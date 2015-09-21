@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
-import org.testng.annotations.Test
+import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 /**
@@ -16,5 +16,9 @@ public class GeldTest extends Specification{
     def "wenn ich geld anzeige, dann wird der Betrag angezeigt"() {
         given: def geld = new Geld(190, "€")
         expect: geld.toString().contains("190")
+    }
+
+    def "Geld erfüllt die Äquivalenzkriterien"() {
+        expect: EqualsVerifier.forClass(Geld.class).verify()
     }
 }
