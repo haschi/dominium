@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- parent>
+        <groupId>de.marsregierung</groupId>
+        <artifactId>produkt</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent -->
+
+    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+    <artifactId>haushaltsbuch</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>Haushaltsbuch</name>
+
+    <scm>
+        <developerConnection>scm:git:http://d-scm.sosi20.prosoz.de/sosi20/grundantrag.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+
+        <!--
+        Legt den URL Pfad für die Webservices fest. Es dürfen keine Pfadtrennzeichen ("/") enthalten sein.
+        -->
+        <app.context.root>haushaltsbuch-${project.version}</app.context.root>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <artifactId>domaene</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <dependencies>
+
+    </dependencies>
+    <modules>
+        <module>domaene</module>
+    </modules>
+</project>
+
