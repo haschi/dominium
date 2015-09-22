@@ -1,10 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import cucumber.api.PendingException;
 import cucumber.api.java8.De;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 /**
  * Created by mhaschka on 20.09.15.
@@ -13,41 +10,45 @@ import static org.hamcrest.Matchers.*;
 
 public class HaushaltsbuchStepdefs implements De {
 
-    private Geldbörse geldbörse;
+  private Geldbörse geldbörse;
 
-    public HaushaltsbuchStepdefs() {
-        Angenommen("^ich habe eine leere Geldbörse$", () -> {
-            this.geldbörse = Geldbörse.Leer;
+  /*
+  public HaushaltsbuchStepdefs() {
+    // Angenommen("^ich habe eine leere Geldbörse$", () -> {
+    //  this.geldbörse = Geldbörse.Leer;
+    //});
+
+    Wenn("^ich (\\d+) (.*) in meine Geldbörse stecke$", (Integer betrag, String währung) -> {
+      Geld geld = new Geld(betrag, währung);
+      this.geldbörse.hineinstecken(geld);
+      ;
+    });
+
+    Dann("^befinden sich (\\d+) (.*) in meiner Geldbörse$", (Integer betrag, String währung) -> {
+      Geld geld = new Geld(betrag, währung);
+      assert this.geldbörse.getInhalt() ==  geld;
+    });
+
+    Angenommen("^in meiner Geldbörse befinden sich (\\d+) (.*)$",
+        (Integer betrag, String währung) -> {
+          Geld geld = new Geld(betrag, währung);
+          this.geldbörse = new Geldbörse(geld);
         });
 
-        Wenn("^ich (\\d+) (.*) in meine Geldbörse stecke$", (Integer betrag, String währung) -> {
-            Geld geld = new Geld(betrag, währung);
-            this.geldbörse.hineinstecken(geld);;
-        });
+    Angenommen("^mein Vermögen beträgt (\\d+) €$", (Integer arg1) -> {
+      // Write code here that turns the phrase above into concrete actions
+      throw new PendingException();
+    });
 
-        Dann("^befinden sich (\\d+) (.*) in meiner Geldbörse$", (Integer betrag, String währung) -> {
-            Geld geld = new Geld(betrag, währung);
-            assertThat(this.geldbörse.getInhalt(), is(equalTo(geld)));
-        });
+    Wenn("^ich einen Kassenbon mit (\\d+) € verbuche$", (Integer arg1) -> {
+      // Write code here that turns the phrase above into concrete actions
+      throw new PendingException();
+    });
 
-        Angenommen("^in meiner Geldbörse befinden sich (\\d+) (.*)$", (Integer betrag, String währung) -> {
-            Geld geld = new Geld(betrag, währung);
-            this.geldbörse = new Geldbörse(geld);
-        });
-
-        Angenommen("^mein Vermögen beträgt (\\d+) €$", (Integer arg1) -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new PendingException();
-        });
-
-        Wenn("^ich einen Kassenbon mit (\\d+) € verbuche$", (Integer arg1) -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new PendingException();
-        });
-
-        Dann("^besitze ich ein Vermögen in Höhe von (\\d+) €$", (Integer arg1) -> {
-            // Write code here that turns the phrase above into concrete actions
-            throw new PendingException();
-        });
-    }
+    Dann("^besitze ich ein Vermögen in Höhe von (\\d+) €$", (Integer arg1) -> {
+      // Write code here that turns the phrase above into concrete actions
+      throw new PendingException();
+    });
+  }
+  */
 }

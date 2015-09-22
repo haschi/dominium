@@ -1,9 +1,9 @@
 # language: de
 
-  Funktionalität: Haushaltsbuchführung begonnen
-    Als Hausmann
-    möchte ich mit der Haushaltsbuchführung beginnen
-    um eine Übersicht meines Vermögens zu erhalten
+Funktionalität: Haushaltsbuchführung begonnen
+  Als Hausmann
+  möchte ich mit der Haushaltsbuchführung beginnen
+  um eine Übersicht meines Vermögens zu erhalten
 
   Szenario: Geld in Geldbörse stecken
     Angenommen ich habe eine leere Geldbörse

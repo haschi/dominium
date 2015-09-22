@@ -4,42 +4,40 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class Geld {
-    private final Integer betrag;
-    private final String währung;
+  private final Integer betrag;
+  private final String währung;
 
-    public Geld(Integer einBetrag, String eineWährung) {
-        this.betrag = einBetrag;
-        this.währung = eineWährung;
+  public Geld(Integer einBetrag, String eineWährung) {
+    this.betrag = einBetrag;
+    this.währung = eineWährung;
+  }
+
+  @Override public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (!(o instanceof Geld)) return false;
-
-        Geld geld = (Geld) o;
-
-        return new EqualsBuilder()
-                .append(betrag, geld.betrag)
-                .append(währung, geld.währung)
-                .isEquals();
+    if (!(obj instanceof Geld)) {
+      return false;
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(betrag)
-                .append(währung)
-                .toHashCode();
-    }
+    Geld geld = (Geld) obj;
 
-    @Override
-    public String toString() {
-        return betrag.toString() + " " + währung;
-    }
+    return new EqualsBuilder()
+        .append(betrag, geld.betrag)
+        .append(währung, geld.währung)
+        .isEquals();
+  }
 
-    public Geld hinzufügen(Geld einGeld) {
-        return new Geld(this.betrag + einGeld.betrag, this.währung);
-    }
+  @Override public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(betrag).append(währung).toHashCode();
+  }
+
+  @Override public String toString() {
+    return betrag.toString() + " " + währung;
+  }
+
+  public Geld hinzufügen(Geld einGeld) {
+    return new Geld(this.betrag + einGeld.betrag, this.währung);
+  }
 }
