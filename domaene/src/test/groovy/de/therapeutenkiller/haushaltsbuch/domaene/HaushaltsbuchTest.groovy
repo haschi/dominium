@@ -7,10 +7,16 @@ import spock.lang.Specification
  */
 
 class HaushaltsbuchTest extends Specification {
-    def "Wenn ein neues Konto hinzugefügt wird, dann muss das Konto existieren"() {
-            given: def haushaltsbuch = new Haushaltsbuch();
-            when: haushaltsbuch.neuesKontoHinzufügen(null)
-            then: thrown(NullPointerException)
+
+    def "Hinzufügen eines nicht extistierenden Kontos"() {
+
+        given: "Angenommen ein neues Haushaltsbuch wurde angelegt"
+        def haushaltsbuch = new Haushaltsbuch();
+
+        when: "Wenn ich versuche eine nicht existierendes Konto hinzuzufügen"
+        haushaltsbuch.neuesKontoHinzufügen(null)
+
+        then: "Dann wird eine NullPointerException ausgelöst."
+        thrown(NullPointerException)
     }
 }
-l
