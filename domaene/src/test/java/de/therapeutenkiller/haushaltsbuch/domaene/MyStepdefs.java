@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by mhaschka on 22.09.15.
- */
 public class MyStepdefs {
 
   private Geldbörse geldbörse;

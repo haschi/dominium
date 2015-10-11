@@ -3,9 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene
 import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
 import spock.lang.Specification
 
-/**
- * Created by mhaschka on 10.10.15.
- */
 class NullPointerExceptionAspektTest extends Specification{
 
     def "Paramater dürfen keine null Pointer sein"() {

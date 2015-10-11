@@ -4,9 +4,6 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
-/**
- * Created by mhaschka on 20.09.15.
- */
 @CucumberOptions(
     monochrome = true,
     strict = false,

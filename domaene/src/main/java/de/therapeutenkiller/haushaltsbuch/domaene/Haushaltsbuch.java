@@ -7,9 +7,6 @@ import javax.money.MonetaryAmountFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by mhaschka on 10.10.15.
- */
 class Haushaltsbuch {
 
   private final Set<Konto> konten = new HashSet<>();

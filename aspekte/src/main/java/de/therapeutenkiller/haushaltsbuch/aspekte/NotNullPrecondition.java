@@ -10,9 +10,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-/**
- * Created by mhaschka on 11.10.15.
- */
 @Aspect
 public class NotNullPrecondition {
 

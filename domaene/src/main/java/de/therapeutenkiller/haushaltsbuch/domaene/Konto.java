@@ -2,9 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import org.javamoney.moneta.Money;
 
-/**
- * Created by mhaschka on 10.10.15.
- */
 class Konto {
 
   private final String kontoname;

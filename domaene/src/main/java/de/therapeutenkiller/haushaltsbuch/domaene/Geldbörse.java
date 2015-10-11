@@ -5,9 +5,6 @@ import org.javamoney.moneta.Money;
 import javax.money.Monetary;
 import javax.money.MonetaryAmountFactory;
 
-/**
- * Created by mhaschka on 20.09.15.
- */
 public final class Geldbörse {
 
   public static Geldbörse erzeugen() {

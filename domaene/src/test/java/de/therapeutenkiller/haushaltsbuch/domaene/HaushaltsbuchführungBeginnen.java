@@ -11,9 +11,6 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by mhaschka on 10.10.15.
- */
 public class HaushaltsbuchführungBeginnen {
 
   private Haushaltsbuch haushaltsbuch;

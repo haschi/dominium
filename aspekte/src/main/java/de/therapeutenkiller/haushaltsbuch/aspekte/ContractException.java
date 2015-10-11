@@ -3,9 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.aspekte;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 
-/**
- * Created by mhaschka on 11.10.15.
- */
 public class ContractException extends RuntimeException {
 
   private static final long serialVersionUID = 1997753363232807009L;
