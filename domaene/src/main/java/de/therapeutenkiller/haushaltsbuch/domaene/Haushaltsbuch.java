@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.javamoney.moneta.Money;
 
 import javax.money.Monetary;
@@ -17,17 +16,17 @@ public class Haushaltsbuch {
 
   public Money gesamtvermögenBerechnen() {
 
-    MonetaryAmountFactory<Money> fact = Monetary.getAmountFactory(Money.class);
+    final MonetaryAmountFactory<Money> fact = Monetary.getAmountFactory(Money.class);
     Money gesamtvermögen = fact.setCurrency("EUR").setNumber(0).create();
 
-    for (Konto konto : this.konten) {
+    for (final Konto konto : this.konten) {
       gesamtvermögen = gesamtvermögen.add(konto.bestandBerechnen());
     }
 
     return gesamtvermögen;
   }
 
-  public void neuesKontoHinzufügen(Konto konto) {
+  public void neuesKontoHinzufügen(final Konto konto) {
     this.konten.add(konto);
   }
 }

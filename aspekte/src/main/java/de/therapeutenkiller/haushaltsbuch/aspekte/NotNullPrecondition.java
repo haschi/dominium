@@ -17,18 +17,18 @@ import java.lang.reflect.Parameter;
 public class NotNullPrecondition {
 
   @Before("execution(public * *(..))")
-  public void checkArguments(JoinPoint joinPoint) throws Throwable {
-    Object[] arguments = joinPoint.getArgs();
-    MethodSignature signature = (MethodSignature)joinPoint.getSignature();
-    Method method = signature.getMethod();
+  public void checkArguments(final JoinPoint joinPoint) throws Throwable {
+    final Object[] arguments = joinPoint.getArgs();
+    final MethodSignature signature = (MethodSignature)joinPoint.getSignature();
+    final Method method = signature.getMethod();
 
     System.out.format("Testing arguments for %s: ", joinPoint.getSignature());
 
     for (int i = 0; i < arguments.length; i++) {
       if (arguments[i] == null) {
-        Parameter[] parameters = method.getParameters();
+        final Parameter[] parameters = method.getParameters();
         if (i < parameters.length) {
-          Annotation ann = parameters[i].getAnnotation(CanBeNull.class);
+          final Annotation ann = parameters[i].getAnnotation(CanBeNull.class);
           if (ann == null) {
             System.out.println("FAILED");
             throw new ContractException(parameters[i].toString());
@@ -40,21 +40,21 @@ public class NotNullPrecondition {
     System.out.println("OK");
   }
 
-
   @AfterReturning(value = "execution(public * *(..))", returning = "returnValue")
-  public void checkResult(JoinPoint joinPoint, Object returnValue) throws Throwable {
+  public void checkResult(final JoinPoint joinPoint, final Object returnValue) throws Throwable {
 
     System.out.format("Testing result of %s", joinPoint.getSignature());
 
     if (returnValue == null) {
-      MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-      Method method = signature.getMethod();
-      Class<?> returnType = method.getReturnType();
+      final MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+      final Method method = signature.getMethod();
+      final Class<?> returnType = method.getReturnType();
       if (!returnType.equals(Void.TYPE)) {
         System.out.println("FAILED");
         throw new ContractException("Rückgabewert darf nicht null sein.");
       }
     }
+
     System.out.println("OK");
   }
 }

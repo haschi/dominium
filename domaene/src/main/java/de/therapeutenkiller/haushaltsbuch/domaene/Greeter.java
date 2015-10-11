@@ -7,10 +7,9 @@ public final class Greeter {
     // $COVERAGE-IGNORE$
   }
 
-  public static String sayHello(String matthias) {
+  public static String sayHello(final String matthias) {
     return "Hello, " + matthias + "!";
   }
-
 
   @CoverageIgnore public static void unusedMethod() {
 

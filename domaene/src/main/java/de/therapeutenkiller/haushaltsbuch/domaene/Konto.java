@@ -10,13 +10,13 @@ public class Konto {
   private String kontoname;
   private Money anfangsbestand;
 
-  public Konto(String kontoname, Money anfangsbestand) {
+  public Konto(final String kontoname, final Money anfangsbestand) {
 
     this.kontoname = kontoname;
     this.anfangsbestand = anfangsbestand;
   }
 
   public Money bestandBerechnen() {
-    return anfangsbestand;
+    return this.anfangsbestand;
   }
 }

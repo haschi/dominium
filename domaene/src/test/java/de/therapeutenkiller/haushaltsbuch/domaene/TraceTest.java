@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class TraceTest {
 
-  public void methodeMitParameter(String einString) {
+  public void methodeMitParameter(final String einString) {
     System.out.println(einString);
   }
 
@@ -17,6 +17,6 @@ public class TraceTest {
     return null;
   }
 
-  public void parameterCanBeNull(@CanBeNull Object parameter) {
+  public void parameterCanBeNull(@CanBeNull final Object parameter) {
   }
 }

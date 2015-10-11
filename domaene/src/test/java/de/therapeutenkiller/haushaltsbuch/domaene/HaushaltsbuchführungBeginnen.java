@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class HaushaltsbuchführungBeginnen {
 
-
   private Haushaltsbuch haushaltsbuch;
 
   @Wenn("^ich mit der Haushaltsbuchführung beginne$")
@@ -26,9 +25,11 @@ public class HaushaltsbuchführungBeginnen {
   }
 
   @Dann("^wird mein ausgewiesenes Gesamtvermögen (-{0,1}\\d+\\,\\d{2}) (.*) betragen$")
-  public void wird_mein_ausgewiesenes_Gesamtvermögen_€_betragen(BigDecimal betrag, String währung) {
+  public void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
+      final BigDecimal betrag,
+      final String währung) {
 
-    Money erwartetesGesamtvermögen = Money.of(betrag, währung);
+    final Money erwartetesGesamtvermögen = Money.of(betrag, währung);
 
     assertThat(this.haushaltsbuch.gesamtvermögenBerechnen())
         .isEqualTo(erwartetesGesamtvermögen);
@@ -36,40 +37,41 @@ public class HaushaltsbuchführungBeginnen {
 
   @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
   public void ich_habe_mit_der_Haushaltsbuchführung_begonnen() {
-   this.haushaltsbuch = new Haushaltsbuch();
+    this.haushaltsbuch = new Haushaltsbuch();
   }
 
-  @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,\\d{2}) (.*) hinzufüge$")
-  public void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_€_hinzufüge(
-      String kontoname,
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) {
+  @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,"
+      + "\\d{2}) (.*) hinzufüge$")
+  public void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
+      final String kontoname,
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
 
-    Money anfangsbestand = Money.of(betrag, währung);
-    Konto konto = new Konto(kontoname, anfangsbestand);
+    final Money anfangsbestand = Money.of(betrag, währung);
+    final Konto konto = new Konto(kontoname, anfangsbestand);
     this.haushaltsbuch.neuesKontoHinzufügen(konto);
   }
 
   @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+\\,\\d{2}) (.*)$")
   public void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) {
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
 
     this.haushaltsbuch = new Haushaltsbuch();
-    Money anfänglichesGesamtvermögen = Money.of(betrag, währung);
-    Konto einKonto = new Konto("anfängliches Geldvermögen", anfänglichesGesamtvermögen);
+    final Money anfänglichesGesamtvermögen = Money.of(betrag, währung);
+    final Konto einKonto = new Konto("anfängliches Geldvermögen", anfänglichesGesamtvermögen);
     this.haushaltsbuch.neuesKontoHinzufügen(einKonto);
   }
 
   @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,\\d{2}) (.*) der "
       + "Haushaltsbuchführung hinzufüge$")
   public void ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(
-      String kontoname,
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) {
+      final String kontoname,
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
 
-    Money anfangsbestand = Money.of(betrag, währung);
-    Konto neuesKonto = new Konto(kontoname, anfangsbestand);
+    final Money anfangsbestand = Money.of(betrag, währung);
+    final Konto neuesKonto = new Konto(kontoname, anfangsbestand);
     this.haushaltsbuch.neuesKontoHinzufügen(neuesKonto);
   }
 }

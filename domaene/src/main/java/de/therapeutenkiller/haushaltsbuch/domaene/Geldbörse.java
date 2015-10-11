@@ -16,11 +16,11 @@ public class Geldbörse {
 
   private Money geld;
 
-  public Geldbörse(Money einGeld) {
+  public Geldbörse(final Money einGeld) {
     this.geld = einGeld;
   }
 
-  public void hineinstecken(Money einGeld) {
+  public void hineinstecken(final Money einGeld) {
     this.geld = this.geld.add(einGeld);
   }
 

@@ -13,30 +13,34 @@ public class ContractException extends RuntimeException {
   public ContractException() {
   }
 
-  public ContractException(String message) {
+  public ContractException(final String message) {
     super(message);
   }
 
-  public ContractException(Signature signature) {
+  public ContractException(final Signature signature) {
     super(signature.toLongString());
   }
 
-  public ContractException(JoinPoint joinPoint) {
+  public ContractException(final JoinPoint joinPoint) {
     joinPoint.getThis();
   }
-  public ContractException(Throwable cause) {
+
+  public ContractException(final Throwable cause) {
     super(cause);
   }
 
-  public ContractException(String message, Throwable cause) {
+  public ContractException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
+  /*
+  @SuppressWarnings("checkstyle:parameternumber")
   public ContractException(
-      String message,
-      Throwable cause,
-      boolean enableSuppression,
-      boolean writableStackTrace) {
+      final String message,
+      final Throwable cause,
+      final boolean enableSuppression,
+      final boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
+  */
 }

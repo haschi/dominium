@@ -25,27 +25,27 @@ public class MyStepdefs {
   }
 
   @Wenn("^ich (\\d+\\,\\d{2}) (.*) in meine Geldbörse stecke$")
-  public void ich_€_in_meine_Geldbörse_stecke(
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) throws Throwable {
+  public void ich_in_meine_Geldbörse_stecke(
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
 
-    Money geld = Money.of(betrag, währung);
+    final Money geld = Money.of(betrag, währung);
     this.geldbörse.hineinstecken(geld);
   }
 
   @Dann("^befinden sich (\\d+\\,\\d{2}) (.*) in meiner Geldbörse$")
-  public void befinden_sich_€_in_meiner_Geldbörse(
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) throws Throwable {
+  public void befinden_sich_in_meiner_Geldbörse(
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
 
-    Money geld = Money.of(betrag, währung);
+    final Money geld = Money.of(betrag, währung);
     assertThat(this.geldbörse.getInhalt()).isEqualTo(geld);
   }
 
   @Angenommen("^in meiner Geldbörse befinden sich (\\d+\\,\\d{2}) (.*)$")
-  public void in_meiner_Geldbörse_befinden_sich_€(
-      BigDecimal betrag,
-      @Transform(CurrencyUnitConverter.class)CurrencyUnit währung) throws Throwable {
+  public void in_meiner_Geldbörse_befinden_sich(
+      final BigDecimal betrag,
+      @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
     this.geldbörse = Geldbörse.erzeugen();
     this.geldbörse.hineinstecken(Money.of(betrag, währung));
   }

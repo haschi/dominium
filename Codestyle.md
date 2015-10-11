@@ -20,3 +20,14 @@ Installing the coding style settings in Eclipse
 
 Download the eclipse-java-google-style.xml file from the http://code.google.com/p/google-styleguide/ repo.
 Under Window/Preferences select Java/Code Style/Formatter. Import the settings file by selecting Import.
+
+POM configuration
+-----------------
+
+See [Multimodule Configuration](https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/multi-module-config.html)
+ at [Apache Maven Checkstyle Plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
+
+ Versuche nicht die Checkstyle Prüfung in die validate Phase einzubinden. das wird nicht
+ funktionieren. Die Resourcen sind zu diesem Zeitpunkt noch nicht vorhanden.
+
+
