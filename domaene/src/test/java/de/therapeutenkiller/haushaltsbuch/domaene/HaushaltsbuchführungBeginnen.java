@@ -19,13 +19,13 @@ public class HaushaltsbuchführungBeginnen {
   private Haushaltsbuch haushaltsbuch;
 
   @Wenn("^ich mit der Haushaltsbuchführung beginne$")
-  public void ich_mit_der_Haushaltsbuchführung_beginne() {
+  public final void ich_mit_der_Haushaltsbuchführung_beginne() {
 
     this.haushaltsbuch = new Haushaltsbuch();
   }
 
   @Dann("^wird mein ausgewiesenes Gesamtvermögen (-{0,1}\\d+\\,\\d{2}) (.*) betragen$")
-  public void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
+  public final void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
       final BigDecimal betrag,
       final String währung) {
 
@@ -36,13 +36,13 @@ public class HaushaltsbuchführungBeginnen {
   }
 
   @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
-  public void ich_habe_mit_der_Haushaltsbuchführung_begonnen() {
+  public final void ich_habe_mit_der_Haushaltsbuchführung_begonnen() {
     this.haushaltsbuch = new Haushaltsbuch();
   }
 
   @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,"
       + "\\d{2}) (.*) hinzufüge$")
-  public void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
+  public final void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
       final String kontoname,
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
@@ -53,7 +53,7 @@ public class HaushaltsbuchführungBeginnen {
   }
 
   @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+\\,\\d{2}) (.*)$")
-  public void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
+  public final void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
 
@@ -65,7 +65,8 @@ public class HaushaltsbuchführungBeginnen {
 
   @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,\\d{2}) (.*) der "
       + "Haushaltsbuchführung hinzufüge$")
-  public void ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(
+  public final void
+      ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(
       final String kontoname,
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {

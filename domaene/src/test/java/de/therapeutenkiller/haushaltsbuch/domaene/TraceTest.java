@@ -9,14 +9,16 @@ import org.junit.Test;
 
 public class TraceTest {
 
-  public void methodeMitParameter(final String einString) {
+  public final void methodeMitParameter(final String einString) {
     System.out.println(einString);
   }
 
-  public Object methodeGibtNullZurück() {
+  @SuppressWarnings("SameReturnValue")
+  public final Object methodeGibtNullZurück() {
     return null;
   }
 
+  @SuppressWarnings("EmptyMethod")
   public void parameterCanBeNull(@CanBeNull final Object parameter) {
   }
 }

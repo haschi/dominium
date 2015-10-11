@@ -12,7 +12,7 @@ import java.util.Set;
  */
 class Haushaltsbuch {
 
-  private Set<Konto> konten = new HashSet<>();
+  private final Set<Konto> konten = new HashSet<>();
 
   public Money gesamtvermögenBerechnen() {
 

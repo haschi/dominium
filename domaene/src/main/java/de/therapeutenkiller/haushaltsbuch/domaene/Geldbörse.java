@@ -8,7 +8,7 @@ import javax.money.MonetaryAmountFactory;
 /**
  * Created by mhaschka on 20.09.15.
  */
-public class Geldbörse {
+public final class Geldbörse {
 
   public static Geldbörse erzeugen() {
     return new Geldbörse(Money.of(0, "EUR"));

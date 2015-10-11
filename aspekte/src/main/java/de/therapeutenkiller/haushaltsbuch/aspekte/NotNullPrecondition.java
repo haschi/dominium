@@ -16,8 +16,9 @@ import java.lang.reflect.Parameter;
 @Aspect
 public class NotNullPrecondition {
 
+  @SuppressWarnings("RedundantThrows")
   @Before("execution(public * *(..))")
-  public void checkArguments(final JoinPoint joinPoint) throws Throwable {
+  public final void checkArguments(final JoinPoint joinPoint) throws Throwable {
     final Object[] arguments = joinPoint.getArgs();
     final MethodSignature signature = (MethodSignature)joinPoint.getSignature();
     final Method method = signature.getMethod();
@@ -40,8 +41,10 @@ public class NotNullPrecondition {
     System.out.println("OK");
   }
 
+  @SuppressWarnings("RedundantThrows")
   @AfterReturning(value = "execution(public * *(..))", returning = "returnValue")
-  public void checkResult(final JoinPoint joinPoint, final Object returnValue) throws Throwable {
+  public final void checkResult(final JoinPoint joinPoint, final Object returnValue)
+      throws Throwable {
 
     System.out.format("Testing result of %s", joinPoint.getSignature());
 

@@ -10,7 +10,7 @@ import javax.money.Monetary;
  */
 public class CurrencyUnitConverter extends Transformer<CurrencyUnit> {
 
-  @Override public CurrencyUnit transform(final String währung) {
+  @Override public final CurrencyUnit transform(final String währung) {
     return Monetary.getCurrency(währung);
   }
 }

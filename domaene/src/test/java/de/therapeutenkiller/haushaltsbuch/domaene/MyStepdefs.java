@@ -20,12 +20,12 @@ public class MyStepdefs {
   private Geldbörse geldbörse;
 
   @Angenommen("^ich habe eine leere Geldbörse$")
-  public void ich_habe_eine_leere_Geldbörse() throws Throwable {
+  public final void ich_habe_eine_leere_Geldbörse() throws Throwable {
     this.geldbörse = Geldbörse.erzeugen();
   }
 
   @Wenn("^ich (\\d+\\,\\d{2}) (.*) in meine Geldbörse stecke$")
-  public void ich_in_meine_Geldbörse_stecke(
+  public final void ich_in_meine_Geldbörse_stecke(
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
 
@@ -34,7 +34,7 @@ public class MyStepdefs {
   }
 
   @Dann("^befinden sich (\\d+\\,\\d{2}) (.*) in meiner Geldbörse$")
-  public void befinden_sich_in_meiner_Geldbörse(
+  public final void befinden_sich_in_meiner_Geldbörse(
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
 
@@ -43,7 +43,7 @@ public class MyStepdefs {
   }
 
   @Angenommen("^in meiner Geldbörse befinden sich (\\d+\\,\\d{2}) (.*)$")
-  public void in_meiner_Geldbörse_befinden_sich(
+  public final void in_meiner_Geldbörse_befinden_sich(
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
     this.geldbörse = Geldbörse.erzeugen();

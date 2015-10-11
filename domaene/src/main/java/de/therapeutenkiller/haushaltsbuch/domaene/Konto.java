@@ -7,8 +7,8 @@ import org.javamoney.moneta.Money;
  */
 class Konto {
 
-  private String kontoname;
-  private Money anfangsbestand;
+  private final String kontoname;
+  private final Money anfangsbestand;
 
   public Konto(final String kontoname, final Money anfangsbestand) {
 

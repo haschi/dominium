@@ -11,7 +11,9 @@ final class Greeter {
     return "Hello, " + matthias + "!";
   }
 
-  @CoverageIgnore public static void unusedMethod() {
+  @SuppressWarnings("EmptyMethod")
+  @CoverageIgnore
+  public static void unusedMethod() {
 
   }
 }
