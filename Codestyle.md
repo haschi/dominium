@@ -27,7 +27,7 @@ POM configuration
 See [Multimodule Configuration](https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/multi-module-config.html)
  at [Apache Maven Checkstyle Plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
 
- Versuche nicht die Checkstyle Prüfung in die validate Phase einzubinden. das wird nicht
+ **Versuche nicht die Checkstyle Prüfung in die validate Phase einzubinden**. Das wird nicht
  funktionieren. Die Resourcen sind zu diesem Zeitpunkt noch nicht vorhanden.
 
 
