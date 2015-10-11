@@ -21,7 +21,7 @@ public class HaushaltsbuchführungBeginnen {
     this.haushaltsbuch = new Haushaltsbuch();
   }
 
-  @Dann("^wird mein ausgewiesenes Gesamtvermögen (-{0,1}\\d+\\,\\d{2}) (.*) betragen$")
+  @Dann("^wird mein ausgewiesenes Gesamtvermögen (-{0,1}\\d+,\\d{2}) (.*) betragen$")
   public final void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
       final BigDecimal betrag,
       final String währung) {
@@ -37,8 +37,8 @@ public class HaushaltsbuchführungBeginnen {
     this.haushaltsbuch = new Haushaltsbuch();
   }
 
-  @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,"
-      + "\\d{2}) (.*) hinzufüge$")
+  @SuppressWarnings("checkstyle:linelength")
+  @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2}) (.*) hinzufüge$")
   public final void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
       final String kontoname,
       final BigDecimal betrag,
@@ -49,7 +49,7 @@ public class HaushaltsbuchführungBeginnen {
     this.haushaltsbuch.neuesKontoHinzufügen(konto);
   }
 
-  @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+\\,\\d{2}) (.*)$")
+  @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+,\\d{2}) (.*)$")
   public final void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
       final BigDecimal betrag,
       @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
@@ -60,7 +60,7 @@ public class HaushaltsbuchführungBeginnen {
     this.haushaltsbuch.neuesKontoHinzufügen(einKonto);
   }
 
-  @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+\\,\\d{2}) (.*) der "
+  @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2}) (.*) der "
       + "Haushaltsbuchführung hinzufüge$")
   public final void
       ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(

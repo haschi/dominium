@@ -29,9 +29,8 @@
 
     <property name="fileExtensions" value="java, properties, xml"/>
 
-    <!--
+
     <module name="SuppressWarningsFilter" />
-    -->
 
     <!-- Checks for whitespace                               -->
     <!-- See http://checkstyle.sf.net/config_whitespace.html -->
@@ -40,9 +39,8 @@
     </module>
 
     <module name="TreeWalker">
-        <!--
+
         <module name="SuppressWarningsHolder" />
-        -->
 
         <module name="FinalClass"/>
         <module name="DesignForExtension"/>
