@@ -17,6 +17,12 @@ class NullPointerExceptionAspektTest extends Specification{
         then: thrown(ContractException)
     }
 
+    def "Methode dürfen mit CanBeNull Annoation null zurückgegeben"() {
+        given: def test = new TraceTest();
+        when: test.annotierteMethodeGibtNullZurück();
+        then: notThrown ContractException;
+    }
+
     def "Parameter mit CanBeNull Annotation"() {
         given: def test = new TraceTest();
         when: test.parameterCanBeNull(null);

@@ -17,4 +17,10 @@ public class TraceTest {
   @SuppressWarnings("EmptyMethod")
   public void parameterCanBeNull(@CanBeNull final Object parameter) {
   }
+
+  @SuppressWarnings("SameReturnValue")
+  @CanBeNull
+  public final Object annotierteMethodeGibtNullZurück() {
+    return null;
+  }
 }

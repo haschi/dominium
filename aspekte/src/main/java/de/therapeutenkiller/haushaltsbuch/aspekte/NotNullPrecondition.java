@@ -50,8 +50,10 @@ public class NotNullPrecondition {
       final Method method = signature.getMethod();
       final Class<?> returnType = method.getReturnType();
       if (!returnType.equals(Void.TYPE)) {
-        System.out.println("FAILED");
-        throw new ContractException("Rückgabewert darf nicht null sein.");
+        if (method.getAnnotation(CanBeNull.class) == null) {
+          System.out.println("FAILED");
+          throw new ContractException("Rückgabewert darf nicht null sein.");
+        }
       }
     }
 
