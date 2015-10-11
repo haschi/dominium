@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by mhaschka on 10.10.15.
  */
-public class Haushaltsbuch {
+class Haushaltsbuch {
 
   private Set<Konto> konten = new HashSet<>();
 

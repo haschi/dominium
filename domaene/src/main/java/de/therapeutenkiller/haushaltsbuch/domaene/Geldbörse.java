@@ -16,7 +16,7 @@ public class Geldbörse {
 
   private Money geld;
 
-  public Geldbörse(final Money einGeld) {
+  private Geldbörse(final Money einGeld) {
     this.geld = einGeld;
   }
 

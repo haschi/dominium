@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 
-public final class Greeter {
+final class Greeter {
 
   @CoverageIgnore private Greeter() {
     // $COVERAGE-IGNORE$

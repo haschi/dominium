@@ -5,7 +5,7 @@ import org.javamoney.moneta.Money;
 /**
  * Created by mhaschka on 10.10.15.
  */
-public class Konto {
+class Konto {
 
   private String kontoname;
   private Money anfangsbestand;
