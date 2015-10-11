@@ -28,10 +28,6 @@ public class Haushaltsbuch {
   }
 
   public void neuesKontoHinzufügen(Konto konto) {
-    if (konto == null) {
-      throw new NullPointerException();
-    }
-
     this.konten.add(konto);
   }
 }

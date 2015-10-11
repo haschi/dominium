@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
 import spock.lang.Specification
 
 /**
@@ -16,6 +17,6 @@ public class GreeterTest extends Specification {
         when:
         Greeter.sayHello(null)
         then:
-        thrown(IllegalArgumentException)
+        thrown(ContractException)
     }
 }

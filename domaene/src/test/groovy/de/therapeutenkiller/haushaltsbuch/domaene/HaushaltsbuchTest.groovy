@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
 import spock.lang.Specification
 
 /**
@@ -17,6 +18,6 @@ class HaushaltsbuchTest extends Specification {
         haushaltsbuch.neuesKontoHinzufügen(null)
 
         then: "Dann wird eine NullPointerException ausgelöst."
-        thrown(NullPointerException)
+        thrown(ContractException)
     }
 }

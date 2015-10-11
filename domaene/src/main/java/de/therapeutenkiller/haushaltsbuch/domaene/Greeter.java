@@ -8,10 +8,6 @@ public final class Greeter {
   }
 
   public static String sayHello(String matthias) {
-    if (matthias == null) {
-      throw new IllegalArgumentException();
-    }
-
     return "Hello, " + matthias + "!";
   }
 
