@@ -45,23 +45,6 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- Dieses Modul besitzt ausschließlich Build Abhängigkeiten und wird
-             deshalb im Pluginmanagement hinzugefügt.-->
-
-            <!--
-            <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
-                <artifactId>config</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            -->
-
-            <dependency>
-                    <groupId>org.stackoverflow</groupId>
-                    <artifactId>Q12423965-ProjectA</artifactId>
-                    <version>${project.version}</version>
-                </dependency>
-
         </dependencies>
 
     </dependencyManagement>
