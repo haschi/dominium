@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 @Aspect
-public class NotNullPrecondition {
+public class DisableBillionDollarBugAspect {
 
   @SuppressWarnings("RedundantThrows")
   @Before("execution(public * *(..))")
@@ -20,22 +20,17 @@ public class NotNullPrecondition {
     final MethodSignature signature = (MethodSignature)joinPoint.getSignature();
     final Method method = signature.getMethod();
 
-    System.out.format("Testing arguments for %s: ", joinPoint.getSignature());
-
     for (int i = 0; i < arguments.length; i++) {
       if (arguments[i] == null) {
         final Parameter[] parameters = method.getParameters();
         if (i < parameters.length) {
           final Annotation ann = parameters[i].getAnnotation(CanBeNull.class);
           if (ann == null) {
-            System.out.println("FAILED");
             throw new ContractException(parameters[i].toString());
           }
         }
       }
     }
-
-    System.out.println("OK");
   }
 
   @SuppressWarnings("RedundantThrows")
@@ -43,20 +38,15 @@ public class NotNullPrecondition {
   public final void checkResult(final JoinPoint joinPoint, final Object returnValue)
       throws Throwable {
 
-    System.out.format("Testing result of %s", joinPoint.getSignature());
-
     if (returnValue == null) {
       final MethodSignature signature = (MethodSignature) joinPoint.getSignature();
       final Method method = signature.getMethod();
       final Class<?> returnType = method.getReturnType();
       if (!returnType.equals(Void.TYPE)) {
         if (method.getAnnotation(CanBeNull.class) == null) {
-          System.out.println("FAILED");
           throw new ContractException("Rückgabewert darf nicht null sein.");
         }
       }
     }
-
-    System.out.println("OK");
   }
 }

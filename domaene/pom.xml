@@ -95,6 +95,8 @@
     </dependencies>
 
     <build>
+        <!-- checkstyle plugin: do not overwrite settings! -->
+
         <plugins>
             <!-- gmavenplus -->
             <plugin>
@@ -209,15 +211,6 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.5</version>
             </plugin>
-
-            <!-- checkstyle -->
-            <!-- do not overwrite! -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-            -->
 
             <!-- findbugs -->
             <plugin>
