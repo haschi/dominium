@@ -40,8 +40,8 @@
 
     <module name="TreeWalker">
 
+        <module name="UnusedImports"/>
         <module name="SuppressWarningsHolder" />
-
         <module name="FinalClass"/>
         <module name="DesignForExtension"/>
         <module name="RequireThis" />

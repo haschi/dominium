@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;

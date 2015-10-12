@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import de.therapeutenkiller.haushaltsbuch.aspekte.CanBeNull;
-import org.junit.Test;
 
 public class TraceTest {
 

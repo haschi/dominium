@@ -2,9 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import org.javamoney.moneta.Money;
 
-import javax.money.Monetary;
-import javax.money.MonetaryAmountFactory;
-
 public final class Geldbörse {
 
   public static Geldbörse erzeugen() {
