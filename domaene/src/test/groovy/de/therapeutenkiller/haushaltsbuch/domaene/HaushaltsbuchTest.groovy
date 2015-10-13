@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import cucumber.api.PendingException
+import cucumber.api.java.de.Und
 import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
 import spock.lang.Specification
 

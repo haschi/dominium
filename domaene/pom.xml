@@ -140,6 +140,8 @@
             </plugin>
 
             <!-- compiler -->
+            <!-- brauchen wir das wirklich, oder reicht es in der parent pom? -->
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -150,6 +152,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            -->
 
             <!-- cobertura -->
             <plugin>

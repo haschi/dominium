@@ -16,4 +16,8 @@ class Konto {
   public Money bestandBerechnen() {
     return this.anfangsbestand;
   }
+
+  public String getBezeichnung() {
+    return this.kontoname;
+  }
 }

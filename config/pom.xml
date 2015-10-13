@@ -14,6 +14,23 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
-
+        <version.maven>3.3.3</version.maven>
+        <version.maven-compat>${version.maven}</version.maven-compat>
+        <version.maven-core>${version.maven}</version.maven-core>
+        <version.plexus>1.6</version.plexus>
+        <version.maven-jar-plugin>2.6</version.maven-jar-plugin>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-compat</artifactId>
+            <version>${version.maven-compat}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>${version.maven-core}</version>
+        </dependency>
+    </dependencies>
 </project>

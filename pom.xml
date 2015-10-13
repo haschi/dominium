@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- parent>
-        <groupId>de.marsregierung</groupId>
-        <artifactId>produkt</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent -->
-
     <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -20,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.version>3.3</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
         <checkstyle.version>6.10.1</checkstyle.version>
@@ -49,7 +44,22 @@
 
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>de.therapeutenkiller</groupId>
+            <artifactId>buildextensions</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
+        <extensions>
+            <extension>
+                <groupId>de.therapeutenkiller</groupId>
+                <artifactId>buildextensions</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </extension>
+        </extensions>
         <pluginManagement>
             <plugins>
 
@@ -74,6 +84,7 @@
                 </plugin>
 
                 <!-- compiler -->
+                <!--
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -84,6 +95,7 @@
                         <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
+                -->
             </plugins>
         </pluginManagement>
 
@@ -137,7 +149,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
