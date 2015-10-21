@@ -8,7 +8,7 @@ final class Greeter {
   }
 
   public static String sayHello(final String matthias) {
-    return "Hello, " + matthias + "!";
+    return "Hello!";
   }
 
   @SuppressWarnings("EmptyMethod")

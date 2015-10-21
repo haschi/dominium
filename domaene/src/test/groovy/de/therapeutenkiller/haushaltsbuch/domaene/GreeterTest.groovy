@@ -8,7 +8,7 @@ public class GreeterTest extends Specification {
 
     def "wenn ich einen Namen eingebe, dann werde ich damit begrüßt"() {
         expect:
-        Greeter.sayHello("Matthias") == "Hello, Matthias!"
+        Greeter.sayHello("Matthias") == "Hello!"
     }
 
     def "wenn ich keinen Namen eingebe, dann wird eine Ausnahme ausgelöst"() {

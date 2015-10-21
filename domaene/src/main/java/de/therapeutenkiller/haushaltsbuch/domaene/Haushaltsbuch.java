@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
+@CoverageIgnore
 class Haushaltsbuch {
 
   private final Set<Konto> konten = new HashSet<>();
@@ -50,6 +51,7 @@ class Haushaltsbuch {
     this.buchungssätze.add(buchungssatz);
   }
 
+  @CoverageIgnore
   public Konto kontoSuchen(final String kontoname) {
     return this.konten.stream()
         .filter(k -> k.getBezeichnung() == kontoname)
@@ -57,6 +59,7 @@ class Haushaltsbuch {
         .get();
   }
 
+  @CoverageIgnore
   public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
     final Optional<MonetaryAmount> plus = this.buchungssätze.stream()
         .filter(bs -> bs.getHabenkonto().getBezeichnung() == einKonto.getBezeichnung())

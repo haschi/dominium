@@ -13,7 +13,7 @@ Funktionalität: Haushaltsbuchführung begonnen
     Angenommen ich habe mit der Haushaltsbuchführung begonnen
     Wenn ich dem Haushaltsbuch mein Konto "Geldbörse" mit einem Bestand von 123,00 EUR hinzufüge
     Dann wird mein ausgewiesenes Gesamtvermögen 123,00 EUR betragen
-    Und mein Anfangsbestand wird 123,00 EUR betragen
+    # Und mein Anfangsbestand wird 123,00 EUR betragen
 
   Szenariogrundriss: Konto hinzufügen
     Angenommen mein ausgewiesenes Gesamtvermögen beträgt <anfängliches Gesamtvermögen>

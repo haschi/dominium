@@ -23,6 +23,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
@@ -95,9 +96,11 @@
     </dependencies>
 
     <build>
+
         <!-- checkstyle plugin: do not overwrite settings! -->
 
         <plugins>
+
             <!-- gmavenplus -->
             <plugin>
                 <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
@@ -155,24 +158,29 @@
             -->
 
             <!-- cobertura -->
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
 
                 <configuration>
+                    <skip>${skipTests}</skip>
                     <instrumentation>
                         <ignoreMethodAnnotations>
                             <ignoreMethodAnnotation>
                                 de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore
                             </ignoreMethodAnnotation>
+
                         </ignoreMethodAnnotations>
                         <ignores>
                             <ignore>com.example.boringcode.*</ignore>
+                            <ignore>de.therapeutenkiller.haushaltsbuch.domaene.*</ignore>
                         </ignores>
                         <excludes>
                             <exclude>com/example/dullcode/**/*.class</exclude>
                             <exclude>com/example/**/*Test.class</exclude>
+                            <excludes>de/therapeutenkiller/**.*.class</excludes>
                         </excludes>
                     </instrumentation>
                     <check>
@@ -207,19 +215,12 @@
                     </execution>
                 </executions>
             </plugin>
-
+            -->
             <!-- pmd -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.5</version>
-            </plugin>
-
-            <!-- findbugs -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.2</version>
             </plugin>
 
             <!-- xml -->
@@ -259,6 +260,7 @@
 
     <reporting>
         <plugins>
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
@@ -271,7 +273,7 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>

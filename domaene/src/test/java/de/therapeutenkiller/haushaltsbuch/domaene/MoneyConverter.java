@@ -3,11 +3,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transformer;
 import org.apache.commons.lang3.StringUtils;
 import org.javamoney.moneta.Money;
-import org.javamoney.moneta.function.MonetaryUtil;
-import org.javamoney.moneta.spi.MonetaryConfig;
 
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmountFactory;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;

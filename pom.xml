@@ -11,14 +11,17 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
+        <tile.coding-all>de.therapeutenkiller:coding-all:pom:0.0.1-SNAPSHOT</tile.coding-all>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
+
         <checkstyle.version>6.10.1</checkstyle.version>
-        <checkstyle.config.location>codingrules/therapeuten_checks.xml</checkstyle.config.location>
+        <checkstyle.config.location>codingrules/checkstyle.xml</checkstyle.config.location>
+
     </properties>
 
     <scm>
@@ -48,7 +51,7 @@
         <dependency>
             <groupId>de.therapeutenkiller</groupId>
             <artifactId>buildextensions</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 
@@ -59,9 +62,29 @@
                 <artifactId>buildextensions</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </extension>
+
+            <!-- checkstyle & co voll konfiguriert -->
+            <extension>
+                <groupId>de.therapeutenkiller</groupId>
+                <artifactId>coding</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </extension>
+
         </extensions>
+
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>io.repaint.maven</groupId>
+                    <artifactId>tiles-maven-plugin</artifactId>
+                    <version>2.1</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <tiles>
+                            <tile>${tile.coding-all}</tile>
+                        </tiles>
+                    </configuration>
+                </plugin>
 
                 <!-- aspectj -->
                 <plugin>
@@ -101,7 +124,14 @@
 
         <plugins>
 
+            <plugin>
+                <groupId>io.repaint.maven</groupId>
+                <artifactId>tiles-maven-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+
             <!-- checkstyle -->
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -115,9 +145,9 @@
                     </dependency>
 
                     <dependency>
-                        <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
-                        <artifactId>config</artifactId>
-                        <version>${project.version}</version>
+                        <artifactId>coding</artifactId>
+                        <groupId>de.therapeutenkiller</groupId>
+                        <version>0.0.1-SNAPSHOT</version>
                     </dependency>
 
                 </dependencies>
@@ -144,7 +174,21 @@
                 </executions>
 
             </plugin>
+            -->
 
+            <!-- findbugs -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <omitVisitors>FindDeadLocalStores,UnreadFields</omitVisitors>
+                    <detail>true</detail>
+                    <failOnError>true</failOnError>
+                    <includeTests>true</includeTests>
+                    <skip>${skipTests}</skip>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -158,8 +202,22 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <modules>
-        <module>config</module>
         <module>aspekte</module>
         <module>domaene</module>
     </modules>

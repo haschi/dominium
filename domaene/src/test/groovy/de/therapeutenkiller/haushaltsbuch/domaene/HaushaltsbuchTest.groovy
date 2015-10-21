@@ -13,7 +13,7 @@ class HaushaltsbuchTest extends Specification {
         def haushaltsbuch = new Haushaltsbuch();
 
         when: "Wenn ich versuche eine nicht existierendes Konto hinzuzufügen"
-        haushaltsbuch.neuesKontoHinzufügen(null)
+        haushaltsbuch.neuesKontoHinzufügen(null, null)
 
         then: "Dann wird eine NullPointerException ausgelöst."
         thrown(ContractException)
