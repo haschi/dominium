@@ -7,44 +7,44 @@ import org.javamoney.moneta.Money;
 
 class Konto {
 
-  private final String kontoname;
-  private final Money anfangsbestand;
+    private final String kontoname;
+    private final Money anfangsbestand;
 
-  public Konto(final String kontoname, final Money anfangsbestand) {
+    public Konto(final String kontoname, final Money anfangsbestand) {
 
-    this.kontoname = kontoname;
-    this.anfangsbestand = anfangsbestand;
-  }
-
-  public Money bestandBerechnen() {
-    return this.anfangsbestand;
-  }
-
-  public String getBezeichnung() {
-    return this.kontoname;
-  }
-
-  @Override public boolean equals(@CanBeNull final Object obj) {
-    if (this == obj) {
-      return true;
+        this.kontoname = kontoname;
+        this.anfangsbestand = anfangsbestand;
     }
 
-    if (obj == null || getClass() != obj.getClass()) {
-      return false;
+    public Money bestandBerechnen() {
+        return this.anfangsbestand;
     }
 
-    final Konto konto = (Konto) obj;
+    public String getBezeichnung() {
+        return this.kontoname;
+    }
 
-    return new EqualsBuilder()
-        .append(this.kontoname, konto.kontoname)
-        .append(this.anfangsbestand, konto.anfangsbestand)
-        .isEquals();
-  }
+    @Override public boolean equals(@CanBeNull final Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
-  @Override public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(this.kontoname)
-        .append(this.anfangsbestand)
-        .toHashCode();
-  }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final Konto konto = (Konto) obj;
+
+        return new EqualsBuilder()
+            .append(this.kontoname, konto.kontoname)
+            .append(this.anfangsbestand, konto.anfangsbestand)
+            .isEquals();
+    }
+
+    @Override public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+            .append(this.kontoname)
+            .append(this.anfangsbestand)
+            .toHashCode();
+    }
 }

@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 import javax.money.Monetary
 
-class BuchungssatzTest extends Specification {
+public final class BuchungssatzTest extends Specification {
 
     def "Wenn ich einen Buchungssatz habe"() {
         given:

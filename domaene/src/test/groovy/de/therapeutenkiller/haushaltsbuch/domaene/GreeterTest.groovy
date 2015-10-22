@@ -4,7 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
 import spock.lang.Specification
 
 
-public class GreeterTest extends Specification {
+public final class GreeterTest extends Specification {
 
     def "wenn ich einen Namen eingebe, dann werde ich damit begrüßt"() {
         expect:
