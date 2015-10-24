@@ -1,8 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
-import cucumber.api.PendingException
-import cucumber.api.java.de.Und
-import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
+import de.therapeutenkiller.haushaltsbuch.aspekte.ArgumentIstNull
 import spock.lang.Specification
 
 class HaushaltsbuchTest extends Specification {
@@ -16,6 +14,6 @@ class HaushaltsbuchTest extends Specification {
         haushaltsbuch.neuesKontoHinzufügen(null, null)
 
         then: "Dann wird eine NullPointerException ausgelöst."
-        thrown(ContractException)
+        thrown(ArgumentIstNull)
     }
 }

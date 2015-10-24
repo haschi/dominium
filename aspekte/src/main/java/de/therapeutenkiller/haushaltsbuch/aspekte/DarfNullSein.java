@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CanBeNull {
+public @interface DarfNullSein {
 }

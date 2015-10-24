@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.ContractException
+import de.therapeutenkiller.haushaltsbuch.aspekte.ArgumentIstNull
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -56,6 +56,6 @@ class MoneyConverterTest  extends Specification {
         converter.transform(null)
 
         then: "Dann wird eine ContractExeption Ausnahme ausgelöst"
-        thrown ContractException
+        thrown ArgumentIstNull
     }
 }

@@ -1,9 +1,11 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.CanBeNull;
+import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.javamoney.moneta.Money;
+
+import javax.money.MonetaryAmount;
 
 class Konto {
 
@@ -16,7 +18,7 @@ class Konto {
         this.anfangsbestand = anfangsbestand;
     }
 
-    public Money bestandBerechnen() {
+    public MonetaryAmount bestandBerechnen() {
         return this.anfangsbestand;
     }
 
@@ -24,7 +26,7 @@ class Konto {
         return this.kontoname;
     }
 
-    @Override public boolean equals(@CanBeNull final Object obj) {
+    @Override public boolean equals(@DarfNullSein final Object obj) {
         if (this == obj) {
             return true;
         }

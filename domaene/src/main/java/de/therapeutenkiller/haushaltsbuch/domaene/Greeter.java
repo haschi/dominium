@@ -13,7 +13,7 @@ final class Greeter {
 
     @SuppressWarnings("EmptyMethod")
     @CoverageIgnore
-    public static void unusedMethod() {
+    public static void unusedMethod() {//NOPMD
 
     }
 }

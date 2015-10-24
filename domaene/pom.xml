@@ -142,21 +142,6 @@
                 </configuration>
             </plugin>
 
-            <!-- compiler -->
-            <!-- brauchen wir das wirklich, oder reicht es in der parent pom? -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            -->
-
             <!-- cobertura -->
             <!--
             <plugin>
@@ -217,11 +202,6 @@
             </plugin>
             -->
             <!-- pmd -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.5</version>
-            </plugin>
 
             <!-- xml -->
             <plugin>

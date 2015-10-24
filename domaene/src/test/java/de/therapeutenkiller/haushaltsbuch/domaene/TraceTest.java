@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.CanBeNull;
+import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
 
 public class TraceTest {
 
@@ -14,11 +14,11 @@ public class TraceTest {
     }
 
     @SuppressWarnings("EmptyMethod")
-    public void parameterCanBeNull(@CanBeNull final Object parameter) {
+    public void parameterCanBeNull(@DarfNullSein final Object parameter) {//NOPMD
     }
 
     @SuppressWarnings("SameReturnValue")
-    @CanBeNull
+    @DarfNullSein
     public final Object annotierteMethodeGibtNullZurück() {
         return null;
     }

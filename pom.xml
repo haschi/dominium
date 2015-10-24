@@ -13,6 +13,10 @@
     <properties>
         <tile.coding-all>de.therapeutenkiller:coding-all:pom:0.0.1-SNAPSHOT</tile.coding-all>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Diese Eigenschaften konfigurieren maven-compiler-plaugin und maven-pmd-plugin und macht
+        die explizite Konfiguration der Plugins überflüssig -->
+
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.version>3.3</maven.compiler.version>
@@ -20,7 +24,7 @@
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
 
         <checkstyle.version>6.10.1</checkstyle.version>
-        <checkstyle.config.location>codingrules/checkstyle.xml</checkstyle.config.location>
+        <skipTest>false</skipTest>
 
     </properties>
 
@@ -48,11 +52,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>de.therapeutenkiller</groupId>
-            <artifactId>buildextensions</artifactId>
-            <version>0.0.1</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -106,19 +105,6 @@
                     </configuration>
                 </plugin>
 
-                <!-- compiler -->
-                <!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
-                    <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-                -->
             </plugins>
         </pluginManagement>
 
@@ -128,66 +114,6 @@
                 <groupId>io.repaint.maven</groupId>
                 <artifactId>tiles-maven-plugin</artifactId>
                 <extensions>true</extensions>
-            </plugin>
-
-            <!-- checkstyle -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.16</version>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>${checkstyle.version}</version>
-                    </dependency>
-
-                    <dependency>
-                        <artifactId>coding</artifactId>
-                        <groupId>de.therapeutenkiller</groupId>
-                        <version>0.0.1-SNAPSHOT</version>
-                    </dependency>
-
-                </dependencies>
-
-                <configuration>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <includeResources>true</includeResources>
-                    <detail>true</detail>
-
-                    <skip>${skipTests}</skip>
-
-                    <failsOnError>true</failsOnError>
-                    <consoleOutput>true</consoleOutput>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-            </plugin>
-            -->
-
-            <!-- findbugs -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.2</version>
-                <configuration>
-                    <omitVisitors>FindDeadLocalStores,UnreadFields</omitVisitors>
-                    <detail>true</detail>
-                    <failOnError>true</failOnError>
-                    <includeTests>true</includeTests>
-                    <skip>${skipTests}</skip>
-                </configuration>
             </plugin>
 
             <plugin>

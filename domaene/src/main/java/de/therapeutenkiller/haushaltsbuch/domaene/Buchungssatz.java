@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.CanBeNull;
+import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.javamoney.moneta.Money;
@@ -30,7 +30,7 @@ public class Buchungssatz {
     }
 
     @Override
-    public final boolean equals(@CanBeNull final Object obj) {
+    public final boolean equals(@DarfNullSein final Object obj) {
         if (this == obj) {
             return true;
         }

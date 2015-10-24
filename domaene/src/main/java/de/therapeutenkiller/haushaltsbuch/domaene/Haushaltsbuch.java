@@ -6,10 +6,8 @@ import org.javamoney.moneta.function.MonetaryFunctions;
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import javax.money.MonetaryAmount;
-import javax.money.MonetaryAmountFactory;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 
 @CoverageIgnore class Haushaltsbuch {
@@ -23,16 +21,12 @@ import java.util.Set;
         this.konten.add(new Konto("Anfangsbestand", anfang));
     }
 
-    public Money gesamtvermögenBerechnen() {
+    public MonetaryAmount gesamtvermögenBerechnen() {
 
-        final MonetaryAmountFactory<Money> fact = Monetary.getAmountFactory(Money.class);
-        Money gesamtvermögen = fact.setCurrency("EUR").setNumber(0).create();
-
-        for (final Konto konto : this.konten) {
-            gesamtvermögen = gesamtvermögen.add(konto.bestandBerechnen());
-        }
-
-        return gesamtvermögen;
+        return this.konten.stream()
+            .map(konto -> konto.bestandBerechnen())
+            .reduce(MonetaryFunctions.sum())
+            .get();
     }
 
     public void neuesKontoHinzufügen(final Konto konto, final Money anfangsbestand) {
@@ -53,18 +47,17 @@ import java.util.Set;
     @CoverageIgnore
     public Konto kontoSuchen(final String kontoname) {
         return this.konten.stream()
-            .filter(k -> k.getBezeichnung() == kontoname)
+            .filter(konto -> konto.getBezeichnung() == kontoname)
             .findFirst()
             .get();
     }
 
     @CoverageIgnore
     public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
-        final Optional<MonetaryAmount> plus = this.buchungssätze.stream()
-            .filter(bs -> bs.getHabenkonto().getBezeichnung() == einKonto.getBezeichnung())
-            .map(bs -> (MonetaryAmount) bs.getWährungsbetrag())
-            .reduce(MonetaryFunctions.sum());
-
-        return plus.get();
+        return this.buchungssätze.stream()
+            .filter(buchungssatz -> buchungssatz.getHabenkonto() == einKonto)
+            .map(buchungssatz -> (MonetaryAmount) buchungssatz.getWährungsbetrag())
+            .reduce(MonetaryFunctions.sum())
+            .get();
     }
 }
