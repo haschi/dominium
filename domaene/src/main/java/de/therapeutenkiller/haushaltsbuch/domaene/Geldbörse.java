@@ -6,7 +6,7 @@ public final class Geldbörse {
 
     private Money geld;
 
-    private Geldbörse(final Money einGeld) {
+    Geldbörse(final Money einGeld) {
         this.geld = einGeld;
     }
 

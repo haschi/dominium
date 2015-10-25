@@ -36,7 +36,7 @@ class MoneyConverterTest  extends Specification {
         when: "Wenn ich einen ungültigen Währungsbetrag konvertiere"
         converter.transform(zeichenfolge)
 
-        then: "Denn erhalte iche eine Ausnahme"
+        then: "Denn erhalte ich eine Ausnahme"
         Exception e = thrown()
         e.getClass() == ausnahme
 
@@ -44,8 +44,7 @@ class MoneyConverterTest  extends Specification {
         zeichenfolge  | ausnahme
         "12.00 €"     | IllegalArgumentException.class
         "Hello World" | MonetaryParseException.class
-        ""            | NullPointerException
-        // "123,5 XXX"   | null
+        ""            | IllegalArgumentException.class
     }
 
     def "Umwandlung einer null-Referenz fürt zu einem Contract Fehler"() {

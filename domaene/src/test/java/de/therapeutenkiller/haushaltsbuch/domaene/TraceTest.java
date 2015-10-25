@@ -5,7 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
 public class TraceTest {
 
     public final void methodeMitParameter(final String einString) {
-        System.out.println(einString);
+        System.out.println(einString);//NOPMD
     }
 
     @SuppressWarnings("SameReturnValue")

@@ -29,21 +29,21 @@ public class HaushaltsbuchführungBeginnen {
         final BigDecimal betrag,
         final String währung) {
 
-        final Money erwartetesGesamtvermögen = Money.of(betrag, währung);
+        final Money gesamtvermögen = Money.of(betrag, währung);
+        final MonetaryAmount actual = this.haushaltsbuch.gesamtvermögenBerechnen();
 
-        assertThat(this.haushaltsbuch.gesamtvermögenBerechnen())
-            .isEqualTo(erwartetesGesamtvermögen);
+        assertThat(actual).isEqualTo(gesamtvermögen); // NOPMD
     }
 
     @Und("^mein Anfangsbestand wird (-{0,1}\\d+,\\d{2} [A-Z]{3}) betragen$")
     public final void mein_Anfangsbestand_wird_Geld_betragen(
-        @Transform(MoneyConverter.class) final Money währungsbetrag) throws Throwable {
+        @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) throws Throwable {
 
         final Konto anfangsbestand = this.haushaltsbuch.kontoSuchen("Anfangsbestand");
         final MonetaryAmount kontostand = this.haushaltsbuch.kontostandBerechnen(anfangsbestand);
 
-        assertThat(kontostand).isEqualTo(währungsbetrag);
-        // Express the Regexp above with the code you wish you had
+        assertThat(kontostand).isEqualTo(währungsbetrag); // NOPMD
+
         throw new PendingException();
     }
 
@@ -52,9 +52,8 @@ public class HaushaltsbuchführungBeginnen {
         this.haushaltsbuch = new Haushaltsbuch();
     }
 
-    @SuppressWarnings("checkstyle:linelength")
-    @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,"
-        + "\\d{2}) (.*) hinzufüge$")
+    @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von "
+        + "(-{0,1}\\d+,\\d{2}) (.*) hinzufüge$")
     public final void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
         final String kontoname,
         final BigDecimal betrag,
@@ -71,9 +70,9 @@ public class HaushaltsbuchführungBeginnen {
         @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) {
 
         this.haushaltsbuch = new Haushaltsbuch();
-        final Money anfänglichesGesamtvermögen = Money.of(betrag, währung);
-        final Konto einKonto = new Konto("anfängliches Geldvermögen", anfänglichesGesamtvermögen);
-        this.haushaltsbuch.neuesKontoHinzufügen(einKonto, anfänglichesGesamtvermögen);
+        final Money gesamtvermögen = Money.of(betrag, währung);
+        final Konto einKonto = new Konto("anfängliches Geldvermögen", gesamtvermögen);
+        this.haushaltsbuch.neuesKontoHinzufügen(einKonto, gesamtvermögen);
     }
 
     @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2}) (.*) der "

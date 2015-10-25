@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.aspekte.validation;
 
 import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
-import de.therapeutenkiller.haushaltsbuch.aspekte.ArgumentIstNull;
 import de.therapeutenkiller.haushaltsbuch.aspekte.RückgabewertIstNull;
 
 import java.lang.reflect.Method;

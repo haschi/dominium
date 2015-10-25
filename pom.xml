@@ -24,8 +24,6 @@
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
 
         <checkstyle.version>6.10.1</checkstyle.version>
-        <skipTest>false</skipTest>
-
     </properties>
 
     <scm>

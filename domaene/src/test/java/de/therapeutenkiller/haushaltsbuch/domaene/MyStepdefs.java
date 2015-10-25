@@ -17,7 +17,7 @@ public class MyStepdefs {
 
     @Angenommen("^ich habe eine leere Geldbörse$")
     public final void ich_habe_eine_leere_Geldbörse() throws Throwable {
-        this.geldbörse = Geldbörse.erzeugen();
+        this.geldbörse = new Geldbörse(Money.of(0, "EUR"));
     }
 
     @Wenn("^ich (\\d+\\,\\d{2}) (.*) in meine Geldbörse stecke$")
@@ -35,7 +35,7 @@ public class MyStepdefs {
         @Transform(CurrencyUnitConverter.class) final CurrencyUnit währung) throws Throwable {
 
         final Money geld = Money.of(betrag, währung);
-        assertThat(this.geldbörse.getInhalt()).isEqualTo(geld);
+        assertThat(this.geldbörse.getInhalt()).isEqualTo(geld); // NOPMD
     }
 
     @Angenommen("^in meiner Geldbörse befinden sich (\\d+\\,\\d{2}) (.*)$")
