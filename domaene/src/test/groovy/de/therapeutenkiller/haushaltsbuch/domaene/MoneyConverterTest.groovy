@@ -21,10 +21,11 @@ class MoneyConverterTest  extends Specification {
         result.number.toBigDecimal() == betrag
 
         where:
-        zeichenfolge | betrag | währung
-        "123,45 EUR" | 123.45 | "EUR"
-        "-10,23 USD" | -10.23 | "USD"
-        "1  DEM"     | 1.00   | "DEM"
+        zeichenfolge | betrag   | währung
+        "123,45 EUR" | 123.45   | "EUR"
+        "123.45 EUR" | 12345.00 | "EUR"
+        "-10,23 USD" | -10.23   | "USD"
+        "1  DEM"     | 1.00     | "DEM"
     }
 
     @Unroll
@@ -42,19 +43,9 @@ class MoneyConverterTest  extends Specification {
 
         where:
         zeichenfolge  | ausnahme
-        "12.00 €"     | IllegalArgumentException.class
-        "Hello World" | MonetaryParseException.class
-        ""            | IllegalArgumentException.class
-    }
-
-    def "Umwandlung einer null-Referenz fürt zu einem Contract Fehler"() {
-        given: "Angenommen ich habe einen MoneyConverter"
-        def converter = new MoneyConverter();
-
-        when: "Wenn ich eine null-Referenz transformiere"
-        converter.transform(null)
-
-        then: "Dann wird eine ContractExeption Ausnahme ausgelöst"
-        thrown ArgumentIstNullException
+        "12.00 €"     | IllegalArgumentException.class  // ungültig wegen € Zeichen
+        "Hello World" | MonetaryParseException.class    // Zeichenfolge ist ungültig
+        ""            | IllegalArgumentException.class  // Leere Zeichfeolge ist ungültig
+        null          | ArgumentIstNullException.class  // Das ist auch Mist.
     }
 }

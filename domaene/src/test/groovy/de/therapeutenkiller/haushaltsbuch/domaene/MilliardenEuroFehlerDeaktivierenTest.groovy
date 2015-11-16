@@ -41,9 +41,9 @@ public final class MilliardenEuroFehlerDeaktivierenTest extends Specification {
         then: notThrown RückgabewertIstNullException;
     }
 
-    def "Parameter mit CanBeNull Annotation"() {
+    def "Parameter mit DarfNullSein-Annotation"() {
         given: def test = new TraceTest();
-        when: test.parameterCanBeNull(null);
+        when: test.parameterDarfNullSein(null);
         then: notThrown ArgumentIstNullException
     }
 }

@@ -14,7 +14,7 @@ public class TraceTest {
     }
 
     @SuppressWarnings("EmptyMethod")
-    public void parameterCanBeNull(@DarfNullSein final Object parameter) {//NOPMD
+    public void parameterDarfNullSein(@DarfNullSein final Object parameter) {//NOPMD
     }
 
     @SuppressWarnings("SameReturnValue")
