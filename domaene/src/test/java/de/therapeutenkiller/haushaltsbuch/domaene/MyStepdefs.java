@@ -6,11 +6,13 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import org.javamoney.moneta.Money;
 
+import javax.inject.Singleton;
 import javax.money.CurrencyUnit;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Singleton
 public class MyStepdefs {
 
     private Geldbörse geldbörse;

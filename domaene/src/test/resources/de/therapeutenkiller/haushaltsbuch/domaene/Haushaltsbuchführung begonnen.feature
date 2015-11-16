@@ -7,7 +7,7 @@ Funktionalität: Haushaltsbuchführung begonnen
 
   Szenario: Haushaltsbuchführung beginnen
     Wenn ich mit der Haushaltsbuchführung beginne
-    Dann wird mein ausgewiesenes Gesamtvermögen 0,00 EUR betragen
+    Dann wird ein neues Haushaltsbuch mit einem Gesamtvermögen von 0,00 EUR angelegt worden sein
 
   Szenario: Erstes Konto hinzufügen
     Angenommen ich habe mit der Haushaltsbuchführung begonnen
