@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.ArgumentIstNull
+import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,7 +9,7 @@ import javax.money.format.MonetaryParseException
 class MoneyConverterTest  extends Specification {
 
     @Unroll
-    def "Umwandlung eines Währungsbetrages"() {
+    def "Umwandlung gültiger Währungsbeträge"() {
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();
 
@@ -18,7 +18,7 @@ class MoneyConverterTest  extends Specification {
 
         then: "Dann erhalte ich ein Money-Objekt mit Betrag und Währung"
         result.currency.currencyCode == währung;
-        result.number == betrag
+        result.number.toBigDecimal() == betrag
 
         where:
         zeichenfolge | betrag | währung
@@ -28,7 +28,7 @@ class MoneyConverterTest  extends Specification {
     }
 
     @Unroll
-    def "Umwandlung Ungültiger Währungsbeträge"() {
+    def "Umwandlung ungültiger Währungsbeträge"() {
 
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();
@@ -55,6 +55,6 @@ class MoneyConverterTest  extends Specification {
         converter.transform(null)
 
         then: "Dann wird eine ContractExeption Ausnahme ausgelöst"
-        thrown ArgumentIstNull
+        thrown ArgumentIstNullException
     }
 }

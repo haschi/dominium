@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.DarfNullSein;
+import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 
 public class TraceTest {
 

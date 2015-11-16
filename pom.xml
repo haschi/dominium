@@ -11,7 +11,6 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
-        <tile.coding-all>de.therapeutenkiller:coding-all:pom:0.0.1-SNAPSHOT</tile.coding-all>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Diese Eigenschaften konfigurieren maven-compiler-plaugin und maven-pmd-plugin und macht
@@ -22,12 +21,11 @@
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
-
         <checkstyle.version>6.10.1</checkstyle.version>
     </properties>
 
     <scm>
-        <developerConnection>scm:git:http://d-scm.sosi20.prosoz.de/sosi20/grundantrag.git</developerConnection>
+        <developerConnection>scm:git:http://localhost/matthias/haushaltsbuch.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -38,15 +36,7 @@
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
-                <artifactId>aspekte</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
         </dependencies>
-
     </dependencyManagement>
 
     <dependencies>
@@ -60,28 +50,14 @@
                 <artifactId>coding</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </extension>
-
         </extensions>
 
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>io.repaint.maven</groupId>
-                    <artifactId>tiles-maven-plugin</artifactId>
-                    <version>2.1</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <tiles>
-                            <tile>${tile.coding-all}</tile>
-                        </tiles>
-                    </configuration>
-                </plugin>
-
                 <!-- aspectj -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>1.8</version>
                     <executions>
                         <execution>
                             <goals>
@@ -96,17 +72,10 @@
                         <target>${maven.compiler.target}</target>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
 
         <plugins>
-
-            <plugin>
-                <groupId>io.repaint.maven</groupId>
-                <artifactId>tiles-maven-plugin</artifactId>
-                <extensions>true</extensions>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -137,7 +106,6 @@
     </distributionManagement>
 
     <modules>
-        <module>aspekte</module>
         <module>domaene</module>
     </modules>
 </project>

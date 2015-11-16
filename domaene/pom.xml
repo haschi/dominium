@@ -31,9 +31,9 @@
         </dependency>
 
         <dependency>
-            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+            <groupId>de.therapeutenkiller</groupId>
             <artifactId>aspekte</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.10-SNAPSHOT</version>
         </dependency>
 
 
@@ -221,7 +221,7 @@
                     <target>1.8</target>
                     <aspectLibraries>
                         <aspectLibrary>
-                            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                            <groupId>de.therapeutenkiller</groupId>
                             <artifactId>aspekte</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>

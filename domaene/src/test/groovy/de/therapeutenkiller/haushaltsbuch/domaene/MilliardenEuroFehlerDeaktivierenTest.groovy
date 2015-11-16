@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
-import de.therapeutenkiller.haushaltsbuch.aspekte.ArgumentIstNull
-import de.therapeutenkiller.haushaltsbuch.aspekte.RückgabewertIstNull
+import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException
 import spock.lang.Ignore
 import spock.lang.Narrative
 import spock.lang.Specification
@@ -12,7 +12,7 @@ public final class MilliardenEuroFehlerDeaktivierenTest extends Specification {
     def "Argumente dürfen nicht null sein"() {
         given:def test = new TraceTest();
         when: test.methodeMitParameter(null)
-        then: thrown ArgumentIstNull
+        then: thrown ArgumentIstNullException
     }
 
     def "Methoden dürfen null nicht zurückgeben"() {
@@ -21,7 +21,7 @@ public final class MilliardenEuroFehlerDeaktivierenTest extends Specification {
         when: test.methodeGibtNullZurück();
 
         then:
-        RückgabewertIstNull ausnahme = thrown();
+        RückgabewertIstNullException ausnahme = thrown();
         ausnahme.message == "Rückgabewert der Methode 'methodeGibtNullZurück' ist null."
     }
 
@@ -31,19 +31,19 @@ public final class MilliardenEuroFehlerDeaktivierenTest extends Specification {
         given: def closure = {-> return null}
         when: closure()
         then:
-        ArgumentIstNull ausnahme = thrown()
+        ArgumentIstNullException ausnahme = thrown()
         ausnahme.message == "Rückagbewer der Methode 'x' ist null."
     }
 
     def "Methode dürfen mit DarfNullSein-Annoation null zurückgegeben"() {
         given: def test = new TraceTest();
         when: test.annotierteMethodeGibtNullZurück();
-        then: notThrown RückgabewertIstNull;
+        then: notThrown RückgabewertIstNullException;
     }
 
     def "Parameter mit CanBeNull Annotation"() {
         given: def test = new TraceTest();
         when: test.parameterCanBeNull(null);
-        then: notThrown ArgumentIstNull
+        then: notThrown ArgumentIstNullException
     }
 }
