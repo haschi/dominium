@@ -54,12 +54,6 @@
 
     <build>
         <extensions>
-            <extension>
-                <groupId>de.therapeutenkiller</groupId>
-                <artifactId>buildextensions</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </extension>
-
             <!-- checkstyle & co voll konfiguriert -->
             <extension>
                 <groupId>de.therapeutenkiller</groupId>
@@ -129,16 +123,17 @@
 
     <distributionManagement>
         <repository>
-            <id>deployment</id>
+            <id>release-deployment</id>
             <name>Internal Releases</name>
             <url>http://localhost:8081/nexus/content/repositories/releases/</url>
         </repository>
 
         <snapshotRepository>
-            <id>deployment</id>
-            <name>Internal Releases</name>
+            <id>snapshot-deployment</id>
+            <name>Internal Snapshots</name>
             <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
+
     </distributionManagement>
 
     <modules>
