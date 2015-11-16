@@ -18,8 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public class HaushaltsbuchführungBeginnen {
 
-    @Inject
+
     private HaushaltsbuchRepository repository;
+
+    @Inject
+    public HaushaltsbuchführungBeginnen(HaushaltsbuchMemoryRepository repository) {
+        this.repository = repository;
+    }
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public final void ich_mit_der_Haushaltsbuchführung_beginne() {
