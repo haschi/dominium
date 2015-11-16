@@ -17,8 +17,4 @@ public class DeutschenWährungsbetragParsen implements WährungsbetragParsen {
     public final MonetaryAmount aus(final String währungsbetrag) {
         return this.format.parse(währungsbetrag);
     }
-
-    public String formatieren(MonetaryAmount amount) {
-        return format.format(amount);
-    }
 }

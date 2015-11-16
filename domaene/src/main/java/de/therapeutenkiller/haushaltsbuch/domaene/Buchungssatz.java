@@ -3,15 +3,16 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.javamoney.moneta.Money;
+
+import javax.money.MonetaryAmount;
 
 public class Buchungssatz {
 
     private final Konto sollkonto;
     private final Konto habenkonto;
-    private final Money währungsbetrag;
+    private final MonetaryAmount währungsbetrag;
 
-    public Buchungssatz(final Konto sollkonto, final Konto habenkonto, final Money währungsbetrag) {
+    public Buchungssatz(final Konto sollkonto, final Konto habenkonto, final MonetaryAmount währungsbetrag) {
         this.sollkonto = sollkonto;
         this.habenkonto = habenkonto;
         this.währungsbetrag = währungsbetrag;
@@ -25,7 +26,7 @@ public class Buchungssatz {
         return this.habenkonto;
     }
 
-    public final Money getWährungsbetrag() {
+    public final MonetaryAmount getWährungsbetrag() {
         return this.währungsbetrag;
     }
 
