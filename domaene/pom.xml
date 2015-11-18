@@ -20,6 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.path>${project.basedir}</project.path>
 
+        <skipTests>false</skipTests>
     </properties>
 
     <dependencies>
@@ -35,7 +36,6 @@
             <artifactId>aspekte</artifactId>
             <version>0.0.10-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -114,23 +114,6 @@
         <!-- checkstyle plugin: do not overwrite settings! -->
 
         <plugins>
-
-            <!-- gmavenplus -->
-            <plugin>
-                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                visit https://github.com/groovy/GMavenPlus/wiki -->
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
             <!-- surefire -->
             <plugin>
@@ -215,7 +198,6 @@
                 </executions>
             </plugin>
             -->
-            <!-- pmd -->
 
             <!-- xml -->
             <plugin>
@@ -249,6 +231,126 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+        <!-- plugins zur Qualitätssicherung -->
+
+            <!-- gmavenplus (für Tests mit Spock-Framework -->
+            <plugin>
+                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                visit https://github.com/groovy/GMavenPlus/wiki -->
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- pmd -->
+            <!-- This version of Maven PMD Plugin uses PMD 5.3.2 and requires Java 1.6. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.5</version>
+                <dependencies>
+                    <dependency>
+                        <artifactId>richtlinien</artifactId>
+                        <groupId>de.therapeutenkiller</groupId>
+                        <version>0.0.10-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <verbose>true</verbose>
+                    <includeTests>true</includeTests>
+                    <rulesets>
+                        <ruleset>codingrules/pmd-ruleset.xml</ruleset>
+                    </rulesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cpd-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <!-- checkstyle -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${checkstyle.version}</version>
+                    </dependency>
+                    <dependency>
+                        <artifactId>richtlinien</artifactId>
+                        <groupId>de.therapeutenkiller</groupId>
+                        <version>0.0.10-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <includeResources>true</includeResources>
+                    <detail>true</detail>
+
+                    <skip>${skipTests}</skip>
+                    <configLocation>codingrules/checkstyle.xml</configLocation>
+                    <failsOnError>true</failsOnError>
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- findbugs -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <dependencies>
+                    <dependency>
+                        <artifactId>richtlinien</artifactId>
+                        <groupId>de.therapeutenkiller</groupId>
+                        <version>0.0.10-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <xmlOutput>true</xmlOutput>
+                    <excludeFilterFile>codingrules/findbugs-exclude.xml</excludeFilterFile>
+                    <skip>${skipTests}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 

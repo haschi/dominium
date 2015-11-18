@@ -24,12 +24,12 @@ import java.util.Set;
     public MonetaryAmount gesamtvermögenBerechnen() {
 
         return this.konten.stream()
-            .map(konto -> konto.bestandBerechnen())
+            .map(Konto::bestandBerechnen)
             .reduce(MonetaryFunctions.sum())
             .get();
     }
 
-    public void neuesKontoHinzufügen(final Konto konto, final Money anfangsbestand) {
+    public void neuesKontoHinzufügen(final Konto konto, final MonetaryAmount anfangsbestand) {
         this.konten.add(konto);
 
         final Buchungssatz buchungssatz = new Buchungssatz(
@@ -47,7 +47,7 @@ import java.util.Set;
     @CoverageIgnore
     public Konto kontoSuchen(final String kontoname) {
         return this.konten.stream()
-            .filter(konto -> konto.getBezeichnung() == kontoname)
+            .filter(konto -> konto.getBezeichnung().equals(kontoname))
             .findFirst()
             .get();
     }
@@ -56,7 +56,7 @@ import java.util.Set;
     public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
         return this.buchungssätze.stream()
             .filter(buchungssatz -> buchungssatz.getHabenkonto() == einKonto)
-            .map(buchungssatz -> (MonetaryAmount) buchungssatz.getWährungsbetrag())
+            .map(Buchungssatz::getWährungsbetrag)
             .reduce(MonetaryFunctions.sum())
             .get();
     }

@@ -3,16 +3,15 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.javamoney.moneta.Money;
 
 import javax.money.MonetaryAmount;
 
 class Konto {
 
     private final String kontoname;
-    private final Money anfangsbestand;
+    private final MonetaryAmount anfangsbestand;
 
-    public Konto(final String kontoname, final Money anfangsbestand) {
+    public Konto(final String kontoname, final MonetaryAmount anfangsbestand) {
 
         this.kontoname = kontoname;
         this.anfangsbestand = anfangsbestand;
