@@ -9,16 +9,33 @@ import javax.money.MonetaryAmount;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 
-@CoverageIgnore class Haushaltsbuch {
+@CoverageIgnore public final class Haushaltsbuch {
 
+    private final UUID haushaltsbuchId;
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public Haushaltsbuch() {
+        this.haushaltsbuchId = UUID.randomUUID();
         final CurrencyUnit euro = Monetary.getCurrency(Locale.GERMANY);
         final Money anfang = Money.of(0, euro);
         this.konten.add(new Konto("Anfangsbestand", anfang));
+    }
+
+    public MonetaryAmount kontostandBerechnen(final String kontoname) {
+        final Konto konto = this.kontoSuchen(kontoname);
+        return this.kontostandBerechnen(konto);
+    }
+
+    @CoverageIgnore
+    public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
+        return this.buchungssätze.stream()
+            .filter(buchungssatz -> buchungssatz.getHabenkonto() == einKonto)
+            .map(Buchungssatz::getWährungsbetrag)
+            .reduce(MonetaryFunctions.sum())
+            .get();
     }
 
     public MonetaryAmount gesamtvermögenBerechnen() {
@@ -47,17 +64,12 @@ import java.util.Set;
     @CoverageIgnore
     public Konto kontoSuchen(final String kontoname) {
         return this.konten.stream()
-            .filter(konto -> konto.getBezeichnung().equals(kontoname))
+            .filter(konto -> new KontonameSpezifikation(kontoname).istErfülltVon(konto))
             .findFirst()
             .get();
     }
 
-    @CoverageIgnore
-    public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
-        return this.buchungssätze.stream()
-            .filter(buchungssatz -> buchungssatz.getHabenkonto() == einKonto)
-            .map(Buchungssatz::getWährungsbetrag)
-            .reduce(MonetaryFunctions.sum())
-            .get();
+    public UUID getHaushaltsbuchId() {
+        return this.haushaltsbuchId;
     }
 }

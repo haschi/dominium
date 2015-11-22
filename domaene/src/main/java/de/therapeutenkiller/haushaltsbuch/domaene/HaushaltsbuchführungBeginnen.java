@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public final class HaushaltsbuchführungBeginnen implements Kommando {
+public class HaushaltsbuchführungBeginnen implements Kommando {
     private final HaushaltsbuchRepository repository;
 
     @Inject
@@ -13,11 +13,14 @@ public final class HaushaltsbuchführungBeginnen implements Kommando {
     }
 
     @Override
-    public void ausführen() {
-        this.getRepository().hinzufügen(new Haushaltsbuch());
+    public final void ausführen() {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch();
+        this.getRepository().hinzufügen(haushaltsbuch);
+
+        DomainEvents.auslösen(new HaushaltsbuchWurdeAngelegt(haushaltsbuch));
     }
 
-    public HaushaltsbuchRepository getRepository() {
+    public final HaushaltsbuchRepository getRepository() {
         return this.repository;
     }
 }

@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
@@ -18,8 +19,11 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     }
 
     @Override
-    public final Haushaltsbuch besorgen() {
-        return this.haushaltsbücher.iterator().next();
+    public final Haushaltsbuch besorgen(final UUID haushaltsbuchId) {
+        return this.haushaltsbücher.stream()
+            .filter(haushaltsbuch -> haushaltsbuch.getHaushaltsbuchId() == haushaltsbuchId)
+            .findFirst()
+            .get();
     }
 
     @Override

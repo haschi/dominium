@@ -6,30 +6,31 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.AnfangsbestandBerechnen;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// @Singleton
 public final class HaushaltsbuchführungBeginnenSteps {
 
-    private final HaushaltsbuchRepository repository;
+    private final HaushaltsbuchführungBeginnenKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
 
     @Inject
     public HaushaltsbuchführungBeginnenSteps(
-        final HaushaltsbuchMemoryRepository repository,
+        final HaushaltsbuchführungBeginnenKontext kontext,
         final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen) {
 
-        this.repository = repository;
+        this.kontext = kontext;
         this.haushaltsbuchführungBeginnen = haushaltsbuchführungBeginnen;
     }
 
     @Before
     public void repositoryLeeren() {
-        this.repository.leeren();
+        this.kontext.initialisieren();
     }
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
@@ -41,19 +42,28 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        final MonetaryAmount actual = new GesamtvermögenBerechnen(this.repository)
-            .ausführen();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+
+        final GesamtvermögenBerechnen gesamtvermögenBerechnen = new GesamtvermögenBerechnen(
+            this.kontext.getRepository());
+
+        final MonetaryAmount actual = gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
 
         assertThat(actual).isEqualTo(währungsbetrag); // NOPMD
     }
 
-    @Dann("^wird ein neues Haushaltsbuch mit einem Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) "
-        + "angelegt worden sein$")
+    @SuppressWarnings("checkstyle:linelength")
+    @Dann("^wird ein neues Haushaltsbuch mit einem Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) angelegt worden sein$")
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag)  {
 
-        final MonetaryAmount actual = new GesamtvermögenBerechnen(this.repository)
-            .ausführen();
+
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+
+        final GesamtvermögenBerechnen gesamtvermögenBerechnen = new GesamtvermögenBerechnen(
+            this.kontext.getRepository());
+
+        final MonetaryAmount actual = gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
 
         assertThat(actual).isEqualTo(währungsbetrag); // NOPMD
     }
@@ -62,8 +72,9 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void mein_Anfangsbestand_wird_Geld_betragen(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) throws Throwable {
 
-        final MonetaryAmount kontostand = new AnfangsbestandBerechnen(this.repository)
-            .ausführen();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final MonetaryAmount kontostand = new AnfangsbestandBerechnen(this.kontext.getRepository())
+            .ausführen(haushaltsbuchId);
 
         assertThat(kontostand).isEqualTo(währungsbetrag); // NOPMD
     }
@@ -79,7 +90,12 @@ public final class HaushaltsbuchführungBeginnenSteps {
         final String kontoname,
         @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
 
-        new KontoHinzufügen(this.repository).ausführen(anfangsbestand, kontoname);
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final KontoHinzufügen kontoHinzufügen = new KontoHinzufügen(
+            this.kontext.getRepository(),
+            haushaltsbuchId);
+
+        kontoHinzufügen.ausführen(anfangsbestand, kontoname);
     }
 
     @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+,\\d{2} [A-Z]{3})$")
@@ -88,15 +104,19 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
         this.haushaltsbuchführungBeginnen.ausführen();
 
-        final KontoHinzufügen kontoHinzufügen = new KontoHinzufügen(this.repository);
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final KontoHinzufügen kontoHinzufügen = new KontoHinzufügen(this.kontext.getRepository(),
+            haushaltsbuchId);
+
         kontoHinzufügen.ausführen(gesamtvermögen, "anfängliches Gesamtvermögen");
     }
 
-    @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2}) (.*) der "
+    @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) der "
         + "Haushaltsbuchführung hinzufüge$")
     public void ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
-        new KontoHinzufügen(this.repository).ausführen(anfangsbestand, kontoname);
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        new KontoHinzufügen(this.kontext.getRepository(), haushaltsbuchId).ausführen(anfangsbestand, kontoname);
     }
 }

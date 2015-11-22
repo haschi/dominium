@@ -15,18 +15,18 @@ Funktionalität: Haushaltsbuchführung begonnen
     Dann wird mein ausgewiesenes Gesamtvermögen 123,00 EUR betragen
     # Und mein Anfangsbestand wird 123,00 EUR betragen
 
-  # @Ignore
-  # Szenariogrundriss: Konto hinzufügen
-  #  Angenommen mein ausgewiesenes Gesamtvermögen beträgt <anfängliches Gesamtvermögen>
-  #  Wenn ich ein Konto "<Konto>" mit einem Bestand von <Kontobestand> der Haushaltsbuchführung hinzufüge
-  #  Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
 
-  #  Beispiele:
-  #    | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |
-  #    | 0,00 EUR                    | Geldbörse | 110,00 EUR   | 110,00 EUR                    |
-  #    | 1235,89 EUR                 | Sparbuch  | 181,34 EUR   | 1417,23 EUR                   |
-  #    | -304,44 EUR                 | Girokonto | 15678,23 EUR | 15373,79 EUR                  |
-  #    | -1000,00 EUR                | Girokonto | 500,00 EUR   | -500,00 EUR                   |
+  Szenariogrundriss: Konto hinzufügen
+    Angenommen mein ausgewiesenes Gesamtvermögen beträgt <anfängliches Gesamtvermögen>
+    Wenn ich ein Konto "<Konto>" mit einem Bestand von <Kontobestand> der Haushaltsbuchführung hinzufüge
+    Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
+
+    Beispiele:
+    | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |
+    | 0,00 EUR                    | Geldbörse | 110,00 EUR   | 110,00 EUR                    |
+    | 1235,89 EUR                 | Sparbuch  | 181,34 EUR   | 1417,23 EUR                   |
+    | -304,44 EUR                 | Girokonto | 15678,23 EUR | 15373,79 EUR                  |
+    | -1000,00 EUR                | Girokonto | 500,00 EUR   | -500,00 EUR                   |
 
   # Die folgenden Szenarien gehören nicht zur
   # Funktionalität Haushaltsbuchführung beginnen
