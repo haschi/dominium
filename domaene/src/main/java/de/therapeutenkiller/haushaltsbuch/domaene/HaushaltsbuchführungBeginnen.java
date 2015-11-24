@@ -1,5 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.DomainEvents;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Kommando;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

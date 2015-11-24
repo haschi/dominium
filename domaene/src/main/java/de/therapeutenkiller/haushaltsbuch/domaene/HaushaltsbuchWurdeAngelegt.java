@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+
 public class HaushaltsbuchWurdeAngelegt extends Domänenereignis {
     public Haushaltsbuch haushaltsbuch;
 

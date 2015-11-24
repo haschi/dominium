@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+
 public class IchTueNichts extends Domänenereignis {
     private final Integer zahl;
 

@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 @FunctionalInterface
 public interface Ereignishandler<T> {

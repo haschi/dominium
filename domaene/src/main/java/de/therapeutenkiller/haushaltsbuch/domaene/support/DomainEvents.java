@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public final class DomainEvents {
             LISTE.put(klasse, new ArrayList<>());
         }
 
-        // TODO: http://stackoverflow.com/questions/5309922/java-generics-how-to-avoid-unchecked-assignment-warning-when-using-class-hierar
+        // Zu tun: http://stackoverflow.com/questions/5309922/java-generics-how-to-avoid-unchecked-assignment-warning-when-using-class-hierar
         final List<Ereignishandler<?>> eineListe = LISTE.get(klasse);
         eineListe.add(handler); // NOPMD LoD
     }

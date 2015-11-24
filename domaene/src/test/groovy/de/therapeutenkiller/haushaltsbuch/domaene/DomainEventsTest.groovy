@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.DomainEvents
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll

@@ -1,21 +1,23 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
+@Singleton
 public final class KontoHinzufügen {
     private final HaushaltsbuchRepository repository;
-    private final UUID haushaltsbuchId;
 
-    public KontoHinzufügen(final HaushaltsbuchRepository repository, final UUID haushaltsbuchId) {
+    @Inject
+    public KontoHinzufügen(final HaushaltsbuchRepository repository) {
         this.repository = repository;
-        this.haushaltsbuchId = haushaltsbuchId;
     }
 
-    public void ausführen(final MonetaryAmount anfangsbestand, final String kontoname) {
+    public void ausführen(final UUID haushaltsbuchId, final MonetaryAmount anfangsbestand, final String kontoname) {
 
         final Konto konto = new Konto(kontoname, anfangsbestand);
-        final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(this.haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
         haushaltsbuch.neuesKontoHinzufügen(konto, anfangsbestand); // NOPMD LoD TODO
     }
 
