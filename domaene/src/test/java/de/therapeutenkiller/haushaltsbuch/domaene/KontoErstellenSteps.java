@@ -31,7 +31,7 @@ public final class KontoErstellenSteps {
         final String kontoname,
         @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         this.kontoHinzufügen.ausführen( haushaltsbuchId, anfangsbestand, kontoname);
     }
 
@@ -41,7 +41,7 @@ public final class KontoErstellenSteps {
 
         this.haushaltsbuchführungBeginnen.ausführen();
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         this.kontoHinzufügen.ausführen(haushaltsbuchId, gesamtvermögen, "anfängliches Gesamtvermögen");
     }
 
@@ -51,7 +51,7 @@ public final class KontoErstellenSteps {
         final String kontoname,
         @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         this.kontoHinzufügen.ausführen(haushaltsbuchId, anfangsbestand, kontoname);
     }
 }

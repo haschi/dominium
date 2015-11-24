@@ -21,7 +21,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     @Override
     public final Haushaltsbuch besorgen(final UUID haushaltsbuchId) {
         return this.haushaltsbücher.stream()
-            .filter(haushaltsbuch -> haushaltsbuch.getHaushaltsbuchId() == haushaltsbuchId)
+            .filter(haushaltsbuch -> haushaltsbuch.getIdentität() == haushaltsbuchId)
             .findFirst()
             .get();
     }

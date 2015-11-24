@@ -25,7 +25,7 @@ public class HaushaltsbuchführungBeginnenKontext {
 
         final Ereignishandler<HaushaltsbuchWurdeAngelegt> angelegt = (event) -> {
             System.out.format("Ereignis Haushaltsbuch wurde angelegt: ID?%s%n",
-                event.haushaltsbuch.getHaushaltsbuchId().toString());
+                event.haushaltsbuch.getIdentität().toString());
 
             this.haushaltsbuch = event.haushaltsbuch;
         };

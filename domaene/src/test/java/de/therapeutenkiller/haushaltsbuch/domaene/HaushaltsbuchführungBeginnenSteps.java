@@ -43,7 +43,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
 
         final MonetaryAmount actual = this.gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
 
@@ -56,7 +56,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag)  {
 
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
 
         final MonetaryAmount actual = this.gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
 

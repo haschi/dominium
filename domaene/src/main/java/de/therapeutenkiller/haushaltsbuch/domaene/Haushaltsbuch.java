@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 
@@ -11,14 +12,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-@CoverageIgnore public final class Haushaltsbuch {
+@CoverageIgnore public final class Haushaltsbuch extends Entität<UUID> {
 
-    private final UUID haushaltsbuchId;
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public Haushaltsbuch() {
-        this.haushaltsbuchId = UUID.randomUUID();
+        super(UUID.randomUUID());
         final CurrencyUnit euro = Monetary.getCurrency(Locale.GERMANY);
         final Money anfang = Money.of(0, euro);
         this.konten.add(new Konto("Anfangsbestand", anfang));
@@ -67,9 +67,5 @@ import java.util.UUID;
             .filter(konto -> new KontonameSpezifikation(kontoname).istErfülltVon(konto))
             .findFirst()
             .get();
-    }
-
-    public UUID getHaushaltsbuchId() {
-        return this.haushaltsbuchId;
     }
 }
