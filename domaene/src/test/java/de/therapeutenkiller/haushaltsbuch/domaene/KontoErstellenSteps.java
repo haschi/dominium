@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;

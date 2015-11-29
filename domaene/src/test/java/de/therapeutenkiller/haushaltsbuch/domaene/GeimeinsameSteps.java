@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.java.de.Angenommen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 
 import javax.inject.Inject;
 
