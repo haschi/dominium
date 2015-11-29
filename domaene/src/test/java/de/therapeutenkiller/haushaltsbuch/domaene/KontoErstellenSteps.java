@@ -4,6 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoHinzufügen;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;

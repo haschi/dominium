@@ -1,5 +1,6 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 
