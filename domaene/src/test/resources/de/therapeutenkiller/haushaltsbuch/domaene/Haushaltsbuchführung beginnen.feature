@@ -1,6 +1,6 @@
 # language: de
 
-Funktionalität: Haushaltsbuchführung begonnen
+Funktionalität: Haushaltsbuchführung beginnen
   Als Hausmann
   möchte ich mit der Haushaltsbuchführung beginnen
   um eine Übersicht meines Vermögens zu erhalten
