@@ -1,4 +1,6 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
+
+import de.therapeutenkiller.haushaltsbuch.domaene.WährungsbetragParsen;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;

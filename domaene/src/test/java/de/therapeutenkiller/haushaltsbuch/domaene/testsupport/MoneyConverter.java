@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import cucumber.api.Transformer;
-import de.therapeutenkiller.haushaltsbuch.domaene.DeutschenWährungsbetragParsen;
 import de.therapeutenkiller.haushaltsbuch.domaene.WährungsbetragParsen;
 import org.apache.commons.lang3.StringUtils;
 

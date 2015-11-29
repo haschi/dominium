@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.support
 
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt
-import de.therapeutenkiller.haushaltsbuch.domaene.IchTueNichts
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.IchTueNichts
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import de.therapeutenkiller.haushaltsbuch.domaene.support.DomainEvents
 import spock.lang.Shared
