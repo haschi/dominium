@@ -21,6 +21,8 @@
         <project.path>${project.basedir}</project.path>
 
         <skipTests>false</skipTests>
+
+        <version.de.therapeutenkiller.coding>0.0.22</version.de.therapeutenkiller.coding>
     </properties>
 
     <dependencies>
@@ -34,7 +36,7 @@
         <dependency>
             <groupId>de.therapeutenkiller</groupId>
             <artifactId>aspekte</artifactId>
-            <version>0.0.10-SNAPSHOT</version>
+            <version>${version.de.therapeutenkiller.coding}</version>
         </dependency>
 
         <dependency>
@@ -269,7 +271,7 @@
                     <dependency>
                         <artifactId>richtlinien</artifactId>
                         <groupId>de.therapeutenkiller</groupId>
-                        <version>0.0.10-SNAPSHOT</version>
+                        <version>${version.de.therapeutenkiller.coding}</version>
                     </dependency>
                 </dependencies>
 
@@ -304,7 +306,7 @@
                     <dependency>
                         <artifactId>richtlinien</artifactId>
                         <groupId>de.therapeutenkiller</groupId>
-                        <version>0.0.10-SNAPSHOT</version>
+                        <version>${version.de.therapeutenkiller.coding}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -337,7 +339,7 @@
                     <dependency>
                         <artifactId>richtlinien</artifactId>
                         <groupId>de.therapeutenkiller</groupId>
-                        <version>0.0.10-SNAPSHOT</version>
+                        <version>${version.de.therapeutenkiller.coding}</version>
                     </dependency>
                 </dependencies>
                 <configuration>

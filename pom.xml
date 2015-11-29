@@ -44,12 +44,6 @@
 
     <build>
         <extensions>
-            <!-- checkstyle & co voll konfiguriert -->
-            <extension>
-                <groupId>de.therapeutenkiller</groupId>
-                <artifactId>coding</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </extension>
         </extensions>
 
         <pluginManagement>
@@ -87,6 +81,8 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
