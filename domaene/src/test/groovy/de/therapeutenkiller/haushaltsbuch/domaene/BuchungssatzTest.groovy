@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto
 import nl.jqno.equalsverifier.EqualsVerifier
 import org.javamoney.moneta.Money
 import spock.lang.Specification

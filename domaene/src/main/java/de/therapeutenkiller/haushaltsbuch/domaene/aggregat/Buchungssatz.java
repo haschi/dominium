@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;

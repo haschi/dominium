@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 
 public final class KontonameSpezifikation implements Spezifikation<Konto> {

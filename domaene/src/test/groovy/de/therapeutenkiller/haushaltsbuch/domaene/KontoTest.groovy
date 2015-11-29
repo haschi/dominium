@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 

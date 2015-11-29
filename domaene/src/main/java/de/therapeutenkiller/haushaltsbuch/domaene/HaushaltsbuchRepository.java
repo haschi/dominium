@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+
 import java.util.UUID;
 
 public interface HaushaltsbuchRepository {

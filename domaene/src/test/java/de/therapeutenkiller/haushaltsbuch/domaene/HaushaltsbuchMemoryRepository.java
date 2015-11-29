@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+
 import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;

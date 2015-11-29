@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import spock.lang.Specification
 
 class HaushaltsbuchTest extends Specification {
