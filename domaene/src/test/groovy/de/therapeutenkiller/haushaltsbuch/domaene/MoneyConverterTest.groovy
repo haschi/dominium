@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter
 import spock.lang.Specification
 import spock.lang.Unroll
 

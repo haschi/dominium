@@ -7,6 +7,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.GesamtvermögenBerechnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;

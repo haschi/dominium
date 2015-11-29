@@ -4,6 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.CurrencyUnitConverter;
 import org.javamoney.moneta.Money;
 
 import javax.inject.Singleton;

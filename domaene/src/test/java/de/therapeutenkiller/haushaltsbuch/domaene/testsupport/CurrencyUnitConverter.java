@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import cucumber.api.Transformer;
 
