@@ -1,4 +1,7 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.abfrage;
+
+import de.therapeutenkiller.haushaltsbuch.domaene.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
