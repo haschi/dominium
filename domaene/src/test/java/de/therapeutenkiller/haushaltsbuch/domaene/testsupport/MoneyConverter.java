@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import cucumber.api.Transformer;
-import de.therapeutenkiller.haushaltsbuch.domaene.WährungsbetragParsen;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.money.MonetaryAmount;
@@ -14,7 +13,7 @@ public class MoneyConverter extends Transformer<MonetaryAmount> {
             throw new IllegalArgumentException("Währungsbetrag ist leer");
         }
 
-        final WährungsbetragParsen parsen = new DeutschenWährungsbetragParsen();
+        final DeutschenWährungsbetragParsen parsen = new DeutschenWährungsbetragParsen();
         return parsen.aus(währungsbetrag);
     }
 }
