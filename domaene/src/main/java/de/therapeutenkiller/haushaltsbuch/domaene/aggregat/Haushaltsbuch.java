@@ -65,8 +65,11 @@ import java.util.UUID;
 
     @CoverageIgnore
     public Konto kontoSuchen(final String kontoname) {
+
+        final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
+
         return this.konten.stream()
-            .filter(konto -> new KontonameSpezifikation(kontoname).istErfülltVon(konto))
+            .filter(kontonameSpezifikation::istErfülltVon)
             .findFirst()
             .get();
     }

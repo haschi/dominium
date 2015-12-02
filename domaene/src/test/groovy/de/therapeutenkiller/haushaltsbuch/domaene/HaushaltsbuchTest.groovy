@@ -17,4 +17,16 @@ class HaushaltsbuchTest extends Specification {
         then: "Dann wird eine NullPointerException ausgelöst."
         thrown ArgumentIstNullException
     }
+
+    def "Konto suchen"() {
+
+        given: def haushaltsbuch = new Haushaltsbuch();
+        // haushaltsbuch.neuesKontoHinzufügen(konto, fünfEuro);
+
+        when:
+        def ergebnis = haushaltsbuch.kontoSuchen("Anfangsbestand")
+
+        then:
+        ergebnis != null
+    }
 }
