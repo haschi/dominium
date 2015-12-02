@@ -7,12 +7,13 @@ Funktionalität: Haushaltsbuchführung beginnen
 
   Szenario: Haushaltsbuchführung beginnen
     Wenn ich mit der Haushaltsbuchführung beginne
-    Dann wird ein neues Haushaltsbuch mit einem Gesamtvermögen von 0,00 EUR angelegt worden sein
+    Dann werde ich ein neues Haushaltsbuch angelegt haben
+    Und ich werde ein Gesamtvermögen von 0,00 EUR besitzen
 
   Szenario: Haushaltsbuchführung nicht beginnen
-    Angenommen ich habe noch nicht mit der Haushaltsbuchführung begonnen
-    Dann wird kein Haushaltsbuch angelegt worden sein.
-
+    Wenn ich nicht mit der Haushaltsbuchführung beginne
+    Dann werde ich kein neues Haushaltsbuch angelegt haben
+    Und ich werde ein Gesamtvermögen von 0,00 EUR besitzen
 
   # Die folgenden Szenarien gehören nicht zur
   # Funktionalität Haushaltsbuchführung beginnen

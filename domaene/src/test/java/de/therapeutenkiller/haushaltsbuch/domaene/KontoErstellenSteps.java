@@ -8,9 +8,11 @@ import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoHinzufüge
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
+@Singleton
 public final class KontoErstellenSteps {
 
     private final HaushaltsbuchführungBeginnenKontext kontext;
@@ -42,7 +44,7 @@ public final class KontoErstellenSteps {
     public void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
         @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
 
-        this.haushaltsbuchführungBeginnen.ausführen();
+        // this.haushaltsbuchführungBeginnen.ausführen();
 
         final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         this.kontoHinzufügen.ausführen(haushaltsbuchId, gesamtvermögen, "anfängliches Gesamtvermögen");

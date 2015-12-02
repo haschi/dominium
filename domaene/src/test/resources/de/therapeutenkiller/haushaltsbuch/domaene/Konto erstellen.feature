@@ -11,9 +11,11 @@ Funktionalität: Konto erstellen
     Dann wird meinem Haushaltsbuch das Konto "Geldbörse" hinzugefügt worden sein
 
   Szenariogrundriss: Konto hinzufügen
-    Angenommen mein ausgewiesenes Gesamtvermögen beträgt <anfängliches Gesamtvermögen>
+    Angenommen ich habe mit der Haushaltsbuchführung begonnen
+    Und mein ausgewiesenes Gesamtvermögen beträgt <anfängliches Gesamtvermögen>
     Wenn ich ein Konto "<Konto>" mit einem Bestand von <Kontobestand> der Haushaltsbuchführung hinzufüge
     Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
+    Dann wird mein Gesamtvermögen auf <abschließendes Gesamtvermögen> geändert worden sein.
 
     Beispiele:
     | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |
