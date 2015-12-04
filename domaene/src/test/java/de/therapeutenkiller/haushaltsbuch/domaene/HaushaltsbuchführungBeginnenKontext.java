@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+@Singleton
 public class HaushaltsbuchführungBeginnenKontext {
 
     private Haushaltsbuch haushaltsbuch;

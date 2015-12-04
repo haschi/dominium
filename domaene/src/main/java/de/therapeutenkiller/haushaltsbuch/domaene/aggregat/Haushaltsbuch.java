@@ -2,6 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.DomainEvents;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
@@ -57,6 +59,7 @@ import java.util.UUID;
             anfangsbestand);
 
         this.buchungHinzufügen(buchungssatz);
+        DomainEvents.auslösen(new VermögenWurdeGeändert(this.getIdentität(), this.gesamtvermögenBerechnen()));
     }
 
     private void buchungHinzufügen(final Buchungssatz buchungssatz) {
