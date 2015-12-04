@@ -86,6 +86,6 @@ public final class KontoErstellenSteps {
     public void wird_mein_Gesamtvermögen_auf_abschließendes_Gesamtvermögen_geändert_worden_sein(
         @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
 
-        assertThat(this.vermögenWurdeGeändert).isNotNull();
+        assertThat(this.vermögenWurdeGeändert.getVermögen()).isEqualTo(gesamtvermögen);
     }
 }

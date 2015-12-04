@@ -1,11 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-
 /**
  * Testmittel für die Domänenereignis Funktionalität.
  */
-public class IchTueNichts extends Domänenereignis {
+public class IchTueNichts  {
     private final Integer zahl;
 
     public IchTueNichts(final Integer zahl) {

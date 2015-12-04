@@ -3,7 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.DomainEvents;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Kommando;
 
 import javax.enterprise.event.Event;
@@ -28,7 +27,6 @@ public class HaushaltsbuchführungBeginnen implements Kommando {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch();
         this.getRepository().hinzufügen(haushaltsbuch);
 
-        DomainEvents.auslösen(new HaushaltsbuchWurdeAngelegt(haushaltsbuch));
         this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch));
     }
 
