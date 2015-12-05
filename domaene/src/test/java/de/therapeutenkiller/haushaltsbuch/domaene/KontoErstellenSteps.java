@@ -5,7 +5,6 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.GesamtvermögenBerechnen;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class KontoErstellenSteps {
 
     private final HaushaltsbuchführungBeginnenKontext kontext;
-    private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
+
     private final GesamtvermögenBerechnen gesamtvermögenBerechnen;
     private final KontoHinzufügen kontoHinzufügen;
     private VermögenWurdeGeändert vermögenWurdeGeändert;
@@ -30,12 +29,10 @@ public final class KontoErstellenSteps {
     @Inject
     public KontoErstellenSteps(
         final HaushaltsbuchführungBeginnenKontext kontext,
-        final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
         final GesamtvermögenBerechnen gesamtvermögenBerechnen,
         final KontoHinzufügen kontoHinzufügen) {
 
         this.kontext = kontext;
-        this.haushaltsbuchführungBeginnen = haushaltsbuchführungBeginnen;
         this.gesamtvermögenBerechnen = gesamtvermögenBerechnen;
         this.kontoHinzufügen = kontoHinzufügen;
     }
@@ -57,8 +54,6 @@ public final class KontoErstellenSteps {
     @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+,\\d{2} [A-Z]{3})$")
     public void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
         @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
-
-        // this.haushaltsbuchführungBeginnen.ausführen();
 
         final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         this.kontoHinzufügen.ausführen(haushaltsbuchId, gesamtvermögen, "anfängliches Gesamtvermögen");

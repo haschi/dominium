@@ -1,5 +1,4 @@
 # language: de
-
 Funktionalität: Konto erstellen
   Als Hausmann möchte ich dem Haushaltsbuch Konten hinzufügen, um die Geldbewegungen zu Gruppieren
 
@@ -17,9 +16,9 @@ Funktionalität: Konto erstellen
     Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
     Dann wird mein Gesamtvermögen auf <abschließendes Gesamtvermögen> geändert worden sein.
 
-    Beispiele:
-    | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |
-    | 0,00 EUR                    | Geldbörse | 110,00 EUR   | 110,00 EUR                    |
-    | 1235,89 EUR                 | Sparbuch  | 181,34 EUR   | 1417,23 EUR                   |
-    | -304,44 EUR                 | Girokonto | 15678,23 EUR | 15373,79 EUR                  |
-    | -1000,00 EUR                | Girokonto | 500,00 EUR   | -500,00 EUR                   |
+    Beispiele: 
+      | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |
+      | 0,00 EUR                    | Geldbörse | 110,00 EUR   | 110,00 EUR                    |
+      | 1235,89 EUR                 | Sparbuch  | 181,34 EUR   | 1417,23 EUR                   |
+      | -304,44 EUR                 | Girokonto | 15678,23 EUR | 15373,79 EUR                  |
+      | -1000,00 EUR                | Girokonto | 500,00 EUR   | -500,00 EUR                   |

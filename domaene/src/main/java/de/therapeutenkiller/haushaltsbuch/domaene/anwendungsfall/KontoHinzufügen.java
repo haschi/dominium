@@ -19,9 +19,7 @@ public final class KontoHinzufügen {
     @Inject
     public KontoHinzufügen(
         final HaushaltsbuchRepository repository,
-        final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent
-
-    ) {
+        final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent) {
         this.repository = repository;
         this.vermögenWurdeGeändertEvent = vermögenWurdeGeändertEvent;
     }
@@ -31,7 +29,7 @@ public final class KontoHinzufügen {
         final Konto konto = new Konto(kontoname, anfangsbestand);
         final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
         haushaltsbuch.neuesKontoHinzufügen(konto, anfangsbestand); // NOPMD LoD TODO
-        final MonetaryAmount vermögen = haushaltsbuch.gesamtvermögenBerechnen();
+        final MonetaryAmount vermögen = haushaltsbuch.gesamtvermögenBerechnen(); // NOPMD Lod
         this.vermögenWurdeGeändertEvent.fire(new VermögenWurdeGeändert(haushaltsbuchId, vermögen));
     }
 

@@ -3,8 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import org.slf4j.Logger;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,7 +12,7 @@ import java.util.HashSet;
 public class HaushaltsbuchführungBeginnenKontext {
 
     private Haushaltsbuch haushaltsbuch;
-    private HaushaltsbuchMemoryRepository repository;
+    private final HaushaltsbuchMemoryRepository repository;
     private final HashSet<Haushaltsbuch> haushaltsbücher;
 
     @Inject
@@ -45,7 +43,7 @@ public class HaushaltsbuchführungBeginnenKontext {
     }
 
     public final <T> T getEvents() {
-        throw new NotImplementedException();
+        return null;
     }
 
     public final HaushaltsbuchMemoryRepository getRepository() {

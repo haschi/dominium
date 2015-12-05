@@ -5,17 +5,17 @@ import java.util.UUID;
 
 public final class VermögenWurdeGeändert {
 
+    private final UUID haushaltsbuchId;
+
+    private final MonetaryAmount vermögen;
+
     public UUID getHaushaltsbuchId() {
         return this.haushaltsbuchId;
     }
 
-    private final UUID haushaltsbuchId;
-
     public MonetaryAmount getVermögen() {
         return this.vermögen;
     }
-
-    private final MonetaryAmount vermögen;
 
     public VermögenWurdeGeändert(final UUID haushaltsbuchId, final MonetaryAmount vermögen) {
 

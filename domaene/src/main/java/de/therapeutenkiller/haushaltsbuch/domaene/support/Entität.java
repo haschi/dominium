@@ -20,11 +20,11 @@ public class Entität<T> {
             return true;
         }
 
-        if (!(object instanceof Entität)) {
+        if (!(object instanceof Entität<?>)) {
             return false;
         }
 
-        final Entität entität = (Entität) object;
+        final Entität<?> entität = (Entität<?>) object;
 
         return new EqualsBuilder()
             .append(this.identität, entität.identität)
