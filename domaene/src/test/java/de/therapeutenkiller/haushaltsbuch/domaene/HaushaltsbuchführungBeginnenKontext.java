@@ -7,13 +7,14 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashSet;
+import java.util.Set;
 
 @Singleton
 public class HaushaltsbuchführungBeginnenKontext {
 
     private Haushaltsbuch haushaltsbuch;
     private final HaushaltsbuchMemoryRepository repository;
-    private final HashSet<Haushaltsbuch> haushaltsbücher;
+    private final Set<Haushaltsbuch> haushaltsbücher;
 
     @Inject
     public HaushaltsbuchführungBeginnenKontext(
@@ -38,7 +39,7 @@ public class HaushaltsbuchführungBeginnenKontext {
         return this.haushaltsbuch;
     }
 
-    public final HashSet<Haushaltsbuch> getHaushaltsbücher() {
+    public final Set<Haushaltsbuch> getHaushaltsbücher() {
         return this.haushaltsbücher;
     }
 

@@ -5,7 +5,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
-import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.GesamtvermögenBerechnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -21,17 +20,14 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     private final HaushaltsbuchführungBeginnenKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
-    private final GesamtvermögenBerechnen gesamtvermögenBerechnen;
 
     @Inject
     public HaushaltsbuchführungBeginnenSteps(
         final HaushaltsbuchführungBeginnenKontext kontext,
-        final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
-        final GesamtvermögenBerechnen gesamtvermögenBerechnen) {
+        final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen) {
 
         this.kontext = kontext;
         this.haushaltsbuchführungBeginnen = haushaltsbuchführungBeginnen;
-        this.gesamtvermögenBerechnen = gesamtvermögenBerechnen;
     }
 
     @Before
@@ -53,7 +49,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein()  {
         // HaushaltsbuchWurdeAngelegt event = this.kontext.getHaushaltsbuch();
 
-        assertThat(this.kontext.getHaushaltsbuch()).isNotNull();
+        assertThat(this.kontext.getHaushaltsbuch()).isNotNull(); // NOPMD LoD ist hier OK
     }
 
     @Dann("^(?:ich werde|ich werde) ein Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
@@ -69,7 +65,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich kein neues Haushaltsbuch angelegt haben$")
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThatThrownBy(() -> this.kontext.getHaushaltsbuch())
+        assertThatThrownBy(() -> this.kontext.getHaushaltsbuch()) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
             .hasMessage("Rückgabewert der Methode 'getHaushaltsbuch' ist null.");
     }

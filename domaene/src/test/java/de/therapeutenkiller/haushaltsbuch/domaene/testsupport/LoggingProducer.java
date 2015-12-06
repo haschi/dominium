@@ -10,6 +10,6 @@ public class LoggingProducer {
 
     @Produces
     public final Logger createLogger(final InjectionPoint injectionPoint) {
-        return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass());
+        return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass()); // NOPMD
     }
 }

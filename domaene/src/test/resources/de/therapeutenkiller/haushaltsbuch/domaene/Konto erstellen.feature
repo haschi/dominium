@@ -15,6 +15,9 @@ Funktionalität: Konto erstellen
     Wenn ich ein Konto "<Konto>" mit einem Bestand von <Kontobestand> der Haushaltsbuchführung hinzufüge
     Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
     Dann wird mein Gesamtvermögen auf <abschließendes Gesamtvermögen> geändert worden sein.
+    Dann wird folgender Buchungssatz erstellt worden sein:
+    |von            | an      |
+    |Anfangsbestand | <Konto> |
 
     Beispiele: 
       | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |

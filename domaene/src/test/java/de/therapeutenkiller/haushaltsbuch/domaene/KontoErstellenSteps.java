@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -13,6 +14,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,13 +76,22 @@ public final class KontoErstellenSteps {
         @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
         final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
         final MonetaryAmount istwert = this.gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
-        assertThat(istwert).isEqualTo(gesamtvermögen);
+
+        assertThat(istwert).isEqualTo(gesamtvermögen); // NOPMD: LoD ist hier OK.
     }
 
     @Dann("^wird mein Gesamtvermögen auf (-{0,1}\\d+,\\d{2} [A-Z]{3}) geändert worden sein.$")
     public void wird_mein_Gesamtvermögen_auf_abschließendes_Gesamtvermögen_geändert_worden_sein(
         @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
 
-        assertThat(this.vermögenWurdeGeändert.getVermögen()).isEqualTo(gesamtvermögen);
+        assertThat(this.vermögenWurdeGeändert.getVermögen()) // NOPMD: LoD ist hier OK
+            .isEqualTo(gesamtvermögen);
+    }
+
+    @Dann("^wird folgender Buchungssatz erstellt worden sein:$")
+    public void wird_folgender_Buchungssatz_erstellt_worden_sein(
+        final List<Buchungssatzdaten> buchungssatz) {
+        // Express the Regexp above with the code you wish you had
+        throw new PendingException();
     }
 }

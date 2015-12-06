@@ -283,6 +283,8 @@
                 </dependencies>
 
                 <configuration>
+                    <skip>${skipTests}</skip>
+                    <linkXRef>false</linkXRef>
                     <verbose>true</verbose>
                     <includeTests>true</includeTests>
                     <rulesets>
