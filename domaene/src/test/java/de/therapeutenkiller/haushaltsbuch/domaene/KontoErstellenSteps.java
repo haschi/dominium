@@ -44,8 +44,8 @@ public final class KontoErstellenSteps {
         this.vermögenWurdeGeändert = vermögenWurdeGeändert;
     }
 
-    public void buchungssatzErstellt
-        (@Observes final BuchungssatzWurdeErstellt buchungssatzWurdeErstellt) {
+    public void buchungssatzErstellt(
+        @Observes final BuchungssatzWurdeErstellt buchungssatzWurdeErstellt) {
         this.buchungssatzWurdeErstellt = buchungssatzWurdeErstellt;
     }
 

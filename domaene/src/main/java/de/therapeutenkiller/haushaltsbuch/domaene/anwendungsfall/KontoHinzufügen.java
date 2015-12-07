@@ -17,7 +17,6 @@ public final class KontoHinzufügen {
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
     private final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent;
 
-
     @Inject
     public KontoHinzufügen(
         final HaushaltsbuchRepository repository,

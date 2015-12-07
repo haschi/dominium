@@ -9,5 +9,7 @@ public class Buchungssatzdaten {
 
     public String von;
     public String an;
-    @XStreamConverter(MoneyConverter.class)  public MonetaryAmount betrag;
+
+    @XStreamConverter(MoneyConverter.class)
+    public MonetaryAmount betrag;
 }

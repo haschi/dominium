@@ -2,7 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
