@@ -16,8 +16,8 @@ Funktionalität: Konto erstellen
     Dann wird mein ausgewiesenes Gesamtvermögen <abschließendes Gesamtvermögen> betragen
     Dann wird mein Gesamtvermögen auf <abschließendes Gesamtvermögen> geändert worden sein.
     Dann wird folgender Buchungssatz erstellt worden sein:
-    |von            | an      |
-    |Anfangsbestand | <Konto> |
+    |von            | an      | betrag         |
+    |Anfangsbestand | <Konto> | <Kontobestand> |
 
     Beispiele: 
       | anfängliches Gesamtvermögen | Konto     | Kontobestand | abschließendes Gesamtvermögen |

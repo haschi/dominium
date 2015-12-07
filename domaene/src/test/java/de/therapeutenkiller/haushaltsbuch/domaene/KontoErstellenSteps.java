@@ -1,12 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.GesamtvermögenBerechnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoHinzufügen;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -27,6 +27,7 @@ public final class KontoErstellenSteps {
     private final GesamtvermögenBerechnen gesamtvermögenBerechnen;
     private final KontoHinzufügen kontoHinzufügen;
     private VermögenWurdeGeändert vermögenWurdeGeändert;
+    private BuchungssatzWurdeErstellt buchungssatzWurdeErstellt;
 
     @Inject
     public KontoErstellenSteps(
@@ -41,6 +42,11 @@ public final class KontoErstellenSteps {
 
     public void vermögenGeändert(@Observes final VermögenWurdeGeändert vermögenWurdeGeändert) {
         this.vermögenWurdeGeändert = vermögenWurdeGeändert;
+    }
+
+    public void buchungssatzErstellt
+        (@Observes final BuchungssatzWurdeErstellt buchungssatzWurdeErstellt) {
+        this.buchungssatzWurdeErstellt = buchungssatzWurdeErstellt;
     }
 
     @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von "
@@ -91,7 +97,10 @@ public final class KontoErstellenSteps {
     @Dann("^wird folgender Buchungssatz erstellt worden sein:$")
     public void wird_folgender_Buchungssatz_erstellt_worden_sein(
         final List<Buchungssatzdaten> buchungssatz) {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
+
+        final Object bs = buchungssatz.iterator().next();
+
+        assertThat((Object) this.buchungssatzWurdeErstellt)
+            .isEqualToComparingOnlyGivenFields(bs, "von", "an", "betrag");
     }
 }
