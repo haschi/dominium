@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Singleton
 public class HaushaltsbuchführungBeginnenKontext {
@@ -24,6 +25,10 @@ public class HaushaltsbuchführungBeginnenKontext {
 
         this.repository = repository;
         this.haushaltsbücher = new HashSet<>();
+    }
+
+    public final UUID aktuellesHaushaltsbuch() {
+        return this.getHaushaltsbuch().getIdentität();
     }
 
     public final void initialisieren() {

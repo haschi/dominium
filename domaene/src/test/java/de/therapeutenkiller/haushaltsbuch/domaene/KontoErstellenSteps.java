@@ -1,20 +1,21 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
-import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
+import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.GesamtvermögenBerechnen;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoHinzufügen;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontostandAbfragen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
+import org.javamoney.moneta.Money;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
 import javax.money.MonetaryAmount;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,83 +25,54 @@ public final class KontoErstellenSteps {
 
     private final HaushaltsbuchführungBeginnenKontext kontext;
 
-    private final GesamtvermögenBerechnen gesamtvermögenBerechnen;
-    private final KontoHinzufügen kontoHinzufügen;
-    private VermögenWurdeGeändert vermögenWurdeGeändert;
-    private BuchungssatzWurdeErstellt buchungssatzWurdeErstellt;
+    private final KontostandAbfragen kontostandAbfragen;
+    private final KontoAnlegen kontoAnlegen;
+    private KontoWurdeAngelegt kontoWurdeAngelegt;
 
     @Inject
     public KontoErstellenSteps(
         final HaushaltsbuchführungBeginnenKontext kontext,
-        final GesamtvermögenBerechnen gesamtvermögenBerechnen,
-        final KontoHinzufügen kontoHinzufügen) {
+        final KontostandAbfragen kontostandAbfragen,
+        final KontoAnlegen kontoAnlegen) {
 
         this.kontext = kontext;
-        this.gesamtvermögenBerechnen = gesamtvermögenBerechnen;
-        this.kontoHinzufügen = kontoHinzufügen;
+        this.kontostandAbfragen = kontostandAbfragen;
+        this.kontoAnlegen = kontoAnlegen;
     }
 
-    public void vermögenGeändert(@Observes final VermögenWurdeGeändert vermögenWurdeGeändert) {
-        this.vermögenWurdeGeändert = vermögenWurdeGeändert;
+    public void kontoWurdeAngelegtEreignishandler(@Observes final KontoWurdeAngelegt ereignis) {
+        this.kontoWurdeAngelegt = ereignis;
     }
 
-    public void buchungssatzErstellt(
-        @Observes final BuchungssatzWurdeErstellt buchungssatzWurdeErstellt) {
-        this.buchungssatzWurdeErstellt = buchungssatzWurdeErstellt;
+    @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")
+    public void wennIchDasKontoAnlege(final String kontoname) {
+
+        final CurrencyUnit euro = Monetary.getCurrency("EUR");
+        final Money nullEuro = Money.of(0, euro);
+
+        this.kontoAnlegen.ausführen(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname,
+                nullEuro);
     }
 
-    @Wenn("^ich dem Haushaltsbuch mein Konto \"([^\"]*)\" mit einem Bestand von "
-        + "(-{0,1}\\d+,\\d{2} [A-Z]{3}) hinzufüge$")
-    public void ich_dem_Haushaltsbuch_mein_Konto_mit_einem_Bestand_von_hinzufüge(
-        final String kontoname,
-        @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
+    @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
+    public void wirdDasKontoFürDasHaushaltsbuchAngelegtWordenSein(final String kontoname) {
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
-        this.kontoHinzufügen.ausführen( haushaltsbuchId, anfangsbestand, kontoname);
+        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
+        final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname);
+
+        assertThat(this.kontoWurdeAngelegt).isEqualTo(sollwert);
     }
 
-    @Angenommen("^mein ausgewiesenes Gesamtvermögen beträgt (-{0,1}\\d+,\\d{2} [A-Z]{3})$")
-    public void mein_ausgewiesenes_Gesamtvermögen_beträgt_anfängliches_Gesamtvermögen(
-        @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
+    @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
+    public void dasKontoWirdEinSaldoVonBesitzen(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
-        this.kontoHinzufügen.ausführen(haushaltsbuchId, gesamtvermögen, "anfängliches Gesamtvermögen");
-    }
+        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
+        final MonetaryAmount saldo = this.kontostandAbfragen.ausführen(kontoname, haushaltsbuchId);
 
-    @Wenn("^ich ein Konto \"([^\"]*)\" mit einem Bestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) der "
-        + "Haushaltsbuchführung hinzufüge$")
-    public void ich_ein_Konto_mit_einem_Bestand_von_Kontobestand_der_Haushaltsbuchführung_hinzufüge(
-        final String kontoname,
-        @Transform(MoneyConverter.class) final MonetaryAmount anfangsbestand) {
-
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
-        this.kontoHinzufügen.ausführen(haushaltsbuchId, anfangsbestand, kontoname);
-    }
-
-    @Dann("^wird mein ausgewiesenes Gesamtvermögen (-{0,1}\\d+,\\d{2} [A-Z]{3}) betragen$")
-    public void wird_mein_ausgewiesenes_Gesamtvermögen_betragen(
-        @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
-        final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
-        final MonetaryAmount istwert = this.gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
-
-        assertThat(istwert).isEqualTo(gesamtvermögen); // NOPMD: LoD ist hier OK.
-    }
-
-    @Dann("^wird mein Gesamtvermögen auf (-{0,1}\\d+,\\d{2} [A-Z]{3}) geändert worden sein.$")
-    public void wird_mein_Gesamtvermögen_auf_abschließendes_Gesamtvermögen_geändert_worden_sein(
-        @Transform(MoneyConverter.class) final MonetaryAmount gesamtvermögen) {
-
-        assertThat(this.vermögenWurdeGeändert.getVermögen()) // NOPMD: LoD ist hier OK
-            .isEqualTo(gesamtvermögen);
-    }
-
-    @Dann("^wird folgender Buchungssatz erstellt worden sein:$")
-    public void wird_folgender_Buchungssatz_erstellt_worden_sein(
-        final List<Buchungssatzdaten> buchungssatz) {
-
-        final Object bs = buchungssatz.iterator().next();
-
-        assertThat((Object) this.buchungssatzWurdeErstellt)
-            .isEqualToComparingOnlyGivenFields(bs, "von", "an", "betrag");
+        assertThat(saldo).isEqualTo(betrag);
     }
 }

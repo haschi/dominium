@@ -24,8 +24,11 @@ public final class BuchungssatzHinzufügen {
         this.buchungssatzWurdeErstellt = buchungssatzWurdeErstellt;
     }
 
-    public void ausführen(final UUID haushaltsbuchId, final String von, final String an,
-        final MonetaryAmount betrag) {
+    public void ausführen(
+            final UUID haushaltsbuchId,
+            final String von,
+            final String an,
+            final MonetaryAmount betrag) {
         this.buchungssatzWurdeErstellt.fire(new BuchungssatzWurdeErstellt(von, an, betrag));
     }
 }
