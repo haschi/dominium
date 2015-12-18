@@ -4,25 +4,24 @@ import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/**
- * Created by matthias on 17.12.15.
- */
-
-// http://www.artima.com/lejava/articles/equality.html
-public abstract class Wertobjekt {
+// s. http://www.artima.com/lejava/articles/equality.html
+public class Wertobjekt {
 
     @Override
-    public final boolean equals(@DarfNullSein final Object obj) {
+    public final boolean equals(@DarfNullSein final Object that) {
 
-        if (obj == this) {
+        if (that == this) {
             return true;
         }
 
-        if (!(obj instanceof Wertobjekt)) {
+        if (!(that instanceof Wertobjekt)) {
             return false;
         }
 
-        final Wertobjekt that = (Wertobjekt) obj;
+        return this.gleicht((Wertobjekt) that);
+    }
+
+    private final boolean gleicht(final Wertobjekt that) {
         return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that);
     }
 

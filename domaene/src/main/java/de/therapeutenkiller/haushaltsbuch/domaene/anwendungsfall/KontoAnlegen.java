@@ -16,7 +16,7 @@ import java.util.UUID;
 public final class KontoAnlegen {
     private final HaushaltsbuchRepository repository;
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
-    private Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent;
+    private final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent;
     private final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent;
 
     @Inject

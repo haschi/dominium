@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
@@ -50,10 +51,17 @@ public final class KontoErstellenSteps {
         final CurrencyUnit euro = Monetary.getCurrency("EUR");
         final Money nullEuro = Money.of(0, euro);
 
-        this.kontoAnlegen.ausführen(
-                this.kontext.aktuellesHaushaltsbuch(),
-                kontoname,
-                nullEuro);
+        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
+        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname, nullEuro);
+    }
+
+    @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) anlege$")
+    public void ichDasKontoMitEinemAnfangsbestandVonEURAnlege(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
+
+        UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
+        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname, betrag);
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")

@@ -13,6 +13,8 @@ public final class KontoWurdeAngelegt extends Wertobjekt {
 
     public KontoWurdeAngelegt(final UUID haushaltsbuchId, final String kontoname) {
 
+        super();
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
     }

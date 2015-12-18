@@ -3,12 +3,12 @@ package de.therapeutenkiller.haushaltsbuch.domaene.ereignis
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
-public final class KontoWurdeAngelegtTest extends Specification {
+public final class HaushaltsbuchWurdeAngelegtTest extends Specification {
 
-    def "erfüllt die equals und hashCode Spezifikation"() {
+    def "erfüllt die equals und hashCode Spezfifikation"() {
         expect: EqualsVerifier
-                .forClass(KontoWurdeAngelegt)
+                .forClass(HaushaltsbuchWurdeAngelegt)
                 .withRedefinedSuperclass()
-                .verify();
+                .verify()
     }
 }
