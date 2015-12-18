@@ -8,8 +8,8 @@ import java.util.UUID;
  * Created by matthias on 17.12.15.
  */
 public final class KontoWurdeAngelegt extends Wertobjekt {
-    private final UUID haushaltsbuchId;
-    private final String kontoname;
+    public final UUID haushaltsbuchId;
+    public final String kontoname;
 
     public KontoWurdeAngelegt(final UUID haushaltsbuchId, final String kontoname) {
 

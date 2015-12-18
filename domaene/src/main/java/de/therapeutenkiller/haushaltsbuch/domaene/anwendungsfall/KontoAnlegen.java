@@ -33,17 +33,20 @@ public final class KontoAnlegen {
 
     public void ausführen(final UUID haushaltsbuchId, final String kontoname, final MonetaryAmount anfangsbestand) {
 
-        final Konto konto = new Konto(kontoname, anfangsbestand);
+        this.ausführen(haushaltsbuchId, kontoname);
+
+        this.buchungssatzHinzufügen.ausführen(haushaltsbuchId, kontoname, "Anfangsbestand", anfangsbestand);
+
         final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
-        haushaltsbuch.neuesKontoHinzufügen(konto, anfangsbestand); // NOPMD LoD TODO
         final MonetaryAmount vermögen = haushaltsbuch.gesamtvermögenBerechnen(); // NOPMD Lod
         this.vermögenWurdeGeändertEvent.fire(new VermögenWurdeGeändert(haushaltsbuchId, vermögen));
+    }
 
-        this.buchungssatzHinzufügen.ausführen(
-            haushaltsbuchId,
-            "Anfangsbestand",
-            konto.getBezeichnung(),
-            anfangsbestand);
+    public void ausführen(final UUID haushaltsbuchId, final String kontoname) {
+        final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
+        final Konto konto = new Konto(kontoname);
+
+        haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
 
         this.kontoWurdeAngelegtEvent.fire(new KontoWurdeAngelegt(haushaltsbuchId, kontoname));
     }

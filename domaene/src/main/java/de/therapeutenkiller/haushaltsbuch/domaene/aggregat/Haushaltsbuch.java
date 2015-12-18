@@ -2,11 +2,11 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
+import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 
-import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import javax.money.MonetaryAmount;
 import java.util.HashSet;
@@ -21,9 +21,8 @@ import java.util.UUID;
 
     public Haushaltsbuch() {
         super(UUID.randomUUID());
-        final CurrencyUnit euro = Monetary.getCurrency(Locale.GERMANY);
-        final Money anfang = Money.of(0, euro);
-        this.konten.add(new Konto("Anfangsbestand", anfang));
+
+        this.konten.add(new Konto("Anfangsbestand"));
     }
 
     public MonetaryAmount kontostandBerechnen(final String kontoname) {
@@ -33,34 +32,26 @@ import java.util.UUID;
 
     @CoverageIgnore
     public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
+
+        final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(einKonto);
+
         return this.buchungssätze.stream()
-            .filter(buchungssatz -> buchungssatz.getHabenkonto() == einKonto)
-            .map(Buchungssatz::getWährungsbetrag)
-            .reduce(MonetaryFunctions.sum())
-            .get();
+                .filter(sollkonto::istErfülltVon)
+                .map(Buchungssatz::getWährungsbetrag)
+                .reduce(MonetaryFunctions.sum())
+                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
     public MonetaryAmount gesamtvermögenBerechnen() {
 
-        return this.konten.stream()
-            .map(Konto::bestandBerechnen)
-            .reduce(MonetaryFunctions.sum())
-            .get();
+        return this.buchungssätze.stream()
+                .map(buchungssatz -> buchungssatz.getWährungsbetrag())
+                .reduce(MonetaryFunctions.sum())
+                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
-    public void neuesKontoHinzufügen(final Konto konto, final MonetaryAmount anfangsbestand) {
+    public void neuesKontoHinzufügen(final Konto konto) {
         this.konten.add(konto);
-
-        final Buchungssatz buchungssatz = new Buchungssatz(
-            this.kontoSuchen("Anfangsbestand"),
-            konto,
-            anfangsbestand);
-
-        this.buchungHinzufügen(buchungssatz);
-    }
-
-    private void buchungHinzufügen(final Buchungssatz buchungssatz) {
-        this.buchungssätze.add(buchungssatz);
     }
 
     @CoverageIgnore
@@ -72,5 +63,15 @@ import java.util.UUID;
             .filter(kontonameSpezifikation::istErfülltVon)
             .findFirst()
             .get();
+    }
+
+    public void neueBuchungHinzufügen(
+            final String sollkontoName,
+            final String habenkontoName,
+            final MonetaryAmount betrag) {
+        final Konto soll = new Konto(sollkontoName);
+        final Konto haben = new Konto(habenkontoName);
+
+        this.buchungssätze.add(new Buchungssatz(soll, haben, betrag));
     }
 }

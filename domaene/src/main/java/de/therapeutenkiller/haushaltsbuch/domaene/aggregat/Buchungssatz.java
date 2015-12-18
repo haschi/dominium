@@ -18,6 +18,10 @@ public class Buchungssatz {
         this.währungsbetrag = währungsbetrag;
     }
 
+    public final boolean sollst(final Konto konto) {
+        return this.sollkonto.equals(konto);
+    }
+
     public final Konto getSollkonto() {
         return this.sollkonto;
     }

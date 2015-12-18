@@ -7,8 +7,8 @@ import javax.money.MonetaryAmount;
 
 public class Buchungssatzdaten {
 
-    public String von;
-    public String an;
+    public String sollkonto;
+    public String habenkonto;
 
     @XStreamConverter(MoneyConverter.class)
     public MonetaryAmount betrag;
