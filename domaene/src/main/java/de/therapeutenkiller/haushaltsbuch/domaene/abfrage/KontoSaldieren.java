@@ -11,7 +11,7 @@ import java.util.UUID;
 @Singleton
 public class KontoSaldieren {
 
-    final HaushaltsbuchRepository repository;
+    private final HaushaltsbuchRepository repository;
 
     @Inject
     public KontoSaldieren(final HaushaltsbuchRepository repository) {
@@ -20,6 +20,6 @@ public class KontoSaldieren {
 
     public final Saldo ausführen(final UUID aktuellesHaushaltsbuch, final String kontoname) {
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(aktuellesHaushaltsbuch);
-        return haushaltsbuch.kontostandBerechnen(kontoname);
+        return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD LoD TODO
     }
 }

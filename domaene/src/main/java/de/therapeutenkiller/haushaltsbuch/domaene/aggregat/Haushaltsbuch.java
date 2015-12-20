@@ -5,6 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 
@@ -35,26 +36,28 @@ import java.util.UUID;
     public Saldo kontostandBerechnen(final Konto einKonto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(einKonto);
-
-        final MonetaryAmount summerDerSollbuchungen = this.buchungssätze.stream()
-                .filter(sollkonto::istErfülltVon)
-                .map(Buchungssatz::getWährungsbetrag)
-                .reduce(MonetaryFunctions.sum())
-                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
+        final MonetaryAmount summerDerSollbuchungen = this.summeFür(sollkonto);
 
         final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(einKonto);
+        final MonetaryAmount summerDerHabenbuchungen = this.summeFür(habenkonto);
 
-        final MonetaryAmount summerDerHabenbuchungen = this.buchungssätze.stream()
-                .filter(habenkonto::istErfülltVon)
-                .map(Buchungssatz::getWährungsbetrag)
-                .reduce(MonetaryFunctions.sum())
-                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
+        return this.saldieren(summerDerSollbuchungen, summerDerHabenbuchungen);
+    }
 
-        if (summerDerHabenbuchungen.isGreaterThanOrEqualTo(summerDerHabenbuchungen)) {
-            return new Sollsaldo(summerDerSollbuchungen.subtract(summerDerHabenbuchungen));
+    private Saldo saldieren(final MonetaryAmount summerDerSollbuchungen, final MonetaryAmount summerDerHabenbuchungen) {
+        if (summerDerHabenbuchungen.isGreaterThanOrEqualTo(summerDerSollbuchungen)) {
+            return new Habensaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
         }
 
-        return new Habensaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
+        return new Sollsaldo(summerDerSollbuchungen.subtract(summerDerHabenbuchungen));
+    }
+
+    private MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzspezifikation) {
+        return this.buchungssätze.stream()
+                    .filter(buchungssatzspezifikation::istErfülltVon)
+                    .map(Buchungssatz::getWährungsbetrag)
+                    .reduce(MonetaryFunctions.sum())
+                    .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
     public MonetaryAmount gesamtvermögenBerechnen() {

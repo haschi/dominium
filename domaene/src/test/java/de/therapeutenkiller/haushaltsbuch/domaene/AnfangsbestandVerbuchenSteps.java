@@ -5,6 +5,7 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
@@ -62,5 +63,14 @@ public final class AnfangsbestandVerbuchenSteps {
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
 
         assertThat(tatsächlicherSaldo).isEqualTo(new Sollsaldo(erwarteterSaldo));
+    }
+
+    @Dann("^wird das Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    public void wirdDasKontoEinHabensaldoVonEurHaben(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount betrag) throws Throwable {
+
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
+        assertThat(tatsächlicherSaldo).isEqualTo(new Habensaldo(betrag));
     }
 }
