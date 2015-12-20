@@ -65,7 +65,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich kein neues Haushaltsbuch angelegt haben$")
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThatThrownBy(() -> this.kontext.getHaushaltsbuch()) // NOPMD LoD ist hier OK
+        assertThatThrownBy(this.kontext::getHaushaltsbuch) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
             .hasMessage("Rückgabewert der Methode 'getHaushaltsbuch' ist null.");
     }

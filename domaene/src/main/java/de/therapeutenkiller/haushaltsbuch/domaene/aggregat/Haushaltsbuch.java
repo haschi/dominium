@@ -45,7 +45,7 @@ import java.util.UUID;
     public MonetaryAmount gesamtvermögenBerechnen() {
 
         return this.buchungssätze.stream()
-                .map(buchungssatz -> buchungssatz.getWährungsbetrag())
+                .map(Buchungssatz::getWährungsbetrag)
                 .reduce(MonetaryFunctions.sum())
                 .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }

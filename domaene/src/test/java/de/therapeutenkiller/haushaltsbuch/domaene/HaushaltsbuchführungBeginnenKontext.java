@@ -19,8 +19,8 @@ public class HaushaltsbuchführungBeginnenKontext {
 
     @Inject
     public HaushaltsbuchführungBeginnenKontext(
-        final HaushaltsbuchMemoryRepository repository,
-        final Logger log) {
+            final HaushaltsbuchMemoryRepository repository,
+            @SuppressWarnings("CdiInjectionPointsInspection") final Logger log) {
         log.warn("HaushaltsbuchführungBeginnenKontext(%s)", repository.toString());
 
         this.repository = repository;

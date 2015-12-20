@@ -21,7 +21,7 @@ public class Wertobjekt {
         return this.gleicht((Wertobjekt) that);
     }
 
-    private final boolean gleicht(final Wertobjekt that) {
+    private boolean gleicht(final Wertobjekt that) {
         return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that);
     }
 

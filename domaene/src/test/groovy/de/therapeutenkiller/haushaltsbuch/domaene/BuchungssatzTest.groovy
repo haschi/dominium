@@ -13,9 +13,7 @@ public final class BuchungssatzTest extends Specification {
     def "Wenn ich einen Buchungssatz habe"() {
         given:
         def euro = Monetary.getCurrency("EUR")
-        Money nullEuro = Money.of(0, euro)
         def habenkonto = new Konto("habenkonto")
-        Money einigeEuro = Money.of(15, euro)
         def sollkonto = new Konto("sollkonto")
         def währungsbetrag = Money.of(12.23, euro)
 
