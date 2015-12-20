@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
+import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
@@ -25,21 +26,35 @@ import java.util.UUID;
         this.konten.add(new Konto("Anfangsbestand"));
     }
 
-    public MonetaryAmount kontostandBerechnen(final String kontoname) {
+    public Saldo kontostandBerechnen(final String kontoname) {
         final Konto konto = this.kontoSuchen(kontoname);
         return this.kontostandBerechnen(konto);
     }
 
     @CoverageIgnore
-    public MonetaryAmount kontostandBerechnen(final Konto einKonto) {
+    public Saldo kontostandBerechnen(final Konto einKonto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(einKonto);
 
-        return this.buchungssätze.stream()
+        final MonetaryAmount summerDerSollbuchungen = this.buchungssätze.stream()
                 .filter(sollkonto::istErfülltVon)
                 .map(Buchungssatz::getWährungsbetrag)
                 .reduce(MonetaryFunctions.sum())
                 .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
+
+        final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(einKonto);
+
+        final MonetaryAmount summerDerHabenbuchungen = this.buchungssätze.stream()
+                .filter(habenkonto::istErfülltVon)
+                .map(Buchungssatz::getWährungsbetrag)
+                .reduce(MonetaryFunctions.sum())
+                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
+
+        if (summerDerHabenbuchungen.isGreaterThanOrEqualTo(summerDerHabenbuchungen)) {
+            return new Sollsaldo(summerDerSollbuchungen.subtract(summerDerHabenbuchungen));
+        }
+
+        return new Habensaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
     }
 
     public MonetaryAmount gesamtvermögenBerechnen() {

@@ -19,6 +19,6 @@ public class KontostandAbfragen {
 
     public final MonetaryAmount ausführen(final String kontoname, final UUID haushaltsbuchId) {
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
-        return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD: LoD TODO
+        return haushaltsbuch.kontostandBerechnen(kontoname).getBetrag(); // NOPMD: LoD TODO
     }
 }

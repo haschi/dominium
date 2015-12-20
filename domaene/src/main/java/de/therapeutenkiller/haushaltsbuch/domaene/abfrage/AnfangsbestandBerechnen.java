@@ -19,7 +19,7 @@ public class AnfangsbestandBerechnen {
 
     public final MonetaryAmount ausführen(final UUID haushaltsbuchId) {
         final Haushaltsbuch haushaltsbuch = this.haushaltsbuchBesorgen(haushaltsbuchId);
-        return haushaltsbuch.kontostandBerechnen("Anfangsbestand"); // NOPMD LoD TODO
+        return haushaltsbuch.kontostandBerechnen("Anfangsbestand").getBetrag(); // NOPMD LoD TODO
     }
 
     private Haushaltsbuch haushaltsbuchBesorgen(final UUID haushaltsbuchId) {

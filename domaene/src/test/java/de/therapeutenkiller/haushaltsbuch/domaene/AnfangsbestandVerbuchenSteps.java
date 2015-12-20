@@ -2,7 +2,11 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
+import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
@@ -14,19 +18,24 @@ import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Singleton
 public final class AnfangsbestandVerbuchenSteps {
 
     private final KontoAnlegen kontoAnlegen;
     private UUID aktuellesHaushaltsbuch;
     private final AnfangsbestandBuchen anfangsbestandBuchen;
+    private final KontoSaldieren kontoSaldieren;
 
     @Inject
     public AnfangsbestandVerbuchenSteps(
             final KontoAnlegen kontoAnlegen,
-            final AnfangsbestandBuchen anfangsbestandBuchen) {
+            final AnfangsbestandBuchen anfangsbestandBuchen,
+            final KontoSaldieren kontoSaldieren) {
         this.kontoAnlegen = kontoAnlegen;
         this.anfangsbestandBuchen = anfangsbestandBuchen;
+        this.kontoSaldieren = kontoSaldieren;
     }
 
     public void haushaltsbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
@@ -43,5 +52,15 @@ public final class AnfangsbestandVerbuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
         this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, betrag);
+    }
+
+    @Dann("^wird das Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    public void wirdDasKontoEinSollsaldoVonEurHaben(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount erwarteterSaldo) throws Throwable {
+
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
+
+        assertThat(tatsächlicherSaldo).isEqualTo(new Sollsaldo(erwarteterSaldo));
     }
 }

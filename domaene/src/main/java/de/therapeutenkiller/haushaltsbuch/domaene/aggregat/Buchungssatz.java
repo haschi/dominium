@@ -22,6 +22,10 @@ public class Buchungssatz {
         return this.sollkonto.equals(konto);
     }
 
+    public final boolean hatHabenkonto(final Konto konto) {
+        return this.habenkonto.equals(konto);
+    }
+
     public final Konto getSollkonto() {
         return this.sollkonto;
     }
