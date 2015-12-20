@@ -4,7 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter
 import spock.lang.Specification
 import spock.lang.Unroll
 
-public class SollsaldoConverterTest extends  Specification {
+public class SollsaldoConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung des gültigen Währungsbetrages #zeichenfolge in ein Sollsaldo"(String zeichenfolge, BigDecimal betrag, String währung) {
@@ -30,10 +30,10 @@ public class SollsaldoConverterTest extends  Specification {
 
     def getGültigeWährungsbeträge() {
         [
-            [ "123,45 EUR", 123.45, "EUR" ],
-            ["123.45 EUR", 12345.00, "EUR"],
-            ["-10,23 USD", -10.23, "USD"],
-            ["1  DEM", 1.00, "DEM"]
+                ["123,45 EUR", 123.45, "EUR"],
+                ["123.45 EUR", 12345.00, "EUR"],
+                ["-10,23 USD", -10.23, "USD"],
+                ["1  DEM", 1.00, "DEM"]
         ]
     }
 }
