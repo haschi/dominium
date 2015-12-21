@@ -9,6 +9,9 @@ import javax.money.MonetaryAmount
 /**
  * Created by matthias on 21.12.15.
  */
+
+// TODO: Refactor: DRY
+// TODO: Refactor in eigenes Modul
 class MoneyExtensions {
 
     static def MonetaryAmount getEuro(BigDecimal betrag) {

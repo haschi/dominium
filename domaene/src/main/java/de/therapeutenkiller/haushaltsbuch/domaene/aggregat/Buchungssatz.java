@@ -67,7 +67,7 @@ public class Buchungssatz {
     }
 
     public final boolean istAnfangsbestandFür(final Konto konto) {
-        return (this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.anfangsbestand))
-                || (this.habenkonto.equals(Konto.anfangsbestand) && this.sollkonto.equals(konto));
+        return this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND)
+                || this.habenkonto.equals(Konto.ANFANGSBESTAND) && this.sollkonto.equals(konto);
     }
 }

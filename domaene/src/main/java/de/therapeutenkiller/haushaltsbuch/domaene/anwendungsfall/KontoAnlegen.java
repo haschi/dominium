@@ -4,6 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
 
 import javax.enterprise.event.Event;
@@ -18,17 +19,20 @@ public final class KontoAnlegen {
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
     private final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent;
     private final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent;
+    private final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt;
 
     @Inject
     public KontoAnlegen(
         final HaushaltsbuchRepository repository,
         final BuchungssatzHinzufügen buchungssatzHinzufügen,
         final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent,
-        final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent) {
+        final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent,
+        final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt) {
         this.repository = repository;
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
         this.kontoWurdeAngelegtEvent = kontoWurdeAngelegtEvent;
         this.vermögenWurdeGeändertEvent = vermögenWurdeGeändertEvent;
+        this.kontoWurdeNichtAngelegt = kontoWurdeNichtAngelegt;
     }
 
     public void ausführen(final UUID haushaltsbuchId, final String kontoname, final MonetaryAmount anfangsbestand) {
@@ -46,9 +50,12 @@ public final class KontoAnlegen {
         final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
         final Konto konto = new Konto(kontoname);
 
-        haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
-
-        this.kontoWurdeAngelegtEvent.fire(new KontoWurdeAngelegt(haushaltsbuchId, kontoname));
+        if (haushaltsbuch.istKontoVorhanden(konto)) { // NOPMD LoD TODO
+            this.kontoWurdeNichtAngelegt.fire(new KontoWurdeNichtAngelegt(haushaltsbuchId, kontoname));
+        } else {
+            haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
+            this.kontoWurdeAngelegtEvent.fire(new KontoWurdeAngelegt(haushaltsbuchId, kontoname));
+        }
     }
 
     public HaushaltsbuchRepository getRepository() {

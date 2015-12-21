@@ -7,6 +7,7 @@ import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontostandAbfragen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Observes;
@@ -25,12 +26,13 @@ public final class KontoErstellenSteps {
     private final KontostandAbfragen kontostandAbfragen;
     private final KontoAnlegen kontoAnlegen;
     private KontoWurdeAngelegt kontoWurdeAngelegt;
+    private KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt;
 
     @Inject
     public KontoErstellenSteps(
-        final HaushaltsbuchführungBeginnenKontext kontext,
-        final KontostandAbfragen kontostandAbfragen,
-        final KontoAnlegen kontoAnlegen) {
+            final HaushaltsbuchführungBeginnenKontext kontext,
+            final KontostandAbfragen kontostandAbfragen,
+            final KontoAnlegen kontoAnlegen) {
 
         this.kontext = kontext;
         this.kontostandAbfragen = kontostandAbfragen;
@@ -39,6 +41,10 @@ public final class KontoErstellenSteps {
 
     public void kontoWurdeAngelegtEreignishandler(@Observes final KontoWurdeAngelegt ereignis) {
         this.kontoWurdeAngelegt = ereignis;
+    }
+
+    public void kontoWurdeNichtAngelegtEreignishandler(@Observes final KontoWurdeNichtAngelegt ereignis) {
+        this.kontoWurdeNichtAngelegt = ereignis;
     }
 
     @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")
@@ -75,5 +81,15 @@ public final class KontoErstellenSteps {
         final MonetaryAmount saldo = this.kontostandAbfragen.ausführen(kontoname, haushaltsbuchId);
 
         assertThat(saldo).isEqualTo(betrag); // NOPMD AssertJ OK TODO
+    }
+
+    @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt$")
+    public void wirdDasKontoNichtAngelegt(final String kontoname) {
+
+        final KontoWurdeNichtAngelegt expected = new KontoWurdeNichtAngelegt(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname);
+
+        assertThat(this.kontoWurdeNichtAngelegt).isEqualTo(expected); // NOPMD LoD AssertJ OK TODO
     }
 }

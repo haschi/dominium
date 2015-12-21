@@ -95,4 +95,9 @@ import java.util.UUID;
     public boolean istAnfangsbestandFürKontoVorhanden(final Konto konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
     }
+
+    public boolean istKontoVorhanden(final Konto konto) {
+        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto.getBezeichnung());
+        return this.konten.stream().anyMatch(kontoname::istErfülltVon);
+    }
 }

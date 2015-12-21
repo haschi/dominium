@@ -14,3 +14,8 @@ Funktionalität: Konto erstellen
     Wenn ich das Konto "Girokonto" mit einem Anfangsbestand von 1024,48 EUR anlege
     Dann wird das Konto "Girokonto" für das Haushaltsbuch angelegt worden sein
     Und das Konto "Girokonto" wird ein Saldo von 1024,48 EUR besitzen
+
+  Szenario: Konto mehrfach hinzufügen
+    Angenommen ich habe das Konto "Tagesgeld" angelegt
+    Wenn wenn ich das Konto "Tagesgeld" anlege
+    Dann wird das Konto "Tagesgeld" nicht angelegt

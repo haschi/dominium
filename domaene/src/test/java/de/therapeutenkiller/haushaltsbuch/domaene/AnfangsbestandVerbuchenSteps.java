@@ -48,7 +48,7 @@ public final class AnfangsbestandVerbuchenSteps {
         this.aktuellesHaushaltsbuch = ereignis.haushaltsbuch.getIdentität(); // NOPMD LoD TODO
     }
 
-    public void buchungWurdeNichtAusgeführt(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
+    public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
 
         this.buchungWurdeNichtAusgeführt = ereignis;
     }
