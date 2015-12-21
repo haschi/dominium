@@ -1,5 +1,5 @@
 Anleitung für das Schreiben von Funktionalitäten und Szenarien
---------------------------------------------------------------
+==============================================================
 
 Die Funktionalitäten und deren Szenarien bilden einen wesentlichen Teil der
 ubiquitären (allgegenwärtigen) Sprache (engl. ubiquitous language).
@@ -10,7 +10,7 @@ Nachbedingungen in den Szenarien werden verschiedene Tempi benutzt, um eine
 die Intention auszudrücken.
 
 Vorbedingung (Angenommen)
-=========================
+-------------------------
 
 Die Vorbedingung wird im Perfekt beschrieben, um eine bereits abgeschlossene
 Handlung zu beschreiben, die Auswirkung auf die Gegenwart besitzt. Die
@@ -24,7 +24,7 @@ Und ich habe das Konto "Girokonto" angelegt
 
 
 Anwendungsfall (Wenn)
-=====================
+---------------------
 
 Ein Anwendungsfall beschreibt die Interaktionen zwischen Nutzer und System,
 die notwendig sind, um ein fachliches Ziel des Nutzers zu verwirklichen.
@@ -38,7 +38,7 @@ Wenn ich das Konto "Geldbörse" anlege
 ```
 
 Nachbedingung (Dann)
-====================
+--------------------
 
 Die Nachbedingung stellt das Ergebnis eines vorangegangenen Anwendungsfalls
 dar. Im vorliegenden System kann das Ergebnis entweder durch eine Abfrage
@@ -74,7 +74,7 @@ Futur I für die Abfrage und Futur II für das behandelte Domänenereignis
 formuliert.
 
 Akteure und deren Personalpronomen
-==================================
+----------------------------------
 
 Ausgehend von der Standardformulierung von Funktionalitäten in der Form,
 in der ein Akteur mit dem Personalpronomen *ich* gleichgesetzt wird:
@@ -101,7 +101,7 @@ versetzt den Autor in dessen Rolle. Insbesondere beim Verfassen der Aktion
 sollte das Personalpronomen verwendet werden.
 
 Vollständiges Beispiel
-======================
+----------------------
 ```gherkin
     Szenario: Pseudobeispiel für Tempusanwendung
     Angenommen ich habe einen Anwendungsfall ausgeführt
@@ -112,7 +112,7 @@ Vollständiges Beispiel
 
 
 Konfiguration von IntelliJ
---------------------------
+==========================
 
 Working directory: Wurzelverzeichnis des Moduls.
 VM Options: -ea
