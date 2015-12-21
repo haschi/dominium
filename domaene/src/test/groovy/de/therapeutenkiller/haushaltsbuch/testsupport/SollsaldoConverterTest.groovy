@@ -7,9 +7,12 @@ import spock.lang.Unroll
 public class SollsaldoConverterTest extends Specification {
 
     @Unroll
-    def "Umwandlung des gültigen Währungsbetrages #zeichenfolge in ein Sollsaldo"(String zeichenfolge, BigDecimal betrag, String währung) {
+    def "Umwandlung der gültigen Eingabe #zeichenfolge in ein Sollsaldo"(
+            final String zeichenfolge,
+            final BigDecimal betrag,
+            final String währung) {
 
-        given: "Angenommen ich habe einen MoneyConverter"
+        given: "Angenommen ich habe einen SollsaldoConverter"
         def converter = new SollsaldoConverter();
 
         when: "Wenn ich einen gültigen Währungsbetrag transformiere"
@@ -20,20 +23,26 @@ public class SollsaldoConverterTest extends Specification {
         result.betrag.number.toBigDecimal() == betrag
 
         where:
-        [zeichenfolge, betrag, währung] << gültigeWährungsbeträge
-        //zeichenfolge | betrag   | währung
-        //"123,45 EUR" | 123.45   | "EUR"
-        //"123.45 EUR" | 12345.00 | "EUR"
-        //"-10,23 USD" | -10.23   | "USD"
-        //"1  DEM"     | 1.00     | "DEM"
+        [zeichenfolge, betrag, währung] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
     }
 
-    def getGültigeWährungsbeträge() {
-        [
-                ["123,45 EUR", 123.45, "EUR"],
-                ["123.45 EUR", 12345.00, "EUR"],
-                ["-10,23 USD", -10.23, "USD"],
-                ["1  DEM", 1.00, "DEM"]
-        ]
+
+    @Unroll
+    def "Umwandlung der ungültigen Eingabe #zeichenfolge in ein Sollsaldo"(
+            final String zeichenfolge,
+            final Class ausnahme) {
+
+        given: "Angenommen ich habe einen SollsaldoConverter"
+        def converter = new SollsaldoConverter();
+
+        when: "Wenn ich ein ungültige Eingabe transformiere"
+        converter.transform(zeichenfolge)
+
+        then: "Dann wird eine Ausnahme ausgelöst"
+        thrown(ausnahme)
+
+        where:
+        [zeichenfolge, ausnahme] << BeispieleFürUmwandlung.ungültigeWährungsbeträge()
     }
 }
+

@@ -10,7 +10,10 @@ import javax.money.format.MonetaryParseException
 class MoneyConverterTest  extends Specification {
 
     @Unroll
-    def "Umwandlung gültiger Währungsbeträge"() {
+    def "Umwandlung gültiger Währungsbeträge"(
+            final String zeichenfolge,
+            final BigDecimal betrag,
+            final String währung) {
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();
 
@@ -22,15 +25,11 @@ class MoneyConverterTest  extends Specification {
         result.number.toBigDecimal() == betrag
 
         where:
-        zeichenfolge | betrag   | währung
-        "123,45 EUR" | 123.45   | "EUR"
-        "123.45 EUR" | 12345.00 | "EUR"
-        "-10,23 USD" | -10.23   | "USD"
-        "1  DEM"     | 1.00     | "DEM"
+        [zeichenfolge, betrag, währung] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
     }
 
     @Unroll
-    def "Umwandlung ungültiger Währungsbeträge"() {
+    def "Umwandlung ungültiger Währungsbeträge"(final String zeichenfolge, final Class ausnahme) {
 
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();
@@ -43,10 +42,6 @@ class MoneyConverterTest  extends Specification {
         e.getClass() == ausnahme
 
         where:
-        zeichenfolge  | ausnahme
-        "12.00 €"     | IllegalArgumentException.class  // ungültig wegen € Zeichen
-        "Hello World" | MonetaryParseException.class    // Zeichenfolge ist ungültig
-        ""            | IllegalArgumentException.class  // Leere Zeichfeolge ist ungültig
-        null          | ArgumentIstNullException.class  // Das ist auch Mist.
+        [zeichenfolge, ausnahme] << BeispieleFürUmwandlung.ungültigeWährungsbeträge()
     }
 }

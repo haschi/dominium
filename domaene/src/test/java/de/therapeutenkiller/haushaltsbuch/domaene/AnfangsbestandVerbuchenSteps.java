@@ -11,7 +11,9 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -58,19 +60,19 @@ public final class AnfangsbestandVerbuchenSteps {
     @Dann("^wird das Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
     public void wirdDasKontoEinSollsaldoVonEurHaben(
             final String kontoname,
-            @Transform(MoneyConverter.class) final MonetaryAmount erwarteterSaldo) throws Throwable {
+            @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
 
-        assertThat(tatsächlicherSaldo).isEqualTo(new Sollsaldo(erwarteterSaldo));
+        assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
     public void wirdDasKontoEinHabensaldoVonEurHaben(
             final String kontoname,
-            @Transform(MoneyConverter.class) final MonetaryAmount betrag) throws Throwable {
+            @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
-        assertThat(tatsächlicherSaldo).isEqualTo(new Habensaldo(betrag));
+        assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 }
