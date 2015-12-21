@@ -30,7 +30,7 @@ Ein Anwendungsfall beschreibt die Interaktionen zwischen Nutzer und System,
 die notwendig sind, um ein fachliches Ziel des Nutzers zu verwirklichen.
 Dabei dürfen die beschriebenen Abläufe nicht zu komplex werden.
 
-Anwendungsfälle werden im Präsens verfasst.
+Anwendungsfälle werden im Präsens Aktiv verfasst.
 
 Beispiel:
 ```gherkin
@@ -45,7 +45,7 @@ dar. Im vorliegenden System kann das Ergebnis entweder durch eine Abfrage
 oder ein Domänenereignis geprüft werden.
 
 Wenn die Ergebnisprüfung durch eine Abfrage erfolgt, dann wird die
-Nachbedingung im Futur I verfasst.
+Nachbedingung im Futur I Passiv verfasst.
 
 Beispiel für Nachbedingung mit Prüfung durch Abfrage:
 ```gherkin
@@ -53,9 +53,9 @@ Dann wird das Konto "Girokonto" angelegt
 ```
 
 Wenn die Nachbedingung durch ein abgefangenes Domänenereignis geprüft wird,
-dann wird Futur II verwendet. Domänenereignis werden in der UL allgemein im
-Perfekt beschrieben. Z.B. *Konto wurde angelegt* oder *Buchung wurde
-ausgeführt*. Da aus Sicht des Anwendungsfalls die Nachbedingung erst in
+dann wird Futur II Passiv verwendet. Domänenereignis werden in der UL
+allgemein im Perfekt beschrieben. Z.B. *Konto wurde angelegt* oder *Buchung
+wurde ausgeführt*. Da aus Sicht des Anwendungsfalls die Nachbedingung erst in
 der Zukunft erfüllt sein wird, bietet sich für die Formulierung der
 Nachbedingung die im Futur II an, um die abgeschlossene Handlung auszudrücken.
 
@@ -63,6 +63,15 @@ Beispiel für Nachbedingung mit Prüfung durch Domänenereignis:
 ```gherkin
 Dann wird das Konto "Girokonto" angelegt worden sein
 ```
+
+Wenn zur Prüfung der Nachbedingung eine Abfrage erfolgt und ein
+Domänenereignis abgefangen wird, dann wird die Nachbedingung nur
+einmal im Futur I formuliert und enthält beide Prüfungen, sofern
+Abfrage und Domänenereignis die gleiche Intention ausdrücken.
+
+Bei ungleicher Intention werden die Nachbedingungen getrennt in
+Futur I für die Abfrage und Futur II für das behandelte Domänenereignis
+formuliert.
 
 Akteure und deren Personalpronomen
 ==================================
@@ -85,6 +94,12 @@ Beispiel:
     Dann werde *ich* ein neues Haushaltsbuch angelegt haben
     Und *ich* werde ein Gesamtvermögen von 0,00 EUR besitzen
 ```
+
+Zwar erscheint die häufige Verwendung des Personalpronomens eine egozentrische
+Sicht einzunehmen, jedoch hebt es den Akteur als handelnde Person hervor und
+versetzt den Autor in dessen Rolle. Insbesondere beim Verfassen der Aktion
+sollte das Personalpronomen verwendet werden.
+
 
 Konfiguration von IntelliJ
 --------------------------
