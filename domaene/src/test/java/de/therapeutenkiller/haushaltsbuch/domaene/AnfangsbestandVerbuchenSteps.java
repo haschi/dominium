@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
+import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
@@ -10,6 +11,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -30,6 +32,7 @@ public final class AnfangsbestandVerbuchenSteps {
     private UUID aktuellesHaushaltsbuch;
     private final AnfangsbestandBuchen anfangsbestandBuchen;
     private final KontoSaldieren kontoSaldieren;
+    private BuchungWurdeNichtAusgeführt buchungWurdeNichtAusgeführt;
 
     @Inject
     public AnfangsbestandVerbuchenSteps(
@@ -43,6 +46,11 @@ public final class AnfangsbestandVerbuchenSteps {
 
     public void haushaltsbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
         this.aktuellesHaushaltsbuch = ereignis.haushaltsbuch.getIdentität(); // NOPMD LoD TODO
+    }
+
+    public void buchungWurdeNichtAusgeführt(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
+
+        this.buchungWurdeNichtAusgeführt = ereignis;
     }
 
     @Angenommen("ich habe das Konto \"([^\"]*)\" angelegt")
@@ -74,5 +82,26 @@ public final class AnfangsbestandVerbuchenSteps {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
+    }
+
+    @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) gebucht$")
+    public void ichHabeAufDasKontoDenAnfangsbestandGebucht(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
+
+        this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, währungsbetrag);
+    }
+
+    @Wenn("^ich weitere (-{0,1}\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")
+    public void ichWeiteresGeldAufDasKontoAlsAnfangsbestandBuche(
+            @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
+            final String kontoname) throws Throwable {
+
+        this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, währungsbetrag);
+    }
+
+    @Dann("^werde ich die Fehlermeldung \"([^\"]*)\" erhalten haben$")
+    public void werdeIchDieFehlermeldungErhaltenHaben(final String fehlermeldung) {
+        assertThat(this.buchungWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeNichtAusgeführt(fehlermeldung));
     }
 }

@@ -4,13 +4,17 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverte
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import javax.money.MonetaryAmount
+
 /**
  * Created by matthias on 21.12.15.
  */
 class HabensaldoConverterTest extends Specification {
 
     @Unroll
-    def "Gültige Eingabe #zeichenfolge transformieren"(final String zeichenfolge, final BigDecimal betrag, final String währung) {
+    def "Gültige Eingabe #zeichenfolge transformieren"(
+            final String zeichenfolge,
+            final MonetaryAmount währungsbetrag) {
 
         given: "Angenommen ich habe einen HabensaldoConverter"
         def converter = new HabensaldoConverter()
@@ -19,11 +23,10 @@ class HabensaldoConverterTest extends Specification {
         def result = converter.transform(zeichenfolge)
 
         then: "Dann erhalte ich ein Habensaldo-Objekt mit Betrag #betrag und Währung #währung"
-        result.betrag.currency.currencyCode == währung
-        result.betrag.number.toBigDecimal() == betrag
+        result.betrag == währungsbetrag
 
         where:
-        [zeichenfolge, betrag, währung] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
     }
 
     @Unroll

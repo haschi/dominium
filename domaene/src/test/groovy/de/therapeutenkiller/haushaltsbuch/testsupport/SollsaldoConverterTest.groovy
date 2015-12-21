@@ -4,13 +4,14 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import javax.money.MonetaryAmount
+
 public class SollsaldoConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung der gültigen Eingabe #zeichenfolge in ein Sollsaldo"(
             final String zeichenfolge,
-            final BigDecimal betrag,
-            final String währung) {
+            final MonetaryAmount währungsbetrag) {
 
         given: "Angenommen ich habe einen SollsaldoConverter"
         def converter = new SollsaldoConverter();
@@ -19,11 +20,10 @@ public class SollsaldoConverterTest extends Specification {
         def result = converter.transform(zeichenfolge)
 
         then: "Dann erhalte ich ein Sollsaldo-Objekt mit Betrag und Währung"
-        result.betrag.currency.currencyCode == währung
-        result.betrag.number.toBigDecimal() == betrag
+        result.betrag == währungsbetrag
 
         where:
-        [zeichenfolge, betrag, währung] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
     }
 
 

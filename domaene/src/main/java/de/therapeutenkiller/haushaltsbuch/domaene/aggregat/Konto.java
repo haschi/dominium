@@ -4,6 +4,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 public final class Konto extends Wertobjekt {
 
+    public static final Konto anfangsbestand = new Konto("Anfangsbestand");
+
     private final String kontoname;
 
     public Konto(final String kontoname) {

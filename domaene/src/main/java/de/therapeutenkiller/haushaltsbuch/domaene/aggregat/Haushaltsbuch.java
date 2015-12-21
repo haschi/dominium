@@ -85,11 +85,14 @@ import java.util.UUID;
 
     public void neueBuchungHinzufügen(
             final String sollkontoName,
-            final String habenkontoName,
+            final Konto habenkonto,
             final MonetaryAmount betrag) {
         final Konto soll = new Konto(sollkontoName);
-        final Konto haben = new Konto(habenkontoName);
 
-        this.buchungssätze.add(new Buchungssatz(soll, haben, betrag));
+        this.buchungssätze.add(new Buchungssatz(soll, habenkonto, betrag));
+    }
+
+    public boolean istAnfangsbestandFürKontoVorhanden(final Konto konto) {
+        return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
     }
 }

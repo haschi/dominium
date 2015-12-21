@@ -12,10 +12,9 @@ public final class BuchungssatzTest extends Specification {
 
     def "Wenn ich einen Buchungssatz habe"() {
         given:
-        def euro = Monetary.getCurrency("EUR")
         def habenkonto = new Konto("habenkonto")
         def sollkonto = new Konto("sollkonto")
-        def währungsbetrag = Money.of(12.23, euro)
+        def währungsbetrag = 12.23.euro
 
         when: "Wenn ich einen Buchungssatz erzeugt habe"
         def buchungssatz = new Buchungssatz(sollkonto, habenkonto, währungsbetrag);

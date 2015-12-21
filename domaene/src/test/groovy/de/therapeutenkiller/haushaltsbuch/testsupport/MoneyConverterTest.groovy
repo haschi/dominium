@@ -5,15 +5,16 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import javax.money.MonetaryAmount
 import javax.money.format.MonetaryParseException
 
 class MoneyConverterTest  extends Specification {
 
     @Unroll
-    def "Umwandlung gültiger Währungsbeträge"(
+    def "Umwandlung gültiger Eingabe #zeichenfolge in einen Währungsbetrag"(
             final String zeichenfolge,
-            final BigDecimal betrag,
-            final String währung) {
+            final MonetaryAmount währungsbetrag) {
+
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();
 
@@ -21,11 +22,10 @@ class MoneyConverterTest  extends Specification {
         def result = converter.transform(zeichenfolge)
 
         then: "Dann erhalte ich ein Money-Objekt mit Betrag und Währung"
-        result.currency.currencyCode == währung;
-        result.number.toBigDecimal() == betrag
+        result == währungsbetrag
 
         where:
-        [zeichenfolge, betrag, währung] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
     }
 
     @Unroll

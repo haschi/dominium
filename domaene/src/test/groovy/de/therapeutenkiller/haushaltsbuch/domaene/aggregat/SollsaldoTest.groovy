@@ -13,8 +13,8 @@ import javax.money.MonetaryAmount
  */
 class SollsaldoTest extends Specification {
 
-    @Shared MonetaryAmount betrag1 = Money.of(12, Monetary.getCurrency(Locale.GERMANY));
-    @Shared MonetaryAmount betrag2 = Money.of(12, Monetary.getCurrency(Locale.GERMANY));
+    @Shared MonetaryAmount betrag1 = 12.00.euro
+    @Shared MonetaryAmount betrag2 = 12.00.euro
 
     def "erfüllt die equals und hashCode Soezifikation"() {
         expect: EqualsVerifier.forClass(Sollsaldo)

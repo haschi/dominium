@@ -65,4 +65,9 @@ public class Buchungssatz {
             .append(this.währungsbetrag)
             .toHashCode();
     }
+
+    public final boolean istAnfangsbestandFür(final Konto konto) {
+        return (this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.anfangsbestand))
+                || (this.habenkonto.equals(Konto.anfangsbestand) && this.sollkonto.equals(konto));
+    }
 }

@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
 
 import javax.enterprise.event.Event;
@@ -32,7 +33,7 @@ public final class BuchungssatzHinzufügen {
             final MonetaryAmount betrag) {
 
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
-        haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag); // NOPMD LoD TODO
+        haushaltsbuch.neueBuchungHinzufügen(sollkonto, new Konto(habenkonto), betrag); // NOPMD LoD TODO
 
         this.buchungssatzWurdeErstellt.fire(new BuchungssatzWurdeErstellt(sollkonto, habenkonto, betrag));
     }

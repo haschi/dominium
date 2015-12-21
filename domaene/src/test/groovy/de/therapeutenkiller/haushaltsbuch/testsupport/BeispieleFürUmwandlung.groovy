@@ -10,10 +10,10 @@ import javax.money.format.MonetaryParseException
 public class BeispieleFürUmwandlung {
     static def gültigeWährungsbeträge() {
         [
-                ["123,45 EUR", 123.45, "EUR"],
-                ["123.45 EUR", 12345.00, "EUR"],
-                ["-10,23 USD", -10.23, "USD"],
-                ["1  DEM", 1.00, "DEM"]
+                ["123,45 EUR", 123.45.euro],
+                ["123.45 EUR", 12345.00.euro],
+                ["-10,23 USD", 10.23.dollar.negate()],
+                ["1  DEM", 1.00.mark]
         ]
     }
 
