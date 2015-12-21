@@ -100,6 +100,16 @@ Sicht einzunehmen, jedoch hebt es den Akteur als handelnde Person hervor und
 versetzt den Autor in dessen Rolle. Insbesondere beim Verfassen der Aktion
 sollte das Personalpronomen verwendet werden.
 
+Vollständiges Beispiel
+======================
+```gherkin
+    Szenario: Pseudobeispiel für Tempusanwendung
+    Angenommen ich habe einen Anwendungsfall ausgeführt
+    Wenn ich einen anderen Anwendungsfall ausführe
+    Dann werde ich das Ergebnis einer Abfrage prüfe
+    Und ich werde ein Domänenereignis abgefangen haben
+```
+
 
 Konfiguration von IntelliJ
 --------------------------
