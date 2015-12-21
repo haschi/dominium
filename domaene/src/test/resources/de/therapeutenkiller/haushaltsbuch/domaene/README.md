@@ -90,9 +90,9 @@ vorgesehen ist.
 Beispiel:
 ```gherkin
   Szenario: Haushaltsbuchführung beginnen
-    Wenn *ich* mit der Haushaltsbuchführung beginne
-    Dann werde *ich* ein neues Haushaltsbuch angelegt haben
-    Und *ich* werde ein Gesamtvermögen von 0,00 EUR besitzen
+    Wenn ich mit der Haushaltsbuchführung beginne
+    Dann werde ich ein neues Haushaltsbuch angelegt haben
+    Und ich werde ein Gesamtvermögen von 0,00 EUR besitzen
 ```
 
 Zwar erscheint die häufige Verwendung des Personalpronomens eine egozentrische
@@ -100,14 +100,29 @@ Sicht einzunehmen, jedoch hebt es den Akteur als handelnde Person hervor und
 versetzt den Autor in dessen Rolle. Insbesondere beim Verfassen der Aktion
 sollte das Personalpronomen verwendet werden.
 
-Vollständiges Beispiel
-----------------------
+Vollständiges Beispiele
+-----------------------
+
+Das folgende Beispiel enthält ein vollständiges Szenario mit Abfrage und
+behandeltem Domänenereignis und verwendet die vorgegebenen Tempi für die
+einzelnen Schritte.
+
 ```gherkin
     Szenario: Pseudobeispiel für Tempusanwendung
-    Angenommen ich habe einen Anwendungsfall ausgeführt
-    Wenn ich einen anderen Anwendungsfall ausführe
-    Dann werde ich das Ergebnis einer Abfrage prüfe
-    Und ich werde ein Domänenereignis abgefangen haben
+        Angenommen ich habe einen Anwendungsfall ausgeführt
+        Wenn ich einen anderen Anwendungsfall ausführe
+        Dann werde ich das Ergebnis einer Abfrage prüfen
+        Und ich werde ein Domänenereignis abgefangen haben
+```
+
+Wenn die Ergebnisprüfung mittels Abfrage und Domänenereignis in einem
+Schritt erfolgen soll, dann sollte folgendes Muster verwendet werden:
+
+```gherkin
+    Szenario: Pseudobeispiel für zusammengefasste Nachbedingung
+        Angenommen ich habe einen Anwendungsfall ausgeführt
+        Wenn ich einen anderen Anwendungsfall ausführe
+        Dann werde ich das Ergebnis prüfen
 ```
 
 
