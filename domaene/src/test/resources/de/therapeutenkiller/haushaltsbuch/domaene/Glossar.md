@@ -5,6 +5,7 @@ Glossar
 * **Passickonto**
 * **Bestandskonto**
 * **Ertragskonto**
+* **Erfolgskonto**
 * **Aufwandskonto**
 * **Saldo**
 * **Buchungssatz**
