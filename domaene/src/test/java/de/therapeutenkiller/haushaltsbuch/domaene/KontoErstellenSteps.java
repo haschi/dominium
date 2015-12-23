@@ -4,7 +4,9 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontostandAbfragen;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
@@ -14,6 +16,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
+import java.util.Collection;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +28,7 @@ public final class KontoErstellenSteps {
 
     private final KontostandAbfragen kontostandAbfragen;
     private final KontoAnlegen kontoAnlegen;
+    private final AlleKonten alleKonten;
     private KontoWurdeAngelegt kontoWurdeAngelegt;
     private KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt;
 
@@ -32,11 +36,13 @@ public final class KontoErstellenSteps {
     public KontoErstellenSteps(
             final HaushaltsbuchführungBeginnenKontext kontext,
             final KontostandAbfragen kontostandAbfragen,
-            final KontoAnlegen kontoAnlegen) {
+            final KontoAnlegen kontoAnlegen,
+            final AlleKonten alleKonten) {
 
         this.kontext = kontext;
         this.kontostandAbfragen = kontostandAbfragen;
         this.kontoAnlegen = kontoAnlegen;
+        this.alleKonten = alleKonten;
     }
 
     public void kontoWurdeAngelegtEreignishandler(@Observes final KontoWurdeAngelegt ereignis) {
@@ -83,7 +89,7 @@ public final class KontoErstellenSteps {
         assertThat(saldo).isEqualTo(betrag); // NOPMD AssertJ OK TODO
     }
 
-    @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt$")
+    @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt worden sein$")
     public void wirdDasKontoNichtAngelegt(final String kontoname) {
 
         final KontoWurdeNichtAngelegt expected = new KontoWurdeNichtAngelegt(
@@ -91,5 +97,14 @@ public final class KontoErstellenSteps {
                 kontoname);
 
         assertThat(this.kontoWurdeNichtAngelegt).isEqualTo(expected); // NOPMD LoD AssertJ OK TODO
+    }
+
+    @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
+    public void dasHaushaltsbuchWirdEinKontoBesitzen(final String kontoname) throws Throwable {
+
+        final Collection<Konto> kontenliste = this.alleKonten.ausführen(
+                this.kontext.aktuellesHaushaltsbuch());
+
+        assertThat(kontenliste).containsOnlyOnce(new Konto(kontoname));
     }
 }

@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
@@ -99,5 +101,9 @@ import java.util.UUID;
     public boolean istKontoVorhanden(final Konto konto) {
         final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto.getBezeichnung());
         return this.konten.stream().anyMatch(kontoname::istErfülltVon);
+    }
+
+    public ImmutableCollection<Konto> getKonten() {
+        return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
     }
 }

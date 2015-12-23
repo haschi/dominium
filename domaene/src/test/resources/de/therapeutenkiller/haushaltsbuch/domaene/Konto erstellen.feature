@@ -18,4 +18,5 @@ Funktionalität: Konto erstellen
   Szenario: Konto mehrfach hinzufügen
     Angenommen ich habe das Konto "Tagesgeld" angelegt
     Wenn wenn ich das Konto "Tagesgeld" anlege
-    Dann wird das Konto "Tagesgeld" nicht angelegt
+    Dann wird das Konto "Tagesgeld" nicht angelegt worden sein
+    Und das Haushaltsbuch wird ein Konto "Tagesgeld" besitzen

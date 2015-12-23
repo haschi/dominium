@@ -12,7 +12,7 @@ die Intention auszudrücken.
 Vorbedingung (Angenommen)
 -------------------------
 
-Die Vorbedingung wird im Perfekt beschrieben, um eine bereits abgeschlossene
+Die Vorbedingung wird im Perfekt formuliert, um eine bereits abgeschlossene
 Handlung zu beschreiben, die Auswirkung auf die Gegenwart besitzt. Die
 Vorbedingung besteht aus ein oder mehreren abgeschlossenen Anwendungsfällen.
 

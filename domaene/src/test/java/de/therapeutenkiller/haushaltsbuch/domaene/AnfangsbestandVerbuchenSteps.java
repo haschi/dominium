@@ -53,6 +53,7 @@ public final class AnfangsbestandVerbuchenSteps {
         this.buchungWurdeNichtAusgeführt = ereignis;
     }
 
+    // TODO Verschiebene zu GemeinsameSteps
     @Angenommen("ich habe das Konto \"([^\"]*)\" angelegt")
     public void ich_habe_das_Konto_angelegt(final String kontoname) {
         this.kontoAnlegen.ausführen(this.aktuellesHaushaltsbuch, kontoname);
