@@ -63,7 +63,7 @@ erfolgsneutrale Zustände.
  Fremdkapitals auf. Die Zugänge werden im Haben, die Abgänge
  im Soll gebucht.
 
-![Bestandskonten][Images/465px-Bestandskonten.svg.png]
+![Bestandskonten](Images/465px-Bestandskonten.svg.png)
 
 
 Erfolgskonten nehmen erfolgswirksame Vorgänge auf. Erfolg ist
@@ -83,4 +83,4 @@ sowohl Gewinn als auch Verlust.
  eines Kunden ist dagegen kein Ertrag, sondern der Abgang einer
  Forderung. Erträge werden immer im Haben gebucht.
 
-![Erfolgskonten][Images/465px-Errfolgskonten.svg.png]
+![Erfolgskonten](Images/465px-Erfolgskonten.svg.png)
