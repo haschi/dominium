@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 
 import javax.money.MonetaryAmount;
 
@@ -11,6 +10,9 @@ import javax.money.MonetaryAmount;
 public class Kontostand {
 
     public String kontoname;
-    public @XStreamConverter(MoneyConverter.class) MonetaryAmount betrag;
+
+    @XStreamConverter(MoneyConverter.class)
+    public MonetaryAmount betrag;
+
     public Kontoart kontoart;
 }

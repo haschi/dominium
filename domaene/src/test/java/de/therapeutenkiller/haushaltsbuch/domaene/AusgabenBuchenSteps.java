@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
-import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -28,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by matthias on 23.12.15.
  */
 @Singleton
-public class AusgabenBuchenSteps {
+public final class AusgabenBuchenSteps {
 
     private final KontoAnlegen kontoAnlegen;
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
@@ -49,39 +48,44 @@ public class AusgabenBuchenSteps {
         this.kontoSaldieren = kontoSaldieren;
     }
 
-    public void HaushaltsbuchbuchWurdeAngelegt(@Observes HaushaltsbuchWurdeAngelegt ereignis) {
-        haushaltsbuchId = ereignis.haushaltsbuch.getIdentität();
+    public void haushaltsbuchbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
+        this.haushaltsbuchId = ereignis.haushaltsbuch.getIdentität(); // NOPMD
     }
 
     @Angenommen("^ich mein Haushaltsbuch besitzt folgende Konten:$")
-    public void ichMeinHaushaltsbuchBesitztFolgendeKonten(List<Kontostand> kontostände) {
+    public void ichMeinHaushaltsbuchBesitztFolgendeKonten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
-        haushaltsbuchfhrungBeginnen.ausführen();
+        this.haushaltsbuchfhrungBeginnen.ausführen();
 
-        for (Kontostand kontostand : kontostände) {
-            kontoAnlegen.ausführen(haushaltsbuchId, kontostand.kontoname);
-        }
+        for (final Kontostand kontostand : kontostände) {
+            this.kontoAnlegen.ausführen(this.haushaltsbuchId, kontostand.kontoname);
 
-        for (Kontostand kontostand : kontostände) {
-            buchungssatzHinzufügen.ausführen(haushaltsbuchId, "Anfangsbestand", kontostand.kontoname, kontostand.betrag);
+            this.buchungssatzHinzufügen.ausführen(
+                    this.haushaltsbuchId,
+                    "Anfangsbestand",
+                    kontostand.kontoname,
+                    kontostand.betrag);
         }
     }
 
     @Wenn("^ich (-{0,1}\\d+,\\d{2} [A-Z]{3}) vom \"([^\"]*)\" an \"([^\"]*)\" buche$")
-    public void ichEURVomAnBuche(
+    public void ichEurVomAnBuche(
             @Transform(MoneyConverter.class) final MonetaryAmount arg0,
             final String sollkonto,
             final String habenkonto)  {
 
-        this.buchungssatzHinzufügen.ausführen(haushaltsbuchId, sollkonto, habenkonto, arg0);
+        this.buchungssatzHinzufügen.ausführen(this.haushaltsbuchId, sollkonto, habenkonto, arg0);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
-    public void werdeIchFolgendeKontoständeErhalten(List<Kontostand> kontostände) throws Throwable {
+    public void werdeIchFolgendeKontoständeErhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
-        for (Kontostand kontostand : kontostände) {
-            final Saldo saldo = kontoSaldieren.ausführen(this.haushaltsbuchId, kontostand.kontoname);
-            assertThat(saldo).isEqualTo(new Habensaldo(kontostand.betrag));
+        for (final Kontostand kontostand : kontostände) {
+            final Saldo saldo = this.kontoSaldieren.ausführen(this.haushaltsbuchId, kontostand.kontoname);
+
+            // TODO Besser in einem Konverter
+            final Habensaldo erwartetesHabensaldo = new Habensaldo(kontostand.betrag); // NOPMD
+            assertThat(saldo).isEqualTo(erwartetesHabensaldo); // NOPMD
         }
     }
 }
