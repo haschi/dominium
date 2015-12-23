@@ -7,11 +7,11 @@ Soll und Haben Buchungen
 Für jedes Konto ist durch die Buchungslogik der doppelten
 Buchführung festgelegt, wann es im Soll oder Haben bebucht wird:
 
-    | Kontoart               | Soll    | Haben  |
-    |------------------------|---------|--------|
-    | Erfolgskonto           | Aufwand | Ertrag |
-    | aktives Bestandskonto  | Zugang  | Abgang |
-    | passives Bestandskonto | Abgang  | Zugang |
+| Kontoart               | Soll    | Haben  |
+| ---------------------- | ------- | ------ |
+| Erfolgskonto           | Aufwand | Ertrag |
+| aktives Bestandskonto  | Zugang  | Abgang |
+| passives Bestandskonto | Abgang  | Zugang |
 
 Zugänge stehen also immer auf derselben Seite, auf der das
 bebuchte Konto in der Bilanz steht.

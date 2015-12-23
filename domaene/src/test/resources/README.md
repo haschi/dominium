@@ -8,6 +8,3 @@ Inhalt
   4. [Konto erstellen](de/therapeutenkiller/haushaltsbuch/domaene/Konto erstellen.feature)
 2. [Anleitung für das Schreiben von Funktionalitäten und Szenarien](de/therapeutenkiller/haushaltsbuch/domaene/Anleitung.md)
 3. [Glossar](de/therapeutenkiller/haushaltsbuch/domaene/Glossar.md)
-
-http://development12/matthias/haushaltsbuch/blob/master/Konto%20erstellen.feature
-http://development12/matthias/haushaltsbuch/blob/master/domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Anleitung.md
