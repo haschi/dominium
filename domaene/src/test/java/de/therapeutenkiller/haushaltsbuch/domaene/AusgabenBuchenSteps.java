@@ -10,6 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -34,6 +35,7 @@ public final class AusgabenBuchenSteps {
     private final KontoSaldieren kontoSaldieren;
     private final HaushaltsbuchführungBeginnen haushaltsbuchfhrungBeginnen;
     private UUID haushaltsbuchId;
+    private BuchungWurdeNichtAusgeführt buchungsWurdeNichtAusgeführt;
 
     @Inject
     AusgabenBuchenSteps(
@@ -50,6 +52,10 @@ public final class AusgabenBuchenSteps {
 
     public void haushaltsbuchbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
         this.haushaltsbuchId = ereignis.haushaltsbuch.getIdentität(); // NOPMD
+    }
+
+    public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
+        this.buchungsWurdeNichtAusgeführt = ereignis;
     }
 
     @Angenommen("^ich mein Haushaltsbuch besitzt folgende Konten:$")
@@ -87,5 +93,10 @@ public final class AusgabenBuchenSteps {
             final Habensaldo erwartetesHabensaldo = new Habensaldo(kontostand.betrag); // NOPMD
             assertThat(saldo).isEqualTo(erwartetesHabensaldo); // NOPMD
         }
+    }
+
+    @Dann("^wird die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt$")
+    public void wirdDieBuchungMitDerFehlermeldungAbgelehnt(final String fehlermeldung) {
+        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeNichtAusgeführt(fehlermeldung));
     }
 }

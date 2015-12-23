@@ -29,6 +29,10 @@ import java.util.UUID;
         this.konten.add(new Konto("Anfangsbestand"));
     }
 
+    public boolean sindKontenVorhanden(final String sollkonto, final String habenkonto) {
+        return this.istKontoVorhanden(new Konto(habenkonto)) && this.istKontoVorhanden(new Konto(sollkonto));
+    }
+
     public Saldo kontostandBerechnen(final String kontoname) {
         final Konto konto = this.kontoSuchen(kontoname);
         return this.kontostandBerechnen(konto);

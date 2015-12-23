@@ -10,4 +10,9 @@ public final class BuchungWurdeNichtAusgeführt extends Wertobjekt {
         super();
         this.fehlermeldung = fehlermeldung;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Buchung wurde nicht ausgeführt: %s", this.fehlermeldung); // NOPMD LoD TODO
+    }
 }

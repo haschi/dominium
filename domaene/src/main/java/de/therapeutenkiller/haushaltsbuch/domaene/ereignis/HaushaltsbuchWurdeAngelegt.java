@@ -5,7 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 public final class HaushaltsbuchWurdeAngelegt extends Wertobjekt {
 
-    // TODO: Das Ereignis sollte nicht das Haushaltsbuch, sondern dessen ID enthalten.
+    // TODO Das Ereignis sollte nicht das Haushaltsbuch, sondern dessen ID enthalten.
     public final Haushaltsbuch haushaltsbuch;
 
     public HaushaltsbuchWurdeAngelegt(final Haushaltsbuch haushaltsbuch) {
