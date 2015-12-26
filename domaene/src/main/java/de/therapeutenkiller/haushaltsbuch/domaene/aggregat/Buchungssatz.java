@@ -1,10 +1,14 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
+import javax.money.format.MonetaryAmountFormat;
+import javax.money.format.MonetaryFormats;
+import java.util.Locale;
 
 public class Buchungssatz {
 
@@ -13,6 +17,10 @@ public class Buchungssatz {
     private final MonetaryAmount währungsbetrag;
 
     public Buchungssatz(final Konto sollkonto, final Konto habenkonto, final MonetaryAmount währungsbetrag) {
+        if (währungsbetrag.isNegative()) {
+            throw new IllegalArgumentException("Buchungssätze dürfen keine negativen Beträge besitzen.");
+        }
+
         this.sollkonto = sollkonto;
         this.habenkonto = habenkonto;
         this.währungsbetrag = währungsbetrag;
@@ -69,5 +77,17 @@ public class Buchungssatz {
     public final boolean istAnfangsbestandFür(final Konto konto) {
         return this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND)
                 || this.habenkonto.equals(Konto.ANFANGSBESTAND) && this.sollkonto.equals(konto);
+    }
+
+    @Override
+    public String toString() {
+        final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
+        final String betrag = format.format(this.währungsbetrag);
+
+        return String.format("%s (%s) an %s (%s)",
+                sollkonto.getBezeichnung(),
+                betrag,
+                habenkonto.getBezeichnung(),
+                betrag);
     }
 }
