@@ -25,7 +25,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Singleton
-public final class AusgabenBuchenSteps {
+public final class AusgabeBuchenSteps {
 
     private final KontoAnlegen kontoAnlegen;
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
@@ -35,7 +35,7 @@ public final class AusgabenBuchenSteps {
     private BuchungWurdeNichtAusgeführt buchungsWurdeNichtAusgeführt;
 
     @Inject
-    AusgabenBuchenSteps(
+    AusgabeBuchenSteps(
             final HaushaltsbuchführungBeginnenKontext kontext,
             final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen,
@@ -69,7 +69,7 @@ public final class AusgabenBuchenSteps {
         }
     }
 
-    @Wenn("^ich meine Ausgabe von (-{0,1}\\d+,\\d{2} [A-Z]{3}) vom \"([^\"]*)\" an \"([^\"]*)\" buche$")
+    @Wenn("^ich meine Ausgabe von (-{0,1}\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,

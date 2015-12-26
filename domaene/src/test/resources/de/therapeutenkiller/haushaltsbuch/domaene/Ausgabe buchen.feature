@@ -1,5 +1,5 @@
 # language: de
-Funktionalität: Ausgaben buchen
+Funktionalität: Ausgabe buchen
   Als Hausmann möchte ich meine Ausgaben buchen, um eine kategorisierte Übersicht meiner Ausgaben zu erhalten
 
   Grundlage:
@@ -9,14 +9,14 @@ Funktionalität: Ausgaben buchen
       | Lebensmittel | 345,00 EUR  | Aufwand  |
 
   Szenario: Ausgabe auf vorhandene Konten buchen (Aktivtausch)
-    Wenn ich meine Ausgabe von 56,78 EUR vom "Girokonto" an "Lebensmittel" buche
+    Wenn ich meine Ausgabe von 56,78 EUR per "Girokonto" an "Lebensmittel" buche
     Dann werde ich folgende Kontostände erhalten:
       | Kontoname    | Betrag      | Kontoart |
       | Girokonto    | 1143,22 EUR | Aktiv    |
       | Lebensmittel | 401,78 EUR  | Aufwand  |
 
   Szenariogrundriss: Ausgabe auf nicht vorhandenes Konto buchen
-    Wenn ich meine Ausgabe von 56,78 EUR vom "<Sollkonto>" an "<Habenkonto>" buche
+    Wenn ich meine Ausgabe von 56,78 EUR per "<Sollkonto>" an "<Habenkonto>" buche
     Dann werde ich die Buchung mit der Fehlermeldung "<Fehlermeldung>" abgelehnt haben
 
     Beispiele:
