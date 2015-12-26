@@ -12,7 +12,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
@@ -21,31 +20,28 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Singleton
 public final class AnfangsbestandVerbuchenSteps {
 
+    private final HaushaltsbuchführungBeginnenKontext kontext;
     private final KontoAnlegen kontoAnlegen;
-    private UUID aktuellesHaushaltsbuch;
     private final AnfangsbestandBuchen anfangsbestandBuchen;
     private final KontoSaldieren kontoSaldieren;
     private BuchungWurdeNichtAusgeführt buchungWurdeNichtAusgeführt;
 
     @Inject
     public AnfangsbestandVerbuchenSteps(
+            final HaushaltsbuchführungBeginnenKontext kontext,
             final KontoAnlegen kontoAnlegen,
             final AnfangsbestandBuchen anfangsbestandBuchen,
             final KontoSaldieren kontoSaldieren) {
+        this.kontext = kontext;
         this.kontoAnlegen = kontoAnlegen;
         this.anfangsbestandBuchen = anfangsbestandBuchen;
         this.kontoSaldieren = kontoSaldieren;
-    }
-
-    public void haushaltsbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
-        this.aktuellesHaushaltsbuch = ereignis.haushaltsbuchId; // NOPMD LoD TODO
     }
 
     public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
@@ -56,14 +52,14 @@ public final class AnfangsbestandVerbuchenSteps {
     // TODO Verschiebene zu GemeinsameSteps
     @Angenommen("ich habe das Konto \"([^\"]*)\" angelegt")
     public void ich_habe_das_Konto_angelegt(final String kontoname) {
-        this.kontoAnlegen.ausführen(this.aktuellesHaushaltsbuch, kontoname);
+        this.kontoAnlegen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname);
     }
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" den Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) buche$")
     public void ichAufDasKontoDenAnfangsbestandVonEurBuche(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
-        this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, betrag);
+        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, betrag);
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -71,7 +67,9 @@ public final class AnfangsbestandVerbuchenSteps {
             final String kontoname,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
@@ -81,7 +79,10 @@ public final class AnfangsbestandVerbuchenSteps {
             final String kontoname,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(this.aktuellesHaushaltsbuch, kontoname);
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname);
+
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 
@@ -90,7 +91,7 @@ public final class AnfangsbestandVerbuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, währungsbetrag);
+        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, währungsbetrag);
     }
 
     @Wenn("^ich weitere (-{0,1}\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")
@@ -98,7 +99,7 @@ public final class AnfangsbestandVerbuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String kontoname) throws Throwable {
 
-        this.anfangsbestandBuchen.ausführen(this.aktuellesHaushaltsbuch, kontoname, währungsbetrag);
+        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, währungsbetrag);
     }
 
     @Dann("^werde ich die Fehlermeldung \"([^\"]*)\" erhalten haben$")
