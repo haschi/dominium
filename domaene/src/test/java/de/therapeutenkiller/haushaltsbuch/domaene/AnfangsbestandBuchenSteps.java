@@ -24,7 +24,7 @@ import javax.money.MonetaryAmount;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Singleton
-public final class AnfangsbestandVerbuchenSteps {
+public final class AnfangsbestandBuchenSteps {
 
     private final HaushaltsbuchführungBeginnenKontext kontext;
     private final KontoAnlegen kontoAnlegen;
@@ -33,7 +33,7 @@ public final class AnfangsbestandVerbuchenSteps {
     private BuchungWurdeNichtAusgeführt buchungWurdeNichtAusgeführt;
 
     @Inject
-    public AnfangsbestandVerbuchenSteps(
+    public AnfangsbestandBuchenSteps(
             final HaushaltsbuchführungBeginnenKontext kontext,
             final KontoAnlegen kontoAnlegen,
             final AnfangsbestandBuchen anfangsbestandBuchen,

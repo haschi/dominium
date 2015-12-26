@@ -1,5 +1,5 @@
 # language: de
-  Funktionalität: Anfangsbestand verbuchen
+  Funktionalität: Anfangsbestand buchen
     Als Hausmann möchte ich den Anfangsbestand meiner Konten verbuchen
   damit ich eine Übersicht meines Vermögens erhalte
 
