@@ -6,14 +6,14 @@ Funktionalität: Ausgaben buchen
     Angenommen mein Haushaltsbuch besitzt folgende Konten:
       | Kontoname    | Betrag      | Kontoart |
       | Girokonto    | 1200,00 EUR | Aktiv    |
-      | Lebensmittel | 345,00 EUR  | Aktiv    |
+      | Lebensmittel | 345,00 EUR  | Aufwand  |
 
   Szenario: Ausgabe auf vorhandene Konten buchen (Aktivtausch)
     Wenn ich meine Ausgabe von 56,78 EUR vom "Girokonto" an "Lebensmittel" buche
     Dann werde ich folgende Kontostände erhalten:
       | Kontoname    | Betrag      | Kontoart |
       | Girokonto    | 1143,22 EUR | Aktiv    |
-      | Lebensmittel | 401,78 EUR  | Aktiv    |
+      | Lebensmittel | 401,78 EUR  | Aufwand  |
 
   Szenariogrundriss: Ausgabe auf nicht vorhandenes Konto buchen
     Wenn ich meine Ausgabe von 56,78 EUR vom "<Sollkonto>" an "<Habenkonto>" buche

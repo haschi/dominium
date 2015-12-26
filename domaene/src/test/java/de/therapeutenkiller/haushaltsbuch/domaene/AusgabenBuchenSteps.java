@@ -7,10 +7,12 @@ import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -89,9 +91,20 @@ public final class AusgabenBuchenSteps {
                     kontostand.kontoname);
 
             // TODO Besser in einem Konverter
-            final Habensaldo erwartetesHabensaldo = new Habensaldo(kontostand.betrag); // NOPMD
-            assertThat(saldo).isEqualTo(erwartetesHabensaldo); // NOPMD
+            final Saldo erwartetesSaldo = saldoFürKonto(kontostand);
+            assertThat(saldo).isEqualTo(erwartetesSaldo); // NOPMD
         }
+    }
+
+    private static Saldo saldoFürKonto(final Kontostand kontostand) {
+        if (kontostand.kontoart.equals(Kontoart.Aktiv)) { //NOPMD LoD TODO
+            return new Habensaldo(kontostand.betrag); // NOPMD
+        } else if (kontostand.kontoart.equals(Kontoart.Ertrag)) { //NOPMD LoD TODO
+            return new Sollsaldo(kontostand.betrag); //NOPMD LoD TODO
+        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) { //NOPMD LoD TODO
+            return new Habensaldo(kontostand.betrag); //NOPMD LoD TODO
+        }
+        return null;
     }
 
     @Dann("^wird die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt$")
