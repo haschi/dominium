@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene
+package de.therapeutenkiller.haushaltsbuch.domaene.aggregat
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto
