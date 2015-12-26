@@ -1,15 +1,15 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.ereignis;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+
+import java.util.UUID;
 
 public final class HaushaltsbuchWurdeAngelegt extends Wertobjekt {
 
-    // TODO Das Ereignis sollte nicht das Haushaltsbuch, sondern dessen ID enthalten.
-    public final Haushaltsbuch haushaltsbuch;
+    public final UUID haushaltsbuchId;
 
-    public HaushaltsbuchWurdeAngelegt(final Haushaltsbuch haushaltsbuch) {
+    public HaushaltsbuchWurdeAngelegt(final UUID haushaltsbuchId) {
         super();
-        this.haushaltsbuch = haushaltsbuch;
+        this.haushaltsbuchId = haushaltsbuchId;
     }
 }

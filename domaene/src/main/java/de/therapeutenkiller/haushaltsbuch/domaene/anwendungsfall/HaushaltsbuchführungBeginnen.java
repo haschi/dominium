@@ -27,7 +27,7 @@ public class HaushaltsbuchführungBeginnen implements Kommando {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch();
         this.getRepository().hinzufügen(haushaltsbuch);
 
-        this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch));
+        this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.getIdentität()));
     }
 
     public final HaushaltsbuchRepository getRepository() {

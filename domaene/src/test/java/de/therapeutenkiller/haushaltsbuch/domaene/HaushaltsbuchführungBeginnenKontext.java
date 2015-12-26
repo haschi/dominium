@@ -13,7 +13,7 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchführungBeginnenKontext {
 
-    private Haushaltsbuch haushaltsbuch;
+    private UUID haushaltsbuchId;
     private final HaushaltsbuchMemoryRepository repository;
     private final Set<Haushaltsbuch> haushaltsbücher;
 
@@ -28,7 +28,7 @@ public class HaushaltsbuchführungBeginnenKontext {
     }
 
     public final UUID aktuellesHaushaltsbuch() {
-        return this.getHaushaltsbuch().getIdentität();
+        return this.haushaltsbuchId;
     }
 
     public final void initialisieren() {
@@ -37,11 +37,7 @@ public class HaushaltsbuchführungBeginnenKontext {
     }
 
     public final void haushaltsbuchWurdeAngelegtHandler(@Observes final HaushaltsbuchWurdeAngelegt event) {
-        this.haushaltsbuch = event.haushaltsbuch;
-    }
-
-    public final Haushaltsbuch getHaushaltsbuch() {
-        return this.haushaltsbuch;
+        this.haushaltsbuchId = event.haushaltsbuchId;
     }
 
     public final Set<Haushaltsbuch> getHaushaltsbücher() {

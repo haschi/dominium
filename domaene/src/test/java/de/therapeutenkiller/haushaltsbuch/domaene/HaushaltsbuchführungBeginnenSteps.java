@@ -49,7 +49,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein()  {
         // HaushaltsbuchWurdeAngelegt event = this.kontext.getHaushaltsbuch();
 
-        assertThat(this.kontext.getHaushaltsbuch()).isNotNull(); // NOPMD LoD ist hier OK
+        assertThat(this.kontext.aktuellesHaushaltsbuch()).isNotNull(); // NOPMD LoD ist hier OK
     }
 
     @Dann("^(?:ich werde|ich werde) ein Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
@@ -65,8 +65,8 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich kein neues Haushaltsbuch angelegt haben$")
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThatThrownBy(this.kontext::getHaushaltsbuch) // NOPMD LoD ist hier OK
+        assertThatThrownBy(this.kontext::aktuellesHaushaltsbuch) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
-            .hasMessage("Rückgabewert der Methode 'getHaushaltsbuch' ist null.");
+            .hasMessage("Rückgabewert der Methode 'aktuellesHaushaltsbuch' ist null.");
     }
 }

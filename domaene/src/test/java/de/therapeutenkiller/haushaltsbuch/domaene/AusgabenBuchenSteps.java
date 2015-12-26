@@ -51,7 +51,7 @@ public final class AusgabenBuchenSteps {
     }
 
     public void haushaltsbuchbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
-        this.haushaltsbuchId = ereignis.haushaltsbuch.getIdentität(); // NOPMD
+        this.haushaltsbuchId = ereignis.haushaltsbuchId; // NOPMD
     }
 
     public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
