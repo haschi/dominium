@@ -17,7 +17,7 @@ Funktionalität: Ausgaben buchen
 
   Szenariogrundriss: Ausgabe auf nicht vorhandenes Konto buchen
     Wenn ich meine Ausgabe von 56,78 EUR vom "<Sollkonto>" an "<Habenkonto>" buche
-    Dann wird die Buchung mit der Fehlermeldung "<Fehlermeldung>" abgelehnt
+    Dann werde ich die Buchung mit der Fehlermeldung "<Fehlermeldung>" abgelehnt haben
 
     Beispiele:
     | Sollkonto | Habenkonto   | Fehlermeldung                                        |

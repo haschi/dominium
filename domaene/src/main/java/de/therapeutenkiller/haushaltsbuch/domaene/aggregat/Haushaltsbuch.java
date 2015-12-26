@@ -29,6 +29,28 @@ import java.util.UUID;
         this.konten.add(new Konto("Anfangsbestand"));
     }
 
+    public String fehlermeldungFürFehlendeKontenErzeugen(
+            final Konto soll,
+            final Konto haben) {
+
+        if (!this.istKontoVorhanden(soll) && this.istKontoVorhanden(haben)) {
+            return String.format("Das Konto %s existiert nicht.", soll.getBezeichnung());
+        }
+
+        if (this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
+            return String.format("Das Konto %s existiert nicht.", haben.getBezeichnung());
+        }
+
+        if (!this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
+
+            return String.format("Die Konten %s und %s existieren nicht.",
+                    soll.getBezeichnung(),
+                    haben.getBezeichnung());
+        }
+
+        throw new IllegalArgumentException("Die Fehlermeldung kann nicht erzeugt werden, da kein Fehler vorliegt.");
+    }
+
     public boolean sindKontenVorhanden(final String sollkonto, final String habenkonto) {
         return this.istKontoVorhanden(new Konto(habenkonto)) && this.istKontoVorhanden(new Konto(sollkonto));
     }

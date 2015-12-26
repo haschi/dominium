@@ -43,8 +43,7 @@ public final class BuchungssatzHinzufügen {
             this.buchungssatzWurdeErstellt.fire(new BuchungssatzWurdeErstellt(sollkonto, habenkonto, betrag));
         } else {
 
-            final String fehlermeldung = this.fehlermeldungErzeugen(
-                    haushaltsbuch,
+            final String fehlermeldung = haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen(
                     new Konto(sollkonto),
                     new Konto(habenkonto));
 
@@ -52,26 +51,4 @@ public final class BuchungssatzHinzufügen {
         }
     }
 
-    private String fehlermeldungErzeugen(
-            final Haushaltsbuch haushaltsbuch,
-            final Konto soll,
-            final Konto haben) {
-
-        if (!haushaltsbuch.istKontoVorhanden(soll) && haushaltsbuch.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", soll.getBezeichnung());
-        }
-
-        if (haushaltsbuch.istKontoVorhanden(soll) && !haushaltsbuch.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", haben.getBezeichnung());
-        }
-
-        if (!haushaltsbuch.istKontoVorhanden(soll) && !haushaltsbuch.istKontoVorhanden(haben)) {
-
-            return String.format("Die Konten %s und %s existieren nicht.",
-                    soll.getBezeichnung(),
-                    haben.getBezeichnung());
-        }
-
-        throw new IllegalArgumentException("Die Fehlermeldung kann nicht erzeugt werden, da kein Fehler vorliegt.");
-    }
 }

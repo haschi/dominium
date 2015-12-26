@@ -107,7 +107,7 @@ public final class AusgabenBuchenSteps {
         return null;
     }
 
-    @Dann("^wird die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt$")
+    @Dann("^werde ich die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void wirdDieBuchungMitDerFehlermeldungAbgelehnt(final String fehlermeldung) {
         assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeNichtAusgeführt(fehlermeldung));
     }
