@@ -11,7 +11,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHin
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -20,38 +19,32 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by matthias on 23.12.15.
- */
 @Singleton
 public final class AusgabenBuchenSteps {
 
     private final KontoAnlegen kontoAnlegen;
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
     private final KontoSaldieren kontoSaldieren;
+    private final HaushaltsbuchführungBeginnenKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchfhrungBeginnen;
-    private UUID haushaltsbuchId;
     private BuchungWurdeNichtAusgeführt buchungsWurdeNichtAusgeführt;
 
     @Inject
     AusgabenBuchenSteps(
+            final HaushaltsbuchführungBeginnenKontext kontext,
             final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen,
             final BuchungssatzHinzufügen buchungssatzHinzufügen,
             final KontoSaldieren kontoSaldieren) {
+        this.kontext = kontext;
         this.haushaltsbuchfhrungBeginnen = haushaltsbuchführungBeginnen;
         this.kontoAnlegen = kontoAnlegen;
 
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
         this.kontoSaldieren = kontoSaldieren;
-    }
-
-    public void haushaltsbuchbuchWurdeAngelegt(@Observes final HaushaltsbuchWurdeAngelegt ereignis) {
-        this.haushaltsbuchId = ereignis.haushaltsbuchId; // NOPMD
     }
 
     public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
@@ -64,10 +57,10 @@ public final class AusgabenBuchenSteps {
         this.haushaltsbuchfhrungBeginnen.ausführen();
 
         for (final Kontostand kontostand : kontostände) {
-            this.kontoAnlegen.ausführen(this.haushaltsbuchId, kontostand.kontoname);
+            this.kontoAnlegen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontostand.kontoname);
 
             this.buchungssatzHinzufügen.ausführen(
-                    this.haushaltsbuchId,
+                    this.kontext.aktuellesHaushaltsbuch(),
                     "Anfangsbestand",
                     kontostand.kontoname,
                     kontostand.betrag);
@@ -80,14 +73,20 @@ public final class AusgabenBuchenSteps {
             final String sollkonto,
             final String habenkonto)  {
 
-        this.buchungssatzHinzufügen.ausführen(this.haushaltsbuchId, sollkonto, habenkonto, währungsbetrag);
+        this.buchungssatzHinzufügen.ausführen(
+                this.kontext.aktuellesHaushaltsbuch(),
+                sollkonto,
+                habenkonto,
+                währungsbetrag);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
     public void werdeIchFolgendeKontoständeErhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
         for (final Kontostand kontostand : kontostände) {
-            final Saldo saldo = this.kontoSaldieren.ausführen(this.haushaltsbuchId, kontostand.kontoname);
+            final Saldo saldo = this.kontoSaldieren.ausführen(
+                    this.kontext.aktuellesHaushaltsbuch(),
+                    kontostand.kontoname);
 
             // TODO Besser in einem Konverter
             final Habensaldo erwartetesHabensaldo = new Habensaldo(kontostand.betrag); // NOPMD
