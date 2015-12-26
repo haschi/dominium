@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -80,14 +79,14 @@ public class Buchungssatz {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        final String betrag = format.format(this.währungsbetrag);
+        final String betrag = format.format(this.währungsbetrag); // NOPMD LoD TODO
 
-        return String.format("%s (%s) an %s (%s)",
-                sollkonto.getBezeichnung(),
+        return String.format("%s (%s) an %s (%s)", // NOPMD LoD TODO
+                this.sollkonto.getBezeichnung(),
                 betrag,
-                habenkonto.getBezeichnung(),
+                this.habenkonto.getBezeichnung(),
                 betrag);
     }
 }
