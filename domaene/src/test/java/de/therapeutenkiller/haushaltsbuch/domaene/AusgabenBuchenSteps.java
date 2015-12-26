@@ -74,13 +74,13 @@ public final class AusgabenBuchenSteps {
         }
     }
 
-    @Wenn("^ich (-{0,1}\\d+,\\d{2} [A-Z]{3}) vom \"([^\"]*)\" an \"([^\"]*)\" buche$")
-    public void ichEurVomAnBuche(
-            @Transform(MoneyConverter.class) final MonetaryAmount arg0,
+    @Wenn("^ich meine Ausgabe von (-{0,1}\\d+,\\d{2} [A-Z]{3}) vom \"([^\"]*)\" an \"([^\"]*)\" buche$")
+    public void wenn_ich_meine_ausgabe_buche(
+            @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,
             final String habenkonto)  {
 
-        this.buchungssatzHinzufügen.ausführen(this.haushaltsbuchId, sollkonto, habenkonto, arg0);
+        this.buchungssatzHinzufügen.ausführen(this.haushaltsbuchId, sollkonto, habenkonto, währungsbetrag);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
