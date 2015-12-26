@@ -2,7 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.weld.exceptions.IllegalArgumentException;
 
 public final class Konto extends Wertobjekt {
 
