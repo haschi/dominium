@@ -3,7 +3,7 @@ Funktionalität: Ausgaben buchen
   Als Hausmann möchte ich meine Ausgaben buchen, um eine kategorisierte Übersicht meiner Ausgaben zu erhalten
 
   Grundlage:
-    Angenommen ich mein Haushaltsbuch besitzt folgende Konten:
+    Angenommen mein Haushaltsbuch besitzt folgende Konten:
       | Kontoname    | Betrag      | Kontoart |
       | Girokonto    | 1200,00 EUR | Aktiv    |
       | Lebensmittel | 345,00 EUR  | Aktiv    |

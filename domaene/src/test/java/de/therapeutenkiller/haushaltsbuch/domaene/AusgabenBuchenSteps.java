@@ -39,11 +39,11 @@ public final class AusgabenBuchenSteps {
 
     @Inject
     AusgabenBuchenSteps(
-            final HaushaltsbuchführungBeginnen haushaltsbuchfhrungBeginnen,
+            final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen,
             final BuchungssatzHinzufügen buchungssatzHinzufügen,
             final KontoSaldieren kontoSaldieren) {
-        this.haushaltsbuchfhrungBeginnen = haushaltsbuchfhrungBeginnen;
+        this.haushaltsbuchfhrungBeginnen = haushaltsbuchführungBeginnen;
         this.kontoAnlegen = kontoAnlegen;
 
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
@@ -58,7 +58,7 @@ public final class AusgabenBuchenSteps {
         this.buchungsWurdeNichtAusgeführt = ereignis;
     }
 
-    @Angenommen("^ich mein Haushaltsbuch besitzt folgende Konten:$")
+    @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void ichMeinHaushaltsbuchBesitztFolgendeKonten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
         this.haushaltsbuchfhrungBeginnen.ausführen();
