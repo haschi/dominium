@@ -61,15 +61,6 @@ public final class KontoErstellenSteps {
         this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname);
     }
 
-    @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) anlege$")
-    public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
-            final String kontoname,
-            @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
-
-        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
-        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname, betrag);
-    }
-
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 

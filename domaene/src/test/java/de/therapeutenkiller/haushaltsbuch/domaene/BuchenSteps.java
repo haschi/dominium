@@ -1,20 +1,25 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
+import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
+import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.money.MonetaryAmount;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +29,8 @@ public final class BuchenSteps {
     private final HaushaltsbuchführungBeginnenKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
     private final KontoAnlegen kontoAnlegen;
-    private BuchungWurdeNichtAusgeführt buchungsWurdeNichtAusgeführt;
-    private BuchungssatzWurdeErstellt buchungssatzWurdeAngelegt;
+    private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
+    private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
     @Inject public BuchenSteps(
             final HaushaltsbuchführungBeginnenKontext kontext,
@@ -36,11 +41,11 @@ public final class BuchenSteps {
         this.kontoAnlegen = kontoAnlegen;
     }
 
-    public void buchungWurdeNichtAusgeführtHandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
+    public void buchungWurdeNichtAusgeführtHandler(@Observes final BuchungWurdeAbgelehnt ereignis) {
         this.buchungsWurdeNichtAusgeführt = ereignis;
     }
 
-    public void buchungssatzWurdeAngelegtHandler(@Observes final BuchungssatzWurdeErstellt buchungssatzWurdeAngelegt) {
+    public void buchungssatzWurdeAngelegtHandler(@Observes final BuchungWurdeAusgeführt buchungssatzWurdeAngelegt) {
         this.buchungssatzWurdeAngelegt = buchungssatzWurdeAngelegt;
     }
 
@@ -57,9 +62,18 @@ public final class BuchenSteps {
         }
     }
 
+    @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) anlege$")
+    public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
+            final String kontoname,
+            @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
+
+        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
+        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname, betrag);
+    }
+
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final String fehlermeldung) {
-        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeNichtAusgeführt(fehlermeldung));
+        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeAbgelehnt(fehlermeldung));
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")

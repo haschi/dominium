@@ -3,8 +3,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungssatzWurdeErstellt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
+import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -16,18 +16,18 @@ import java.util.UUID;
 public final class BuchungssatzHinzufügen {
 
     private final HaushaltsbuchRepository repository;
-    private final Event<BuchungssatzWurdeErstellt> buchungssatzWurdeErstellt;
-    private final Event<BuchungWurdeNichtAusgeführt> buchungWurdeNichtAusgeführt;
+    private final Event<BuchungWurdeAusgeführt> buchungWurdeAusgeführtEreignis;
+    private final Event<BuchungWurdeAbgelehnt> buchungWurdeAbgelehntEreignis;
 
     @Inject
     public BuchungssatzHinzufügen(
             final HaushaltsbuchRepository repository,
-            final Event<BuchungssatzWurdeErstellt> buchungssatzWurdeErstellt,
-            final Event<BuchungWurdeNichtAusgeführt> buchungWurdeNichtAusgeführt) {
+            final Event<BuchungWurdeAusgeführt> buchungWurdeAusgeführtEreignis,
+            final Event<BuchungWurdeAbgelehnt> buchungWurdeAbgelehntEreignis) {
 
         this.repository = repository;
-        this.buchungssatzWurdeErstellt = buchungssatzWurdeErstellt;
-        this.buchungWurdeNichtAusgeführt = buchungWurdeNichtAusgeführt;
+        this.buchungWurdeAusgeführtEreignis = buchungWurdeAusgeführtEreignis;
+        this.buchungWurdeAbgelehntEreignis = buchungWurdeAbgelehntEreignis;
     }
 
     public void ausführen(
@@ -40,14 +40,14 @@ public final class BuchungssatzHinzufügen {
 
         if (haushaltsbuch.sindKontenVorhanden(sollkonto, habenkonto)) { // NOPMD LoD TODO
             haushaltsbuch.neueBuchungHinzufügen(sollkonto, new Konto(habenkonto), betrag); // NOPMD LoD TODO
-            this.buchungssatzWurdeErstellt.fire(new BuchungssatzWurdeErstellt(sollkonto, habenkonto, betrag));
+            this.buchungWurdeAusgeführtEreignis.fire(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
         } else {
 
             final String fehlermeldung = haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen(
                     new Konto(sollkonto),
                     new Konto(habenkonto));
 
-            this.buchungWurdeNichtAusgeführt.fire(new BuchungWurdeNichtAusgeführt(fehlermeldung));
+            this.buchungWurdeAbgelehntEreignis.fire(new BuchungWurdeAbgelehnt(fehlermeldung));
         }
     }
 

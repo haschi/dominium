@@ -6,18 +6,18 @@ import spock.lang.Specification
 /**
  * Created by matthias on 21.12.15.
  */
-class BuchungWurdeNichtAusgeführtTest extends Specification {
+class BuchungWurdeAbgelehntTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
         expect: EqualsVerifier
-                .forClass(BuchungWurdeNichtAusgeführt)
+                .forClass(BuchungWurdeAbgelehnt)
                 .withRedefinedSuperclass()
                 .verify()
     }
 
     def "Die Methode toString() liefert die Fehlermeldung zurück"() {
-        given: "Ich habe ein BuchungWurdeNichtAusgeführt Ereignis"
-        def ereignis = new BuchungWurdeNichtAusgeführt("Fehlermeldung.")
+        given: "Ich habe ein BuchungWurdeAbgelehnt Ereignis"
+        def ereignis = new BuchungWurdeAbgelehnt("Fehlermeldung.")
 
         when: "ich das Objekt als Zeichenfolge ausgebe"
         def ergebnis = ereignis.toString()
