@@ -5,7 +5,7 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
@@ -17,7 +17,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -27,17 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class BuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
     private final KontoAnlegen kontoAnlegen;
     private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
     private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
     @Inject public BuchenSteps(
             final HaushaltsbuchAggregatKontext kontext,
-            final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen) {
         this.kontext = kontext;
-        this.haushaltsbuchführungBeginnen = haushaltsbuchführungBeginnen;
         this.kontoAnlegen = kontoAnlegen;
     }
 
@@ -52,7 +48,7 @@ public final class BuchenSteps {
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
-        this.haushaltsbuchführungBeginnen.ausführen();
+        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
 
         for (final Kontostand kontostand : kontostände) {
             this.kontoAnlegen.ausführen(

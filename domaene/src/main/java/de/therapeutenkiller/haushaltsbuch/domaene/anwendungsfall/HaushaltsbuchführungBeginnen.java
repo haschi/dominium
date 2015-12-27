@@ -6,6 +6,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAng
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Kommando;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -28,6 +29,10 @@ public class HaushaltsbuchführungBeginnen implements Kommando {
         this.getRepository().hinzufügen(haushaltsbuch);
 
         this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.getIdentität()));
+    }
+
+    public final void process(@Observes final HaushaltsbuchführungBeginnenKommando kommando) {
+        this.ausführen();
     }
 
     public final HaushaltsbuchRepository getRepository() {
