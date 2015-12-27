@@ -7,8 +7,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AusgabeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -23,17 +23,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AusgabeBuchenSteps {
 
-    private final BuchungssatzHinzufügen buchungssatzHinzufügen;
     private final KontoSaldieren kontoSaldieren;
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
 
     @Inject
     AusgabeBuchenSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
-            final BuchungssatzHinzufügen buchungssatzHinzufügen,
+            final HaushaltsbuchAggregatKontext kontext,
             final KontoSaldieren kontoSaldieren) {
         this.kontext = kontext;
-        this.buchungssatzHinzufügen = buchungssatzHinzufügen;
         this.kontoSaldieren = kontoSaldieren;
     }
 
@@ -43,11 +40,12 @@ public final class AusgabeBuchenSteps {
             final String sollkonto,
             final String habenkonto)  {
 
-        this.buchungssatzHinzufügen.ausführen(
+        this.kontext.kommandoAusführen(new AusgabeBuchenKommando(
                 this.kontext.aktuellesHaushaltsbuch(),
                 sollkonto,
                 habenkonto,
-                währungsbetrag);
+                währungsbetrag
+        ));
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")

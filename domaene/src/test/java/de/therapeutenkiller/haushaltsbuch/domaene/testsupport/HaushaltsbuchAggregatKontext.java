@@ -5,6 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAng
 import org.slf4j.Logger;
 
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashSet;
@@ -12,17 +13,20 @@ import java.util.Set;
 import java.util.UUID;
 
 @Singleton
-public class HaushaltsbuchführungBeginnenKontext {
+public class HaushaltsbuchAggregatKontext {
 
     private UUID haushaltsbuchId;
     private final HaushaltsbuchMemoryRepository repository;
     private final Set<Haushaltsbuch> haushaltsbücher;
 
     @Inject
-    public HaushaltsbuchführungBeginnenKontext(
+    private BeanManager manager;
+
+    @Inject
+    public HaushaltsbuchAggregatKontext(
             final HaushaltsbuchMemoryRepository repository,
             @SuppressWarnings("CdiInjectionPointsInspection") final Logger log) {
-        log.warn("HaushaltsbuchführungBeginnenKontext(%s)", repository.toString());
+        log.warn("HaushaltsbuchAggregatKontext(%s)", repository.toString());
 
         this.repository = repository;
         this.haushaltsbücher = new HashSet<>();
@@ -43,5 +47,9 @@ public class HaushaltsbuchführungBeginnenKontext {
 
     public final void haushaltsbuchWurdeAngelegtHandler(@Observes final HaushaltsbuchWurdeAngelegt event) {
         this.haushaltsbuchId = event.haushaltsbuchId;
+    }
+
+    public final <T> void kommandoAusführen(final T kommando) {
+        this.manager.fireEvent(kommando);
     }
 }

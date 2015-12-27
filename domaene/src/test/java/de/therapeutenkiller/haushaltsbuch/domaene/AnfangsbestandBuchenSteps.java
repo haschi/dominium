@@ -10,7 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
@@ -23,13 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AnfangsbestandBuchenSteps {
 
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
     private final AnfangsbestandBuchen anfangsbestandBuchen;
     private final KontoSaldieren kontoSaldieren;
 
     @Inject
     public AnfangsbestandBuchenSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
+            final HaushaltsbuchAggregatKontext kontext,
             final AnfangsbestandBuchen anfangsbestandBuchen,
             final KontoSaldieren kontoSaldieren) {
         this.kontext = kontext;

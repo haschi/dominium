@@ -10,7 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Observes;
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class KontoErstellenSteps {
 
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
 
     private final KontostandAbfragen kontostandAbfragen;
     private final KontoAnlegen kontoAnlegen;
@@ -35,7 +35,7 @@ public final class KontoErstellenSteps {
 
     @Inject
     public KontoErstellenSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
+            final HaushaltsbuchAggregatKontext kontext,
             final KontostandAbfragen kontostandAbfragen,
             final KontoAnlegen kontoAnlegen,
             final AlleKonten alleKonten) {
@@ -70,7 +70,7 @@ public final class KontoErstellenSteps {
         assertThat(this.kontoWurdeAngelegt).isEqualTo(sollwert); // NOPMD AssertJ OK TODO
     }
 
-    @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
+    @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
     public void und_das_Konto_wird_einen_Saldo_besitzen(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {

@@ -9,7 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.Haushaltsbuchf�
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -26,14 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class BuchenSteps {
 
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
     private final KontoAnlegen kontoAnlegen;
     private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
     private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
     @Inject public BuchenSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
+            final HaushaltsbuchAggregatKontext kontext,
             final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen) {
         this.kontext = kontext;

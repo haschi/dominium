@@ -13,7 +13,7 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 @Singleton
-public final class BuchungssatzHinzufügen {
+final class BuchungssatzHinzufügen {
 
     private final HaushaltsbuchRepository repository;
     private final Event<BuchungWurdeAusgeführt> buchungWurdeAusgeführtEreignis;

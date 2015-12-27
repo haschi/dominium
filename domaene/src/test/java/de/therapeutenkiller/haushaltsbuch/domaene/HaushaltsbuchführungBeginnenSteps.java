@@ -6,7 +6,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Singleton
 public final class HaushaltsbuchführungBeginnenSteps {
 
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
 
     @Inject
     public HaushaltsbuchführungBeginnenSteps(
-        final HaushaltsbuchführungBeginnenKontext kontext,
+        final HaushaltsbuchAggregatKontext kontext,
         final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen) {
 
         this.kontext = kontext;

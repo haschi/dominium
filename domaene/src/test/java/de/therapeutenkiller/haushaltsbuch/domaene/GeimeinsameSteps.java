@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.java.de.Angenommen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -14,11 +14,11 @@ public final class GeimeinsameSteps {
 
     private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
     private final KontoAnlegen kontoAnlegen;
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
 
     @Inject
     public GeimeinsameSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
+            final HaushaltsbuchAggregatKontext kontext,
             final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
             final KontoAnlegen kontoAnlegen,
             final Logger logger) {

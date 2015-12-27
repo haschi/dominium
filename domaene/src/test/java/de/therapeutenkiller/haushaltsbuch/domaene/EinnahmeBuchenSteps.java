@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.EinnahmeBuchen;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
@@ -13,12 +13,12 @@ import javax.money.MonetaryAmount;
 @Singleton
 public final class EinnahmeBuchenSteps {
 
-    private final HaushaltsbuchführungBeginnenKontext kontext;
+    private final HaushaltsbuchAggregatKontext kontext;
     private final EinnahmeBuchen einnahmeBuchen;
 
     @Inject
     public EinnahmeBuchenSteps(
-            final HaushaltsbuchführungBeginnenKontext kontext,
+            final HaushaltsbuchAggregatKontext kontext,
             final EinnahmeBuchen einnahmeBuchen) {
         this.kontext = kontext;
         this.einnahmeBuchen = einnahmeBuchen;
