@@ -6,7 +6,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegenMitAnfangsbestandKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -26,15 +26,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class BuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final KontoAnlegen kontoAnlegen;
     private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
     private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
     @Inject public BuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext,
-            final KontoAnlegen kontoAnlegen) {
+            final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
-        this.kontoAnlegen = kontoAnlegen;
     }
 
     public void buchungWurdeNichtAusgeführtHandler(@Observes final BuchungWurdeAbgelehnt ereignis) {
@@ -51,10 +48,10 @@ public final class BuchenSteps {
         this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
 
         for (final Kontostand kontostand : kontostände) {
-            this.kontoAnlegen.ausführen(
+            this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando( // NOPMD
                     this.kontext.aktuellesHaushaltsbuch(),
                     kontostand.kontoname,
-                    kontostand.betrag);
+                    kontostand.betrag));
         }
     }
 
@@ -64,7 +61,7 @@ public final class BuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
-        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname, betrag);
+        this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando(haushaltsbuchId, kontoname, betrag));
     }
 
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")

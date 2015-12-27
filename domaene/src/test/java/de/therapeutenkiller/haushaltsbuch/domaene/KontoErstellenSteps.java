@@ -7,7 +7,7 @@ import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontostandAbfragen;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -28,7 +28,6 @@ public final class KontoErstellenSteps {
     private final HaushaltsbuchAggregatKontext kontext;
 
     private final KontostandAbfragen kontostandAbfragen;
-    private final KontoAnlegen kontoAnlegen;
     private final AlleKonten alleKonten;
     private KontoWurdeAngelegt kontoWurdeAngelegt;
     private KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt;
@@ -37,12 +36,10 @@ public final class KontoErstellenSteps {
     public KontoErstellenSteps(
             final HaushaltsbuchAggregatKontext kontext,
             final KontostandAbfragen kontostandAbfragen,
-            final KontoAnlegen kontoAnlegen,
             final AlleKonten alleKonten) {
 
         this.kontext = kontext;
         this.kontostandAbfragen = kontostandAbfragen;
-        this.kontoAnlegen = kontoAnlegen;
         this.alleKonten = alleKonten;
     }
 
@@ -58,7 +55,7 @@ public final class KontoErstellenSteps {
     public void wenn_ich_das_Konto_anlege(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
-        this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname);
+        this.kontext.kommandoAusführen(new KontoAnlegenKommando(haushaltsbuchId, kontoname));
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")

@@ -6,6 +6,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -45,5 +46,9 @@ public final class AnfangsbestandBuchen {
                     kontoname,
                     betrag);
         }
+    }
+
+    public void process(@Observes final AnfangsbestandBuchenKommando kommando) {
+        this.ausführen(kommando.haushaltsbuch, kommando.kontoname, kommando.währungsbetrag);
     }
 }

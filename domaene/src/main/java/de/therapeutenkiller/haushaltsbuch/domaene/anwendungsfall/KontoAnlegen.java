@@ -7,6 +7,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -46,6 +47,14 @@ public final class KontoAnlegen {
             haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
             this.kontoWurdeAngelegtEvent.fire(new KontoWurdeAngelegt(haushaltsbuchId, kontoname));
         }
+    }
+
+    public void process(@Observes final KontoAnlegenMitAnfangsbestandKommando kommando) {
+        this.ausführen(kommando.haushaltsbuch, kommando.kontoname, kommando.betrag);
+    }
+
+    public void process(@Observes final KontoAnlegenKommando kommando) {
+        this.ausführen(kommando.haushaltsbuch, kommando.kontoname);
     }
 
     public HaushaltsbuchRepository getRepository() {

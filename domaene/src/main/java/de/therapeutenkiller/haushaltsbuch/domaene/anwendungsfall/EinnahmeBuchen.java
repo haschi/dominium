@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
 import javax.ejb.Singleton;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
@@ -25,5 +26,9 @@ public final class EinnahmeBuchen {
 
         // TODO ggf. später prüfen, ob die Kontenarten korrekt sind.
         this.buchungssatzHinzufügen.ausführen(haushaltsbuchId, sollkonto, habenkonto, währungsbetrag);
+    }
+
+    public void process(@Observes final EinnahmeBuchenKommando kommando) {
+        this.ausführen(kommando.haushaltsbuch, kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);
     }
 }

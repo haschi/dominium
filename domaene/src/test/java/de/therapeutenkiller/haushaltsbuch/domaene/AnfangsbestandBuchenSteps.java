@@ -8,7 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -24,16 +24,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AnfangsbestandBuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final AnfangsbestandBuchen anfangsbestandBuchen;
     private final KontoSaldieren kontoSaldieren;
 
     @Inject
     public AnfangsbestandBuchenSteps(
             final HaushaltsbuchAggregatKontext kontext,
-            final AnfangsbestandBuchen anfangsbestandBuchen,
             final KontoSaldieren kontoSaldieren) {
         this.kontext = kontext;
-        this.anfangsbestandBuchen = anfangsbestandBuchen;
         this.kontoSaldieren = kontoSaldieren;
     }
 
@@ -41,7 +38,11 @@ public final class AnfangsbestandBuchenSteps {
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
-        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, betrag);
+
+        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname,
+                betrag));
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -73,7 +74,10 @@ public final class AnfangsbestandBuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, währungsbetrag);
+        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname,
+                währungsbetrag));
     }
 
     @Wenn("^ich weitere (-?\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")
@@ -81,6 +85,9 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String kontoname) throws Throwable {
 
-        this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, währungsbetrag);
+        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
+                this.kontext.aktuellesHaushaltsbuch(),
+                kontoname,
+                währungsbetrag));
     }
 }

@@ -3,13 +3,13 @@ package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class AusgabeBuchenKommando {
+public class EinnahmeBuchenKommando {
     public final UUID haushaltsbuch;
     public final String sollkonto;
     public final String habenkonto;
     public final MonetaryAmount währungsbetrag;
 
-    public AusgabeBuchenKommando(
+    public EinnahmeBuchenKommando(
             final UUID haushaltsbuch,
             final String sollkonto,
             final String habenkonto,

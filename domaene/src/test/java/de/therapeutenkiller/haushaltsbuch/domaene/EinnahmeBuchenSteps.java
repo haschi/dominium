@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.EinnahmeBuchen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.EinnahmeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -14,14 +14,11 @@ import javax.money.MonetaryAmount;
 public final class EinnahmeBuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final EinnahmeBuchen einnahmeBuchen;
 
     @Inject
     public EinnahmeBuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext,
-            final EinnahmeBuchen einnahmeBuchen) {
+            final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
-        this.einnahmeBuchen = einnahmeBuchen;
     }
 
     @Wenn("^ich meine Einnahme von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
@@ -30,6 +27,10 @@ public final class EinnahmeBuchenSteps {
             final String sollkonto,
             final String habenkonto) {
 
-        this.einnahmeBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), sollkonto, habenkonto, währungsbetrag);
+        this.kontext.kommandoAusführen(new EinnahmeBuchenKommando(
+                this.kontext.aktuellesHaushaltsbuch(),
+                sollkonto,
+                habenkonto,
+                währungsbetrag));
     }
 }

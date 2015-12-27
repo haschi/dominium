@@ -5,7 +5,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -20,15 +20,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public final class HaushaltsbuchführungBeginnenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen;
 
     @Inject
-    public HaushaltsbuchführungBeginnenSteps(
-        final HaushaltsbuchAggregatKontext kontext,
-        final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen) {
+    public HaushaltsbuchführungBeginnenSteps(final HaushaltsbuchAggregatKontext kontext) {
 
         this.kontext = kontext;
-        this.haushaltsbuchführungBeginnen = haushaltsbuchführungBeginnen;
     }
 
     @Before
@@ -38,7 +34,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
-        this.haushaltsbuchführungBeginnen.ausführen();
+        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
     }
 
     @Wenn("^ich nicht mit der Haushaltsbuchführung beginne$")
