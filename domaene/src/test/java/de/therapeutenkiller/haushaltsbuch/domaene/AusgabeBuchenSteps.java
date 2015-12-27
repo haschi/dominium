@@ -37,7 +37,7 @@ public final class AusgabeBuchenSteps {
         this.kontoSaldieren = kontoSaldieren;
     }
 
-    @Wenn("^ich meine Ausgabe von (-{0,1}\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
+    @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,

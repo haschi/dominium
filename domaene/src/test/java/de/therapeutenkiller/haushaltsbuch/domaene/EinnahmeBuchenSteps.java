@@ -24,7 +24,7 @@ public final class EinnahmeBuchenSteps {
         this.einnahmeBuchen = einnahmeBuchen;
     }
 
-    @Wenn("^ich meine Einnahme von (-{0,1}\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
+    @Wenn("^ich meine Einnahme von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void ich_meine_einnahme_per_an_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,

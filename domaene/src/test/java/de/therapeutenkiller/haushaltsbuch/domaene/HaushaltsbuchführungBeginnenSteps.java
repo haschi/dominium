@@ -52,7 +52,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     }
 
     // TODO Dieser Step muss noch implementiert werden.
-    @Dann("^(?:ich werde|werde ich) ein Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
+    @Dann("^(?:ich werde|werde ich) ein Gesamtvermögen von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
     public void ich_werde_ein_Gesamtvermögen_besitzen(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 

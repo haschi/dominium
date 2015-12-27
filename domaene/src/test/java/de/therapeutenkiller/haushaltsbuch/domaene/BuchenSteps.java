@@ -62,7 +62,7 @@ public final class BuchenSteps {
         }
     }
 
-    @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) anlege$")
+    @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")
     public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
