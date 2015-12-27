@@ -5,7 +5,7 @@ import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 

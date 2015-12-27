@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.java.de.Angenommen;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import org.slf4j.Logger;
 

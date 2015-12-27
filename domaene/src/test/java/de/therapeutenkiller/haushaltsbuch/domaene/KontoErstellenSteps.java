@@ -7,7 +7,7 @@ import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontostandAbfragen;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -89,11 +89,11 @@ public final class KontoErstellenSteps {
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
-    public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final String kontoname) throws Throwable {
+    public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final Konto konto) throws Throwable {
 
         final Collection<Konto> kontenliste = this.alleKonten.ausführen(
                 this.kontext.aktuellesHaushaltsbuch());
 
-        assertThat(kontenliste).containsOnlyOnce(new Konto(kontoname));
+        assertThat(kontenliste).containsOnlyOnce(konto); // NOPMD LoD ToDo
     }
 }

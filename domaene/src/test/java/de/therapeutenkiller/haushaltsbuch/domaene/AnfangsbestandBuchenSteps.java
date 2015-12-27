@@ -8,7 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -36,35 +36,35 @@ public final class AnfangsbestandBuchenSteps {
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) buche$")
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
-            final String kontoname,
+            final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
                 this.kontext.aktuellesHaushaltsbuch(),
-                kontoname,
+                konto,
                 betrag));
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
     public void dann_werde_ich_auf_dem_Konto_ein_Sollsaldo_haben(
-            final String kontoname,
+            final String konto,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
                 this.kontext.aktuellesHaushaltsbuch(),
-                kontoname);
+                konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
     public void dann_werde_ich_auf_dem_Konto_ein_Habensaldo_haben(
-            final String kontoname,
+            final String konto,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
                 this.kontext.aktuellesHaushaltsbuch(),
-                kontoname);
+                konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }

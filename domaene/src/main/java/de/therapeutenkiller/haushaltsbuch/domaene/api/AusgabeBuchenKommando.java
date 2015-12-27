@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
+package de.therapeutenkiller.haushaltsbuch.domaene.api;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;

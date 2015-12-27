@@ -7,7 +7,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AusgabeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.AusgabeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;

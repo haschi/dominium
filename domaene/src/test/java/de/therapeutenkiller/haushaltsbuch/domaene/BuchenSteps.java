@@ -5,8 +5,9 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegenMitAnfangsbestandKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenMitAnfangsbestandKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -57,16 +58,19 @@ public final class BuchenSteps {
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")
     public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
-            final String kontoname,
+            final Konto kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
-        this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando(haushaltsbuchId, kontoname, betrag));
+        this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando(
+                haushaltsbuchId,
+                kontoname.getBezeichnung(),
+                betrag));
     }
 
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
-    public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final String fehlermeldung) {
-        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeAbgelehnt(fehlermeldung));
+    public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
+        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(fehlermeldung); // NOPMD LoD TODO
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
