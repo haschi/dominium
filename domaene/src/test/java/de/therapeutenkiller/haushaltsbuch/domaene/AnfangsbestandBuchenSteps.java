@@ -13,6 +13,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.AnfangsbestandB
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 

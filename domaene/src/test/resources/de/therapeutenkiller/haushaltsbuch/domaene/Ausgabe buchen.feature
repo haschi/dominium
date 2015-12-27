@@ -14,6 +14,7 @@ Funktionalität: Ausgabe buchen
       | Kontoname    | Betrag      | Kontoart |
       | Girokonto    | 1143,22 EUR | Aktiv    |
       | Lebensmittel | 401,78 EUR  | Aufwand  |
+    Und ich werde den Buchungssatz "Girokonto (56,78 EUR) an Lebensmittel (56,78 EUR)" angelegt haben
 
   Szenariogrundriss: Ausgabe auf nicht vorhandenes Konto buchen
     Wenn ich meine Ausgabe von 56,78 EUR per "<Sollkonto>" an "<Habenkonto>" buche

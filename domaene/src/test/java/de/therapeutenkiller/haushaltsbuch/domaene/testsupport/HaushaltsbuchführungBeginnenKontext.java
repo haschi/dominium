@@ -1,8 +1,9 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
 import org.slf4j.Logger;
+
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,28 +28,20 @@ public class HaushaltsbuchführungBeginnenKontext {
         this.haushaltsbücher = new HashSet<>();
     }
 
+    public final void repositoryLeeren() {
+        this.repository.leeren();
+    }
+
     public final UUID aktuellesHaushaltsbuch() {
         return this.haushaltsbuchId;
     }
 
     public final void initialisieren() {
         this.haushaltsbücher.clear();
-        this.getRepository().leeren();
+        this.repositoryLeeren();
     }
 
     public final void haushaltsbuchWurdeAngelegtHandler(@Observes final HaushaltsbuchWurdeAngelegt event) {
         this.haushaltsbuchId = event.haushaltsbuchId;
-    }
-
-    public final Set<Haushaltsbuch> getHaushaltsbücher() {
-        return this.haushaltsbücher;
-    }
-
-    public final <T> T getEvents() {
-        return null;
-    }
-
-    public final HaushaltsbuchMemoryRepository getRepository() {
-        return this.repository;
     }
 }

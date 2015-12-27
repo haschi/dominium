@@ -11,12 +11,11 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeNichtAusgeführt;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -32,7 +31,6 @@ public final class AusgabeBuchenSteps {
     private final KontoSaldieren kontoSaldieren;
     private final HaushaltsbuchführungBeginnenKontext kontext;
     private final HaushaltsbuchführungBeginnen haushaltsbuchfhrungBeginnen;
-    private BuchungWurdeNichtAusgeführt buchungsWurdeNichtAusgeführt;
 
     @Inject
     AusgabeBuchenSteps(
@@ -47,10 +45,6 @@ public final class AusgabeBuchenSteps {
 
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
         this.kontoSaldieren = kontoSaldieren;
-    }
-
-    public void buchungWurdeNichtAusgeführtEreignishandler(@Observes final BuchungWurdeNichtAusgeführt ereignis) {
-        this.buchungsWurdeNichtAusgeführt = ereignis;
     }
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
@@ -105,10 +99,5 @@ public final class AusgabeBuchenSteps {
             return new Habensaldo(kontostand.betrag); //NOPMD LoD TODO
         }
         return null;
-    }
-
-    @Dann("^werde ich die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
-    public void wirdDieBuchungMitDerFehlermeldungAbgelehnt(final String fehlermeldung) {
-        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(new BuchungWurdeNichtAusgeführt(fehlermeldung));
     }
 }

@@ -6,6 +6,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
@@ -42,17 +43,16 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Wenn("^ich nicht mit der Haushaltsbuchführung beginne$")
     public void ich_nicht_mit_der_Haushaltsbuchführung_beginne() {
-        this.kontext.getRepository().leeren();
+        this.kontext.repositoryLeeren();
     }
 
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben$")
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein()  {
-        // HaushaltsbuchWurdeAngelegt event = this.kontext.getHaushaltsbuch();
-
         assertThat(this.kontext.aktuellesHaushaltsbuch()).isNotNull(); // NOPMD LoD ist hier OK
     }
 
-    @Dann("^(?:ich werde|ich werde) ein Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
+    // TODO Dieser Step muss noch implementiert werden.
+    @Dann("^(?:ich werde|werde ich) ein Gesamtvermögen von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
     public void ich_werde_ein_Gesamtvermögen_besitzen(
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 

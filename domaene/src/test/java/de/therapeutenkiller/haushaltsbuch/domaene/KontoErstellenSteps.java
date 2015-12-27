@@ -10,6 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Observes;
@@ -54,14 +55,14 @@ public final class KontoErstellenSteps {
     }
 
     @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")
-    public void wennIchDasKontoAnlege(final String kontoname) {
+    public void wenn_ich_das_Konto_anlege(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
         this.kontoAnlegen.ausführen(haushaltsbuchId, kontoname);
     }
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) anlege$")
-    public void ichDasKontoMitEinemAnfangsbestandVonEurAnlege(
+    public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
@@ -70,7 +71,7 @@ public final class KontoErstellenSteps {
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
-    public void wirdDasKontoFürDasHaushaltsbuchAngelegtWordenSein(final String kontoname) {
+    public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
         final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname);
@@ -79,7 +80,7 @@ public final class KontoErstellenSteps {
     }
 
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) besitzen$")
-    public void dasKontoWirdEinSaldoVonBesitzen(
+    public void und_das_Konto_wird_einen_Saldo_besitzen(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
@@ -90,7 +91,7 @@ public final class KontoErstellenSteps {
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt worden sein$")
-    public void wirdDasKontoNichtAngelegt(final String kontoname) {
+    public void dann_wird_das_Konto_nicht_angelegt_worden_sein(final String kontoname) {
 
         final KontoWurdeNichtAngelegt expected = new KontoWurdeNichtAngelegt(
                 this.kontext.aktuellesHaushaltsbuch(),
@@ -100,7 +101,7 @@ public final class KontoErstellenSteps {
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
-    public void dasHaushaltsbuchWirdEinKontoBesitzen(final String kontoname) throws Throwable {
+    public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final String kontoname) throws Throwable {
 
         final Collection<Konto> kontenliste = this.alleKonten.ausführen(
                 this.kontext.aktuellesHaushaltsbuch());
