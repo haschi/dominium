@@ -44,7 +44,7 @@ public final class AnfangsbestandBuchenSteps {
         this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, betrag);
     }
 
-    @Dann("^werde ich auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
     public void dann_werde_ich_auf_dem_Konto_ein_Sollsaldo_haben(
             final String kontoname,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
@@ -56,7 +56,7 @@ public final class AnfangsbestandBuchenSteps {
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 
-    @Dann("^werde ich auf dem Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
     public void dann_werde_ich_auf_dem_Konto_ein_Habensaldo_haben(
             final String kontoname,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {

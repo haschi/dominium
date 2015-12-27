@@ -22,7 +22,6 @@ Angenommen ich habe mit der Haushaltsbuchführung begonnen
 Und ich habe das Konto "Girokonto" angelegt
 ```
 
-
 Anwendungsfall (Wenn)
 ---------------------
 
@@ -49,7 +48,7 @@ Nachbedingung im Futur I Passiv verfasst.
 
 Beispiel für Nachbedingung mit Prüfung durch Abfrage:
 ```gherkin
-Dann wird das Konto "Girokonto" angelegt
+Dann werde ich das Konto "Girokonto" angelegen
 ```
 
 Wenn die Nachbedingung durch ein abgefangenes Domänenereignis geprüft wird,
@@ -57,11 +56,11 @@ dann wird Futur II Passiv verwendet. Domänenereignis werden in der UL
 allgemein im Perfekt beschrieben. Z.B. *Konto wurde angelegt* oder *Buchung
 wurde ausgeführt*. Da aus Sicht des Anwendungsfalls die Nachbedingung erst in
 der Zukunft erfüllt sein wird, bietet sich für die Formulierung der
-Nachbedingung die im Futur II an, um die abgeschlossene Handlung auszudrücken.
+Nachbedingung im Futur II an, um die abgeschlossene Handlung auszudrücken.
 
 Beispiel für Nachbedingung mit Prüfung durch Domänenereignis:
 ```gherkin
-Dann wird das Konto "Girokonto" angelegt worden sein
+Dann werde ich das das Konto "Girokonto" angelegt haben
 ```
 
 Wenn zur Prüfung der Nachbedingung eine Abfrage erfolgt und ein
@@ -100,6 +99,50 @@ Sicht einzunehmen, jedoch hebt es den Akteur als handelnde Person hervor und
 versetzt den Autor in dessen Rolle. Insbesondere beim Verfassen der Aktion
 sollte das Personalpronomen verwendet werden.
 
+Das System bietet dem Akteur Kommandos zur Ausführung seiner Anwendungsfälle
+und reagiert mit Ereignissen und bietet Abfragen zur Darstellung seines
+Zustandes. Wenn das System und damit alle seine Kommandos, Ereignisse und
+Abfragen mit dem Personalpronomen *ich* gleichgesetzt werden, erhält man die
+Beschreibung des Systems in Form einer *Ich-Erzählung*. Das System beschreibt
+sich also selbst, welches ein Hauptziel von ATDD ist und damit erfüllt wird.
+Gleichzeitig verhindert diese Form den Einfluss technischer und fachfremder
+Aspekte.
+
+Wenn es für ein Szenario weitere Akteure gibt, so werden sie explizit
+in der dritten Person benannt.
+
+```gherkin
+Angenommen der Systemadministrator hat die Benutzeranmeldung freigeschaltet
+```
+
+Der Begriff System
+------------------
+
+In Wikipedia ist der allgemeine Begriff System wie folgt definiert:
+> Als System (altgr. σύστεμα sýstēma, ‚aus mehreren Einzelteilen
+> zusammengesetztes Ganzes‘) wird allgemein eine Gesamtheit von
+> Elementen bezeichnet, die so aufeinander bezogen oder miteinander
+> verbunden sind und in einer Weise interagieren, dass sie als eine
+> aufgaben-, sinn- oder zweckgebundene Einheit angesehen werden können,
+> als strukturierte systematische Ganzheit.
+
+Im DDD und damit auch ATDD wird das System durch Einzelteile (Bausteine)
+beschrieben, deren Funktion klar abgegrenzt sind. Dazu zählen unter anderem:
+
+* Kommando
+* Abfrage
+* Ereignis
+* Zustand (Modell)
+
+Nicht das technische Endprodukt, welches zweifelos auch ein System ist,
+sondern das __fachliche System__ steht im Mittelpunkt von DDD und ATDD. Das
+sich durch ATDDD selbst beschreibende fachliche System wird ausschließlich
+mit Hilfe der ubiquitären (allgegenwärtigen) Sprache (engl. ubiquitous
+language) ausgedrückt. Technische Fachbegriffe, die zur Umsetzung der
+Systemanforderungen erforderlich sind, gehören nicht zur UL und damit auch
+nicht in die fachliche Beschreibung, es sei denn ein technisches System
+ist der zentrale faachliche Aspekt.
+
 Vollständiges Beispiele
 -----------------------
 
@@ -124,7 +167,6 @@ Schritt erfolgen soll, dann sollte folgendes Muster verwendet werden:
         Wenn ich einen anderen Anwendungsfall ausführe
         Dann werde ich das Ergebnis prüfen
 ```
-
 
 Konfiguration von IntelliJ
 ==========================
