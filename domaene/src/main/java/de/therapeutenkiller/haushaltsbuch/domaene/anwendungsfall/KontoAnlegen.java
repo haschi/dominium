@@ -5,7 +5,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.VermögenWurdeGeändert;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -16,34 +15,25 @@ import java.util.UUID;
 @Singleton
 public final class KontoAnlegen {
     private final HaushaltsbuchRepository repository;
-    private final BuchungssatzHinzufügen buchungssatzHinzufügen;
+    private final AnfangsbestandBuchen anfangsbestandBuchen;
     private final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent;
-    private final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent;
     private final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt;
 
     @Inject
     public KontoAnlegen(
-        final HaushaltsbuchRepository repository,
-        final BuchungssatzHinzufügen buchungssatzHinzufügen,
-        final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent,
-        final Event<VermögenWurdeGeändert> vermögenWurdeGeändertEvent,
-        final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt) {
+            final HaushaltsbuchRepository repository,
+            final AnfangsbestandBuchen anfangsbestandBuchen,
+            final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent,
+            final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt) {
         this.repository = repository;
-        this.buchungssatzHinzufügen = buchungssatzHinzufügen;
+        this.anfangsbestandBuchen = anfangsbestandBuchen;
         this.kontoWurdeAngelegtEvent = kontoWurdeAngelegtEvent;
-        this.vermögenWurdeGeändertEvent = vermögenWurdeGeändertEvent;
         this.kontoWurdeNichtAngelegt = kontoWurdeNichtAngelegt;
     }
 
     public void ausführen(final UUID haushaltsbuchId, final String kontoname, final MonetaryAmount anfangsbestand) {
-
         this.ausführen(haushaltsbuchId, kontoname);
-
-        this.buchungssatzHinzufügen.ausführen(haushaltsbuchId, kontoname, "Anfangsbestand", anfangsbestand);
-
-        final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
-        final MonetaryAmount vermögen = haushaltsbuch.gesamtvermögenBerechnen(); // NOPMD Lod
-        this.vermögenWurdeGeändertEvent.fire(new VermögenWurdeGeändert(haushaltsbuchId, vermögen));
+        this.anfangsbestandBuchen.ausführen(haushaltsbuchId, kontoname, anfangsbestand);
     }
 
     public void ausführen(final UUID haushaltsbuchId, final String kontoname) {

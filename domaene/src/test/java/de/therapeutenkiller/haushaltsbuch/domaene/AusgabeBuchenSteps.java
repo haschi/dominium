@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
-import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
@@ -9,8 +8,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.HaushaltsbuchführungBeginnen;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.KontoAnlegen;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchführungBeginnenKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
@@ -26,41 +23,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AusgabeBuchenSteps {
 
-    private final KontoAnlegen kontoAnlegen;
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
     private final KontoSaldieren kontoSaldieren;
     private final HaushaltsbuchführungBeginnenKontext kontext;
-    private final HaushaltsbuchführungBeginnen haushaltsbuchfhrungBeginnen;
 
     @Inject
     AusgabeBuchenSteps(
             final HaushaltsbuchführungBeginnenKontext kontext,
-            final HaushaltsbuchführungBeginnen haushaltsbuchführungBeginnen,
-            final KontoAnlegen kontoAnlegen,
             final BuchungssatzHinzufügen buchungssatzHinzufügen,
             final KontoSaldieren kontoSaldieren) {
         this.kontext = kontext;
-        this.haushaltsbuchfhrungBeginnen = haushaltsbuchführungBeginnen;
-        this.kontoAnlegen = kontoAnlegen;
-
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
         this.kontoSaldieren = kontoSaldieren;
-    }
-
-    @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
-    public void ichMeinHaushaltsbuchBesitztFolgendeKonten(final List<Kontostand> kontostände) { // NOPMD Dataflow
-
-        this.haushaltsbuchfhrungBeginnen.ausführen();
-
-        for (final Kontostand kontostand : kontostände) {
-            this.kontoAnlegen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontostand.kontoname);
-
-            this.buchungssatzHinzufügen.ausführen(
-                    this.kontext.aktuellesHaushaltsbuch(),
-                    "Anfangsbestand",
-                    kontostand.kontoname,
-                    kontostand.betrag);
-        }
     }
 
     @Wenn("^ich meine Ausgabe von (-{0,1}\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
@@ -77,7 +51,7 @@ public final class AusgabeBuchenSteps {
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
-    public void werdeIchFolgendeKontoständeErhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
+    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
         for (final Kontostand kontostand : kontostände) {
             final Saldo saldo = this.kontoSaldieren.ausführen(

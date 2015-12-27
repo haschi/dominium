@@ -38,14 +38,14 @@ public final class AnfangsbestandBuchenSteps {
     }
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" den Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) buche$")
-    public void ichAufDasKontoDenAnfangsbestandVonEurBuche(
+    public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
         this.anfangsbestandBuchen.ausführen(this.kontext.aktuellesHaushaltsbuch(), kontoname, betrag);
     }
 
-    @Dann("^wird das Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
-    public void wirdDasKontoEinSollsaldoVonEurHaben(
+    @Dann("^werde ich auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    public void dann_werde_ich_auf_dem_Konto_ein_Sollsaldo_haben(
             final String kontoname,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
@@ -56,8 +56,8 @@ public final class AnfangsbestandBuchenSteps {
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
     }
 
-    @Dann("^wird das Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
-    public void wirdDasKontoEinHabensaldoVonEurHaben(
+    @Dann("^werde ich auf dem Konto \"([^\"]*)\" ein Habensaldo von (-{0,1}\\d+,\\d{2} [A-Z]{3}) haben$")
+    public void dann_werde_ich_auf_dem_Konto_ein_Habensaldo_haben(
             final String kontoname,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
 
@@ -69,7 +69,7 @@ public final class AnfangsbestandBuchenSteps {
     }
 
     @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-{0,1}\\d+,\\d{2} [A-Z]{3}) gebucht$")
-    public void ichHabeAufDasKontoDenAnfangsbestandGebucht(
+    public void angenommen_ich_habe_auf_das_Konto_den_Anfangsbestand_gebucht(
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
@@ -77,7 +77,7 @@ public final class AnfangsbestandBuchenSteps {
     }
 
     @Wenn("^ich weitere (-{0,1}\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")
-    public void ichWeiteresGeldAufDasKontoAlsAnfangsbestandBuche(
+    public void wenn_ich_weitere_Euro_auf_das_Konto_als_Anfangsbestand_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String kontoname) throws Throwable {
 
