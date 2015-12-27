@@ -88,14 +88,6 @@ import java.util.UUID;
                     .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
-    public MonetaryAmount gesamtvermögenBerechnen() {
-
-        return this.buchungssätze.stream()
-                .map(Buchungssatz::getWährungsbetrag)
-                .reduce(MonetaryFunctions.sum())
-                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
-    }
-
     public void neuesKontoHinzufügen(final Konto konto) {
         this.konten.add(konto);
     }
