@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene;
+package de.therapeutenkiller.haushaltsbuch.spi;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 

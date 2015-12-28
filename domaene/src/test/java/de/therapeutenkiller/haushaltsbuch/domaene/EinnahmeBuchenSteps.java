@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.EinnahmeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 

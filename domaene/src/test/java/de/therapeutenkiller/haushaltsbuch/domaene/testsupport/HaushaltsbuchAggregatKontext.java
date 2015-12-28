@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import org.slf4j.Logger;
 
 import javax.enterprise.event.Observes;

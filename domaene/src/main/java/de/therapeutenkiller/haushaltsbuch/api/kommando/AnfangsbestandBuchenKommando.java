@@ -1,20 +1,20 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.api;
+package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class KontoMitAnfangsbestandAnlegenKommando {
-
+public class AnfangsbestandBuchenKommando {
     public final UUID haushaltsbuchId;
     public final String kontoname;
-    public final MonetaryAmount betrag;
+    public final MonetaryAmount währungsbetrag;
 
-    public KontoMitAnfangsbestandAnlegenKommando(
+    public AnfangsbestandBuchenKommando(
             final UUID haushaltsbuchId,
             final String kontoname,
-            final MonetaryAmount betrag) {
+            final MonetaryAmount währungsbetrag) {
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
-        this.betrag = betrag;
+        this.währungsbetrag = währungsbetrag;
     }
 }

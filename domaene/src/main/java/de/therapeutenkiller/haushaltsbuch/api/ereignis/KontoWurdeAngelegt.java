@@ -1,14 +1,15 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.ereignis;
+package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import java.util.UUID;
 
-public final class KontoWurdeNichtAngelegt extends Wertobjekt {
+public final class KontoWurdeAngelegt extends Wertobjekt {
     public final UUID haushaltsbuchId;
     public final String kontoname;
 
-    public KontoWurdeNichtAngelegt(final UUID haushaltsbuchId, final String kontoname) {
+    public KontoWurdeAngelegt(final UUID haushaltsbuchId, final String kontoname) {
+
         super();
 
         this.haushaltsbuchId = haushaltsbuchId;

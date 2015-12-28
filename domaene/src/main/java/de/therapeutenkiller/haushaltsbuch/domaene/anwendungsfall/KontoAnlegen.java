@@ -1,12 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
+import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoMitAnfangsbestandAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;

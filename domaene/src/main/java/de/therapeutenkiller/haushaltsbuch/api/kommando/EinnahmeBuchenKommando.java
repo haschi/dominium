@@ -1,15 +1,15 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.api;
+package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class AusgabeBuchenKommando {
+public class EinnahmeBuchenKommando {
     public final UUID haushaltsbuchId;
     public final String sollkonto;
     public final String habenkonto;
     public final MonetaryAmount währungsbetrag;
 
-    public AusgabeBuchenKommando(
+    public EinnahmeBuchenKommando(
             final UUID haushaltsbuchId,
             final String sollkonto,
             final String habenkonto,

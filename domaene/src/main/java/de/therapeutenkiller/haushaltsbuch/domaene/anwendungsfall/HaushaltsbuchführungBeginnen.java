@@ -1,10 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.HaushaltsbuchWurdeAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Kommando;
+import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
@@ -12,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class HaushaltsbuchführungBeginnen implements Kommando {
+public class HaushaltsbuchführungBeginnen {
     private final HaushaltsbuchRepository repository;
     private final Event<HaushaltsbuchWurdeAngelegt> haushaltsbuchWurdeAngelegt;
 
@@ -24,7 +23,6 @@ public class HaushaltsbuchführungBeginnen implements Kommando {
         this.haushaltsbuchWurdeAngelegt = haushaltsbuchWurdeAngelegt;
     }
 
-    @Override
     public final void ausführen() {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch();
         this.getRepository().hinzufügen(haushaltsbuch);

@@ -1,10 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
+import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
-import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;

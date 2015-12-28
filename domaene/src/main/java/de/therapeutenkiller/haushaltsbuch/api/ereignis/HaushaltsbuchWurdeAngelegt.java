@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.ereignis;
+package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 

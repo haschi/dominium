@@ -1,7 +1,7 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.abfrage;
+package de.therapeutenkiller.haushaltsbuch.abfrage;
 
 import com.google.common.collect.ImmutableCollection;
-import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
+import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 

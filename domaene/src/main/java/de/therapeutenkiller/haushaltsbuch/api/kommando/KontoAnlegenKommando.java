@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.api;
+package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.api.AusgabeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;

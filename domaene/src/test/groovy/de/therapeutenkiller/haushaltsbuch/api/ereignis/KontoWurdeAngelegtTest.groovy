@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.ereignis
+package de.therapeutenkiller.haushaltsbuch.api.ereignis
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
