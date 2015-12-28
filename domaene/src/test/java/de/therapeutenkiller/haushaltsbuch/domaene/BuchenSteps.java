@@ -7,7 +7,7 @@ import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.api.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenMitAnfangsbestandKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -30,8 +30,7 @@ public final class BuchenSteps {
     private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
     private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
-    @Inject public BuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext) {
+    @Inject public BuchenSteps(final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
     }
 
@@ -49,8 +48,8 @@ public final class BuchenSteps {
         this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
 
         for (final Kontostand kontostand : kontostände) {
-            this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando( // NOPMD
-                    this.kontext.aktuellesHaushaltsbuch(),
+            this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando( // NOPMD
+                    this.kontext.aktuelleHaushaltsbuchId(),
                     kontostand.kontoname,
                     kontostand.betrag));
         }
@@ -61,8 +60,8 @@ public final class BuchenSteps {
             final Konto kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final UUID haushaltsbuchId = this.kontext.aktuellesHaushaltsbuch();
-        this.kontext.kommandoAusführen(new KontoAnlegenMitAnfangsbestandKommando(
+        final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
+        this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando(
                 haushaltsbuchId,
                 kontoname.getBezeichnung(),
                 betrag));

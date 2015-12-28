@@ -44,7 +44,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben$")
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein()  {
-        assertThat(this.kontext.aktuellesHaushaltsbuch()).isNotNull(); // NOPMD LoD ist hier OK
+        assertThat(this.kontext.aktuelleHaushaltsbuchId()).isNotNull(); // NOPMD LoD ist hier OK
     }
 
     // TODO Dieser Step muss noch implementiert werden.
@@ -54,15 +54,15 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
         // Überlegen, wie die Abfrage ausgeführt wird, wenn kein Haushaltsbuch existiert.
         // final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
-        // final MonetaryAmount actual = this.gesamtvermögenBerechnen.ausführen(haushaltsbuchId);
+        // final MonetaryAmount actual = this.gesamtvermögenBerechnen.abfragen(haushaltsbuchId);
 
         // assertThat(actual).isEqualTo(währungsbetrag); // NOPMD
     }
 
     @Dann("^werde ich kein neues Haushaltsbuch angelegt haben$")
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThatThrownBy(this.kontext::aktuellesHaushaltsbuch) // NOPMD LoD ist hier OK
+        assertThatThrownBy(this.kontext::aktuelleHaushaltsbuchId) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
-            .hasMessage("Rückgabewert der Methode 'aktuellesHaushaltsbuch' ist null.");
+            .hasMessage("Rückgabewert der Methode 'aktuelleHaushaltsbuchId' ist null.");
     }
 }

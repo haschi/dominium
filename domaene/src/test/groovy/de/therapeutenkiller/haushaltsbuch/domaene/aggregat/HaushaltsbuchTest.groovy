@@ -21,7 +21,7 @@ class HaushaltsbuchTest extends Specification {
     def "Konto suchen"() {
 
         given: def haushaltsbuch = new Haushaltsbuch();
-        // haushaltsbuch.neuesKontoHinzufügen(konto, fünfEuro);
+        // haushaltsbuchId.neuesKontoHinzufügen(konto, fünfEuro);
 
         when:
         def ergebnis = haushaltsbuch.kontoSuchen("Anfangsbestand")

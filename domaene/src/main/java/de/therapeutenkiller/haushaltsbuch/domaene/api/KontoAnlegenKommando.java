@@ -3,12 +3,12 @@ package de.therapeutenkiller.haushaltsbuch.domaene.api;
 import java.util.UUID;
 
 public class KontoAnlegenKommando {
-    public final UUID haushaltsbuch;
+    public final UUID haushaltsbuchId;
     public final String kontoname;
 
-    public KontoAnlegenKommando(final UUID haushaltsbuch, final String kontoname) {
+    public KontoAnlegenKommando(final UUID haushaltsbuchId, final String kontoname) {
 
-        this.haushaltsbuch = haushaltsbuch;
+        this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
     }
 }

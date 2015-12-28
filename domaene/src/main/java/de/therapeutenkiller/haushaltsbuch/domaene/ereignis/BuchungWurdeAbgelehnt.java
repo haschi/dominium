@@ -3,16 +3,16 @@ package de.therapeutenkiller.haushaltsbuch.domaene.ereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 public final class BuchungWurdeAbgelehnt extends Wertobjekt {
-    public final String fehlermeldung;
+    public final String grund;
 
-    public BuchungWurdeAbgelehnt(final String fehlermeldung) {
+    public BuchungWurdeAbgelehnt(final String grund) {
 
         super();
-        this.fehlermeldung = fehlermeldung;
+        this.grund = grund;
     }
 
     @Override
     public String toString() {
-        return String.format("Buchung wurde nicht ausgeführt: %s", this.fehlermeldung); // NOPMD LoD TODO
+        return String.format("Buchung wurde nicht ausgeführt: %s", this.grund); // NOPMD LoD TODO
     }
 }

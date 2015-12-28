@@ -61,12 +61,12 @@ import java.util.UUID;
     }
 
     @CoverageIgnore
-    public Saldo kontostandBerechnen(final Konto einKonto) {
+    public Saldo kontostandBerechnen(final Konto konto) {
 
-        final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(einKonto);
+        final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
         final MonetaryAmount summerDerSollbuchungen = this.summeFür(sollkonto);
 
-        final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(einKonto);
+        final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(konto);
         final MonetaryAmount summerDerHabenbuchungen = this.summeFür(habenkonto);
 
         return this.saldieren(summerDerSollbuchungen, summerDerHabenbuchungen);

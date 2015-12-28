@@ -29,7 +29,7 @@ public final class AusgabeBuchen {
 
     public void process(@Observes final AusgabeBuchenKommando kommando) {
         this.ausführen(
-                kommando.haushaltsbuch,
+                kommando.haushaltsbuchId,
                 kommando.sollkonto,
                 kommando.habenkonto,
                 kommando.währungsbetrag

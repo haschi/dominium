@@ -4,7 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoAnlegenMitAnfangsbestandKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.api.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.ereignis.KontoWurdeNichtAngelegt;
 
@@ -51,12 +51,12 @@ public final class KontoAnlegen {
         }
     }
 
-    public void process(@Observes final KontoAnlegenMitAnfangsbestandKommando kommando) {
-        this.ausführen(kommando.haushaltsbuch, kommando.kontoname, kommando.betrag);
+    public void process(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
+        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, kommando.betrag);
     }
 
     public void process(@Observes final KontoAnlegenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuch, kommando.kontoname);
+        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname);
     }
 
     public HaushaltsbuchRepository getRepository() {

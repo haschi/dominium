@@ -16,8 +16,7 @@ public final class EinnahmeBuchenSteps {
     private final HaushaltsbuchAggregatKontext kontext;
 
     @Inject
-    public EinnahmeBuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext) {
+    public EinnahmeBuchenSteps(final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
     }
 
@@ -28,7 +27,7 @@ public final class EinnahmeBuchenSteps {
             final String habenkonto) {
 
         this.kontext.kommandoAusführen(new EinnahmeBuchenKommando(
-                this.kontext.aktuellesHaushaltsbuch(),
+                this.kontext.aktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
                 währungsbetrag));

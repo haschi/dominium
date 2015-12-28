@@ -22,7 +22,7 @@ public final class AlleKonten {
         this.repository = repository;
     }
 
-    public ImmutableCollection<Konto> ausführen(final UUID haushaltsbuchId) {
+    public ImmutableCollection<Konto> abfragen(final UUID haushaltsbuchId) {
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
         return haushaltsbuch.getKonten(); // NOPMD LoD TODO
     }

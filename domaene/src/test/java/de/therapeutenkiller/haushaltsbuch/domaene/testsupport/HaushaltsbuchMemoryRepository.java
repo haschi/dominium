@@ -18,6 +18,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         if (!this.haushaltsbücher.isEmpty()) {
             throw new IllegalStateException();
         }
+
         this.haushaltsbücher.add(haushaltsbuch);
     }
 

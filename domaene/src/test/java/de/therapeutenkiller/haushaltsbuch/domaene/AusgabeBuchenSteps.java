@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
@@ -23,13 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AusgabeBuchenSteps {
 
-    private final KontoSaldieren kontoSaldieren;
+    private final SaldoAbfrage kontoSaldieren;
     private final HaushaltsbuchAggregatKontext kontext;
 
     @Inject
     AusgabeBuchenSteps(
             final HaushaltsbuchAggregatKontext kontext,
-            final KontoSaldieren kontoSaldieren) {
+            final SaldoAbfrage kontoSaldieren) {
         this.kontext = kontext;
         this.kontoSaldieren = kontoSaldieren;
     }
@@ -41,7 +41,7 @@ public final class AusgabeBuchenSteps {
             final String habenkonto)  {
 
         this.kontext.kommandoAusführen(new AusgabeBuchenKommando(
-                this.kontext.aktuellesHaushaltsbuch(),
+                this.kontext.aktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
                 währungsbetrag
@@ -52,8 +52,8 @@ public final class AusgabeBuchenSteps {
     public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
 
         for (final Kontostand kontostand : kontostände) {
-            final Saldo saldo = this.kontoSaldieren.ausführen(
-                    this.kontext.aktuellesHaushaltsbuch(),
+            final Saldo saldo = this.kontoSaldieren.abfragen(
+                    this.kontext.aktuelleHaushaltsbuchId(),
                     kontostand.kontoname);
 
             // TODO Besser in einem Konverter

@@ -36,8 +36,12 @@ public class HaushaltsbuchAggregatKontext {
         this.repository.leeren();
     }
 
-    public final UUID aktuellesHaushaltsbuch() {
+    public final UUID aktuelleHaushaltsbuchId() {
         return this.haushaltsbuchId;
+    }
+
+    public final Haushaltsbuch aktuellesHaushaltsbuch() {
+        return this.repository.besorgen(this.haushaltsbuchId);
     }
 
     public final void initialisieren() {

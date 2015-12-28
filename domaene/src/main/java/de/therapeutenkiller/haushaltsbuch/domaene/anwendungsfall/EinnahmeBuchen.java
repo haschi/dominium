@@ -31,6 +31,6 @@ public final class EinnahmeBuchen {
     }
 
     public void process(@Observes final EinnahmeBuchenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuch, kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);
+        this.ausführen(kommando.haushaltsbuchId, kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);
     }
 }

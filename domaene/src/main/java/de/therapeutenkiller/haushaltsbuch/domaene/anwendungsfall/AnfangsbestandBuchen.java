@@ -50,6 +50,6 @@ public final class AnfangsbestandBuchen {
     }
 
     public void process(@Observes final AnfangsbestandBuchenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuch, kommando.kontoname, kommando.währungsbetrag);
+        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, kommando.währungsbetrag);
     }
 }

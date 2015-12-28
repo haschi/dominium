@@ -167,13 +167,13 @@
                     <instrumentation>
                         <ignoreMethodAnnotations>
                             <ignoreMethodAnnotation>
-                                de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore
+                                de.therapeutenkiller.haushaltsbuchId.domaene.CoverageIgnore
                             </ignoreMethodAnnotation>
 
                         </ignoreMethodAnnotations>
                         <ignores>
                             <ignore>com.example.boringcode.*</ignore>
-                            <ignore>de.therapeutenkiller.haushaltsbuch.domaene.*</ignore>
+                            <ignore>de.therapeutenkiller.haushaltsbuchId.domaene.*</ignore>
                         </ignores>
                         <excludes>
                             <exclude>com/example/dullcode/**/*.class</exclude>

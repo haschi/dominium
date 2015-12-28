@@ -4,7 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.KontoSaldieren;
+import de.therapeutenkiller.haushaltsbuch.domaene.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
@@ -24,12 +24,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AnfangsbestandBuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private final KontoSaldieren kontoSaldieren;
+    private final SaldoAbfrage kontoSaldieren;
 
     @Inject
     public AnfangsbestandBuchenSteps(
             final HaushaltsbuchAggregatKontext kontext,
-            final KontoSaldieren kontoSaldieren) {
+            final SaldoAbfrage kontoSaldieren) {
         this.kontext = kontext;
         this.kontoSaldieren = kontoSaldieren;
     }
@@ -40,7 +40,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuellesHaushaltsbuch(),
+                this.kontext.aktuelleHaushaltsbuchId(),
                 konto,
                 betrag));
     }
@@ -50,8 +50,8 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
-                this.kontext.aktuellesHaushaltsbuch(),
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
+                this.kontext.aktuelleHaushaltsbuchId(),
                 konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
@@ -62,8 +62,8 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.ausführen(
-                this.kontext.aktuellesHaushaltsbuch(),
+        final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
+                this.kontext.aktuelleHaushaltsbuchId(),
                 konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
@@ -75,7 +75,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuellesHaushaltsbuch(),
+                this.kontext.aktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));
     }
@@ -86,7 +86,7 @@ public final class AnfangsbestandBuchenSteps {
             final String kontoname) throws Throwable {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuellesHaushaltsbuch(),
+                this.kontext.aktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));
     }
