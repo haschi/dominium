@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-@CoverageIgnore public final class Haushaltsbuch extends Entität<UUID> {
+@CoverageIgnore public final class Haushaltsbuch extends Entität<UUID> { // NOPMD Klasse zu groß TODO
 
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
@@ -133,10 +133,7 @@ import java.util.UUID;
         final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
         final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
 
-        if (sollkonto.kannAusgabeBuchen(buchungssatz) && habenkonto.kannAusgabeBuchen(buchungssatz)) {
-            return true;
-        }
-
-        return false;
+        return sollkonto.kannAusgabeBuchen(buchungssatz) // NOPMD LoD TODO
+                && habenkonto.kannAusgabeBuchen(buchungssatz); // NOPMD LoD TODO
     }
 }

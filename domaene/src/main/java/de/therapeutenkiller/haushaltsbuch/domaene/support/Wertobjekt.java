@@ -22,13 +22,7 @@ public class Wertobjekt {
     }
 
     private boolean gleicht(final Wertobjekt that) {
-
-        if (that.canEqual(this)) {
-            boolean ergebnis = EqualsBuilder.reflectionEquals(this, that);
-            return ergebnis;
-        }
-
-        return false;
+        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that);
     }
 
     @Override
@@ -36,7 +30,7 @@ public class Wertobjekt {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public boolean canEqual(@DarfNullSein final Object other) {
+    public final boolean canEqual(@DarfNullSein final Object other) {
         return other != null && this.getClass() == other.getClass();
     }
 }

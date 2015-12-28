@@ -15,7 +15,7 @@ public class MoneyConverter extends Transformer<MonetaryAmount> {
 
         final DeutschenWährungsbetragParsen parsen = new DeutschenWährungsbetragParsen();
         final MonetaryAmount betrag = parsen.aus(währungsbetrag);
-        if (betrag.isNegative()) {
+        if (betrag.isNegative()) { // NOPMD LoD TODO
             throw new IllegalArgumentException();
         }
 

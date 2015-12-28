@@ -9,7 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungsregel;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
@@ -95,6 +95,6 @@ public final class KontoErstellenSteps {
         final Collection<Konto> kontenliste = this.alleKonten.abfragen(
                 this.kontext.aktuelleHaushaltsbuchId());
 
-        assertThat(kontenliste).containsOnlyOnce(new Konto(konto, new Buchungsregel())); // NOPMD LoD ToDo
+        assertThat(kontenliste).containsOnlyOnce(new Konto(konto, new KeineRegel())); // NOPMD LoD ToDo
     }
 }

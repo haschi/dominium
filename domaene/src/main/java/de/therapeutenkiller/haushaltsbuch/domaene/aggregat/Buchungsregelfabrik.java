@@ -5,11 +5,15 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 /**
  * Created by matthias on 28.12.15.
  */
-public class Buchungsregelfabrik {
-    public static Buchungsregel erzeugen(Kontoart kontoart) {
-        switch (kontoart){
-            case Ertrag: return new Buchungsregel();
-            default: return new Buchungsregel();
+public final class Buchungsregelfabrik {
+
+    private Buchungsregelfabrik() {
+    }
+
+    public static Buchungsregel erzeugen(final Kontoart kontoart, final String kontoname) {
+        switch (kontoart) { // NOPMD
+            case Ertrag: return new Ertragskontoregel(kontoname);
+            default: return new KeineRegel();
         }
     }
 }

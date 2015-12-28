@@ -1,7 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.coding.aspekte.DarfNullSein;
-
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
@@ -12,6 +10,11 @@ import java.util.Locale;
  */
 public final class Habensaldo extends Saldo {
 
+    @Override
+    public MonetaryAmount getBetrag() {
+        return this.betrag;
+    }
+
     public Habensaldo(final MonetaryAmount betrag) {
         super(betrag);
     }
@@ -21,6 +24,6 @@ public final class Habensaldo extends Saldo {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final String betrag = format.format(this.getBetrag()); // NOPMD LoD TODO
 
-        return "Habensaldo{"+ betrag + "}";
+        return "Habensaldo{" + betrag + "}";
     }
 }

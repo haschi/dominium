@@ -5,7 +5,6 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.enterprise.event.Event;
@@ -41,9 +40,9 @@ public final class AusgabeBuchen {
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
 
         final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
-        if (haushaltsbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
-            if (haushaltsbuch.kannAusgabeGebuchtWerden(buchungssatz)) {
-                haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag);
+        if (haushaltsbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) { // NOPMD LoD TODO
+            if (haushaltsbuch.kannAusgabeGebuchtWerden(buchungssatz)) { // NOPMD LoD TODO
+                haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag); // NOPMD LoD TODO
 
                 this.buchungWurdeAusgeführtEvent.fire(
                         new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
@@ -54,7 +53,7 @@ public final class AusgabeBuchen {
         } else {
             this.buchungWurdeAbgelehntEvent.fire(
                     new BuchungWurdeAbgelehnt(
-                            haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                            haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen( // NOPMD LoD TODO
                                     sollkonto,
                                     habenkonto)));
         }

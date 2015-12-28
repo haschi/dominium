@@ -14,6 +14,8 @@ public class Buchungssatz extends Wertobjekt {
     private final MonetaryAmount währungsbetrag;
 
     public Buchungssatz(final String sollkonto, final String habenkonto, final MonetaryAmount währungsbetrag) {
+        super();
+
         if (währungsbetrag.isNegative()) {
             throw new IllegalArgumentException("Buchungssätze dürfen keine negativen Beträge besitzen.");
         }
@@ -44,8 +46,10 @@ public class Buchungssatz extends Wertobjekt {
     }
 
     public final boolean istAnfangsbestandFür(final String konto) {
-        return this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung())
-                || this.habenkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()) && this.sollkonto.equals(konto);
+        return this.habenkonto.equals(konto)
+                && this.sollkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()) // NOPMD LoD TODO
+                || this.habenkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()) // NOPMD LoD TODO
+                && this.sollkonto.equals(konto);
     }
 
     @Override
