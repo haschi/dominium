@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.*;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
@@ -34,16 +34,21 @@ public final class KontoAnlegen {
         this.kontoWurdeNichtAngelegt = kontoWurdeNichtAngelegt;
     }
 
-    public void ausführen(final UUID haushaltsbuchId, final String kontoname, final MonetaryAmount anfangsbestand) {
-        this.ausführen(haushaltsbuchId, kontoname);
+    public void ausführen(
+            final UUID haushaltsbuchId,
+            final String kontoname,
+            final Kontoart kontoart,
+            final MonetaryAmount anfangsbestand) {
+        this.ausführen(haushaltsbuchId, kontoname, kontoart);
         this.anfangsbestandBuchen.ausführen(haushaltsbuchId, kontoname, anfangsbestand);
     }
 
-    public void ausführen(final UUID haushaltsbuchId, final String kontoname) {
+    public void ausführen(final UUID haushaltsbuchId, final String kontoname, final Kontoart kontoart) {
         final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
-        final Konto konto = new Konto(kontoname);
+        final Buchungsregel regel = Buchungsregelfabrik.erzeugen(kontoart);
+        final Konto konto = new Konto(kontoname, regel);
 
-        if (haushaltsbuch.istKontoVorhanden(konto)) { // NOPMD LoD TODO
+        if (haushaltsbuch.istKontoVorhanden(kontoname)) { // NOPMD LoD TODO
             this.kontoWurdeNichtAngelegt.fire(new KontoWurdeNichtAngelegt(haushaltsbuchId, kontoname));
         } else {
             haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
@@ -52,11 +57,15 @@ public final class KontoAnlegen {
     }
 
     public void process(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, kommando.betrag);
+        this.ausführen(
+                kommando.haushaltsbuchId,
+                kommando.kontoname,
+                kommando.kontoart,
+                kommando.betrag);
     }
 
     public void process(@Observes final KontoAnlegenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname);
+        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, Kontoart.Aktiv);
     }
 
     public HaushaltsbuchRepository getRepository() {

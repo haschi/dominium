@@ -9,15 +9,15 @@ Funktionalität: Anfangsbestand buchen
   Szenario: Anfangsbestand auf vorhandenes Konto buchen
     Angenommen ich habe das Konto "Girokonto" angelegt
     Wenn ich auf das Konto "Girokonto" den Anfangsbestand von 1234,56 EUR buche
-    Dann werde ich auf dem Konto "Girokonto" ein Habensaldo von 1234,56 EUR haben
-    Und ich werde auf dem Konto "Anfangsbestand" ein Sollsaldo von 1234,56 EUR haben
-    Und ich werde den Buchungssatz "Anfangsbestand (1.234,56 EUR) an Girokonto (1.234,56 EUR)" angelegt haben
+    Dann werde ich auf dem Konto "Girokonto" ein Sollsaldo von 1234,56 EUR haben
+    Und ich werde auf dem Konto "Anfangsbestand" ein Habensaldo von 1234,56 EUR haben
+    Und ich werde den Buchungssatz "Girokonto (1.234,56 EUR) an Anfangsbestand (1.234,56 EUR)" angelegt haben
 
   Szenario: Konto mit einem Anfangsbestand anlegen
     Wenn ich das Konto "Girokonto" mit einem Anfangsbestand von 1234,56 EUR anlege
-    Dann werde ich auf dem Konto "Girokonto" ein Habensaldo von 1234,56 EUR haben
-    Und ich werde auf dem Konto "Anfangsbestand" ein Sollsaldo von 1234,56 EUR haben
-    Und ich werde den Buchungssatz "Anfangsbestand (1.234,56 EUR) an Girokonto (1.234,56 EUR)" angelegt haben
+    Dann werde ich auf dem Konto "Girokonto" ein Sollsaldo von 1234,56 EUR haben
+    Und ich werde auf dem Konto "Anfangsbestand" ein Habensaldo von 1234,56 EUR haben
+    Und ich werde den Buchungssatz "Girokonto (1.234,56 EUR) an Anfangsbestand (1.234,56 EUR)" angelegt haben
 
   Szenario: Anfangsbestand mehrfach buchen
     Angenommen ich habe das Konto "Sparbuch" angelegt

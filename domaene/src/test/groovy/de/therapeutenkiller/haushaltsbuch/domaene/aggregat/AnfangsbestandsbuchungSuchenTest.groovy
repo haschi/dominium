@@ -8,9 +8,9 @@ class AnfangsbestandsbuchungSuchenTest extends Specification {
 
             given:
             def haushaltsbuch = new Haushaltsbuch()
-            haushaltsbuch.neueBuchungHinzufügen("Girokonto", Konto.ANFANGSBESTAND, 10.00.euro)
+            haushaltsbuch.neueBuchungHinzufügen("Girokonto", Konto.ANFANGSBESTAND.bezeichnung, 10.00.euro)
 
             expect:
-            haushaltsbuch.istAnfangsbestandFürKontoVorhanden(new Konto("Girokonto"))
+            haushaltsbuch.istAnfangsbestandFürKontoVorhanden("Girokonto")
     }
 }

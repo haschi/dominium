@@ -36,15 +36,14 @@ public final class AnfangsbestandBuchen {
             final MonetaryAmount betrag) {
 
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
-        final Konto konto = new Konto(kontoname);
 
-        if (haushaltsbuch.istAnfangsbestandFürKontoVorhanden(konto)) { // NOPMD LoD TODO
+        if (haushaltsbuch.istAnfangsbestandFürKontoVorhanden(kontoname)) { // NOPMD LoD TODO
             this.buchungWurdeAbgelehntEreignis.fire(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
             this.buchungssatzHinzufügen.ausführen(
                     haushaltsbuchId,
-                    konto.ANFANGSBESTAND.getBezeichnung(), // NOPMD LoD TODO
                     kontoname,
+                    Konto.ANFANGSBESTAND.getBezeichnung(), // NOPMD LoD TODO
                     betrag);
         }
     }

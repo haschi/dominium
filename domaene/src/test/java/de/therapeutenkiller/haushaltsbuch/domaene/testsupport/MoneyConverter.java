@@ -14,6 +14,11 @@ public class MoneyConverter extends Transformer<MonetaryAmount> {
         }
 
         final DeutschenWährungsbetragParsen parsen = new DeutschenWährungsbetragParsen();
-        return parsen.aus(währungsbetrag);
+        final MonetaryAmount betrag = parsen.aus(währungsbetrag);
+        if (betrag.isNegative()) {
+            throw new IllegalArgumentException();
+        }
+
+        return betrag;
     }
 }

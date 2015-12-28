@@ -6,14 +6,15 @@ import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungsregel;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -71,7 +72,7 @@ public final class KontoErstellenSteps {
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
     public void und_das_Konto_wird_einen_Saldo_besitzen(
             final String kontoname,
-            @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
+            @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
         final Saldo tatsächlicherSaldo = this.saldieren.abfragen(haushaltsbuchId, kontoname);
@@ -89,11 +90,11 @@ public final class KontoErstellenSteps {
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
-    public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final Konto konto) throws Throwable {
+    public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final String konto) throws Throwable {
 
         final Collection<Konto> kontenliste = this.alleKonten.abfragen(
                 this.kontext.aktuelleHaushaltsbuchId());
 
-        assertThat(kontenliste).containsOnlyOnce(konto); // NOPMD LoD ToDo
+        assertThat(kontenliste).containsOnlyOnce(new Konto(konto, new Buchungsregel())); // NOPMD LoD ToDo
     }
 }

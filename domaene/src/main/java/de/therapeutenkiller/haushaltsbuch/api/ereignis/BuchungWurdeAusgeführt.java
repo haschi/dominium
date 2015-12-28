@@ -21,6 +21,6 @@ public final class BuchungWurdeAusgeführt extends Wertobjekt {
     }
 
     public Buchungssatz getBuchungssatz() {
-        return new Buchungssatz(new Konto(this.soll), new Konto(this.haben), this.betrag);
+        return new Buchungssatz(this.soll, this.haben, this.betrag);
     }
 }

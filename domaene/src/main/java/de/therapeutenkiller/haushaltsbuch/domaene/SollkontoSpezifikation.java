@@ -19,6 +19,6 @@ public final class SollkontoSpezifikation implements Spezifikation<Buchungssatz>
     @Override
     public boolean istErfülltVon(final Buchungssatz buchungssatz) {
 
-        return buchungssatz.sollst(this.konto); // NOPMD false positive? TODO
+        return buchungssatz.sollst(this.konto.getBezeichnung()); // NOPMD false positive? TODO
     }
 }

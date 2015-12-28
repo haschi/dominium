@@ -12,7 +12,6 @@ public class BeispieleFürUmwandlung {
         [
                 ["123,45 EUR", 123.45.euro],
                 ["123.45 EUR", 12345.00.euro],
-                ["-10,23 USD", 10.23.dollar.negate()],
                 ["1  DEM", 1.00.mark]
         ]
     }
@@ -22,8 +21,8 @@ public class BeispieleFürUmwandlung {
                 ["12.00 €", IllegalArgumentException.class],  // ungültig wegen € Zeichen
                 ["Hello World", MonetaryParseException.class],    // Zeichenfolge ist ungültig
                 ["", IllegalArgumentException.class],  // Leere Zeichfeolge ist ungültig
+                ["-10,23 USD", IllegalArgumentException],
                 [null, ArgumentIstNullException.class]  // Das ist auch Mist.
-
         ]
     }
 }

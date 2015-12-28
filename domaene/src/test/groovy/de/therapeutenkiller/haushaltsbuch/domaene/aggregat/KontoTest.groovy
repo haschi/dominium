@@ -17,7 +17,7 @@ public class KontoTest extends Specification {
     @Unroll
     def "Der Kontoname darf nicht leer sein"(final String kontoname) {
         when:
-        new Konto(kontoname)
+        new Konto(kontoname, new Buchungsregel())
 
         then:
         thrown IllegalArgumentException

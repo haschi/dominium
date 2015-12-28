@@ -38,14 +38,14 @@ final class BuchungssatzHinzufügen {
 
         final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
 
-        if (haushaltsbuch.sindKontenVorhanden(sollkonto, habenkonto)) { // NOPMD LoD TODO
-            haushaltsbuch.neueBuchungHinzufügen(sollkonto, new Konto(habenkonto), betrag); // NOPMD LoD TODO
+        if (haushaltsbuch.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) { // NOPMD LoD TODO
+            haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag); // NOPMD LoD TODO
             this.buchungWurdeAusgeführtEreignis.fire(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
         } else {
 
             final String fehlermeldung = haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen(
-                    new Konto(sollkonto),
-                    new Konto(habenkonto));
+                    sollkonto,
+                    habenkonto);
 
             this.buchungWurdeAbgelehntEreignis.fire(new BuchungWurdeAbgelehnt(fehlermeldung));
         }

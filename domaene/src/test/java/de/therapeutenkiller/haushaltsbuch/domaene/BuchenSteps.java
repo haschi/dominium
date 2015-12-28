@@ -4,6 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
@@ -51,19 +52,21 @@ public final class BuchenSteps {
             this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando( // NOPMD
                     this.kontext.aktuelleHaushaltsbuchId(),
                     kontostand.kontoname,
+                    kontostand.kontoart,
                     kontostand.betrag));
         }
     }
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")
     public void wenn_ich_das_Konto_mit_einem_Anfangsbestand_anlege(
-            final Konto kontoname,
+            final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
         this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando(
                 haushaltsbuchId,
-                kontoname.getBezeichnung(),
+                kontoname,
+                Kontoart.Aktiv,
                 betrag));
     }
 

@@ -1,21 +1,19 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.coding.aspekte.DarfNullSein;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-public class Buchungssatz {
+public class Buchungssatz extends Wertobjekt {
 
-    private final Konto sollkonto;
-    private final Konto habenkonto;
+    private final String sollkonto;
+    private final String habenkonto;
     private final MonetaryAmount währungsbetrag;
 
-    public Buchungssatz(final Konto sollkonto, final Konto habenkonto, final MonetaryAmount währungsbetrag) {
+    public Buchungssatz(final String sollkonto, final String habenkonto, final MonetaryAmount währungsbetrag) {
         if (währungsbetrag.isNegative()) {
             throw new IllegalArgumentException("Buchungssätze dürfen keine negativen Beträge besitzen.");
         }
@@ -25,19 +23,19 @@ public class Buchungssatz {
         this.währungsbetrag = währungsbetrag;
     }
 
-    public final boolean sollst(final Konto konto) {
+    public final boolean sollst(final String konto) {
         return this.sollkonto.equals(konto);
     }
 
-    public final boolean hatHabenkonto(final Konto konto) {
+    public final boolean hatHabenkonto(final String konto) {
         return this.habenkonto.equals(konto);
     }
 
-    public final Konto getSollkonto() {
+    public final String getSollkonto() {
         return this.sollkonto;
     }
 
-    public final Konto getHabenkonto() {
+    public final String getHabenkonto() {
         return this.habenkonto;
     }
 
@@ -45,37 +43,9 @@ public class Buchungssatz {
         return this.währungsbetrag;
     }
 
-    @Override
-    public final boolean equals(@DarfNullSein final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-
-        final Buchungssatz that = (Buchungssatz) obj;
-
-        return new EqualsBuilder()
-            .append(this.sollkonto, that.sollkonto)
-            .append(this.habenkonto, that.habenkonto)
-            .append(this.währungsbetrag, that.währungsbetrag)
-            .isEquals();
-    }
-
-    @Override
-    public final int hashCode() {
-        return new HashCodeBuilder(17, 37)
-            .append(this.sollkonto)
-            .append(this.habenkonto)
-            .append(this.währungsbetrag)
-            .toHashCode();
-    }
-
-    public final boolean istAnfangsbestandFür(final Konto konto) {
-        return this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND)
-                || this.habenkonto.equals(Konto.ANFANGSBESTAND) && this.sollkonto.equals(konto);
+    public final boolean istAnfangsbestandFür(final String konto) {
+        return this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung())
+                || this.habenkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()) && this.sollkonto.equals(konto);
     }
 
     @Override
@@ -84,9 +54,9 @@ public class Buchungssatz {
         final String betrag = format.format(this.währungsbetrag); // NOPMD LoD TODO
 
         return String.format("%s (%s) an %s (%s)", // NOPMD LoD TODO
-                this.sollkonto.getBezeichnung(),
+                this.sollkonto,
                 betrag,
-                this.habenkonto.getBezeichnung(),
+                this.habenkonto,
                 betrag);
     }
 }

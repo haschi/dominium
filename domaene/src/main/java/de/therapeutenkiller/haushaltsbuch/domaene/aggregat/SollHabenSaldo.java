@@ -7,11 +7,14 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-/**
- * Created by matthias on 20.12.15.
+
+/** Die Klasse SollHabenSaldo ist sowohl Sollsaldo wie auch Habensaldo. Dies ist immer
+ *  der Fall, wenn der Saldo 0.00 EUR beträgt. Es kann dann nicht entschieden werden,
+ *  ob es sich um einen Soll- oder Habensaldo handelt.
  */
-public final class Sollsaldo extends Saldo {
-    public Sollsaldo(final MonetaryAmount betrag) {
+public class SollHabenSaldo extends Saldo {
+
+    public SollHabenSaldo(MonetaryAmount betrag) {
         super(betrag);
     }
 
@@ -20,6 +23,6 @@ public final class Sollsaldo extends Saldo {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final String betrag = format.format(this.getBetrag()); // NOPMD LoD TODO
 
-        return "Sollsaldo{"+ betrag + "}";
+        return "Soll- Habensaldo{"+ betrag + "}";
     }
 }

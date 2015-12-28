@@ -26,33 +26,35 @@ import java.util.UUID;
     public Haushaltsbuch() {
         super(UUID.randomUUID());
 
-        this.konten.add(new Konto("Anfangsbestand"));
+        this.konten.add(Konto.ANFANGSBESTAND);
     }
 
     public String fehlermeldungFürFehlendeKontenErzeugen(
-            final Konto soll,
-            final Konto haben) {
+            final String soll,
+            final String haben) {
 
         if (!this.istKontoVorhanden(soll) && this.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", soll.getBezeichnung());
+            return String.format("Das Konto %s existiert nicht.", soll);
         }
 
         if (this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", haben.getBezeichnung());
+            return String.format("Das Konto %s existiert nicht.", haben);
         }
 
         if (!this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
 
-            return String.format("Die Konten %s und %s existieren nicht.",
-                    soll.getBezeichnung(),
-                    haben.getBezeichnung());
+            return String.format("Die Konten %s und %s existieren nicht.", soll, haben);
         }
 
         throw new IllegalArgumentException("Die Fehlermeldung kann nicht erzeugt werden, da kein Fehler vorliegt.");
     }
 
-    public boolean sindKontenVorhanden(final String sollkonto, final String habenkonto) {
-        return this.istKontoVorhanden(new Konto(habenkonto)) && this.istKontoVorhanden(new Konto(sollkonto));
+    public boolean sindAlleBuchungskontenVorhanden(final String sollkonto, final String habenkonto) {
+        return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
+    }
+
+    public boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
+        return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
     }
 
     public Saldo kontostandBerechnen(final String kontoname) {
@@ -73,7 +75,11 @@ import java.util.UUID;
     }
 
     private Saldo saldieren(final MonetaryAmount summerDerSollbuchungen, final MonetaryAmount summerDerHabenbuchungen) {
-        if (summerDerHabenbuchungen.isGreaterThanOrEqualTo(summerDerSollbuchungen)) {
+        if (summerDerHabenbuchungen.isEqualTo(summerDerSollbuchungen)) {
+            return new SollHabenSaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
+        }
+
+        if (summerDerHabenbuchungen.isGreaterThan(summerDerSollbuchungen)) {
             return new Habensaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
         }
 
@@ -104,24 +110,33 @@ import java.util.UUID;
     }
 
     public void neueBuchungHinzufügen(
-            final String sollkontoName,
-            final Konto habenkonto,
+            final String sollkonto,
+            final String habenkonto,
             final MonetaryAmount betrag) {
-        final Konto soll = new Konto(sollkontoName);
-
-        this.buchungssätze.add(new Buchungssatz(soll, habenkonto, betrag));
+        this.buchungssätze.add(new Buchungssatz(sollkonto, habenkonto, betrag));
     }
 
-    public boolean istAnfangsbestandFürKontoVorhanden(final Konto konto) {
+    public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
     }
 
-    public boolean istKontoVorhanden(final Konto konto) {
-        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto.getBezeichnung());
+    public boolean istKontoVorhanden(final String konto) {
+        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
         return this.konten.stream().anyMatch(kontoname::istErfülltVon);
     }
 
     public ImmutableCollection<Konto> getKonten() {
         return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
+    }
+
+    public boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
+        final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
+        final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
+
+        if (sollkonto.kannAusgabeBuchen(buchungssatz) && habenkonto.kannAusgabeBuchen(buchungssatz)) {
+            return true;
+        }
+
+        return false;
     }
 }

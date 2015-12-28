@@ -9,7 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontoart;
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -64,11 +64,11 @@ public final class AusgabeBuchenSteps {
 
     private static Saldo saldoFürKonto(final Kontostand kontostand) {
         if (kontostand.kontoart.equals(Kontoart.Aktiv)) { //NOPMD LoD TODO
-            return new Habensaldo(kontostand.betrag); // NOPMD
+            return new Sollsaldo(kontostand.betrag); // NOPMD
         } else if (kontostand.kontoart.equals(Kontoart.Ertrag)) { //NOPMD LoD TODO
-            return new Sollsaldo(kontostand.betrag); //NOPMD LoD TODO
-        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) { //NOPMD LoD TODO
             return new Habensaldo(kontostand.betrag); //NOPMD LoD TODO
+        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) { //NOPMD LoD TODO
+            return new Sollsaldo(kontostand.betrag); //NOPMD LoD TODO
         }
         return null;
     }

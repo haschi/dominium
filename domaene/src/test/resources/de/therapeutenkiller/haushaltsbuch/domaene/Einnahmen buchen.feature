@@ -9,12 +9,12 @@ Funktionalität: Einnahmen buchen
       | Gehalt    | 0,00 EUR    | Ertrag   |
 
   Szenario: Einnahmen auf vorhandene Konten buchen
-    Wenn ich meine Einnahme von 3005,67 EUR per "Gehalt" an "Girokonto" buche
+    Wenn ich meine Einnahme von 3005,67 EUR per "Girokonto" an "Gehalt" buche
     Dann werde ich folgende Kontostände erhalten:
       | Kontoname | Betrag      | Kontoart |
       | Girokonto | 4205,67 EUR | Aktiv    |
       | Gehalt    | 3005,67 EUR | Ertrag   |
-    Und ich werde den Buchungssatz "Gehalt (3.005,67 EUR) an Girokonto (3.005,67 EUR)" angelegt haben
+    Und ich werde den Buchungssatz "Girokonto (3.005,67 EUR) an Gehalt (3.005,67 EUR)" angelegt haben
 
 
   Szenariogrundriss: Einnahme auf nicht vorhandenes Konto buchen
