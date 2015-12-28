@@ -29,6 +29,42 @@ import java.util.UUID;
         this.konten.add(Konto.ANFANGSBESTAND);
     }
 
+    // Hauptbuch -- Alle Methoden zum Hauptbuch
+
+    public void neuesKontoHinzufügen(final Konto konto) {
+        this.konten.add(konto);
+    }
+
+    @CoverageIgnore
+    public Konto kontoSuchen(final String kontoname) {
+
+        final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
+
+        return this.konten.stream()
+                .filter(kontonameSpezifikation::istErfülltVon)
+                .findFirst()
+                .get();
+    }
+
+    public boolean istKontoVorhanden(final String konto) {
+        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
+        return this.konten.stream().anyMatch(kontoname::istErfülltVon);
+    }
+
+    public ImmutableCollection<Konto> getKonten() {
+        return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
+    }
+
+    public boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
+        final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
+        final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
+
+        return sollkonto.kannAusgabeBuchen(buchungssatz) // NOPMD LoD TODO
+                && habenkonto.kannAusgabeBuchen(buchungssatz); // NOPMD LoD TODO
+    }
+
+    // Journal -- Alle Methoden fürs Journal
+
     public String fehlermeldungFürFehlendeKontenErzeugen(
             final String soll,
             final String haben) {
@@ -94,21 +130,6 @@ import java.util.UUID;
                     .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
-    public void neuesKontoHinzufügen(final Konto konto) {
-        this.konten.add(konto);
-    }
-
-    @CoverageIgnore
-    public Konto kontoSuchen(final String kontoname) {
-
-        final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
-
-        return this.konten.stream()
-            .filter(kontonameSpezifikation::istErfülltVon)
-            .findFirst()
-            .get();
-    }
-
     public void neueBuchungHinzufügen(
             final String sollkonto,
             final String habenkonto,
@@ -118,22 +139,5 @@ import java.util.UUID;
 
     public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
-    }
-
-    public boolean istKontoVorhanden(final String konto) {
-        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
-        return this.konten.stream().anyMatch(kontoname::istErfülltVon);
-    }
-
-    public ImmutableCollection<Konto> getKonten() {
-        return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
-    }
-
-    public boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
-        final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
-        final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
-
-        return sollkonto.kannAusgabeBuchen(buchungssatz) // NOPMD LoD TODO
-                && habenkonto.kannAusgabeBuchen(buchungssatz); // NOPMD LoD TODO
     }
 }
