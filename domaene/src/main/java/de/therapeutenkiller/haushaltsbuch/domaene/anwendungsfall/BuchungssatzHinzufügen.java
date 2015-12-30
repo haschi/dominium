@@ -12,7 +12,7 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 @Singleton
-final class BuchungssatzHinzufügen {
+public final class BuchungssatzHinzufügen {
 
     private final HaushaltsbuchRepository repository;
     private final Event<BuchungWurdeAusgeführt> buchungWurdeAusgeführtEreignis;
@@ -35,19 +35,9 @@ final class BuchungssatzHinzufügen {
             final String habenkonto,
             final MonetaryAmount betrag) {
 
-        final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
 
-        if (haushaltsbuch.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) { // NOPMD LoD TODO
-            haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag); // NOPMD LoD TODO
-            this.buchungWurdeAusgeführtEreignis.fire(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
-        } else {
-
-            final String fehlermeldung = haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen( // NOPMD LoD TODO
-                    sollkonto,
-                    habenkonto);
-
-            this.buchungWurdeAbgelehntEreignis.fire(new BuchungWurdeAbgelehnt(fehlermeldung));
-        }
+        haushaltsbuch.buchungssatzHinzufügen(sollkonto, habenkonto, betrag);
+        this.repository.save(haushaltsbuch);
     }
-
 }

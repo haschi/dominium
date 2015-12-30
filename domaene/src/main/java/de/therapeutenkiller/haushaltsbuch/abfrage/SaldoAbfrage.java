@@ -19,7 +19,7 @@ public class SaldoAbfrage {
     }
 
     public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) {
-        final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
         return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD LoD TODO
     }
 }

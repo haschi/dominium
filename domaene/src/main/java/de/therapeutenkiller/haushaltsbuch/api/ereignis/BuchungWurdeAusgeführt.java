@@ -1,11 +1,13 @@
 package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 
-public final class BuchungWurdeAusgeführt extends Wertobjekt {
+public final class BuchungWurdeAusgeführt extends Wertobjekt implements Haushaltsbuchereignis {
     public final String soll;
     public final String haben;
     public final MonetaryAmount betrag;
@@ -21,5 +23,10 @@ public final class BuchungWurdeAusgeführt extends Wertobjekt {
 
     public Buchungssatz getBuchungssatz() {
         return new Buchungssatz(this.soll, this.haben, this.betrag);
+    }
+
+    @Override
+    public void applyTo(final Haushaltsbuch spiel) {
+        spiel.falls(this);
     }
 }

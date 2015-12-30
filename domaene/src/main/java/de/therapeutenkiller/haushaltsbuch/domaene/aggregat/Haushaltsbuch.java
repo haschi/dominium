@@ -2,11 +2,21 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
+import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.AggregateRoot;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
@@ -18,10 +28,13 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-@CoverageIgnore public final class Haushaltsbuch extends Entität<UUID> { // NOPMD Klasse zu groß TODO
+@CoverageIgnore
+public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereignis> { // NOPMD Klasse zu groß TODO
 
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
+
+    public int initialVersion = 0;
 
     public Haushaltsbuch() {
         super(UUID.randomUUID());
@@ -29,10 +42,47 @@ import java.util.UUID;
         this.konten.add(Konto.ANFANGSBESTAND);
     }
 
+    public Haushaltsbuch(final Haushaltsbuchsnapshot snapshot) {
+        super(snapshot);
+        this.initialVersion = snapshot.version;
+    }
+
+    public Haushaltsbuch(final UUID uuid) {
+        super(uuid);
+        this.causes(new HaushaltsbuchWurdeAngelegt(uuid));
+    }
+
+    public Haushaltsbuchsnapshot getSnapshot() {
+        final Haushaltsbuchsnapshot snapshot = new Haushaltsbuchsnapshot(getIdentität(), getVersion());
+        snapshot.konten = ImmutableSet.copyOf(this.konten);
+        snapshot.buchungssätze = ImmutableList.of(this.buchungssätze);
+
+        return snapshot;
+    }
+
+    // bewirkt
+    private void causes(final Haushaltsbuchereignis ereignis) {
+        this.getÄnderungen().add(ereignis);
+        this.anwenden(ereignis);
+    }
+
+    @Override
+    protected void anwenden(final Haushaltsbuchereignis ereignis) {
+        ereignis.applyTo(this);
+    }
+
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
     public void neuesKontoHinzufügen(final Konto konto) {
         this.konten.add(konto);
+    }
+
+    public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
+        if (this.istKontoVorhanden(kontoname)) {
+            this.causes(new KontoWurdeNichtAngelegt(getIdentität(), kontoname, kontoart));
+        } else {
+            this.causes(new KontoWurdeAngelegt(getIdentität(), kontoname, kontoart));
+        }
     }
 
     @CoverageIgnore
@@ -139,5 +189,60 @@ import java.util.UUID;
 
     public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
+    }
+
+    public void falls(final HaushaltsbuchWurdeAngelegt haushaltsbuchWurdeAngelegt) {
+        this.setIdentity(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
+    }
+
+    public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
+        final Buchungsregel regel = Buchungsregelfabrik.erzeugen(
+                kontoWurdeAngelegt.kontoart,
+                kontoWurdeAngelegt.kontoname);
+
+        final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
+        this.neuesKontoHinzufügen(konto);
+    }
+
+    public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
+    }
+
+    public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
+    }
+
+    public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
+
+        this.neueBuchungHinzufügen(
+                buchungWurdeAusgeführt.soll,
+                buchungWurdeAusgeführt.haben,
+                buchungWurdeAusgeführt.betrag);
+    }
+
+    public static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
+
+    public void anfangsbestandBuchen(
+            final String kontoname,
+            final MonetaryAmount betrag,
+            final BuchungssatzHinzufügen buchungssatzHinzufügen) {
+        if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
+            this.causes(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
+        } else {
+            buchungssatzHinzufügen.ausführen(
+                    getIdentität(),
+                    kontoname,
+                    Konto.ANFANGSBESTAND.getBezeichnung(), // NOPMD LoD TODO
+                    betrag);
+        }
+    }
+
+    public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
+        if (this.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
+            this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
+        } else {
+            final String fehlermeldung = this.fehlermeldungFürFehlendeKontenErzeugen(
+                    sollkonto,
+                    habenkonto);
+            this.causes(new BuchungWurdeAbgelehnt(fehlermeldung));
+        }
     }
 }

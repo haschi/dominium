@@ -1,10 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungsregel;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungsregelfabrik;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
@@ -47,16 +44,10 @@ public final class KontoAnlegen {
     }
 
     public void ausführen(final UUID haushaltsbuchId, final String kontoname, final Kontoart kontoart) {
-        final Haushaltsbuch haushaltsbuch = this.getRepository().besorgen(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.getRepository().findBy(haushaltsbuchId);
 
-        if (haushaltsbuch.istKontoVorhanden(kontoname)) { // NOPMD LoD TODO
-            this.kontoWurdeNichtAngelegt.fire(new KontoWurdeNichtAngelegt(haushaltsbuchId, kontoname));
-        } else {
-            final Buchungsregel regel = Buchungsregelfabrik.erzeugen(kontoart, kontoname);
-            final Konto konto = new Konto(kontoname, regel);
-            haushaltsbuch.neuesKontoHinzufügen(konto); // NOPMD LoD TODO
-            this.kontoWurdeAngelegtEvent.fire(new KontoWurdeAngelegt(haushaltsbuchId, kontoname));
-        }
+        haushaltsbuch.neuesKontoHinzufügen(kontoname, kontoart);
+        this.repository.save(haushaltsbuch);
     }
 
     public void process(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {

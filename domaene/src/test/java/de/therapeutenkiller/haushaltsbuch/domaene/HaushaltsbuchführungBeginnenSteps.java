@@ -63,6 +63,6 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
         assertThatThrownBy(this.kontext::aktuelleHaushaltsbuchId) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
-            .hasMessage("Rückgabewert der Methode 'aktuelleHaushaltsbuchId' ist null.");
+            .hasMessage("Rückgabewert der Methode 'getAktuell' ist null.");
     }
 }

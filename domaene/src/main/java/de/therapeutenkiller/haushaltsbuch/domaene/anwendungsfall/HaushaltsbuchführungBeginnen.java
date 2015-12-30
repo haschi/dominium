@@ -9,6 +9,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.UUID;
 
 @Singleton
 public class HaushaltsbuchführungBeginnen {
@@ -24,10 +25,11 @@ public class HaushaltsbuchführungBeginnen {
     }
 
     public final void ausführen() {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch();
-        this.getRepository().hinzufügen(haushaltsbuch);
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
+        // this.getRepository().hinzufügen(haushaltsbuch);
 
-        this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.getIdentität()));
+        this.getRepository().add(haushaltsbuch);
+        // this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.getIdentität()));
     }
 
     public final void process(@Observes final HaushaltsbuchführungBeginnenKommando kommando) {

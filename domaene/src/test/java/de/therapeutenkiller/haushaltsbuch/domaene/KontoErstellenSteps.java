@@ -6,6 +6,7 @@ import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
@@ -13,6 +14,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
@@ -20,6 +22,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,9 +67,10 @@ public final class KontoErstellenSteps {
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
-        final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname);
+        final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname, Kontoart.Aktiv);
 
-        assertThat(this.kontoWurdeAngelegt).isEqualTo(sollwert); // NOPMD AssertJ OK TODO
+        final List<Haushaltsbuchereignis> ereignisse = this.kontext.getStream(haushaltsbuchId);
+        assertThat(ereignisse).contains(sollwert); // NOPMD AssertJ OK TODO
     }
 
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
@@ -84,9 +88,11 @@ public final class KontoErstellenSteps {
 
         final KontoWurdeNichtAngelegt expected = new KontoWurdeNichtAngelegt(
                 this.kontext.aktuelleHaushaltsbuchId(),
-                kontoname);
+                kontoname,
+                Kontoart.Aktiv);
 
-        assertThat(this.kontoWurdeNichtAngelegt).isEqualTo(expected); // NOPMD LoD AssertJ OK TODO
+        final List<Haushaltsbuchereignis> ereignisse = this.kontext.getStream(this.kontext.aktuelleHaushaltsbuchId());
+        assertThat(ereignisse).contains(expected); // NOPMD LoD AssertJ OK TODO
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")

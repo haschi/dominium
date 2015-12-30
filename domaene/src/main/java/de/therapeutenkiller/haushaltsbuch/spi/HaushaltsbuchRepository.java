@@ -10,4 +10,10 @@ public interface HaushaltsbuchRepository {
     Haushaltsbuch besorgen(UUID haushaltsbuchId);
 
     void leeren();
+
+    Haushaltsbuch findBy(UUID id);
+
+    void add(Haushaltsbuch haushaltsbuch);
+
+    void save(Haushaltsbuch haushaltsbuch);
 }

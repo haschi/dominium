@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import org.slf4j.Logger;
 
 import javax.enterprise.event.Observes;
@@ -9,6 +10,7 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,7 +39,7 @@ public class HaushaltsbuchAggregatKontext {
     }
 
     public final UUID aktuelleHaushaltsbuchId() {
-        return this.haushaltsbuchId;
+        return this.repository.getAktuell();
     }
 
     public final Haushaltsbuch aktuellesHaushaltsbuch() {
@@ -55,5 +57,9 @@ public class HaushaltsbuchAggregatKontext {
 
     public final <T> void kommandoAusführen(final T kommando) {
         this.manager.fireEvent(kommando);
+    }
+
+    public final List<Haushaltsbuchereignis> getStream(final UUID haushaltsbuchId) {
+        return this.repository.getStream(haushaltsbuchId);
     }
 }
