@@ -36,10 +36,8 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereign
 
     public int initialVersion = 0;
 
-    public Haushaltsbuch() {
+    private Haushaltsbuch() {
         super(UUID.randomUUID());
-
-        this.konten.add(Konto.ANFANGSBESTAND);
     }
 
     public Haushaltsbuch(final Haushaltsbuchsnapshot snapshot) {
@@ -50,6 +48,10 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereign
     public Haushaltsbuch(final UUID uuid) {
         super(uuid);
         this.causes(new HaushaltsbuchWurdeAngelegt(uuid));
+    }
+
+    public Haushaltsbuch(final HaushaltsbuchWurdeAngelegt ereignis) {
+        super(ereignis.haushaltsbuchId);
     }
 
     public Haushaltsbuchsnapshot getSnapshot() {
@@ -192,7 +194,8 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereign
     }
 
     public void falls(final HaushaltsbuchWurdeAngelegt haushaltsbuchWurdeAngelegt) {
-        this.setIdentity(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
+        assert this.getIdentität().equals(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
+        this.konten.add(Konto.ANFANGSBESTAND);
     }
 
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {

@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Entität<T> {
-    private T identität;
+    private final T identität;
 
     protected Entität(final T identität) {
 
@@ -35,9 +35,5 @@ public class Entität<T> {
         return new HashCodeBuilder(17, 37)
             .append(this.identität)
             .toHashCode();
-    }
-
-    protected final void setIdentity(final T identity) {
-        this.identität = identity;
     }
 }

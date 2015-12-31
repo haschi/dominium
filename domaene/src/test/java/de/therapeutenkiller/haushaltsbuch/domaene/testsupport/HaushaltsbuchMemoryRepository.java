@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
+import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot> store;
+    private final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt> store;
 
     public final UUID getAktuell() {
         return this.aktuell;
@@ -28,7 +29,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     }
 
     @Inject
-    public HaushaltsbuchMemoryRepository(final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot> store) {
+    public HaushaltsbuchMemoryRepository(
+            final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt> store) {
 
         this.store = store;
     }
@@ -52,7 +54,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         if (snapshot != null) {
             haushaltsbuch = new Haushaltsbuch(snapshot);
         } else {
-            haushaltsbuch = new Haushaltsbuch();
+            HaushaltsbuchWurdeAngelegt ereignis = this.store.getInitialEvent(streamName);
+            haushaltsbuch = new Haushaltsbuch(ereignis);
         }
 
 

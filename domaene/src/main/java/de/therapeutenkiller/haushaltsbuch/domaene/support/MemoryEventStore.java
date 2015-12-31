@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Dependent
-public class MemoryEventStore<T, E> implements EventStore<T, E> {
+public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> {
 
     private Map<String, EventStream<T>> streams = new HashMap<>();
     private List<EventWrapper<T>> events = new ArrayList<>();
@@ -108,5 +108,15 @@ public class MemoryEventStore<T, E> implements EventStore<T, E> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public final I getInitialEvent(final String streamName) {
+        return (I)(this.events.stream()
+                .filter(event -> this.gehörtZumStream(streamName, event))
+                .filter(event -> event.version == 1)
+                .map(wrapper -> (T)wrapper.ereignis)
+                .findFirst()
+                .get());
     }
 }

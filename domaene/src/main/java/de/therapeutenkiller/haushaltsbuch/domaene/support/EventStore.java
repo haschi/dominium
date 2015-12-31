@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-// T: Ereignistyp, E: Snapshottyp
-public interface EventStore<T, E> {
+// T: Ereignistyp, E: Snapshottyp, I Initialereignis
+public interface EventStore<T, E, I extends  T> {
 
     void createNewStream(String streamName, Collection<T> domainEvents);
 
@@ -19,4 +19,6 @@ public interface EventStore<T, E> {
 
     @DarfNullSein
     E getLatestSnapshot(String streamName);
+
+    I getInitialEvent(String streamName);
 }

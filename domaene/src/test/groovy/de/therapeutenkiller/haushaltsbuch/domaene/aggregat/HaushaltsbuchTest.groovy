@@ -20,8 +20,7 @@ class HaushaltsbuchTest extends Specification {
 
     def "Konto suchen"() {
 
-        given: def haushaltsbuch = new Haushaltsbuch();
-        // haushaltsbuchId.neuesKontoHinzufügen(konto, fünfEuro);
+        given: def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
 
         when:
         def ergebnis = haushaltsbuch.kontoSuchen("Anfangsbestand")
