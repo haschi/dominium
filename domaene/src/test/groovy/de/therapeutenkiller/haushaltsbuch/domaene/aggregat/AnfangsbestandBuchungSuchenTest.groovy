@@ -2,9 +2,9 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat
 import spock.lang.Specification
 
 
-class AnfangsbestandsbuchungSuchenTest extends Specification {
+class AnfangsbestandBuchungSuchenTest extends Specification {
 
-    def "Suche nach Anfangsbestandsbuchung"() {
+    def "Suche nach Anfangsbestand-Buchung"() {
 
             given: "Angenommen ich habe ein Haushaltsbuch"
             def haushaltsbuch = new Haushaltsbuch()
