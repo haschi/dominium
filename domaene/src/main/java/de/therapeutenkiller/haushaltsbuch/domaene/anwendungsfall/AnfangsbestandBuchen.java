@@ -7,8 +7,6 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.money.MonetaryAmount;
-import java.util.UUID;
 
 @Singleton
 public final class AnfangsbestandBuchen {
@@ -23,19 +21,15 @@ public final class AnfangsbestandBuchen {
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }
 
-    public void ausführen(
-            final UUID haushaltsbuchId,
-            final String kontoname,
-            final MonetaryAmount betrag) {
+    public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando) {
 
-        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.findBy(kommando.haushaltsbuchId);
 
-        haushaltsbuch.anfangsbestandBuchen(kontoname, betrag, this.buchungssatzHinzufügen);
+        haushaltsbuch.anfangsbestandBuchen(
+                kommando.kontoname,
+                kommando.währungsbetrag,
+                this.buchungssatzHinzufügen);
 
         this.repository.save(haushaltsbuch);
-    }
-
-    public void process(@Observes final AnfangsbestandBuchenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, kommando.währungsbetrag);
     }
 }
