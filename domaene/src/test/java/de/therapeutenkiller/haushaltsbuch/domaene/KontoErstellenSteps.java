@@ -18,7 +18,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collection;
@@ -50,7 +49,7 @@ public final class KontoErstellenSteps {
     public void wenn_ich_das_Konto_anlege(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
-        this.kontext.kommandoAusführen(new KontoAnlegenKommando(haushaltsbuchId, kontoname));
+        this.kontext.kommandoAusführen(new KontoAnlegenKommando(haushaltsbuchId, kontoname, Kontoart.Aktiv));
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")

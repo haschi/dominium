@@ -14,10 +14,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Created by matthias on 30.12.15.
- */
-
 @Dependent
 public class MemoryEventStore<T, E> implements EventStore<T, E> {
 

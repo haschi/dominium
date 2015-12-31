@@ -5,8 +5,6 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
 import javax.ejb.Singleton;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.money.MonetaryAmount;
-import java.util.UUID;
 
 @Singleton
 public final class EinnahmeBuchen {
@@ -20,17 +18,13 @@ public final class EinnahmeBuchen {
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }
 
-    public void ausführen(
-            final UUID haushaltsbuchId,
-            final String sollkonto,
-            final String habenkonto,
-            final MonetaryAmount währungsbetrag) {
+    public void ausführen(@Observes final EinnahmeBuchenKommando kommando) {
 
         // TODO ggf. später prüfen, ob die Kontenarten korrekt sind.
-        this.buchungssatzHinzufügen.ausführen(haushaltsbuchId, sollkonto, habenkonto, währungsbetrag);
-    }
-
-    public void process(@Observes final EinnahmeBuchenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuchId, kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);
+        this.buchungssatzHinzufügen.ausführen(
+                kommando.haushaltsbuchId,
+                kommando.sollkonto,
+                kommando.habenkonto,
+                kommando.währungsbetrag);
     }
 }

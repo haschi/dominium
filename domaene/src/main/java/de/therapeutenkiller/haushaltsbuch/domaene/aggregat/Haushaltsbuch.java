@@ -246,17 +246,17 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereign
         }
     }
 
-    public void ausgabeBuchen(String sollkonto, String habenkonto, MonetaryAmount betrag) {
+    public void ausgabeBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
 
         if (this.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.kannAusgabeGebuchtWerden(buchungssatz)) {
-                causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
+                this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
             } else {
-                causes(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
+                this.causes(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
             }
         } else {
-            causes(new BuchungWurdeAbgelehnt(
+            this.causes(new BuchungWurdeAbgelehnt(
                             this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
         }
     }

@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.java.de.Angenommen;
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
@@ -27,6 +28,7 @@ public final class GeimeinsameSteps {
     public void ich_habe_das_Konto_angelegt(final String kontoname) {
         this.kontext.kommandoAusführen(new KontoAnlegenKommando(
                 this.kontext.aktuelleHaushaltsbuchId(),
-                kontoname));
+                kontoname,
+                Kontoart.Aktiv));
     }
 }

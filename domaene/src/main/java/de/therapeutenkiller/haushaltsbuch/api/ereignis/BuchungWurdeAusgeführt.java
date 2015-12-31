@@ -26,7 +26,7 @@ public final class BuchungWurdeAusgeführt extends Wertobjekt implements Haushal
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch spiel) {
-        spiel.falls(this);
+    public void applyTo(final Haushaltsbuch aggregat) {
+        aggregat.falls(this);
     }
 }

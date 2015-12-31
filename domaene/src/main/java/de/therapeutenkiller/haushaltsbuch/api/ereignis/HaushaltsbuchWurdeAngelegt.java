@@ -16,7 +16,7 @@ public final class HaushaltsbuchWurdeAngelegt extends Wertobjekt implements Haus
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch spiel) {
-        spiel.falls(this);
+    public void applyTo(final Haushaltsbuch aggregat) {
+        aggregat.falls(this);
     }
 }

@@ -19,7 +19,7 @@ public final class BuchungWurdeAbgelehnt extends Wertobjekt implements Haushalts
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch spiel) {
-        spiel.falls(this);
+    public void applyTo(final Haushaltsbuch aggregat) {
+        aggregat.falls(this);
     }
 }

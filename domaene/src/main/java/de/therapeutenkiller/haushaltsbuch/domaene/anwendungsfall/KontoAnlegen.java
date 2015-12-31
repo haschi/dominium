@@ -1,19 +1,17 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
-import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.money.MonetaryAmount;
-import java.util.UUID;
 
 @Singleton
 public final class KontoAnlegen {
@@ -34,32 +32,28 @@ public final class KontoAnlegen {
         this.kontoWurdeNichtAngelegt = kontoWurdeNichtAngelegt;
     }
 
-    public void ausführen(
-            final UUID haushaltsbuchId,
-            final String kontoname,
-            final Kontoart kontoart,
-            final MonetaryAmount anfangsbestand) {
-        this.ausführen(haushaltsbuchId, kontoname, kontoart);
-        this.anfangsbestandBuchen.ausführen(haushaltsbuchId, kontoname, anfangsbestand);
-    }
+    public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
 
-    public void ausführen(final UUID haushaltsbuchId, final String kontoname, final Kontoart kontoart) {
-        final Haushaltsbuch haushaltsbuch = this.getRepository().findBy(haushaltsbuchId);
-
-        haushaltsbuch.neuesKontoHinzufügen(kontoname, kontoart);
-        this.repository.save(haushaltsbuch);
-    }
-
-    public void process(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
-        this.ausführen(
+        final KontoAnlegenKommando anlegenKommando = new KontoAnlegenKommando(
                 kommando.haushaltsbuchId,
                 kommando.kontoname,
-                kommando.kontoart,
+                kommando.kontoart);
+
+        this.ausführen(anlegenKommando);
+
+        final AnfangsbestandBuchenKommando anfangsbestandBuchenKommando = new AnfangsbestandBuchenKommando(
+                kommando.haushaltsbuchId,
+                kommando.kontoname,
                 kommando.betrag);
+
+        this.anfangsbestandBuchen.ausführen(anfangsbestandBuchenKommando);
     }
 
-    public void process(@Observes final KontoAnlegenKommando kommando) {
-        this.ausführen(kommando.haushaltsbuchId, kommando.kontoname, Kontoart.Aktiv);
+    public void ausführen(@Observes final KontoAnlegenKommando kommando) {
+        final Haushaltsbuch haushaltsbuch = this.getRepository().findBy(kommando.haushaltsbuchId);
+
+        haushaltsbuch.neuesKontoHinzufügen(kommando.kontoname, kommando.kontoart);
+        this.repository.save(haushaltsbuch);
     }
 
     public HaushaltsbuchRepository getRepository() {
