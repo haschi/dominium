@@ -17,7 +17,6 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchAggregatKontext {
 
-    private UUID haushaltsbuchId;
     private final HaushaltsbuchMemoryRepository repository;
     private final Set<Haushaltsbuch> haushaltsbücher;
 
@@ -42,17 +41,9 @@ public class HaushaltsbuchAggregatKontext {
         return this.repository.getAktuell();
     }
 
-    public final Haushaltsbuch aktuellesHaushaltsbuch() {
-        return this.repository.besorgen(this.haushaltsbuchId);
-    }
-
     public final void initialisieren() {
         this.haushaltsbücher.clear();
         this.repositoryLeeren();
-    }
-
-    public final void haushaltsbuchWurdeAngelegtHandler(@Observes final HaushaltsbuchWurdeAngelegt event) {
-        this.haushaltsbuchId = event.haushaltsbuchId;
     }
 
     public final <T> void kommandoAusführen(final T kommando) {
