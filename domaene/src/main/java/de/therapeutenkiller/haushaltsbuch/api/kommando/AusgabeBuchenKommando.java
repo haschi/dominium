@@ -1,9 +1,11 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class AusgabeBuchenKommando {
+public class AusgabeBuchenKommando extends Wertobjekt{
     public final UUID haushaltsbuchId;
     public final String sollkonto;
     public final String habenkonto;

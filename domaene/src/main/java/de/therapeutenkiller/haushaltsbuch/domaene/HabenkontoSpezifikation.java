@@ -4,9 +4,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 
-/**
- * Created by matthias on 20.12.15.
- */
 public class HabenkontoSpezifikation implements Spezifikation<Buchungssatz> {
     private final Konto konto;
 

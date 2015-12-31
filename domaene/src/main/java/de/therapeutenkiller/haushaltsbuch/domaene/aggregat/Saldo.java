@@ -6,9 +6,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 
-/**
- * Created by matthias on 20.12.15.
- */
 public abstract class Saldo { // NOPMD TODO Regel ändern
 
     protected final MonetaryAmount betrag;

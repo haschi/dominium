@@ -25,7 +25,7 @@ public class Buchungssatz extends Wertobjekt {
         this.währungsbetrag = währungsbetrag;
     }
 
-    public final boolean sollst(final String konto) {
+    public final boolean hatSollkonto(final String konto) {
         return this.sollkonto.equals(konto);
     }
 

@@ -1,11 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class KontoMitAnfangsbestandAnlegenKommando {
+public class KontoMitAnfangsbestandAnlegenKommando extends Wertobjekt{
 
     public final UUID haushaltsbuchId;
     public final String kontoname;

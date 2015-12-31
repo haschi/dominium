@@ -2,9 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
-/**
- * Created by matthias on 28.12.15.
- */
 public final class Buchungsregelfabrik {
 
     private Buchungsregelfabrik() {

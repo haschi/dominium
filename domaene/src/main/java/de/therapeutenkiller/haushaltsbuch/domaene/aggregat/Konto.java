@@ -36,7 +36,7 @@ public final class Konto {
 
     @SuppressWarnings("checkstyle")
     public boolean kannAusgabeBuchen(final Buchungssatz buchungssatz) {
-        return this.regel.kannAusgabeBuchen(buchungssatz);
+        return this.regel.kannErtragBuchen(buchungssatz);
     }
 
     @Override

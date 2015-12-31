@@ -3,9 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by matthias on 30.12.15.
- */
 public abstract class AggregateRoot<T, E> extends Entität<T> {
 
     private List<E> änderungen;

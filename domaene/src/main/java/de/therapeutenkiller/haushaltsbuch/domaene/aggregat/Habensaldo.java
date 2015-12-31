@@ -5,9 +5,6 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-/**
- * Created by matthias on 20.12.15.
- */
 public final class Habensaldo extends Saldo {
 
     @Override

@@ -1,17 +1,15 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Singleton

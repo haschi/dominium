@@ -5,9 +5,6 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
 import javax.money.MonetaryAmount;
 
-/**
- * Created by matthias on 23.12.15.
- */
 public class Kontostand {
 
     public String kontoname;
