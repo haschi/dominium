@@ -15,6 +15,8 @@ public class AnfangsbestandBuchenKommando extends Wertobjekt {
             final String kontoname,
             final MonetaryAmount währungsbetrag) {
 
+        super();
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
         this.währungsbetrag = währungsbetrag;

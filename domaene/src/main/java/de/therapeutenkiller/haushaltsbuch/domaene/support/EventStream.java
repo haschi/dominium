@@ -2,12 +2,11 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 public class EventStream<A> {
     private final String name;
+    private int version;
 
     public final int getVersion() {
         return this.version;
     }
-
-    private int version;
 
     public EventStream(final String streamName) {
         this.name = streamName;

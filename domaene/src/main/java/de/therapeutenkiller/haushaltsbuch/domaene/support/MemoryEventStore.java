@@ -12,15 +12,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 // T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
 @Dependent
 public class MemoryEventStore<E, A> implements EventStore<E, A> {
 
-    private Map<String, EventStream<A>> streams = new HashMap<>();
-    private List<EventWrapper<A>> events = new ArrayList<>();
-    private List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
+    private final Map<String, EventStream<A>> streams = new ConcurrentHashMap<>();
+    private final List<EventWrapper<A>> events = new ArrayList<>();
+    private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
 
     @Override
     public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
@@ -114,11 +115,17 @@ public class MemoryEventStore<E, A> implements EventStore<E, A> {
 
     @Override
     public final Domänenereignis<A> getInitialEvent(final String streamName) {
-        return (this.events.stream()
+        return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.version == 1)
                 .map(wrapper -> wrapper.ereignis)
                 .findFirst()
-                .get());
+                .get();
+    }
+
+    public void clear() {
+        this.events.clear();
+        this.snapshots.clear();
+        this.streams.clear();
     }
 }

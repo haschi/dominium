@@ -77,7 +77,6 @@ public final class KontoErstellenSteps {
     public void dann_wird_das_Konto_nicht_angelegt_worden_sein(final String kontoname) {
 
         final KontoWurdeNichtAngelegt expected = new KontoWurdeNichtAngelegt(
-                this.kontext.aktuelleHaushaltsbuchId(),
                 kontoname,
                 Kontoart.Aktiv);
 

@@ -12,6 +12,8 @@ public class KontoAnlegenKommando extends Wertobjekt {
 
     public KontoAnlegenKommando(final UUID haushaltsbuchId, final String kontoname, final Kontoart kontoart) {
 
+        super();
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
         this.kontoart = kontoart;

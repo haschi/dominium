@@ -31,10 +31,12 @@ import java.util.UUID;
 @CoverageIgnore
 public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
 
+    public static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
+
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
-    public int initialVersion = 0;
+    public int initialVersion;
 
     private Haushaltsbuch() {
         super(UUID.randomUUID());
@@ -76,7 +78,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
 
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
         if (this.istKontoVorhanden(kontoname)) {
-            this.causes(new KontoWurdeNichtAngelegt(getIdentität(), kontoname, kontoart));
+            this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
             this.causes(new KontoWurdeAngelegt(getIdentität(), kontoname, kontoart));
         }
@@ -203,9 +205,11 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
     }
 
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
+        // Do Nothing
     }
 
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
+        // Nichts tun.
     }
 
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
@@ -215,8 +219,6 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
                 buchungWurdeAusgeführt.haben,
                 buchungWurdeAusgeführt.betrag);
     }
-
-    public static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 
     public void anfangsbestandBuchen(
             final String kontoname,

@@ -18,6 +18,9 @@ public class KontoMitAnfangsbestandAnlegenKommando extends Wertobjekt {
             final String kontoname,
             final Kontoart kontoart,
             final MonetaryAmount betrag) {
+
+        super();
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.kontoname = kontoname;
         this.kontoart = kontoart;

@@ -5,6 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
@@ -16,21 +17,22 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final EventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store;
+    private final MemoryEventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store;
+
+    private UUID aktuell;
 
     public final UUID getAktuell() {
         return this.aktuell;
     }
 
-    private UUID aktuell;
-
     @Override
     public final void leeren() {
+        this.store.clear();
     }
 
     @Inject
     public HaushaltsbuchMemoryRepository(
-            final EventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store) {
+            final MemoryEventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store) {
 
         this.store = store;
     }
@@ -54,11 +56,11 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
                 toEventNumber);
 
         Haushaltsbuch haushaltsbuch = null;
-        if (snapshot != null) {
-            haushaltsbuch = new Haushaltsbuch(snapshot);
-        } else {
+        if (snapshot == null) {
             final Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialEvent(streamName);
             haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO kein Cast
+        } else {
+            haushaltsbuch = new Haushaltsbuch(snapshot);
         }
 
 

@@ -17,6 +17,8 @@ public class EinnahmeBuchenKommando extends Wertobjekt {
             final String habenkonto,
             final MonetaryAmount währungsbetrag) {
 
+        super();
+
         this.haushaltsbuchId = haushaltsbuchId;
         this.sollkonto = sollkonto;
         this.habenkonto = habenkonto;

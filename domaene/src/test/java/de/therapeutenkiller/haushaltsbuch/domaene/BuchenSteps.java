@@ -76,13 +76,11 @@ public final class BuchenSteps {
         final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
                 this.kontext.aktuelleHaushaltsbuchId());
 
-
         final List<Buchungssatz> buchungssatzs = stream.stream()
                 .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
                 .map(ereignis -> (BuchungWurdeAusgeführt) ereignis)
-                .map(buchung -> buchung.getBuchungssatz())
+                .map(BuchungWurdeAusgeführt::getBuchungssatz)
                 .collect(Collectors.toList());
-
 
         assertThat(buchungssatzs.toString()).contains(erwarteterBuchungssatz); // NOPMD LoD TODO
     }

@@ -1,14 +1,11 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
 
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
-import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,19 +14,13 @@ import javax.inject.Singleton;
 public final class KontoAnlegen {
     private final HaushaltsbuchRepository repository;
     private final AnfangsbestandBuchen anfangsbestandBuchen;
-    private final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent;
-    private final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt;
 
     @Inject
     public KontoAnlegen(
             final HaushaltsbuchRepository repository,
-            final AnfangsbestandBuchen anfangsbestandBuchen,
-            final Event<KontoWurdeAngelegt> kontoWurdeAngelegtEvent,
-            final Event<KontoWurdeNichtAngelegt> kontoWurdeNichtAngelegt) {
+            final AnfangsbestandBuchen anfangsbestandBuchen) {
         this.repository = repository;
         this.anfangsbestandBuchen = anfangsbestandBuchen;
-        this.kontoWurdeAngelegtEvent = kontoWurdeAngelegtEvent;
-        this.kontoWurdeNichtAngelegt = kontoWurdeNichtAngelegt;
     }
 
     public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
