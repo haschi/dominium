@@ -6,19 +6,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-// T: Ereignistyp, E: Snapshottyp, I Initialereignis
-public interface EventStore<T, E, I extends  T> {
+// T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
+public interface EventStore<T, E, I extends  T, A> {
 
-    void createNewStream(String streamName, Collection<T> domainEvents);
+    void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);
 
-    void appendEventsToStream(String streamName, Collection<T> domainEvents, Optional<Integer> expectedVersion);
+    void appendEventsToStream(String streamName, Collection<Domänenereignis<A>> domainEvents, Optional<Integer> expectedVersion);
 
-    List<T> getStream(String streamName, int fromVersion, int toVersion);
+    List<Domänenereignis<A>> getStream(String streamName, int fromVersion, int toVersion);
 
     void addSnapshot(String streamName, E snapshot);
 
     @DarfNullSein
     E getLatestSnapshot(String streamName);
 
-    I getInitialEvent(String streamName);
+    /**
+     * Liefert das Ereignis, mit dem ein Aggregat erzeugt worden ist.
+     * @param streamName Name des Streams für das Aggregat
+     * @return Das Initialereignis.
+     */
+    Domänenereignis<A> getInitialEvent(String streamName);
 }

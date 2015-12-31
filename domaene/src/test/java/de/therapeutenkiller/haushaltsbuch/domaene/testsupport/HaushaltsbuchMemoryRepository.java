@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt> store;
+    private final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt, Haushaltsbuch> store;
 
     public final UUID getAktuell() {
         return this.aktuell;
@@ -30,7 +31,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Inject
     public HaushaltsbuchMemoryRepository(
-            final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt> store) {
+            final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt, Haushaltsbuch> store) {
 
         this.store = store;
     }
@@ -48,18 +49,18 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
             fromEventNumber = snapshot.version + 1; // load only events after snapshot
         }
 
-        final List<Haushaltsbuchereignis> stream = this.store.getStream(streamName, fromEventNumber, toEventNumber);
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getStream(streamName, fromEventNumber, toEventNumber);
 
         Haushaltsbuch haushaltsbuch = null;
         if (snapshot != null) {
             haushaltsbuch = new Haushaltsbuch(snapshot);
         } else {
-            HaushaltsbuchWurdeAngelegt ereignis = this.store.getInitialEvent(streamName);
-            haushaltsbuch = new Haushaltsbuch(ereignis);
+            Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialEvent(streamName);
+            haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO: kein Cast
         }
 
 
-        for (final Haushaltsbuchereignis ereignis : stream) {
+        for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {
             ereignis.applyTo(haushaltsbuch);
         }
 
@@ -74,7 +75,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     @Override
     public final void add(final Haushaltsbuch haushaltsbuch) {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentität());
-        this.store.createNewStream(streamName, haushaltsbuch.getÄnderungen());
+        final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
+        this.store.createNewStream(streamName, änderungen);
         this.aktuell = haushaltsbuch.getIdentität();
     }
 
@@ -95,7 +97,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         }
     }
 
-    public final List<Haushaltsbuchereignis> getStream(final UUID haushaltsbuchId) {
+    public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         final String streamName = this.streamNameFor(haushaltsbuchId);
         return this.store.getStream(streamName, 0, Integer.MAX_VALUE);
     }

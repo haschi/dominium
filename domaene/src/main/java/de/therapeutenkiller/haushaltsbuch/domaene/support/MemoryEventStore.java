@@ -14,16 +14,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
 @Dependent
-public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> {
+public class MemoryEventStore<T, E, I extends T, A> implements EventStore<T, E, I, A> {
 
-    private Map<String, EventStream<T>> streams = new HashMap<>();
-    private List<EventWrapper<T>> events = new ArrayList<>();
+    private Map<String, EventStream<A>> streams = new HashMap<>();
+    private List<EventWrapper<A>> events = new ArrayList<>();
     private List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
 
     @Override
-    public final void createNewStream(final String streamName, final Collection<T> domainEvents) {
-        final EventStream eventStream = new EventStream(streamName);
+    public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
+        final EventStream<A> eventStream = new EventStream<>(streamName);
         this.streams.put(streamName, eventStream);
         this.appendEventsToStream(streamName, domainEvents, Optional.empty());
     }
@@ -31,17 +32,18 @@ public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> 
     @Override
     public final void appendEventsToStream(
             final String streamName,
-            final Collection<T> domainEvents,
+            final Collection<Domänenereignis<A>> domainEvents,
             @DarfNullSein final Optional<Integer> expectedVersion) {
 
-        final EventStream stream = this.streams.get(streamName);
+        final EventStream<A> stream = this.streams.get(streamName);
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), stream);
         }
 
-        for (final T ereignis : domainEvents) {
-            this.events.add(stream.registerEvent(ereignis));
+        for (final Domänenereignis<A> ereignis : domainEvents) {
+            final EventWrapper<A> wrappedEvent = stream.registerEvent(ereignis);
+            this.events.add(wrappedEvent);
         }
     }
 
@@ -49,17 +51,17 @@ public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> 
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
-            final String error = String.format("Expected: %i. Found: %d", expectedVersion, lastUpdatedVersion);
+            final String error = String.format("Expected: %d. Found: %d", expectedVersion, lastUpdatedVersion);
             throw new IllegalArgumentException(error);
         }
     }
 
     @Override
-    public final List<T> getStream(final String streamName, final int fromVersion, final int toVersion) {
+    public final List<Domänenereignis<A>> getStream(final String streamName, final int fromVersion, final int toVersion) {
 
-        final Comparator<? super EventWrapper<T>> byVersion = new Comparator<EventWrapper<T>>() {
+        final Comparator<? super EventWrapper<A>> byVersion = new Comparator<EventWrapper<A>>() {
             @Override
-            public int compare(final EventWrapper<T> eventWrapper, final EventWrapper<T> t1) {
+            public int compare(final EventWrapper<A> eventWrapper, final EventWrapper<A> t1) {
                 return Integer.compare(eventWrapper.version, t1.version);
             }
         };
@@ -72,17 +74,17 @@ public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> 
                 .collect(Collectors.toList());
     }
 
-    private boolean gehörtZumStream(final String streamName, final EventWrapper<T> event) {
+    private boolean gehörtZumStream(final String streamName, final EventWrapper<A> event) {
         return event.name.equals(streamName);
     }
 
-    private boolean istVersionInnerhalb(final int fromVersion, final int toVersion, final EventWrapper<T> event) {
+    private boolean istVersionInnerhalb(final int fromVersion, final int toVersion, final EventWrapper<A> event) {
         return event.version >= fromVersion && event.version <= toVersion;
     }
 
     @Override
     public final void addSnapshot(final String streamName, final E snapshot) {
-        final SnapshotWrapper<E> wrapper = new SnapshotWrapper(streamName, snapshot, LocalDateTime.now());
+        final SnapshotWrapper<E> wrapper = new SnapshotWrapper<>(streamName, snapshot, LocalDateTime.now());
         this.snapshots.add(wrapper);
     }
 
@@ -111,11 +113,11 @@ public class MemoryEventStore<T, E, I extends T> implements EventStore<T, E, I> 
     }
 
     @Override
-    public final I getInitialEvent(final String streamName) {
-        return (I)(this.events.stream()
+    public final Domänenereignis<A> getInitialEvent(final String streamName) {
+        return (this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.version == 1)
-                .map(wrapper -> (T)wrapper.ereignis)
+                .map(wrapper -> wrapper.ereignis)
                 .findFirst()
                 .get());
     }

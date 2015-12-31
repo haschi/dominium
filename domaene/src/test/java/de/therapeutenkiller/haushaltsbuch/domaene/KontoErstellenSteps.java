@@ -10,10 +10,8 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.*;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
@@ -58,7 +56,7 @@ public final class KontoErstellenSteps {
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
         final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname, Kontoart.Aktiv);
 
-        final List<Haushaltsbuchereignis> ereignisse = this.kontext.getStream(haushaltsbuchId);
+        final List<Domänenereignis<Haushaltsbuch>> ereignisse = this.kontext.getStream(haushaltsbuchId);
         assertThat(ereignisse).contains(sollwert); // NOPMD AssertJ OK TODO
     }
 
@@ -80,7 +78,7 @@ public final class KontoErstellenSteps {
                 kontoname,
                 Kontoart.Aktiv);
 
-        final List<Haushaltsbuchereignis> ereignisse = this.kontext.getStream(this.kontext.aktuelleHaushaltsbuchId());
+        final List<Domänenereignis<Haushaltsbuch>> ereignisse = this.kontext.getStream(this.kontext.aktuelleHaushaltsbuchId());
         assertThat(ereignisse).contains(expected); // NOPMD LoD AssertJ OK TODO
     }
 

@@ -29,7 +29,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @CoverageIgnore
-public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereignis> { // NOPMD Klasse zu groß TODO
+public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
 
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
@@ -65,12 +65,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuchereign
     // bewirkt
     private void causes(final Haushaltsbuchereignis ereignis) {
         this.getÄnderungen().add(ereignis);
-        this.anwenden(ereignis);
-    }
-
-    @Override
-    protected void anwenden(final Haushaltsbuchereignis ereignis) {
-        ereignis.applyTo(this);
+        this.anwenden(ereignis, this);
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch

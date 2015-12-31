@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import org.slf4j.Logger;
 
@@ -48,7 +49,7 @@ public class HaushaltsbuchAggregatKontext {
         this.manager.fireEvent(kommando);
     }
 
-    public final List<Haushaltsbuchereignis> getStream(final UUID haushaltsbuchId) {
+    public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         return this.repository.getStream(haushaltsbuchId);
     }
 }

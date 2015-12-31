@@ -14,18 +14,16 @@ class HaushaltsbuchTest extends Specification {
         when: "Wenn ich versuche eine nicht existierendes Konto hinzuzufügen"
         haushaltsbuch.neuesKontoHinzufügen(null)
 
-        then: "Dann wird eine NullPointerException ausgelöst."
+        then: "Dann wird eine ArgumentIstNullException ausgelöst."
         thrown ArgumentIstNullException
     }
 
-    def "Konto suchen"() {
+    def "Das Konto Anfangsbestand wird automatisch angelegt"() {
 
-        given: def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
+        given: "Angenommen ich lege ein neues Haushaltsbuch an"
+        def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
 
-        when:
-        def ergebnis = haushaltsbuch.kontoSuchen("Anfangsbestand")
-
-        then:
-        ergebnis != null
+        expect: "Dann wird das Konto Anfangsbestand existieren"
+        haushaltsbuch.kontoSuchen("Anfangsbestand") != null
     }
 }
