@@ -4,9 +4,6 @@ import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 
 import javax.money.format.MonetaryParseException
 
-/**
- * Created by matthias on 21.12.15.
- */
 public class BeispieleFürUmwandlung {
     static def gültigeWährungsbeträge() {
         [

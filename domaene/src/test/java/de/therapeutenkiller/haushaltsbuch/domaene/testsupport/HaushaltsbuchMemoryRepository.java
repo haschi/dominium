@@ -54,7 +54,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
                 fromEventNumber,
                 toEventNumber);
 
-        Haushaltsbuch haushaltsbuch = null;
+        Haushaltsbuch haushaltsbuch;
         if (snapshot == null) {
             final Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialEvent(streamName);
             haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO kein Cast

@@ -9,9 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.UUID;
 
-/**
- * Created by matthias on 23.12.15.
- */
 @Singleton
 public final class AlleKonten {
     private final HaushaltsbuchRepository repository;

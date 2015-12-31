@@ -47,7 +47,7 @@ public final class KontoAnlegen {
         this.repository.save(haushaltsbuch);
     }
 
-    public HaushaltsbuchRepository getRepository() {
+    private HaushaltsbuchRepository getRepository() {
         return this.repository;
     }
 }

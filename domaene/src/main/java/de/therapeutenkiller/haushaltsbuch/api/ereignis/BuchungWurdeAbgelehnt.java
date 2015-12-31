@@ -5,7 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 public final class BuchungWurdeAbgelehnt extends Wertobjekt implements Haushaltsbuchereignis {
-    public final String grund;
+    private final String grund;
 
     public BuchungWurdeAbgelehnt(final String grund) {
 

@@ -6,9 +6,6 @@ import spock.lang.Unroll
 
 import javax.money.MonetaryAmount
 
-/**
- * Created by matthias on 21.12.15.
- */
 class HabensaldoConverterTest extends Specification {
 
     @Unroll

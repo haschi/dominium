@@ -13,7 +13,7 @@ public class AggregateRoot<T, A> extends Entität<T> {
         this.version = 0;
     }
 
-    public AggregateRoot(final Snapshot<T> snapshot) {
+    protected AggregateRoot(final Snapshot<T> snapshot) {
         super(snapshot.getIdentifier());
         this.version = snapshot.getVersion();
     }
@@ -38,7 +38,7 @@ public class AggregateRoot<T, A> extends Entität<T> {
         this.version = version;
     }
 
-    public final int getVersion() {
+    protected final int getVersion() {
         return this.version;
     }
 }

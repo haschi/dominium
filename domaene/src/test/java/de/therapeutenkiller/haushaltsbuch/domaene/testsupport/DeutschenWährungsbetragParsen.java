@@ -5,7 +5,7 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-public class DeutschenWährungsbetragParsen {
+class DeutschenWährungsbetragParsen {
 
     private final MonetaryAmountFormat format;
 

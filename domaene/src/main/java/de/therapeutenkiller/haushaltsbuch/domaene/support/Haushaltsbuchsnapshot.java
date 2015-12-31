@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Haushaltsbuchsnapshot implements Snapshot<UUID> {
-    public int version;
-    public UUID identität;
+    public final int version;
+    private final UUID identität;
     public ImmutableSet<Konto> konten;
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 

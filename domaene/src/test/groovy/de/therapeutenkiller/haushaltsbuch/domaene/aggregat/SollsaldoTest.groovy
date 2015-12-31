@@ -9,9 +9,6 @@ import spock.lang.Specification
 import javax.money.Monetary
 import javax.money.MonetaryAmount
 
-/**
- * Created by matthias on 20.12.15.
- */
 class SollsaldoTest extends Specification {
 
     @Shared MonetaryAmount betrag1 = 12.00.euro

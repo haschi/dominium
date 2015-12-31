@@ -16,7 +16,6 @@ import java.util.UUID;
 public class HaushaltsbuchAggregatKontext {
 
     private final HaushaltsbuchMemoryRepository repository;
-    private final Set<Haushaltsbuch> haushaltsbücher;
 
     @Inject
     private BeanManager manager;
@@ -28,7 +27,6 @@ public class HaushaltsbuchAggregatKontext {
         log.warn("HaushaltsbuchAggregatKontext(%s)", repository.toString());
 
         this.repository = repository;
-        this.haushaltsbücher = new HashSet<>();
     }
 
     public final void repositoryLeeren() {
@@ -40,7 +38,6 @@ public class HaushaltsbuchAggregatKontext {
     }
 
     public final void initialisieren() {
-        this.haushaltsbücher.clear();
         this.repositoryLeeren();
     }
 

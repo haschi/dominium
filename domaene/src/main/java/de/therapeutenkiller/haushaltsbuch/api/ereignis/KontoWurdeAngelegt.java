@@ -8,7 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 import java.util.UUID;
 
 public final class KontoWurdeAngelegt extends Wertobjekt implements Haushaltsbuchereignis {
-    public final UUID haushaltsbuchId;
+    private final UUID haushaltsbuchId;
     public final String kontoname;
     public final Kontoart kontoart;
 

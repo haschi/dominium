@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import java.time.LocalDateTime;
 
-public class SnapshotWrapper<E> {
+class SnapshotWrapper<E> {
     public final String streamName;
     public final E snapshot;
     public final LocalDateTime timestamp;

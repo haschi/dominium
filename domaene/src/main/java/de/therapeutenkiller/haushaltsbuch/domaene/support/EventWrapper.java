@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 public class EventWrapper<T> {
-    public final String id; // NOPMD Das heißt nun mal so.
+    private final String id; // NOPMD Das heißt nun mal so.
     public final Domänenereignis<T> ereignis;
     public final int version;
     public final String name;

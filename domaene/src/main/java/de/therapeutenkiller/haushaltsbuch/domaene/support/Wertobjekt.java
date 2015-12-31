@@ -30,7 +30,7 @@ public class Wertobjekt {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public final boolean canEqual(@DarfNullSein final Object other) {
+    private boolean canEqual(@DarfNullSein final Object other) {
         return other != null && this.getClass() == other.getClass();
     }
 }

@@ -23,7 +23,7 @@ public class HaushaltsbuchführungBeginnen {
         this.getRepository().add(haushaltsbuch);
     }
 
-    public final HaushaltsbuchRepository getRepository() {
+    private HaushaltsbuchRepository getRepository() {
         return this.repository;
     }
 }

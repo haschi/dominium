@@ -8,11 +8,11 @@ import javax.money.MonetaryAmount;
 
 public abstract class Saldo { // NOPMD TODO Regel ändern
 
-    protected final MonetaryAmount betrag;
+    final MonetaryAmount betrag;
 
     public abstract MonetaryAmount getBetrag();
 
-    public Saldo( final MonetaryAmount betrag) {
+    Saldo(final MonetaryAmount betrag) {
         this.betrag = betrag;
     }
 

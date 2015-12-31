@@ -31,7 +31,7 @@ import java.util.UUID;
 @CoverageIgnore
 public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
 
-    public static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
+    private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
@@ -95,7 +95,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
                 .get();
     }
 
-    public boolean istKontoVorhanden(final String konto) {
+    private boolean istKontoVorhanden(final String konto) {
         final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
         return this.konten.stream().anyMatch(kontoname::istErfülltVon);
     }
@@ -104,7 +104,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
         return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
     }
 
-    public boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
+    private boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
         final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
         final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
 
@@ -114,7 +114,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
 
     // Journal -- Alle Methoden fürs Journal
 
-    public String fehlermeldungFürFehlendeKontenErzeugen(
+    private String fehlermeldungFürFehlendeKontenErzeugen(
             final String soll,
             final String haben) {
 
@@ -134,11 +134,11 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
         throw new IllegalArgumentException("Die Fehlermeldung kann nicht erzeugt werden, da kein Fehler vorliegt.");
     }
 
-    public boolean sindAlleBuchungskontenVorhanden(final String sollkonto, final String habenkonto) {
+    private boolean sindAlleBuchungskontenVorhanden(final String sollkonto, final String habenkonto) {
         return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
     }
 
-    public boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
+    private boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
         return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
     }
 
@@ -148,7 +148,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
     }
 
     @CoverageIgnore
-    public Saldo kontostandBerechnen(final Konto konto) {
+    private Saldo kontostandBerechnen(final Konto konto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
         final MonetaryAmount summerDerSollbuchungen = this.summeFür(sollkonto);

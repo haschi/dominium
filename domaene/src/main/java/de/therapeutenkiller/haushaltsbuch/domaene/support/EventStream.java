@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-public class EventStream<A> {
+class EventStream<A> {
     private final String name;
     private int version;
 
@@ -15,6 +15,6 @@ public class EventStream<A> {
 
     public final EventWrapper<A> registerEvent(final Domänenereignis<A> ereignis) {
         this.version = this.version + 1;
-        return new EventWrapper<A>(ereignis, this.version, this.name);
+        return new EventWrapper<>(ereignis, this.version, this.name);
     }
 }

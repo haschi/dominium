@@ -6,8 +6,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 public final class KontoWurdeNichtAngelegt extends Wertobjekt implements Haushaltsbuchereignis {
-    public final String kontoname;
-    public final Kontoart kontoart;
+    private final String kontoname;
+    private final Kontoart kontoart;
 
     public KontoWurdeNichtAngelegt(final String kontoname, final Kontoart kontoart) {
 

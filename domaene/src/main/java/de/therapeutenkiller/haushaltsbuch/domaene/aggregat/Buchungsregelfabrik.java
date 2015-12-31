@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
-public final class Buchungsregelfabrik {
+final class Buchungsregelfabrik {
 
     private Buchungsregelfabrik() {
     }

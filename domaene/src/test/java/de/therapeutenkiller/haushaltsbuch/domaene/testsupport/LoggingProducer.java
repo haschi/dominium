@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-public class LoggingProducer {
+class LoggingProducer {
 
     @Produces
     public final Logger createLogger(final InjectionPoint injectionPoint) {

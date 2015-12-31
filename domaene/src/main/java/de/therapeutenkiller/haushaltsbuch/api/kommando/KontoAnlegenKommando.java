@@ -8,7 +8,7 @@ import java.util.UUID;
 public class KontoAnlegenKommando extends Wertobjekt {
     public final UUID haushaltsbuchId;
     public final String kontoname;
-    public Kontoart kontoart;
+    public final Kontoart kontoart;
 
     public KontoAnlegenKommando(final UUID haushaltsbuchId, final String kontoname, final Kontoart kontoart) {
 
