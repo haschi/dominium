@@ -8,7 +8,7 @@ public interface HaushaltsbuchRepository {
 
     void leeren();
 
-    Haushaltsbuch findBy(UUID id);
+    Haushaltsbuch findBy(UUID identitätsmerkmal);
 
     void add(Haushaltsbuch haushaltsbuch);
 

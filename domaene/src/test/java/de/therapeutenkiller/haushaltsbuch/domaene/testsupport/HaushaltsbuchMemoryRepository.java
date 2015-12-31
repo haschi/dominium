@@ -3,7 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
@@ -38,8 +37,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     }
 
     @Override
-    public final Haushaltsbuch findBy(final UUID id) {
-        final String streamName = this.streamNameFor(id);
+    public final Haushaltsbuch findBy(final UUID identitätsmerkmal) {
+        final String streamName = this.streamNameFor(identitätsmerkmal);
 
         int fromEventNumber = 0;
         final int toEventNumber = Integer.MAX_VALUE;
@@ -71,9 +70,9 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         return haushaltsbuch;
     }
 
-    private String streamNameFor(final UUID id) {
+    private String streamNameFor(final UUID identitätsmerkmal) {
         // Stream per-aggregate: {AggregateType}-{AggregateId}
-        return String.format("%s-%s", Haushaltsbuch.class.getName(), id);
+        return String.format("%s-%s", Haushaltsbuch.class.getName(), identitätsmerkmal);
     }
 
     @Override
