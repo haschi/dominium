@@ -24,16 +24,9 @@ public class HaushaltsbuchführungBeginnen {
         this.haushaltsbuchWurdeAngelegt = haushaltsbuchWurdeAngelegt;
     }
 
-    public final void ausführen() {
+    public final void ausführen(@Observes final HaushaltsbuchführungBeginnenKommando kommando) {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
-        // this.getRepository().hinzufügen(haushaltsbuch);
-
         this.getRepository().add(haushaltsbuch);
-        // this.haushaltsbuchWurdeAngelegt.fire(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.getIdentität()));
-    }
-
-    public final void process(@Observes final HaushaltsbuchführungBeginnenKommando kommando) {
-        this.ausführen();
     }
 
     public final HaushaltsbuchRepository getRepository() {
