@@ -64,7 +64,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
 
     // bewirkt
     private void causes(final Haushaltsbuchereignis ereignis) {
-        this.getÄnderungen().add(ereignis);
+        this.ereignisHinzufügen(ereignis);
         this.anwenden(ereignis, this);
     }
 

@@ -18,22 +18,21 @@ public class AggregateRoot<T, A> extends Entität<T> {
         this.version = snapshot.getVersion();
     }
 
-    protected void anwenden(final Domänenereignis<A> ereignis, A aggrgat) {
+    protected final void anwenden(final Domänenereignis<A> ereignis, final A aggrgat) {
         this.eventManager.anwenden(ereignis, aggrgat);
     }
 
     public final List<Domänenereignis<A>> getÄnderungen() {
-        return eventManager.getÄnderungen();
+        return this.eventManager.getÄnderungen();
     }
 
     protected final void ereignisHinzufügen(final Domänenereignis<A> ereignis) {
-        eventManager.ereignisHinzufügen(ereignis);
+        this.eventManager.ereignisHinzufügen(ereignis);
     }
 
     protected final void versionErhöhen() {
         this.version = this.version + 1;
     }
-
 
     public final void setVersion(final int version) {
         this.version = version;

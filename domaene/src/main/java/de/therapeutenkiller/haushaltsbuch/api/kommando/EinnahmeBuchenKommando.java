@@ -5,7 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class EinnahmeBuchenKommando extends Wertobjekt{
+public class EinnahmeBuchenKommando extends Wertobjekt {
     public final UUID haushaltsbuchId;
     public final String sollkonto;
     public final String habenkonto;

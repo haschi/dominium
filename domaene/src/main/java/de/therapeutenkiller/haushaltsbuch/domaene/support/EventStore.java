@@ -6,12 +6,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-// T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
+// E: Snapshottyp, A: Aggregattyp
 public interface EventStore<E, A> {
 
     void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);
 
-    void appendEventsToStream(String streamName, Collection<Domänenereignis<A>> domainEvents, Optional<Integer> expectedVersion);
+    void appendEventsToStream(
+            String streamName,
+            Collection<Domänenereignis<A>> domainEvents,
+            Optional<Integer> expectedVersion);
 
     List<Domänenereignis<A>> getStream(String streamName, int fromVersion, int toVersion);
 

@@ -12,7 +12,6 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnl
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -65,14 +64,18 @@ public final class BuchenSteps {
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(this.kontext.aktuelleHaushaltsbuchId());
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
+                this.kontext.aktuelleHaushaltsbuchId());
+
         assertThat(stream).contains(fehlermeldung); // NOPMD LoD TODO
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz) {
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext
-                .getStream(this.kontext.aktuelleHaushaltsbuchId());
+
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
+                this.kontext.aktuelleHaushaltsbuchId());
+
 
         final List<Buchungssatz> buchungssatzs = stream.stream()
                 .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)

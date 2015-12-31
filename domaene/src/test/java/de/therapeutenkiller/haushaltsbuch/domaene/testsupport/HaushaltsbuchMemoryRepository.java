@@ -48,14 +48,17 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
             fromEventNumber = snapshot.version + 1; // load only events after snapshot
         }
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getStream(streamName, fromEventNumber, toEventNumber);
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getStream(
+                streamName,
+                fromEventNumber,
+                toEventNumber);
 
         Haushaltsbuch haushaltsbuch = null;
         if (snapshot != null) {
             haushaltsbuch = new Haushaltsbuch(snapshot);
         } else {
-            Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialEvent(streamName);
-            haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO: kein Cast
+            final Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialEvent(streamName);
+            haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO kein Cast
         }
 
 

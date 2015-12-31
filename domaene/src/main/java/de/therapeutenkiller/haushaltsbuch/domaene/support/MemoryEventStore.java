@@ -57,14 +57,14 @@ public class MemoryEventStore<E, A> implements EventStore<E, A> {
     }
 
     @Override
-    public final List<Domänenereignis<A>> getStream(final String streamName, final int fromVersion, final int toVersion) {
+    public final List<Domänenereignis<A>> getStream(
+            final String streamName,
+            final int fromVersion,
+            final int toVersion) {
 
-        final Comparator<? super EventWrapper<A>> byVersion = new Comparator<EventWrapper<A>>() {
-            @Override
-            public int compare(final EventWrapper<A> eventWrapper, final EventWrapper<A> t1) {
-                return Integer.compare(eventWrapper.version, t1.version);
-            }
-        };
+        final Comparator<? super EventWrapper<A>> byVersion = (left, right) -> Integer.compare(
+                left.version,
+                right.version);
 
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))

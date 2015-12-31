@@ -6,7 +6,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class KontoMitAnfangsbestandAnlegenKommando extends Wertobjekt{
+public class KontoMitAnfangsbestandAnlegenKommando extends Wertobjekt {
 
     public final UUID haushaltsbuchId;
     public final String kontoname;

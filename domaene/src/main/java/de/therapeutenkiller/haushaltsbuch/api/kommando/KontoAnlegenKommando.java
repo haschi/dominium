@@ -5,7 +5,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import java.util.UUID;
 
-public class KontoAnlegenKommando extends Wertobjekt{
+public class KontoAnlegenKommando extends Wertobjekt {
     public final UUID haushaltsbuchId;
     public final String kontoname;
     public Kontoart kontoart;
