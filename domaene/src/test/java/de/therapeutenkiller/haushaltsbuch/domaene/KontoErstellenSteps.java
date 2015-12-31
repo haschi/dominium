@@ -34,8 +34,6 @@ public final class KontoErstellenSteps {
 
     private final SaldoAbfrage saldieren;
     private final AlleKonten alleKonten;
-    private KontoWurdeAngelegt kontoWurdeAngelegt;
-    private KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt;
 
     @Inject
     public KontoErstellenSteps(
@@ -46,14 +44,6 @@ public final class KontoErstellenSteps {
         this.kontext = kontext;
         this.saldieren = saldieren;
         this.alleKonten = alleKonten;
-    }
-
-    public void kontoWurdeAngelegtEreignishandler(@Observes final KontoWurdeAngelegt ereignis) {
-        this.kontoWurdeAngelegt = ereignis;
-    }
-
-    public void kontoWurdeNichtAngelegtEreignishandler(@Observes final KontoWurdeNichtAngelegt ereignis) {
-        this.kontoWurdeNichtAngelegt = ereignis;
     }
 
     @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")

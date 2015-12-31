@@ -30,19 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class BuchenSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
-    private BuchungWurdeAbgelehnt buchungsWurdeNichtAusgeführt;
-    private BuchungWurdeAusgeführt buchungssatzWurdeAngelegt;
 
     @Inject public BuchenSteps(final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
-    }
-
-    public void buchungWurdeNichtAusgeführtHandler(@Observes final BuchungWurdeAbgelehnt ereignis) {
-        this.buchungsWurdeNichtAusgeführt = ereignis;
-    }
-
-    public void buchungssatzWurdeAngelegtHandler(@Observes final BuchungWurdeAusgeführt buchungssatzWurdeAngelegt) {
-        this.buchungssatzWurdeAngelegt = buchungssatzWurdeAngelegt;
     }
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
