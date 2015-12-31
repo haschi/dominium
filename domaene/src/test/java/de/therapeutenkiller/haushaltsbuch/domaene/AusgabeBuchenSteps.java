@@ -49,7 +49,7 @@ public final class AusgabeBuchenSteps {
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
-    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) { // NOPMD Dataflow
+    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) { // NOPMD Datenfluss
 
         for (final Kontostand kontostand : kontostände) {
             final Saldo saldo = this.kontoSaldieren.abfragen(

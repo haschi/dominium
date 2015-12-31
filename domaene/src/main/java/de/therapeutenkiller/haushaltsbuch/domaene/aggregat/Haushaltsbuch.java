@@ -15,8 +15,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.AggregateRoot;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchSnapshot;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
@@ -42,7 +42,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
         super(UUID.randomUUID());
     }
 
-    public Haushaltsbuch(final Haushaltsbuchsnapshot snapshot) {
+    public Haushaltsbuch(final HaushaltsbuchSnapshot snapshot) {
         super(snapshot);
         this.initialVersion = snapshot.version;
     }
@@ -56,8 +56,8 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
         super(ereignis.haushaltsbuchId);
     }
 
-    public Haushaltsbuchsnapshot getSnapshot() {
-        final Haushaltsbuchsnapshot snapshot = new Haushaltsbuchsnapshot(getIdentität(), getVersion());
+    public HaushaltsbuchSnapshot getSnapshot() {
+        final HaushaltsbuchSnapshot snapshot = new HaushaltsbuchSnapshot(getIdentität(), getVersion());
         snapshot.konten = ImmutableSet.copyOf(this.konten);
         snapshot.buchungssätze = ImmutableList.of(this.buchungssätze);
 
@@ -65,7 +65,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
     }
 
     // bewirkt
-    private void causes(final Haushaltsbuchereignis ereignis) {
+    private void causes(final HaushaltsbuchEreignis ereignis) {
         this.ereignisHinzufügen(ereignis);
         this.anwenden(ereignis, this);
     }
@@ -151,29 +151,29 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
     private Saldo kontostandBerechnen(final Konto konto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
-        final MonetaryAmount summerDerSollbuchungen = this.summeFür(sollkonto);
+        final MonetaryAmount summerDerSollBuchungen = this.summeFür(sollkonto);
 
         final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(konto);
-        final MonetaryAmount summerDerHabenbuchungen = this.summeFür(habenkonto);
+        final MonetaryAmount summerDerHabenBuchungen = this.summeFür(habenkonto);
 
-        return this.saldieren(summerDerSollbuchungen, summerDerHabenbuchungen);
+        return this.saldieren(summerDerSollBuchungen, summerDerHabenBuchungen);
     }
 
-    private Saldo saldieren(final MonetaryAmount summerDerSollbuchungen, final MonetaryAmount summerDerHabenbuchungen) {
-        if (summerDerHabenbuchungen.isEqualTo(summerDerSollbuchungen)) {
-            return new SollHabenSaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
+    private Saldo saldieren(final MonetaryAmount summerDerSollBuchungen, final MonetaryAmount summerDerHabenBuchungen) {
+        if (summerDerHabenBuchungen.isEqualTo(summerDerSollBuchungen)) {
+            return new SollHabenSaldo(summerDerHabenBuchungen.subtract(summerDerSollBuchungen));
         }
 
-        if (summerDerHabenbuchungen.isGreaterThan(summerDerSollbuchungen)) {
-            return new Habensaldo(summerDerHabenbuchungen.subtract(summerDerSollbuchungen));
+        if (summerDerHabenBuchungen.isGreaterThan(summerDerSollBuchungen)) {
+            return new Habensaldo(summerDerHabenBuchungen.subtract(summerDerSollBuchungen));
         }
 
-        return new Sollsaldo(summerDerSollbuchungen.subtract(summerDerHabenbuchungen));
+        return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
     }
 
-    private MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzspezifikation) {
+    private MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzSpezifikation) {
         return this.buchungssätze.stream()
-                    .filter(buchungssatzspezifikation::istErfülltVon)
+                    .filter(buchungssatzSpezifikation::istErfülltVon)
                     .map(Buchungssatz::getWährungsbetrag)
                     .reduce(MonetaryFunctions.sum())
                     .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
@@ -196,7 +196,7 @@ public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { //
     }
 
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
-        final Buchungsregel regel = Buchungsregelfabrik.erzeugen(
+        final Buchungsregel regel = BuchungsregelFabrik.erzeugen(
                 kontoWurdeAngelegt.kontoart,
                 kontoWurdeAngelegt.kontoname);
 

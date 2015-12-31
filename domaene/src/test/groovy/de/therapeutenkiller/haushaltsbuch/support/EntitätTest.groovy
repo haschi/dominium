@@ -25,7 +25,7 @@ class EntitätTest extends Specification {
 
     def "Entitäten benötigen eine Identität"() {
 
-        when: "die Entität ohne Identitätsschlüssel erzeugt wird"
+        when: "die Entität ohne Identitätsmerkmal erzeugt wird"
         new Entität(null);
 
         then: "wird eine ArgumentIstNullException ausgelöst"

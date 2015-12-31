@@ -17,7 +17,7 @@ public class BeispieleFürUmwandlung {
         [
                 ["12.00 €", IllegalArgumentException.class],  // ungültig wegen € Zeichen
                 ["Hello World", MonetaryParseException.class],    // Zeichenfolge ist ungültig
-                ["", IllegalArgumentException.class],  // Leere Zeichfeolge ist ungültig
+                ["", IllegalArgumentException.class],  // Leere Zeichenfolge ist ungültig
                 ["-10,23 USD", IllegalArgumentException],
                 [null, ArgumentIstNullException.class]  // Das ist auch Mist.
         ]

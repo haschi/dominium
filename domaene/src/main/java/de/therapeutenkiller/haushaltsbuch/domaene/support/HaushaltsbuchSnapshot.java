@@ -8,13 +8,13 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import java.util.Set;
 import java.util.UUID;
 
-public class Haushaltsbuchsnapshot implements Snapshot<UUID> {
+public class HaushaltsbuchSnapshot implements Snapshot<UUID> {
     public final int version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 
-    public Haushaltsbuchsnapshot(final UUID identität, final int version) {
+    public HaushaltsbuchSnapshot(final UUID identität, final int version) {
         this.identität = identität;
         this.version = version;
     }

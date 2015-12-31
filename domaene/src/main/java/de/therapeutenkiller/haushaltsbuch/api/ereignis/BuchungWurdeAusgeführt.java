@@ -2,12 +2,12 @@ package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 
-public final class BuchungWurdeAusgeführt extends Wertobjekt implements Haushaltsbuchereignis {
+public final class BuchungWurdeAusgeführt extends Wertobjekt implements HaushaltsbuchEreignis {
     public final String soll;
     public final String haben;
     public final MonetaryAmount betrag;

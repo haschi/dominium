@@ -38,7 +38,7 @@ class SollsaldoTest extends Specification {
         saldo1.equals(saldo2)
     }
 
-    def "kann mit Sollhabensaldo verglichen werden"() {
+    def "kann mit Soll- Habensaldo verglichen werden"() {
         given:
         def betrag = 0.0.euro
         def saldo1 = new Sollsaldo(betrag)

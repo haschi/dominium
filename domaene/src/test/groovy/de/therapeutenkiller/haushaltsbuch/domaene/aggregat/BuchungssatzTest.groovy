@@ -15,7 +15,7 @@ public final class BuchungssatzTest extends Specification {
         given: "Angenommen ich habe ein Sollkonto, Habenkonto und Währungsbetrag"
         def währungsbetrag = 12.23.euro
 
-        when: "Wenn ich daraus einen Nuchungssatz erzeuge"
+        when: "Wenn ich daraus einen Buchungssatz erzeuge"
         def buchungssatz = new Buchungssatz("sollkonto", "habenkonto", währungsbetrag);
 
         then: "Dann sind Sollkonto, Habenkonto und Währungsbetrag Teil des Buchungssatzes"
@@ -30,7 +30,7 @@ public final class BuchungssatzTest extends Specification {
                 .verify();
     }
 
-    def "Zeichenfolgenrepräsentation des Buchungssatzes"() {
+    def "Zeichenfolgen-Repräsentation des Buchungssatzes"() {
 
         given:
         def MonetaryAmount währungsbetrag = 123.45.euro

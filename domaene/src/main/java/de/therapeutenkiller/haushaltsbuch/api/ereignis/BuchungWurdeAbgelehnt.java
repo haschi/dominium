@@ -1,10 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
-public final class BuchungWurdeAbgelehnt extends Wertobjekt implements Haushaltsbuchereignis {
+public final class BuchungWurdeAbgelehnt extends Wertobjekt implements HaushaltsbuchEreignis {
     private final String grund;
 
     public BuchungWurdeAbgelehnt(final String grund) {

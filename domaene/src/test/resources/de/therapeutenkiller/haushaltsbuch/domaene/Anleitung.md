@@ -5,7 +5,7 @@ Die Funktionalitäten und deren Szenarien bilden einen wesentlichen Teil der
 ubiquitären (allgegenwärtigen) Sprache (engl. ubiquitous language).
 
 Für die sprachliche Abgrenzung zwischen Vorbedingungen, Anwendungsfällen und
-Nachbedingungen in den Szenarien werden verschiedene Tempi benutzt, um eine
+Nachbedingungen in den Szenarien werden verschiedene Tempora benutzt, um eine
 Überschneidung der Implementierungen im Glue Code zu vermeiden und präzise
 die Intention auszudrücken.
 
@@ -75,7 +75,7 @@ formuliert.
 Akteure und deren Personalpronomen
 ----------------------------------
 
-Ausgehend von der Standardformulierung von Funktionalitäten in der Form,
+Ausgehend von der Standard-Formulierung von Funktionalitäten in der Form,
 in der ein Akteur mit dem Personalpronomen *ich* gleichgesetzt wird:
 
 ```
@@ -134,24 +134,24 @@ beschrieben, deren Funktion klar abgegrenzt sind. Dazu zählen unter anderem:
 * Ereignis
 * Zustand (Modell)
 
-Nicht das technische Endprodukt, welches zweifelos auch ein System ist,
+Nicht das technische Endprodukt, welches zweifellos auch ein System ist,
 sondern das __fachliche System__ steht im Mittelpunkt von DDD und ATDD. Das
-sich durch ATDDD selbst beschreibende fachliche System wird ausschließlich
+sich durch ATDD selbst beschreibende fachliche System wird ausschließlich
 mit Hilfe der ubiquitären (allgegenwärtigen) Sprache (engl. ubiquitous
 language) ausgedrückt. Technische Fachbegriffe, die zur Umsetzung der
 Systemanforderungen erforderlich sind, gehören nicht zur UL und damit auch
 nicht in die fachliche Beschreibung, es sei denn ein technisches System
-ist der zentrale faachliche Aspekt.
+ist der zentrale fachliche Aspekt.
 
 Vollständiges Beispiele
 -----------------------
 
 Das folgende Beispiel enthält ein vollständiges Szenario mit Abfrage und
-behandeltem Domänenereignis und verwendet die vorgegebenen Tempi für die
+behandeltem Domänenereignis und verwendet die vorgegebenen Tempora für die
 einzelnen Schritte.
 
 ```gherkin
-    Szenario: Pseudobeispiel für Tempusanwendung
+    Szenario: Pseudo-Beispiel für Tempus-Anwendung
         Angenommen ich habe einen Anwendungsfall ausgeführt
         Wenn ich einen anderen Anwendungsfall ausführe
         Dann werde ich das Ergebnis einer Abfrage prüfen
@@ -162,7 +162,7 @@ Wenn die Ergebnisprüfung mittels Abfrage und Domänenereignis in einem
 Schritt erfolgen soll, dann sollte folgendes Muster verwendet werden:
 
 ```gherkin
-    Szenario: Pseudobeispiel für zusammengefasste Nachbedingung
+    Szenario: Pseudo-Beispiel für zusammengefasste Nachbedingung
         Angenommen ich habe einen Anwendungsfall ausgeführt
         Wenn ich einen anderen Anwendungsfall ausführe
         Dann werde ich das Ergebnis prüfen

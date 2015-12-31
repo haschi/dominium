@@ -10,15 +10,7 @@ public class Wertobjekt {
     @Override
     public final boolean equals(@DarfNullSein final Object that) {
 
-        if (that == this) {
-            return true;
-        }
-
-        if (!(that instanceof Wertobjekt)) {
-            return false;
-        }
-
-        return this.gleicht((Wertobjekt) that);
+        return that == this || that instanceof Wertobjekt && this.gleicht((Wertobjekt) that);
     }
 
     private boolean gleicht(final Wertobjekt that) {

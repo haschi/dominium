@@ -3,11 +3,11 @@ Event Sourcing
 
 Bestandteile:
 
-1. Kommandos
-2. Ereignisse
-3. Aggregate
-4. Ereignisspeicher (Event Store)
-5. Application Services (Anwendungsdienste)
+1. Kommando
+2. Ereignis
+3. Aggregat
+4. Ereignis-Speicher (Event Store)
+5. Anwendungsdienst (Application Service)
 
 
     Commands which request that something should happen, ie some state change

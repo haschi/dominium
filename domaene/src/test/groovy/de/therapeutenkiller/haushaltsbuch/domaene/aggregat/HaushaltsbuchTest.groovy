@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class HaushaltsbuchTest extends Specification {
 
-    def "Hinzufügen eines nicht extistierenden Kontos"() {
+    def "Hinzufügen eines nicht existierenden Kontos"() {
 
         given: "Angenommen ein neues Haushaltsbuch wurde angelegt"
         def haushaltsbuch = new Haushaltsbuch();

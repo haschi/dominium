@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-// E: Snapshottyp, A: Aggregattyp
+// E: Snapshot-Typ, A: Aggregat-Typ
 interface EventStore<E, A> {
 
     void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);

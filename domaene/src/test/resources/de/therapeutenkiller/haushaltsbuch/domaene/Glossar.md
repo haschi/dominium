@@ -2,7 +2,7 @@ Glossar
 =======
 
 * **Aktivkonto**
-* **Passickonto**
+* **Passivkonto**
 * **Bestandskonto**
 * **Ertragskonto**
 * **Erfolgskonto**

@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public final class GeimeinsameSteps {
+public final class GemeinsameSteps {
 
     private final HaushaltsbuchAggregatKontext kontext;
 
     @Inject
-    public GeimeinsameSteps(final HaushaltsbuchAggregatKontext kontext) {
+    public GemeinsameSteps(final HaushaltsbuchAggregatKontext kontext) {
         this.kontext = kontext;
     }
 

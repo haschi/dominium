@@ -1,12 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import java.util.UUID;
 
-public final class HaushaltsbuchWurdeAngelegt extends Wertobjekt implements Haushaltsbuchereignis {
+public final class HaushaltsbuchWurdeAngelegt extends Wertobjekt implements HaushaltsbuchEreignis {
 
     public final UUID haushaltsbuchId;
 

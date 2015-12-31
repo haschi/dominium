@@ -13,8 +13,8 @@ public class MoneyConverter extends Transformer<MonetaryAmount> {
             throw new IllegalArgumentException("Währungsbetrag ist leer");
         }
 
-        final DeutschenWährungsbetragParsen parsen = new DeutschenWährungsbetragParsen();
-        final MonetaryAmount betrag = parsen.aus(währungsbetrag);
+        final DeutschenWährungsbetragAnalysieren analysieren = new DeutschenWährungsbetragAnalysieren();
+        final MonetaryAmount betrag = analysieren.aus(währungsbetrag);
         if (betrag.isNegative()) { // NOPMD LoD TODO
             throw new IllegalArgumentException();
         }

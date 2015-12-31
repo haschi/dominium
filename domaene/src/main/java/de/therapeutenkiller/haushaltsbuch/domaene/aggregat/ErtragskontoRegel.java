@@ -1,10 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-public final class Ertragskontoregel implements Buchungsregel {
+public final class ErtragskontoRegel implements Buchungsregel {
 
     private final String konto;
 
-    public Ertragskontoregel(final String konto) {
+    public ErtragskontoRegel(final String konto) {
 
         this.konto = konto;
     }

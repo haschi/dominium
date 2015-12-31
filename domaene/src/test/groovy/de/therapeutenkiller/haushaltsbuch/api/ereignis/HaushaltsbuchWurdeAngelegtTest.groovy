@@ -5,7 +5,7 @@ import spock.lang.Specification
 
 public final class HaushaltsbuchWurdeAngelegtTest extends Specification {
 
-    def "erfüllt die equals und hashCode Spezfifikation"() {
+    def "erfüllt die equals und hashCode Spezifikation"() {
         expect: EqualsVerifier
                 .forClass(HaushaltsbuchWurdeAngelegt)
                 .withRedefinedSuperclass()

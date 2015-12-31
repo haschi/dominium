@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-// T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
+// E: Snapshot-Typ, A: Aggregat-Typ
 @Dependent
 public class MemoryEventStore<E, A> implements EventStore<E, A> {
 

@@ -35,7 +35,7 @@ public final class BuchenSteps {
     }
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
-    public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) { // NOPMD Dataflow
+    public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) { // NOPMD Datenfluss
 
         this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
 
@@ -76,12 +76,12 @@ public final class BuchenSteps {
         final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
                 this.kontext.aktuelleHaushaltsbuchId());
 
-        final List<Buchungssatz> buchungssatzs = stream.stream()
+        final List<Buchungssatz> buchungssätze = stream.stream()
                 .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
                 .map(ereignis -> (BuchungWurdeAusgeführt) ereignis)
                 .map(BuchungWurdeAusgeführt::getBuchungssatz)
                 .collect(Collectors.toList());
 
-        assertThat(buchungssatzs.toString()).contains(erwarteterBuchungssatz); // NOPMD LoD TODO
+        assertThat(buchungssätze.toString()).contains(erwarteterBuchungssatz); // NOPMD LoD TODO
     }
 }

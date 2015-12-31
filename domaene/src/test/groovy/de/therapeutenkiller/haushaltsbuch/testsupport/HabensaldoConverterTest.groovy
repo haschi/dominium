@@ -19,7 +19,7 @@ class HabensaldoConverterTest extends Specification {
         when: "Wenn ich die Zeichenfolge #zeichenfolge transformiere"
         def result = converter.transform(zeichenfolge)
 
-        then: "Dann erhalte ich ein Habensaldo-Objekt mit Betrag #betrag und Währung #währung"
+        then: "Dann erhalte ich ein Habensaldo-Objekt mit Betrag #betrag und Währung #währungsbetrag"
         result.betrag == währungsbetrag
 
         where:

@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchSnapshot;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final MemoryEventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store;
+    private final MemoryEventStore<HaushaltsbuchSnapshot, Haushaltsbuch> store;
 
     private UUID aktuell;
 
@@ -31,7 +31,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Inject
     public HaushaltsbuchMemoryRepository(
-            final MemoryEventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store) {
+            final MemoryEventStore<HaushaltsbuchSnapshot, Haushaltsbuch> store) {
 
         this.store = store;
     }
@@ -43,7 +43,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         int fromEventNumber = 0;
         final int toEventNumber = Integer.MAX_VALUE;
 
-        final Haushaltsbuchsnapshot snapshot = this.store.getLatestSnapshot(streamName);
+        final HaushaltsbuchSnapshot snapshot = this.store.getLatestSnapshot(streamName);
 
         if (snapshot != null) {
             fromEventNumber = snapshot.version + 1; // load only events after snapshot

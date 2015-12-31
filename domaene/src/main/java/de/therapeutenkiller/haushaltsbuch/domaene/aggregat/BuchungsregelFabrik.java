@@ -2,14 +2,14 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
-final class Buchungsregelfabrik {
+final class BuchungsregelFabrik {
 
-    private Buchungsregelfabrik() {
+    private BuchungsregelFabrik() {
     }
 
     public static Buchungsregel erzeugen(final Kontoart kontoart, final String kontoname) {
         switch (kontoart) { // NOPMD
-            case Ertrag: return new Ertragskontoregel(kontoname);
+            case Ertrag: return new ErtragskontoRegel(kontoname);
             default: return new KeineRegel();
         }
     }
