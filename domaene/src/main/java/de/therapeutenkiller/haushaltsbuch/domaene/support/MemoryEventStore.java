@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 // T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
 @Dependent
-public class MemoryEventStore<T, E, I extends T, A> implements EventStore<T, E, I, A> {
+public class MemoryEventStore<E, A> implements EventStore<E, A> {
 
     private Map<String, EventStream<A>> streams = new HashMap<>();
     private List<EventWrapper<A>> events = new ArrayList<>();

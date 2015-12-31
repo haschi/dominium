@@ -4,7 +4,6 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngeleg
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventStore;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchsnapshot;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 @Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt, Haushaltsbuch> store;
+    private final EventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store;
 
     public final UUID getAktuell() {
         return this.aktuell;
@@ -31,7 +30,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Inject
     public HaushaltsbuchMemoryRepository(
-            final EventStore<Haushaltsbuchereignis, Haushaltsbuchsnapshot, HaushaltsbuchWurdeAngelegt, Haushaltsbuch> store) {
+            final EventStore<Haushaltsbuchsnapshot, Haushaltsbuch> store) {
 
         this.store = store;
     }

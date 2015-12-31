@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 // T: Ereignistyp, E: Snapshottyp, I Initialereignis, a: Aggregattyp
-public interface EventStore<T, E, I extends  T, A> {
+public interface EventStore<E, A> {
 
     void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);
 
