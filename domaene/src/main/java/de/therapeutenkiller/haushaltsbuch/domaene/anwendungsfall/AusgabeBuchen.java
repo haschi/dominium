@@ -37,26 +37,10 @@ public final class AusgabeBuchen {
             final String sollkonto,
             final String habenkonto,
             final MonetaryAmount betrag) {
-        final Haushaltsbuch haushaltsbuch = this.repository.besorgen(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
 
-        final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
-        if (haushaltsbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) { // NOPMD LoD TODO
-            if (haushaltsbuch.kannAusgabeGebuchtWerden(buchungssatz)) { // NOPMD LoD TODO
-                haushaltsbuch.neueBuchungHinzufügen(sollkonto, habenkonto, betrag); // NOPMD LoD TODO
-
-                this.buchungWurdeAusgeführtEvent.fire(
-                        new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
-            } else {
-                this.buchungWurdeAbgelehntEvent.fire(new BuchungWurdeAbgelehnt(
-                        "Ausgaben können nicht auf Ertragskonten gebucht werden."));
-            }
-        } else {
-            this.buchungWurdeAbgelehntEvent.fire(
-                    new BuchungWurdeAbgelehnt(
-                            haushaltsbuch.fehlermeldungFürFehlendeKontenErzeugen( // NOPMD LoD TODO
-                                    sollkonto,
-                                    habenkonto)));
-        }
+        haushaltsbuch.ausgabeBuchen(sollkonto, habenkonto, betrag);
+        repository.save(haushaltsbuch);
     }
 
     public void process(@Observes final AusgabeBuchenKommando kommando) {

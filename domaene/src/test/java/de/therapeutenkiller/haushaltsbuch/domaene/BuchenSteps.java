@@ -10,6 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Haushaltsbuchereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -20,6 +21,8 @@ import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,12 +74,23 @@ public final class BuchenSteps {
 
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
-        assertThat(this.buchungsWurdeNichtAusgeführt).isEqualTo(fehlermeldung); // NOPMD LoD TODO
+
+        final List<Haushaltsbuchereignis> stream = this.kontext.getStream(this.kontext.aktuelleHaushaltsbuchId());
+        assertThat(stream).contains(fehlermeldung); // NOPMD LoD TODO
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz) {
-        final Buchungssatz aktuellerBuchungssatz = this.buchungssatzWurdeAngelegt.getBuchungssatz();
-        assertThat(aktuellerBuchungssatz.toString()).isEqualTo(erwarteterBuchungssatz); // NOPMD LoD TODO
+        final List<Haushaltsbuchereignis> stream = this.kontext
+                .getStream(this.kontext.aktuelleHaushaltsbuchId());
+
+        final List<Buchungssatz> buchungssatzs = stream.stream()
+                .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
+                .map(ereignis -> (BuchungWurdeAusgeführt) ereignis)
+                .map(buchung -> buchung.getBuchungssatz())
+                .collect(Collectors.toList());
+
+
+        assertThat(buchungssatzs.toString()).contains(erwarteterBuchungssatz); // NOPMD LoD TODO
     }
 }
