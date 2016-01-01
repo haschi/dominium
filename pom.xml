@@ -90,19 +90,20 @@
         <repository>
             <id>release-deployment</id>
             <name>Internal Releases</name>
-            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+            <url>http://development12:8081/nexus/content/repositories/releases/</url>
         </repository>
 
         <snapshotRepository>
             <id>snapshot-deployment</id>
             <name>Internal Snapshots</name>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://development12:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
 
     </distributionManagement>
 
     <modules>
         <module>domaene</module>
+        <module>infrastruktur</module>
     </modules>
 </project>
 

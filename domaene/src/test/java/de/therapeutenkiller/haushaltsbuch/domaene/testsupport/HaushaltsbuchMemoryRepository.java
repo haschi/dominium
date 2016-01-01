@@ -40,14 +40,10 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     public final Haushaltsbuch findBy(final UUID identitätsmerkmal) {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
-        int fromEventNumber = 0;
-        final int toEventNumber = Integer.MAX_VALUE;
-
         final HaushaltsbuchSnapshot snapshot = this.store.getLatestSnapshot(streamName);
 
-        if (snapshot != null) {
-            fromEventNumber = snapshot.version + 1; // load only events after snapshot
-        }
+        final int fromEventNumber = snapshot == null ? 0 : snapshot.version + 1;
+        final int toEventNumber = Integer.MAX_VALUE;
 
         final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getStream(
                 streamName,
@@ -72,7 +68,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     private String streamNameFor(final UUID identitätsmerkmal) {
         // Stream per-aggregate: {AggregateType}-{AggregateId}
-        return String.format("%s-%s", Haushaltsbuch.class.getName(), identitätsmerkmal);
+        return String.format("%s-%s", Haushaltsbuch.class.getName(), identitätsmerkmal); // NOPMD
     }
 
     @Override

@@ -22,7 +22,7 @@
 
         <skipTests>false</skipTests>
 
-        <version.de.therapeutenkiller.coding>0.0.22</version.de.therapeutenkiller.coding>
+        <version.de.therapeutenkiller.coding>0.0.24</version.de.therapeutenkiller.coding>
     </properties>
 
     <dependencies>

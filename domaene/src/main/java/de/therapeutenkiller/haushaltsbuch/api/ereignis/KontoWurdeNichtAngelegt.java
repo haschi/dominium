@@ -4,6 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public final class KontoWurdeNichtAngelegt extends Wertobjekt implements HaushaltsbuchEreignis {
     private final String kontoname;
@@ -20,5 +21,13 @@ public final class KontoWurdeNichtAngelegt extends Wertobjekt implements Haushal
     @Override
     public void applyTo(final Haushaltsbuch aggregat) {
         aggregat.falls(this);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("kontoname", this.kontoname)
+                .append("kontoart", this.kontoart)
+                .toString();
     }
 }

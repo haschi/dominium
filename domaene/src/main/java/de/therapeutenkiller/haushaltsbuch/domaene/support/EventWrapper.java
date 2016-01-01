@@ -7,6 +7,8 @@ public class EventWrapper<T> extends Wertobjekt {
     public final String name;
 
     public EventWrapper(final Domänenereignis<T> ereignis, final int version, final String name) {
+        super();
+
         this.id = String.format("%s(%d)", name, version);
         this.ereignis = ereignis;
         this.version = version;

@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-import com.google.common.collect.Ordering;
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 
 import javax.enterprise.context.Dependent;
@@ -30,12 +29,12 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void appendEventsToStream(
+    public final void appendEventsToStream( // NOPMD Datenfluss
             final String streamName,
             final Collection<Domänenereignis<A>> domainEvents,
             @DarfNullSein final Optional<Integer> expectedVersion) {
 
-        final Ereignisstrom<A> stream = this.streams.get(streamName);
+        final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), stream);
@@ -92,12 +91,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @DarfNullSein
     public final E getLatestSnapshot(final String streamName) {
 
-        final Comparator<SnapshotWrapper<E>> byDateTimeAbsteigend = new Ordering<SnapshotWrapper<E>>() {
-            @Override
-            public int compare(final SnapshotWrapper<E> left, final SnapshotWrapper<E> right) {
-                return left.timestamp.compareTo(right.timestamp) * -1;
-            }
-        };
+        final Comparator<? super SnapshotWrapper<E>> byDateTimeAbsteigend = (left, right) ->
+                left.timestamp.compareTo(right.timestamp);
 
         final Optional<E> snapshot = this.snapshots.stream()
                 .filter(wrapper -> wrapper.streamName.equals(streamName))

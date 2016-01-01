@@ -18,7 +18,7 @@ class EventManager<A> {
         return this.änderungen;
     }
 
-    final void ereignisHinzufügen(final Domänenereignis<A> ereignis) {
+    public final void ereignisHinzufügen(final Domänenereignis<A> ereignis) {
         this.änderungen.add(ereignis);
     }
 }

@@ -57,7 +57,7 @@ public final class KontoErstellenSteps {
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
-        final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(haushaltsbuchId, kontoname, Kontoart.Aktiv);
+        final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(kontoname, Kontoart.Aktiv);
 
         final List<Domänenereignis<Haushaltsbuch>> ereignisse = this.kontext.getStream(haushaltsbuchId);
         assertThat(ereignisse).contains(sollwert); // NOPMD AssertJ OK TODO

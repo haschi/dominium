@@ -78,7 +78,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         if (this.istKontoVorhanden(kontoname)) {
             this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
-            this.causes(new KontoWurdeAngelegt(getIdentitätsmerkmal(), kontoname, kontoart));
+            this.causes(new KontoWurdeAngelegt(kontoname, kontoart));
         }
     }
 
