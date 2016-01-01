@@ -16,7 +16,7 @@ class EntitätTest extends Specification {
         def entität = new Entität(id);
 
         then:
-        entität.getIdentität() == id;
+        entität.getIdentitätsmerkmal() == id;
     }
 
     def "Äquivalenzregeln für Entitäten"() {

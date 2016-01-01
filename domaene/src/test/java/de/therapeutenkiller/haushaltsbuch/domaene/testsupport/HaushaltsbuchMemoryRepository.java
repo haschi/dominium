@@ -77,15 +77,15 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Override
     public final void add(final Haushaltsbuch haushaltsbuch) {
-        final String streamName = this.streamNameFor(haushaltsbuch.getIdentität());
+        final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
         final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
         this.store.createNewStream(streamName, änderungen);
-        this.aktuell = haushaltsbuch.getIdentität();
+        this.aktuell = haushaltsbuch.getIdentitätsmerkmal();
     }
 
     @Override
     public final void save(final Haushaltsbuch haushaltsbuch) {
-        final String streamName = this.streamNameFor(haushaltsbuch.getIdentität());
+        final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
 
         final Optional<Integer> expectedVersion = this.getExpectedVersion(haushaltsbuch.initialVersion);
         this.store.appendEventsToStream(streamName, haushaltsbuch.getÄnderungen(), expectedVersion);

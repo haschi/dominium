@@ -55,7 +55,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
     }
 
     public HaushaltsbuchSnapshot getSnapshot() {
-        final HaushaltsbuchSnapshot snapshot = new HaushaltsbuchSnapshot(getIdentität(), getVersion());
+        final HaushaltsbuchSnapshot snapshot = new HaushaltsbuchSnapshot(getIdentitätsmerkmal(), getVersion());
         snapshot.konten = ImmutableSet.copyOf(this.konten);
         snapshot.buchungssätze = ImmutableList.of(this.buchungssätze);
 
@@ -78,7 +78,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         if (this.istKontoVorhanden(kontoname)) {
             this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
-            this.causes(new KontoWurdeAngelegt(getIdentität(), kontoname, kontoart));
+            this.causes(new KontoWurdeAngelegt(getIdentitätsmerkmal(), kontoname, kontoart));
         }
     }
 
@@ -189,7 +189,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
     }
 
     public void falls(final HaushaltsbuchWurdeAngelegt haushaltsbuchWurdeAngelegt) {
-        assert this.getIdentität().equals(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
+        assert this.getIdentitätsmerkmal().equals(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
         this.konten.add(Konto.ANFANGSBESTAND);
     }
 
@@ -226,7 +226,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
             this.causes(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
             buchungssatzHinzufügen.ausführen(
-                    getIdentität(),
+                    getIdentitätsmerkmal(),
                     kontoname,
                     Konto.ANFANGSBESTAND.getBezeichnung(), // NOPMD LoD TODO
                     betrag);

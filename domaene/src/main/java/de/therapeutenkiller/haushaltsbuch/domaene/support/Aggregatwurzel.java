@@ -18,6 +18,20 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         this.version = snapshot.getVersion();
     }
 
+    /**
+     * Die Aggregatwurzel ist eine Entität, die sicherstellen muss, dass das
+     * Identitätsmerkmal stets verfügbar ist. Deswegen muss das Aggregat immer
+     * durch einen von drei möglichen Konstruktoren erzeugt werden, die das
+     * Identitätsmerkmal erhalten.
+     * 
+     * Dieser Konstruktor erhält das Initialereignis als Argument, in dem sich
+     * das Identitätsmerkmal befindet
+     *
+     * @param ereignis Ein Ereignis, welches beim erstmaligen entstehen des
+     *                 Aggregats erzeugt wurde. Das Initialereignis ist immer
+     *                 das erste Ereignis des Ereignisstroms und enthält ein
+     *                 Identitätsmerkmal zur Wiederherstellung des Aggregats.
+     */
     protected Aggregatwurzel(final Initialereignis<T, A> ereignis) {
         super(ereignis.getIdentitätsmerkmal());
     }

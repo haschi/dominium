@@ -53,7 +53,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
         @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
         // Überlegen, wie die Abfrage ausgeführt wird, wenn kein Haushaltsbuch existiert.
-        // final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentität();
+        // final UUID haushaltsbuchId = this.kontext.getHaushaltsbuch().getIdentitätsmerkmal();
         // final MonetaryAmount actual = this.gesamtvermögenBerechnen.abfragen(haushaltsbuchId);
 
         // assertThat(actual).isEqualTo(währungsbetrag); // NOPMD
