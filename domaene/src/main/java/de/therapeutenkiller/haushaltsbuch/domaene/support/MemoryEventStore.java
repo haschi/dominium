@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 
 // E: Snapshot-Typ, A: Aggregat-Typ
 @Dependent
-public class MemoryEventStore<E, A> implements EventStore<E, A> {
+public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
-    private final Map<String, EventStream<A>> streams = new ConcurrentHashMap<>();
+    private final Map<String, Ereignisstrom<A>> streams = new ConcurrentHashMap<>();
     private final List<EventWrapper<A>> events = new ArrayList<>();
     private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
 
     @Override
     public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
-        final EventStream<A> eventStream = new EventStream<>(streamName);
-        this.streams.put(streamName, eventStream);
+        final Ereignisstrom<A> ereignisstrom = new Ereignisstrom<>(streamName);
+        this.streams.put(streamName, ereignisstrom);
         this.appendEventsToStream(streamName, domainEvents, Optional.empty());
     }
 
@@ -35,7 +35,7 @@ public class MemoryEventStore<E, A> implements EventStore<E, A> {
             final Collection<Domänenereignis<A>> domainEvents,
             @DarfNullSein final Optional<Integer> expectedVersion) {
 
-        final EventStream<A> stream = this.streams.get(streamName);
+        final Ereignisstrom<A> stream = this.streams.get(streamName);
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), stream);
@@ -47,7 +47,7 @@ public class MemoryEventStore<E, A> implements EventStore<E, A> {
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final EventStream stream) {
+    private void checkForConcurrencyError(final int expectedVersion, final Ereignisstrom stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {

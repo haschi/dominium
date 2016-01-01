@@ -1,9 +1,10 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.support;
+package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Snapshot;
 
 import java.util.Set;
 import java.util.UUID;

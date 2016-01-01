@@ -2,18 +2,18 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import java.util.List;
 
-public class AggregateRoot<T, A> extends Entität<T> {
+public class Aggregatwurzel<T, A> extends Entität<T> {
 
     private final EventManager<A> eventManager = new EventManager<>();
 
     private int version;
 
-    protected AggregateRoot(final T identität) {
+    protected Aggregatwurzel(final T identität) {
         super(identität);
         this.version = 0;
     }
 
-    protected AggregateRoot(final Snapshot<T> snapshot) {
+    protected Aggregatwurzel(final Snapshot<T> snapshot) {
         super(snapshot.getIdentifier());
         this.version = snapshot.getVersion();
     }

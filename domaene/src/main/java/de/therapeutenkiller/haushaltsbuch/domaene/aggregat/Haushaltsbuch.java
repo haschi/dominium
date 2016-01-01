@@ -14,9 +14,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.AggregateRoot;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchEreignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.HaushaltsbuchSnapshot;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Aggregatwurzel;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
@@ -29,7 +27,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @CoverageIgnore
-public final class Haushaltsbuch extends AggregateRoot<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
+public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 

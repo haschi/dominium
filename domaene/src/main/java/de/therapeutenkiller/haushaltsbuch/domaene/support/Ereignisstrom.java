@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-class EventStream<A> {
+class Ereignisstrom<A> {
     private final String name;
     private int version;
 
@@ -8,7 +8,7 @@ class EventStream<A> {
         return this.version;
     }
 
-    public EventStream(final String streamName) {
+    public Ereignisstrom(final String streamName) {
         this.name = streamName;
         this.version = 0;
     }

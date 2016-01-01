@@ -16,7 +16,6 @@ Bestandteile:
     Event store which stores all events that has happened
     Application services that receives Commands and routes it to the appropriate aggregate
 
-
 Aufgaben des Application Service:
 
 1. Events aus dem Event Store laden
@@ -24,3 +23,8 @@ Aufgaben des Application Service:
 3. Alle Ereignis auf das Aggregat anwenden
 4. Das Kommando an das Aggregat senden
 5. Die neuen Ereignisse speichern.
+
+So funktioniert Event Sourcing
+==============================
+
+
