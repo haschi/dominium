@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-public class EventWrapper<T> {
+public class EventWrapper<T> extends Wertobjekt {
     private final String id; // NOPMD Das heißt nun mal so.
     public final Domänenereignis<T> ereignis;
     public final int version;

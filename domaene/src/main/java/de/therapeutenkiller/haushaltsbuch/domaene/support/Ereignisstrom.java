@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-class Ereignisstrom<A> {
+public class Ereignisstrom<A> {
     private final String name;
     private int version;
 
