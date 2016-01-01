@@ -51,7 +51,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
     }
 
     public Haushaltsbuch(final HaushaltsbuchWurdeAngelegt ereignis) {
-        super(ereignis.haushaltsbuchId);
+        super(ereignis);
     }
 
     public HaushaltsbuchSnapshot getSnapshot() {

@@ -18,6 +18,10 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         this.version = snapshot.getVersion();
     }
 
+    protected Aggregatwurzel(final Initialereignis<T, A> ereignis) {
+        super(ereignis.getIdentitätsmerkmal());
+    }
+
     protected final void anwenden(final Domänenereignis<A> ereignis, final A aggregat) {
         this.eventManager.anwenden(ereignis, aggregat);
     }
