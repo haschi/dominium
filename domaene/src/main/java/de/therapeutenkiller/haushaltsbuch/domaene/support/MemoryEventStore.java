@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Dependent
 public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
-    private final Map<String, Ereignisstrom<A>> streams = new ConcurrentHashMap<>();
+    private final Map<String, Ereignisstrom> streams = new ConcurrentHashMap<>();
     private final List<EventWrapper<A>> events = new ArrayList<>();
     private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
 
     @Override
     public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
-        final Ereignisstrom<A> ereignisstrom = new Ereignisstrom<>(streamName);
+        final Ereignisstrom ereignisstrom = new Ereignisstrom(streamName);
         this.streams.put(streamName, ereignisstrom);
         this.appendEventsToStream(streamName, domainEvents, Optional.empty());
     }
@@ -34,7 +34,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final Collection<Domänenereignis<A>> domainEvents,
             @DarfNullSein final Optional<Integer> expectedVersion) {
 
-        final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD
+        final Ereignisstrom stream = this.streams.get(streamName); // NOPMD
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), stream);
@@ -74,7 +74,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     private boolean gehörtZumStream(final String streamName, final EventWrapper<A> event) {
-        return event.name.equals(streamName);
+        return event.stream.equals(streamName);
     }
 
     private boolean istVersionInnerhalb(final int fromVersion, final int toVersion, final EventWrapper<A> event) {

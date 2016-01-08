@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 // E: Snapshot-Typ, A: Aggregat-Typ
-interface EreignisLager<E, A> {
+public interface EreignisLager<E, A> {
 
     void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);
 

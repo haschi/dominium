@@ -21,8 +21,6 @@
         <project.path>${project.basedir}</project.path>
 
         <skipTests>false</skipTests>
-
-        <version.de.therapeutenkiller.coding>0.0.24</version.de.therapeutenkiller.coding>
     </properties>
 
     <dependencies>
@@ -36,19 +34,16 @@
         <dependency>
             <groupId>de.therapeutenkiller</groupId>
             <artifactId>aspekte</artifactId>
-            <version>${version.de.therapeutenkiller.coding}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
         </dependency>
 
         <dependency>
@@ -97,7 +92,6 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
         </dependency>
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->

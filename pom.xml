@@ -22,6 +22,9 @@
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
         <checkstyle.version>6.10.1</checkstyle.version>
+
+        <!-- Version für die Codierungunterastützung mit Richtlinien und Aspekten -->
+        <version.de.therapeutenkiller.coding>0.0.24</version.de.therapeutenkiller.coding>
     </properties>
 
     <scm>
@@ -36,6 +39,55 @@
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>1.8.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.therapeutenkiller</groupId>
+                <artifactId>aspekte</artifactId>
+                <version>${version.de.therapeutenkiller.coding}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <!-- version>19.0</version -->
+                <version>14.0.1</version>
+                <!-- Höhere Versionen führen zu einem Konflikt im Zusammenhang mit Weld Embedded und Arquillian -->
+            </dependency>
+
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>7.0</version>
+            </dependency>
+
+
+            <!-- Abhängigkeiten für die Komponententests -->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>1.0-groovy-2.4</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>nl.jqno.equalsverifier</groupId>
+                <artifactId>equalsverifier</artifactId>
+                <version>1.7.5</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -66,6 +118,24 @@
                         <target>${maven.compiler.target}</target>
                     </configuration>
                 </plugin>
+
+                <!-- gmavenplus (für Tests mit Spock-Framework -->
+                <plugin>
+                    <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                    visit https://github.com/groovy/GMavenPlus/wiki -->
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>1.4</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
