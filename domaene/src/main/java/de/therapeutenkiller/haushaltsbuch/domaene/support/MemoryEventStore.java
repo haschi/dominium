@@ -32,7 +32,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     public final void appendEventsToStream( // NOPMD Datenfluss
             final String streamName,
             final Collection<Domänenereignis<A>> domainEvents,
-            @DarfNullSein final Optional<Integer> expectedVersion) {
+            @DarfNullSein final Optional<Integer> expectedVersion)  {
 
         final Ereignisstrom stream = this.streams.get(streamName); // NOPMD
 
@@ -41,7 +41,9 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         for (final Domänenereignis<A> ereignis : domainEvents) {
-            final EventWrapper<A> wrappedEvent = stream.registerEvent(ereignis);
+            EventWrapper<A> wrappedEvent = null;
+            wrappedEvent = stream.registerEvent(ereignis);
+
             this.events.add(wrappedEvent);
         }
     }
@@ -66,11 +68,19 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
                 right.version);
 
         return this.events.stream()
-                .filter(event -> this.gehörtZumStream(streamName, event))
-                .filter(event -> this.istVersionInnerhalb(fromVersion, toVersion, event))
-                .sorted(byVersion)
-                .map(wrapper -> wrapper.ereignis)
-                .collect(Collectors.toList());
+            .filter(event -> this.gehörtZumStream(streamName, event))
+            .filter(event -> this.istVersionInnerhalb(fromVersion, toVersion, event))
+            .sorted(byVersion)
+            .map(this::deserialize)
+            .collect(Collectors.toList());
+    }
+
+    private Domänenereignis<A> deserialize(final EventWrapper<A> wrapper) {
+        try {
+            return (Domänenereignis<A>) EventSerializer.deserialize(wrapper.ereignis);
+        } catch (final Exception exception) {
+            throw new IllegalArgumentException("Das war nix.", exception);
+        }
     }
 
     private boolean gehörtZumStream(final String streamName, final EventWrapper<A> event) {
@@ -112,7 +122,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.version == 1)
-                .map(wrapper -> wrapper.ereignis)
+                .map(this::deserialize)
                 .findFirst()
                 .get();
     }

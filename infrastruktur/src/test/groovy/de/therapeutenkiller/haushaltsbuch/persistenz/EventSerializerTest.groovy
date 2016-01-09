@@ -1,25 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt
+import de.therapeutenkiller.haushaltsbuch.domaene.support.EventSerializer
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.TestEreignis
 import spock.lang.Specification
-
-class TestEreignis extends Wertobjekt implements Domänenereignis<UUID>, java.io.Serializable{
-
-    String vorname;
-    String nachname;
-
-    TestEreignis(vorname, nachname) {
-        this.vorname = vorname;
-        this.nachname = nachname;
-    }
-
-    @Override
-    void applyTo(UUID aggregat) {
-
-    }
-}
 
 class EventSerializerTest extends Specification {
 

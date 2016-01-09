@@ -21,7 +21,7 @@
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
-        <checkstyle.version>6.10.1</checkstyle.version>
+        <checkstyle.version>6.13</checkstyle.version>
 
         <!-- Version für die Codierungunterastützung mit Richtlinien und Aspekten -->
         <version.de.therapeutenkiller.coding>0.0.24</version.de.therapeutenkiller.coding>

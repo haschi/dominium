@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz;
+package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 

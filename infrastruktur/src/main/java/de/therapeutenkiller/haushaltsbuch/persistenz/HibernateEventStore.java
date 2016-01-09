@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EreignisLager;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
@@ -56,7 +55,10 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final List<Domänenereignis<A>> getStream(final String streamName, final int fromVersion, final int toVersion) {
+    public final List<Domänenereignis<A>> getStream(
+            final String streamName,
+            final int fromVersion,
+            final int toVersion) {
         /*final TypedQuery<EventWrapper<A>> query = this.entityManager.createQuery(
                 "SELECT c FROM EventWrapper c", HaushaltsbuchEreignis.class);
 
@@ -69,17 +71,17 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public void addSnapshot(final String streamName, final E snapshot) {
+    public final void addSnapshot(final String streamName, final E snapshot) {
 
     }
 
     @Override
-    public E getLatestSnapshot(final String streamName) {
+    public final E getLatestSnapshot(final String streamName) {
         return null;
     }
 
     @Override
-    public Domänenereignis<A> getInitialEvent(final String streamName) {
+    public final Domänenereignis<A> getInitialEvent(final String streamName) {
         return null;
     }
 }
