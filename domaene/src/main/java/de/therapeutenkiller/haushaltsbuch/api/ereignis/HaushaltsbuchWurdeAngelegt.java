@@ -5,11 +5,14 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Initialereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 public final class HaushaltsbuchWurdeAngelegt
         extends Wertobjekt
-        implements HaushaltsbuchEreignis, Initialereignis<UUID, Haushaltsbuch> {
+        implements HaushaltsbuchEreignis, Initialereignis<UUID, Haushaltsbuch>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public final UUID haushaltsbuchId;
 

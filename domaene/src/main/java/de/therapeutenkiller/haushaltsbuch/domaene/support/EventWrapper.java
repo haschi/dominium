@@ -10,19 +10,21 @@ public class EventWrapper<T> extends Wertobjekt {
     private String id = null; // NOPMD Das heißt nun mal so.
 
     @Lob
-    public byte[] ereignis = null;
-    public int version = 0;
-    public String stream = null;
+    public byte[] ereignis = null; // NOPMD
+    public int version = 0; // NOPMD
+    public String stream = null; //NOPMD TODO Regel ändern.
 
     public EventWrapper(final byte[] ereignis, final int version, final String stream) {
         super();
 
         this.id = String.format("%s(%d)", stream, version);
-        this.ereignis = ereignis;
+        this.ereignis = ereignis.clone();
         this.version = version;
         this.stream = stream;
     }
 
     public EventWrapper() {
+        super();
+        // Für JPA
     }
 }

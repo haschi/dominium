@@ -4,7 +4,11 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
-public final class BuchungWurdeAbgelehnt extends Wertobjekt implements HaushaltsbuchEreignis {
+import java.io.Serializable;
+
+public final class BuchungWurdeAbgelehnt extends Wertobjekt  implements HaushaltsbuchEreignis, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final String grund;
 
     public BuchungWurdeAbgelehnt(final String grund) {

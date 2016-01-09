@@ -6,7 +6,12 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public final class KontoWurdeNichtAngelegt extends Wertobjekt implements HaushaltsbuchEreignis {
+import java.io.Serializable;
+
+public final class KontoWurdeNichtAngelegt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private final String kontoname;
     private final Kontoart kontoart;
 

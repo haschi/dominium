@@ -78,7 +78,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     private Domänenereignis<A> deserialize(final EventWrapper<A> wrapper) {
         try {
             return (Domänenereignis<A>) EventSerializer.deserialize(wrapper.ereignis);
-        } catch (final Exception exception) {
+        } catch (final Exception exception) { // NOPMD TODO
             throw new IllegalArgumentException("Das war nix.", exception);
         }
     }

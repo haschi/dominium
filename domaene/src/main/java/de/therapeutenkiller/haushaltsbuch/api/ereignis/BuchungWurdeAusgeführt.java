@@ -6,8 +6,12 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
+import java.io.Serializable;
 
-public final class BuchungWurdeAusgeführt extends Wertobjekt implements HaushaltsbuchEreignis {
+public final class BuchungWurdeAusgeführt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     public final String soll;
     public final String haben;
     public final MonetaryAmount betrag;

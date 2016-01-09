@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.persistenz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,7 +21,7 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
 
     @Override
     public void leeren() {
-
+        throw new NotImplementedException("Nicht implementiert.");
     }
 
     @Override
@@ -42,6 +43,6 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
 
     @Override
     public void save(final Haushaltsbuch haushaltsbuch) {
-
+        throw new NotImplementedException("Nicht implementiert");
     }
 }

@@ -1,14 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class EventSerializer<T> {
+public class EventSerializer<T> { // NOPMD
     public static <T> byte[] serialize(final Domänenereignis<T> ereignis) throws IOException {
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

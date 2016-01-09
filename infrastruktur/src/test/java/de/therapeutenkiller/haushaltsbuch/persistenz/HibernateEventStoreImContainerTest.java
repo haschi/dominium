@@ -32,6 +32,18 @@ import java.util.UUID;
 @RunWith(Arquillian.class)
 public final class HibernateEventStoreImContainerTest {
 
+    @Inject
+    public Greeter greeter;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Inject
+    private UserTransaction userTransaction;
+
+    //@Inject
+    //HaushaltsbuchEventStore store;
+
     @Deployment
     public static WebArchive createDeployment() {
 
@@ -60,21 +72,9 @@ public final class HibernateEventStoreImContainerTest {
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml");
 
 
-        System.out.println(jar.toString(true));
+        // System.out.println(jar.toString(true));
         return jar;
     }
-
-    @Inject
-    public Greeter greeter;
-
-    @PersistenceContext
-    EntityManager entityManager;
-
-    @Inject
-    UserTransaction userTransaction;
-
-    //@Inject
-    //HaushaltsbuchEventStore store;
 
     @Test
     public void kann_entity_manager_injizieren() {

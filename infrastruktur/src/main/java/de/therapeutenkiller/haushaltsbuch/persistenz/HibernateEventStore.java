@@ -4,6 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EreignisLager;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EventWrapper;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -72,7 +73,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
 
     @Override
     public final void addSnapshot(final String streamName, final E snapshot) {
-
+        throw new NotImplementedException("Nicht implementiert.");
     }
 
     @Override

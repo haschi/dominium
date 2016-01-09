@@ -18,9 +18,8 @@ public class Ereignisstrom extends Wertobjekt {
 
     public final <A> EventWrapper<A> registerEvent(final Domänenereignis<A> ereignis)  {
         this.version = this.version + 1;
-        final byte[] serialisiertesEreignis;
         try {
-            serialisiertesEreignis = EventSerializer.serialize(ereignis);
+            final byte[] serialisiertesEreignis = EventSerializer.serialize(ereignis);
             return new EventWrapper<>(serialisiertesEreignis, this.version, this.name);
         } catch (final IOException exception) {
             throw new IllegalArgumentException("Ging nicht,.", exception);
