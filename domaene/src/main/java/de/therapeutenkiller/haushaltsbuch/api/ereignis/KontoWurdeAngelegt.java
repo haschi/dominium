@@ -23,7 +23,7 @@ public final class KontoWurdeAngelegt extends Wertobjekt implements Haushaltsbuc
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final Haushaltsbuch aggregat) {
         aggregat.falls(this);
     }
 }

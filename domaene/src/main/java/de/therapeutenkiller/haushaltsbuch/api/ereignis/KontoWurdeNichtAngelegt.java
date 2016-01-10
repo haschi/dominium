@@ -24,7 +24,7 @@ public final class KontoWurdeNichtAngelegt extends Wertobjekt implements Haushal
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final Haushaltsbuch aggregat) {
         aggregat.falls(this);
     }
 

@@ -18,7 +18,7 @@ public final class TestEreignis extends Wertobjekt implements Domänenereignis<U
     }
 
     @Override
-    public void applyTo(final UUID aggregat) {
+    public void anwendenAuf(final UUID aggregat) {
         throw new NotImplementedException("Nicht implementiert.");
     }
 }

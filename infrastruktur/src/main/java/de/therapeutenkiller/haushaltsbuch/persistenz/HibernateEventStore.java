@@ -22,25 +22,27 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
-        final Ereignisstrom ereignisstrom = new Ereignisstrom(streamName);
+    public final void neuenEreignisstromErzeugen(
+            final String streamName,
+            final Collection<Domänenereignis<A>> domainEvents) {
+        final Ereignisstrom<A> ereignisstrom = new Ereignisstrom<>(streamName);
         this.entityManager.persist(ereignisstrom);
-        this.appendEventsToStream(streamName, domainEvents, Optional.empty());
+        this.ereignisseDemStromHinzufügen(streamName, domainEvents, Optional.empty());
     }
 
     @Override
-    public final void appendEventsToStream(
+    public final void ereignisseDemStromHinzufügen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domainEvents,
-            final Optional<Integer> expectedVersion) {
+            final Collection<Domänenereignis<A>> domänenereignisse,
+            final Optional<Integer> erwarteteVersion) {
 
         final Ereignisstrom<A> strom = (Ereignisstrom<A>)this.entityManager.find(Ereignisstrom.class, streamName);
 
-        if (expectedVersion.isPresent()) {
-            this.checkForConcurrencyError(expectedVersion.get(), strom);
+        if (erwarteteVersion.isPresent()) {
+            this.checkForConcurrencyError(erwarteteVersion.get(), strom);
         }
 
-        for (final Domänenereignis<A> ereignis : domainEvents) {
+        for (final Domänenereignis<A> ereignis : domänenereignisse) {
             final Umschlag<A> wrappedEvent = strom.registerEvent(ereignis);
             this.entityManager.persist(wrappedEvent);
         }
@@ -58,8 +60,8 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final List<Domänenereignis<A>> getStream(
             final String streamName,
-            final int fromVersion,
-            final int toVersion) {
+            final int vonVersion,
+            final int bisVersion) {
         /*final TypedQuery<EventWrapper<A>> query = this.entityManager.createQuery(
                 "SELECT c FROM EventWrapper c", HaushaltsbuchEreignis.class);
 
@@ -72,7 +74,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void addSnapshot(final String streamName, final E snapshot) {
+    public final void snapshotHinzufügen(final String streamName, final E snapshot) {
         throw new NotImplementedException("Nicht implementiert.");
     }
 

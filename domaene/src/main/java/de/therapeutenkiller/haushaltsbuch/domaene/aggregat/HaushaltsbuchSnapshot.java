@@ -19,7 +19,7 @@ public class HaushaltsbuchSnapshot implements Snapshot<UUID> {
     }
 
     @Override
-    public final UUID getIdentifier() {
+    public final UUID getIdentitätsmerkmal() {
         return this.identität;
     }
 

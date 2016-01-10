@@ -60,7 +60,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
 
         for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {
-            ereignis.applyTo(haushaltsbuch);
+            ereignis.anwendenAuf(haushaltsbuch);
         }
 
         return haushaltsbuch;
@@ -75,7 +75,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     public final void add(final Haushaltsbuch haushaltsbuch) {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
         final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
-        this.store.createNewStream(streamName, änderungen);
+        this.store.neuenEreignisstromErzeugen(streamName, änderungen);
         this.aktuell = haushaltsbuch.getIdentitätsmerkmal();
     }
 
@@ -84,7 +84,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
 
         final Optional<Integer> expectedVersion = this.getExpectedVersion(haushaltsbuch.initialVersion);
-        this.store.appendEventsToStream(streamName, haushaltsbuch.getÄnderungen(), expectedVersion);
+        this.store.ereignisseDemStromHinzufügen(streamName, haushaltsbuch.getÄnderungen(), expectedVersion);
     }
 
     private Optional<Integer> getExpectedVersion(final int expectedVersion) {

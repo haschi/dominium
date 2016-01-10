@@ -11,7 +11,7 @@ interface MeinEreignisTyp extends Domänenereignis<String>, Serializable {    }
 class MeinEreignis implements MeinEreignisTyp {
 
     @Override
-    void applyTo(String aggregat) {
+    void anwendenAuf(String aggregat) {
 
     }
 }

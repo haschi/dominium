@@ -23,7 +23,7 @@ public final class BuchungWurdeAbgelehnt extends Wertobjekt  implements Haushalt
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final Haushaltsbuch aggregat) {
         aggregat.falls(this);
     }
 }

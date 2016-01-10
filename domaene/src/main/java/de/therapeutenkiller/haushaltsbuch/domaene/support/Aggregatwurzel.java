@@ -2,19 +2,26 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import java.util.List;
 
+/**
+ * Die Aggregatwurzel ist eine zentrale Entität, welche die Integrität einer
+ * zusammenhängender Gruppe von Entitäten sicherstellt.
+ *
+ * @param <T> Der Typ des Identitätsmerkmals der zugrunde liegenden Entität
+ * @param <A> Der konkrete Typ der Aggregatwurzel (eine Ableitung dieser Klasse)
+ */
 public class Aggregatwurzel<T, A> extends Entität<T> {
 
     private final EventManager<A> eventManager = new EventManager<>();
 
     private int version;
 
-    protected Aggregatwurzel(final T identität) {
-        super(identität);
+    protected Aggregatwurzel(final T identitätsmerkmal) {
+        super(identitätsmerkmal);
         this.version = 0;
     }
 
     protected Aggregatwurzel(final Snapshot<T> snapshot) {
-        super(snapshot.getIdentifier());
+        super(snapshot.getIdentitätsmerkmal());
         this.version = snapshot.getVersion();
     }
 
@@ -36,6 +43,7 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         super(ereignis.getIdentitätsmerkmal());
     }
 
+    // TODO der Parameter aggregat ist doch überflüssig oder?
     protected final void anwenden(final Domänenereignis<A> ereignis, final A aggregat) {
         this.eventManager.anwenden(ereignis, aggregat);
     }

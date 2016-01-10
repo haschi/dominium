@@ -1,9 +1,19 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 /**
+ * Schnittstelle für Domänenereignisse
  *
- * @param <T> Der Typ des Aggregats, zu dem das Ereignis gehört.
+ * Domänenereignisse enthalten die Informationen der Zustandsänderungen
+ * für ein Aggregat.
+ *
+ * @param <A> Der Typ des Aggregats, zu dem das Ereignis gehört.
  */
-public interface Domänenereignis<T> {
-    void applyTo(T aggregat);
+public interface Domänenereignis<A> {
+
+    /**
+     * Wendet eine durch das Domänenereignis beschriebene Zustandsänderung auf
+     * ein Aggregat an.
+     * @param aggregat Ein Aggregat.
+     */
+    void anwendenAuf(A aggregat);
 }

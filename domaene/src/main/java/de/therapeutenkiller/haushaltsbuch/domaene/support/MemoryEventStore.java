@@ -71,25 +71,27 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
+    public final void neuenEreignisstromErzeugen(
+            final String streamName,
+            final Collection<Domänenereignis<A>> domainEvents) {
         final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
-        this.appendEventsToStream(streamName, domainEvents, Optional.empty());
+        this.ereignisseDemStromHinzufügen(streamName, domainEvents, Optional.empty());
     }
 
     @Override
-    public final void appendEventsToStream( // NOPMD Datenfluss
-            final String streamName,
-            final Collection<Domänenereignis<A>> domainEvents,
-            @DarfNullSein final Optional<Integer> expectedVersion)  {
+    public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
+                                                    final String streamName,
+                                                    final Collection<Domänenereignis<A>> domänenereignisse,
+                                                    @DarfNullSein final Optional<Integer> erwarteteVersion)  {
 
         final AbstrakterEreignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
-        if (expectedVersion.isPresent()) {
-            this.checkForConcurrencyError(expectedVersion.get(), stream);
+        if (erwarteteVersion.isPresent()) {
+            this.checkForConcurrencyError(erwarteteVersion.get(), stream);
         }
 
-        for (final Domänenereignis<A> ereignis : domainEvents) {
+        for (final Domänenereignis<A> ereignis : domänenereignisse) {
             final Umschlag<A> wrappedEvent = stream.registerEvent(ereignis);
             this.events.add(wrappedEvent);
         }
@@ -107,8 +109,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final List<Domänenereignis<A>> getStream(
             final String streamName,
-            final int fromVersion,
-            final int toVersion) {
+            final int vonVersion,
+            final int bisVersion) {
 
         final Comparator<? super Umschlag<A>> byVersion = (left, right) -> Integer.compare(
                 left.getVersion(),
@@ -116,7 +118,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
         return this.events.stream()
             .filter(event -> this.gehörtZumStream(streamName, event))
-            .filter(event -> this.istVersionInnerhalb(fromVersion, toVersion, event))
+            .filter(event -> this.istVersionInnerhalb(vonVersion, bisVersion, event))
             .sorted(byVersion)
             .map(Umschlag::getEreignis)
             .collect(Collectors.toList());
@@ -134,7 +136,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void addSnapshot(final String streamName, final E snapshot) {
+    public final void snapshotHinzufügen(final String streamName, final E snapshot) {
         final SnapshotWrapper<E> wrapper = new SnapshotWrapper<>(streamName, snapshot, LocalDateTime.now());
         this.snapshots.add(wrapper);
     }

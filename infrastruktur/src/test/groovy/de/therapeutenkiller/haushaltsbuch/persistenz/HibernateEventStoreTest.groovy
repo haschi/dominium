@@ -30,7 +30,7 @@ class HibernateEventStoreTest extends Specification {
         Collection<Domänenereignis<Haushaltsbuch>> ereignisse = new ArrayList<Domänenereignis<Haushaltsbuch>>()
 
         when: "Wenn ich einen neues Event-Stream erzeuge"
-        store.createNewStream(streamName, ereignisse)
+        store.neuenEreignisstromErzeugen(streamName, ereignisse)
 
         then: "Dann wird der Event-Stream persistiert"
         1 * entityManager.persist(new Ereignisstrom(streamName))
@@ -46,7 +46,7 @@ class HibernateEventStoreTest extends Specification {
         def store = new HibernateEventStore<HaushaltsbuchSnapshot, Haushaltsbuch>(entityManager)
 
         when:
-        store.createNewStream(streamName, ereignisse)
+        store.neuenEreignisstromErzeugen(streamName, ereignisse)
 
         then:
         1* entityManager.persist(strom)
@@ -68,7 +68,7 @@ class HibernateEventStoreTest extends Specification {
         def store = new HibernateEventStore(entityManager)
 
         when:
-        store.appendEventsToStream(streamName, ereignisse, Optional.of(0))
+        store.ereignisseDemStromHinzufügen(streamName, ereignisse, Optional.of(0))
 
         then:
         1 * entityManager.persist({it.version == 1})

@@ -9,16 +9,16 @@ import java.util.Optional;
 // E: Snapshot-Typ, A: Aggregat-Typ
 public interface EreignisLager<E, A> {
 
-    void createNewStream(String streamName, Collection<Domänenereignis<A>> domainEvents);
+    void neuenEreignisstromErzeugen(String streamName, Collection<Domänenereignis<A>> domainEvents);
 
-    void appendEventsToStream(
+    void ereignisseDemStromHinzufügen(
             String streamName,
-            Collection<Domänenereignis<A>> domainEvents,
-            Optional<Integer> expectedVersion);
+            Collection<Domänenereignis<A>> domänenereignisse,
+            Optional<Integer> erwarteteVersion);
 
-    List<Domänenereignis<A>> getStream(String streamName, int fromVersion, int toVersion);
+    List<Domänenereignis<A>> getStream(String streamName, int vonVersion, int bisVersion);
 
-    void addSnapshot(String streamName, E snapshot);
+    void snapshotHinzufügen(String streamName, E snapshot);
 
     @DarfNullSein
     E getLatestSnapshot(String streamName);

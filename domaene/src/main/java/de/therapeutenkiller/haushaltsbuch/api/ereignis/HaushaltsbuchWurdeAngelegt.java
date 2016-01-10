@@ -22,7 +22,7 @@ public final class HaushaltsbuchWurdeAngelegt
     }
 
     @Override
-    public void applyTo(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final Haushaltsbuch aggregat) {
         aggregat.falls(this);
     }
 

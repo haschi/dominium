@@ -11,7 +11,7 @@ class EventManager<A> {
     }
 
     public final void anwenden(final Domänenereignis<A> ereignis, final A aggregat) {
-        ereignis.applyTo(aggregat);
+        ereignis.anwendenAuf(aggregat);
     }
 
     public final List<Domänenereignis<A>> getÄnderungen() {

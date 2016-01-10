@@ -7,7 +7,6 @@ public class Entität<T> {
     private final T identitätsmerkmal;
 
     protected Entität(final T identitätsmerkmal) {
-
         this.identitätsmerkmal = identitätsmerkmal;
     }
 
