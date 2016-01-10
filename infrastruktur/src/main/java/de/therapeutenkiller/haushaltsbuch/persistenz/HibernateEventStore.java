@@ -24,10 +24,10 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void neuenEreignisstromErzeugen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domainEvents) {
+            final Collection<Domänenereignis<A>> domänenereignisse) {
         final Ereignisstrom<A> ereignisstrom = new Ereignisstrom<>(streamName);
         this.entityManager.persist(ereignisstrom);
-        this.ereignisseDemStromHinzufügen(streamName, domainEvents, Optional.empty());
+        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
     }
 
     @Override
@@ -84,7 +84,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final Domänenereignis<A> getInitialEvent(final String streamName) {
+    public final Domänenereignis<A> getInitialereignis(final String streamName) {
         return null;
     }
 }

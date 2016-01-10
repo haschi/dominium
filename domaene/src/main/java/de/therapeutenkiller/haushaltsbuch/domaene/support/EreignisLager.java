@@ -6,10 +6,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-// E: Snapshot-Typ, A: Aggregat-Typ
+/**
+ * Dauerhafte Ablage für Domänenereignisse.
+ *
+ * @param <E> Der Snapshot-Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen
+ * @param <A> Der Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen.
+ */
 public interface EreignisLager<E, A> {
 
-    void neuenEreignisstromErzeugen(String streamName, Collection<Domänenereignis<A>> domainEvents);
+    void neuenEreignisstromErzeugen(String streamName, Collection<Domänenereignis<A>> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             String streamName,
@@ -28,5 +33,5 @@ public interface EreignisLager<E, A> {
      * @param streamName Name des Streams für das Aggregat
      * @return Das Initialereignis.
      */
-    Domänenereignis<A> getInitialEvent(String streamName);
+    Domänenereignis<A> getInitialereignis(String streamName);
 }

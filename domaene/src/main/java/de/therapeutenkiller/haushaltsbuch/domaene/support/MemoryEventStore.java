@@ -73,10 +73,10 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void neuenEreignisstromErzeugen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domainEvents) {
+            final Collection<Domänenereignis<A>> domänenereignisse) {
         final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
-        this.ereignisseDemStromHinzufügen(streamName, domainEvents, Optional.empty());
+        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
     }
 
     @Override
@@ -162,7 +162,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final Domänenereignis<A> getInitialEvent(final String streamName) {
+    public final Domänenereignis<A> getInitialereignis(final String streamName) {
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.getVersion() == 1)
