@@ -40,7 +40,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         super(UUID.randomUUID());
     }
 
-    public Haushaltsbuch(final HaushaltsbuchSnapshot snapshot) {
+    public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
         this.initialVersion = snapshot.version;
     }
@@ -54,8 +54,11 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         super(ereignis);
     }
 
-    public HaushaltsbuchSnapshot getSnapshot() {
-        final HaushaltsbuchSnapshot snapshot = new HaushaltsbuchSnapshot(getIdentitätsmerkmal(), getVersion());
+    public HaushaltsbuchSchnappschuss getSnapshot() {
+        final HaushaltsbuchSchnappschuss snapshot = new HaushaltsbuchSchnappschuss(
+                getIdentitätsmerkmal(),
+                getVersion());
+
         snapshot.konten = ImmutableSet.copyOf(this.konten);
         snapshot.buchungssätze = ImmutableList.of(this.buchungssätze);
 

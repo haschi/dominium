@@ -4,7 +4,7 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSnapshot
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom
 import spock.lang.Shared
@@ -26,7 +26,7 @@ class HibernateEventStoreTest extends Specification {
         EntityManager entityManager = Mock(EntityManager)
 
         given: "Angenommen ich habe einen Event-Store"
-        def store = new HibernateEventStore<HaushaltsbuchSnapshot, Haushaltsbuch>(entityManager)
+        def store = new HibernateEventStore<HaushaltsbuchSchnappschuss, Haushaltsbuch>(entityManager)
         Collection<Domänenereignis<Haushaltsbuch>> ereignisse = new ArrayList<Domänenereignis<Haushaltsbuch>>()
 
         when: "Wenn ich einen neues Event-Stream erzeuge"
@@ -43,7 +43,7 @@ class HibernateEventStoreTest extends Specification {
         }
 
         given:
-        def store = new HibernateEventStore<HaushaltsbuchSnapshot, Haushaltsbuch>(entityManager)
+        def store = new HibernateEventStore<HaushaltsbuchSchnappschuss, Haushaltsbuch>(entityManager)
 
         when:
         store.neuenEreignisstromErzeugen(streamName, ereignisse)

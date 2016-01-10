@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
-public interface Snapshot<T> {
+public interface Schnappschuss<T> {
     T getIdentitätsmerkmal();
 
     int getVersion();

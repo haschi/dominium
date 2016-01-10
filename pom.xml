@@ -164,7 +164,7 @@
         </repository>
 
         <snapshotRepository>
-            <id>snapshot-deployment</id>
+            <id>schnappschuss-deployment</id>
             <name>Internal Snapshots</name>
             <url>http://development12:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-// E: Snapshot-Typ, A: Aggregat-Typ
+// E: Schnappschuss-Typ, A: Aggregat-Typ
 
 /**
  * Der MemoryEventStore ist ein EventStore, der Ereignisse im
@@ -92,7 +92,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-            final Umschlag<A> wrappedEvent = stream.registerEvent(ereignis);
+            final Umschlag<A> wrappedEvent = stream.registerEvent(ereignis); // NOPMD LoD
             this.events.add(wrappedEvent);
         }
     }

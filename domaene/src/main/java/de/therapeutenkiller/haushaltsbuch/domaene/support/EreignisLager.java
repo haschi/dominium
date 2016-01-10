@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Dauerhafte Ablage für Domänenereignisse.
  *
- * @param <E> Der Snapshot-Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen
+ * @param <E> Der Schnappschuss-Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen
  * @param <A> Der Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen.
  */
 public interface EreignisLager<E, A> {

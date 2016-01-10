@@ -22,13 +22,18 @@ public class JpaUmschlag<T> extends Wertobjekt implements Umschlag<T> {
     private int version = 0; // NOPMD
     private String stream = null; //NOPMD TODO Regel ändern.
 
-    public JpaUmschlag(final byte[] ereignis, final int version, final String stream) {
+    public JpaUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
         super();
 
         this.identitätsmerkmal = String.format("%s(%d)", stream, version);
-        this.ereignis = ereignis.clone();
         this.version = version;
         this.stream = stream;
+
+        try {
+            this.ereignis = EventSerializer.serialize(ereignis);
+        } catch (final IOException exception) {
+            throw new IllegalArgumentException("Das war nix.", exception);
+        }
     }
 
     public JpaUmschlag() {

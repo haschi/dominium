@@ -20,9 +20,9 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         this.version = 0;
     }
 
-    protected Aggregatwurzel(final Snapshot<T> snapshot) {
-        super(snapshot.getIdentitätsmerkmal());
-        this.version = snapshot.getVersion();
+    protected Aggregatwurzel(final Schnappschuss<T> schnappschuss) {
+        super(schnappschuss.getIdentitätsmerkmal());
+        this.version = schnappschuss.getVersion();
     }
 
     /**
