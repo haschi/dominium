@@ -65,8 +65,8 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(Domänenereignis.class)
                 .addClass(TestEreignis.class)
                 .addClass(Wertobjekt.class)
-                .addClass(Ereignisstrom.class)
-                .addClass(JpaUmschlag.class)
+                .addClass(JpaEreignisstrom.class)
+                .addClass(JpaDomänenereignisUmschlag.class)
                 .addClass(EventSerializer.class)
                 .addClass(DomänenereignisUmschlag.class)
                 .addClass(AbstrakterEreignisstrom.class)
@@ -97,7 +97,7 @@ public final class HibernateEventStoreImContainerTest {
         this.entityManager.joinTransaction();
 
         final TestEreignis ereignis = new TestEreignis("Matthias", "Haschka");
-        final Ereignisstrom<UUID> strom = new Ereignisstrom<>("Test-Strom");
+        final JpaEreignisstrom<UUID> strom = new JpaEreignisstrom<>("Test-Strom");
         final DomänenereignisUmschlag<UUID> wrapper = strom.registerEvent(ereignis);
 
         this.entityManager.persist(wrapper);
@@ -105,8 +105,8 @@ public final class HibernateEventStoreImContainerTest {
         this.userTransaction.commit();
         this.entityManager.clear();
 
-        final List<JpaUmschlag> ergebnis = this.entityManager
-                .createQuery("SELECT e from JpaUmschlag e ", JpaUmschlag.class)
+        final List<JpaDomänenereignisUmschlag> ergebnis = this.entityManager
+                .createQuery("SELECT e from JpaDomänenereignisUmschlag e ", JpaDomänenereignisUmschlag.class)
                 .getResultList();
 
         Assert.assertEquals(ergebnis.size(), 1);

@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 /**
- * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert
+ * JpaEreignisstrom für die Domänenereignisse eines Aggregats. Der JpaEreignisstrom registriert
  * die Domänenereignisse eines Aggregats und kapselt sie in einen DomänenereignisUmschlag, der weitere
  * Meta-Informationen enthält.
  *

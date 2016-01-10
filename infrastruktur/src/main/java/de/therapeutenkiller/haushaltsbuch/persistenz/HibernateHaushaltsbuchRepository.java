@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -31,7 +31,7 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
 
     @Override
     public void add(final Haushaltsbuch haushaltsbuch) {
-        final Ereignisstrom ereignisstrom = new Ereignisstrom(this.streamName(haushaltsbuch));
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.streamName(haushaltsbuch));
         this.entityManager.persist(ereignisstrom);
 
         haushaltsbuch.getÄnderungen().forEach(this.entityManager::persist);

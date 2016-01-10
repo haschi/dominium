@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.persistenz;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.DomänenereignisUmschlag;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EreignisLager;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.inject.Inject;
@@ -25,7 +25,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     public final void neuenEreignisstromErzeugen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
-        final Ereignisstrom<A> ereignisstrom = new Ereignisstrom<>(streamName);
+        final JpaEreignisstrom<A> ereignisstrom = new JpaEreignisstrom<>(streamName);
         this.entityManager.persist(ereignisstrom);
         this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
     }
@@ -36,7 +36,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
             final Collection<Domänenereignis<A>> domänenereignisse,
             final Optional<Integer> erwarteteVersion) {
 
-        final Ereignisstrom<A> strom = (Ereignisstrom<A>)this.entityManager.find(Ereignisstrom.class, streamName);
+        final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(JpaEreignisstrom.class, streamName);
 
         if (erwarteteVersion.isPresent()) {
             this.checkForConcurrencyError(erwarteteVersion.get(), strom);
@@ -48,7 +48,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final Ereignisstrom stream) {
+    private void checkForConcurrencyError(final int expectedVersion, final JpaEreignisstrom stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {

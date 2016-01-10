@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.support
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom
-import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaUmschlag
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaDomänenereignisUmschlag
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -17,27 +17,27 @@ class MeinEreignis implements MeinEreignisTyp {
 }
 class EreignisstromTest extends Specification{
 
-    @Shared String streamName = "Mein Ereignisstrom"
+    @Shared String streamName = "Mein JpaEreignisstrom"
 
 
 
     def "Ereignisstrom kann Ereignisse registrieren"() {
-        given: "Angenommen ich habe einen Ereignisstrom und ein Ereignis"
+        given: "Angenommen ich habe einen JpaEreignisstrom und ein Ereignis"
 
-        Ereignisstrom ereignisstrom = new Ereignisstrom(streamName)
+        JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName)
         MeinEreignis ereignis = new MeinEreignis()
 
         when: "Wenn ich ein Ereignis registriere"
-        JpaUmschlag<String> wrapper = ereignisstrom.registerEvent(ereignis)
+        JpaDomänenereignisUmschlag<String> wrapper = ereignisstrom.registerEvent(ereignis)
 
-        then: "Dann wird ein JpaUmschlag erzeugt mit Version und streamName"
+        then: "Dann wird ein JpaDomänenereignisUmschlag erzeugt mit Version und streamName"
         wrapper.stream == streamName
         wrapper.version == 1
     }
 
     def "Ereignisstrom vergibt fortlaufende Versionsnummern"() {
-        given: "Angenommen ich habe einen Ereignisstrom und ein Ereignis"
-        Ereignisstrom ereignisstrom = new Ereignisstrom(streamName)
+        given: "Angenommen ich habe einen JpaEreignisstrom und ein Ereignis"
+        JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName)
         Domänenereignis<String> ereignis = new MeinEreignis();
 
         when: "Wenn ich mehrere Ereignisse registriere"

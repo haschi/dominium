@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom
 import spock.lang.Specification
 
 import javax.persistence.EntityManager
@@ -29,9 +29,9 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
         when: "Wenn ich das Haushaltsbuch dem Repository hinzufüge"
         repository.add hhb
 
-        then: "Dann wird der Ereignisstrom gespeichert"
+        then: "Dann wird der JpaEreignisstrom gespeichert"
         1 * entityManager.persist({
-            it.equals(new Ereignisstrom<Haushaltsbuch>(Haushaltsbuch.class.getName()+"-"+hhb.identitätsmerkmal.toString()))
+            it.equals(new JpaEreignisstrom<Haushaltsbuch>(Haushaltsbuch.class.getName()+"-"+hhb.identitätsmerkmal.toString()))
         })
     }
 

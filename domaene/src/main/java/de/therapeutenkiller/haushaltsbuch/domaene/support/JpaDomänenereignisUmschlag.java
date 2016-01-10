@@ -13,7 +13,7 @@ import java.io.IOException;
  * @param <T> Der Typ des Aggregats, dessen Domänenereignisse gekapselt werden.
  */
 @Entity
-public class JpaUmschlag<T> extends Wertobjekt implements DomänenereignisUmschlag<T> {
+public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements DomänenereignisUmschlag<T> {
     @Id
     private String identitätsmerkmal = null; // NOPMD Das heißt nun mal so.
 
@@ -22,7 +22,7 @@ public class JpaUmschlag<T> extends Wertobjekt implements DomänenereignisUmschl
     private int version = 0; // NOPMD
     private String stream = null; //NOPMD TODO Regel ändern.
 
-    public JpaUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
+    public JpaDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
         super();
 
         this.identitätsmerkmal = String.format("%s(%d)", stream, version);
@@ -36,7 +36,7 @@ public class JpaUmschlag<T> extends Wertobjekt implements DomänenereignisUmschl
         }
     }
 
-    public JpaUmschlag() {
+    public JpaDomänenereignisUmschlag() {
         super();
         // Für JPA
     }

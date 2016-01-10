@@ -6,7 +6,7 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -15,7 +15,7 @@ import javax.persistence.EntityManager
 class HibernateEventStoreTest extends Specification {
 
     @Shared streamName = "Test-Strom"
-    Ereignisstrom strom = new Ereignisstrom(streamName)
+    JpaEreignisstrom strom = new JpaEreignisstrom(streamName)
     @Shared List<Domänenereignis<Haushaltsbuch>> ereignisse = [
             new HaushaltsbuchWurdeAngelegt(UUID.randomUUID()),
             new KontoWurdeAngelegt("Anfangsbestand", Kontoart.Aktiv)]
@@ -33,13 +33,13 @@ class HibernateEventStoreTest extends Specification {
         store.neuenEreignisstromErzeugen(streamName, ereignisse)
 
         then: "Dann wird der Event-Stream persistiert"
-        1 * entityManager.persist(new Ereignisstrom(streamName))
+        1 * entityManager.persist(new JpaEreignisstrom(streamName))
     }
 
     def "Ereignisse beim Anlegen persistieren"() {
 
         EntityManager entityManager = Mock(EntityManager) {
-            find(Ereignisstrom.class, streamName) >> strom
+            find(JpaEreignisstrom.class, streamName) >> strom
         }
 
         given:
@@ -61,7 +61,7 @@ class HibernateEventStoreTest extends Specification {
     def "Ereignisse einem vorhandenen Event-Stream hinzufügen"() {
 
         EntityManager entityManager = Mock(EntityManager) {
-            find(Ereignisstrom, streamName) >> strom
+            find(JpaEreignisstrom, streamName) >> strom
         }
 
         given:
