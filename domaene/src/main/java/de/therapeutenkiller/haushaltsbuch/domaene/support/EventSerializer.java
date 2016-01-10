@@ -18,9 +18,9 @@ public class EventSerializer<T> { // NOPMD
         return outputStream.toByteArray();
     }
 
-    public static <T> Domänenereignis<T> deserialize(final byte[] data) throws IOException, ClassNotFoundException {
+    public static <T> T deserialize(final byte[] data) throws IOException, ClassNotFoundException {
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
         final ObjectInputStream stream = new ObjectInputStream(inputStream);
-        return (Domänenereignis<T>) stream.readObject();
+        return (T) stream.readObject();
     }
 }

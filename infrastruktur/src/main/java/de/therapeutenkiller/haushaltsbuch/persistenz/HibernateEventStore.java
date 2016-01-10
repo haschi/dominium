@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.persistenz;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.EreignisLager;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.EventWrapper;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.EventWrapperSchnittstelle;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.inject.Inject;
@@ -34,14 +34,14 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
             final Collection<Domänenereignis<A>> domainEvents,
             final Optional<Integer> expectedVersion) {
 
-        final Ereignisstrom strom = this.entityManager.find(Ereignisstrom.class, streamName);
+        final Ereignisstrom<A> strom = (Ereignisstrom<A>)this.entityManager.find(Ereignisstrom.class, streamName);
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), strom);
         }
 
         for (final Domänenereignis<A> ereignis : domainEvents) {
-            final EventWrapper<A> wrappedEvent = strom.registerEvent(ereignis);
+            final EventWrapperSchnittstelle<A> wrappedEvent = strom.registerEvent(ereignis);
             this.entityManager.persist(wrappedEvent);
         }
     }

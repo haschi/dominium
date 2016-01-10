@@ -5,14 +5,14 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
-public class EventWrapper<T> extends Wertobjekt {
+public class EventWrapper<T> extends Wertobjekt implements EventWrapperSchnittstelle<T> {
     @Id
     private String id = null; // NOPMD Das heißt nun mal so.
 
     @Lob
-    public byte[] ereignis = null; // NOPMD
-    public int version = 0; // NOPMD
-    public String stream = null; //NOPMD TODO Regel ändern.
+    private byte[] ereignis = null; // NOPMD
+    private int version = 0; // NOPMD
+    private String stream = null; //NOPMD TODO Regel ändern.
 
     public EventWrapper(final byte[] ereignis, final int version, final String stream) {
         super();
@@ -26,5 +26,20 @@ public class EventWrapper<T> extends Wertobjekt {
     public EventWrapper() {
         super();
         // Für JPA
+    }
+
+    @Override
+    public final Domänenereignis<T> getEreignis() {
+        return null;
+    }
+
+    @Override
+    public final int getVersion() {
+        return this.version;
+    }
+
+    @Override
+    public final String getStreamName() {
+        return this.stream;
     }
 }

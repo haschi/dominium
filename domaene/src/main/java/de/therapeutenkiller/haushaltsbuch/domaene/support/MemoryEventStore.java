@@ -14,16 +14,65 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 // E: Snapshot-Typ, A: Aggregat-Typ
+
+/**
+ * Der MemoryEventStore ist ein EventStore, der Ereignisse im
+ * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests
+ * verwendet.
+ * @param <E> Der Typ des Snapshots des Aggregats, dessen Ereignisse gespeichert werden.
+ * @param <A> Der Typ des Aggregates, dessen Ereignisse verwaltet werden
+ */
 @Dependent
 public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
-    private final Map<String, Ereignisstrom> streams = new ConcurrentHashMap<>();
-    private final List<EventWrapper<A>> events = new ArrayList<>();
+    private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
+    private final List<EventWrapperSchnittstelle<A>> events = new ArrayList<>();
     private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
+
+    class MemoryEventWrapper<T> implements EventWrapperSchnittstelle<T> {
+
+        private final Domänenereignis<T> ereignis;
+        private final int version;
+        private final String stream;
+
+        public MemoryEventWrapper(final Domänenereignis<T> ereignis, final int version, final String stream) {
+            super();
+
+            this.ereignis = ereignis;
+            this.version = version;
+            this.stream = stream;
+        }
+
+        public Domänenereignis<T> getEreignis() {
+            return this.ereignis;
+        }
+
+        @Override
+        public int getVersion() {
+            return this.version;
+        }
+
+        @Override
+        public String getStreamName() {
+            return this.stream;
+        }
+    }
+
+    class MemoryEreignisstrom<T> extends AbstrakterEreignisstrom<T> {
+
+        public MemoryEreignisstrom(final String streamName) {
+            super(streamName);
+        }
+
+        @Override
+        public EventWrapperSchnittstelle<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
+            return new MemoryEventWrapper<>(ereignis, version, this.name);
+        }
+    }
 
     @Override
     public final void createNewStream(final String streamName, final Collection<Domänenereignis<A>> domainEvents) {
-        final Ereignisstrom ereignisstrom = new Ereignisstrom(streamName);
+        final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
         this.appendEventsToStream(streamName, domainEvents, Optional.empty());
     }
@@ -34,21 +83,19 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final Collection<Domänenereignis<A>> domainEvents,
             @DarfNullSein final Optional<Integer> expectedVersion)  {
 
-        final Ereignisstrom stream = this.streams.get(streamName); // NOPMD
+        final AbstrakterEreignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
         if (expectedVersion.isPresent()) {
             this.checkForConcurrencyError(expectedVersion.get(), stream);
         }
 
         for (final Domänenereignis<A> ereignis : domainEvents) {
-            EventWrapper<A> wrappedEvent = null;
-            wrappedEvent = stream.registerEvent(ereignis);
-
+            final EventWrapperSchnittstelle<A> wrappedEvent = stream.registerEvent(ereignis);
             this.events.add(wrappedEvent);
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final Ereignisstrom stream) {
+    private void checkForConcurrencyError(final int expectedVersion, final AbstrakterEreignisstrom<A> stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
@@ -63,32 +110,27 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final int fromVersion,
             final int toVersion) {
 
-        final Comparator<? super EventWrapper<A>> byVersion = (left, right) -> Integer.compare(
-                left.version,
-                right.version);
+        final Comparator<? super EventWrapperSchnittstelle<A>> byVersion = (left, right) -> Integer.compare(
+                left.getVersion(),
+                right.getVersion());
 
         return this.events.stream()
             .filter(event -> this.gehörtZumStream(streamName, event))
             .filter(event -> this.istVersionInnerhalb(fromVersion, toVersion, event))
             .sorted(byVersion)
-            .map(this::deserialize)
+            .map(EventWrapperSchnittstelle::getEreignis)
             .collect(Collectors.toList());
     }
 
-    private Domänenereignis<A> deserialize(final EventWrapper<A> wrapper) {
-        try {
-            return (Domänenereignis<A>) EventSerializer.deserialize(wrapper.ereignis);
-        } catch (final Exception exception) { // NOPMD TODO
-            throw new IllegalArgumentException("Das war nix.", exception);
-        }
+    private boolean gehörtZumStream(final String streamName, final EventWrapperSchnittstelle<A> event) {
+        return event.getStreamName().equals(streamName);
     }
 
-    private boolean gehörtZumStream(final String streamName, final EventWrapper<A> event) {
-        return event.stream.equals(streamName);
-    }
-
-    private boolean istVersionInnerhalb(final int fromVersion, final int toVersion, final EventWrapper<A> event) {
-        return event.version >= fromVersion && event.version <= toVersion;
+    private boolean istVersionInnerhalb(
+            final int fromVersion,
+            final int toVersion,
+            final EventWrapperSchnittstelle<A> event) {
+        return event.getVersion() >= fromVersion && event.getVersion() <= toVersion;
     }
 
     @Override
@@ -121,8 +163,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     public final Domänenereignis<A> getInitialEvent(final String streamName) {
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
-                .filter(event -> event.version == 1)
-                .map(this::deserialize)
+                .filter(event -> event.getVersion() == 1)
+                .map(EventWrapperSchnittstelle::getEreignis)
                 .findFirst()
                 .get();
     }

@@ -2,27 +2,19 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 import java.io.IOException;
 
-public class Ereignisstrom extends Wertobjekt {
-    private final String name;
-    private int version;
-
-    public final int getVersion() {
-        return this.version;
-    }
+public class Ereignisstrom<A> extends AbstrakterEreignisstrom<A> {
 
     public Ereignisstrom(final String streamName) {
-        super();
-        this.name = streamName;
-        this.version = 0;
+        super(streamName);
     }
 
-    public final <A> EventWrapper<A> registerEvent(final Domänenereignis<A> ereignis)  {
-        this.version = this.version + 1;
+    @Override
+    public final EventWrapperSchnittstelle<A> onRegisterEvent(final Domänenereignis<A> ereignis, final int version)  {
         try {
             final byte[] serialisiertesEreignis = EventSerializer.serialize(ereignis);
-            return new EventWrapper<>(serialisiertesEreignis, this.version, this.name);
+            return new EventWrapper<A>(serialisiertesEreignis, version, this.name);
         } catch (final IOException exception) {
-            throw new IllegalArgumentException("Ging nicht,.", exception);
+            throw new IllegalArgumentException("Das war nix.", exception);
         }
     }
 }
