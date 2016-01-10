@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
     private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
-    private final List<EventWrapperSchnittstelle<A>> events = new ArrayList<>();
+    private final List<Umschlag<A>> events = new ArrayList<>();
     private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
 
-    class MemoryEventWrapper<T> implements EventWrapperSchnittstelle<T> {
+    class MemoryEventWrapper<T> implements Umschlag<T> {
 
         private final Domänenereignis<T> ereignis;
         private final int version;
@@ -65,7 +65,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         @Override
-        public EventWrapperSchnittstelle<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
+        public Umschlag<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
             return new MemoryEventWrapper<>(ereignis, version, this.name);
         }
     }
@@ -90,7 +90,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         for (final Domänenereignis<A> ereignis : domainEvents) {
-            final EventWrapperSchnittstelle<A> wrappedEvent = stream.registerEvent(ereignis);
+            final Umschlag<A> wrappedEvent = stream.registerEvent(ereignis);
             this.events.add(wrappedEvent);
         }
     }
@@ -110,7 +110,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final int fromVersion,
             final int toVersion) {
 
-        final Comparator<? super EventWrapperSchnittstelle<A>> byVersion = (left, right) -> Integer.compare(
+        final Comparator<? super Umschlag<A>> byVersion = (left, right) -> Integer.compare(
                 left.getVersion(),
                 right.getVersion());
 
@@ -118,18 +118,18 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             .filter(event -> this.gehörtZumStream(streamName, event))
             .filter(event -> this.istVersionInnerhalb(fromVersion, toVersion, event))
             .sorted(byVersion)
-            .map(EventWrapperSchnittstelle::getEreignis)
+            .map(Umschlag::getEreignis)
             .collect(Collectors.toList());
     }
 
-    private boolean gehörtZumStream(final String streamName, final EventWrapperSchnittstelle<A> event) {
+    private boolean gehörtZumStream(final String streamName, final Umschlag<A> event) {
         return event.getStreamName().equals(streamName);
     }
 
     private boolean istVersionInnerhalb(
             final int fromVersion,
             final int toVersion,
-            final EventWrapperSchnittstelle<A> event) {
+            final Umschlag<A> event) {
         return event.getVersion() >= fromVersion && event.getVersion() <= toVersion;
     }
 
@@ -164,7 +164,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.getVersion() == 1)
-                .map(EventWrapperSchnittstelle::getEreignis)
+                .map(Umschlag::getEreignis)
                 .findFirst()
                 .get();
     }

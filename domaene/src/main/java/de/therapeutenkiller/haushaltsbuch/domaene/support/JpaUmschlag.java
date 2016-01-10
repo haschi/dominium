@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
-public class JpaEreignisUmschlag<T> extends Wertobjekt implements EventWrapperSchnittstelle<T> {
+public class JpaUmschlag<T> extends Wertobjekt implements Umschlag<T> {
     @Id
     private String id = null; // NOPMD Das heißt nun mal so.
 
@@ -14,7 +14,7 @@ public class JpaEreignisUmschlag<T> extends Wertobjekt implements EventWrapperSc
     private int version = 0; // NOPMD
     private String stream = null; //NOPMD TODO Regel ändern.
 
-    public JpaEreignisUmschlag(final byte[] ereignis, final int version, final String stream) {
+    public JpaUmschlag(final byte[] ereignis, final int version, final String stream) {
         super();
 
         this.id = String.format("%s(%d)", stream, version);
@@ -23,7 +23,7 @@ public class JpaEreignisUmschlag<T> extends Wertobjekt implements EventWrapperSc
         this.stream = stream;
     }
 
-    public JpaEreignisUmschlag() {
+    public JpaUmschlag() {
         super();
         // Für JPA
     }

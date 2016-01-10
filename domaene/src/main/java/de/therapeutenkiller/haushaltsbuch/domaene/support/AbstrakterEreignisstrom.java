@@ -15,10 +15,10 @@ public abstract class AbstrakterEreignisstrom<A> extends Wertobjekt { // NOPMD, 
         return this.version;
     }
 
-    public final EventWrapperSchnittstelle<A> registerEvent(final Domänenereignis<A> ereignis) {
+    public final Umschlag<A> registerEvent(final Domänenereignis<A> ereignis) {
         this.version = this.version + 1;
         return this.onRegisterEvent(ereignis, this.version);
     }
 
-    public abstract EventWrapperSchnittstelle<A> onRegisterEvent(Domänenereignis<A> ereignis, int version);
+    public abstract Umschlag<A> onRegisterEvent(Domänenereignis<A> ereignis, int version);
 }
