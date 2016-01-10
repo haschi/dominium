@@ -3,10 +3,10 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 import java.util.ArrayList;
 import java.util.List;
 
-class EventManager<A> {
+class EreignisVerwalter<A> {
     private final List<Domänenereignis<A>> änderungen;
 
-    public EventManager() {
+    public EreignisVerwalter() {
         this.änderungen = new ArrayList<>();
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Aggregatwurzel<T, A> extends Entität<T> {
 
-    private final EventManager<A> eventManager = new EventManager<>();
+    private final EreignisVerwalter<A> ereignisVerwalter = new EreignisVerwalter<>();
 
     private int version;
 
@@ -45,15 +45,15 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
 
     // TODO der Parameter aggregat ist doch überflüssig oder?
     protected final void anwenden(final Domänenereignis<A> ereignis, final A aggregat) {
-        this.eventManager.anwenden(ereignis, aggregat);
+        this.ereignisVerwalter.anwenden(ereignis, aggregat);
     }
 
     public final List<Domänenereignis<A>> getÄnderungen() {
-        return this.eventManager.getÄnderungen();
+        return this.ereignisVerwalter.getÄnderungen();
     }
 
     protected final void ereignisHinzufügen(final Domänenereignis<A> ereignis) {
-        this.eventManager.ereignisHinzufügen(ereignis);
+        this.ereignisVerwalter.ereignisHinzufügen(ereignis);
     }
 
     protected final void versionErhöhen() {
