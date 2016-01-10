@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import org.apache.commons.lang3.NotImplementedException;
 

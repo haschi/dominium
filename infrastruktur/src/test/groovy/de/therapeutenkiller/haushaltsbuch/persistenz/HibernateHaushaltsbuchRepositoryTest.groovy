@@ -3,7 +3,6 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
-import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom
 import spock.lang.Specification
 
 import javax.persistence.EntityManager

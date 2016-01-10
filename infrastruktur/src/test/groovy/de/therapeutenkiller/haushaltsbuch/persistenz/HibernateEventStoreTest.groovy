@@ -6,7 +6,6 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
-import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisstrom
 import spock.lang.Shared
 import spock.lang.Specification
 

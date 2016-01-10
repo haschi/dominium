@@ -1,4 +1,9 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.support;
+package de.therapeutenkiller.haushaltsbuch.persistenz;
+
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.DomänenereignisUmschlag;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.EventSerializer;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
