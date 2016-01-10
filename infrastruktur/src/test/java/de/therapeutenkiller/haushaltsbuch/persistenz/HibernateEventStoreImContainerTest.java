@@ -57,6 +57,11 @@ public final class HibernateEventStoreImContainerTest {
                 .withoutTransitivity()
                 .asFile();
 
+        final File[] commons = Maven.resolver()
+                .resolve("org.apache.commons:commons-lang3:3.4")
+                .withoutTransitivity()
+                .asFile();
+
         final WebArchive jar =  ShrinkWrap.create(WebArchive.class)
 
                 .addClass(Greeter.class)
@@ -68,6 +73,7 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(EventSerializer.class)
                 .addAsLibraries(aspectj)
                 .addAsLibraries(aspekte)
+                .addAsLibraries(commons)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml");
 

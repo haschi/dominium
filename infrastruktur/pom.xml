@@ -206,6 +206,11 @@
                 </dependency>
             </dependencies>
             <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources-wildfly-embedded</directory>
+                    </testResource>
+                </testResources>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
