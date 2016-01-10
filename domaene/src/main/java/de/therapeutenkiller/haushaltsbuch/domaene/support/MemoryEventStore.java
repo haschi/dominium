@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
     private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
-    private final List<Umschlag<A>> events = new ArrayList<>();
-    private final List<SnapshotWrapper<E>> snapshots = new ArrayList<>();
+    private final List<DomänenereignisUmschlag<A>> events = new ArrayList<>();
+    private final List<SchnappschussUmschlag<E>> snapshots = new ArrayList<>();
 
-    class MemoryEventWrapper<T> implements Umschlag<T> {
+    class MemoryEventWrapper<T> implements DomänenereignisUmschlag<T> {
 
         private final Domänenereignis<T> ereignis;
         private final int version;
@@ -65,7 +65,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         @Override
-        public Umschlag<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
+        public DomänenereignisUmschlag<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
             return new MemoryEventWrapper<>(ereignis, version, this.name);
         }
     }
@@ -92,7 +92,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-            final Umschlag<A> wrappedEvent = stream.registerEvent(ereignis); // NOPMD LoD
+            final DomänenereignisUmschlag<A> wrappedEvent = stream.registerEvent(ereignis); // NOPMD LoD
             this.events.add(wrappedEvent);
         }
     }
@@ -112,7 +112,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final int vonVersion,
             final int bisVersion) {
 
-        final Comparator<? super Umschlag<A>> byVersion = (left, right) -> Integer.compare(
+        final Comparator<? super DomänenereignisUmschlag<A>> byVersion = (left, right) -> Integer.compare(
                 left.getVersion(),
                 right.getVersion());
 
@@ -120,24 +120,24 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             .filter(event -> this.gehörtZumStream(streamName, event))
             .filter(event -> this.istVersionInnerhalb(vonVersion, bisVersion, event))
             .sorted(byVersion)
-            .map(Umschlag::getEreignis)
+            .map(DomänenereignisUmschlag::getEreignis)
             .collect(Collectors.toList());
     }
 
-    private boolean gehörtZumStream(final String streamName, final Umschlag<A> event) {
+    private boolean gehörtZumStream(final String streamName, final DomänenereignisUmschlag<A> event) {
         return event.getStreamName().equals(streamName);
     }
 
     private boolean istVersionInnerhalb(
             final int fromVersion,
             final int toVersion,
-            final Umschlag<A> event) {
+            final DomänenereignisUmschlag<A> event) {
         return event.getVersion() >= fromVersion && event.getVersion() <= toVersion;
     }
 
     @Override
     public final void snapshotHinzufügen(final String streamName, final E snapshot) {
-        final SnapshotWrapper<E> wrapper = new SnapshotWrapper<>(streamName, snapshot, LocalDateTime.now());
+        final SchnappschussUmschlag<E> wrapper = new SchnappschussUmschlag<>(streamName, snapshot, LocalDateTime.now());
         this.snapshots.add(wrapper);
     }
 
@@ -145,7 +145,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @DarfNullSein
     public final E getLatestSnapshot(final String streamName) {
 
-        final Comparator<? super SnapshotWrapper<E>> byDateTimeAbsteigend = (left, right) ->
+        final Comparator<? super SchnappschussUmschlag<E>> byDateTimeAbsteigend = (left, right) ->
                 left.timestamp.compareTo(right.timestamp);
 
         final Optional<E> snapshot = this.snapshots.stream()
@@ -166,7 +166,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         return this.events.stream()
                 .filter(event -> this.gehörtZumStream(streamName, event))
                 .filter(event -> event.getVersion() == 1)
-                .map(Umschlag::getEreignis)
+                .map(DomänenereignisUmschlag::getEreignis)
                 .findFirst()
                 .get();
     }

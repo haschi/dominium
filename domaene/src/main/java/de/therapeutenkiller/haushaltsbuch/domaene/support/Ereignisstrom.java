@@ -7,7 +7,7 @@ public class Ereignisstrom<A> extends AbstrakterEreignisstrom<A> {
     }
 
     @Override
-    public final Umschlag<A> onRegisterEvent(final Domänenereignis<A> ereignis, final int version)  {
+    public final DomänenereignisUmschlag<A> onRegisterEvent(final Domänenereignis<A> ereignis, final int version)  {
         return new JpaUmschlag<>(ereignis, version, this.name);
     }
 }

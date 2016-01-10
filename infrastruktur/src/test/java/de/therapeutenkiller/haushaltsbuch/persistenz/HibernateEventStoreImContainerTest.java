@@ -1,12 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.AbstrakterEreignisstrom;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.EventSerializer;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaUmschlag;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Umschlag;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.*;
+import de.therapeutenkiller.haushaltsbuch.domaene.support.DomänenereignisUmschlag;
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.TestEreignis;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -73,7 +68,7 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(Ereignisstrom.class)
                 .addClass(JpaUmschlag.class)
                 .addClass(EventSerializer.class)
-                .addClass(Umschlag.class)
+                .addClass(DomänenereignisUmschlag.class)
                 .addClass(AbstrakterEreignisstrom.class)
                 .addAsLibraries(aspectj)
                 .addAsLibraries(aspekte)
@@ -103,7 +98,7 @@ public final class HibernateEventStoreImContainerTest {
 
         final TestEreignis ereignis = new TestEreignis("Matthias", "Haschka");
         final Ereignisstrom<UUID> strom = new Ereignisstrom<>("Test-Strom");
-        final Umschlag<UUID> wrapper = strom.registerEvent(ereignis);
+        final DomänenereignisUmschlag<UUID> wrapper = strom.registerEvent(ereignis);
 
         this.entityManager.persist(wrapper);
 

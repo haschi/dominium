@@ -2,11 +2,11 @@ package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert
- * die Domänenereignisse eines Aggregats und kapselt sie in einen Umschlag, der weitere
+ * die Domänenereignisse eines Aggregats und kapselt sie in einen DomänenereignisUmschlag, der weitere
  * Meta-Informationen enthält.
  *
  * Implementierungen des Ereignisstroms müssen in der Methode onRegisterEvent den
- * Umschlag erzeugen.
+ * DomänenereignisUmschlag erzeugen.
  *
  * @param <A> Der Typ des Aggregats dessen Domänenereignisse registriert werden.
  */
@@ -25,10 +25,10 @@ public abstract class AbstrakterEreignisstrom<A> extends Wertobjekt { // NOPMD, 
         return this.version;
     }
 
-    public final Umschlag<A> registerEvent(final Domänenereignis<A> ereignis) {
+    public final DomänenereignisUmschlag<A> registerEvent(final Domänenereignis<A> ereignis) {
         this.version = this.version + 1;
         return this.onRegisterEvent(ereignis, this.version);
     }
 
-    public abstract Umschlag<A> onRegisterEvent(Domänenereignis<A> ereignis, int version);
+    public abstract DomänenereignisUmschlag<A> onRegisterEvent(Domänenereignis<A> ereignis, int version);
 }

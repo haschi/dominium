@@ -8,12 +8,12 @@ import java.io.IOException;
 // TODO Schlüssel des JpaUmschlags sind version + stream;
 
 /**
- * Ein Umschlag für Domänenereignisse zum Speichern in einer
+ * Ein DomänenereignisUmschlag für Domänenereignisse zum Speichern in einer
  * Datenbank mit JPA.
  * @param <T> Der Typ des Aggregats, dessen Domänenereignisse gekapselt werden.
  */
 @Entity
-public class JpaUmschlag<T> extends Wertobjekt implements Umschlag<T> {
+public class JpaUmschlag<T> extends Wertobjekt implements DomänenereignisUmschlag<T> {
     @Id
     private String identitätsmerkmal = null; // NOPMD Das heißt nun mal so.
 
