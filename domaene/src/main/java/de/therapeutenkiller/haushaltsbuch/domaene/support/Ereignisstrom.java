@@ -12,7 +12,7 @@ public class Ereignisstrom<A> extends AbstrakterEreignisstrom<A> {
     public final EventWrapperSchnittstelle<A> onRegisterEvent(final Domänenereignis<A> ereignis, final int version)  {
         try {
             final byte[] serialisiertesEreignis = EventSerializer.serialize(ereignis);
-            return new EventWrapper<A>(serialisiertesEreignis, version, this.name);
+            return new JpaEreignisUmschlag<A>(serialisiertesEreignis, version, this.name);
         } catch (final IOException exception) {
             throw new IllegalArgumentException("Das war nix.", exception);
         }

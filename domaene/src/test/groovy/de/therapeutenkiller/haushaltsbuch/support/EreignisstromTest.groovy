@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.support
 
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom
-import de.therapeutenkiller.haushaltsbuch.domaene.support.EventWrapper
+import de.therapeutenkiller.haushaltsbuch.domaene.support.JpaEreignisUmschlag
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -28,9 +28,9 @@ class EreignisstromTest extends Specification{
         MeinEreignis ereignis = new MeinEreignis()
 
         when: "Wenn ich ein Ereignis registriere"
-        EventWrapper<String> wrapper = ereignisstrom.registerEvent(ereignis)
+        JpaEreignisUmschlag<String> wrapper = ereignisstrom.registerEvent(ereignis)
 
-        then: "Dann wird ein EventWrapper erzeugt mit Version und streamName"
+        then: "Dann wird ein JpaEreignisUmschlag erzeugt mit Version und streamName"
         wrapper.stream == streamName
         wrapper.version == 1
     }

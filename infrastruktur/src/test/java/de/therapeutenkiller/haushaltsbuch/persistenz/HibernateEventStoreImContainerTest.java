@@ -65,7 +65,7 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(TestEreignis.class)
                 .addClass(Wertobjekt.class)
                 .addClass(Ereignisstrom.class)
-                .addClass(EventWrapper.class)
+                .addClass(JpaEreignisUmschlag.class)
                 .addClass(EventSerializer.class)
                 .addClass(EventWrapperSchnittstelle.class)
                 .addClass(AbstrakterEreignisstrom.class)
@@ -104,8 +104,8 @@ public final class HibernateEventStoreImContainerTest {
         this.userTransaction.commit();
         this.entityManager.clear();
 
-        final List<EventWrapper> ergebnis = this.entityManager
-                .createQuery("SELECT e from EventWrapper e ", EventWrapper.class)
+        final List<JpaEreignisUmschlag> ergebnis = this.entityManager
+                .createQuery("SELECT e from JpaEreignisUmschlag e ", JpaEreignisUmschlag.class)
                 .getResultList();
 
         Assert.assertEquals(ergebnis.size(), 1);
