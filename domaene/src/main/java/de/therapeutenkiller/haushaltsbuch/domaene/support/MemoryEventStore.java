@@ -13,8 +13,6 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-// E: Schnappschuss-Typ, A: Aggregat-Typ
-
 /**
  * Der MemoryEventStore ist ein EventStore, der Ereignisse im
  * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests
@@ -28,47 +26,6 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
     private final List<DomänenereignisUmschlag<A>> events = new ArrayList<>();
     private final List<SchnappschussUmschlag<E>> snapshots = new ArrayList<>();
-
-    class MemoryEventWrapper<T> implements DomänenereignisUmschlag<T> {
-
-        private final Domänenereignis<T> ereignis;
-        private final int version;
-        private final String stream;
-
-        public MemoryEventWrapper(final Domänenereignis<T> ereignis, final int version, final String stream) {
-            super();
-
-            this.ereignis = ereignis;
-            this.version = version;
-            this.stream = stream;
-        }
-
-        public Domänenereignis<T> getEreignis() {
-            return this.ereignis;
-        }
-
-        @Override
-        public int getVersion() {
-            return this.version;
-        }
-
-        @Override
-        public String getStreamName() {
-            return this.stream;
-        }
-    }
-
-    class MemoryEreignisstrom<T> extends AbstrakterEreignisstrom<T> {
-
-        public MemoryEreignisstrom(final String streamName) {
-            super(streamName);
-        }
-
-        @Override
-        public DomänenereignisUmschlag<T> onRegisterEvent(final Domänenereignis<T> ereignis, final int version) {
-            return new MemoryEventWrapper<>(ereignis, version, this.name);
-        }
-    }
 
     @Override
     public final void neuenEreignisstromErzeugen(
@@ -85,7 +42,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
                                                     final Collection<Domänenereignis<A>> domänenereignisse,
                                                     @DarfNullSein final Optional<Integer> erwarteteVersion)  {
 
-        final AbstrakterEreignisstrom<A> stream = this.streams.get(streamName); // NOPMD
+        final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
         if (erwarteteVersion.isPresent()) {
             this.checkForConcurrencyError(erwarteteVersion.get(), stream);
@@ -97,7 +54,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final AbstrakterEreignisstrom<A> stream) {
+    private void checkForConcurrencyError(final int expectedVersion, final Ereignisstrom<A> stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {

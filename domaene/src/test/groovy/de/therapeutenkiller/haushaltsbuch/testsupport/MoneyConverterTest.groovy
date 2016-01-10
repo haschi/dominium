@@ -1,12 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.testsupport
 
-import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import javax.money.MonetaryAmount
-import javax.money.format.MonetaryParseException
 
 class MoneyConverterTest  extends Specification {
 
@@ -25,7 +23,7 @@ class MoneyConverterTest  extends Specification {
         result == währungsbetrag
 
         where:
-        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlungVonWährungsbeträgen.gültigeWährungsbeträge()
     }
 
     @Unroll
@@ -42,6 +40,6 @@ class MoneyConverterTest  extends Specification {
         e.getClass() == ausnahme
 
         where:
-        [zeichenfolge, ausnahme] << BeispieleFürUmwandlung.ungültigeWährungsbeträge()
+        [zeichenfolge, ausnahme] << BeispieleFürUmwandlungVonWährungsbeträgen.ungültigeWährungsbeträge()
     }
 }

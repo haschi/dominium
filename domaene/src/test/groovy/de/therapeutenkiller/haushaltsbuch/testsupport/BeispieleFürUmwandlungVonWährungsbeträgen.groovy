@@ -4,7 +4,7 @@ import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 
 import javax.money.format.MonetaryParseException
 
-public class BeispieleFürUmwandlung {
+public class BeispieleFürUmwandlungVonWährungsbeträgen {
     static def gültigeWährungsbeträge() {
         [
                 ["123,45 EUR", 123.45.euro],

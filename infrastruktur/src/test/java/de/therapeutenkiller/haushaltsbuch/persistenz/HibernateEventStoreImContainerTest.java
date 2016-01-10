@@ -69,7 +69,7 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(JpaDomänenereignisUmschlag.class)
                 .addClass(EventSerializer.class)
                 .addClass(DomänenereignisUmschlag.class)
-                .addClass(AbstrakterEreignisstrom.class)
+                .addClass(Ereignisstrom.class)
                 .addAsLibraries(aspectj)
                 .addAsLibraries(aspekte)
                 .addAsLibraries(commons)

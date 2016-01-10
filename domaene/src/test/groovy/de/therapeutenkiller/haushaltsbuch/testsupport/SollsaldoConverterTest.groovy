@@ -23,7 +23,7 @@ public class SollsaldoConverterTest extends Specification {
         result.betrag == währungsbetrag
 
         where:
-        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlungVonWährungsbeträgen.gültigeWährungsbeträge()
     }
 
 
@@ -42,7 +42,7 @@ public class SollsaldoConverterTest extends Specification {
         thrown(ausnahme)
 
         where:
-        [zeichenfolge, ausnahme] << BeispieleFürUmwandlung.ungültigeWährungsbeträge()
+        [zeichenfolge, ausnahme] << BeispieleFürUmwandlungVonWährungsbeträgen.ungültigeWährungsbeträge()
     }
 }
 

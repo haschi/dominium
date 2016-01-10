@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.EventSerializer
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.TestEreignis
 import spock.lang.Specification
 

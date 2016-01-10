@@ -2,7 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.testsupport
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter
-import groovy.transform.TypeChecked
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -25,7 +24,7 @@ class HabensaldoConverterTest extends Specification {
         result.betrag == währungsbetrag
 
         where:
-        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlung.gültigeWährungsbeträge()
+        [zeichenfolge, währungsbetrag] << BeispieleFürUmwandlungVonWährungsbeträgen.gültigeWährungsbeträge()
     }
 
     @Unroll
@@ -41,6 +40,6 @@ class HabensaldoConverterTest extends Specification {
         thrown ausnahme
 
         where:
-        [zeichenfolge, ausnahme] << BeispieleFürUmwandlung.ungültigeWährungsbeträge()
+        [zeichenfolge, ausnahme] << BeispieleFürUmwandlungVonWährungsbeträgen.ungültigeWährungsbeträge()
     }
 }
