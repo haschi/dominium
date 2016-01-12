@@ -21,12 +21,12 @@ public interface EreignisLager<E, A> {
             Collection<Domänenereignis<A>> domänenereignisse,
             Optional<Integer> erwarteteVersion);
 
-    List<Domänenereignis<A>> getStream(String streamName, int vonVersion, int bisVersion);
+    List<Domänenereignis<A>> getEreignisListe(String streamName, int vonVersion, int bisVersion);
 
-    void snapshotHinzufügen(String streamName, E snapshot);
+    void schnappschussHinzufügen(String streamName, E snapshot);
 
     @DarfNullSein
-    E getLatestSnapshot(String streamName);
+    E getNeuesterSchnappschuss(String streamName);
 
     /**
      * Liefert das Ereignis, mit dem ein Aggregat erzeugt worden ist.

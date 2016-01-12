@@ -7,9 +7,12 @@ class SchnappschussUmschlag<E> {
     public final E snapshot;
     public final LocalDateTime timestamp;
 
-    public SchnappschussUmschlag(final String streamName, final E schnappschuss, final LocalDateTime jetzt) {
+    public SchnappschussUmschlag(
+            final String streamName,
+            final E schnappschuss,
+            final LocalDateTime erstellungszeitpunkt) {
         this.streamName = streamName;
         this.snapshot = schnappschuss;
-        this.timestamp = jetzt;
+        this.timestamp = erstellungszeitpunkt;
     }
 }

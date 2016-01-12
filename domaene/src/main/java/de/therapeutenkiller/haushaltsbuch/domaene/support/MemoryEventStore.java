@@ -38,14 +38,14 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
 
     @Override
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
-                                                    final String streamName,
-                                                    final Collection<Domänenereignis<A>> domänenereignisse,
-                                                    @DarfNullSein final Optional<Integer> erwarteteVersion)  {
+            final String streamName,
+            final Collection<Domänenereignis<A>> domänenereignisse,
+            final Optional<Integer> erwarteteVersion)  {
 
         final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
         if (erwarteteVersion.isPresent()) {
-            this.checkForConcurrencyError(erwarteteVersion.get(), stream);
+            this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion.get(), stream);
         }
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
@@ -54,7 +54,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final Ereignisstrom<A> stream) {
+    private void aufKonkurrierendenZugriffPrüfen(final int expectedVersion, final Ereignisstrom<A> stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
@@ -64,7 +64,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final List<Domänenereignis<A>> getStream(
+    public final List<Domänenereignis<A>> getEreignisListe(
             final String streamName,
             final int vonVersion,
             final int bisVersion) {
@@ -74,18 +74,18 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
                 right.getVersion());
 
         return this.events.stream()
-            .filter(event -> this.gehörtZumStream(streamName, event))
-            .filter(event -> this.istVersionInnerhalb(vonVersion, bisVersion, event))
+            .filter(event -> MemoryEventStore.gehörtZumStream(streamName, event))
+            .filter(event -> MemoryEventStore.istVersionInnerhalb(vonVersion, bisVersion, event))
             .sorted(byVersion)
             .map(DomänenereignisUmschlag::getEreignis)
             .collect(Collectors.toList());
     }
 
-    private boolean gehörtZumStream(final String streamName, final DomänenereignisUmschlag<A> event) {
-        return event.getStreamName().equals(streamName);
+    private static <A> boolean gehörtZumStream(final String streamName, final DomänenereignisUmschlag<A> ereignis) {
+        return ereignis.getStreamName().equals(streamName);
     }
 
-    private boolean istVersionInnerhalb(
+    private static <A> boolean istVersionInnerhalb(
             final int fromVersion,
             final int toVersion,
             final DomänenereignisUmschlag<A> event) {
@@ -93,14 +93,19 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void snapshotHinzufügen(final String streamName, final E snapshot) {
-        final SchnappschussUmschlag<E> wrapper = new SchnappschussUmschlag<>(streamName, snapshot, LocalDateTime.now());
+    public final void schnappschussHinzufügen(final String streamName, final E snapshot) {
+
+        final SchnappschussUmschlag<E> wrapper = new SchnappschussUmschlag<>(
+                streamName,
+                snapshot,
+                LocalDateTime.now());
+
         this.snapshots.add(wrapper);
     }
 
     @Override
     @DarfNullSein
-    public final E getLatestSnapshot(final String streamName) {
+    public final E getNeuesterSchnappschuss(final String streamName) {
 
         final Comparator<? super SchnappschussUmschlag<E>> byDateTimeAbsteigend = (left, right) ->
                 left.timestamp.compareTo(right.timestamp);
@@ -121,7 +126,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final Domänenereignis<A> getInitialereignis(final String streamName) {
         return this.events.stream()
-                .filter(event -> this.gehörtZumStream(streamName, event))
+                .filter(event -> MemoryEventStore.gehörtZumStream(streamName, event))
                 .filter(event -> event.getVersion() == 1)
                 .map(DomänenereignisUmschlag::getEreignis)
                 .findFirst()

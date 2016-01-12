@@ -40,12 +40,12 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     public final Haushaltsbuch findBy(final UUID identitätsmerkmal) {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
-        final HaushaltsbuchSchnappschuss snapshot = this.store.getLatestSnapshot(streamName);
+        final HaushaltsbuchSchnappschuss snapshot = this.store.getNeuesterSchnappschuss(streamName);
 
         final int fromEventNumber = snapshot == null ? 0 : snapshot.version + 1;
         final int toEventNumber = Integer.MAX_VALUE;
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getStream(
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getEreignisListe(
                 streamName,
                 fromEventNumber,
                 toEventNumber);
@@ -98,6 +98,6 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         final String streamName = this.streamNameFor(haushaltsbuchId);
-        return this.store.getStream(streamName, 0, Integer.MAX_VALUE);
+        return this.store.getEreignisListe(streamName, 0, Integer.MAX_VALUE);
     }
 }

@@ -57,7 +57,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final List<Domänenereignis<A>> getStream(
+    public final List<Domänenereignis<A>> getEreignisListe(
             final String streamName,
             final int vonVersion,
             final int bisVersion) {
@@ -73,12 +73,12 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final void snapshotHinzufügen(final String streamName, final E snapshot) {
+    public final void schnappschussHinzufügen(final String streamName, final E snapshot) {
         throw new NotImplementedException("Nicht implementiert.");
     }
 
     @Override
-    public final E getLatestSnapshot(final String streamName) {
+    public final E getNeuesterSchnappschuss(final String streamName) {
         return null;
     }
 

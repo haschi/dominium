@@ -56,14 +56,6 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         this.ereignisVerwalter.ereignisHinzufügen(ereignis);
     }
 
-    protected final void versionErhöhen() {
-        this.version = this.version + 1;
-    }
-
-    public final void setVersion(final int version) {
-        this.version = version;
-    }
-
     protected final int getVersion() {
         return this.version;
     }
