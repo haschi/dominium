@@ -14,11 +14,11 @@ import java.util.Optional;
  */
 public interface EreignisLager<E, A> {
 
-    void neuenEreignisstromErzeugen(String streamName, Collection<Domänenereignis<A>> domänenereignisse);
+    void neuenEreignisstromErzeugen(String streamName, Collection<? extends Domänenereignis<A>> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             String streamName,
-            Collection<Domänenereignis<A>> domänenereignisse,
+            Collection<? extends Domänenereignis<A>> domänenereignisse,
             Optional<Integer> erwarteteVersion);
 
     List<Domänenereignis<A>> getEreignisListe(String streamName, int vonVersion, int bisVersion);

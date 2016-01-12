@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.support;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,9 +10,10 @@ import java.util.List;
  * @param <T> Der Typ des Identitätsmerkmals der zugrunde liegenden Entität
  * @param <A> Der konkrete Typ der Aggregatwurzel (eine Ableitung dieser Klasse)
  */
-public class Aggregatwurzel<T, A> extends Entität<T> {
+public class Aggregatwurzel<T, A extends Aggregatwurzel<T,A>>
+        extends Entität<T> {
 
-    private final EreignisVerwalter<A> ereignisVerwalter = new EreignisVerwalter<>();
+    private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
 
     private int version;
 
@@ -43,17 +45,14 @@ public class Aggregatwurzel<T, A> extends Entität<T> {
         super(ereignis.getIdentitätsmerkmal());
     }
 
-    // TODO der Parameter aggregat ist doch überflüssig oder?
-    protected final void anwenden(final Domänenereignis<A> ereignis, final A aggregat) {
-        this.ereignisVerwalter.anwenden(ereignis, aggregat);
+    // bewirkt
+    protected final void causes(final Domänenereignis<A> ereignis, final A aggregat) {
+        this.änderungen.add(ereignis);
+        ereignis.anwendenAuf(aggregat);
     }
 
-    public final List<Domänenereignis<A>> getÄnderungen() {
-        return this.ereignisVerwalter.getÄnderungen();
-    }
-
-    protected final void ereignisHinzufügen(final Domänenereignis<A> ereignis) {
-        this.ereignisVerwalter.ereignisHinzufügen(ereignis);
+    public final List<? extends Domänenereignis<A>> getÄnderungen() {
+        return this.änderungen;
     }
 
     protected final int getVersion() {

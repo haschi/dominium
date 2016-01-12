@@ -30,7 +30,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void neuenEreignisstromErzeugen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domänenereignisse) {
+            final Collection<? extends Domänenereignis<A>> domänenereignisse) {
         final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
         this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
@@ -39,7 +39,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
             final String streamName,
-            final Collection<Domänenereignis<A>> domänenereignisse,
+            final Collection<? extends Domänenereignis<A>> domänenereignisse,
             final Optional<Integer> erwarteteVersion)  {
 
         final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD

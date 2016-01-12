@@ -23,7 +23,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void neuenEreignisstromErzeugen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domänenereignisse) {
+            final Collection<? extends Domänenereignis<A>> domänenereignisse) {
         final JpaEreignisstrom<A> ereignisstrom = new JpaEreignisstrom<>(streamName);
         this.entityManager.persist(ereignisstrom);
         this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
@@ -32,10 +32,11 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final void ereignisseDemStromHinzufügen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domänenereignisse,
+            final Collection<? extends Domänenereignis<A>> domänenereignisse,
             final Optional<Integer> erwarteteVersion) {
 
-        final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(JpaEreignisstrom.class, streamName);
+        final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(
+                JpaEreignisstrom.class, streamName);
 
         if (erwarteteVersion.isPresent()) {
             this.checkForConcurrencyError(erwarteteVersion.get(), strom);

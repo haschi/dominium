@@ -27,7 +27,8 @@ import java.util.Set;
 import java.util.UUID;
 
 @CoverageIgnore
-public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { // NOPMD Klasse zu groß TODO
+public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { // NOPMD
+    // Klasse zu groß TODO
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 
@@ -47,7 +48,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public Haushaltsbuch(final UUID uuid) {
         super(uuid);
-        this.causes(new HaushaltsbuchWurdeAngelegt(uuid));
+        this.causes(new HaushaltsbuchWurdeAngelegt(uuid), this);
     }
 
     public Haushaltsbuch(final HaushaltsbuchWurdeAngelegt ereignis) {
@@ -65,12 +66,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         return snapshot;
     }
 
-    // bewirkt
-    private void causes(final HaushaltsbuchEreignis ereignis) {
-        this.ereignisHinzufügen(ereignis);
-        this.anwenden(ereignis, this);
-    }
-
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
     public void neuesKontoHinzufügen(final Konto konto) {
@@ -79,9 +74,9 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
         if (this.istKontoVorhanden(kontoname)) {
-            this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart));
+            this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart), this);
         } else {
-            this.causes(new KontoWurdeAngelegt(kontoname, kontoart));
+            this.causes(new KontoWurdeAngelegt(kontoname, kontoart), this);
         }
     }
 
@@ -226,7 +221,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
             final MonetaryAmount betrag,
             final BuchungssatzHinzufügen buchungssatzHinzufügen) {
         if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
-            this.causes(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
+            this.causes(new BuchungWurdeAbgelehnt(FEHLERMELDUNG), this);
         } else {
             buchungssatzHinzufügen.ausführen(
                     getIdentitätsmerkmal(),
@@ -238,12 +233,12 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         if (this.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
-            this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
+            this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag), this);
         } else {
             final String fehlermeldung = this.fehlermeldungFürFehlendeKontenErzeugen(
                     sollkonto,
                     habenkonto);
-            this.causes(new BuchungWurdeAbgelehnt(fehlermeldung));
+            this.causes(new BuchungWurdeAbgelehnt(fehlermeldung), this);
         }
     }
 
@@ -252,13 +247,13 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
         if (this.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.kannAusgabeGebuchtWerden(buchungssatz)) {
-                this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
+                this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag), this);
             } else {
-                this.causes(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
+                this.causes(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."), this);
             }
         } else {
             this.causes(new BuchungWurdeAbgelehnt(
-                            this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
+                            this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)), this);
         }
     }
 }
