@@ -1,8 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene;
 
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A>> {
+import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
 
-    Aggregatwurzel() { }
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> {
+
+    protected Aggregatwurzel(final T identitätsmerkmal) {
+        super(identitätsmerkmal);
+    }
 
     protected final void bewirkt(final Domänenereignis<A> ereignis) {
         ereignis.anwendenAuf(this.getSelf());

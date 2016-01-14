@@ -1,10 +1,13 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene;
 
-public final class TestAggregat extends Aggregatwurzel<TestAggregat> {
+import java.util.UUID;
+
+public final class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
 
     private boolean aufgerufen = false;
 
     TestAggregat() {
+        super(UUID.randomUUID());
     }
 
     @Override
