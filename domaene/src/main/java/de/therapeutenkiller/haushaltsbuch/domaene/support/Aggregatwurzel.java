@@ -13,7 +13,7 @@ import java.util.List;
 public class Aggregatwurzel<T, A extends Aggregatwurzel<T,A>>
         extends Entität<T> {
 
-    private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
+    protected final List<Domänenereignis<A>> änderungen = new ArrayList<>();
 
     private int version;
 
