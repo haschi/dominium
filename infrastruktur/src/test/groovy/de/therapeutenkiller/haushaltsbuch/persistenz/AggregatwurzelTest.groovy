@@ -4,62 +4,14 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Aggregatwurzel
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Domänenereignis
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Schnappschuss
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregatSchnappschuss
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
+
 
 class AggregatwurzelTest extends Specification {
 
-    class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
-
-        long zustand
-
-        protected TestAggregat(UUID identitätsmerkmal) {
-            super(identitätsmerkmal)
-        }
-
-        protected TestAggregat(TestAggregatSchnappschuss schnappschuss) {
-            super(schnappschuss)
-        }
-
-        @Override
-        protected TestAggregat getSelf() {
-            return this
-        }
-
-        public void zustandÄndern(long payload) {
-            bewirkt new ZustandWurdeGeändert(payload)
-        }
-
-        void falls(ZustandWurdeGeändert zustandWurdeGeändert) {
-            this.zustand = zustandWurdeGeändert.payload
-        }
-    }
-
-    class ZustandWurdeGeändert extends  Wertobjekt implements Domänenereignis<TestAggregat> {
-
-        private final long payload
-
-        ZustandWurdeGeändert(long payload) {
-
-            this.payload = payload
-        }
-
-        @Override
-        void anwendenAuf(TestAggregat aggregat) {
-            aggregat.falls(this)
-        }
-    }
-
-    class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
-
-        long version
-        long payload
-        UUID identitätsmerkmal
-
-        @Override
-        TestAggregat materialisieren() {
-            new TestAggregat(this)
-        }
-    }
 
     def "Eine Aggregatwurzel ist eine Entität mit Identitätsmerkmal"() {
 

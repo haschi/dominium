@@ -4,7 +4,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.DomänenereignisUmschlag;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.EreignisWurdeGeworfen;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -31,9 +30,6 @@ import java.util.UUID;
 
 @RunWith(Arquillian.class)
 public final class HibernateEventStoreImContainerTest {
-
-    @Inject
-    public Greeter greeter;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -62,11 +58,12 @@ public final class HibernateEventStoreImContainerTest {
                 .withoutTransitivity()
                 .asFile();
 
-        final WebArchive jar =  ShrinkWrap.create(WebArchive.class)
+
+        // System.out.println(jar.toString(true));
+        return ShrinkWrap.create(WebArchive.class)
 
                 .addClass(Greeter.class)
                 .addClass(Domänenereignis.class)
-                .addClass(EreignisWurdeGeworfen.class)
                 .addClass(Wertobjekt.class)
                 .addClass(JpaEreignisstrom.class)
                 .addClass(JpaDomänenereignisUmschlag.class)
@@ -78,15 +75,6 @@ public final class HibernateEventStoreImContainerTest {
                 .addAsLibraries(commons)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml");
-
-
-        // System.out.println(jar.toString(true));
-        return jar;
-    }
-
-    @Test
-    public void kann_entity_manager_injizieren() {
-        Assert.assertNotNull(this.greeter);
     }
 
     @Test

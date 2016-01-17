@@ -9,7 +9,6 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
-import de.therapeutenkiller.haushaltsbuch.domaene.CoverageIgnore;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
@@ -26,7 +25,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-@CoverageIgnore
 public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { // NOPMD
     // Klasse zu groß TODO
 
@@ -80,7 +78,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         }
     }
 
-    @CoverageIgnore
     public Konto kontoSuchen(final String kontoname) {
 
         final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
@@ -143,7 +140,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
         return this.kontostandBerechnen(konto);
     }
 
-    @CoverageIgnore
     private Saldo kontostandBerechnen(final Konto konto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
