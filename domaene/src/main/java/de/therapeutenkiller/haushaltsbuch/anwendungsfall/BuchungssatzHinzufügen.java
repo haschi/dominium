@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall;
+package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;

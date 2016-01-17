@@ -12,7 +12,7 @@ import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
-import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
+import de.therapeutenkiller.haushaltsbuch.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
 import de.therapeutenkiller.dominium.aggregat.Spezifikation;
 import org.javamoney.moneta.Money;
