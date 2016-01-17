@@ -33,5 +33,5 @@ public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel
         return this.umschlagErzeugen(ereignis, this.version);
     }
 
-    public abstract DomänenereignisUmschlag<A> umschlagErzeugen(Domänenereignis<A> ereignis, int version);
+    protected abstract DomänenereignisUmschlag<A> umschlagErzeugen(Domänenereignis<A> ereignis, int version);
 }

@@ -3,13 +3,13 @@ package de.therapeutenkiller.support;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 
-public final class MemoryEventWrapper<T> implements DomänenereignisUmschlag<T> {
+public final class MemoryDomänenereignisUmschlag<T> implements DomänenereignisUmschlag<T> {
 
     private final Domänenereignis<T> ereignis;
     private final int version;
     private final String stream;
 
-    public MemoryEventWrapper(final Domänenereignis<T> ereignis, final int version, final String stream) {
+    public MemoryDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
         super();
 
         this.ereignis = ereignis;

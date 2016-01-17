@@ -12,6 +12,6 @@ public final class MemoryEreignisstrom<T> extends Ereignisstrom<T> {
 
     @Override
     public DomänenereignisUmschlag<T> umschlagErzeugen(final Domänenereignis<T> ereignis, final int version) {
-        return new MemoryEventWrapper<>(ereignis, version, this.name);
+        return new MemoryDomänenereignisUmschlag<>(ereignis, version, this.name);
     }
 }

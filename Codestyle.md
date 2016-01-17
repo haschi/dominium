@@ -1,10 +1,10 @@
-Installation der Google styleguide Einstellungen in IntelliJ und Eclipse
+Installation der Google Styleguide Einstellungen in IntelliJ und Eclipse
 ========================================================================
 
 Installation in IntelliJ
 ------------------------
 
-Kopiere die Datei intellij-java-google-style.xml in das config/codestyle Verzeichnis. Wähle unter
+Kopiere die Datei intellij-java-google-style.xml in das config/codestyles Verzeichnis. Wähle unter
 Settings/Code Style google-styleguide als aktuellen Code Style für das Projekt.
 
 
@@ -28,6 +28,6 @@ See [Multimodule Configuration](https://maven.apache.org/plugins/maven-checkstyl
  at [Apache Maven Checkstyle Plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
 
  **Versuche nicht die Checkstyle Prüfung in die validate Phase einzubinden**. Das wird nicht
- funktionieren. Die Resourcen sind zu diesem Zeitpunkt noch nicht vorhanden.
+ funktionieren. Die Ressourcen sind zu diesem Zeitpunkt noch nicht vorhanden.
 
 

@@ -60,8 +60,6 @@ public final class HibernateEventStoreImContainerTest {
 
         // System.out.println(jar.toString(true));
         return ShrinkWrap.create(WebArchive.class)
-
-                .addClass(Greeter.class)
                 .addClass(Domänenereignis.class)
                 .addClass(Wertobjekt.class)
                 .addClass(JpaEreignisstrom.class)
