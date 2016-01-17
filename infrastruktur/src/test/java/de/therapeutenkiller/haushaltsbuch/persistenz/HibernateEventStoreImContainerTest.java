@@ -1,9 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.DomänenereignisUmschlag;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Ereignisstrom;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import de.therapeutenkiller.support.Domänenereignis;
+import de.therapeutenkiller.support.DomänenereignisUmschlag;
+import de.therapeutenkiller.support.Ereignisstrom;
+import de.therapeutenkiller.support.Wertobjekt;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

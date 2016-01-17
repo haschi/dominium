@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Spezifikation;
+import de.therapeutenkiller.support.Spezifikation;
 
 public final class SollkontoSpezifikation implements Spezifikation<Buchungssatz> {
 

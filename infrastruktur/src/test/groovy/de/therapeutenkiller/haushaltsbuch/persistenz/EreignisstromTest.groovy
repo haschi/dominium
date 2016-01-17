@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis
+import de.therapeutenkiller.support.Domänenereignis
 import spock.lang.Shared
 import spock.lang.Specification
 

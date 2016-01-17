@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+import de.therapeutenkiller.support.Domänenereignis;
 
 public interface HaushaltsbuchEreignis
         extends Domänenereignis<Haushaltsbuch> {

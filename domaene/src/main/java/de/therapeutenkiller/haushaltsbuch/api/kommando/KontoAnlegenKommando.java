@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import de.therapeutenkiller.support.Wertobjekt;
 
 import java.util.UUID;
 

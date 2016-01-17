@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität;
+import de.therapeutenkiller.support.Entität;
 
 import java.util.ArrayList;
 import java.util.List;

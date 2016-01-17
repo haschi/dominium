@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.support;
+package de.therapeutenkiller.support;
 
 /**
  * Schnittstelle für Domänenereignis-Umschläge. Der DomänenereignisUmschlag  kapselt ein Domänenereignis und

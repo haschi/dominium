@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+import de.therapeutenkiller.support.Domänenereignis;
 import org.slf4j.Logger;
 
 import javax.enterprise.inject.spi.BeanManager;

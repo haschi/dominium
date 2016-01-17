@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.support;
+package de.therapeutenkiller.support;
 
 public final class MemoryEventWrapper<T> implements DomänenereignisUmschlag<T> {
 

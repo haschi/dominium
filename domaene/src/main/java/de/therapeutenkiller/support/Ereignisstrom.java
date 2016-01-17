@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.support;
+package de.therapeutenkiller.support;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert

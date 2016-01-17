@@ -3,8 +3,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.MemoryEventStore;
+import de.therapeutenkiller.support.Domänenereignis;
+import de.therapeutenkiller.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;

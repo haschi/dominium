@@ -3,7 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import de.therapeutenkiller.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import java.io.Serializable;

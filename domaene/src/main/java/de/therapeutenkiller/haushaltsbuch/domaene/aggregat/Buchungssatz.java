@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt;
+import de.therapeutenkiller.support.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;

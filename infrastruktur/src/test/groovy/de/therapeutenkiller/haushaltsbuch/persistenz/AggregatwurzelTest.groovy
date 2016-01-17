@@ -1,9 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Aggregatwurzel
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Domänenereignis
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Schnappschuss
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregatSchnappschuss
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert

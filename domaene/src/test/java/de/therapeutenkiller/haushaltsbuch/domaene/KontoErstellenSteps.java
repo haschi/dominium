@@ -15,7 +15,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Domänenereignis;
+import de.therapeutenkiller.support.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 

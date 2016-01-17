@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.support
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.haushaltsbuch.domaene.support.Entität
+import de.therapeutenkiller.support.Entität
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
