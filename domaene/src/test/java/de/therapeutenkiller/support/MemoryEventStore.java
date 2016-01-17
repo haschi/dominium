@@ -45,7 +45,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
             final String streamName,
             final Collection<? extends Domänenereignis<A>> domänenereignisse,
-            final Optional<Integer> erwarteteVersion)  {
+            final Optional<Long> erwarteteVersion)  {
 
         final Ereignisstrom<A> stream = this.streams.get(streamName); // NOPMD
 
@@ -59,7 +59,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
         }
     }
 
-    private void aufKonkurrierendenZugriffPrüfen(final int expectedVersion, final Ereignisstrom<A> stream) {
+    private void aufKonkurrierendenZugriffPrüfen(final long expectedVersion, final Ereignisstrom<A> stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
@@ -71,8 +71,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final List<Domänenereignis<A>> getEreignisListe(
             final String streamName,
-            final int vonVersion,
-            final int bisVersion) {
+            final long vonVersion,
+            final long bisVersion) {
 
         final Comparator<? super DomänenereignisUmschlag<A>> byVersion = (left, right) -> Integer.compare(
                 left.getVersion(),
@@ -91,8 +91,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     private static <A> boolean istVersionInnerhalb(
-            final int fromVersion,
-            final int toVersion,
+            final long fromVersion,
+            final long toVersion,
             final DomänenereignisUmschlag<A> event) {
         return event.getVersion() >= fromVersion && event.getVersion() <= toVersion;
     }

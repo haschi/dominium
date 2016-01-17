@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne
 
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Schnappschuss
+import de.therapeutenkiller.dominium.aggregat.Schnappschuss
+
 
 class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
 

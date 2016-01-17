@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.aggregat;
 
-public interface Schnappschuss<T> {
+public interface Schnappschuss<A extends Aggregatwurzel<A, T>, T> {
     T getIdentitätsmerkmal();
 
-    int getVersion();
+    long getVersion();
 }

@@ -67,7 +67,7 @@ class HibernateEventStoreTest extends Specification {
         def store = new HibernateEventStore(entityManager)
 
         when:
-        store.ereignisseDemStromHinzufügen(streamName, ereignisse, Optional.of(0))
+        store.ereignisseDemStromHinzufügen(streamName, ereignisse, Optional.of(0L))
 
         then:
         1 * entityManager.persist({it.version == 1})

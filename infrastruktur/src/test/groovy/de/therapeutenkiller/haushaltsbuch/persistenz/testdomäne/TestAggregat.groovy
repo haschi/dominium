@@ -1,10 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne
 
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Aggregatwurzel
+import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel
 
-/**
- * Created by matthias on 17.01.16.
- */
 class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
 
     long zustand

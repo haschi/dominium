@@ -3,59 +3,39 @@ package de.therapeutenkiller.dominium.aggregat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Die Aggregatwurzel ist eine zentrale Entität, welche die Integrität einer
- * zusammenhängender Gruppe von Entitäten sicherstellt.
- *
- * @param <T> Der Typ des Identitätsmerkmals der zugrunde liegenden Entität
- * @param <A> Der konkrete Typ der Aggregatwurzel (eine Ableitung dieser Klasse)
- */
-public class Aggregatwurzel<T, A extends Aggregatwurzel<T,A>>
-        extends Entität<T> {
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> { // NOPMD Regel abschalten
 
-    protected final List<Domänenereignis<A>> änderungen = new ArrayList<>();
-
-    private int version;
+    private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
+    private final long version;
 
     protected Aggregatwurzel(final T identitätsmerkmal) {
         super(identitätsmerkmal);
-        this.version = 0;
+        this.version = 0L;
     }
 
-    protected Aggregatwurzel(final Schnappschuss<T> schnappschuss) {
+    protected Aggregatwurzel(final Schnappschuss<A, T> schnappschuss) {
         super(schnappschuss.getIdentitätsmerkmal());
         this.version = schnappschuss.getVersion();
     }
 
-    /**
-     * Die Aggregatwurzel ist eine Entität, die sicherstellen muss, dass das
-     * Identitätsmerkmal stets verfügbar ist. Deswegen muss das Aggregat immer
-     * durch einen von drei möglichen Konstruktoren erzeugt werden, die das
-     * Identitätsmerkmal erhalten.
-     * 
-     * Dieser Konstruktor erhält das Initialereignis als Argument, in dem sich
-     * das Identitätsmerkmal befindet
-     *
-     * @param ereignis Ein Ereignis, welches beim erstmaligen entstehen des
-     *                 Aggregats erzeugt wurde. Das Initialereignis ist immer
-     *                 das erste Ereignis des Ereignisstroms und enthält ein
-     *                 Identitätsmerkmal zur Wiederherstellung des Aggregats.
-     */
-    protected Aggregatwurzel(final Initialereignis<T, A> ereignis) {
+    protected Aggregatwurzel(final Initialereignis<A, T> ereignis) {
         super(ereignis.getIdentitätsmerkmal());
+        this.version = 1L;
     }
 
-    // bewirkt
-    protected final void causes(final Domänenereignis<A> ereignis, final A aggregat) {
+    protected final void bewirkt(final Domänenereignis<A> ereignis) {
         this.änderungen.add(ereignis);
-        ereignis.anwendenAuf(aggregat);
+        ereignis.anwendenAuf(this.getSelf());
     }
 
-    public final List<? extends Domänenereignis<A>> getÄnderungen() {
+    public final List<Domänenereignis<A>> getÄnderungen() {
         return this.änderungen;
     }
 
-    protected final int getVersion() {
+    protected abstract A getSelf();
+
+    public final long getVersion() {
         return this.version;
     }
 }
+

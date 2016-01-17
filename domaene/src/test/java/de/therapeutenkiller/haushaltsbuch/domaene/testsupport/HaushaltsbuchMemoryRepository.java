@@ -42,8 +42,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
         final HaushaltsbuchSchnappschuss snapshot = this.store.getNeuesterSchnappschuss(streamName);
 
-        final int fromEventNumber = snapshot == null ? 0 : snapshot.version + 1;
-        final int toEventNumber = Integer.MAX_VALUE;
+        final long fromEventNumber = snapshot == null ? 0 : snapshot.version + 1;
+        final long toEventNumber = Long.MAX_VALUE;
 
         final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getEreignisListe(
                 streamName,
@@ -83,11 +83,11 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     public final void save(final Haushaltsbuch haushaltsbuch) {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
 
-        final Optional<Integer> expectedVersion = this.getExpectedVersion(haushaltsbuch.initialVersion);
+        final Optional<Long> expectedVersion = this.getExpectedVersion(haushaltsbuch.initialVersion);
         this.store.ereignisseDemStromHinzufügen(streamName, haushaltsbuch.getÄnderungen(), expectedVersion);
     }
 
-    private Optional<Integer> getExpectedVersion(final int expectedVersion) {
+    private Optional<Long> getExpectedVersion(final long expectedVersion) {
         if (expectedVersion == 0) {
             // first time the aggregate is stored there is no expected version
             return Optional.empty();

@@ -7,7 +7,7 @@ class AnfangsbestandBuchungSuchenTest extends Specification {
     def "Suche nach Anfangsbestand-Buchung"() {
 
             given: "Angenommen ich habe ein Haushaltsbuch"
-            def haushaltsbuch = new Haushaltsbuch()
+            def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
 
             when: "Wenn ich den Anfangsbestand meines Girokontos buche"
             haushaltsbuch.neueBuchungHinzufügen("Girokonto", Konto.ANFANGSBESTAND.bezeichnung, 10.00.euro)

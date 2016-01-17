@@ -33,7 +33,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     public final void ereignisseDemStromHinzufügen(
             final String streamName,
             final Collection<? extends Domänenereignis<A>> domänenereignisse,
-            final Optional<Integer> erwarteteVersion) {
+            final Optional<Long> erwarteteVersion) {
 
         final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(
                 JpaEreignisstrom.class, streamName);
@@ -48,7 +48,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
         }
     }
 
-    private void checkForConcurrencyError(final int expectedVersion, final JpaEreignisstrom stream) {
+    private void checkForConcurrencyError(final long expectedVersion, final JpaEreignisstrom stream) {
         final int lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
@@ -60,8 +60,8 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     @Override
     public final List<Domänenereignis<A>> getEreignisListe(
             final String streamName,
-            final int vonVersion,
-            final int bisVersion) {
+            final long vonVersion,
+            final long bisVersion) {
         /*final TypedQuery<EventWrapper<A>> query = this.entityManager.createQuery(
                 "SELECT c FROM EventWrapper c", HaushaltsbuchEreignis.class);
 

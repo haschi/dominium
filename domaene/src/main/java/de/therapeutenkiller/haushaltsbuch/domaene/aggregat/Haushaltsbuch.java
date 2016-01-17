@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { // NOPMD
+public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { // NOPMD
     // Klasse zu groß TODO
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
@@ -33,11 +33,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
     private final Set<Konto> konten = new HashSet<>();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
-    public int initialVersion;
-
-    private Haushaltsbuch() {
-        super(UUID.randomUUID());
-    }
+    public long initialVersion;
 
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
@@ -46,7 +42,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public Haushaltsbuch(final UUID uuid) {
         super(uuid);
-        this.causes(new HaushaltsbuchWurdeAngelegt(uuid), this);
+        this.bewirkt(new HaushaltsbuchWurdeAngelegt(uuid));
     }
 
     public Haushaltsbuch(final HaushaltsbuchWurdeAngelegt ereignis) {
@@ -72,9 +68,9 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
         if (this.istKontoVorhanden(kontoname)) {
-            this.causes(new KontoWurdeNichtAngelegt(kontoname, kontoart), this);
+            this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
-            this.causes(new KontoWurdeAngelegt(kontoname, kontoart), this);
+            this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
         }
     }
 
@@ -217,7 +213,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
             final MonetaryAmount betrag,
             final BuchungssatzHinzufügen buchungssatzHinzufügen) {
         if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
-            this.causes(new BuchungWurdeAbgelehnt(FEHLERMELDUNG), this);
+            this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
             buchungssatzHinzufügen.ausführen(
                     getIdentitätsmerkmal(),
@@ -229,12 +225,12 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
     public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         if (this.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
-            this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag), this);
+            this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
         } else {
             final String fehlermeldung = this.fehlermeldungFürFehlendeKontenErzeugen(
                     sollkonto,
                     habenkonto);
-            this.causes(new BuchungWurdeAbgelehnt(fehlermeldung), this);
+            this.bewirkt(new BuchungWurdeAbgelehnt(fehlermeldung));
         }
     }
 
@@ -243,13 +239,18 @@ public final class Haushaltsbuch extends Aggregatwurzel<UUID, Haushaltsbuch> { /
 
         if (this.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.kannAusgabeGebuchtWerden(buchungssatz)) {
-                this.causes(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag), this);
+                this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
             } else {
-                this.causes(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."), this);
+                this.bewirkt(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
             }
         } else {
-            this.causes(new BuchungWurdeAbgelehnt(
-                            this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)), this);
+            this.bewirkt(new BuchungWurdeAbgelehnt(
+                            this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
         }
+    }
+
+    @Override
+    protected Haushaltsbuch getSelf() {
+        return this;
     }
 }

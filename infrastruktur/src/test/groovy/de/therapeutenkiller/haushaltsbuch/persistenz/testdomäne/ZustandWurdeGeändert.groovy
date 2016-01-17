@@ -1,11 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne
 
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis
 import de.therapeutenkiller.dominium.aggregat.Wertobjekt
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Domänenereignis
 
-/**
- * Created by matthias on 17.01.16.
- */
 class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestAggregat> {
 
     private final long payload

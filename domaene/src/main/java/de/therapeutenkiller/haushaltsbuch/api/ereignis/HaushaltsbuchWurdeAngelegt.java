@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public final class HaushaltsbuchWurdeAngelegt
         extends Wertobjekt
-        implements HaushaltsbuchEreignis, Initialereignis<UUID, Haushaltsbuch>, Serializable {
+        implements HaushaltsbuchEreignis, Initialereignis<Haushaltsbuch, UUID>, Serializable {
 
     private static final long serialVersionUID = 1L;
 

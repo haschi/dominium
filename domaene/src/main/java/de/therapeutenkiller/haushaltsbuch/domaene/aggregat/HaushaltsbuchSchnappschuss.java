@@ -7,13 +7,13 @@ import de.therapeutenkiller.dominium.aggregat.Schnappschuss;
 import java.util.Set;
 import java.util.UUID;
 
-public class HaushaltsbuchSchnappschuss implements Schnappschuss<UUID> {
-    public final int version;
+public class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID> {
+    public final long version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 
-    public HaushaltsbuchSchnappschuss(final UUID identität, final int version) {
+    public HaushaltsbuchSchnappschuss(final UUID identität, final long version) {
         this.identität = identität;
         this.version = version;
     }
@@ -24,7 +24,7 @@ public class HaushaltsbuchSchnappschuss implements Schnappschuss<UUID> {
     }
 
     @Override
-    public final int getVersion() {
+    public final long getVersion() {
         return this.version;
     }
 }
