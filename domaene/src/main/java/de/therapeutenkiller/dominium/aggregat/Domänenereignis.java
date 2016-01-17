@@ -1,4 +1,4 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.aggregat;
 
 /**
  * Schnittstelle für Domänenereignisse
@@ -12,7 +12,16 @@ public interface Domänenereignis<A> {
 
     /**
      * Wendet eine durch das Domänenereignis beschriebene Zustandsänderung auf
-     * ein Aggregat an.
+     * ein Aggregat an. Die Implementierung der Methode sollte das
+     * Domänenereignis an ein Exemplar des Aggregats weiterleiten. Das Aggregat
+     * soll seinen Zustand dem Domänenereignis entsprechend aktualisieren.
+     *
+     * {@code
+     * void anwendenAuf(BeispielAggregat aggregat) {
+     *     aggregat.falls(this);
+     * }
+     * }
+     *
      * @param aggregat Ein Aggregat.
      */
     void anwendenAuf(A aggregat);

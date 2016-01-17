@@ -1,6 +1,11 @@
 package de.therapeutenkiller.support;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.lagerung.EreignisLager;
+import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
+import de.therapeutenkiller.dominium.lagerung.SchnappschussUmschlag;
 
 import javax.enterprise.context.Dependent;
 import java.time.LocalDateTime;

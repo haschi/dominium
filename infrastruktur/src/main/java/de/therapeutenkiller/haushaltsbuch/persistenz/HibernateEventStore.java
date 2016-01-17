@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.support.Domänenereignis;
-import de.therapeutenkiller.support.DomänenereignisUmschlag;
-import de.therapeutenkiller.support.EreignisLager;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.lagerung.EreignisLager;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.inject.Inject;

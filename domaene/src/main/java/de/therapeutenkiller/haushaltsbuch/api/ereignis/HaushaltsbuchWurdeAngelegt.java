@@ -2,8 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.api.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
-import de.therapeutenkiller.support.Initialereignis;
-import de.therapeutenkiller.support.Wertobjekt;
+import de.therapeutenkiller.dominium.aggregat.Initialereignis;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 
 import java.io.Serializable;
 import java.util.UUID;

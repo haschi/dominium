@@ -13,8 +13,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.anwendungsfall.BuchungssatzHinzufügen;
-import de.therapeutenkiller.support.Aggregatwurzel;
-import de.therapeutenkiller.support.Spezifikation;
+import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
+import de.therapeutenkiller.dominium.aggregat.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 

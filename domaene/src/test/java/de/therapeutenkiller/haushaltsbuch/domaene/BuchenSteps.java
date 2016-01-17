@@ -11,7 +11,7 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBegi
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.support.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;

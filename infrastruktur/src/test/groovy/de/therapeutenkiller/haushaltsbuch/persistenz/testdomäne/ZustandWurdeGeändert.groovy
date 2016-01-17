@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne
 
-import de.therapeutenkiller.support.Wertobjekt
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Domänenereignis
 
 /**

@@ -74,7 +74,7 @@ class AggregatwurzelTest extends Specification {
         }
 
         when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
-        TestAggregat aggregat = schnappschuss.materialisieren()
+        TestAggregat aggregat = new TestAggregat(schnappschuss)
 
         then: "wird das Aggregat die Version des Schnappschusses besitzen"
         aggregat.version == schnappschuss.version
@@ -87,7 +87,7 @@ class AggregatwurzelTest extends Specification {
         schnappschuss.identitätsmerkmal = UUID.randomUUID()
 
         when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
-        TestAggregat aggregat = schnappschuss.materialisieren()
+        TestAggregat aggregat = new TestAggregat(schnappschuss)
 
         then: "wird das Aggregat die Identität aus dem Schnappschuss erhalten"
         aggregat.identitätsmerkmal == schnappschuss.identitätsmerkmal

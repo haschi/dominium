@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.support.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

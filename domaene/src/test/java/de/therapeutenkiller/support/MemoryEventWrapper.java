@@ -1,5 +1,8 @@
 package de.therapeutenkiller.support;
 
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
+
 public final class MemoryEventWrapper<T> implements DomänenereignisUmschlag<T> {
 
     private final Domänenereignis<T> ereignis;

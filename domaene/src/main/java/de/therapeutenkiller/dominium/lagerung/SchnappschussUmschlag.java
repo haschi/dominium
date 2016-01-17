@@ -1,8 +1,8 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.lagerung;
 
 import java.time.LocalDateTime;
 
-class SchnappschussUmschlag<E> {
+public class SchnappschussUmschlag<E> {
     public final String streamName;
     public final E snapshot;
     public final LocalDateTime timestamp;

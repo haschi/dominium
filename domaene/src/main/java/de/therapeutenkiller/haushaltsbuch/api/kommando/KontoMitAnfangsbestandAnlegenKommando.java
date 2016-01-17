@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.support.Wertobjekt;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.aggregat;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;

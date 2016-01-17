@@ -1,6 +1,7 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.lagerung;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 
 import java.util.Collection;
 import java.util.List;

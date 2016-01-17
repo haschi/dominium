@@ -1,4 +1,7 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.lagerung;
+
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert

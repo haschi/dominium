@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.support.Domänenereignis;
-import de.therapeutenkiller.support.DomänenereignisUmschlag;
-import de.therapeutenkiller.support.Wertobjekt;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

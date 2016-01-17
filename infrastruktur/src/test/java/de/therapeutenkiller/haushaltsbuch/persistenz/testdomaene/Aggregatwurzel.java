@@ -1,18 +1,17 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene;
 
-import de.therapeutenkiller.support.Entität;
+import de.therapeutenkiller.dominium.aggregat.Entität;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> {
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> { // NOPMD Regel abschalten
 
-    private List<Domänenereignis<A>> änderungen;
-    private long version;
+    private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
+    private final long version;
 
     protected Aggregatwurzel(final T identitätsmerkmal) {
         super(identitätsmerkmal);
-        this.änderungen = new ArrayList<>();
         this.version = 0L;
     }
 

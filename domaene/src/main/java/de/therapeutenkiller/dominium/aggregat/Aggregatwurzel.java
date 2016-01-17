@@ -1,4 +1,4 @@
-package de.therapeutenkiller.support;
+package de.therapeutenkiller.dominium.aggregat;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package de.therapeutenkiller.support.support
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.support.Entität
+import de.therapeutenkiller.dominium.aggregat.Entität
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 

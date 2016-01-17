@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.support.Ereignisstrom;
-import de.therapeutenkiller.support.Domänenereignis;
-import de.therapeutenkiller.support.DomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 
 public class JpaEreignisstrom<A> extends Ereignisstrom<A> {
 

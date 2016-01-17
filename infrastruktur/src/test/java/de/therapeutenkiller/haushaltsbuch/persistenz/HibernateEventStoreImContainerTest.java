@@ -1,9 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.support.Domänenereignis;
-import de.therapeutenkiller.support.DomänenereignisUmschlag;
-import de.therapeutenkiller.support.Ereignisstrom;
-import de.therapeutenkiller.support.Wertobjekt;
+import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -26,7 +26,6 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 @RunWith(Arquillian.class)
 public final class HibernateEventStoreImContainerTest {
@@ -89,7 +88,7 @@ public final class HibernateEventStoreImContainerTest {
         this.entityManager.joinTransaction();
 
         // final EreignisWurdeGeworfen ereignis = new EreignisWurdeGeworfen("Matthias", "Haschka");
-        final JpaEreignisstrom<UUID> strom = new JpaEreignisstrom<>("Test-Strom");
+        // final JpaEreignisstrom<UUID> strom = new JpaEreignisstrom<>("Test-Strom");
         // final DomänenereignisUmschlag<UUID> wrapper = strom.registerEvent(ereignis);
 
         // this.entityManager.persist(wrapper);

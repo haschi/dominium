@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import de.therapeutenkiller.support.Schnappschuss;
+import de.therapeutenkiller.dominium.aggregat.Schnappschuss;
 
 import java.util.Set;
 import java.util.UUID;
