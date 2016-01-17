@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.KontoWurdeAngelegt
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis

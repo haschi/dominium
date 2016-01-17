@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
-import de.therapeutenkiller.haushaltsbuch.api.ereignis.HaushaltsbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;

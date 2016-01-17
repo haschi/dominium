@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.api.ereignis;
+package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
