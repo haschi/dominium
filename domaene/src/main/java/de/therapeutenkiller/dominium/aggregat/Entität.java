@@ -3,6 +3,16 @@ package de.therapeutenkiller.dominium.aggregat;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Entitäten sind Objekte mit eindeutiger Identität. Die Identität
+ * des Objekts wird durch das Identitätsmerkmal hergestellt. Das
+ * Identitätsmerkmal muss ein Wertobjekt sein.
+ *
+ * Jeweils zwei Entitäten sind gleich, wenn sie das gleiche
+ * Identitätsmerkmal besitzen.
+ *
+ * @param <T> Der Typ des Identitätsmerkmals
+ */
 public class Entität<T> {
     private final T identitätsmerkmal;
 

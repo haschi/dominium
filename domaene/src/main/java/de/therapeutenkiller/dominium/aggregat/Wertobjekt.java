@@ -4,6 +4,17 @@ import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Wertobjekte sind Daten, die nur anhand ihres Wertes
+ * unterscheiden sind. Zwei Instanzen sind gleich, wenn
+ * sie die gleichen Werte besitzen. Dabei ist es unerheblich,
+ * ob das Wertobjekt ein oder mehr Datenfelder besitzt.
+ *
+ * Es ist ein Fehler, Klassen ohne Felder als Wertobjekt zu
+ * kennzeichnen. Diese besitzen keine Werte, die verglichen
+ * werden können.
+ *
+ */
 // s. http://www.artima.com/lejava/articles/equality.html
 public class Wertobjekt {
 
