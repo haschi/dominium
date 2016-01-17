@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.support
+package de.therapeutenkiller.support.support
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.support.Entität
