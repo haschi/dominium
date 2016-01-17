@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 import de.therapeutenkiller.haushaltsbuch.domaene.support.Wertobjekt
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Aggregatwurzel
 import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Domänenereignis
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomaene.Schnappschuss
 import spock.lang.Specification
 
 class AggregatwurzelTest extends Specification {
@@ -13,6 +14,10 @@ class AggregatwurzelTest extends Specification {
 
         protected TestAggregat(UUID identitätsmerkmal) {
             super(identitätsmerkmal)
+        }
+
+        protected TestAggregat(TestAggregatSchnappschuss schnappschuss) {
+            super(schnappschuss)
         }
 
         @Override
@@ -42,6 +47,13 @@ class AggregatwurzelTest extends Specification {
         void anwendenAuf(TestAggregat aggregat) {
             aggregat.falls(this)
         }
+    }
+
+    class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
+
+        long version
+        long payload
+        UUID identitätsmerkmal
     }
 
     def "Eine Aggregatwurzel ist eine Entität mit Identitätsmerkmal"() {
@@ -96,5 +108,33 @@ class AggregatwurzelTest extends Specification {
     def "Ein neues Aggregat besitzt die Version 0"() {
         expect:
         new TestAggregat(UUID.randomUUID()).version == 0
+    }
+
+    def "Ein Aggregat erhält die Version seines Schnappschusses"() {
+
+        given: "ich habe ein Schnappschuss des Aggregats"
+        TestAggregatSchnappschuss schnappschuss = new TestAggregatSchnappschuss();
+        schnappschuss.version = 42L
+        schnappschuss.payload = 4711L
+        schnappschuss.identitätsmerkmal = UUID.randomUUID()
+
+        when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
+        TestAggregat aggregat = new TestAggregat(schnappschuss)
+
+        then: "wird das Aggregat die Version des Schnappschusses besitzen"
+        aggregat.version == schnappschuss.version
+    }
+
+    def "Ein Aggregat erhält seine Identität aus dem Schnappschuss"() {
+
+        given: "ich habe den Schnappschuss eine Aggregats"
+        TestAggregatSchnappschuss schnappschuss = new TestAggregatSchnappschuss();
+        schnappschuss.identitätsmerkmal = UUID.randomUUID()
+
+        when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
+        TestAggregat aggregat = new TestAggregat(schnappschuss)
+
+        then: "wird das Aggregat die Identität aus dem Schnappschuss erhalten"
+        aggregat.identitätsmerkmal == schnappschuss.identitätsmerkmal
     }
 }

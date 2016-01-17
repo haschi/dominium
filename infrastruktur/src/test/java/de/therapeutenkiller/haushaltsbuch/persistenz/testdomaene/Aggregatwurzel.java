@@ -16,6 +16,11 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends 
         this.version = 0L;
     }
 
+    protected Aggregatwurzel(final Schnappschuss<A, T> schnappschuss) {
+        super(schnappschuss.getIdentitätsmerkmal());
+        this.version = schnappschuss.getVersion();
+    }
+
     protected final void bewirkt(final Domänenereignis<A> ereignis) {
         this.änderungen.add(ereignis);
         ereignis.anwendenAuf(this.getSelf());
