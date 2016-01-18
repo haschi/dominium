@@ -1,5 +1,7 @@
 package de.therapeutenkiller.dominium.aggregat;
 
+import java.io.Serializable;
+
 /**
  * Schnittstelle für Domänenereignisse
  *
@@ -8,7 +10,7 @@ package de.therapeutenkiller.dominium.aggregat;
  *
  * @param <A> Der Typ des Aggregats, zu dem das Ereignis gehört.
  */
-public interface Domänenereignis<A> {
+public interface Domänenereignis<A> extends Serializable {
 
     /**
      * Wendet eine durch das Domänenereignis beschriebene Zustandsänderung auf

@@ -1,9 +1,14 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
+import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Entität;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
 import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat;
+
+import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -11,11 +16,11 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -28,12 +33,13 @@ import java.io.File;
 import java.util.List;
 
 @RunWith(Arquillian.class)
+@Ignore
 public final class HibernateEventStoreImContainerTest {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
+    // @Inject
     private UserTransaction userTransaction;
 
     //@Inject
@@ -67,6 +73,10 @@ public final class HibernateEventStoreImContainerTest {
                 .addClass(EventSerializer.class)
                 .addClass(DomänenereignisUmschlag.class)
                 .addClass(Ereignisstrom.class)
+                .addClass(ZustandWurdeGeändert.class)
+                .addClass(TestAggregat.class)
+                .addClass(Aggregatwurzel.class)
+                .addClass(Entität.class)
                 .addAsLibraries(aspectj)
                 .addAsLibraries(aspekte)
                 .addAsLibraries(commons)
@@ -75,7 +85,6 @@ public final class HibernateEventStoreImContainerTest {
     }
 
     @Test
-    @Ignore
     public void kann_EreignisWrapper_persistieren()
             throws SystemException,
             NotSupportedException,
@@ -85,11 +94,11 @@ public final class HibernateEventStoreImContainerTest {
         this.userTransaction.begin();
         this.entityManager.joinTransaction();
 
-        // final EreignisWurdeGeworfen ereignis = new EreignisWurdeGeworfen("Matthias", "Haschka");
-        // final JpaEreignisstrom<UUID> strom = new JpaEreignisstrom<>("Test-Strom");
-        // final DomänenereignisUmschlag<UUID> wrapper = strom.registerEvent(ereignis);
+        final ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(42L);
+        final JpaEreignisstrom<TestAggregat> strom = new JpaEreignisstrom<>("Test-Strom");
+        final DomänenereignisUmschlag<TestAggregat> umschlag = strom.registerEvent(ereignis);
 
-        // this.entityManager.persist(wrapper);
+        this.entityManager.persist(umschlag);
 
         this.userTransaction.commit();
         this.entityManager.clear();

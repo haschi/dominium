@@ -8,6 +8,7 @@ import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
  *
  * @param <A> Der Typ der Aggregatwurzel, auf dass sich das gekapselte Domänenereignis bezieht.
  */
+// TODO Primärschlüssel muss festgelegt werden
 public interface DomänenereignisUmschlag<A> {
     Domänenereignis<A> getEreignis();
 

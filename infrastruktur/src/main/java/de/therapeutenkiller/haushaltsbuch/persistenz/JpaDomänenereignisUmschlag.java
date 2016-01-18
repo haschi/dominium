@@ -18,6 +18,7 @@ import java.io.IOException;
  */
 @Entity
 public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements DomänenereignisUmschlag<T> {
+
     @Id
     private String identitätsmerkmal = null; // NOPMD Das heißt nun mal so.
 
@@ -43,6 +44,10 @@ public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements Domän
     public JpaDomänenereignisUmschlag() {
         super();
         // Für JPA
+    }
+
+    public String getIdentitätsmerkmal() {
+        return identitätsmerkmal;
     }
 
     @Override
