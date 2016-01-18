@@ -74,7 +74,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     @Override
     public final void add(final Haushaltsbuch haushaltsbuch) {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
-        final List<? extends Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
+        final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
         this.store.neuenEreignisstromErzeugen(streamName, änderungen);
         this.aktuell = haushaltsbuch.getIdentitätsmerkmal();
     }
