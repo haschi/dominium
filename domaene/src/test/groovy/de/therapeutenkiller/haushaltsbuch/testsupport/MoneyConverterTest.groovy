@@ -27,7 +27,7 @@ class MoneyConverterTest  extends Specification {
     }
 
     @Unroll
-    def "Umwandlung ungültiger Währungsbeträge"(final String zeichenfolge, final Class ausnahme) {
+    def "Umwandlung von #zeichenfolge führt zu #ausnahme"(final String zeichenfolge, final Class ausnahme) {
 
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();

@@ -1,11 +1,11 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz
+package de.therapeutenkiller.dominium.lagerung
 
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.jpa.EventSerializer
 import spock.lang.Ignore
 import spock.lang.Specification
 
 class EventSerializerTest extends Specification {
-
 
     @Ignore
     def "Serialisierung eines Ereignisses"() {

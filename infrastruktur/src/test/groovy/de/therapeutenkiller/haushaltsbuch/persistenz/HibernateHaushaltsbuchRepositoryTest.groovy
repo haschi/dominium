@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import spock.lang.Specification

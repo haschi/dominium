@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz;
+package de.therapeutenkiller.dominium.jpa;
 
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
@@ -46,8 +46,8 @@ public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements Domän
         // Für JPA
     }
 
-    public String getIdentitätsmerkmal() {
-        return identitätsmerkmal;
+    public final String getIdentitätsmerkmal() {
+        return this.identitätsmerkmal;
     }
 
     @Override

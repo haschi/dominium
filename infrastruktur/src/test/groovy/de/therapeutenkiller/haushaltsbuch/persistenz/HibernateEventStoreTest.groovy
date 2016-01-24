@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
+import de.therapeutenkiller.dominium.jpa.HibernateEventStore
+import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
@@ -10,7 +12,6 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
 
-import javax.inject.Inject
 import javax.persistence.EntityManager
 
 @Ignore

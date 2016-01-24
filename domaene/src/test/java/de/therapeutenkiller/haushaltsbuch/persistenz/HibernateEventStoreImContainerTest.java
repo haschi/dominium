@@ -1,14 +1,16 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz;
+package de.therapeutenkiller.haushaltsbuch.persistenz; // NOPMD
 
 import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.dominium.aggregat.Entität;
+import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
+import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregat;
+import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert;
+import de.therapeutenkiller.dominium.jpa.EventSerializer;
+import de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
-import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat;
-
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,7 +18,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,15 @@ public final class HibernateEventStoreImContainerTest {
                 .withoutTransitivity()
                 .asFile();
 
+        final File[] deltaspikeApi = Maven.resolver()
+                .resolve("org.apache.deltaspike.core:deltaspike-core-api:1.5.2")
+                .withTransitivity()
+                .asFile();
+
+        final File[] deltaspikeImpl = Maven.resolver()
+                .resolve("org.apache.deltaspike.core:deltaspike-core-impl:1.5.2")
+                .withTransitivity()
+                .asFile();
 
         // System.out.println(jar.toString(true));
         return ShrinkWrap.create(WebArchive.class)
@@ -80,8 +90,18 @@ public final class HibernateEventStoreImContainerTest {
                 .addAsLibraries(aspectj)
                 .addAsLibraries(aspekte)
                 .addAsLibraries(commons)
+                .addAsLibraries(deltaspikeApi)
+                .addAsLibraries(deltaspikeImpl)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml");
+    }
+
+    @Test
+    public void es_gibt_einen_entity_manager() {
+        Assert.assertNotNull(this.entityManager);
+    }
+
+    class TestAggregatDomänenereignisUmschlag extends JpaDomänenereignisUmschlag<TestAggregat> {
     }
 
     @Test
@@ -99,6 +119,7 @@ public final class HibernateEventStoreImContainerTest {
         final DomänenereignisUmschlag<TestAggregat> umschlag = strom.registerEvent(ereignis);
 
         this.entityManager.persist(umschlag);
+        this.entityManager.flush();
 
         this.userTransaction.commit();
         this.entityManager.clear();

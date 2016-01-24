@@ -1,8 +1,8 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz
+package de.therapeutenkiller.dominium.aggregat
 
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregatSchnappschuss
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregatSchnappschuss
+import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 
 

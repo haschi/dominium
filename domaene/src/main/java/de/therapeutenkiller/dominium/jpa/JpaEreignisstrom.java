@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz;
+package de.therapeutenkiller.dominium.jpa;
 
 import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;

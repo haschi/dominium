@@ -1,6 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis
+import de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag
+import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
 import spock.lang.Shared
 import spock.lang.Specification
 

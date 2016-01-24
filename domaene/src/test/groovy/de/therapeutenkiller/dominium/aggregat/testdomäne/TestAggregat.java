@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne;
+package de.therapeutenkiller.dominium.aggregat.testdomäne;
 
 import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
 

@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium
+package de.therapeutenkiller.dominium.aggregat
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.dominium.aggregat.Entität

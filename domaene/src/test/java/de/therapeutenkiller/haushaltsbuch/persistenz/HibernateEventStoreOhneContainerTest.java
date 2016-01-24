@@ -1,20 +1,20 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
+import de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag;
+import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.TestAggregat;
-import de.therapeutenkiller.haushaltsbuch.persistenz.testdomäne.ZustandWurdeGeändert;
-import org.jglue.cdiunit.CdiRunner;
+import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregat;
+import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert;
+import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
-@RunWith(CdiRunner.class)
+@RunWith(CdiTestRunner.class)
 @SuppressWarnings("checkstyle:designforextension")
 public class HibernateEventStoreOhneContainerTest {
 
@@ -23,13 +23,6 @@ public class HibernateEventStoreOhneContainerTest {
 
     @Inject
     private ZustandWurdeGeändert geändert;
-
-    @Produces
-    public EntityManager createEntityManager() {
-        return Persistence
-            .createEntityManagerFactory("test")
-            .createEntityManager();
-    }
 
     @Test
     public void entityManager_wird_injiziiert() {
@@ -43,6 +36,7 @@ public class HibernateEventStoreOhneContainerTest {
     }
 
     @Test
+    @Transactional
     public void ereignis_persistieren() {
 
         final ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(42L);
@@ -51,12 +45,12 @@ public class HibernateEventStoreOhneContainerTest {
         final JpaDomänenereignisUmschlag<TestAggregat> umschlag = (JpaDomänenereignisUmschlag<TestAggregat>)
                 strom.registerEvent(ereignis);
 
-        final String id = umschlag.getIdentitätsmerkmal();
+        final String identitätsmerkmal  = umschlag.getIdentitätsmerkmal();
         this.entityManager.persist(umschlag);
 
         final DomänenereignisUmschlag umschlag1 = this.entityManager.find(
                 JpaDomänenereignisUmschlag.class,
-                id);
+                identitätsmerkmal);
 
         Assert.assertNotNull(umschlag1);
     }
