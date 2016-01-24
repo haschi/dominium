@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.lagerung;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Initialereignis;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,5 +37,5 @@ public interface EreignisLager<E, A> {
      * @param streamName Name des Streams für das Aggregat
      * @return Das Initialereignis.
      */
-    Domänenereignis<A> getInitialereignis(String streamName);
+    <T> Initialereignis<A, T> getInitialereignis(String streamName);
 }

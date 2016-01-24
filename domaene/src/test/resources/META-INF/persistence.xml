@@ -4,7 +4,10 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="test">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
         <class>de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag</class>
+        <class>de.therapeutenkiller.dominium.jpa.JpaEreignisstrom</class>
+
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

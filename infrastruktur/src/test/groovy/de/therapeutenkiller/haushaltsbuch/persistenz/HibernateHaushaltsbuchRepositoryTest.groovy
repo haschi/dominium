@@ -10,8 +10,8 @@ import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.persistence.EntityManager
+import javax.persistence.EntityTransaction
 
-@Ignore
 class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
     def "Repository benötigt einen JPA Entity Manager"() {
@@ -25,19 +25,24 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
     def "Für neue Aggregate wird ein Ereignisstrom angelegt"() {
 
         given: "Angenommen ich habe ein Repository und ein Haushaltsbuch"
-        EntityManager entityManager = Mock(EntityManager)
+        EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
         HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
 
         def hhb = new Haushaltsbuch(UUID.randomUUID())
         HibernateHaushaltsbuchRepository repository = new HibernateHaushaltsbuchRepository(eventStore);
 
         when: "Wenn ich das Haushaltsbuch dem Repository hinzufüge"
+        def transaction = entityManager.getTransaction()
+        transaction.begin()
+
         repository.add hhb
 
+        transaction.commit()
+
         then: "Dann wird der JpaEreignisstrom gespeichert"
-        1 * entityManager.persist({
-            it.equals(new JpaEreignisstrom<Haushaltsbuch>(Haushaltsbuch.class.getName()+"-"+hhb.identitätsmerkmal.toString()))
-        })
+
+        def x = repository.findBy(hhb.identitätsmerkmal)
+        x == hhb
     }
 
     def "Für neue Aggregate werden die aufgetretenen Ereignisse gespeichert"() {

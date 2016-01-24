@@ -14,8 +14,8 @@ import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
  * @param <A> Der Typ des Aggregats dessen Domänenereignisse registriert werden.
  */
 public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel ändern.
-    protected final String name;
-    private int version;
+    protected String name;
+    protected int version;
 
     public Ereignisstrom(final String streamName) {
         super();
@@ -24,7 +24,7 @@ public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel
         this.version = 0;
     }
 
-    public final int getVersion() {
+    public int getVersion() {
         return this.version;
     }
 

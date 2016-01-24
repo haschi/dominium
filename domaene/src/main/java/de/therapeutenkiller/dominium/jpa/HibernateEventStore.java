@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.jpa;
 
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Initialereignis;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 import de.therapeutenkiller.dominium.lagerung.EreignisLager;
 import org.apache.commons.lang3.NotImplementedException;
@@ -83,7 +84,7 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final Domänenereignis<A> getInitialereignis(final String streamName) {
+    public final <T> Initialereignis<A, T> getInitialereignis(final String streamName) {
         return null;
     }
 }
