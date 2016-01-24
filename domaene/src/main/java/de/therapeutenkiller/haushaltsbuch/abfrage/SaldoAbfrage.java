@@ -11,12 +11,13 @@ import java.util.UUID;
 @Singleton
 public class SaldoAbfrage {
 
-    private final HaushaltsbuchRepository repository;
-
     @Inject
-    public SaldoAbfrage(final HaushaltsbuchRepository repository) {
-        this.repository = repository;
-    }
+    private HaushaltsbuchRepository repository;
+
+    //@Inject
+    //public SaldoAbfrage(final HaushaltsbuchRepository repository) {
+    //    this.repository = repository;
+    //}
 
     public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) {
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);

@@ -1,22 +1,26 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import org.apache.commons.lang3.NotImplementedException;
 
+import javax.annotation.Priority;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import javax.inject.Singleton;
+import javax.interceptor.Interceptor;
+import java.util.Optional;
 import java.util.UUID;
 
+@Priority(Interceptor.Priority.APPLICATION + 10)
+@Singleton
 public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepository {
 
-    private final EntityManager entityManager;
+    HaushaltsbuchEventStore eventStore;
 
     @Inject
-    public HibernateHaushaltsbuchRepository(final EntityManager entityManager) {
+    public HibernateHaushaltsbuchRepository(final HaushaltsbuchEventStore eventStore) {
 
-        this.entityManager = entityManager;
+        this.eventStore = eventStore;
     }
 
     @Override
@@ -31,18 +35,22 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
 
     @Override
     public void add(final Haushaltsbuch haushaltsbuch) {
-        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.streamName(haushaltsbuch));
-        this.entityManager.persist(ereignisstrom);
-
-        this.save(haushaltsbuch);
+        this.eventStore.neuenEreignisstromErzeugen(
+                this.streamName(haushaltsbuch),
+                haushaltsbuch.getÄnderungen());
     }
 
     private String streamName(final Haushaltsbuch haushaltsbuch) {
-        return String.format("%s-%s", Haushaltsbuch.class.getName(), haushaltsbuch.getIdentitätsmerkmal());
+        return String.format("%s-%s",
+                Haushaltsbuch.class.getName(),
+                haushaltsbuch.getIdentitätsmerkmal());
     }
 
     @Override
     public void save(final Haushaltsbuch haushaltsbuch) {
-        haushaltsbuch.getÄnderungen().forEach(this.entityManager::persist);
+        this.eventStore.ereignisseDemStromHinzufügen(
+                this.streamName(haushaltsbuch),
+                haushaltsbuch.getÄnderungen(),
+                Optional.of(haushaltsbuch.getVersion()));
     }
 }

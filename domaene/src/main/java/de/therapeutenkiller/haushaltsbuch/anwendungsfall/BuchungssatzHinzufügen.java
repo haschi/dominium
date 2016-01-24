@@ -14,8 +14,7 @@ public final class BuchungssatzHinzufügen {
     private final HaushaltsbuchRepository repository;
 
     @Inject
-    public BuchungssatzHinzufügen(
-            final HaushaltsbuchRepository repository) {
+    public BuchungssatzHinzufügen(final HaushaltsbuchRepository repository) {
 
         this.repository = repository;
     }
