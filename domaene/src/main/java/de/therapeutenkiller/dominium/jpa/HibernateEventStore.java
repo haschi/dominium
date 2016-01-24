@@ -6,15 +6,18 @@ import de.therapeutenkiller.dominium.lagerung.EreignisLager;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
 
-    @PersistenceContext
-    public EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    public HibernateEventStore(final EntityManager entityManager) {
+
+        this.entityManager = entityManager;
+    }
 
     @Override
     public final void neuenEreignisstromErzeugen(

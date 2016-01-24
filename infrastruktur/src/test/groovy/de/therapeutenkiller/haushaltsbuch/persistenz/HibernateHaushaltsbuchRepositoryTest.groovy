@@ -2,8 +2,10 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
+import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
 import spock.lang.Specification
 
 import javax.persistence.EntityManager
@@ -47,5 +49,23 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         then:
         1 * entityManager.persist(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.identitätsmerkmal))
+    }
+
+    def "Für bestehende aggregate werden die aufgetretenen Ereignisse gespeichert"() {
+        given:
+        EntityManager entityManager = Mock(EntityManager)
+        def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
+        def repository = new HibernateHaushaltsbuchRepository(entityManager);
+        repository.add haushaltsbuch
+
+        when: "Wenn ich die Änderungen des Haushaltsbuches speicher"
+        haushaltsbuch.neuesKontoHinzufügen "Girokonto", Kontoart.Aktiv
+        repository.save haushaltsbuch
+
+        then:
+        1 * entityManager.persist(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.identitätsmerkmal))
+
+        then:
+        1 * entityManager.persist(new KontoWurdeAngelegt("Girokonto", Kontoart.Aktiv))
     }
 }

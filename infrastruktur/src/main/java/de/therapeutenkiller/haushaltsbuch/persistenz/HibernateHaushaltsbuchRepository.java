@@ -34,7 +34,7 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.streamName(haushaltsbuch));
         this.entityManager.persist(ereignisstrom);
 
-        haushaltsbuch.getÄnderungen().forEach(this.entityManager::persist);
+        this.save(haushaltsbuch);
     }
 
     private String streamName(final Haushaltsbuch haushaltsbuch) {
@@ -43,6 +43,6 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
 
     @Override
     public void save(final Haushaltsbuch haushaltsbuch) {
-        throw new NotImplementedException("Nicht implementiert");
+        haushaltsbuch.getÄnderungen().forEach(this.entityManager::persist);
     }
 }
