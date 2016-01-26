@@ -15,7 +15,7 @@ import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
  */
 public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel ändern.
     protected String name;
-    protected int version;
+    protected long version;
 
     public Ereignisstrom(final String streamName) {
         super();
@@ -24,7 +24,7 @@ public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel
         this.version = 0;
     }
 
-    public int getVersion() {
+    public final long getVersion() {
         return this.version;
     }
 
@@ -33,5 +33,5 @@ public abstract class Ereignisstrom<A> extends Wertobjekt { // NOPMD, TODO Regel
         return this.umschlagErzeugen(ereignis, this.version);
     }
 
-    protected abstract DomänenereignisUmschlag<A> umschlagErzeugen(Domänenereignis<A> ereignis, int version);
+    protected abstract DomänenereignisUmschlag<A> umschlagErzeugen(Domänenereignis<A> ereignis, long version);
 }

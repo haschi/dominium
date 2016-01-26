@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@SuppressWarnings("checkstyle:designforextension")
 public class JpaEreignisstrom<A> extends Ereignisstrom<A> {
 
     @Id
@@ -18,10 +19,6 @@ public class JpaEreignisstrom<A> extends Ereignisstrom<A> {
 
     public void setName(final String name) {
         this.name = name;
-    }
-
-    public int getVersion() {
-        return this.version;
     }
 
     public void setVersion(final int version) {
@@ -37,7 +34,7 @@ public class JpaEreignisstrom<A> extends Ereignisstrom<A> {
     }
 
     @Override
-    public final DomänenereignisUmschlag<A> umschlagErzeugen(final Domänenereignis<A> ereignis, final int version)  {
+    public final DomänenereignisUmschlag<A> umschlagErzeugen(final Domänenereignis<A> ereignis, final long version)  {
         return new JpaDomänenereignisUmschlag<>(ereignis, version, this.name);
     }
 }

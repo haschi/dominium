@@ -24,10 +24,10 @@ public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements Domän
 
     @Lob
     private byte[] ereignis = null; // NOPMD
-    private int version = 0; // NOPMD
+    private long version = 0; // NOPMD
     private String stream = null; //NOPMD TODO Regel ändern.
 
-    public JpaDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
+    public JpaDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final long version, final String stream) {
         super();
 
         this.identitätsmerkmal = String.format("%s(%d)", stream, version);
@@ -62,7 +62,7 @@ public class JpaDomänenereignisUmschlag<T> extends Wertobjekt implements Domän
     }
 
     @Override
-    public final int getVersion() {
+    public final long getVersion() {
         return this.version;
     }
 

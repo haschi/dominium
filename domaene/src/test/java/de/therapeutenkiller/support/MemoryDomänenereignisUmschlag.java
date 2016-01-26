@@ -6,10 +6,10 @@ import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 public final class MemoryDomänenereignisUmschlag<T> implements DomänenereignisUmschlag<T> {
 
     private final Domänenereignis<T> ereignis;
-    private final int version;
+    private final long version;
     private final String stream;
 
-    public MemoryDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final int version, final String stream) {
+    public MemoryDomänenereignisUmschlag(final Domänenereignis<T> ereignis, final long version, final String stream) {
         super();
 
         this.ereignis = ereignis;
@@ -22,7 +22,7 @@ public final class MemoryDomänenereignisUmschlag<T> implements Domänenereignis
     }
 
     @Override
-    public int getVersion() {
+    public long getVersion() {
         return this.version;
     }
 

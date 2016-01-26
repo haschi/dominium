@@ -2,6 +2,7 @@ package de.therapeutenkiller.support;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.aggregat.Initialereignis;
 import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
 import de.therapeutenkiller.dominium.lagerung.EreignisLager;
 import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
@@ -60,7 +61,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     private void aufKonkurrierendenZugriffPrüfen(final long expectedVersion, final Ereignisstrom<A> stream) {
-        final int lastUpdatedVersion = stream.getVersion();
+        final long lastUpdatedVersion = stream.getVersion();
 
         if (lastUpdatedVersion != expectedVersion) {
             final String error = String.format("Expected: %d. Found: %d", expectedVersion, lastUpdatedVersion);
@@ -74,7 +75,7 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
             final long vonVersion,
             final long bisVersion) {
 
-        final Comparator<? super DomänenereignisUmschlag<A>> byVersion = (left, right) -> Integer.compare(
+        final Comparator<? super DomänenereignisUmschlag<A>> byVersion = (left, right) -> Long.compare(
                 left.getVersion(),
                 right.getVersion());
 
@@ -129,8 +130,8 @@ public class MemoryEventStore<E, A> implements EreignisLager<E, A> {
     }
 
     @Override
-    public final Domänenereignis<A> getInitialereignis(final String streamName) {
-        return this.events.stream()
+    public final <T> Initialereignis<A, T> getInitialereignis(final String streamName) {
+        return (Initialereignis<A, T>)this.events.stream()
                 .filter(event -> MemoryEventStore.gehörtZumStream(streamName, event))
                 .filter(event -> event.getVersion() == 1)
                 .map(DomänenereignisUmschlag::getEreignis)

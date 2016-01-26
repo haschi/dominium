@@ -5,7 +5,7 @@ import de.therapeutenkiller.dominium.jpa.EventSerializer
 import spock.lang.Ignore
 import spock.lang.Specification
 
-class EventSerializerTest extends Specification {
+class EventSerializerSpockTest extends Specification {
 
     @Ignore
     def "Serialisierung eines Ereignisses"() {

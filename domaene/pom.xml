@@ -167,7 +167,7 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
             <version>1.0-groovy-2.4</version>
-            <scope>test</scope>
+            <!--scope>test</scope-->
         </dependency>
 
         <!-- Spock: zum Mocken erforderlich -->
@@ -176,6 +176,14 @@
             <artifactId>cglib-nodep</artifactId>
             <version>3.2.0</version>
         </dependency>
+
+
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <!-- any version of Groovy \>= 1.8.2 should work here -->
+                <version>2.4.4</version>
+            </dependency>
 
     </dependencies>
 
@@ -276,6 +284,35 @@
                 <version>1.0</version>
             </plugin>
 
+
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-Xlint</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- gmavenplus (für Tests mit Spock-Framework -->
+            <plugin>
+                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                visit https://github.com/groovy/GMavenPlus/wiki -->
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addTestSources</goal>
+                            <goal>testCompile</goal>
+                            <goal>removeTestStubs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- aspectj -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -302,34 +339,8 @@
                 </executions>
             </plugin>
 
+            <!-- plugins zur Qualitätssicherung -->
 
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgs>
-                        <arg>-Xlint</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
-        <!-- plugins zur Qualitätssicherung -->
-
-            <!-- gmavenplus (für Tests mit Spock-Framework -->
-            <plugin>
-                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                visit https://github.com/groovy/GMavenPlus/wiki -->
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
             <!-- pmd -->
             <!-- This version of Maven PMD Plugin uses PMD 5.3.2 and requires Java 1.6. -->

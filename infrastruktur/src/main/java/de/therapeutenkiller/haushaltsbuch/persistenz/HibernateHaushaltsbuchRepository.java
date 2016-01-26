@@ -19,7 +19,7 @@ import java.util.UUID;
 @Singleton
 public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepository {
 
-    HaushaltsbuchEventStore eventStore;
+    private final HaushaltsbuchEventStore eventStore;
 
     @Inject
     public HibernateHaushaltsbuchRepository(final HaushaltsbuchEventStore eventStore) {
@@ -35,14 +35,14 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
     @Override
     public Haushaltsbuch findBy(final UUID identitätsmerkmal) {
 
-        final HaushaltsbuchWurdeAngelegt initialereignis = eventStore.getInitialereignis(
+        final Initialereignis<Haushaltsbuch, UUID> initialereignis = this.eventStore.getInitialereignis(
                 this.streamName(identitätsmerkmal));
 
-        Haushaltsbuch haushaltsbuch = new Haushaltsbuch(initialereignis);
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)initialereignis);
 
-        final List<Domänenereignis<Haushaltsbuch>> ereignisListe = eventStore.getEreignisListe(
+        final List<Domänenereignis<Haushaltsbuch>> ereignisListe = this.eventStore.getEreignisListe(
                 this.streamName(identitätsmerkmal),
-                Integer.MIN_VALUE,
+                2,
                 Integer.MAX_VALUE);
 
         ereignisListe.forEach(ereignis -> ereignis.anwendenAuf(haushaltsbuch));
@@ -61,7 +61,6 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
                 Haushaltsbuch.class.getName(),
                 haushaltsbuch.getIdentitätsmerkmal());
     }
-
 
     private String streamName(final UUID identitätsmerkmal) {
         return String.format("%s-%s",

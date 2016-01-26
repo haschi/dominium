@@ -100,20 +100,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.11.Final</version>
-            <scope>test</scope>
-            <!-- <version>5.0.7.Final</version> -->
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.190</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->
         <dependency>
@@ -270,6 +256,22 @@
                     <version>${slf4j.version}</version>
                     <scope>test</scope>
                 </dependency>
+
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <version>4.3.11.Final</version>
+                    <scope>test</scope>
+                    <!-- <version>5.0.7.Final</version> -->
+                </dependency>
+
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>1.4.190</version>
+                    <scope>test</scope>
+                </dependency>
+
             </dependencies>
             <build>
                 <testResources>

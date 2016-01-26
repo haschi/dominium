@@ -1,16 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
-
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.persistence.EntityManager
-import javax.persistence.EntityTransaction
 
 class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
@@ -48,36 +42,54 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
     def "Für neue Aggregate werden die aufgetretenen Ereignisse gespeichert"() {
 
         given: "Angenommen ich habe ein Repository und ein neues Haushaltsbuch"
-        EntityManager entityManager = Mock(EntityManager)
+        EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
         HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore)
 
         when: "Wenn ich das Haushaltsbuch dem Repository hinzufüge"
+        def transaction = entityManager.getTransaction()
+        transaction.begin()
+
         repository.add haushaltsbuch
 
+        transaction.commit()
+
         then:
-        1 * entityManager.persist(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.identitätsmerkmal))
+        def x = repository.findBy(haushaltsbuch.identitätsmerkmal)
+        x == haushaltsbuch
     }
 
     def "Für bestehende aggregate werden die aufgetretenen Ereignisse gespeichert"() {
         given:
-        EntityManager entityManager = Mock(EntityManager)
+        EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
         HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore);
+
+        def transaction = entityManager.getTransaction()
+        transaction.begin()
+
         repository.add haushaltsbuch
+
+        transaction.commit()
 
         when: "Wenn ich die Änderungen des Haushaltsbuches speicher"
         haushaltsbuch.neuesKontoHinzufügen "Girokonto", Kontoart.Aktiv
+
+        def transaction2 = entityManager.getTransaction()
+        transaction2.begin()
+
         repository.save haushaltsbuch
 
-        then:
-        1 * entityManager.persist(new HaushaltsbuchWurdeAngelegt(haushaltsbuch.identitätsmerkmal))
+        transaction2.commit()
+
+        def ergebnis = repository.findBy(haushaltsbuch.identitätsmerkmal);
 
         then:
-        1 * entityManager.persist(new KontoWurdeAngelegt("Girokonto", Kontoart.Aktiv))
+
+        ergebnis.konten.find {it.bezeichnung == "Girokonto"}
     }
 }

@@ -2,6 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.dominium.jpa.HibernateEventStore
 import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom
+import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag
+import de.therapeutenkiller.dominium.lagerung.Ereignisstrom
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
@@ -51,13 +53,13 @@ class HibernateEventStoreTest extends Specification {
         store.neuenEreignisstromErzeugen(streamName, ereignisse)
 
         then:
-        1* entityManager.persist(strom)
+        1 * entityManager.persist({it.version == 1 && it instanceof DomänenereignisUmschlag}) // TODO: Weitere Attribute prüfen
 
-        then:
-        1 * entityManager.persist({it.version == 1}) // TODO: Weitere Attribute prüfen
 
-        then:
-        1 * entityManager.persist({it.version == 2})
+        1 * entityManager.persist({it.version == 2 && it instanceof DomänenereignisUmschlag})
+
+
+        1* entityManager.persist {it instanceof Ereignisstrom} //(strom)
     }
 
     def "Ereignisse einem vorhandenen Event-Stream hinzufügen"() {

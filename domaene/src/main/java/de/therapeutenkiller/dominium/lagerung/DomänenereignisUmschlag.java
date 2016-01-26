@@ -12,7 +12,7 @@ import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 public interface DomänenereignisUmschlag<A> {
     Domänenereignis<A> getEreignis();
 
-    int getVersion();
+    long getVersion();
 
     String getStreamName();
 }

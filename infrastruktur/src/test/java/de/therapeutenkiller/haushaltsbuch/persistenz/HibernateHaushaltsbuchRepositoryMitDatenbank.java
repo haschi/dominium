@@ -14,10 +14,10 @@ import javax.persistence.EntityManager;
 public final class HibernateHaushaltsbuchRepositoryMitDatenbank {
 
     @Inject
-    EntityManager entityManager;
+    private EntityManager entityManager; // NOPMD
 
     @Inject
-    HaushaltsbuchRepository repository;
+    private HaushaltsbuchRepository repository; // NOPMD
 
     @Test
     @Transactional

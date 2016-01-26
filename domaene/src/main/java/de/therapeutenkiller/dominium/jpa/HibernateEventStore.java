@@ -7,9 +7,11 @@ import de.therapeutenkiller.dominium.lagerung.EreignisLager;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
 
@@ -25,8 +27,13 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
         final JpaEreignisstrom<A> ereignisstrom = new JpaEreignisstrom<>(streamName);
+
+        for (final Domänenereignis<A> ereignis : domänenereignisse) {
+            final DomänenereignisUmschlag<A> wrappedEvent = ereignisstrom.registerEvent(ereignis);
+            this.entityManager.persist(wrappedEvent);
+        }
+
         this.entityManager.persist(ereignisstrom);
-        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
     }
 
     @Override
@@ -38,22 +45,9 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
         final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(
                 JpaEreignisstrom.class, streamName);
 
-        if (erwarteteVersion.isPresent()) {
-            this.checkForConcurrencyError(erwarteteVersion.get(), strom);
-        }
-
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
             final DomänenereignisUmschlag<A> wrappedEvent = strom.registerEvent(ereignis);
             this.entityManager.persist(wrappedEvent);
-        }
-    }
-
-    private void checkForConcurrencyError(final long expectedVersion, final JpaEreignisstrom stream) {
-        final int lastUpdatedVersion = stream.getVersion();
-
-        if (lastUpdatedVersion != expectedVersion) {
-            final String error = String.format("Expected: %d. Found: %d", expectedVersion, lastUpdatedVersion);
-            throw new IllegalArgumentException(error);
         }
     }
 
@@ -62,15 +56,21 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
             final String streamName,
             final long vonVersion,
             final long bisVersion) {
-        /*final TypedQuery<EventWrapper<A>> query = this.entityManager.createQuery(
-                "SELECT c FROM EventWrapper c", HaushaltsbuchEreignis.class);
 
+        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
+                "SELECT i FROM JpaDomänenereignisUmschlag i "
+                + "WHERE i.version >= :vonVersion AND i.version <= :bisVersion",
+                JpaDomänenereignisUmschlag.class);
 
-        final List<EventWrapper<A>> wrapperList = query.getResultList();
-        final List<Domänenereignis<A>> ld = wrapperList.stream()
-                .map(wrapper -> EventSerializer.deserialize(wrapper.ereignis))
-                .collect(Collectors.toList());*/
-        return null;
+        query.setParameter("vonVersion", vonVersion);
+        query.setParameter("bisVersion", bisVersion);
+
+        final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
+
+        return resultList.stream()
+                .map(DomänenereignisUmschlag::getEreignis)
+                .map(ereignis -> (Domänenereignis<A>)ereignis)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,6 +85,12 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
 
     @Override
     public final <T> Initialereignis<A, T> getInitialereignis(final String streamName) {
-        return null;
+        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
+                "SELECT i FROM JpaDomänenereignisUmschlag i WHERE i.version = 1",
+                JpaDomänenereignisUmschlag.class);
+
+        final DomänenereignisUmschlag umschlag = query.getSingleResult();
+        final Domänenereignis ereignis = umschlag.getEreignis();
+        return (Initialereignis<A, T>)ereignis; // NOPMD
     }
 }
