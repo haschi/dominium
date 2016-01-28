@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.aggregat;
+package de.therapeutenkiller.dominium.modell;
 
 import java.io.Serializable;
 

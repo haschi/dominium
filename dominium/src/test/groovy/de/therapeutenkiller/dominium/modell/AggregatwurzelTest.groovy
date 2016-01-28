@@ -1,13 +1,12 @@
-package de.therapeutenkiller.dominium.aggregat
+package de.therapeutenkiller.dominium.modell
 
-import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregat
-import de.therapeutenkiller.dominium.aggregat.testdomäne.TestAggregatSchnappschuss
-import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
+import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 
 
 class AggregatwurzelTest extends Specification {
-
 
     def "Eine Aggregatwurzel ist eine Entität mit Identitätsmerkmal"() {
 
@@ -66,12 +65,12 @@ class AggregatwurzelTest extends Specification {
     def "Ein Aggregat erhält die Version seines Schnappschusses"() {
 
         given: "ich habe ein Schnappschuss des Aggregats"
-        TestAggregatSchnappschuss schnappschuss = new TestAggregatSchnappschuss()
-        schnappschuss.with {
-            version = 42L
-            payload = 4711
-            identitätsmerkmal = UUID.randomUUID()
-        }
+
+        def schnappschuss = TestAggregatSchnappschuss.builder()
+                .payload(4711L)
+                .version(42)
+                .identitätsmerkmal(UUID.randomUUID())
+                .build()
 
         when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
         TestAggregat aggregat = new TestAggregat(schnappschuss)

@@ -12,8 +12,12 @@ import java.util.UUID;
 @Singleton
 public final class AlleKonten {
 
+    private final HaushaltsbuchRepository repository;
+
     @Inject
-    private HaushaltsbuchRepository repository;
+    public AlleKonten(final HaushaltsbuchRepository repository) {
+        this.repository = repository;
+    }
 
     public ImmutableCollection<Konto> abfragen(final UUID haushaltsbuchId) {
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);

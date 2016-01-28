@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.lagerung
 
-import de.therapeutenkiller.dominium.aggregat.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
 import de.therapeutenkiller.dominium.jpa.EventSerializer
 import spock.lang.Ignore
 import spock.lang.Specification

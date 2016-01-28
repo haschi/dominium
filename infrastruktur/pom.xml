@@ -34,11 +34,14 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--
         <dependency>
             <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
             <artifactId>domaene</artifactId>
         </dependency>
+        -->
 
+        <!--
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
@@ -59,7 +62,6 @@
             <artifactId>guava</artifactId>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -67,6 +69,7 @@
         -->
 
         <!-- Allgemeine Test-Unterstützung -->
+        <!--
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
@@ -85,8 +88,10 @@
             <artifactId>equalsverifier</artifactId>
             <scope>test</scope>
         </dependency>
+        -->
 
         <!-- Alles für Arquillian -->
+        <!--
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
@@ -99,9 +104,10 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-
+        -->
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->
+        <!--
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se</artifactId>
@@ -144,7 +150,7 @@
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-test-control-module-impl</artifactId>
         </dependency>
-
+        -->
     </dependencies>
 
     <build>
@@ -164,30 +170,7 @@
         </plugin>
 
         <!-- aspectj -->
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>aspectj-maven-plugin</artifactId>
-            <version>1.8</version>
-            <configuration>
-                <complianceLevel>1.8</complianceLevel>
-                <source>1.8</source>
-                <target>1.8</target>
-                <aspectLibraries>
-                    <aspectLibrary>
-                        <groupId>de.therapeutenkiller</groupId>
-                        <artifactId>aspekte</artifactId>
-                    </aspectLibrary>
-                </aspectLibraries>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>compile</goal>
-                        <goal>test-compile</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+
 
         <!-- gmavenplus (für Tests mit Spock-Framework -->
         <plugin>
@@ -221,6 +204,7 @@
             </properties>
             <id>arquillian-wildfly-embedded</id>
             <dependencies>
+                <!--
                 <dependency>
                     <groupId>org.apache.deltaspike.cdictrl</groupId>
                     <artifactId>deltaspike-cdictrl-weld</artifactId>
@@ -233,7 +217,7 @@
                     <artifactId>jboss-javaee-7.0</artifactId>
                     <version>1.0.2.Final</version>
                     <type>pom</type>
-                    <scope>provided</scope>
+                    <scope>compile</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.wildfly</groupId>
@@ -256,7 +240,7 @@
                     <version>${slf4j.version}</version>
                     <scope>test</scope>
                 </dependency>
-
+                -->
                 <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-entitymanager</artifactId>
@@ -265,13 +249,14 @@
                     <!-- <version>5.0.7.Final</version> -->
                 </dependency>
 
+                <!--
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                     <version>1.4.190</version>
                     <scope>test</scope>
                 </dependency>
-
+                -->
             </dependencies>
             <build>
                 <testResources>

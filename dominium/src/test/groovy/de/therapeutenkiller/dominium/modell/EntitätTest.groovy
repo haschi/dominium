@@ -1,10 +1,8 @@
-package de.therapeutenkiller.dominium.aggregat
+package de.therapeutenkiller.dominium.modell
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.dominium.aggregat.Entität
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
-
 
 class EntitätTest extends Specification {
 
@@ -66,6 +64,6 @@ class EntitätTest extends Specification {
     }
 
     def "Für Abgeleitete Klassen gelten die Äquivalenzregeln"() {
-        expect: EqualsVerifier.forClass(Person.class).verify()
+        expect: EqualsVerifier.forClass(Person).verify()
     }
 }

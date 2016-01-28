@@ -29,6 +29,14 @@
 
         <version.deltaspike>1.5.2</version.deltaspike>
         <version.weld.se>2.3.1.Final</version.weld.se>
+
+        <slf4j.version>1.7.13</slf4j.version>
+        <junit.version>4.12</junit.version>
+        <junit.version>4.12</junit.version>
+        <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
+        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+
+        <skipTests>false</skipTests>
     </properties>
 
     <scm>
@@ -44,24 +52,35 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
+            <!--dependency wird indirekt durch de.therapeutenkiller:aspekte gezogen>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
                 <version>1.8.7</version>
+            </dependency-->
+
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.2.0</version>
+                <scope>test</scope>
             </dependency>
 
+            <!-- auslagern nach coding.bom -->
             <dependency>
                 <groupId>de.therapeutenkiller</groupId>
                 <artifactId>aspekte</artifactId>
                 <version>${version.de.therapeutenkiller.coding}</version>
             </dependency>
 
+            <!-- auslagern nach coding.bom -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.4</version>
             </dependency>
 
+            <!-- auslagern nach coding.bom -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -70,6 +89,7 @@
                 <!-- Höhere Versionen führen zu einem Konflikt im Zusammenhang mit Weld Embedded und Arquillian -->
             </dependency>
 
+            <!-- auslagern nach jee.bom -->
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
@@ -78,6 +98,7 @@
 
 
             <!-- Abhängigkeiten für die Komponententests -->
+            <!-- auslagern nach test.bom -->
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-core</artifactId>
@@ -85,6 +106,22 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.4.5</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach test-bom -->
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
@@ -96,6 +133,7 @@
 
             <!-- Für die Integrationstests wird Deltaspike verwendet, weil Arquillian
             nicht immer so gut funktioniert -->
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.core</groupId>
                 <artifactId>deltaspike-core-api</artifactId>
@@ -103,6 +141,7 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.core</groupId>
                 <artifactId>deltaspike-core-impl</artifactId>
@@ -110,6 +149,7 @@
                 <scope>runtime</scope>
             </dependency>
 
+            <!-- auslagern nach jee.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.cdictrl</groupId>
                 <artifactId>deltaspike-cdictrl-api</artifactId>
@@ -117,6 +157,7 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- auslagern nach jee.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.modules</groupId>
                 <artifactId>deltaspike-jpa-module-api</artifactId>
@@ -124,6 +165,7 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- auslagern nach jee.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.modules</groupId>
                 <artifactId>deltaspike-jpa-module-impl</artifactId>
@@ -131,6 +173,7 @@
                 <scope>runtime</scope>
             </dependency>
 
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.modules</groupId>
                 <artifactId>deltaspike-test-control-module-api</artifactId>
@@ -138,6 +181,7 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.apache.deltaspike.modules</groupId>
                 <artifactId>deltaspike-test-control-module-impl</artifactId>
@@ -146,6 +190,7 @@
             </dependency>
 
             <!-- Dependency Injection für Java EE, Arquillian Wildfly Embedded und Deltaspike -->
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se</artifactId>
@@ -154,6 +199,7 @@
             </dependency>
 
             <!-- Alles für Arquillian -->
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
@@ -163,6 +209,7 @@
                 <type>pom</type>
             </dependency>
 
+            <!-- auslagern nach jee-test.bom -->
             <dependency>
                 <groupId>org.jboss.shrinkwrap.resolver</groupId>
                 <artifactId>shrinkwrap-resolver-bom</artifactId>
@@ -171,10 +218,39 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- auslagern nach jee-test.bom -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach jee-test.bom -->
+            <dependency>
+                <groupId>org.apache.deltaspike.cdictrl</groupId>
+                <artifactId>deltaspike-cdictrl-weld</artifactId>
+                <version>${version.deltaspike}</version>
+                <scope>test</scope>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>de.therapeutenkiller</groupId>
+            <artifactId>aspekte</artifactId>
+            <version>${version.de.therapeutenkiller.coding}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.19.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -187,6 +263,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>aspectj-maven-plugin</artifactId>
+                    <version>1.8</version>
                     <executions>
                         <execution>
                             <goals>
@@ -211,9 +288,90 @@
                     <version>1.4</version>
                     <executions>
                         <execution>
+
+                                <goals>
+                                    <goal>addSources</goal>
+                                    <goal>addTestSources</goal>
+                                    <!--goal>generateStubs</goal -->
+                                    <goal>compile</goal>
+                                    <!--goal>testGenerateStubs</goal-->
+                                    <goal>testCompile</goal>
+                                    <goal>removeStubs</goal>
+                                    <goal>removeTestStubs</goal>
+                                </goals>
+
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- checkstyle -->
+                <!-- TODO: auslagern nach test.bom -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.17</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                        <dependency>
+                            <artifactId>richtlinien</artifactId>
+                            <groupId>de.therapeutenkiller</groupId>
+                            <version>${version.de.therapeutenkiller.coding}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <includeResources>true</includeResources>
+                        <detail>true</detail>
+
+                        <skip>${skipTests}</skip>
+                        <configLocation>codingrules/checkstyle.xml</configLocation>
+                        <failsOnError>true</failsOnError>
+                        <consoleOutput>true</consoleOutput>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>process-classes</phase>
                             <goals>
-                                <goal>compile</goal>
-                                <goal>testCompile</goal>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- pmd -->
+                <!-- This version of Maven PMD Plugin uses PMD 5.3.2 and requires Java 1.6. -->
+                <!-- TODO: auslagern nach test.bom -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.6</version>
+                    <dependencies>
+                        <dependency>
+                            <artifactId>richtlinien</artifactId>
+                            <groupId>de.therapeutenkiller</groupId>
+                            <version>${version.de.therapeutenkiller.coding}</version>
+                        </dependency>
+                    </dependencies>
+
+                    <configuration>
+                        <skip>${skipTests}</skip>
+                        <linkXRef>false</linkXRef>
+                        <verbose>true</verbose>
+                        <includeTests>true</includeTests>
+                        <rulesets>
+                            <ruleset>codingrules/pmd-ruleset.xml</ruleset>
+                        </rulesets>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>cpd-check</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -250,6 +408,27 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <configuration>
+                    <detail>true</detail>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>de.therapeutenkiller</groupId>
+                            <artifactId>aspekte</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
         </plugins>
     </build>
@@ -269,25 +448,33 @@
 
     </distributionManagement>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.8</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <profiles>
         <profile>
             <id>arquillian-wildfly-embedded</id>
             <properties>
                 <arquillian.version>1.1.9.Final</arquillian.version>
-                <junit.version>4.12</junit.version>
-                <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
-                <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
-                <slf4j.version>1.7.12</slf4j.version>
+
                 <wildfly.version>8.2.1.Final</wildfly.version>
             </properties>
             <dependencyManagement>
+
                 <dependencies>
-                    <dependency>
-                        <groupId>org.apache.deltaspike.cdictrl</groupId>
-                        <artifactId>deltaspike-cdictrl-weld</artifactId>
-                        <version>${version.deltaspike}</version>
-                        <scope>test</scope>
-                    </dependency>
                 </dependencies>
             </dependencyManagement>
             <build>
@@ -345,6 +532,7 @@
     <modules>
         <module>domaene</module>
         <module>infrastruktur</module>
+        <module>dominium</module>
     </modules>
 </project>
 

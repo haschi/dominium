@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.aggregat;
+package de.therapeutenkiller.dominium.modell;
 
 /**
  * Ein Initialereignis tritt bei der Entstehung eines
@@ -15,5 +15,6 @@ package de.therapeutenkiller.dominium.aggregat;
  * @param <T> Der Typ des Identitätsmerkmals des Aggregats.
  */
 public interface Initialereignis<A, T> extends Domänenereignis<A> {
+    // BUG: Initialereignis kann mit anwendenAuf auf Aggregat angewendet werden. Darf es aber nicht
     T getIdentitätsmerkmal();
 }

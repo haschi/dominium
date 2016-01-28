@@ -1,4 +1,4 @@
-package de.therapeutenkiller.haushaltsbuch
+package de.therapeutenkiller
 
 import org.javamoney.moneta.Money
 

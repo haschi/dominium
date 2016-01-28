@@ -8,12 +8,10 @@ import de.therapeutenkiller.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     private final MemoryEventStore<HaushaltsbuchSchnappschuss, Haushaltsbuch> store;

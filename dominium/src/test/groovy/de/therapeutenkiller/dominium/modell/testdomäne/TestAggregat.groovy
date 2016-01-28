@@ -1,10 +1,8 @@
-package de.therapeutenkiller.dominium.aggregat.testdomäne;
+package de.therapeutenkiller.dominium.modell.testdomäne
 
-import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Aggregatwurzel
 
-import java.util.UUID;
-
-public final class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
+class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
 
     private long zustand; // NOPMD
 

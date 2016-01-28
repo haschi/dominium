@@ -1,9 +1,9 @@
-package de.therapeutenkiller.dominium.aggregat;
+package de.therapeutenkiller.dominium.modell;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> { // NOPMD Regel abschalten
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> {
 
     private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
     private final long version;

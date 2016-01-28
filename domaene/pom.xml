@@ -31,7 +31,6 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.8.7</version>
         </dependency>
 
         <dependency>
@@ -52,15 +51,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.13</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.2.0</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -178,13 +173,64 @@
         </dependency>
 
 
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <!-- any version of Groovy \>= 1.8.2 should work here -->
-                <version>2.4.4</version>
-            </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <!-- any version of Groovy \>= 1.8.2 should work here -->
+            <version>2.4.4</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.deltaspike.cdictrl</groupId>
+            <artifactId>deltaspike-cdictrl-weld</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.11.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.190</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jandex</artifactId>
+            <version>2.0.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Arquillian & Wildfly embedded -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-7.0</artifactId>
+            <version>1.0.2.Final</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-arquillian-container-embedded</artifactId>
+            <version>${wildfly.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-embedded</artifactId>
+            <version>${wildfly.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -340,77 +386,14 @@
             </plugin>
 
             <!-- plugins zur Qualitätssicherung -->
-
-
-            <!-- pmd -->
-            <!-- This version of Maven PMD Plugin uses PMD 5.3.2 and requires Java 1.6. -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.6</version>
-                <dependencies>
-                    <dependency>
-                        <artifactId>richtlinien</artifactId>
-                        <groupId>de.therapeutenkiller</groupId>
-                        <version>${version.de.therapeutenkiller.coding}</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <skip>${skipTests}</skip>
-                    <linkXRef>false</linkXRef>
-                    <verbose>true</verbose>
-                    <includeTests>true</includeTests>
-                    <rulesets>
-                        <ruleset>codingrules/pmd-ruleset.xml</ruleset>
-                    </rulesets>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                            <goal>cpd-check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
 
             <!-- checkstyle -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>${checkstyle.version}</version>
-                    </dependency>
-                    <dependency>
-                        <artifactId>richtlinien</artifactId>
-                        <groupId>de.therapeutenkiller</groupId>
-                        <version>${version.de.therapeutenkiller.coding}</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <includeResources>true</includeResources>
-                    <detail>true</detail>
-
-                    <skip>${skipTests}</skip>
-                    <configLocation>codingrules/checkstyle.xml</configLocation>
-                    <failsOnError>true</failsOnError>
-                    <consoleOutput>true</consoleOutput>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <!-- findbugs -->
@@ -474,72 +457,10 @@
     <profiles>
         <profile>
             <id>arquillian-wildfly-embedded</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <dependencies>
-                <dependency>
-                    <groupId>org.apache.deltaspike.cdictrl</groupId>
-                    <artifactId>deltaspike-cdictrl-weld</artifactId>
-                    <version>${version.deltaspike}</version>
-                    <scope>test</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <version>4.3.11.Final</version>
-                    <scope>test</scope>
-                    <!-- <version>5.0.7.Final</version> -->
-                </dependency>
-
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                    <version>1.4.190</version>
-                    <scope>test</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.jboss</groupId>
-                    <artifactId>jandex</artifactId>
-                    <version>2.0.0.Final</version>
-                    <scope>test</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                    <version>1.1</version>
-                    <scope>test</scope>
-                </dependency>
-
-                <!-- Arquillian & Wildfly embedded -->
-                <dependency>
-                    <groupId>org.jboss.spec</groupId>
-                    <artifactId>jboss-javaee-7.0</artifactId>
-                    <version>1.0.2.Final</version>
-                    <type>pom</type>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-arquillian-container-embedded</artifactId>
-                    <version>${wildfly.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.wildfly</groupId>
-                    <artifactId>wildfly-embedded</artifactId>
-                    <version>${wildfly.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jboss.arquillian.junit</groupId>
-                    <artifactId>arquillian-junit-container</artifactId>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-simple</artifactId>
-                    <version>${slf4j.version}</version>
-                    <scope>test</scope>
-                </dependency>
 
             </dependencies>
         </profile>
