@@ -6,7 +6,7 @@ class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
 
     private long zustand; // NOPMD
 
-    protected TestAggregat(final UUID identitätsmerkmal) {
+    public TestAggregat(final UUID identitätsmerkmal) {
         super(identitätsmerkmal);
     }
 

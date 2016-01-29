@@ -2,7 +2,6 @@ package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Initialereignis;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,11 +30,4 @@ public interface Ereignislager<E, A> {
 
     @DarfNullSein
     E getNeuesterSchnappschuss(String streamName);
-
-    /**
-     * Liefert das Ereignis, mit dem ein Aggregat erzeugt worden ist.
-     * @param streamName Name des Streams für das Aggregat
-     * @return Das Initialereignis.
-     */
-    <T> Initialereignis<A, T> getInitialereignis(String streamName);
 }
