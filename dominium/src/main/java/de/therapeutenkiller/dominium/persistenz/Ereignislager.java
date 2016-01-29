@@ -1,8 +1,8 @@
-package de.therapeutenkiller.dominium.lagerung;
+package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
-import de.therapeutenkiller.dominium.aggregat.Initialereignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Initialereignis;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Optional;
  * @param <E> Der Schnappschuss-Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen
  * @param <A> Der Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen.
  */
-public interface EreignisLager<E, A> {
+public interface Ereignislager<E, A> {
 
     void neuenEreignisstromErzeugen(
             String streamName,

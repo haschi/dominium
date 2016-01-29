@@ -5,9 +5,6 @@ import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 
 import javax.money.format.MonetaryParseException
 
-@Mixin(MoneyExtensions)
-class BigDecimal {}
-
 public class BeispieleFürUmwandlungVonWährungsbeträgen {
     static def gültigeWährungsbeträge() {
         [

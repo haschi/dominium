@@ -1,6 +1,6 @@
-package de.therapeutenkiller.dominium.lagerung;
+package de.therapeutenkiller.dominium.persistenz;
 
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 
 /**
  * Schnittstelle für Domänenereignis-Umschläge. Der DomänenereignisUmschlag  kapselt ein Domänenereignis und

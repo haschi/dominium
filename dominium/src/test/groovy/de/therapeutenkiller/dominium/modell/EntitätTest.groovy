@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.modell
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import groovy.transform.CompileStatic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
@@ -8,10 +9,10 @@ class EntitätTest extends Specification {
 
     def "Entitäten besitzen eine Identität"() {
         given:
-        def id = UUID.randomUUID()
+        UUID id = UUID.randomUUID()
 
         when:
-        def entität = new Entität(id);
+        Entität<UUID> entität = new Entität<UUID>(id);
 
         then:
         entität.getIdentitätsmerkmal() == id;
