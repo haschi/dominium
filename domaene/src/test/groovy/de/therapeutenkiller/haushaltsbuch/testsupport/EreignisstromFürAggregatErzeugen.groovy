@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.testsupport
 
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import Domänenereignis
-import de.therapeutenkiller.support.MemoryEreignisstrom
+import MemoryEreignisstrom
 import spock.lang.Ignore
 import spock.lang.Specification
 
