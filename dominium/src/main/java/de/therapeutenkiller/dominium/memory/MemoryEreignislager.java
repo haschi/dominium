@@ -34,6 +34,11 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     public final void neuenEreignisstromErzeugen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
+
+        if (this.streams.containsKey(streamName)) {
+            throw new IllegalArgumentException();
+        }
+
         final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
         this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());

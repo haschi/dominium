@@ -2,7 +2,9 @@ package de.therapeutenkiller.dominium.modell.testdomäne
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis
 import de.therapeutenkiller.dominium.modell.Wertobjekt
+import groovy.transform.ToString
 
+@ToString
 class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestAggregat> {
 
     private final long payload;
