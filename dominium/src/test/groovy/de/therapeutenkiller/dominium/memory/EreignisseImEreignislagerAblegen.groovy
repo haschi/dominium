@@ -29,7 +29,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
         ]
     }
 
-    def "Ein neuer Ereignis-Strom kann nur mit einer Ereignis-Liste erzeugt werden"() {
+    def "Ein neuer Ereignis-Strom darf nicht ohne Ereignis-Liste erzeugt werden"() {
         given:
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
 
@@ -40,7 +40,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
         thrown ArgumentIstNullException
     }
 
-    def "Ein neuer Ereignis-Strom kann nicht ohne Namen erzeugt werden"() {
+    def "Ein neuer Ereignis-Strom darf nicht ohne Namen erzeugt werden"() {
         given:
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
 
