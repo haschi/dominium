@@ -25,7 +25,7 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
             Collection<Domänenereignis<A>> domänenereignisse,
             Optional<Long> erwarteteVersion);
 
-    List<Domänenereignis<A>> getEreignisListe(String streamName, long vonVersion, long bisVersion);
+    List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich);
 
     void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot);
 

@@ -6,6 +6,7 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -76,9 +77,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Override
     public final List<Domänenereignis<A>> getEreignisListe(
-            final String streamName,
-            final long vonVersion,
-            final long bisVersion) {
+            final String streamName, final Versionsbereich bereich) {
 
         final Comparator<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten>>
                 byVersion = (left, right) -> Long.compare(
@@ -87,7 +86,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
         return this.events.stream()
             .filter(event -> this.gehörtZumStream(streamName, event))
-            .filter(event -> MemoryEreignislager.istVersionInnerhalb(vonVersion, bisVersion, event))
+            .filter(event -> bereich.liegtInnerhalb(event.getMetaDaten().version))
             .sorted(byVersion)
             .map(Umschlag::öffnen)
             .collect(Collectors.toList());
@@ -98,13 +97,6 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten> ereignis) {
 
         return ereignis.getMetaDaten().stream.equals(streamName);
-    }
-
-    private static <A> boolean istVersionInnerhalb(
-            final long fromVersion,
-            final long toVersion,
-            final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten> event) {
-        return event.getMetaDaten().version >= fromVersion && event.getMetaDaten().version <= toVersion;
     }
 
     @Override

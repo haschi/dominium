@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.memory
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -18,7 +19,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
         lager.neuenEreignisstromErzeugen("test-strom", testEreignisse)
 
         then: "werde ich die Ereignisse für den Ereignisstrom aus dem Lager lesen können"
-        def liste = lager.getEreignisListe("test-strom", Long.MIN_VALUE, Long.MAX_VALUE)
+        def liste = lager.getEreignisListe("test-strom", Versionsbereich.ALLE_VERSIONEN)
         liste == testEreignisse
 
         where:
