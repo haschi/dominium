@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import spock.lang.Specification
 
@@ -18,6 +19,6 @@ class KonkurrierendeZugriffePrüfen extends  Specification {
         lager.ereignisseDemStromHinzufügen "test-strom", [], 1L
 
         then: "werde ich eine Ausnahme erhalten"
-        thrown IllegalArgumentException
+        thrown KonkurrierenderZugriff
     }
 }

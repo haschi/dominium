@@ -18,12 +18,12 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
 
     void neuenEreignisstromErzeugen(
             String streamName,
-            Collection<Domänenereignis<A>> domänenereignisse);
+            Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
 
     void ereignisseDemStromHinzufügen(
             String streamName,
             Collection<Domänenereignis<A>> domänenereignisse,
-            long erwarteteVersion);
+            long erwarteteVersion) throws KonkurrierenderZugriff;
 
     List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich);
 

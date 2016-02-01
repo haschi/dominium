@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.modell;
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Wertobjekte sind Daten, die nur anhand ihres Wertes

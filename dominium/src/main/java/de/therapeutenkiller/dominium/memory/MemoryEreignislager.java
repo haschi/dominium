@@ -4,6 +4,7 @@ import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
@@ -38,7 +39,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Override
     public final void neuenEreignisstromErzeugen(
             final String streamName,
-            final Collection<Domänenereignis<A>> domänenereignisse) {
+            final Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff {
 
         if (this.streams.containsKey(streamName)) {
             throw new IllegalArgumentException();
@@ -53,7 +54,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse,
-            final long erwarteteVersion)  {
+            final long erwarteteVersion) throws KonkurrierenderZugriff {
 
         if (!this.streams.containsKey(streamName)) {
             throw new IllegalArgumentException();
@@ -75,12 +76,11 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     private void aufKonkurrierendenZugriffPrüfen(
             final long erwarteteVersion,
-            final MemoryEreignisstrom<A> ereignisstrom) {
+            final MemoryEreignisstrom<A> ereignisstrom) throws KonkurrierenderZugriff {
         final long aktuelleVersion = ereignisstrom.getVersion();
 
         if (aktuelleVersion != erwarteteVersion) {
-            final String error = String.format("Expected: %d. Found: %d", erwarteteVersion, aktuelleVersion);
-            throw new IllegalArgumentException(error);
+            throw new KonkurrierenderZugriff(ereignisstrom, erwarteteVersion);
         }
     }
 

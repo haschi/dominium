@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert
@@ -35,4 +36,12 @@ public abstract class Ereignisstrom<A, M> extends Wertobjekt { // NOPMD, TODO Re
     }
 
     protected abstract Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("name", this.name)
+                .append("version", this.version)
+                .toString();
+    }
 }
