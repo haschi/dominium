@@ -33,22 +33,7 @@ class EntitätTest extends Specification {
 
     class Person extends Entität<Long> {
 
-        String getVorname() {
-            return vorname
-        }
-
-        void setVorname(String vorname) {
-            this.vorname = vorname
-        }
         String vorname
-
-        String getNachname() {
-            return nachname
-        }
-
-        void setNachname(String nachname) {
-            this.nachname = nachname
-        }
         String nachname
 
         Person(long id) {

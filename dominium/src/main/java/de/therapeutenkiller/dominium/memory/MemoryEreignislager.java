@@ -80,7 +80,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         final long aktuelleVersion = ereignisstrom.getVersion();
 
         if (aktuelleVersion != erwarteteVersion) {
-            throw new KonkurrierenderZugriff(ereignisstrom, erwarteteVersion);
+            throw new KonkurrierenderZugriff();
         }
     }
 

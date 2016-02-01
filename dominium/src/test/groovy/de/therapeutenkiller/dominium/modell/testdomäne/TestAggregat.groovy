@@ -12,14 +12,13 @@ class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
     }
 
     @Override
-    Schnappschuss<TestAggregat, UUID> schnappschussErstellen() {
+    TestAggregatSchnappschuss schnappschussErstellen() {
 
-        TestAggregatSchnappschuss schnappschuss = new TestAggregatSchnappschuss()
-        schnappschuss.identitätsmerkmal = this.identitätsmerkmal
-        schnappschuss.version = this.version
-        schnappschuss.payload = this.zustand;
-
-        return schnappschuss
+        return TestAggregatSchnappschuss.builder()
+            .identitätsmerkmal(this.identitätsmerkmal)
+            .version(this.version)
+            .payload(this.zustand)
+            .build()
     }
 
     protected TestAggregat(final TestAggregatSchnappschuss schnappschuss) {

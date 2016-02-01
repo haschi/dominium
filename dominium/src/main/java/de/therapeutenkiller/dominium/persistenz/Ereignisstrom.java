@@ -36,12 +36,4 @@ public abstract class Ereignisstrom<A, M> extends Wertobjekt { // NOPMD, TODO Re
     }
 
     protected abstract Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("name", this.name)
-                .append("version", this.version)
-                .toString();
-    }
 }
