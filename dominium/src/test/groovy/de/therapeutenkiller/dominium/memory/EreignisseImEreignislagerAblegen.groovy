@@ -9,11 +9,13 @@ import spock.lang.Unroll
 
 class EreignisseImEreignislagerAblegen extends Specification {
 
+    TestUhr uhr = new TestUhr()
+
     @Unroll
     def "Neue Ereignis-Ströme erzeugen"() {
 
         given: "ich habe ein Ereignislager"
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
+        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
 
         when: "ich einen neuen Ereignisstrom mit Ereignissen erzeuge"
         lager.neuenEreignisstromErzeugen("test-strom", testEreignisse)
@@ -31,7 +33,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Ereignis-Liste erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
+        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen("test-strom", null)
@@ -42,7 +44,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Namen erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
+        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen(null, [])
@@ -53,7 +55,7 @@ class EreignisseImEreignislagerAblegen extends Specification {
 
     def "Doppelte Namen für Ereignis-Ströme sind nicht erlaubt"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>()
+        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen("test-strom", [])
 
         when:

@@ -1,14 +1,13 @@
 package de.therapeutenkiller.dominium.memory;
 
-import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -30,6 +29,11 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
     private final List<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten>> events = new ArrayList<>();
     private final List<MemorySchnappschussUmschlag<A, I>> snapshots = new ArrayList<>();
+    private final Uhr uhr;
+
+    MemoryEreignislager(final Uhr uhr) {
+        this.uhr = uhr;
+    }
 
     @Override
     public final void neuenEreignisstromErzeugen(
@@ -42,35 +46,40 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
         final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
         this.streams.put(streamName, ereignisstrom);
-        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, Optional.empty());
+        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, ereignisstrom.getVersion());
     }
 
     @Override
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse,
-            final Optional<Long> erwarteteVersion)  {
+            final long erwarteteVersion)  {
 
-        final MemoryEreignisstrom<A> stream = this.streams.get(streamName); // NOPMD
-
-        if (erwarteteVersion.isPresent()) {
-            this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion.get(), stream);
+        if (!this.streams.containsKey(streamName)) {
+            throw new IllegalArgumentException();
         }
+
+        final MemoryEreignisstrom<A> ereignisstrom = this.streams.get(streamName); // NOPMD
+
+        this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion, ereignisstrom);
+
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
 
             final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten> registrieren =
-                    stream.registrieren(ereignis);// NOPMD LoD
+                    ereignisstrom.registrieren(ereignis);// NOPMD LoD
 
             this.events.add(registrieren);
         }
     }
 
-    private void aufKonkurrierendenZugriffPrüfen(final long expectedVersion, final MemoryEreignisstrom<A> stream) {
-        final long lastUpdatedVersion = stream.getVersion();
+    private void aufKonkurrierendenZugriffPrüfen(
+            final long erwarteteVersion,
+            final MemoryEreignisstrom<A> ereignisstrom) {
+        final long aktuelleVersion = ereignisstrom.getVersion();
 
-        if (lastUpdatedVersion != expectedVersion) {
-            final String error = String.format("Expected: %d. Found: %d", expectedVersion, lastUpdatedVersion);
+        if (aktuelleVersion != erwarteteVersion) {
+            final String error = String.format("Expected: %d. Found: %d", erwarteteVersion, aktuelleVersion);
             throw new IllegalArgumentException(error);
         }
     }
@@ -102,20 +111,25 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Override
     public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot) {
 
-        final MemorySchnappschussUmschlag<A, I> wrapper = new MemorySchnappschussUmschlag<>(
+        if (!this.streams.containsKey(streamName)) {
+            throw new IllegalArgumentException();
+        }
+
+        final MemorySchnappschussMetaDaten meta = new MemorySchnappschussMetaDaten(
                 streamName,
-                snapshot,
-                LocalDateTime.now());
+                this.uhr.jetzt());
+
+        final MemorySchnappschussUmschlag<A, I> wrapper = new MemorySchnappschussUmschlag<>(
+                snapshot, meta);
 
         this.snapshots.add(wrapper);
     }
 
     @Override
-    @DarfNullSein
     public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) {
 
         final Comparator<? super MemorySchnappschussUmschlag<A, I>> byDateTimeAbsteigend = (left, right) ->
-                left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());
+                -1 * left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());
 
         return this.snapshots.stream()
                 .filter(wrapper -> wrapper.getMetaDaten().getStreamName().equals(streamName))

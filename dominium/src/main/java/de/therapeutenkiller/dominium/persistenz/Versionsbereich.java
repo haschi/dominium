@@ -24,14 +24,6 @@ public final class Versionsbereich {
         this.bis = bis;
     }
 
-    public long getVon() {
-        return this.von;
-    }
-
-    public long getBis() {
-        return this.bis;
-    }
-
     public boolean liegtInnerhalb(final long zahl) {
         return this.von <= zahl && zahl <= this.bis;
     }

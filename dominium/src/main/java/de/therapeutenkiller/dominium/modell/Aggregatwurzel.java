@@ -27,6 +27,8 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends 
         return this.änderungen;
     }
 
+    public abstract Schnappschuss<A, T> schnappschussErstellen();
+
     protected abstract A getSelf();
 
     public final long getVersion() {

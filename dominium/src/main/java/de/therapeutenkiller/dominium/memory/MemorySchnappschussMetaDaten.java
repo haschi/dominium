@@ -1,13 +1,13 @@
 package de.therapeutenkiller.dominium.memory;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public final class MemorySchnappschussMetaDaten {
 
     private final String streamName;
-    private final LocalDateTime zeitstempel;
+    private final ZonedDateTime zeitstempel;
 
-    public MemorySchnappschussMetaDaten(final String streamName, final LocalDateTime now) {
+    public MemorySchnappschussMetaDaten(final String streamName, final ZonedDateTime now) {
 
         this.streamName = streamName;
         this.zeitstempel = now;
@@ -17,7 +17,7 @@ public final class MemorySchnappschussMetaDaten {
         return this.streamName;
     }
 
-    public LocalDateTime getZeitstempel() {
+    public ZonedDateTime getZeitstempel() {
         return this.zeitstempel;
     }
 }

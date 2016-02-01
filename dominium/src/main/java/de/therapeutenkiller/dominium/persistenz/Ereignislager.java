@@ -23,7 +23,7 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
     void ereignisseDemStromHinzufügen(
             String streamName,
             Collection<Domänenereignis<A>> domänenereignisse,
-            Optional<Long> erwarteteVersion);
+            long erwarteteVersion);
 
     List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich);
 
