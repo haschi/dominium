@@ -14,7 +14,7 @@ public final class MemoryEreignisstrom<A> extends Ereignisstrom<A, MemoryEreigni
             final Domänenereignis<A> ereignis) {
 
         final MemoryEreignisMetaDaten metaDaten = new MemoryEreignisMetaDaten();
-        metaDaten.stream = this.name;
+        metaDaten.ereignisstrom = this.name;
         metaDaten.version = this.version;
 
         return new MemoryDomänenereignisUmschlag<A>(ereignis, metaDaten);

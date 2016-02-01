@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
 
-    private final Map<String, MemoryEreignisstrom<A>> streams = new ConcurrentHashMap<>();
-    private final List<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten>> events = new ArrayList<>();
-    private final List<MemorySchnappschussUmschlag<A, I>> snapshots = new ArrayList<>();
+    private final Map<String, MemoryEreignisstrom<A>> ereignisströme = new ConcurrentHashMap<>();
+    private final List<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten>> ereignisse = new ArrayList<>();
+    private final List<MemorySchnappschussUmschlag<A, I>> schnappschüsse = new ArrayList<>();
     private final Uhr uhr;
 
     MemoryEreignislager(final Uhr uhr) {
@@ -38,16 +38,16 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Override
     public final void neuenEreignisstromErzeugen(
-            final String streamName,
+            final String name,
             final Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff {
 
-        if (this.streams.containsKey(streamName)) {
+        if (this.ereignisströme.containsKey(name)) {
             throw new IllegalArgumentException();
         }
 
-        final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(streamName);
-        this.streams.put(streamName, ereignisstrom);
-        this.ereignisseDemStromHinzufügen(streamName, domänenereignisse, ereignisstrom.getVersion());
+        final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(name);
+        this.ereignisströme.put(name, ereignisstrom);
+        this.ereignisseDemStromHinzufügen(name, domänenereignisse, ereignisstrom.getVersion());
     }
 
     @Override
@@ -56,11 +56,11 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             final Collection<Domänenereignis<A>> domänenereignisse,
             final long erwarteteVersion) throws KonkurrierenderZugriff {
 
-        if (!this.streams.containsKey(streamName)) {
+        if (!this.ereignisströme.containsKey(streamName)) {
             throw new IllegalArgumentException();
         }
 
-        final MemoryEreignisstrom<A> ereignisstrom = this.streams.get(streamName); // NOPMD
+        final MemoryEreignisstrom<A> ereignisstrom = this.ereignisströme.get(streamName); // NOPMD
 
         this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion, ereignisstrom);
 
@@ -70,7 +70,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten> registrieren =
                     ereignisstrom.registrieren(ereignis);// NOPMD LoD
 
-            this.events.add(registrieren);
+            this.ereignisse.add(registrieren);
         }
     }
 
@@ -93,7 +93,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
                     left.getMetaDaten().version,
                     right.getMetaDaten().version);
 
-        return this.events.stream()
+        return this.ereignisse.stream()
             .filter(event -> this.gehörtZumStream(streamName, event))
             .filter(event -> bereich.liegtInnerhalb(event.getMetaDaten().version))
             .sorted(byVersion)
@@ -105,13 +105,13 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             final String streamName,
             final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten> ereignis) {
 
-        return ereignis.getMetaDaten().stream.equals(streamName);
+        return ereignis.getMetaDaten().ereignisstrom.equals(streamName);
     }
 
     @Override
     public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot) {
 
-        if (!this.streams.containsKey(streamName)) {
+        if (!this.ereignisströme.containsKey(streamName)) {
             throw new IllegalArgumentException();
         }
 
@@ -122,7 +122,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         final MemorySchnappschussUmschlag<A, I> wrapper = new MemorySchnappschussUmschlag<>(
                 snapshot, meta);
 
-        this.snapshots.add(wrapper);
+        this.schnappschüsse.add(wrapper);
     }
 
     @Override
@@ -131,16 +131,16 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         final Comparator<? super MemorySchnappschussUmschlag<A, I>> byDateTimeAbsteigend = (left, right) ->
                 -1 * left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());
 
-        return this.snapshots.stream()
-                .filter(wrapper -> wrapper.getMetaDaten().getStreamName().equals(streamName))
+        return this.schnappschüsse.stream()
+                .filter(wrapper -> wrapper.getMetaDaten().getEreignisstrom().equals(streamName))
                 .sorted(byDateTimeAbsteigend)
                 .map(MemorySchnappschussUmschlag::öffnen)
                 .findFirst();
     }
 
     public final void clear() {
-        this.events.clear();
-        this.snapshots.clear();
-        this.streams.clear();
+        this.ereignisse.clear();
+        this.schnappschüsse.clear();
+        this.ereignisströme.clear();
     }
 }

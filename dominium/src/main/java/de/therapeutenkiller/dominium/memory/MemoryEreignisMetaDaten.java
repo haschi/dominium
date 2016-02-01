@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.memory;
 
 public class MemoryEreignisMetaDaten {
-    public String stream;
+    public String ereignisstrom;
     public long version;
 }

@@ -4,17 +4,17 @@ import java.time.ZonedDateTime;
 
 public final class MemorySchnappschussMetaDaten {
 
-    private final String streamName;
+    private final String ereignisstrom;
     private final ZonedDateTime zeitstempel;
 
-    public MemorySchnappschussMetaDaten(final String streamName, final ZonedDateTime now) {
+    public MemorySchnappschussMetaDaten(final String ereignisstrom, final ZonedDateTime zeitstempel) {
 
-        this.streamName = streamName;
-        this.zeitstempel = now;
+        this.ereignisstrom = ereignisstrom;
+        this.zeitstempel = zeitstempel;
     }
 
-    public String getStreamName() {
-        return this.streamName;
+    public String getEreignisstrom() {
+        return this.ereignisstrom;
     }
 
     public ZonedDateTime getZeitstempel() {
