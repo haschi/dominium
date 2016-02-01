@@ -3,17 +3,16 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.anwendungsfall.BuchungssatzHinzufügen;
-import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
 import de.therapeutenkiller.dominium.aggregat.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
@@ -42,22 +41,18 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public Haushaltsbuch(final UUID uuid) {
         super(uuid);
-        this.bewirkt(new HaushaltsbuchWurdeAngelegt(uuid));
     }
 
-    public Haushaltsbuch(final HaushaltsbuchWurdeAngelegt ereignis) {
-        super(ereignis);
-    }
+    @Override
+    public HaushaltsbuchSchnappschuss schnappschussErstellen() {
+        final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
+                this.getIdentitätsmerkmal(),
+                this.getVersion());
 
-    public HaushaltsbuchSchnappschuss getSnapshot() {
-        final HaushaltsbuchSchnappschuss snapshot = new HaushaltsbuchSchnappschuss(
-                getIdentitätsmerkmal(),
-                getVersion());
+        schnappschuss.konten = ImmutableSet.copyOf(this.konten);
+        schnappschuss.buchungssätze = ImmutableList.of(this.buchungssätze);
 
-        snapshot.konten = ImmutableSet.copyOf(this.konten);
-        snapshot.buchungssätze = ImmutableList.of(this.buchungssätze);
-
-        return snapshot;
+        return schnappschuss;
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch
@@ -176,11 +171,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
-    }
-
-    public void falls(final HaushaltsbuchWurdeAngelegt haushaltsbuchWurdeAngelegt) {
-        assert this.getIdentitätsmerkmal().equals(haushaltsbuchWurdeAngelegt.haushaltsbuchId);
-        this.konten.add(Konto.ANFANGSBESTAND);
     }
 
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {

@@ -1,9 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
+import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
-import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 
 import javax.money.MonetaryAmount;
 import java.io.Serializable;

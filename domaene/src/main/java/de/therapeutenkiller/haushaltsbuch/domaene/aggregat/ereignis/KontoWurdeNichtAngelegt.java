@@ -1,9 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
+import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
-import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;

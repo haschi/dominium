@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.jpa;
 
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

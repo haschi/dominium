@@ -2,12 +2,12 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import de.therapeutenkiller.dominium.aggregat.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.Set;
 import java.util.UUID;
 
-public class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID> {
+public final class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID> {
     public final long version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;
@@ -26,5 +26,10 @@ public class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, 
     @Override
     public final long getVersion() {
         return this.version;
+    }
+
+    @Override
+    public Haushaltsbuch wiederherstellen() {
+        return new Haushaltsbuch(this);
     }
 }

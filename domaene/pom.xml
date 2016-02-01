@@ -29,8 +29,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
+            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+            <artifactId>dominium</artifactId>
         </dependency>
 
         <dependency>
@@ -221,16 +221,7 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-arquillian-container-embedded</artifactId>
-            <version>${wildfly.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-embedded</artifactId>
-            <version>${wildfly.version}</version>
-        </dependency>
+
     </dependencies>
 
     <build>

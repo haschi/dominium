@@ -1,9 +1,12 @@
 package de.therapeutenkiller.dominium.jpa;
 
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
-import de.therapeutenkiller.dominium.aggregat.Initialereignis;
-import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
-import de.therapeutenkiller.dominium.lagerung.EreignisLager;
+import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+import de.therapeutenkiller.dominium.persistenz.Umschlag;
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.persistence.EntityManager;
@@ -13,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
+public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
+        implements Ereignislager<A, I> {
 
     private final EntityManager entityManager;
 
@@ -29,8 +33,9 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
         final JpaEreignisstrom<A> ereignisstrom = new JpaEreignisstrom<>(streamName);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-            final DomänenereignisUmschlag<A> wrappedEvent = ereignisstrom.registerEvent(ereignis);
-            this.entityManager.persist(wrappedEvent);
+
+            final Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten> umschlag = ereignisstrom.registrieren(ereignis);
+            this.entityManager.persist(umschlag);
         }
 
         this.entityManager.persist(ereignisstrom);
@@ -40,15 +45,40 @@ public class HibernateEventStore<E, A> implements EreignisLager<E, A> {
     public final void ereignisseDemStromHinzufügen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse,
-            final Optional<Long> erwarteteVersion) {
+            final long erwarteteVersion) throws KonkurrierenderZugriff {
 
         final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(
-                JpaEreignisstrom.class, streamName);
+                JpaEreignisstrom.class,
+                streamName);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-            final DomänenereignisUmschlag<A> wrappedEvent = strom.registerEvent(ereignis);
-            this.entityManager.persist(wrappedEvent);
+            final Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten> umschlag = strom.registrieren(ereignis);
+            this.entityManager.persist(umschlag);
         }
+
+    }
+
+    @Override
+    public List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich) {
+        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
+                "SELECT i FROM JpaDomänenereignisUmschlag i "
+                        + "WHERE i.version >= :vonVersion AND i.version <= :bisVersion",
+                JpaDomänenereignisUmschlag.class);
+
+        query.setParameter("vonVersion", vonVersion);
+        query.setParameter("bisVersion", bisVersion);
+
+        final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
+
+        return resultList.stream()
+                .map(DomänenereignisUmschlag::getEreignis)
+                .map(ereignis -> (Domänenereignis<A>)ereignis)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) {
+
     }
 
     @Override

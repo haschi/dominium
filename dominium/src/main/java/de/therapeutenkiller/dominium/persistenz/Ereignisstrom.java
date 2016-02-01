@@ -2,7 +2,6 @@ package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert
