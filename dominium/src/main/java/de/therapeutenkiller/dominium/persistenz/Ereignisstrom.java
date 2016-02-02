@@ -13,7 +13,7 @@ import de.therapeutenkiller.dominium.modell.Wertobjekt;
  *
  * @param <A> Der Typ des Aggregats dessen Domänenereignisse registriert werden.
  */
-public abstract class Ereignisstrom<A, M> extends Wertobjekt { // NOPMD, TODO Regel ändern.
+public abstract class Ereignisstrom<M> extends Wertobjekt { // NOPMD, TODO Regel ändern.
     protected String name;
     protected long version;
 
@@ -28,11 +28,11 @@ public abstract class Ereignisstrom<A, M> extends Wertobjekt { // NOPMD, TODO Re
         return this.version;
     }
 
-    public final Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
+    public final <A> Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
         final Umschlag<Domänenereignis<A>, M> domänenereignisMUmschlag = this.umschlagErzeugen(ereignis);
         this.version = this.version + 1;
         return domänenereignisMUmschlag;
     }
 
-    protected abstract Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);
+    protected abstract <A> Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);
 }

@@ -4,6 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
@@ -15,7 +16,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 

@@ -53,4 +53,12 @@ public final class Versionsbereich {
                 .append(this.bis)
                 .toHashCode();
     }
+
+    public long getVon() {
+        return this.von;
+    }
+
+    public long getBis() {
+        return this.bis;
+    }
 }

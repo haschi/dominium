@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.jpa;
+package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
@@ -30,7 +30,7 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
     public final void neuenEreignisstromErzeugen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
-        final JpaEreignisstrom<A> ereignisstrom = new JpaEreignisstrom<>(streamName);
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
 
@@ -47,80 +47,41 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
             final Collection<Domänenereignis<A>> domänenereignisse,
             final long erwarteteVersion) throws KonkurrierenderZugriff {
 
-        final JpaEreignisstrom<A> strom = (JpaEreignisstrom<A>)this.entityManager.find(
-                JpaEreignisstrom.class,
-                streamName);
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
             final Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten> umschlag = strom.registrieren(ereignis);
             this.entityManager.persist(umschlag);
         }
-
     }
 
     @Override
-    public List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich) {
+    public final List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
-                        + "WHERE i.version >= :vonVersion AND i.version <= :bisVersion",
+                        + "WHERE i.meta.name = :name "
+                        + "AND i.meta.version >= :vonVersion "
+                        + "AND i.meta.version <= :bisVersion",
                 JpaDomänenereignisUmschlag.class);
 
-        query.setParameter("vonVersion", vonVersion);
-        query.setParameter("bisVersion", bisVersion);
+        query.setParameter("vonVersion", bereich.getVon());
+        query.setParameter("bisVersion", bereich.getBis());
+        query.setParameter("name", streamName);
 
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
 
         return resultList.stream()
-                .map(DomänenereignisUmschlag::getEreignis)
-                .map(ereignis -> (Domänenereignis<A>)ereignis)
+                .map(JpaDomänenereignisUmschlag<A>::öffnen)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) {
-
-    }
-
-    @Override
-    public final List<Domänenereignis<A>> getEreignisListe(
-            final String streamName,
-            final long vonVersion,
-            final long bisVersion) {
-
-        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
-                "SELECT i FROM JpaDomänenereignisUmschlag i "
-                + "WHERE i.version >= :vonVersion AND i.version <= :bisVersion",
-                JpaDomänenereignisUmschlag.class);
-
-        query.setParameter("vonVersion", vonVersion);
-        query.setParameter("bisVersion", bisVersion);
-
-        final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
-
-        return resultList.stream()
-                .map(DomänenereignisUmschlag::getEreignis)
-                .map(ereignis -> (Domänenereignis<A>)ereignis)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public final void schnappschussHinzufügen(final String streamName, final E snapshot) {
+    public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot) {
         throw new NotImplementedException("Nicht implementiert.");
     }
 
     @Override
-    public final E getNeuesterSchnappschuss(final String streamName) {
+    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) {
         return null;
-    }
-
-    @Override
-    public final <T> Initialereignis<A, T> getInitialereignis(final String streamName) {
-        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
-                "SELECT i FROM JpaDomänenereignisUmschlag i WHERE i.version = 1",
-                JpaDomänenereignisUmschlag.class);
-
-        final DomänenereignisUmschlag umschlag = query.getSingleResult();
-        final Domänenereignis ereignis = umschlag.getEreignis();
-        return (Initialereignis<A, T>)ereignis; // NOPMD
     }
 }

@@ -1,16 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz; // NOPMD
 
-import de.therapeutenkiller.dominium.aggregat.Aggregatwurzel;
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
-import de.therapeutenkiller.dominium.aggregat.Entität;
-import de.therapeutenkiller.dominium.aggregat.Wertobjekt;
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat;
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert;
 import de.therapeutenkiller.dominium.jpa.EventSerializer;
 import de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag;
 import de.therapeutenkiller.dominium.jpa.JpaEreignisstrom;
-import de.therapeutenkiller.dominium.lagerung.DomänenereignisUmschlag;
-import de.therapeutenkiller.dominium.lagerung.Ereignisstrom;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

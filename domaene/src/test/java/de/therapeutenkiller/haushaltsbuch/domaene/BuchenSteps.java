@@ -4,6 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
@@ -11,7 +12,6 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBegi
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;

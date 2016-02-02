@@ -7,13 +7,14 @@ import de.therapeutenkiller.dominium.persistenz.Umschlag
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class TestEreignisstrom extends Ereignisstrom<TestAggregat, TestEreignisMetaDaten> {
+class TestEreignisstrom extends Ereignisstrom<TestEreignisMetaDaten> {
     TestEreignisstrom(String streamName) {
         super(streamName)
     }
 
     @Override
-    protected TestDomänenereignisUmschlag umschlagErzeugen(Domänenereignis<TestAggregat> ereignis) {
+    protected <A> TestDomänenereignisUmschlag<A> umschlagErzeugen(
+            final Domänenereignis<A> ereignis) {
         return new TestDomänenereignisUmschlag(ereignis, this.version, this.name);
     }
 }

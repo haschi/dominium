@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.jpa;
+package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 

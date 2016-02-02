@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
 
-    private final Map<String, MemoryEreignisstrom<A>> ereignisströme = new ConcurrentHashMap<>();
+    private final Map<String, MemoryEreignisstrom> ereignisströme = new ConcurrentHashMap<>();
     private final List<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten>> ereignisse = new ArrayList<>();
     private final List<MemorySchnappschussUmschlag<A, I>> schnappschüsse = new ArrayList<>();
     private final Uhr uhr;
@@ -45,7 +45,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             throw new IllegalArgumentException();
         }
 
-        final MemoryEreignisstrom<A> ereignisstrom = new MemoryEreignisstrom<>(name);
+        final MemoryEreignisstrom ereignisstrom = new MemoryEreignisstrom(name);
         this.ereignisströme.put(name, ereignisstrom);
         this.ereignisseDemStromHinzufügen(name, domänenereignisse, ereignisstrom.getVersion());
     }
@@ -60,7 +60,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             throw new IllegalArgumentException();
         }
 
-        final MemoryEreignisstrom<A> ereignisstrom = this.ereignisströme.get(streamName); // NOPMD
+        final MemoryEreignisstrom ereignisstrom = this.ereignisströme.get(streamName); // NOPMD
 
         this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion, ereignisstrom);
 
@@ -76,7 +76,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     private void aufKonkurrierendenZugriffPrüfen(
             final long erwarteteVersion,
-            final MemoryEreignisstrom<A> ereignisstrom) throws KonkurrierenderZugriff {
+            final MemoryEreignisstrom ereignisstrom) throws KonkurrierenderZugriff {
         final long aktuelleVersion = ereignisstrom.getVersion();
 
         if (aktuelleVersion != erwarteteVersion) {

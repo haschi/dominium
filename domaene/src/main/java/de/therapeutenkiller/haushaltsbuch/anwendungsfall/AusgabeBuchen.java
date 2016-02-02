@@ -14,8 +14,7 @@ public final class AusgabeBuchen {
     private final HaushaltsbuchRepository repository;
 
     @Inject
-    public AusgabeBuchen(
-            final HaushaltsbuchRepository repository) {
+    public AusgabeBuchen(final HaushaltsbuchRepository repository) {
         this.repository = repository;
     }
 

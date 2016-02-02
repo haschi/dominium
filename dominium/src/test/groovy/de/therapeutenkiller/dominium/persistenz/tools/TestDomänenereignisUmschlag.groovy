@@ -4,13 +4,12 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.persistenz.Umschlag
 
-class TestDomänenereignisUmschlag implements Umschlag<Domänenereignis<TestAggregat>, TestEreignisMetaDaten> {
+class TestDomänenereignisUmschlag<A> implements Umschlag<Domänenereignis<A>, TestEreignisMetaDaten> {
 
-
-    private final Domänenereignis<TestAggregat> ereignis
+    private final Domänenereignis<A> ereignis
     private final TestEreignisMetaDaten metaDaten
 
-    TestDomänenereignisUmschlag(Domänenereignis<TestAggregat> ereignis, long version, String name) {
+    TestDomänenereignisUmschlag(Domänenereignis<A> ereignis, long version, String name) {
 
         this.ereignis = ereignis
         this.metaDaten = new TestEreignisMetaDaten(version, name);
@@ -22,7 +21,7 @@ class TestDomänenereignisUmschlag implements Umschlag<Domänenereignis<TestAggr
     }
 
     @Override
-    Domänenereignis<TestAggregat> öffnen() {
+    Domänenereignis<A> öffnen() {
         return ereignis
     }
 }

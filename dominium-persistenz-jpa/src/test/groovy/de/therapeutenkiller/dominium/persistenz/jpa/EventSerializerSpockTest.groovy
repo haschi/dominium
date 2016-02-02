@@ -1,17 +1,14 @@
-package de.therapeutenkiller.dominium.lagerung
+package de.therapeutenkiller.dominium.persistenz.jpa
 
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
-import de.therapeutenkiller.dominium.jpa.EventSerializer
-import spock.lang.Ignore
+import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert
 import spock.lang.Specification
 
 class EventSerializerSpockTest extends Specification {
 
-    @Ignore
     def "Serialisierung eines Ereignisses"() {
 
         given:
-        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert("Matthias","Haschka");
+        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(payload: 42L);
 
         when:
         byte[] ergebnis = EventSerializer.serialize(ereignis);

@@ -9,10 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dominium</artifactId>
+    <artifactId>dominium-persistenz-jpa</artifactId>
 
 
     <dependencies>
+        <dependency>
+            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+            <artifactId>dominium</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -39,18 +43,11 @@
             <artifactId>groovy-all</artifactId>
         </dependency>
 
-        <!-- compile -->
+        <!-- Erforderlich für CDI Annotationen in der Domäne -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
         </dependency>
-    </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    </dependencies>
 </project>

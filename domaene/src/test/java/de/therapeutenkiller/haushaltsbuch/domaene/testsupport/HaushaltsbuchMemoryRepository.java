@@ -1,5 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
@@ -8,13 +13,14 @@ import de.therapeutenkiller.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
+import javax.persistence.Version;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
-    private final MemoryEventStore<HaushaltsbuchSchnappschuss, Haushaltsbuch> store;
+    private Ereignislager<Haushaltsbuch, UUID> ereignislager;
 
     private UUID aktuell;
 
@@ -24,39 +30,40 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Override
     public final void leeren() {
-        this.store.clear();
+        ereignislager.leeren();
     }
 
     @Inject
-    public HaushaltsbuchMemoryRepository(
-            final MemoryEventStore<HaushaltsbuchSchnappschuss, Haushaltsbuch> store) {
+    public HaushaltsbuchMemoryRepository(final HaushaltsbuchEreignislager ereignislager) {
 
-        this.store = store;
+        this.ereignislager = ereignislager;
     }
 
     @Override
     public final Haushaltsbuch findBy(final UUID identitätsmerkmal) {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
-        final HaushaltsbuchSchnappschuss snapshot = this.store.getNeuesterSchnappschuss(streamName);
+        final Optional<Schnappschuss<Haushaltsbuch, UUID>> snapshot = this.ereignislager.getNeuesterSchnappschuss(
+                streamName);
 
-        final long fromEventNumber = snapshot == null ? 0 : snapshot.version + 1;
-        final long toEventNumber = Long.MAX_VALUE;
+        if (snapshot.isPresent()) {
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.store.getEreignisListe(
-                streamName,
-                fromEventNumber,
-                toEventNumber);
+            final Versionsbereich bereich = new Versionsbereich(snapshot.get().getVersion(), Long.MAX_VALUE);
 
-        Haushaltsbuch haushaltsbuch;
-        if (snapshot == null) {
-            final Domänenereignis<Haushaltsbuch> ereignis = this.store.getInitialereignis(streamName);
-            haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)ereignis); // TODO kein Cast
-        } else {
-            haushaltsbuch = new Haushaltsbuch(snapshot);
+            final List<Domänenereignis<Haushaltsbuch>> stream = this.ereignislager.getEreignisListe(streamName, bereich);
+
+            final Haushaltsbuch haushaltsbuch = snapshot.get().wiederherstellen();
+            for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {
+                ereignis.anwendenAuf(haushaltsbuch);
+            }
+
+            return haushaltsbuch;
         }
 
+        final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.ereignislager.getEreignisListe(streamName, bereich);
 
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal);
         for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {
             ereignis.anwendenAuf(haushaltsbuch);
         }
@@ -70,32 +77,25 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     }
 
     @Override
-    public final void add(final Haushaltsbuch haushaltsbuch) {
+    public final void add(final Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
         final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
-        this.store.neuenEreignisstromErzeugen(streamName, änderungen);
-        this.aktuell = haushaltsbuch.getIdentitätsmerkmal();
+
+        this.ereignislager.neuenEreignisstromErzeugen(streamName, änderungen);
     }
 
     @Override
-    public final void save(final Haushaltsbuch haushaltsbuch) {
+    public final void save(final Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff {
         final String streamName = this.streamNameFor(haushaltsbuch.getIdentitätsmerkmal());
 
-        final Optional<Long> expectedVersion = this.getExpectedVersion(haushaltsbuch.initialVersion);
-        this.store.ereignisseDemStromHinzufügen(streamName, haushaltsbuch.getÄnderungen(), expectedVersion);
-    }
-
-    private Optional<Long> getExpectedVersion(final long expectedVersion) {
-        if (expectedVersion == 0) {
-            // first time the aggregate is stored there is no expected version
-            return Optional.empty();
-        } else {
-            return Optional.of(expectedVersion);
-        }
+        this.ereignislager.ereignisseDemStromHinzufügen(
+                streamName,
+                haushaltsbuch.getÄnderungen(),
+                haushaltsbuch.initialVersion);
     }
 
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         final String streamName = this.streamNameFor(haushaltsbuchId);
-        return this.store.getEreignisListe(streamName, 0, Integer.MAX_VALUE);
+        return this.ereignislager.getEreignisListe(streamName, Versionsbereich.ALLE_VERSIONEN);
     }
 }

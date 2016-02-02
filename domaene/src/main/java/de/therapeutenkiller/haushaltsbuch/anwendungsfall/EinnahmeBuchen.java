@@ -12,8 +12,7 @@ public final class EinnahmeBuchen {
     private final BuchungssatzHinzufügen buchungssatzHinzufügen;
 
     @Inject
-    public EinnahmeBuchen(
-            final BuchungssatzHinzufügen buchungssatzHinzufügen) {
+    public EinnahmeBuchen(final BuchungssatzHinzufügen buchungssatzHinzufügen) {
 
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }

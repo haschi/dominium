@@ -5,8 +5,8 @@
     <persistence-unit name="test">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag</class>
-        <class>de.therapeutenkiller.dominium.jpa.JpaEreignisstrom</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
 
         <properties>
 

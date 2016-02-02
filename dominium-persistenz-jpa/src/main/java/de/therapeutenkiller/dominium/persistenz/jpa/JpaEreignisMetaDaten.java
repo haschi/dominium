@@ -1,12 +1,13 @@
-package de.therapeutenkiller.dominium.jpa;
+package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class JpaEreignisMetaDaten {
 
-    private final String name;
-    private final long version;
+    private String name;
+
+    private long version;
 
     public JpaEreignisMetaDaten(final String name, final long version) {
 
@@ -17,5 +18,13 @@ public class JpaEreignisMetaDaten {
     public JpaEreignisMetaDaten() {
         this.name = null;
         this.version = 0;
+    }
+
+    public final String getName() {
+        return this.name;
+    }
+
+    public final long getVersion() {
+        return this.version;
     }
 }

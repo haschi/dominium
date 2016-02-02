@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.jpa;
+package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
@@ -45,7 +45,6 @@ public class JpaDomänenereignisUmschlag<A>
 
     public JpaDomänenereignisUmschlag() {
         super();
-        // Für JPA
     }
 
     public final String getIdentitätsmerkmal() {
