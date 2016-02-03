@@ -4,11 +4,12 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
 @SuppressWarnings("checkstyle:designforextension")
+@Entity()
 public class JpaEreignisstrom extends Ereignisstrom<JpaEreignisMetaDaten> {
 
     @Id
@@ -20,7 +21,8 @@ public class JpaEreignisstrom extends Ereignisstrom<JpaEreignisMetaDaten> {
         this.name = name;
     }
 
-    public void setVersion(final int version) {
+    @Column(nullable = false)
+    public void setVersion(final long version) {
         this.version = version;
     }
 

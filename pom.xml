@@ -204,6 +204,15 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- Ohne das läuft nichts: org.jboss.jandex.ClassInfo.hasNoArgsConstructor()Z -->
+            <!-- siehe http://stackoverflow.com/questions/25797866/hibernate-makes-weld-not-initializing-in-java-se -->
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>2.0.0.Final</version>
+                <scope>test</scope>
+            </dependency>
+
             <!-- Alles für Arquillian -->
             <!-- auslagern nach jee-test.bom -->
             <dependency>
