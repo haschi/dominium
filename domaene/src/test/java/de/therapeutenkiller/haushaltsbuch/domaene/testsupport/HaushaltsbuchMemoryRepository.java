@@ -5,15 +5,11 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt;
+
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
-import de.therapeutenkiller.support.MemoryEventStore;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
-import javax.persistence.Version;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,7 +26,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     @Override
     public final void leeren() {
-        ereignislager.leeren();
+        this.ereignislager.leeren();
     }
 
     @Inject
@@ -50,7 +46,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
             final Versionsbereich bereich = new Versionsbereich(snapshot.get().getVersion(), Long.MAX_VALUE);
 
-            final List<Domänenereignis<Haushaltsbuch>> stream = this.ereignislager.getEreignisListe(streamName, bereich);
+            final List<Domänenereignis<Haushaltsbuch>> stream = this.ereignislager.getEreignisListe(
+                    streamName, bereich);
 
             final Haushaltsbuch haushaltsbuch = snapshot.get().wiederherstellen();
             for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {

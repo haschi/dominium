@@ -11,7 +11,6 @@ import de.therapeutenkiller.dominium.modell.Wertobjekt;
  * Implementierungen des Ereignisstroms müssen in der Methode umschlagErzeugen den
  * einen Umschlag mit Meta-Daten für das Ereignis erzeugen
  *
- * @param <A> Der Typ des Aggregats dessen Domänenereignisse registriert werden.
  */
 public abstract class Ereignisstrom<M> extends Wertobjekt { // NOPMD, TODO Regel ändern.
     protected String name;
