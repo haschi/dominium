@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -35,7 +34,7 @@ public class EreignisstromPersistieren  {
     }
 
     @Test
-    public void name_des_stroms_muss_eindeutig_sein() {
+    public void verschiedene_ereignisströme_mit_gleichem_namen_können_nicht_persistiert_werden() {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
         this.entityManager.persist(ereignisstrom);
 
@@ -48,17 +47,25 @@ public class EreignisstromPersistieren  {
     }
 
     @Test
-    public void ereignisströme_mit_gleichem_namen_können_nicht_gespeichert_werden() {
+    public void verschiedene_ereignisströme_mit_gleichem_namen_können_nicht_gespeichert_werden() {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
         this.entityManager.persist(ereignisstrom);
+
         this.entityManager.flush();
         this.entityManager.clear();
 
         final JpaEreignisstrom doppelt = new JpaEreignisstrom("test-strom");
 
-        assertThatExceptionOfType(PersistenceException.class)
-                .isThrownBy(() -> { this.entityManager.persist(doppelt); })
-                .withMessageStartingWith(
-                        "A different object with the same identifier value was already associated with the session");
+        try {
+            this.entityManager.persist(doppelt);
+            System.out.println("Hello World");
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        //assertThatExceptionOfType(JdbcSQLException.class)
+        //        .isThrownBy(() -> { this.entityManager.persist(doppelt); });
+                //.withMessageStartingWith("could not execute statement")
+                //.withCauseExactlyInstanceOf(ConstraintViolationException.class);
     }
 }
