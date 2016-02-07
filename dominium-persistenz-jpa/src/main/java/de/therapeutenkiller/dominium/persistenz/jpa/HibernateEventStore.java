@@ -61,7 +61,8 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.name = :name "
                         + "AND i.meta.version >= :vonVersion "
-                        + "AND i.meta.version <= :bisVersion",
+                        + "AND i.meta.version <= :bisVersion "
+                        + "ORDER BY i.meta.version",
                 JpaDomänenereignisUmschlag.class);
 
         query.setParameter("vonVersion", bereich.getVon());

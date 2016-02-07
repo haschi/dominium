@@ -1,9 +1,10 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class JpaEreignisMetaDaten {
+public final class JpaEreignisMetaDaten implements Serializable {
 
     private String name;
 
@@ -13,18 +14,5 @@ public class JpaEreignisMetaDaten {
 
         this.name = name;
         this.version = version;
-    }
-
-    public JpaEreignisMetaDaten() {
-        this.name = null;
-        this.version = 0;
-    }
-
-    public final String getName() {
-        return this.name;
-    }
-
-    public final long getVersion() {
-        return this.version;
     }
 }

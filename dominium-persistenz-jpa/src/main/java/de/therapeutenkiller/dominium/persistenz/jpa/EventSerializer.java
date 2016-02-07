@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class EventSerializer { // NOPMD
+public final class EventSerializer { // NOPMD
+
+    private EventSerializer() {}
+
     public static <T> byte[] serialize(final Domänenereignis<T> ereignis) throws IOException {
 
         // TODO prüfen, ob der Umgang mit den Streams korrekt ist.

@@ -7,7 +7,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
         <class>de.therapeutenkiller.dominium.persistenz.Ereignisstrom</class>
-
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisMetaDaten</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

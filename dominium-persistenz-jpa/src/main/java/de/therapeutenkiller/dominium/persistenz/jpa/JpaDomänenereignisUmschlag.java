@@ -4,13 +4,10 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
-import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import java.io.IOException;
-
-// TODO Schlüssel des JpaUmschlags sind version + stream;
 
 /**
  * Ein DomänenereignisUmschlag für Domänenereignisse zum Speichern in einer
@@ -22,16 +19,15 @@ public class JpaDomänenereignisUmschlag<A>
         extends Wertobjekt
         implements Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten> {
 
-    @Id
-    private String identitätsmerkmal = null; // NOPMD Das heißt nun mal so.
+    @EmbeddedId
+    private JpaEreignisMetaDaten meta = null;
 
     @Lob
     private byte[] ereignis = null; // NOPMD
 
-    @Embedded
-    private JpaEreignisMetaDaten meta = null;
-
-    public JpaDomänenereignisUmschlag(final Domänenereignis<A> ereignis, final JpaEreignisMetaDaten meta) {
+    public JpaDomänenereignisUmschlag(
+            final Domänenereignis<A> ereignis,
+            final JpaEreignisMetaDaten meta) {
         super();
 
         this.meta = meta;
@@ -45,10 +41,6 @@ public class JpaDomänenereignisUmschlag<A>
 
     public JpaDomänenereignisUmschlag() {
         super();
-    }
-
-    public final String getIdentitätsmerkmal() {
-        return this.identitätsmerkmal;
     }
 
     public final Domänenereignis<A> getEreignis() {
