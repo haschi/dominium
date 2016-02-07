@@ -4,6 +4,7 @@ import org.apache.deltaspike.cdise.api.CdiContainer
 import org.apache.deltaspike.cdise.api.CdiContainerLoader
 import org.apache.deltaspike.core.api.projectstage.ProjectStage
 import org.apache.deltaspike.core.util.ProjectStageProducer
+import org.apache.deltaspike.jpa.api.transaction.TransactionScoped
 import org.spockframework.runtime.extension.AbstractAnnotationDrivenExtension
 import org.spockframework.runtime.extension.IMethodInterceptor
 import org.spockframework.runtime.extension.IMethodInvocation
@@ -92,6 +93,7 @@ class DeltaspikeExtension extends  AbstractAnnotationDrivenExtension<Deltaspike>
         cdiContainer.getContextControl().startContext(RequestScoped.class);
         //cdiContainer.getContextControl().stopContext(SessionScoped.class);
         cdiContainer.getContextControl().startContext(SessionScoped.class);
+        cdiContainer.getContextControl().startContext(TransactionScoped.class)
     }
 
     // @AfterSuite

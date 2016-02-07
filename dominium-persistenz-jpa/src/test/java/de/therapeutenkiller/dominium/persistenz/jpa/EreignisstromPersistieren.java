@@ -8,9 +8,11 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @SuppressWarnings("checkstyle:designforextension")
 @RunWith(CdiTestRunner.class)
@@ -56,16 +58,15 @@ public class EreignisstromPersistieren  {
 
         final JpaEreignisstrom doppelt = new JpaEreignisstrom("test-strom");
 
-        try {
-            this.entityManager.persist(doppelt);
-            System.out.println("Hello World");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        final Throwable thrown = catchThrowable(() -> {
+            try {
+                this.entityManager.persist(doppelt);
+                this.entityManager.flush();
+            } finally {
+                this.entityManager.clear();
+            }
+        });
 
-        //assertThatExceptionOfType(JdbcSQLException.class)
-        //        .isThrownBy(() -> { this.entityManager.persist(doppelt); });
-                //.withMessageStartingWith("could not execute statement")
-                //.withCauseExactlyInstanceOf(ConstraintViolationException.class);
+        assertThat(thrown).isExactlyInstanceOf(PersistenceException.class);
     }
 }

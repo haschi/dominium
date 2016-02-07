@@ -20,6 +20,10 @@ public class JpaEreignisstrom extends Ereignisstrom<JpaEreignisMetaDaten> {
         this.name = name;
     }
 
+    public long getVersion() {
+        return this.version;
+    }
+
     public void setVersion(final long version) {
         this.version = version;
     }

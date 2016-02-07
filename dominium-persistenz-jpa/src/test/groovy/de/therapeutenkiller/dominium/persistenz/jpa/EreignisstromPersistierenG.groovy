@@ -2,12 +2,15 @@ package de.therapeutenkiller.dominium.persistenz.jpa
 
 import de.therapeutenkiller.dominium.memory.MemorySchnappschussMetaDaten
 import de.therapeutenkiller.dominium.persistenz.Uhr
+import org.apache.deltaspike.jpa.api.transaction.Transactional
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.inject.Inject
 import javax.persistence.EntityManager
 
 @Deltaspike
+@Transactional
 class EreignisstromPersistierenG extends Specification{
 
     @Inject
@@ -36,5 +39,22 @@ class EreignisstromPersistierenG extends Specification{
 
     def "vierter Test"() {
         expect: entityManager != null;
+    }
+
+    @Ignore
+    def "Ereignis-Ströme können persistiert werden"() {
+
+        given:
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
+        ereignisstrom.setVersion(42L);
+
+        when:
+        this.entityManager.persist(ereignisstrom);
+        this.entityManager.flush();
+        this.entityManager.clear();
+
+        final JpaEreignisstrom materialisiert = this.entityManager.find(JpaEreignisstrom.class, "test-strom");
+        then:
+        materialisiert == ereignisstrom
     }
 }

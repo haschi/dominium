@@ -13,6 +13,11 @@ class TestEreignisstrom extends Ereignisstrom<TestEreignisMetaDaten> {
     }
 
     @Override
+    public long getVersion() {
+        return this.version;
+    }
+
+    @Override
     protected <A> TestDomänenereignisUmschlag<A> umschlagErzeugen(
             final Domänenereignis<A> ereignis) {
         return new TestDomänenereignisUmschlag(ereignis, this.version, this.name);

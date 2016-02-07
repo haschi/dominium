@@ -9,6 +9,10 @@ public final class MemoryEreignisstrom extends Ereignisstrom<MemoryEreignisMetaD
         super(streamName);
     }
 
+    public long getVersion() {
+        return this.version;
+    }
+
     @Override
     protected <A> MemoryDomänenereignisUmschlag<A> umschlagErzeugen(
             final Domänenereignis<A> ereignis) {

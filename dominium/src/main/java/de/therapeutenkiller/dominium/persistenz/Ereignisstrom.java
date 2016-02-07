@@ -23,9 +23,7 @@ public abstract class Ereignisstrom<M> extends Wertobjekt { // NOPMD, TODO Regel
         this.version = 1;
     }
 
-    public final long getVersion() {
-        return this.version;
-    }
+    public abstract long getVersion();
 
     public final <A> Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
         final Umschlag<Domänenereignis<A>, M> domänenereignisMUmschlag = this.umschlagErzeugen(ereignis);
