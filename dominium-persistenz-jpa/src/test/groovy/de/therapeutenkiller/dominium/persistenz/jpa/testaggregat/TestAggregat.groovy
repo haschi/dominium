@@ -2,12 +2,14 @@ package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel
 import de.therapeutenkiller.dominium.modell.Schnappschuss
+import groovy.transform.CompileStatic
 
+@CompileStatic
 class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
 
     long zustand
 
-    protected TestAggregat(final Long identitätsmerkmal) {
+    public TestAggregat(final Long identitätsmerkmal) {
         super(identitätsmerkmal)
     }
 
@@ -18,10 +20,14 @@ class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
 
     @Override
     protected TestAggregat getSelf() {
-        return null
+        return this
     }
 
     void falls(ZustandWurdeGeändert zustandWurdeGeändert) {
         this.zustand = zustandWurdeGeändert.payload
+    }
+
+    void einenZustandÄndern(long wert) {
+        this.bewirkt(new ZustandWurdeGeändert(wert))
     }
 }

@@ -1,7 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz.jpa
 
-import de.therapeutenkiller.dominium.memory.MemorySchnappschussMetaDaten
-import de.therapeutenkiller.dominium.persistenz.Uhr
 import org.apache.deltaspike.jpa.api.transaction.Transactional
 import spock.lang.Ignore
 import spock.lang.Specification
@@ -14,9 +12,6 @@ import javax.persistence.EntityManager
 class EreignisstromPersistierenG extends Specification{
 
     @Inject
-    EreignisstromPersistieren uhr;
-
-    @Inject
     TestUhr uhr2
 
     @Inject
@@ -25,11 +20,6 @@ class EreignisstromPersistierenG extends Specification{
     def "ich bin ein Test"() {
         expect:
         "Hurra" != null
-    }
-
-    def "ich bin noch ein Test"() {
-        expect:
-        uhr != null
     }
 
     def "dritter test"() {

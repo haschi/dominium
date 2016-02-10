@@ -33,9 +33,7 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-
-            final Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten> umschlag = ereignisstrom.registrieren(ereignis);
-            this.entityManager.persist(umschlag);
+            this.entityManager.persist(ereignisstrom.registrieren(ereignis));
         }
 
         this.entityManager.persist(ereignisstrom);
