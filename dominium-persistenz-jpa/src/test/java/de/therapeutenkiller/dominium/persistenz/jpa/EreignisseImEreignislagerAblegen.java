@@ -1,57 +1,60 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnit4.class)
+public final class EreignisseImEreignislagerAblegen {
 
-@SuppressWarnings("checkstyle:designforextension")
-@RunWith(CdiTestRunner.class)
-@Transactional
-public class EreignisseImEreignislagerAblegen {
+    @Rule
+    public final DatenbankRegel dbt = new DatenbankRegel();
 
-    class JpaDomänenereignisUmschlagTestAggregat extends JpaDomänenereignisUmschlag<TestAggregat>{}
-
-    @Inject
-    EntityManager entityManager;
-
-    @Test
-    public void sdfsdf() {
+    @Before
+    public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
 
         final TestAggregat aggregat = new TestAggregat(1L);
         aggregat.einenZustandÄndern(42L);
         aggregat.einenZustandÄndern(43L);
 
-        final HibernateEventStore<TestAggregat, Long> store = new HibernateEventStore<>(this.entityManager);
+        final EntityManager entityManager = this.dbt.getEntityManager();
 
+        final HibernateEventStore<TestAggregat, Long> store = new HibernateEventStore<>(entityManager);
         store.neuenEreignisstromErzeugen("test-strom", aggregat.getÄnderungen());
+        entityManager.flush();
+        entityManager.clear();
+    }
 
-        this.entityManager.flush();
-        this.entityManager.clear();
+    @Test
+    public void dann_wird_die_versionsnummer_des_ereignisstroms_erhöht() {
+        final EntityManager entityManager = this.dbt.getEntityManager();
 
-        final JpaEreignisstrom materialisierterEreignisstrom = this.entityManager.find(JpaEreignisstrom.class, "test-strom");
+        final JpaEreignisstrom materialisierterEreignisstrom = entityManager.find(JpaEreignisstrom.class, "test-strom");
         final JpaEreignisstrom x = new JpaEreignisstrom("test-strom");
         x.setVersion(3L);
         assertThat(materialisierterEreignisstrom).isEqualTo(x);
 
-        final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
+    }
+
+    @Test
+    public void dann_werden_die_ereignisse_gespeichert() {
+        final EntityManager entityManager = this.dbt.getEntityManager();
+
+        final TypedQuery<JpaDomänenereignisUmschlag> query = entityManager.createQuery(
                 "SELECT umschlag from JpaDomänenereignisUmschlag umschlag "
-                + "WHERE umschlag.meta.name = :name",
+                        + "WHERE umschlag.meta.name = :name "
+                        + "ORDER BY umschlag.meta.version",
                 JpaDomänenereignisUmschlag.class);
 
         query.setParameter("name", "test-strom");

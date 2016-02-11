@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import org.apache.deltaspike.jpa.api.entitymanager.PersistenceUnitName;
 import org.apache.deltaspike.jpa.api.transaction.TransactionScoped;
 
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
@@ -20,7 +21,8 @@ public class EntityManagerProducer {
 
     @Produces
     @Default
-    @TransactionScoped
+    @RequestScoped
+    // @TransactionScoped
     public EntityManager entityManager() {
         return this.factory.createEntityManager();
     }
