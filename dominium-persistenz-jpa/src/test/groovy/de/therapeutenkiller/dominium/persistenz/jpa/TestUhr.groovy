@@ -3,12 +3,19 @@ package de.therapeutenkiller.dominium.persistenz.jpa
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import groovy.transform.CompileStatic
 
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
 @CompileStatic
-class TestUhr implements  Uhr{
+class TestUhr implements  Uhr {
+    LocalDateTime jetzt;
+
     @Override
-    ZonedDateTime jetzt() {
-        return null
+    LocalDateTime jetzt() {
+        return jetzt
+    }
+
+    void stellen(LocalDateTime jetzt) {
+        this.jetzt = jetzt;
     }
 }

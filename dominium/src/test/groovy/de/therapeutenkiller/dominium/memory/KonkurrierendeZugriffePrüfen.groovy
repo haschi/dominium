@@ -16,7 +16,7 @@ class KonkurrierendeZugriffePrüfen extends  Specification {
         lager.neuenEreignisstromErzeugen("test-strom", [new ZustandWurdeGeändert(42L)])
 
         when: "ich die Version 1 beim Hinzufügen weiterer Ereignisse erwarte"
-        lager.ereignisseDemStromHinzufügen "test-strom", [], 1L
+        lager.ereignisseDemStromHinzufügen "test-strom", 1L, []
 
         then: "werde ich eine Ausnahme erhalten"
         thrown KonkurrierenderZugriff

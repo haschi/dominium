@@ -1,7 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,7 +10,7 @@ public final class EventSerializer { // NOPMD
 
     private EventSerializer() {}
 
-    public static <T> byte[] serialize(final Domänenereignis<T> ereignis) throws IOException {
+    public static byte[] serialize(final Object ereignis) throws IOException {
 
         // TODO prüfen, ob der Umgang mit den Streams korrekt ist.
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -24,9 +22,9 @@ public final class EventSerializer { // NOPMD
         return outputStream.toByteArray();
     }
 
-    public static <T> Domänenereignis<T> deserialize(final byte[] data) throws IOException, ClassNotFoundException {
+    public static Object deserialize(final byte[] data) throws IOException, ClassNotFoundException {
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
         final ObjectInputStream stream = new ObjectInputStream(inputStream);
-        return (Domänenereignis<T>) stream.readObject();
+        return stream.readObject();
     }
 }

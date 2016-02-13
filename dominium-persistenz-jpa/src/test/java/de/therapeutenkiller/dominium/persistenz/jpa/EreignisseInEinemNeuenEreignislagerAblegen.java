@@ -1,7 +1,10 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
+import de.therapeutenkiller.testing.DatenbankRegel;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,10 +19,12 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnit4.class)
-public final class EreignisseImEreignislagerAblegen {
+public final class EreignisseInEinemNeuenEreignislagerAblegen {
 
     @Rule
-    public final DatenbankRegel dbt = new DatenbankRegel();
+    public final DatenbankRegel datenbankRegel = new DatenbankRegel();
+
+    private Uhr uhr = new TestUhr();
 
     @Before
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
@@ -28,9 +33,9 @@ public final class EreignisseImEreignislagerAblegen {
         aggregat.einenZustandÄndern(42L);
         aggregat.einenZustandÄndern(43L);
 
-        final EntityManager entityManager = this.dbt.getEntityManager();
+        final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final HibernateEventStore<TestAggregat, Long> store = new HibernateEventStore<>(entityManager);
+        final HibernateEventStore<TestAggregat, Long> store = new HibernateEventStore<>(entityManager, this.uhr);
         store.neuenEreignisstromErzeugen("test-strom", aggregat.getÄnderungen());
         entityManager.flush();
         entityManager.clear();
@@ -38,18 +43,18 @@ public final class EreignisseImEreignislagerAblegen {
 
     @Test
     public void dann_wird_die_versionsnummer_des_ereignisstroms_erhöht() {
-        final EntityManager entityManager = this.dbt.getEntityManager();
+        final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final JpaEreignisstrom materialisierterEreignisstrom = entityManager.find(JpaEreignisstrom.class, "test-strom");
+        final JpaEreignisstrom rematerialisiert = entityManager.find(JpaEreignisstrom.class, "test-strom");
         final JpaEreignisstrom x = new JpaEreignisstrom("test-strom");
         x.setVersion(3L);
-        assertThat(materialisierterEreignisstrom).isEqualTo(x);
+        assertThat(rematerialisiert).isEqualTo(x);
 
     }
 
     @Test
     public void dann_werden_die_ereignisse_gespeichert() {
-        final EntityManager entityManager = this.dbt.getEntityManager();
+        final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
         final TypedQuery<JpaDomänenereignisUmschlag> query = entityManager.createQuery(
                 "SELECT umschlag from JpaDomänenereignisUmschlag umschlag "
@@ -58,9 +63,12 @@ public final class EreignisseImEreignislagerAblegen {
                 JpaDomänenereignisUmschlag.class);
 
         query.setParameter("name", "test-strom");
-        final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
-        assertThat(resultList.size()).isEqualTo(2);
-        assertThat(resultList.stream().map(JpaDomänenereignisUmschlag<TestAggregat>::öffnen).collect(Collectors.toList()))
-                .containsExactly(new ZustandWurdeGeändert(42L), new ZustandWurdeGeändert(43L));
+
+        final List<Domänenereignis<TestAggregat>> domänenereignisse = query.getResultList().stream()
+                .map(JpaDomänenereignisUmschlag<TestAggregat>::öffnen)
+                .collect(Collectors.toList());
+
+        assertThat(domänenereignisse)
+            .containsExactly(new ZustandWurdeGeändert(42L), new ZustandWurdeGeändert(43L));
     }
 }

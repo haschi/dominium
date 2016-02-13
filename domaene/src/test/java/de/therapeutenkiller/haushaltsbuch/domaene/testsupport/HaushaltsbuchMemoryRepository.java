@@ -87,8 +87,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
         this.ereignislager.ereignisseDemStromHinzufügen(
                 streamName,
-                haushaltsbuch.getÄnderungen(),
-                haushaltsbuch.initialVersion);
+                haushaltsbuch.initialVersion, haushaltsbuch.getÄnderungen()
+        );
     }
 
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {

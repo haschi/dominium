@@ -4,6 +4,7 @@ import de.therapeutenkiller.dominium.persistenz.Uhr
 
 import java.time.Clock
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -14,8 +15,8 @@ class TestUhr implements Uhr {
             ZoneId.systemDefault().normalized());
 
     @Override
-    public ZonedDateTime jetzt() {
-        return ZonedDateTime.now(this.uhr);
+    public LocalDateTime jetzt() {
+        return LocalDateTime.now(uhr);
     }
 
     public static void stellen(final String uhrzeit) {

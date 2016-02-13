@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.persistenz.jpa;
+package de.therapeutenkiller.testing;
 
 import java.util.function.Consumer;
 

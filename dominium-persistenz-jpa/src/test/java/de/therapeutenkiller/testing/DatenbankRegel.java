@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.persistenz.jpa;
+package de.therapeutenkiller.testing;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -8,8 +8,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.function.Consumer;
 
+/**
+ * Die Regel bewirkt in einem JUnit Test, dass alle Testmethoden
+ * innerhalb einer Datenbank-Transaktion ausgeführt werden.
+ */
 public class DatenbankRegel implements TestRule {
     private final ThreadLocal<EntityManager> em = new ThreadLocal<>();
 
@@ -33,10 +36,6 @@ public class DatenbankRegel implements TestRule {
 
     public final EntityManager getEntityManager() {
         return this.em.get();
-    }
-
-    public final void run(final Consumer<EntityManager> task) {
-        task.accept(this.em.get());
     }
 
     public final void transaction(final ThrowingConsumer<EntityManager> task) {

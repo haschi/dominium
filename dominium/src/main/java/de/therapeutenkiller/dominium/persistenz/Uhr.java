@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public interface Uhr {
-    ZonedDateTime jetzt();
+    LocalDateTime jetzt();
 }

@@ -13,6 +13,11 @@ class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
         super(identitätsmerkmal)
     }
 
+    public TestAggregat(final TestSchnappschuss schnappschuss) {
+        super(schnappschuss)
+        this.zustand = schnappschuss.zustand
+    }
+
     @Override
     Schnappschuss<TestAggregat, Long> schnappschussErstellen() {
         return null

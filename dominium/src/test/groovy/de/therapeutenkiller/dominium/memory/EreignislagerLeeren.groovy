@@ -42,7 +42,7 @@ class EreignislagerLeeren extends Specification {
 
         when:
         lager.clear()
-        lager.ereignisseDemStromHinzufügen("test-strom", [], 1L)
+        lager.ereignisseDemStromHinzufügen("test-strom", 1L, [])
 
         then:
         thrown IllegalArgumentException

@@ -12,7 +12,7 @@ public final class JpaEreignisMetaDaten implements Serializable {
 
     private long version;
 
-    private JpaEreignisMetaDaten() {
+    protected JpaEreignisMetaDaten() {
         this.name = StringUtils.EMPTY;
         this.version = 0;
     }

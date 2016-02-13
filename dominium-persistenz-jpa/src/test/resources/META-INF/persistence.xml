@@ -9,6 +9,8 @@
         <class>de.therapeutenkiller.dominium.persistenz.Ereignisstrom</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisMetaDaten</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
