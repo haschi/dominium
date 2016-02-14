@@ -3,11 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.Ereignislager;
-import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Uhr;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
-import org.apache.commons.lang3.NotImplementedException;
+import de.therapeutenkiller.dominium.persistenz.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -83,7 +79,12 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
 
     @Override
     public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
-            throws IOException {
+            throws EreignisstromNichtVorhanden {
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
+        if (strom == null) {
+            throw new EreignisstromNichtVorhanden();
+        }
+
         final JpaSchnappschussUmschlag<A, I> umschlag = new JpaSchnappschussUmschlag<>(
                 streamName,
                 this.uhr.jetzt(),
@@ -93,7 +94,12 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) {
+    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) throws EreignisstromNichtVorhanden {
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
+        if (strom == null) {
+            throw new EreignisstromNichtVorhanden();
+        }
+
         final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaSchnappschussUmschlag i "
                         + "WHERE i.meta.streamName = :name "

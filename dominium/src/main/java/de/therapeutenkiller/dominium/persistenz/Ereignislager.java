@@ -4,7 +4,6 @@ import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +25,7 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
 
     List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) throws IOException;
+    void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) throws EreignisstromNichtVorhanden;
 
-    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(String streamName);
+    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(String streamName) throws EreignisstromNichtVorhanden;
 }

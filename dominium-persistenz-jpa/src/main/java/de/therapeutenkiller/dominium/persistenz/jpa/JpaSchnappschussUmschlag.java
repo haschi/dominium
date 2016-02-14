@@ -25,9 +25,15 @@ public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, I>, I>
     public  JpaSchnappschussUmschlag(
             final String streamName,
             final LocalDateTime jetzt,
-            final Schnappschuss<A, I> snapshot) throws IOException {
+            final Schnappschuss<A, I> snapshot) {
+
         this.meta = new JpaSchnappschussMetaDaten(streamName, jetzt);
-        this.snapshot = EventSerializer.serialize(snapshot);
+
+        try {
+            this.snapshot = EventSerializer.serialize(snapshot);
+        } catch (final IOException grund) {
+            throw new Serialisierungsfehler(grund);
+        }
     }
 
     protected JpaSchnappschussUmschlag() {
