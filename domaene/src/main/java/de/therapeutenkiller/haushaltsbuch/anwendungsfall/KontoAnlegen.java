@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
@@ -23,7 +25,8 @@ public final class KontoAnlegen {
         this.anfangsbestandBuchen = anfangsbestandBuchen;
     }
 
-    public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando) {
+    public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando)
+            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
 
         final KontoAnlegenKommando anlegenKommando = new KontoAnlegenKommando(
                 kommando.haushaltsbuchId,
@@ -40,8 +43,10 @@ public final class KontoAnlegen {
         this.anfangsbestandBuchen.ausführen(anfangsbestandBuchenKommando);
     }
 
-    public void ausführen(@Observes final KontoAnlegenKommando kommando) {
-        final Haushaltsbuch haushaltsbuch = this.getRepository().findBy(kommando.haushaltsbuchId);
+    public void ausführen(@Observes final KontoAnlegenKommando kommando)
+            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
+        final Haushaltsbuch haushaltsbuch = this.getRepository()
+                .findBy(kommando.haushaltsbuchId);
 
         haushaltsbuch.neuesKontoHinzufügen(kommando.kontoname, kommando.kontoart);
         this.repository.save(haushaltsbuch);

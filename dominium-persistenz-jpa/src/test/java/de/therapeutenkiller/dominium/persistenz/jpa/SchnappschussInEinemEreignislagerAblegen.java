@@ -20,7 +20,7 @@ public final class SchnappschussInEinemEreignislagerAblegen {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private HibernateEventStore<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat, Long> store;
     private TestUhr uhr = new TestUhr();
 
     @SuppressWarnings("LawOfDemeter")
@@ -32,7 +32,7 @@ public final class SchnappschussInEinemEreignislagerAblegen {
 
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_angelegt() {
-        this.store = new HibernateEventStore<>(this.datenbankRegel.getEntityManager(), this.uhr);
+        this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
         this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<>());
 
         this.uhr.stellen(LocalDateTime.now());

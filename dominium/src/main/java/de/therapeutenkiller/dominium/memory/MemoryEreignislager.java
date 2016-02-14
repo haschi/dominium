@@ -52,8 +52,10 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Override
     public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
-                                                    final String streamName,
-                                                    final long erwarteteVersion, final Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff {
+            final String streamName,
+            final long erwarteteVersion,
+            final Collection<Domänenereignis<A>> domänenereignisse)
+            throws KonkurrierenderZugriff {
 
         if (!this.ereignisströme.containsKey(streamName)) {
             throw new IllegalArgumentException();

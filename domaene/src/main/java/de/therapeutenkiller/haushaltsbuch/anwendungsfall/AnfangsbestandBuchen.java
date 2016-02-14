@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
@@ -21,7 +23,8 @@ public final class AnfangsbestandBuchen {
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }
 
-    public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando) {
+    public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando)
+            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
 
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(kommando.haushaltsbuchId);
 

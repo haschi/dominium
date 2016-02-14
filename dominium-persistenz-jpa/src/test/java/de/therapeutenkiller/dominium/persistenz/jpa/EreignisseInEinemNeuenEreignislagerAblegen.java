@@ -35,7 +35,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegen {
 
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final HibernateEventStore<TestAggregat, Long> store = new HibernateEventStore<>(entityManager, this.uhr);
+        final JpaEreignislager<TestAggregat, Long> store = new JpaEreignislager<>(entityManager, this.uhr);
         store.neuenEreignisstromErzeugen("test-strom", aggregat.getÄnderungen());
         entityManager.flush();
         entityManager.clear();
@@ -46,9 +46,9 @@ public final class EreignisseInEinemNeuenEreignislagerAblegen {
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
         final JpaEreignisstrom rematerialisiert = entityManager.find(JpaEreignisstrom.class, "test-strom");
-        final JpaEreignisstrom x = new JpaEreignisstrom("test-strom");
-        x.setVersion(3L);
-        assertThat(rematerialisiert).isEqualTo(x);
+        final JpaEreignisstrom einEreignisstrom = new JpaEreignisstrom("test-strom");
+        einEreignisstrom.setVersion(3L);
+        assertThat(rematerialisiert).isEqualTo(einEreignisstrom);
 
     }
 

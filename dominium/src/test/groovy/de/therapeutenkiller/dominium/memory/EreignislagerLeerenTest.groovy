@@ -7,7 +7,7 @@ import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import spock.lang.Specification
 
-class EreignislagerLeeren extends Specification {
+class EreignislagerLeerenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
     MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr);

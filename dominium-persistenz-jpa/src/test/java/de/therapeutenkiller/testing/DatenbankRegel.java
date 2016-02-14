@@ -24,7 +24,9 @@ public class DatenbankRegel implements TestRule {
                 final EntityManager entityManager = emf.createEntityManager();
                 DatenbankRegel.this.em.set(entityManager);
                 try {
-                    DatenbankRegel.this.transaction(x -> { base.evaluate(); });
+                    DatenbankRegel.this.transaction(x -> {
+                        base.evaluate();
+                    });
                 } finally {
                     entityManager.close();
                     emf.close();

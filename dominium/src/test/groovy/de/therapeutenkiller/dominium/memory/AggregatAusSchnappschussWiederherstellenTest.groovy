@@ -5,7 +5,7 @@ import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschus
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import spock.lang.Specification
 
-class AggregatAusSchnappschussWiederherstellen extends Specification {
+class AggregatAusSchnappschussWiederherstellenTest extends Specification {
 
     def "Aggregat aus Schnappschuss wiederherstellen"() {
         given:

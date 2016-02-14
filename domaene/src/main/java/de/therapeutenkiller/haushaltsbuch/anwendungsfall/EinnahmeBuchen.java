@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
 
 import javax.ejb.Singleton;
@@ -17,7 +19,8 @@ public final class EinnahmeBuchen {
         this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }
 
-    public void ausführen(@Observes final EinnahmeBuchenKommando kommando) {
+    public void ausführen(@Observes final EinnahmeBuchenKommando kommando)
+            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
 
         // TODO ggf. später prüfen, ob die Kontenarten korrekt sind.
         this.buchungssatzHinzufügen.ausführen(

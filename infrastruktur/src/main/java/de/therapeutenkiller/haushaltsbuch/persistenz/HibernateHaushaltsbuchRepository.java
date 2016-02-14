@@ -1,51 +1,40 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.dominium.aggregat.Domänenereignis;
-import de.therapeutenkiller.dominium.aggregat.Initialereignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
-import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.interceptor.Interceptor;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Priority(Interceptor.Priority.APPLICATION + 10)
 @Singleton
 public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepository {
 
-    private final HaushaltsbuchEventStore eventStore;
+    private final HaushaltsbuchEreignislager eventStore;
 
     @Inject
-    public HibernateHaushaltsbuchRepository(final HaushaltsbuchEventStore eventStore) {
+    public HibernateHaushaltsbuchRepository(final HaushaltsbuchEreignislager eventStore) {
 
         this.eventStore = eventStore;
     }
 
     @Override
-    public void leeren() {
-        throw new NotImplementedException("Nicht implementiert.");
-    }
-
-    @Override
     public Haushaltsbuch findBy(final UUID identitätsmerkmal) {
-
-        final Initialereignis<Haushaltsbuch, UUID> initialereignis = this.eventStore.getInitialereignis(
-                this.streamName(identitätsmerkmal));
-
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch((HaushaltsbuchWurdeAngelegt)initialereignis);
 
         final List<Domänenereignis<Haushaltsbuch>> ereignisListe = this.eventStore.getEreignisListe(
                 this.streamName(identitätsmerkmal),
-                2,
-                Integer.MAX_VALUE);
+                Versionsbereich.ALLE_VERSIONEN);
 
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal);
         ereignisListe.forEach(ereignis -> ereignis.anwendenAuf(haushaltsbuch));
+
         return haushaltsbuch;
     }
 
@@ -69,10 +58,10 @@ public final class HibernateHaushaltsbuchRepository implements HaushaltsbuchRepo
     }
 
     @Override
-    public void save(final Haushaltsbuch haushaltsbuch) {
+    public void save(final Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff {
         this.eventStore.ereignisseDemStromHinzufügen(
                 this.streamName(haushaltsbuch),
-                haushaltsbuch.getÄnderungen(),
-                Optional.of(haushaltsbuch.getVersion()));
+                haushaltsbuch.getVersion(),
+                haushaltsbuch.getÄnderungen());
     }
 }

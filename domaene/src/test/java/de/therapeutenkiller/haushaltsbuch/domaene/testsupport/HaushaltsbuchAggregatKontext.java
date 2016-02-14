@@ -2,7 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import org.slf4j.Logger;
 
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
@@ -20,10 +19,7 @@ public class HaushaltsbuchAggregatKontext {
 
     @Inject
     public HaushaltsbuchAggregatKontext(
-            final HaushaltsbuchMemoryRepository repository,
-            @SuppressWarnings("CdiInjectionPointsInspection") final Logger log) {
-        log.warn("HaushaltsbuchAggregatKontext(%s)", repository.toString());
-
+            final HaushaltsbuchMemoryRepository repository) {
         this.repository = repository;
     }
 

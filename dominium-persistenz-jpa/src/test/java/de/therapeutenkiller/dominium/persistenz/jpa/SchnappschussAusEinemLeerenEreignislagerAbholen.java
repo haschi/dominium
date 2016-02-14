@@ -18,12 +18,12 @@ public final class SchnappschussAusEinemLeerenEreignislagerAbholen {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private HibernateEventStore<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat, Long> store;
     private TestUhr uhr = new TestUhr();
 
     @Before
     public void angenommen_ich_habe_ein_ereignislager_ohne_schnappschüsse_angelegt() {
-        this.store = new HibernateEventStore<>(this.datenbankRegel.getEntityManager(), this.uhr);
+        this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
         this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<>());
     }
 

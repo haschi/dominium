@@ -21,7 +21,7 @@
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
-        <checkstyle.version>6.13</checkstyle.version>
+        <checkstyle.version>6.14.1</checkstyle.version>
 
         <!-- Version für die Codierungunterastützung mit Richtlinien und Aspekten -->
         <version.de.therapeutenkiller.coding>0.0.24</version.de.therapeutenkiller.coding>
@@ -37,6 +37,8 @@
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 
         <skipTests>false</skipTests>
+        <groovy.version>2.4.5</groovy.version>
+        <groovy.classifier>indy</groovy.classifier>
     </properties>
 
     <scm>
@@ -49,7 +51,13 @@
             <dependency>
                 <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
                 <artifactId>dominium</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <artifactId>dominium-persistenz-jpa</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -57,12 +65,6 @@
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            <!--dependency wird indirekt durch de.therapeutenkiller:aspekte gezogen>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>1.8.7</version>
-            </dependency-->
 
             <!-- auslagern nach test.bom -->
             <dependency>
@@ -110,13 +112,28 @@
                 <artifactId>spock-core</artifactId>
                 <version>1.0-groovy-2.4</version>
                 <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Spock: zum Mocken erforderlich -->
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>3.2.0</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>2.4.5</version>
-                <scope>test</scope>
+                <version>${groovy.version}</version>
+                <classifier>${groovy.classifier}</classifier>
             </dependency>
 
             <!-- auslagern nach test.bom -->
@@ -124,6 +141,30 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-java8</artifactId>
+                <version>1.2.4</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>1.2.4</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- auslagern nach test.bom -->
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-weld</artifactId>
+                <version>1.2.4</version>
                 <scope>test</scope>
             </dependency>
 
@@ -295,9 +336,8 @@
                 </plugin>
 
                 <!-- gmavenplus (für Tests mit Spock-Framework -->
+                <!-- ersetzt durch groovy-eclipse
                 <plugin>
-                    <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                    visit https://github.com/groovy/GMavenPlus/wiki -->
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
                     <version>1.4</version>
@@ -305,19 +345,20 @@
                         <execution>
 
                                 <goals>
-                                    <goal>addSources</goal>
-                                    <goal>addTestSources</goal>
-                                    <!--goal>generateStubs</goal -->
                                     <goal>compile</goal>
-                                    <!--goal>testGenerateStubs</goal-->
                                     <goal>testCompile</goal>
-                                    <goal>removeStubs</goal>
-                                    <goal>removeTestStubs</goal>
                                 </goals>
-
                         </execution>
                     </executions>
+                    <configuration>
+                        <targetBytecode>1.8</targetBytecode>
+                        <warningLevel>2</warningLevel>
+                        <invokeDynamic>true</invokeDynamic>
+
+                    </configuration>
+
                 </plugin>
+                -->
 
                 <!-- checkstyle -->
                 <!-- TODO: auslagern nach test.bom -->
@@ -397,22 +438,12 @@
 
         <plugins>
             <!-- gmavenplus (für Tests mit Spock-Framework -->
-            <plugin>
-                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
-                visit https://github.com/groovy/GMavenPlus/wiki -->
+            <!--plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
+                <version>1.5</version>
+            </plugin-->
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
@@ -421,6 +452,29 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- 2.8.0-01 and later require maven-compiler-plugin 3.1 or higher -->
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-compiler</artifactId>
+                        <version>2.9.2-01</version>
+                    </dependency>
+                    <!-- for 2.8.0-01 and later you must have an explicit dependency on groovy-eclipse-batch -->
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-batch</artifactId>
+                        <version>2.4.3-01</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>

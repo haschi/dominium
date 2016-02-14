@@ -4,12 +4,12 @@ import java.util.function.Consumer;
 
 @FunctionalInterface
 public interface ThrowingConsumer<T>  extends Consumer<T> {
-    void doAccept(T t)
+    void doAccept(T parameter)
             throws Throwable;
 
-    default void accept(T t) {
+    default void accept(T parameter) {
         try {
-            this.doAccept(t);
+            this.doAccept(parameter);
         } catch (Error | RuntimeException e) {
             throw e;
         } catch (Throwable throwable) {

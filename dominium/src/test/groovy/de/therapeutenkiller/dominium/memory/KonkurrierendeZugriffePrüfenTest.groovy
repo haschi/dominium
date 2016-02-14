@@ -6,7 +6,7 @@ import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import spock.lang.Specification
 
-class KonkurrierendeZugriffePrüfen extends  Specification {
+class KonkurrierendeZugriffePrüfenTest extends  Specification {
 
     Uhr uhr = new TestUhr()
 

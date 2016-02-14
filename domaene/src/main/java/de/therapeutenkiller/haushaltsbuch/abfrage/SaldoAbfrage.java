@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.abfrage;
 
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
@@ -19,7 +20,7 @@ public class SaldoAbfrage {
     //    this.repository = repository;
     //}
 
-    public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) {
+    public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) throws EreignisstromNichtVorhanden {
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
         return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD LoD TODO
     }

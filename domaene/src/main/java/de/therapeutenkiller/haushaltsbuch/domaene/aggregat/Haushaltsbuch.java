@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
@@ -201,7 +203,8 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     public void anfangsbestandBuchen(
             final String kontoname,
             final MonetaryAmount betrag,
-            final BuchungssatzHinzufügen buchungssatzHinzufügen) {
+            final BuchungssatzHinzufügen buchungssatzHinzufügen)
+            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
         if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
             this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {

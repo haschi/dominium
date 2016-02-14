@@ -6,7 +6,7 @@ import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschus
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class SchnappschüsseAblegen extends Specification {
+class SchnappschüsseAblegenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
 

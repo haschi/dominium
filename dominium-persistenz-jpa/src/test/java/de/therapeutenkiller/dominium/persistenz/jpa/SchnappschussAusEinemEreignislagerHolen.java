@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -21,7 +20,7 @@ public final class SchnappschussAusEinemEreignislagerHolen {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private HibernateEventStore<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat, Long> store;
     private TestUhr uhr = new TestUhr();
 
     @SuppressWarnings("LawOfDemeter")
@@ -40,7 +39,7 @@ public final class SchnappschussAusEinemEreignislagerHolen {
 
     @Before
     public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws EreignisstromNichtVorhanden {
-        this.store = new HibernateEventStore<>(this.datenbankRegel.getEntityManager(), this.uhr);
+        this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
         this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<>());
 
         final LocalDateTime jetzt = LocalDateTime.now();

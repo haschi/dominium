@@ -37,6 +37,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
+            <classifier>${groovy.classifier}</classifier>
         </dependency>
 
         <!-- compile -->

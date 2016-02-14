@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
@@ -24,11 +25,6 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         return this.aktuell;
     }
 
-    @Override
-    public final void leeren() {
-        this.ereignislager.leeren();
-    }
-
     @Inject
     public HaushaltsbuchMemoryRepository(final HaushaltsbuchEreignislager ereignislager) {
 
@@ -36,7 +32,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
     }
 
     @Override
-    public final Haushaltsbuch findBy(final UUID identitätsmerkmal) {
+    public final Haushaltsbuch findBy(final UUID identitätsmerkmal) throws EreignisstromNichtVorhanden {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
         final Optional<Schnappschuss<Haushaltsbuch, UUID>> snapshot = this.ereignislager.getNeuesterSchnappschuss(

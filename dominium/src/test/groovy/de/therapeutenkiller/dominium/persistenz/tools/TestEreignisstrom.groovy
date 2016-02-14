@@ -14,7 +14,7 @@ class TestEreignisstrom extends Ereignisstrom<TestEreignisMetaDaten> {
 
     @Override
     public long getVersion() {
-        return this.version;
+        return super.version
     }
 
     @Override

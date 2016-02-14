@@ -3,24 +3,27 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.*;
+import de.therapeutenkiller.dominium.persistenz.Ereignislager;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+import de.therapeutenkiller.dominium.persistenz.Uhr;
+import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
+public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
 
     private final EntityManager entityManager;
     private final Uhr uhr;
 
-    public HibernateEventStore(final EntityManager entityManager, final Uhr uhr) {
+    public JpaEreignislager(final EntityManager entityManager, final Uhr uhr) {
 
         this.entityManager = entityManager;
         this.uhr = uhr;
@@ -94,7 +97,8 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) throws EreignisstromNichtVorhanden {
+    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
+            final String streamName) throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
             throw new EreignisstromNichtVorhanden();

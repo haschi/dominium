@@ -12,6 +12,7 @@ import groovy.transform.builder.InitializerStrategy
 
 @ToString
 @Builder(builderStrategy = InitializerStrategy)
+@CompileStatic
 class TestSchnappschuss extends Wertobjekt implements Schnappschuss<TestAggregat, Long>, Serializable {
 
     long zustand

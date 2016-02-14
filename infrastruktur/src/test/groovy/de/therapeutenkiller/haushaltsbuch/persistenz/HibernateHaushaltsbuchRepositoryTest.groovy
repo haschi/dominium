@@ -20,7 +20,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         given: "Angenommen ich habe ein Repository und ein Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
 
         def hhb = new Haushaltsbuch(UUID.randomUUID())
         HibernateHaushaltsbuchRepository repository = new HibernateHaushaltsbuchRepository(eventStore);
@@ -43,7 +43,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         given: "Angenommen ich habe ein Repository und ein neues Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore)
@@ -64,7 +64,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
     def "Für bestehende aggregate werden die aufgetretenen Ereignisse gespeichert"() {
         given:
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEventStore eventStore = new HaushaltsbuchEventStore(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore);

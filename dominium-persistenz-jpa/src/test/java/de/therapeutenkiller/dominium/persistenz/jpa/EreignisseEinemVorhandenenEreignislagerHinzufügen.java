@@ -27,7 +27,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügen {
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
     private EntityManager entityManager;
-    private HibernateEventStore<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat, Long> store;
 
     private Uhr uhr = new TestUhr();
 
@@ -38,7 +38,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügen {
         aggregat.einenZustandÄndern(43L);
 
         this.entityManager = this.datenbankRegel.getEntityManager();
-        this.store = new HibernateEventStore<>(this.entityManager, this.uhr);
+        this.store = new JpaEreignislager<>(this.entityManager, this.uhr);
         this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<Domänenereignis<TestAggregat>>() {
             {
                 add(new ZustandWurdeGeändert(42L));

@@ -7,7 +7,7 @@ import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class EreignisseImEreignislagerAblegen extends Specification {
+class EreignisseImEreignislagerAblegenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
 

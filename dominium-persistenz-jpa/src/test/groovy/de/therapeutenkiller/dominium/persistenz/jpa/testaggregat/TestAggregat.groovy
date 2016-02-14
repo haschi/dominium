@@ -4,7 +4,6 @@ import de.therapeutenkiller.dominium.modell.Aggregatwurzel
 import de.therapeutenkiller.dominium.modell.Schnappschuss
 import groovy.transform.CompileStatic
 
-@CompileStatic
 class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
 
     long zustand

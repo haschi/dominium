@@ -41,6 +41,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
+            <classifier>${groovy.classifier}</classifier>
         </dependency>
 
         <!-- Erforderlich für CDI Annotationen in der Domäne -->
@@ -94,6 +95,11 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>

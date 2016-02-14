@@ -32,7 +32,9 @@ public class DomänenereignisUmschlagPersistieren {
         this.entityManager.flush();
         this.entityManager.clear();
 
-        final JpaDomänenereignisUmschlag materialisiert = this.entityManager.find(JpaDomänenereignisUmschlag.class, meta);
+        final JpaDomänenereignisUmschlag materialisiert = this.entityManager.find(
+                JpaDomänenereignisUmschlag.class, meta);
+
         assertThat(materialisiert).isEqualTo(umschlag);
     }
 }
