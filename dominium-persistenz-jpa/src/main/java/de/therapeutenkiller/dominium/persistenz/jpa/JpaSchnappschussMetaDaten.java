@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 @Embeddable
 public class JpaSchnappschussMetaDaten implements Serializable {
     final String streamName;
-    final LocalDateTime jetzt;
+    final LocalDateTime erstellungszeitpunkt;
 
     public JpaSchnappschussMetaDaten(final String streamName, final LocalDateTime jetzt) {
         this.streamName = streamName;
-        this.jetzt = jetzt;
+        this.erstellungszeitpunkt = jetzt;
     }
 
     protected JpaSchnappschussMetaDaten() {
         this.streamName = StringUtils.EMPTY;
-        this.jetzt = null;
+        this.erstellungszeitpunkt = null;
     }
 }

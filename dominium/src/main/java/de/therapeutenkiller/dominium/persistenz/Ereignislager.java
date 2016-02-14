@@ -1,6 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz;
 
-import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
@@ -29,6 +28,5 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
 
     void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) throws IOException;
 
-    @DarfNullSein
     Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(String streamName);
 }

@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
@@ -93,6 +94,21 @@ public class HibernateEventStore<A extends Aggregatwurzel<A, I>, I>
 
     @Override
     public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final String streamName) {
-        return null;
+        final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
+                "SELECT i FROM JpaSchnappschussUmschlag i "
+                        + "WHERE i.meta.streamName = :name "
+                        + "ORDER BY i.meta.erstellungszeitpunkt DESC",
+                JpaSchnappschussUmschlag.class);
+
+        final List<JpaSchnappschussUmschlag> resultList = query
+                .setParameter("name", streamName)
+                .setMaxResults(1)
+                .getResultList();
+
+
+        final Stream<Schnappschuss<A, I>> schnappschussStream = resultList.stream()
+                .map(JpaSchnappschussUmschlag<A, I>::öffnen);
+
+        return schnappschussStream.findFirst();
     }
 }

@@ -60,7 +60,7 @@ class DomänenereignisseInUmschlagPacken extends Specification {
         umschlag.öffnen();
 
         then:
-        thrown IllegalArgumentException
+        thrown Serialisierungsfehler
     }
 
     def "Ereignisse können nicht aus dem Umschlag geholt werden, wenn eine Klasse fehlt"() {
@@ -74,6 +74,6 @@ class DomänenereignisseInUmschlagPacken extends Specification {
         umschlag.öffnen();
 
         then:
-        thrown IllegalArgumentException
+        thrown Serialisierungsfehler
     }
 }

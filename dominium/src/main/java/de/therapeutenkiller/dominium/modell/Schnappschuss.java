@@ -1,5 +1,7 @@
 package de.therapeutenkiller.dominium.modell;
 
+import java.io.Serializable;
+
 /**
  * Der Schnappschuss eines Aggregats.
  *
@@ -11,7 +13,7 @@ package de.therapeutenkiller.dominium.modell;
  * @param <A> Der Typ des Aggregats, zu dem der Schnappschuss gehört.
  * @param <T> Der Typ des Identitätsmerkmals des Aggregats zu dem der Schnappschuss gehört.
  */
-public interface Schnappschuss<A extends Aggregatwurzel<A, T>, T> {
+public interface Schnappschuss<A extends Aggregatwurzel<A, T>, T> extends Serializable {
     T getIdentitätsmerkmal();
 
     long getVersion();

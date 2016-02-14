@@ -46,10 +46,8 @@ public class JpaDomänenereignisUmschlag<A>
     public final Domänenereignis<A> getEreignis() {
         try {
             return (Domänenereignis<A>) EventSerializer.deserialize(this.ereignis);
-        } catch (final IOException exception) {
-            throw new IllegalArgumentException("Geht nicht!", exception);
-        } catch (final ClassNotFoundException exception) {
-            throw new IllegalArgumentException("Geht nicht.!", exception);
+        } catch (final IOException | ClassNotFoundException exception) {
+            throw new Serialisierungsfehler(exception);
         }
     }
 
