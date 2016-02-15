@@ -4,6 +4,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.testing.DatenbankRegel;
+import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public final class SchnappschussAusEinemLeerenEreignislagerAbholen {
+public final class SchnappschussAusEinemLeerenEreignislagerAbholenTest {
 
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();

@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 @SuppressWarnings("checkstyle:designforextension")
 @RunWith(CdiTestRunner.class)
 @Transactional
-public class EreignisstromPersistieren  {
+public class EreignisstromPersistierenTest {
 
     @Inject
     private EntityManager entityManager;

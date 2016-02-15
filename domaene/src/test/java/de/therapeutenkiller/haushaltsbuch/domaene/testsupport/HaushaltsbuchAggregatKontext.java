@@ -23,16 +23,8 @@ public class HaushaltsbuchAggregatKontext {
         this.repository = repository;
     }
 
-    public final void repositoryLeeren() {
-        this.repository.leeren();
-    }
-
     public final UUID aktuelleHaushaltsbuchId() {
         return this.repository.getAktuell();
-    }
-
-    public final void initialisieren() {
-        this.repositoryLeeren();
     }
 
     public final <T> void kommandoAusführen(final T kommando) {

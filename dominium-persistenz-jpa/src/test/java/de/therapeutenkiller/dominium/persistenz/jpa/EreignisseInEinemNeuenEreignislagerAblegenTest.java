@@ -5,6 +5,7 @@ import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
+import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnit4.class)
-public final class EreignisseInEinemNeuenEreignislagerAblegen {
+public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
     @Rule
     public final DatenbankRegel datenbankRegel = new DatenbankRegel();

@@ -10,10 +10,10 @@ class UmschlagErzeugenTest extends Specification {
         JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom")
 
         when: "ich ein Ereignis registriere"
-        def umschlag = ereignisstrom.registrieren(new ZustandWurdeGeändert(payload: 42L))
+        def umschlag = ereignisstrom.registrieren(new ZustandWurdeGeändert(42L))
 
         then: "werde ich einen Umschlag für das Ereignis erhalten"
-        umschlag.öffnen() == new ZustandWurdeGeändert(payload: 42L)
+        umschlag.öffnen() == new ZustandWurdeGeändert(42L)
     }
 
     def "Der Umschlag eines registrierten Ereignisses enthält Meta-Daten"() {
@@ -21,7 +21,7 @@ class UmschlagErzeugenTest extends Specification {
         JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom")
 
         when: "ich ein Ereignis registriere"
-        def umschlag = ereignisstrom.registrieren(new ZustandWurdeGeändert(payload: 42L))
+        def umschlag = ereignisstrom.registrieren(new ZustandWurdeGeändert(42L))
 
         then: "werde ich Meta-Daten um Umschlag des Ereignisses erhalten"
         umschlag.metaDaten.version == 1

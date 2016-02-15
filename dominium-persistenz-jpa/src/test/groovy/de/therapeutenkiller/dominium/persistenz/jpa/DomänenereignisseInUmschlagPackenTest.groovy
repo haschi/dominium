@@ -8,12 +8,12 @@ import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert
 import spock.lang.Specification
 
-class DomänenereignisseInUmschlagPacken extends Specification {
+class DomänenereignisseInUmschlagPackenTest extends Specification {
 
     def "Serialisierung eines Ereignisses"() {
 
         given:
-        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(payload: 42L);
+        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(42L);
 
         when:
         byte[] ergebnis = EventSerializer.serialize(ereignis);
@@ -25,7 +25,7 @@ class DomänenereignisseInUmschlagPacken extends Specification {
     def "Domänenereignis Umschlag öffnen"() {
 
         given: "ich habe ein Domänenereignis-Umschlag mit einem Ereignis"
-        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(payload: 42L)
+        ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(42L)
         JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten("test-strom", 1L)
         JpaDomänenereignisUmschlag<TestAggregat> umschlag = new JpaDomänenereignisUmschlag<>(ereignis, meta)
 

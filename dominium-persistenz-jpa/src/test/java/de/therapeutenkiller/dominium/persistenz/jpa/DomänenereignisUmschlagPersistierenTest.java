@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("checkstyle:designforextension")
 @RunWith(CdiTestRunner.class)
 @Transactional
-public class DomänenereignisUmschlagPersistieren {
+public class DomänenereignisUmschlagPersistierenTest {
 
     @Inject
     EntityManager entityManager;

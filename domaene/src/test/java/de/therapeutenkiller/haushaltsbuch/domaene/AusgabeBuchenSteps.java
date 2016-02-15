@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
@@ -49,7 +50,8 @@ public final class AusgabeBuchenSteps {
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
-    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) { // NOPMD Datenfluss
+    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände)
+            throws EreignisstromNichtVorhanden {
 
         for (final Kontostand kontostand : kontostände) {
             final Saldo saldo = this.kontoSaldieren.abfragen(

@@ -7,6 +7,7 @@ import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
+import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 @RunWith(JUnit4.class)
-public final class EreignisseEinemVorhandenenEreignislagerHinzufügen {
+public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();

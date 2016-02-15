@@ -5,7 +5,9 @@ import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
+import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public final class SchnappschussAusEinemEreignislagerHolen {
+public final class SchnappschussAusEinemEreignislagerHolenTest {
 
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
@@ -24,18 +26,18 @@ public final class SchnappschussAusEinemEreignislagerHolen {
     private TestUhr uhr = new TestUhr();
 
     @SuppressWarnings("LawOfDemeter")
-    private TestSchnappschuss alterSchnappschuss = new TestSchnappschuss(
+    private TestSchnappschuss alterSchnappschuss = new TestSchnappschuss(/*
             TestSchnappschuss.createInitializer()
                     .identitätsmerkmal(1L)
                     .version(1L)
-                    .zustand(42L));
+                    .zustand(42L)*/);
 
     @SuppressWarnings("LawOfDemeter")
-    private TestSchnappschuss neuerSchnappschuss = new TestSchnappschuss(
+    private TestSchnappschuss neuerSchnappschuss = new TestSchnappschuss(/*
             TestSchnappschuss.createInitializer()
                     .identitätsmerkmal(1L)
                     .version(2L)
-                    .zustand(43L));
+                    .zustand(43L)*/);
 
     @Before
     public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws EreignisstromNichtVorhanden {

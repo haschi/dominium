@@ -27,11 +27,6 @@ public final class HaushaltsbuchführungBeginnenSteps {
         this.kontext = kontext;
     }
 
-    @Before
-    public void repositoryLeeren() {
-        this.kontext.initialisieren();
-    }
-
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
         this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
@@ -39,7 +34,6 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Wenn("^ich nicht mit der Haushaltsbuchführung beginne$")
     public void ich_nicht_mit_der_Haushaltsbuchführung_beginne() {
-        this.kontext.repositoryLeeren();
     }
 
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben$")

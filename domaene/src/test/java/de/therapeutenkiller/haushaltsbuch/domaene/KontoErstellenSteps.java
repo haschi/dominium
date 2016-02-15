@@ -5,6 +5,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
@@ -66,7 +67,8 @@ public final class KontoErstellenSteps {
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
     public void und_das_Konto_wird_einen_Saldo_besitzen(
             final String kontoname,
-            @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
+            @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
+            throws EreignisstromNichtVorhanden {
 
         final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
         final Saldo tatsächlicherSaldo = this.saldieren.abfragen(haushaltsbuchId, kontoname);

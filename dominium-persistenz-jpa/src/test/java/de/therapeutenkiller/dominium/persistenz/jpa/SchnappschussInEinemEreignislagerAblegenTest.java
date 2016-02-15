@@ -5,6 +5,7 @@ import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
+import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public final class SchnappschussInEinemEreignislagerAblegen {
+public final class SchnappschussInEinemEreignislagerAblegenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
@@ -24,11 +25,11 @@ public final class SchnappschussInEinemEreignislagerAblegen {
     private TestUhr uhr = new TestUhr();
 
     @SuppressWarnings("LawOfDemeter")
-    private TestSchnappschuss testSchnappschuss = new TestSchnappschuss(
+    private TestSchnappschuss testSchnappschuss = new TestSchnappschuss(/*
             TestSchnappschuss.createInitializer()
             .identitätsmerkmal(1L)
             .version(1L)
-            .zustand(42L));
+            .zustand(42L)*/);
 
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_angelegt() {
