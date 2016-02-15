@@ -7,7 +7,6 @@ import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschu
 import de.therapeutenkiller.testing.DatenbankRegel;
 import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 

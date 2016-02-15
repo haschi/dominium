@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.Transform;
-import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
