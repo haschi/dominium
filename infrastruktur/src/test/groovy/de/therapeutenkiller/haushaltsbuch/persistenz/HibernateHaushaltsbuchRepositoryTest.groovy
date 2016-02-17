@@ -2,11 +2,14 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
+import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.persistence.EntityManager
 
 class HibernateHaushaltsbuchRepositoryTest extends Specification {
+
+    @Shared TestUhr uhr = new TestUhr()
 
     def "Repository benötigt einen JPA Entity Manager"() {
         when:
@@ -20,7 +23,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         given: "Angenommen ich habe ein Repository und ein Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager, uhr)
 
         def hhb = new Haushaltsbuch(UUID.randomUUID())
         HibernateHaushaltsbuchRepository repository = new HibernateHaushaltsbuchRepository(eventStore);
@@ -43,7 +46,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         given: "Angenommen ich habe ein Repository und ein neues Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager, uhr)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore)
@@ -64,7 +67,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
     def "Für bestehende aggregate werden die aufgetretenen Ereignisse gespeichert"() {
         given:
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
-        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager)
+        HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager, uhr)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore);

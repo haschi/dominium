@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends Entität<T> {
 
     private final List<Domänenereignis<A>> änderungen = new ArrayList<>();
-    private final long version;
+    private long version;
 
     protected Aggregatwurzel(final T identitätsmerkmal) {
         super(identitätsmerkmal);
@@ -21,6 +21,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends 
     protected final void bewirkt(final Domänenereignis<A> ereignis) {
         this.änderungen.add(ereignis);
         ereignis.anwendenAuf(this.getSelf());
+        this.version = this.version + 1L;
     }
 
     public final List<Domänenereignis<A>> getÄnderungen() {

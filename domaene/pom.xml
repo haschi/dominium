@@ -196,5 +196,36 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <profiles>
+            <profile>
+                <id>h2</id>
+                <build>
+                    <testResources>
+                        <testResource>
+                            <directory>src/test/resources-h2</directory>
+                        </testResource>
+                    </testResources>
+                </build>
+                <dependencies>
+
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <version>4.3.11.Final</version>
+                    <scope>test</scope>
+                    <!-- <version>5.0.7.Final</version> -->
+                </dependency>
+
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>1.4.190</version>
+                    <scope>test</scope>
+                </dependency>
+
+                </dependencies>
+            </profile>
+    </profiles>
 </project>
 

@@ -11,10 +11,12 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Singleton
 public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
     private Ereignislager<Haushaltsbuch, UUID> ereignislager;
@@ -75,6 +77,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         final List<Domänenereignis<Haushaltsbuch>> änderungen = haushaltsbuch.getÄnderungen();
 
         this.ereignislager.neuenEreignisstromErzeugen(streamName, änderungen);
+        this.aktuell = haushaltsbuch.getIdentitätsmerkmal();
     }
 
     @Override
@@ -83,7 +86,8 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
         this.ereignislager.ereignisseDemStromHinzufügen(
                 streamName,
-                haushaltsbuch.initialVersion, haushaltsbuch.getÄnderungen()
+                haushaltsbuch.getVersion(),
+                haushaltsbuch.getÄnderungen()
         );
     }
 

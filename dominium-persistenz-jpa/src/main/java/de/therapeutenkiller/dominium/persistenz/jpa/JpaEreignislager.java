@@ -8,6 +8,7 @@ import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
@@ -29,8 +31,9 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         this.uhr = uhr;
     }
 
+    @Transactional
     @Override
-    public final void neuenEreignisstromErzeugen(
+    public void neuenEreignisstromErzeugen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
@@ -40,10 +43,12 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         }
 
         this.entityManager.persist(ereignisstrom);
+        this.entityManager.flush();
     }
 
+    @Transactional
     @Override
-    public final void ereignisseDemStromHinzufügen(
+    public void ereignisseDemStromHinzufügen(
             final String streamName,
             final long erwarteteVersion, final Collection<Domänenereignis<A>> domänenereignisse)
             throws KonkurrierenderZugriff {
@@ -60,7 +65,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
+    public List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.name = :name "
@@ -80,8 +85,9 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
-    public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
+    public void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
             throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
@@ -97,7 +103,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
+    public Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
             final String streamName) throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {

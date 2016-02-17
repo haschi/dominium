@@ -32,7 +32,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     private final List<MemorySchnappschussUmschlag<A, I>> schnappschüsse = new ArrayList<>();
     private final Uhr uhr;
 
-    MemoryEreignislager(final Uhr uhr) {
+    public MemoryEreignislager(final Uhr uhr) {
         this.uhr = uhr;
     }
 

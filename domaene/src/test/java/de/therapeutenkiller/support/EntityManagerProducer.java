@@ -1,5 +1,7 @@
 package de.therapeutenkiller.support;
 
+import org.apache.deltaspike.jpa.api.transaction.TransactionScoped;
+
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -10,6 +12,7 @@ public final class EntityManagerProducer {
     // private EntityManagerFactory factory; // NOPMD
 
     @Produces
+    @TransactionScoped
     public EntityManager erzeugen() {
         return Persistence
                 .createEntityManagerFactory("test")
