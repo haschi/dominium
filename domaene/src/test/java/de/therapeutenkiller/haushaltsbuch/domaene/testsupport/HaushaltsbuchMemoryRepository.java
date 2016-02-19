@@ -59,8 +59,9 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
         final List<Domänenereignis<Haushaltsbuch>> stream = this.ereignislager.getEreignisListe(streamName, bereich);
 
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal);
+
         for (final Domänenereignis<Haushaltsbuch> ereignis : stream) {
-            ereignis.anwendenAuf(haushaltsbuch);
+            haushaltsbuch.anwenden(ereignis);
         }
 
         return haushaltsbuch;

@@ -14,6 +14,7 @@ import javax.inject.Singleton;
 import java.util.UUID;
 
 @Singleton
+@SuppressWarnings("checkstyle:designforextension")
 public class HaushaltsbuchführungBeginnen {
     private final HaushaltsbuchRepository repository;
 
@@ -21,7 +22,6 @@ public class HaushaltsbuchführungBeginnen {
     public HaushaltsbuchführungBeginnen(final HaushaltsbuchRepository repository) {
         this.repository = repository;
     }
-
 
     public void ausführen(@Observes final HaushaltsbuchführungBeginnenKommando kommando)
             throws KonkurrierenderZugriff {

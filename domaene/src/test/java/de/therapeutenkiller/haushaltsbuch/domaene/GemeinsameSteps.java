@@ -6,9 +6,6 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
-import org.apache.deltaspike.cdise.api.ContextControl;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-import org.apache.deltaspike.jpa.api.transaction.TransactionScoped;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

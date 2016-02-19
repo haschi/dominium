@@ -20,8 +20,12 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, T>, T> extends 
 
     protected final void bewirkt(final Domänenereignis<A> ereignis) {
         this.änderungen.add(ereignis);
-        ereignis.anwendenAuf(this.getSelf());
+        this.anwenden(ereignis);
+    }
+
+    public final void anwenden(final Domänenereignis<A> ereignis) {
         this.version = this.version + 1L;
+        ereignis.anwendenAuf(this.getSelf());
     }
 
     public final List<Domänenereignis<A>> getÄnderungen() {

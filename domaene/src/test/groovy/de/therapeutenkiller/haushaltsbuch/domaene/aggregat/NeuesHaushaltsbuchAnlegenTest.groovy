@@ -4,7 +4,7 @@ import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import spock.lang.Specification
 
-class HaushaltsbuchTest extends Specification {
+class NeuesHaushaltsbuchAnlegenTest extends Specification {
 
     def "Hinzufügen eines nicht existierenden Kontos"() {
 
@@ -16,14 +16,5 @@ class HaushaltsbuchTest extends Specification {
 
         then: "Dann wird eine ArgumentIstNullException ausgelöst."
         thrown ArgumentIstNullException
-    }
-
-    def "Das Konto Anfangsbestand wird automatisch angelegt"() {
-
-        given: "Angenommen ich lege ein neues Haushaltsbuch an"
-        def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
-
-        expect: "Dann wird das Konto Anfangsbestand existieren"
-        haushaltsbuch.kontoSuchen("Anfangsbestand") != null
     }
 }
