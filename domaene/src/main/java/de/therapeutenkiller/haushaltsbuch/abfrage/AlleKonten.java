@@ -21,7 +21,7 @@ public final class AlleKonten {
     }
 
     public ImmutableCollection<Konto> abfragen(final UUID haushaltsbuchId) throws AggregatNichtGefunden {
-        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
         return haushaltsbuch.getKonten(); // NOPMD LoD TODO
     }
 }

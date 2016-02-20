@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public interface HaushaltsbuchRepository {
 
-    Haushaltsbuch findBy(UUID identitätsmerkmal) throws AggregatNichtGefunden;
+    Haushaltsbuch suchen(UUID identitätsmerkmal) throws AggregatNichtGefunden;
 
-    void add(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
+    void hinzufügen(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
 
-    void save(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
+    void speichern(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
 
     ImmutableCollection<UUID> alle();
 }

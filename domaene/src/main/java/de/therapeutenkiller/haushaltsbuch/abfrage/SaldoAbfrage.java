@@ -21,7 +21,7 @@ public class SaldoAbfrage {
     //}
 
     public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) throws AggregatNichtGefunden {
-        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
         return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD LoD TODO
     }
 }

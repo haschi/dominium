@@ -25,9 +25,9 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
 
 
         when:
-        Haushaltsbuch haushaltsbuch2 = repository.findBy(haushaltsbuchId)
+        Haushaltsbuch haushaltsbuch2 = repository.suchen(haushaltsbuchId)
         haushaltsbuch2.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv)
-        repository.save(haushaltsbuch2)
+        repository.speichern(haushaltsbuch2)
 
         then:
         repository.getStream(haushaltsbuchId).size() == 2

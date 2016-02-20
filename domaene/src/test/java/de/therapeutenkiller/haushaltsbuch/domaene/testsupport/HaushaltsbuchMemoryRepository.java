@@ -29,12 +29,6 @@ public class HaushaltsbuchMemoryRepository
         return new Haushaltsbuch(identitätsmerkmal);
     }
 
-    @Override
-    protected final String streamNameFor(final UUID identitätsmerkmal) {
-        // Stream per-aggregate: {AggregateType}-{AggregateId}
-        return String.format("%s-%s", Haushaltsbuch.class.getName(), identitätsmerkmal); // NOPMD
-    }
-
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         return this.getEreignislager().getEreignisliste(haushaltsbuchId, Versionsbereich.ALLE_VERSIONEN);
     }

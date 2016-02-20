@@ -15,9 +15,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
         this.ereignislager = ereignislager;
     }
 
-    public final A findBy(final I identitätsmerkmal) throws AggregatNichtGefunden {
-        final String streamName = this.streamNameFor(identitätsmerkmal);
-
+    public final A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
         final Optional<Schnappschuss<A, I>> snapshot = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
 
@@ -52,24 +50,19 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
 
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
 
-    public final void add(final A aggregat) throws KonkurrierenderZugriff {
-        final String streamName = this.streamNameFor(aggregat.getIdentitätsmerkmal());
+    public final void hinzufügen(final A aggregat) throws KonkurrierenderZugriff {
         final List<Domänenereignis<A>> änderungen = aggregat.getÄnderungen();
 
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
-    public final void save(final A aggregat) throws KonkurrierenderZugriff {
-        final String streamName = this.streamNameFor(aggregat.getIdentitätsmerkmal());
-
+    public final void speichern(final A aggregat) throws KonkurrierenderZugriff {
         this.ereignislager.ereignisseDemStromHinzufügen(
                 aggregat.getIdentitätsmerkmal(),
                 aggregat.getInitialversion(),
                 aggregat.getÄnderungen()
         );
     }
-
-    protected abstract String streamNameFor(final I identitätsmerkmal);
 
     protected final Ereignislager<A, I> getEreignislager() {
         return this.ereignislager;

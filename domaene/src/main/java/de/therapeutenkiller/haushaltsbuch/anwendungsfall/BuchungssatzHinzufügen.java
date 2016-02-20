@@ -28,9 +28,9 @@ public final class BuchungssatzHinzufügen {
             final MonetaryAmount betrag)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
-        final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
 
         haushaltsbuch.buchungssatzHinzufügen(sollkonto, habenkonto, betrag);
-        this.repository.save(haushaltsbuch);
+        this.repository.speichern(haushaltsbuch);
     }
 }

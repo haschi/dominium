@@ -32,13 +32,13 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
         def transaction = entityManager.getTransaction()
         transaction.begin()
 
-        repository.add hhb
+        repository.hinzufügen hhb
 
         transaction.commit()
 
         then: "Dann wird der JpaEreignisstrom gespeichert"
 
-        def x = repository.findBy(hhb.identitätsmerkmal)
+        def x = repository.suchen(hhb.identitätsmerkmal)
         x == hhb
     }
 
@@ -55,12 +55,12 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
         def transaction = entityManager.getTransaction()
         transaction.begin()
 
-        repository.add haushaltsbuch
+        repository.hinzufügen haushaltsbuch
 
         transaction.commit()
 
         then:
-        def x = repository.findBy(haushaltsbuch.identitätsmerkmal)
+        def x = repository.suchen(haushaltsbuch.identitätsmerkmal)
         x == haushaltsbuch
     }
 
@@ -75,7 +75,7 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
         def transaction = entityManager.getTransaction()
         transaction.begin()
 
-        repository.add haushaltsbuch
+        repository.hinzufügen haushaltsbuch
 
         transaction.commit()
 
@@ -85,11 +85,11 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
         def transaction2 = entityManager.getTransaction()
         transaction2.begin()
 
-        repository.save haushaltsbuch
+        repository.speichern haushaltsbuch
 
         transaction2.commit()
 
-        def ergebnis = repository.findBy(haushaltsbuch.identitätsmerkmal);
+        def ergebnis = repository.suchen(haushaltsbuch.identitätsmerkmal);
 
         then:
 

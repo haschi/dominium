@@ -46,10 +46,10 @@ public final class KontoAnlegen {
     public void ausführen(@Observes final KontoAnlegenKommando kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.getRepository()
-                .findBy(kommando.haushaltsbuchId);
+                .suchen(kommando.haushaltsbuchId);
 
         haushaltsbuch.neuesKontoHinzufügen(kommando.kontoname, kommando.kontoart);
-        this.repository.save(haushaltsbuch);
+        this.repository.speichern(haushaltsbuch);
     }
 
     private HaushaltsbuchRepository getRepository() {

@@ -26,13 +26,13 @@ public final class AnfangsbestandBuchen {
     public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
-        final Haushaltsbuch haushaltsbuch = this.repository.findBy(kommando.haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.suchen(kommando.haushaltsbuchId);
 
         haushaltsbuch.anfangsbestandBuchen(
                 kommando.kontoname,
                 kommando.währungsbetrag
         );
 
-        this.repository.save(haushaltsbuch);
+        this.repository.speichern(haushaltsbuch);
     }
 }

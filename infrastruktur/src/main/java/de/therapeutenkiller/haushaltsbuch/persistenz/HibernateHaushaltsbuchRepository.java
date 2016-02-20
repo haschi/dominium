@@ -29,13 +29,6 @@ public final class HibernateHaushaltsbuchRepository
     }
 
     @Override
-    protected String streamNameFor(final UUID identitätsmerkmal) {
-        return String.format("%s-%s",
-                Haushaltsbuch.class.getName(),
-                identitätsmerkmal);
-    }
-
-    @Override
     public ImmutableCollection<UUID> alle() {
         throw new NotImplementedException("Die Methode muss implementiert werden");
     }

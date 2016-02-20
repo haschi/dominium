@@ -29,7 +29,7 @@ public class HaushaltsbuchführungBeginnen {
                 Konto.ANFANGSBESTAND.getBezeichnung(),
                 Kontoart.Aktiv);
 
-        this.getRepository().add(haushaltsbuch);
+        this.getRepository().hinzufügen(haushaltsbuch);
     }
 
     private HaushaltsbuchRepository getRepository() {
