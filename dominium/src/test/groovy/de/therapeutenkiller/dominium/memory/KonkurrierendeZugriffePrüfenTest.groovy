@@ -15,10 +15,15 @@ class KonkurrierendeZugriffePrüfenTest extends  Specification {
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen("test-strom", [new ZustandWurdeGeändert(42L)])
 
-        when: "ich die Version 1 beim Hinzufügen weiterer Ereignisse erwarte"
-        lager.ereignisseDemStromHinzufügen "test-strom", 1L, []
+        when: "ich die Version 0 beim Hinzufügen weiterer Ereignisse erwarte"
+        lager.ereignisseDemStromHinzufügen "test-strom", version, []
 
         then: "werde ich eine Ausnahme erhalten"
         thrown KonkurrierenderZugriff
+
+        where:
+        version | _
+        0L      | _
+        2L      | _
     }
 }

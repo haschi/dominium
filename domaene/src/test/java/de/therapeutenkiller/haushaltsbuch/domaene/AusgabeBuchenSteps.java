@@ -9,7 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -25,11 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AusgabeBuchenSteps {
 
     private final SaldoAbfrage kontoSaldieren;
-    private final HaushaltsbuchAggregatKontext kontext;
+    private final DieWelt kontext;
 
     @Inject
     AusgabeBuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext,
+            final DieWelt kontext,
             final SaldoAbfrage kontoSaldieren) {
         this.kontext = kontext;
         this.kontoSaldieren = kontoSaldieren;
@@ -42,7 +42,7 @@ public final class AusgabeBuchenSteps {
             final String habenkonto)  {
 
         this.kontext.kommandoAusführen(new AusgabeBuchenKommando(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
                 währungsbetrag
@@ -55,7 +55,7 @@ public final class AusgabeBuchenSteps {
 
         for (final Kontostand kontostand : kontostände) {
             final Saldo saldo = this.kontoSaldieren.abfragen(
-                    this.kontext.aktuelleHaushaltsbuchId(),
+                    this.kontext.getAktuelleHaushaltsbuchId(),
                     kontostand.kontoname);
 
             // TODO Besser in einem Konverter

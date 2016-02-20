@@ -11,8 +11,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import java.util.UUID;
-
 @Singleton
 @SuppressWarnings("checkstyle:designforextension")
 public class HaushaltsbuchführungBeginnen {
@@ -25,7 +23,7 @@ public class HaushaltsbuchführungBeginnen {
 
     public void ausführen(@Observes final HaushaltsbuchführungBeginnenKommando kommando)
             throws KonkurrierenderZugriff {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(UUID.randomUUID());
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(kommando.identitätsmerkmal);
 
         haushaltsbuch.neuesKontoHinzufügen(
                 Konto.ANFANGSBESTAND.getBezeichnung(),

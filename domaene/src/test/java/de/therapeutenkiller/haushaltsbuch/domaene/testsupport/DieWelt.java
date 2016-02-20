@@ -10,21 +10,17 @@ import java.util.List;
 import java.util.UUID;
 
 @Singleton
-public class HaushaltsbuchAggregatKontext {
+public class DieWelt {
 
     private final HaushaltsbuchMemoryRepository repository;
+    private UUID aktuelleHaushaltsbuchId;
 
     @Inject
     private BeanManager manager;
 
     @Inject
-    public HaushaltsbuchAggregatKontext(
-            final HaushaltsbuchMemoryRepository repository) {
+    public DieWelt(final HaushaltsbuchMemoryRepository repository) {
         this.repository = repository;
-    }
-
-    public final UUID aktuelleHaushaltsbuchId() {
-        return this.repository.getAktuell();
     }
 
     public final <T> void kommandoAusführen(final T kommando) {
@@ -33,5 +29,13 @@ public class HaushaltsbuchAggregatKontext {
 
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
         return this.repository.getStream(haushaltsbuchId);
+    }
+
+    public final UUID getAktuelleHaushaltsbuchId() {
+        return this.aktuelleHaushaltsbuchId;
+    }
+
+    public final void setAktuelleHaushaltsbuchId(final UUID aktuelleHaushaltsbuchId) {
+        this.aktuelleHaushaltsbuchId = aktuelleHaushaltsbuchId;
     }
 }

@@ -51,7 +51,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     @Test
     public void wenn_ich_dem_ereignislager_weitere_ereignisse_hinzufüge() throws KonkurrierenderZugriff {
 
-        this.store.ereignisseDemStromHinzufügen("test-strom", 3L, new ArrayList<Domänenereignis<TestAggregat>>() {
+        this.store.ereignisseDemStromHinzufügen("test-strom", 2L, new ArrayList<Domänenereignis<TestAggregat>>() {
             {
                 add(new ZustandWurdeGeändert(44L));
                 add(new ZustandWurdeGeändert(45L));
@@ -70,7 +70,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
         final Throwable thrown = catchThrowable(() -> {
             this.store.ereignisseDemStromHinzufügen(
                     "test-strom",
-                    2L,
+                    1L,
                     new ArrayList<>());
         });
 

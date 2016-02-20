@@ -48,9 +48,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
         final JpaEreignisstrom rematerialisiert = entityManager.find(JpaEreignisstrom.class, "test-strom");
         final JpaEreignisstrom einEreignisstrom = new JpaEreignisstrom("test-strom");
-        einEreignisstrom.setVersion(3L);
+        einEreignisstrom.setVersion(2L);
         assertThat(rematerialisiert).isEqualTo(einEreignisstrom);
-
     }
 
     @Test

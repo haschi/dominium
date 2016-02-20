@@ -12,7 +12,7 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBegi
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -28,20 +28,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class BuchenSteps {
 
-    private final HaushaltsbuchAggregatKontext kontext;
+    private final DieWelt kontext;
 
-    @Inject public BuchenSteps(final HaushaltsbuchAggregatKontext kontext) {
+    @Inject public BuchenSteps(final DieWelt kontext) {
         this.kontext = kontext;
     }
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) { // NOPMD Datenfluss
 
-        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
+        final UUID identitätsmerkmal = UUID.randomUUID();
+        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
+        this.kontext.setAktuelleHaushaltsbuchId(identitätsmerkmal);
 
         for (final Kontostand kontostand : kontostände) {
             this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando( // NOPMD
-                    this.kontext.aktuelleHaushaltsbuchId(),
+                    this.kontext.getAktuelleHaushaltsbuchId(),
                     kontostand.kontoname,
                     kontostand.kontoart,
                     kontostand.betrag));
@@ -53,7 +55,7 @@ public final class BuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
         this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando(
                 haushaltsbuchId,
                 kontoname,
@@ -65,7 +67,7 @@ public final class BuchenSteps {
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
 
         final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
-                this.kontext.aktuelleHaushaltsbuchId());
+                this.kontext.getAktuelleHaushaltsbuchId());
 
         assertThat(stream).contains(fehlermeldung); // NOPMD LoD TODO
     }
@@ -74,7 +76,7 @@ public final class BuchenSteps {
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz) {
 
         final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
-                this.kontext.aktuelleHaushaltsbuchId());
+                this.kontext.getAktuelleHaushaltsbuchId());
 
         final List<Buchungssatz> buchungssätze = stream.stream()
                 .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)

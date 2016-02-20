@@ -19,18 +19,17 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
         given:
         HaushaltsbuchEreignislager lager = new HaushaltsbuchEreignislager(uhr);
         HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager)
-
+        UUID haushaltsbuchId = UUID.randomUUID()
         new HaushaltsbuchführungBeginnen(repository).ausführen(
-                new HaushaltsbuchführungBeginnenKommando())
+                new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId))
 
-        UUID uuid = repository.aktuell
 
         when:
-        Haushaltsbuch haushaltsbuch2 = repository.findBy(uuid)
+        Haushaltsbuch haushaltsbuch2 = repository.findBy(haushaltsbuchId)
         haushaltsbuch2.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv)
         repository.save(haushaltsbuch2)
 
         then:
-        repository.getStream(uuid).size() == 2
+        repository.getStream(haushaltsbuchId).size() == 2
     }
 }

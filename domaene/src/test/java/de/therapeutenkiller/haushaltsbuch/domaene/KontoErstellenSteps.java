@@ -17,7 +17,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
 import javax.inject.Inject;
@@ -31,14 +31,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class KontoErstellenSteps {
 
-    private final HaushaltsbuchAggregatKontext kontext;
+    private final DieWelt kontext;
 
     private final SaldoAbfrage saldieren;
     private final AlleKonten alleKonten;
 
     @Inject
     public KontoErstellenSteps(
-            final HaushaltsbuchAggregatKontext kontext,
+            final DieWelt kontext,
             final SaldoAbfrage saldieren,
             final AlleKonten alleKonten) {
 
@@ -50,14 +50,14 @@ public final class KontoErstellenSteps {
     @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")
     public void wenn_ich_das_Konto_anlege(final String kontoname) {
 
-        final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
         this.kontext.kommandoAusführen(new KontoAnlegenKommando(haushaltsbuchId, kontoname, Kontoart.Aktiv));
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 
-        final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
         final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(kontoname, Kontoart.Aktiv);
 
         final List<Domänenereignis<Haushaltsbuch>> ereignisse = this.kontext.getStream(haushaltsbuchId);
@@ -70,7 +70,7 @@ public final class KontoErstellenSteps {
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
             throws EreignisstromNichtVorhanden {
 
-        final UUID haushaltsbuchId = this.kontext.aktuelleHaushaltsbuchId();
+        final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
         final Saldo tatsächlicherSaldo = this.saldieren.abfragen(haushaltsbuchId, kontoname);
         assertThat(erwarteterSaldo).isEqualTo(tatsächlicherSaldo); // NOPMD AssertJ OK TODO
     }
@@ -83,7 +83,7 @@ public final class KontoErstellenSteps {
                 Kontoart.Aktiv);
 
         final List<Domänenereignis<Haushaltsbuch>> ereignisse = this.kontext.getStream(
-                this.kontext.aktuelleHaushaltsbuchId());
+                this.kontext.getAktuelleHaushaltsbuchId());
 
         assertThat(ereignisse).contains(expected); // NOPMD LoD AssertJ OK TODO
     }
@@ -92,7 +92,7 @@ public final class KontoErstellenSteps {
     public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final String konto) throws Throwable {
 
         final Collection<Konto> kontenliste = this.alleKonten.abfragen(
-                this.kontext.aktuelleHaushaltsbuchId());
+                this.kontext.getAktuelleHaushaltsbuchId());
 
         assertThat(kontenliste).containsOnlyOnce(new Konto(konto, new KeineRegel())); // NOPMD LoD ToDo
     }

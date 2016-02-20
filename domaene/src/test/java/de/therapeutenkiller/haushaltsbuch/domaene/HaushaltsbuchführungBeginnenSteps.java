@@ -5,12 +5,14 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.coding.aspekte.RückgabewertIstNullException;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,17 +20,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Singleton
 public final class HaushaltsbuchführungBeginnenSteps {
 
-    private final HaushaltsbuchAggregatKontext kontext;
+    private final DieWelt kontext;
 
     @Inject
-    public HaushaltsbuchführungBeginnenSteps(final HaushaltsbuchAggregatKontext kontext) {
+    public HaushaltsbuchführungBeginnenSteps(final DieWelt kontext) {
 
         this.kontext = kontext;
     }
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
-        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando());
+        final UUID haushaltsbuchId = UUID.randomUUID();
+        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId));
+        this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 
     @Wenn("^ich nicht mit der Haushaltsbuchführung beginne$")
@@ -37,7 +41,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben$")
     public void dann_wird_ein_neues_haushaltsbuch_angelegt_worden_sein()  {
-        assertThat(this.kontext.aktuelleHaushaltsbuchId()).isNotNull(); // NOPMD LoD ist hier OK
+        assertThat(this.kontext.getAktuelleHaushaltsbuchId()).isNotNull(); // NOPMD LoD ist hier OK
     }
 
     // TODO Dieser Step muss noch implementiert werden.
@@ -54,8 +58,8 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich kein neues Haushaltsbuch angelegt haben$")
     public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThatThrownBy(this.kontext::aktuelleHaushaltsbuchId) // NOPMD LoD ist hier OK
+        assertThatThrownBy(() -> this.kontext.getAktuelleHaushaltsbuchId()) // NOPMD LoD ist hier OK
             .isExactlyInstanceOf(RückgabewertIstNullException.class)
-            .hasMessage("Rückgabewert der Methode 'getAktuell' ist null.");
+            .hasMessage("Rückgabewert der Methode 'getAktuelleHaushaltsbuchId' ist null.");
     }
 }

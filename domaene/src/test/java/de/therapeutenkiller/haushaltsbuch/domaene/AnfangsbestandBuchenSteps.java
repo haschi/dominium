@@ -11,7 +11,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchAggregatKontext;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
@@ -24,12 +24,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AnfangsbestandBuchenSteps {
 
-    private final HaushaltsbuchAggregatKontext kontext;
+    private final DieWelt kontext;
     private final SaldoAbfrage kontoSaldieren;
 
     @Inject
     public AnfangsbestandBuchenSteps(
-            final HaushaltsbuchAggregatKontext kontext,
+            final DieWelt kontext,
             final SaldoAbfrage kontoSaldieren) {
         this.kontext = kontext;
         this.kontoSaldieren = kontoSaldieren;
@@ -41,7 +41,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 konto,
                 betrag));
     }
@@ -53,7 +53,7 @@ public final class AnfangsbestandBuchenSteps {
             throws EreignisstromNichtVorhanden {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
@@ -66,7 +66,7 @@ public final class AnfangsbestandBuchenSteps {
             throws EreignisstromNichtVorhanden {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 konto);
 
         assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
@@ -78,7 +78,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));
     }
@@ -89,7 +89,7 @@ public final class AnfangsbestandBuchenSteps {
             final String kontoname) throws Throwable {
 
         this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.aktuelleHaushaltsbuchId(),
+                this.kontext.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));
     }
