@@ -14,15 +14,14 @@ class AggregatAusSchnappschussWiederherstellenTest extends Specification {
         TestAggregat aggregat = new TestAggregat(UUID.randomUUID())
         aggregat.zustandÄndern(42L)
 
-        lager.neuenEreignisstromErzeugen("test-strom", aggregat.änderungen)
-        lager.schnappschussHinzufügen("test-strom", aggregat.schnappschussErstellen())
+        lager.neuenEreignisstromErzeugen(aggregat.identitätsmerkmal, aggregat.änderungen)
+        lager.schnappschussHinzufügen(aggregat.identitätsmerkmal, aggregat.schnappschussErstellen())
 
         when:
-        def schnappschuss = lager.getNeuesterSchnappschuss("test-strom").get()
+        def schnappschuss = lager.getNeuesterSchnappschuss(aggregat.identitätsmerkmal).get()
         def wiederhergestellt = schnappschuss.wiederherstellen()
 
         then:
         wiederhergestellt.zustand == 42L
-
     }
 }

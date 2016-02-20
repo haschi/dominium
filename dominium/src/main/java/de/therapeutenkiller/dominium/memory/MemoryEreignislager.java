@@ -47,13 +47,13 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             throw new IllegalArgumentException();
         }
 
-        final MemoryEreignisstrom<I> ereignisstrom = new MemoryEreignisstrom<I>(identitätsmerkmal);
+        final MemoryEreignisstrom<I> ereignisstrom = new MemoryEreignisstrom<>(identitätsmerkmal);
         this.ereignisströme.put(identitätsmerkmal, ereignisstrom);
         this.ereignisseHinzufügen(ereignisstrom, domänenereignisse);
     }
 
     @Override
-    public final void ereignisseDemStromHinzufügen( // NOPMD Datenfluss
+    public final void ereignisseDemStromHinzufügen(
             final I identitätsmerkmal,
             final long erwarteteVersion,
             final Collection<Domänenereignis<A>> domänenereignisse)
@@ -70,7 +70,8 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     private void ereignisseHinzufügen(
-            final MemoryEreignisstrom<I> ereignisstrom, final Collection<Domänenereignis<A>> domänenereignisse) {
+            final MemoryEreignisstrom<I> ereignisstrom,
+            final Collection<Domänenereignis<A>> domänenereignisse) {
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
             this.ereignisse.add(ereignisstrom.registrieren(ereignis));
         }
@@ -116,12 +117,13 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
             throw new IllegalArgumentException();
         }
 
-        final MemorySchnappschussMetaDaten<I> meta = new MemorySchnappschussMetaDaten<I>(
+        final MemorySchnappschussMetaDaten<I> meta = new MemorySchnappschussMetaDaten<>(
                 identitätsmerkmal,
                 this.uhr.jetzt());
 
         final MemorySchnappschussUmschlag<A, I> wrapper = new MemorySchnappschussUmschlag<>(
-                snapshot, meta);
+                snapshot,
+                meta);
 
         this.schnappschüsse.add(wrapper);
     }
@@ -129,12 +131,12 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Override
     public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
 
-        final Comparator<? super MemorySchnappschussUmschlag<A, I>> byDateTimeAbsteigend = (left, right) ->
+        final Comparator<? super MemorySchnappschussUmschlag<A, I>> nachZeitstempelAbsteigend = (left, right) ->
                 -1 * left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());
 
         return this.schnappschüsse.stream()
                 .filter(wrapper -> wrapper.getMetaDaten().getEreignisstrom().equals(identitätsmerkmal))
-                .sorted(byDateTimeAbsteigend)
+                .sorted(nachZeitstempelAbsteigend)
                 .map(MemorySchnappschussUmschlag::öffnen)
                 .findFirst();
     }
