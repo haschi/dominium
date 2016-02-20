@@ -24,7 +24,8 @@ public class Entität<T> {
         return this.identitätsmerkmal;
     }
 
-    @Override public final boolean equals(final Object object) {
+    @Override
+    public final boolean equals(final Object object) {
         if (this == object) {
             return true;
         }

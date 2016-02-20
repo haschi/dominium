@@ -4,7 +4,7 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
@@ -50,7 +50,7 @@ public final class AnfangsbestandBuchenSteps {
     public void dann_werde_ich_auf_dem_Konto_ein_Sollsaldo_haben(
             final String konto,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
-            throws EreignisstromNichtVorhanden {
+            throws AggregatNichtGefunden {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
                 this.kontext.getAktuelleHaushaltsbuchId(),
@@ -63,7 +63,7 @@ public final class AnfangsbestandBuchenSteps {
     public void dann_werde_ich_auf_dem_Konto_ein_Habensaldo_haben(
             final String konto,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo)
-            throws EreignisstromNichtVorhanden {
+            throws AggregatNichtGefunden {
 
         final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
                 this.kontext.getAktuelleHaushaltsbuchId(),

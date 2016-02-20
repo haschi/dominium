@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
@@ -21,7 +21,7 @@ public final class AusgabeBuchen {
     }
 
     public void ausführen(@Observes final AusgabeBuchenKommando kommando)
-            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
+            throws KonkurrierenderZugriff, AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(kommando.haushaltsbuchId);
 
         haushaltsbuch.ausgabeBuchen(kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);

@@ -20,7 +20,7 @@ class EreignislagerLeerenTest extends Specification {
         lager.clear()
 
         then:
-        lager.getEreignisListe("test-strom", Versionsbereich.ALLE_VERSIONEN) == []
+        lager.getEreignisliste("test-strom", Versionsbereich.ALLE_VERSIONEN) == []
     }
 
     def "Schnappschüsse des Ereignis-Lagers leeren"() {

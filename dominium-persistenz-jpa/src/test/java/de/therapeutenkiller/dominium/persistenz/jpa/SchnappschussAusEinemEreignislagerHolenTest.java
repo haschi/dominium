@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
@@ -41,7 +41,7 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
                     .zustand(43L)*/);
 
     @Before
-    public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws EreignisstromNichtVorhanden {
+    public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws AggregatNichtGefunden {
         this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
         this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<>());
 
@@ -63,11 +63,11 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
     }
 
     private void dann_werde_ich_eine_EreignisstromNichtVorhanden_ausnahme_erhalten(final Throwable thrown) {
-        assertThat(thrown).isExactlyInstanceOf(EreignisstromNichtVorhanden.class);
+        assertThat(thrown).isExactlyInstanceOf(AggregatNichtGefunden.class);
     }
 
     @Test
-    public void wenn_ich_den_neusten_schnappschuss_anfordere() throws EreignisstromNichtVorhanden {
+    public void wenn_ich_den_neusten_schnappschuss_anfordere() throws AggregatNichtGefunden {
         final Schnappschuss<TestAggregat, UUID> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id).get();
 

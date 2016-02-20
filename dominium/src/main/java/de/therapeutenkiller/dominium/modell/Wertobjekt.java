@@ -14,8 +14,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * kennzeichnen. Diese besitzen keine Werte, die verglichen
  * werden können.
  *
+ * Wertobjekte sollten unveränderlich (immutable) sein.
+ *
  */
-// s. http://www.artima.com/lejava/articles/equality.html
 public class Wertobjekt {
 
     @Override
@@ -33,6 +34,7 @@ public class Wertobjekt {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
+    // s. http://www.artima.com/lejava/articles/equality.html
     private boolean canEqual(@DarfNullSein final Object other) {
         return other != null && this.getClass() == other.getClass();
     }

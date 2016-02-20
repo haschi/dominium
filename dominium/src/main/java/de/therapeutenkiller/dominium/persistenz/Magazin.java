@@ -7,15 +7,15 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
+public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
 
     private final Ereignislager<A, I> ereignislager;
 
-    protected Repository(final Ereignislager<A, I> ereignislager) {
+    protected Magazin(final Ereignislager<A, I> ereignislager) {
         this.ereignislager = ereignislager;
     }
 
-    public final A findBy(final I identitätsmerkmal) throws EreignisstromNichtVorhanden {
+    public final A findBy(final I identitätsmerkmal) throws AggregatNichtGefunden {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
         final Optional<Schnappschuss<A, I>> snapshot = this.ereignislager.getNeuesterSchnappschuss(
@@ -25,7 +25,7 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
 
             final Versionsbereich bereich = new Versionsbereich(snapshot.get().getVersion(), Long.MAX_VALUE);
 
-            final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisListe(
+            final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisliste(
                     identitätsmerkmal, bereich);
 
             final A aggregat = snapshot.get().wiederherstellen();
@@ -38,7 +38,7 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
         }
 
         final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
-        final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisListe(identitätsmerkmal, bereich);
+        final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
 
         final A haushaltsbuch = this.neuesAggregatErzeugen(identitätsmerkmal);
 

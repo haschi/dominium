@@ -21,14 +21,14 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
     def "Für neue Aggregate wird ein Ereignisstrom angelegt"() {
 
-        given: "Angenommen ich habe ein Repository und ein Haushaltsbuch"
+        given: "Angenommen ich habe ein Magazin und ein Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
         HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager, uhr)
 
         def hhb = new Haushaltsbuch(UUID.randomUUID())
         HibernateHaushaltsbuchRepository repository = new HibernateHaushaltsbuchRepository(eventStore);
 
-        when: "Wenn ich das Haushaltsbuch dem Repository hinzufüge"
+        when: "Wenn ich das Haushaltsbuch dem Magazin hinzufüge"
         def transaction = entityManager.getTransaction()
         transaction.begin()
 
@@ -44,14 +44,14 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
     def "Für neue Aggregate werden die aufgetretenen Ereignisse gespeichert"() {
 
-        given: "Angenommen ich habe ein Repository und ein neues Haushaltsbuch"
+        given: "Angenommen ich habe ein Magazin und ein neues Haushaltsbuch"
         EntityManager entityManager = EntityManagerProducer.entityManagerErzeugen();
         HaushaltsbuchEreignislager eventStore = new HaushaltsbuchEreignislager(entityManager, uhr)
 
         def haushaltsbuch = new Haushaltsbuch(UUID.randomUUID())
         def repository = new HibernateHaushaltsbuchRepository(eventStore)
 
-        when: "Wenn ich das Haushaltsbuch dem Repository hinzufüge"
+        when: "Wenn ich das Haushaltsbuch dem Magazin hinzufüge"
         def transaction = entityManager.getTransaction()
         transaction.begin()
 

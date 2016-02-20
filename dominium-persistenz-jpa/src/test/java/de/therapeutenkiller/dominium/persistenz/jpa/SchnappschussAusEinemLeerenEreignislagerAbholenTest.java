@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
 import de.therapeutenkiller.testing.DatenbankRegel;
 import de.therapeutenkiller.testing.TestUhr;
@@ -31,7 +31,7 @@ public final class SchnappschussAusEinemLeerenEreignislagerAbholenTest {
     }
 
     @Test
-    public void wenn_ich_den_neuesten_schnappschuss_anfordere() throws EreignisstromNichtVorhanden {
+    public void wenn_ich_den_neuesten_schnappschuss_anfordere() throws AggregatNichtGefunden {
         final Optional<Schnappschuss<TestAggregat, UUID>> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id);
 

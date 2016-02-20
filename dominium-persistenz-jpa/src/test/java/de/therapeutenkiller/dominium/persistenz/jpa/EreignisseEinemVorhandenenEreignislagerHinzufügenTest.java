@@ -84,7 +84,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     }
 
     private void dann_werden_die_ereignisse_dem_ereignisstrom_hinzugefügt_worden_sein() {
-        final List<Domänenereignis<TestAggregat>> ereignisListe = this.store.getEreignisListe(
+        final List<Domänenereignis<TestAggregat>> ereignisListe = this.store.getEreignisliste(
                 this.id,
                 Versionsbereich.ALLE_VERSIONEN);
 

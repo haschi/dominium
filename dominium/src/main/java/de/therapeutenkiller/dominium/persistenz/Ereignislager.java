@@ -24,11 +24,14 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
             I identitätsmerkmal,
             long erwarteteVersion, Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
 
-    List<Domänenereignis<A>> getEreignisListe(I identitätsmerkmal, Versionsbereich bereich);
+    List<Domänenereignis<A>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws EreignisstromNichtVorhanden;
+    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws AggregatNichtGefunden;
 
-    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws EreignisstromNichtVorhanden;
+    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
 
+    /**
+     * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.
+     */
     Stream<I> getEreignisströme();
 }

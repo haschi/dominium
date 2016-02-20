@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
@@ -26,7 +26,7 @@ public final class KontoAnlegen {
     }
 
     public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando)
-            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
+            throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         final KontoAnlegenKommando anlegenKommando = new KontoAnlegenKommando(
                 kommando.haushaltsbuchId,
@@ -44,7 +44,7 @@ public final class KontoAnlegen {
     }
 
     public void ausführen(@Observes final KontoAnlegenKommando kommando)
-            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
+            throws KonkurrierenderZugriff, AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.getRepository()
                 .findBy(kommando.haushaltsbuchId);
 

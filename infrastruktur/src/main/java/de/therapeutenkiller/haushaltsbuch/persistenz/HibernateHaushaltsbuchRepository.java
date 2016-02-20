@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import com.google.common.collect.ImmutableCollection;
-import de.therapeutenkiller.dominium.persistenz.Repository;
+import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import org.apache.commons.lang3.NotImplementedException;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Priority(Interceptor.Priority.APPLICATION + 10)
 @Singleton
 public final class HibernateHaushaltsbuchRepository
-        extends Repository<Haushaltsbuch, UUID>
+        extends Magazin<Haushaltsbuch, UUID>
         implements HaushaltsbuchRepository {
 
     @Inject

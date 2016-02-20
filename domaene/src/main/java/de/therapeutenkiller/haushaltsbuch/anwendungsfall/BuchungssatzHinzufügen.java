@@ -1,6 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
@@ -26,7 +26,7 @@ public final class BuchungssatzHinzufügen {
             final String sollkonto,
             final String habenkonto,
             final MonetaryAmount betrag)
-            throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
+            throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
 

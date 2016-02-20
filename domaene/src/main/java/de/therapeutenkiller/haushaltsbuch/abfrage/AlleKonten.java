@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.abfrage;
 
 import com.google.common.collect.ImmutableCollection;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
@@ -20,7 +20,7 @@ public final class AlleKonten {
         this.repository = repository;
     }
 
-    public ImmutableCollection<Konto> abfragen(final UUID haushaltsbuchId) throws EreignisstromNichtVorhanden {
+    public ImmutableCollection<Konto> abfragen(final UUID haushaltsbuchId) throws AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.repository.findBy(haushaltsbuchId);
         return haushaltsbuch.getKonten(); // NOPMD LoD TODO
     }

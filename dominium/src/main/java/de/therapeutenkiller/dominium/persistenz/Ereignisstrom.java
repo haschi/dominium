@@ -12,15 +12,15 @@ import de.therapeutenkiller.dominium.modell.Wertobjekt;
  * einen Umschlag mit Meta-Daten für das Ereignis erzeugen
  *
  */
-public abstract class Ereignisstrom<I, M> extends Wertobjekt { // NOPMD, TODO Regel ändern.
+public abstract class Ereignisstrom<I, M> extends Wertobjekt {
 
     protected I identitätsmerkmal;
     protected long version;
 
-    public Ereignisstrom(final I streamName) {
+    public Ereignisstrom(final I identitätsmerkmal) {
         super();
 
-        this.identitätsmerkmal = streamName;
+        this.identitätsmerkmal = identitätsmerkmal;
         this.version = 0;
     }
 

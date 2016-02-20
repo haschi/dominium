@@ -21,7 +21,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
         lager.neuenEreignisstromErzeugen("test-strom", testEreignisse)
 
         then: "werde ich die Ereignisse für den Ereignisstrom aus dem Lager lesen können"
-        def liste = lager.getEreignisListe("test-strom", Versionsbereich.ALLE_VERSIONEN)
+        def liste = lager.getEreignisliste("test-strom", Versionsbereich.ALLE_VERSIONEN)
         liste == testEreignisse
 
         where:

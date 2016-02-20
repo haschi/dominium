@@ -88,7 +88,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final List<Domänenereignis<A>> getEreignisListe(final I identitätsmerkmal, final Versionsbereich bereich) {
+    public final List<Domänenereignis<A>> getEreignisliste(final I identitätsmerkmal, final Versionsbereich bereich) {
 
         final Comparator<Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten<I>>>
                 byVersion = (left, right) -> Long.compare(

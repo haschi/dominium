@@ -4,7 +4,7 @@ import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
@@ -67,7 +67,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     }
 
     @Override
-    public List<Domänenereignis<A>> getEreignisListe(final UUID streamName, final Versionsbereich bereich) {
+    public List<Domänenereignis<A>> getEreignisliste(final UUID streamName, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
@@ -90,10 +90,10 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     @Transactional
     @Override
     public void schnappschussHinzufügen(final UUID streamName, final Schnappschuss<A, UUID> snapshot)
-            throws EreignisstromNichtVorhanden {
+            throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
-            throw new EreignisstromNichtVorhanden();
+            throw new AggregatNichtGefunden();
         }
 
         final JpaSchnappschussUmschlag<A> umschlag = new JpaSchnappschussUmschlag<>(
@@ -106,10 +106,10 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
 
     @Override
     public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
-            final UUID streamName) throws EreignisstromNichtVorhanden {
+            final UUID streamName) throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
-            throw new EreignisstromNichtVorhanden();
+            throw new AggregatNichtGefunden();
         }
 
         final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
