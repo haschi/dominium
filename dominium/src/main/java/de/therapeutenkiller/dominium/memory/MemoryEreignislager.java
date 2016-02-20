@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Der MemoryEventStore ist ein EventStore, der Ereignisse im
- * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests
- * verwendet.
+ * Das MemoryEreignislager ist ein Ereignislager, der Ereignisse im
+ * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests verwendet.
+ *
  * @param <A> Der Typ des Aggregates, dessen Ereignisse verwaltet werden
  */
 public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
@@ -49,7 +49,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
 
         final MemoryEreignisstrom<I> ereignisstrom = new MemoryEreignisstrom<I>(identitätsmerkmal);
         this.ereignisströme.put(identitätsmerkmal, ereignisstrom);
-        this.ereignisseDemStromHinzufügen(identitätsmerkmal, ereignisstrom.getVersion(), domänenereignisse);
+        this.ereignisseHinzufügen(ereignisstrom, domänenereignisse);
     }
 
     @Override
@@ -66,14 +66,13 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
         final MemoryEreignisstrom<I> ereignisstrom = this.ereignisströme.get(identitätsmerkmal); // NOPMD
 
         this.aufKonkurrierendenZugriffPrüfen(erwarteteVersion, ereignisstrom);
+        this.ereignisseHinzufügen(ereignisstrom, domänenereignisse);
+    }
 
-
+    private void ereignisseHinzufügen(
+            final MemoryEreignisstrom<I> ereignisstrom, final Collection<Domänenereignis<A>> domänenereignisse) {
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
-
-            final Umschlag<Domänenereignis<A>, MemoryEreignisMetaDaten<I>> registrieren =
-                    ereignisstrom.registrieren(ereignis);// NOPMD LoD
-
-            this.ereignisse.add(registrieren);
+            this.ereignisse.add(ereignisstrom.registrieren(ereignis));
         }
     }
 
