@@ -20,14 +20,14 @@ public abstract class Ereignisstrom<M> extends Wertobjekt { // NOPMD, TODO Regel
         super();
 
         this.name = streamName;
-        this.version = 1;
+        this.version = 0;
     }
 
     public abstract long getVersion();
 
     public final <A> Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
-        final Umschlag<Domänenereignis<A>, M> domänenereignisMUmschlag = this.umschlagErzeugen(ereignis);
         this.version = this.version + 1;
+        final Umschlag<Domänenereignis<A>, M> domänenereignisMUmschlag = this.umschlagErzeugen(ereignis);
         return domänenereignisMUmschlag;
     }
 

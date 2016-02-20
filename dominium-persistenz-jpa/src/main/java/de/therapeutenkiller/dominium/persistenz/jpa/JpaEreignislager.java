@@ -55,7 +55,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
 
         if (strom.getVersion() != erwarteteVersion) {
-            throw new KonkurrierenderZugriff();
+            throw new KonkurrierenderZugriff(erwarteteVersion, strom.getVersion());
         }
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {

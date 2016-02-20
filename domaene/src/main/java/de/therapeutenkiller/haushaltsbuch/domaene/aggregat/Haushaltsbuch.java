@@ -7,7 +7,6 @@ import de.therapeutenkiller.dominium.aggregat.Spezifikation;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.haushaltsbuch.anwendungsfall.BuchungssatzHinzufügen;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
@@ -202,17 +201,12 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public void anfangsbestandBuchen(
             final String kontoname,
-            final MonetaryAmount betrag,
-            final BuchungssatzHinzufügen buchungssatzHinzufügen)
+            final MonetaryAmount betrag)
             throws KonkurrierenderZugriff, EreignisstromNichtVorhanden {
         if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
             this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
-            buchungssatzHinzufügen.ausführen(
-                    getIdentitätsmerkmal(),
-                    kontoname,
-                    Konto.ANFANGSBESTAND.getBezeichnung(), // NOPMD LoD TODO
-                    betrag);
+            this.buchungssatzHinzufügen(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
         }
     }
 

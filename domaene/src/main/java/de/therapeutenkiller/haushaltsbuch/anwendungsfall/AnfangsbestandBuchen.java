@@ -30,8 +30,8 @@ public final class AnfangsbestandBuchen {
 
         haushaltsbuch.anfangsbestandBuchen(
                 kommando.kontoname,
-                kommando.währungsbetrag,
-                this.buchungssatzHinzufügen);
+                kommando.währungsbetrag
+        );
 
         this.repository.save(haushaltsbuch);
     }

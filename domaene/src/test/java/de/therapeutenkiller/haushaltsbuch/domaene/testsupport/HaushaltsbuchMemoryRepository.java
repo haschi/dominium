@@ -64,6 +64,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
             haushaltsbuch.anwenden(ereignis);
         }
 
+        haushaltsbuch.setInitialversion(haushaltsbuch.getVersion());
         return haushaltsbuch;
     }
 
@@ -87,7 +88,7 @@ public class HaushaltsbuchMemoryRepository implements HaushaltsbuchRepository {
 
         this.ereignislager.ereignisseDemStromHinzufügen(
                 streamName,
-                haushaltsbuch.getVersion(),
+                haushaltsbuch.getInitialversion(),
                 haushaltsbuch.getÄnderungen()
         );
     }
