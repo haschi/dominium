@@ -4,8 +4,11 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="test-infrastruktur">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>de.therapeutenkiller.dominium.jpa.JpaDomänenereignisUmschlag</class>
-        <class>de.therapeutenkiller.dominium.jpa.JpaEreignisstrom</class>
+        <class>de.therapeutenkiller.dominium.persistenz.Umschlag</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

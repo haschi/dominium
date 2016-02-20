@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.persistenz.Repository;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
@@ -25,6 +26,7 @@ public class HaushaltsbuchMemoryRepository
         return new Haushaltsbuch(identitätsmerkmal);
     }
 
+    @Override
     protected final String streamNameFor(final UUID identitätsmerkmal) {
         // Stream per-aggregate: {AggregateType}-{AggregateId}
         return String.format("%s-%s", Haushaltsbuch.class.getName(), identitätsmerkmal); // NOPMD

@@ -1,14 +1,9 @@
-package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
+package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.Ereignislager;
-import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
-import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +11,6 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
 
     private final Ereignislager<A, I> ereignislager;
 
-    @Inject
     protected Repository(final Ereignislager<A, I> ereignislager) {
         this.ereignislager = ereignislager;
     }

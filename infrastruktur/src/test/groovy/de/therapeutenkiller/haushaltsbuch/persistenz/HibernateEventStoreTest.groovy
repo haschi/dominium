@@ -3,6 +3,8 @@ package de.therapeutenkiller.haushaltsbuch.persistenz
 import de.therapeutenkiller.dominium.modell.Domänenereignis
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom
 import de.therapeutenkiller.dominium.persistenz.Umschlag
+import de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag
+import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisMetaDaten
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignislager
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
@@ -56,11 +58,14 @@ class HibernateEventStoreTest extends Specification {
         store.neuenEreignisstromErzeugen(streamName, ereignisse)
 
         then:
-        1 * entityManager.persist({it.version == 1 && it instanceof Umschlag}) // TODO: Weitere Attribute prüfen
+        1 * entityManager.persist({it == new JpaDomänenereignisUmschlag<Haushaltsbuch>(
+                ereignisse[0],
+                new JpaEreignisMetaDaten(streamName, 1))})
 
 
-        1 * entityManager.persist({it.version == 2 && it instanceof Umschlag})
-
+        1 * entityManager.persist({it == new JpaDomänenereignisUmschlag<Haushaltsbuch>(
+                ereignisse[1],
+                new JpaEreignisMetaDaten(streamName, 2))})
 
         1* entityManager.persist {it instanceof Ereignisstrom} //(strom)
     }
@@ -78,9 +83,13 @@ class HibernateEventStoreTest extends Specification {
         store.ereignisseDemStromHinzufügen(streamName, 0L, ereignisse)
 
         then:
-        1 * entityManager.persist({it.version == 1})
+        1 * entityManager.persist({it == new JpaDomänenereignisUmschlag<Haushaltsbuch>(
+                ereignisse[0],
+                new JpaEreignisMetaDaten(streamName, 1))})
 
         then:
-        1 * entityManager.persist({it.version == 2})
+        1 * entityManager.persist({it == new JpaDomänenereignisUmschlag<Haushaltsbuch>(
+                ereignisse[1],
+                new JpaEreignisMetaDaten(streamName, 2))})
     }
 }

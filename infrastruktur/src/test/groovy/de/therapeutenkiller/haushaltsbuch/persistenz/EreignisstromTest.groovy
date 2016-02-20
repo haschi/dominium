@@ -1,7 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis
+import de.therapeutenkiller.dominium.persistenz.Umschlag
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag
+import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisMetaDaten
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom
 import spock.lang.Shared
 import spock.lang.Specification
@@ -19,8 +21,6 @@ class EreignisstromTest extends Specification{
 
     @Shared String streamName = "Mein JpaEreignisstrom"
 
-
-
     def "Ereignisstrom kann Ereignisse registrieren"() {
         given: "Angenommen ich habe einen JpaEreignisstrom und ein Ereignis"
 
@@ -28,11 +28,10 @@ class EreignisstromTest extends Specification{
         MeinEreignis ereignis = new MeinEreignis()
 
         when: "Wenn ich ein Ereignis registriere"
-        JpaDomänenereignisUmschlag<String> wrapper = ereignisstrom.registerEvent(ereignis)
+        Umschlag<Domänenereignis<String>, JpaEreignisMetaDaten> wrapper = ereignisstrom.registrieren(ereignis)
 
         then: "Dann wird ein JpaDomänenereignisUmschlag erzeugt mit Version und streamName"
-        wrapper.stream == streamName
-        wrapper.version == 1
+        wrapper.metaDaten == new JpaEreignisMetaDaten(streamName, 1L)
     }
 
     def "Ereignisstrom vergibt fortlaufende Versionsnummern"() {
@@ -41,10 +40,9 @@ class EreignisstromTest extends Specification{
         Domänenereignis<String> ereignis = new MeinEreignis();
 
         when: "Wenn ich mehrere Ereignisse registriere"
-        def result = (1..5).collect { ereignisstrom.registerEvent(ereignis).version }
+        def result = (1..5).collect { ereignisstrom.registrieren(ereignis).metaDaten }
 
         then: "Dann werden die Versionsnummern fortlaufend aufsteigend sein."
-        result == (1..5)
-
+        result == (1..5).collect { new JpaEreignisMetaDaten(streamName, it)}
     }
 }

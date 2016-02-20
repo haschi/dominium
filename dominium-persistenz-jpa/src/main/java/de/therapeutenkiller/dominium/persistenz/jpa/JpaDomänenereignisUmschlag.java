@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -59,5 +60,13 @@ public class JpaDomänenereignisUmschlag<A>
     @Override
     public final Domänenereignis<A> öffnen() {
         return this.getEreignis();
+    }
+
+
+    @Override
+    public final String toString() {
+        return new ToStringBuilder(this)
+                .append("meta", this.meta)
+                .toString();
     }
 }
