@@ -1,8 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
+import com.google.common.collect.ImmutableCollection;
 import de.therapeutenkiller.dominium.persistenz.Repository;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -31,5 +33,10 @@ public final class HibernateHaushaltsbuchRepository
         return String.format("%s-%s",
                 Haushaltsbuch.class.getName(),
                 identitätsmerkmal);
+    }
+
+    @Override
+    public ImmutableCollection<UUID> alle() {
+        throw new NotImplementedException("Die Methode muss implementiert werden");
     }
 }

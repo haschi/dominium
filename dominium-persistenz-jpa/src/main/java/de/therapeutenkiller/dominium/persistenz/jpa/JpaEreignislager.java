@@ -8,6 +8,7 @@ import de.therapeutenkiller.dominium.persistenz.EreignisstromNichtVorhanden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.persistence.EntityManager;
@@ -15,12 +16,13 @@ import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings("checkstyle:designforextension")
-public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
-        implements Ereignislager<A, I> {
+public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
+        implements Ereignislager<A, UUID> {
 
     private final EntityManager entityManager;
     private final Uhr uhr;
@@ -34,7 +36,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Transactional
     @Override
     public void neuenEreignisstromErzeugen(
-            final String streamName,
+            final UUID streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
 
@@ -49,7 +51,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Transactional
     @Override
     public void ereignisseDemStromHinzufügen(
-            final String streamName,
+            final UUID streamName,
             final long erwarteteVersion, final Collection<Domänenereignis<A>> domänenereignisse)
             throws KonkurrierenderZugriff {
 
@@ -65,10 +67,10 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
+    public List<Domänenereignis<A>> getEreignisListe(final UUID streamName, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
-                        + "WHERE i.meta.name = :name "
+                        + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
                         + "AND i.meta.version >= :vonVersion "
                         + "AND i.meta.version <= :bisVersion "
                         + "ORDER BY i.meta.version",
@@ -76,7 +78,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
         query.setParameter("vonVersion", bereich.getVon());
         query.setParameter("bisVersion", bereich.getBis());
-        query.setParameter("name", streamName);
+        query.setParameter("identitätsmerkmal", streamName);
 
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
 
@@ -87,14 +89,14 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Transactional
     @Override
-    public void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
+    public void schnappschussHinzufügen(final UUID streamName, final Schnappschuss<A, UUID> snapshot)
             throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
             throw new EreignisstromNichtVorhanden();
         }
 
-        final JpaSchnappschussUmschlag<A, I> umschlag = new JpaSchnappschussUmschlag<>(
+        final JpaSchnappschussUmschlag<A> umschlag = new JpaSchnappschussUmschlag<>(
                 streamName,
                 this.uhr.jetzt(),
                 snapshot);
@@ -103,8 +105,8 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
-            final String streamName) throws EreignisstromNichtVorhanden {
+    public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
+            final UUID streamName) throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
             throw new EreignisstromNichtVorhanden();
@@ -112,19 +114,24 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
         final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaSchnappschussUmschlag i "
-                        + "WHERE i.meta.streamName = :name "
+                        + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
                         + "ORDER BY i.meta.erstellungszeitpunkt DESC",
                 JpaSchnappschussUmschlag.class);
 
         final List<JpaSchnappschussUmschlag> resultList = query
-                .setParameter("name", streamName)
+                .setParameter("identitätsmerkmal", streamName)
                 .setMaxResults(1)
                 .getResultList();
 
 
-        final Stream<Schnappschuss<A, I>> schnappschussStream = resultList.stream()
-                .map(JpaSchnappschussUmschlag<A, I>::öffnen);
+        final Stream<Schnappschuss<A, UUID>> schnappschussStream = resultList.stream()
+                .map(JpaSchnappschussUmschlag<A>::öffnen);
 
         return schnappschussStream.findFirst();
+    }
+
+    @Override
+    public Stream<UUID> getEreignisströme() {
+        throw new NotImplementedException("Die Methode ist nicht implementiert.");
     }
 }

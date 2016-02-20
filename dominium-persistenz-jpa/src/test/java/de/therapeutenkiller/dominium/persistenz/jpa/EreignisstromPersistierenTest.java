@@ -10,6 +10,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -21,26 +23,27 @@ public class EreignisstromPersistierenTest {
 
     @Inject
     private EntityManager entityManager;
+    private UUID id = UUID.randomUUID();
 
     @Test
     public void ereignisströme_können_persistiert_werden() {
-        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.id);
         ereignisstrom.setVersion(42L);
 
         this.entityManager.persist(ereignisstrom);
         this.entityManager.flush();
         this.entityManager.clear();
 
-        final JpaEreignisstrom materialisiert = this.entityManager.find(JpaEreignisstrom.class, "test-strom");
+        final JpaEreignisstrom materialisiert = this.entityManager.find(JpaEreignisstrom.class, this.id);
         assertThat(materialisiert).isEqualTo(ereignisstrom);
     }
 
     @Test
     public void verschiedene_ereignisströme_mit_gleichem_namen_können_nicht_persistiert_werden() {
-        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.id);
         this.entityManager.persist(ereignisstrom);
 
-        final JpaEreignisstrom doppelt = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom doppelt = new JpaEreignisstrom(this.id);
 
         assertThatExceptionOfType(EntityExistsException.class)
             .isThrownBy(() -> { this.entityManager.persist(doppelt); })
@@ -50,13 +53,13 @@ public class EreignisstromPersistierenTest {
 
     @Test
     public void verschiedene_ereignisströme_mit_gleichem_namen_können_nicht_gespeichert_werden() {
-        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.id);
         this.entityManager.persist(ereignisstrom);
 
         this.entityManager.flush();
         this.entityManager.clear();
 
-        final JpaEreignisstrom doppelt = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom doppelt = new JpaEreignisstrom(this.id);
 
         final Throwable thrown = catchThrowable(() -> {
             try {

@@ -2,22 +2,27 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @SuppressWarnings("checkstyle:designforextension")
 @Entity
-public class JpaEreignisstrom extends Ereignisstrom<JpaEreignisMetaDaten> {
+public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten<UUID>> {
 
-    @Id
-    public String getName() {
-        return this.name;
+    public JpaEreignisstrom() {
+        super(UUID.randomUUID());
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    @Id
+    @Override
+    public UUID getIdentitätsmerkmal() {
+        return this.identitätsmerkmal;
+    }
+
+    public void setIdentitätsmerkmal(final UUID identitätsmerkmal) {
+        this.identitätsmerkmal = identitätsmerkmal;
     }
 
     public long getVersion() {
@@ -28,19 +33,15 @@ public class JpaEreignisstrom extends Ereignisstrom<JpaEreignisMetaDaten> {
         this.version = version;
     }
 
-    public  JpaEreignisstrom() {
-        super(StringUtils.EMPTY);
-    }
-
-    public JpaEreignisstrom(final String streamName) {
+    public JpaEreignisstrom(final UUID streamName) {
         super(streamName);
     }
 
     @Override
     protected <A> JpaDomänenereignisUmschlag<A> umschlagErzeugen(final Domänenereignis<A> ereignis) {
 
-        final JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten(
-                this.getName(),
+        final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<UUID>(
+                this.getIdentitätsmerkmal(),
                 this.getVersion());
 
         return new JpaDomänenereignisUmschlag<>(ereignis, meta);

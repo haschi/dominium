@@ -7,6 +7,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Dauerhafte Ablage für Domänenereignisse.
@@ -16,16 +17,18 @@ import java.util.Optional;
 public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
 
     void neuenEreignisstromErzeugen(
-            String streamName,
+            I identitätsmerkmal,
             Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
 
     void ereignisseDemStromHinzufügen(
-            String streamName,
+            I identitätsmerkmal,
             long erwarteteVersion, Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
 
-    List<Domänenereignis<A>> getEreignisListe(String streamName, Versionsbereich bereich);
+    List<Domänenereignis<A>> getEreignisListe(I identitätsmerkmal, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(String streamName, Schnappschuss<A, I> snapshot) throws EreignisstromNichtVorhanden;
+    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws EreignisstromNichtVorhanden;
 
-    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(String streamName) throws EreignisstromNichtVorhanden;
+    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws EreignisstromNichtVorhanden;
+
+    Stream<I> getEreignisströme();
 }

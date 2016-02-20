@@ -15,6 +15,7 @@ import org.junit.runners.JUnit4;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,18 +27,19 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     public final DatenbankRegel datenbankRegel = new DatenbankRegel();
 
     private Uhr uhr = new TestUhr();
+    private UUID id = UUID.randomUUID();
 
     @Before
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
 
-        final TestAggregat aggregat = new TestAggregat(1L);
+        final TestAggregat aggregat = new TestAggregat(this.id);
         aggregat.einenZustandÄndern(42L);
         aggregat.einenZustandÄndern(43L);
 
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final JpaEreignislager<TestAggregat, Long> store = new JpaEreignislager<>(entityManager, this.uhr);
-        store.neuenEreignisstromErzeugen("test-strom", aggregat.getÄnderungen());
+        final JpaEreignislager<TestAggregat> store = new JpaEreignislager<>(entityManager, this.uhr);
+        store.neuenEreignisstromErzeugen(this.id, aggregat.getÄnderungen());
         entityManager.flush();
         entityManager.clear();
     }
@@ -46,8 +48,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     public void dann_wird_die_versionsnummer_des_ereignisstroms_erhöht() {
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final JpaEreignisstrom rematerialisiert = entityManager.find(JpaEreignisstrom.class, "test-strom");
-        final JpaEreignisstrom einEreignisstrom = new JpaEreignisstrom("test-strom");
+        final JpaEreignisstrom rematerialisiert = entityManager.find(JpaEreignisstrom.class, this.id);
+        final JpaEreignisstrom einEreignisstrom = new JpaEreignisstrom(this.id);
         einEreignisstrom.setVersion(2L);
         assertThat(rematerialisiert).isEqualTo(einEreignisstrom);
     }
@@ -58,11 +60,11 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
         final TypedQuery<JpaDomänenereignisUmschlag> query = entityManager.createQuery(
                 "SELECT umschlag from JpaDomänenereignisUmschlag umschlag "
-                        + "WHERE umschlag.meta.name = :name "
+                        + "WHERE umschlag.meta.identitätsmerkmal = :identitätsmerkmal "
                         + "ORDER BY umschlag.meta.version",
                 JpaDomänenereignisUmschlag.class);
 
-        query.setParameter("name", "test-strom");
+        query.setParameter("identitätsmerkmal", this.id);
 
         final List<Domänenereignis<TestAggregat>> domänenereignisse = query.getResultList().stream()
                 .map(JpaDomänenereignisUmschlag<TestAggregat>::öffnen)

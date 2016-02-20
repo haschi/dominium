@@ -10,24 +10,25 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
-public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, I>, I>
+public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID>>
         extends Wertobjekt
-        implements Umschlag<Schnappschuss<A, I>, JpaSchnappschussMetaDaten> {
+        implements Umschlag<Schnappschuss<A, UUID>, JpaSchnappschussMetaDaten<UUID>> {
 
     @EmbeddedId
-    private final JpaSchnappschussMetaDaten meta;
+    private final JpaSchnappschussMetaDaten<UUID> meta;
 
     @Lob
     private final byte[] snapshot;
 
     public  JpaSchnappschussUmschlag(
-            final String streamName,
+            final UUID streamName,
             final LocalDateTime jetzt,
-            final Schnappschuss<A, I> snapshot) {
+            final Schnappschuss<A, UUID> snapshot) {
 
-        this.meta = new JpaSchnappschussMetaDaten(streamName, jetzt);
+        this.meta = new JpaSchnappschussMetaDaten<>(streamName, jetzt);
 
         try {
             this.snapshot = EventSerializer.serialize(snapshot);
@@ -42,13 +43,13 @@ public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final JpaSchnappschussMetaDaten getMetaDaten() {
+    public final JpaSchnappschussMetaDaten<UUID> getMetaDaten() {
         return this.meta;
     }
 
-    public final Schnappschuss<A, I> öffnen() {
+    public final Schnappschuss<A, UUID> öffnen() {
         try {
-            return (Schnappschuss<A, I>)EventSerializer.deserialize(this.snapshot);
+            return (Schnappschuss<A, UUID>)EventSerializer.deserialize(this.snapshot);
         } catch (final IOException | ClassNotFoundException grund) {
             throw new Serialisierungsfehler(grund);
         }

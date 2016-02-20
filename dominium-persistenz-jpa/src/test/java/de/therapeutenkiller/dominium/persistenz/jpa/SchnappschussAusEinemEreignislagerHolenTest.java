@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -21,8 +22,9 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private JpaEreignislager<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat> store;
     private TestUhr uhr = new TestUhr();
+    private UUID id = UUID.randomUUID();
 
     @SuppressWarnings("LawOfDemeter")
     private TestSchnappschuss alterSchnappschuss = new TestSchnappschuss(/*
@@ -41,20 +43,20 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
     @Before
     public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws EreignisstromNichtVorhanden {
         this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
-        this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<>());
+        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<>());
 
         final LocalDateTime jetzt = LocalDateTime.now();
         this.uhr.stellen(jetzt.minusMinutes(1L));
-        this.store.schnappschussHinzufügen("test-strom", this.alterSchnappschuss);
+        this.store.schnappschussHinzufügen(this.id, this.alterSchnappschuss);
 
         this.uhr.stellen(jetzt.plusMinutes(1L));
-        this.store.schnappschussHinzufügen("test-strom", this.neuerSchnappschuss);
+        this.store.schnappschussHinzufügen(this.id, this.neuerSchnappschuss);
     }
 
     @Test
     public void wenn_ich_den_neuesten_schnappschuss_aus_einem_nicht_vorhandenen_ereignisstrom_lese() {
         final Throwable thrown = catchThrowable(() -> {
-            this.store.getNeuesterSchnappschuss("nicht-vorhanden");
+            this.store.getNeuesterSchnappschuss(UUID.randomUUID());
         });
 
         this.dann_werde_ich_eine_EreignisstromNichtVorhanden_ausnahme_erhalten(thrown);
@@ -66,14 +68,14 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
 
     @Test
     public void wenn_ich_den_neusten_schnappschuss_anfordere() throws EreignisstromNichtVorhanden {
-        final Schnappschuss<TestAggregat, Long> schnappschuss =
-                this.store.getNeuesterSchnappschuss("test-strom").get();
+        final Schnappschuss<TestAggregat, UUID> schnappschuss =
+                this.store.getNeuesterSchnappschuss(this.id).get();
 
         this.dann_werde_ich_den_jüngsten_schnappschuss_erhalten(schnappschuss);
     }
 
     private void dann_werde_ich_den_jüngsten_schnappschuss_erhalten(
-            final Schnappschuss<TestAggregat, Long> schnappschuss) {
+            final Schnappschuss<TestAggregat, UUID> schnappschuss) {
         assertThat(schnappschuss).isEqualTo(this.neuerSchnappschuss);
     }
 }

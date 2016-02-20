@@ -4,20 +4,21 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public final class TestSchnappschuss
         extends Wertobjekt
-        implements Schnappschuss<TestAggregat, Long>, Serializable {
+        implements Schnappschuss<TestAggregat, UUID>, Serializable {
 
     private long zustand;
-    private Long identitätsmerkmal;
+    private UUID identitätsmerkmal;
     private long version;
 
     public TestSchnappschuss() {
     }
 
     @Override
-    public Long getIdentitätsmerkmal() {
+    public UUID getIdentitätsmerkmal() {
         return this.identitätsmerkmal;
     }
 

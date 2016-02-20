@@ -17,6 +17,7 @@ import org.junit.runners.JUnit4;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -28,19 +29,20 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
     private EntityManager entityManager;
-    private JpaEreignislager<TestAggregat, Long> store;
+    private JpaEreignislager<TestAggregat> store;
 
     private Uhr uhr = new TestUhr();
+    private UUID id = UUID.randomUUID();
 
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() throws KonkurrierenderZugriff {
-        final TestAggregat aggregat = new TestAggregat(1L);
+        final TestAggregat aggregat = new TestAggregat(this.id);
         aggregat.einenZustandÄndern(42L);
         aggregat.einenZustandÄndern(43L);
 
         this.entityManager = this.datenbankRegel.getEntityManager();
         this.store = new JpaEreignislager<>(this.entityManager, this.uhr);
-        this.store.neuenEreignisstromErzeugen("test-strom", new ArrayList<Domänenereignis<TestAggregat>>() {
+        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<Domänenereignis<TestAggregat>>() {
             {
                 add(new ZustandWurdeGeändert(42L));
                 add(new ZustandWurdeGeändert(43L));
@@ -51,7 +53,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     @Test
     public void wenn_ich_dem_ereignislager_weitere_ereignisse_hinzufüge() throws KonkurrierenderZugriff {
 
-        this.store.ereignisseDemStromHinzufügen("test-strom", 2L, new ArrayList<Domänenereignis<TestAggregat>>() {
+        this.store.ereignisseDemStromHinzufügen(this.id, 2L, new ArrayList<Domänenereignis<TestAggregat>>() {
             {
                 add(new ZustandWurdeGeändert(44L));
                 add(new ZustandWurdeGeändert(45L));
@@ -69,7 +71,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
             throws KonkurrierenderZugriff {
         final Throwable thrown = catchThrowable(() -> {
             this.store.ereignisseDemStromHinzufügen(
-                    "test-strom",
+                    this.id,
                     1L,
                     new ArrayList<>());
         });
@@ -83,7 +85,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
     private void dann_werden_die_ereignisse_dem_ereignisstrom_hinzugefügt_worden_sein() {
         final List<Domänenereignis<TestAggregat>> ereignisListe = this.store.getEreignisListe(
-                "test-strom",
+                this.id,
                 Versionsbereich.ALLE_VERSIONEN);
 
         assertThat(ereignisListe).containsExactly(

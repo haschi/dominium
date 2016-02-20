@@ -12,7 +12,7 @@ class EreignisstromTest extends Specification {
         def strom = new TestEreignisstrom("test-strom")
 
         then:
-        strom.name == "test-strom"
+        strom.identitätsmerkmal == "test-strom"
     }
 
     def "Ereignisse können für einen Ereignis-Strom registriert werden"() {

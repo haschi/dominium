@@ -3,9 +3,9 @@ package de.therapeutenkiller.dominium.memory;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 
-public final class MemoryEreignisstrom extends Ereignisstrom<MemoryEreignisMetaDaten> {
+public final class MemoryEreignisstrom<I> extends Ereignisstrom<I, MemoryEreignisMetaDaten<I>> {
 
-    public MemoryEreignisstrom(final String streamName) {
+    public MemoryEreignisstrom(final I streamName) {
         super(streamName);
     }
 
@@ -14,12 +14,16 @@ public final class MemoryEreignisstrom extends Ereignisstrom<MemoryEreignisMetaD
     }
 
     @Override
-    protected <A> MemoryDomänenereignisUmschlag<A> umschlagErzeugen(
-            final Domänenereignis<A> ereignis) {
-        final MemoryEreignisMetaDaten metaDaten = new MemoryEreignisMetaDaten();
-        metaDaten.ereignisstrom = this.name;
+    public I getIdentitätsmerkmal() {
+        return this.identitätsmerkmal;
+    }
+
+    @Override
+    protected <A> MemoryDomänenereignisUmschlag<A, I> umschlagErzeugen(final Domänenereignis<A> ereignis) {
+        final MemoryEreignisMetaDaten<I> metaDaten = new MemoryEreignisMetaDaten<I>();
+        metaDaten.ereignisstrom = this.identitätsmerkmal;
         metaDaten.version = this.version;
 
-        return new MemoryDomänenereignisUmschlag<A>(ereignis, metaDaten);
+        return new MemoryDomänenereignisUmschlag<A, I>(ereignis, metaDaten);
     }
 }

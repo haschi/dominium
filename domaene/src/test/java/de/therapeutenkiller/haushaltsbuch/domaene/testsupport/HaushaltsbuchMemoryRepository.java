@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Repository;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository
@@ -33,7 +36,11 @@ public class HaushaltsbuchMemoryRepository
     }
 
     public final List<Domänenereignis<Haushaltsbuch>> getStream(final UUID haushaltsbuchId) {
-        final String streamName = this.streamNameFor(haushaltsbuchId);
-        return this.getEreignislager().getEreignisListe(streamName, Versionsbereich.ALLE_VERSIONEN);
+        return this.getEreignislager().getEreignisListe(haushaltsbuchId, Versionsbereich.ALLE_VERSIONEN);
+    }
+
+    @Override
+    public final ImmutableCollection<UUID> alle() {
+        return ImmutableList.copyOf(this.getEreignislager().getEreignisströme().collect(Collectors.toList()));
     }
 }

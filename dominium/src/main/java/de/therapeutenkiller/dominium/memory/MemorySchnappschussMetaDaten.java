@@ -2,18 +2,18 @@ package de.therapeutenkiller.dominium.memory;
 
 import java.time.LocalDateTime;
 
-public final class MemorySchnappschussMetaDaten {
+public final class MemorySchnappschussMetaDaten<I> {
 
-    private final String ereignisstrom;
+    private final I ereignisstrom;
     private final LocalDateTime zeitstempel;
 
-    public MemorySchnappschussMetaDaten(final String ereignisstrom, final LocalDateTime zeitstempel) {
+    public MemorySchnappschussMetaDaten(final I ereignisstrom, final LocalDateTime zeitstempel) {
 
         this.ereignisstrom = ereignisstrom;
         this.zeitstempel = zeitstempel;
     }
 
-    public String getEreignisstrom() {
+    public I getEreignisstrom() {
         return this.ereignisstrom;
     }
 

@@ -19,7 +19,7 @@ class MeinEreignis implements MeinEreignisTyp {
 }
 class EreignisstromTest extends Specification{
 
-    @Shared String streamName = "Mein JpaEreignisstrom"
+    @Shared UUID streamName = UUID.randomUUID()
 
     def "Ereignisstrom kann Ereignisse registrieren"() {
         given: "Angenommen ich habe einen JpaEreignisstrom und ein Ereignis"

@@ -21,7 +21,7 @@ import javax.persistence.EntityManager
 
 class HibernateEventStoreTest extends Specification {
 
-    @Shared streamName = "Test-Strom"
+    @Shared streamName = UUID.randomUUID()
     JpaEreignisstrom strom = new JpaEreignisstrom(streamName)
     @Shared List<Domänenereignis<Haushaltsbuch>> ereignisse = [
             new KontoWurdeAngelegt("Anfangsbestand", Kontoart.Aktiv),
@@ -35,7 +35,7 @@ class HibernateEventStoreTest extends Specification {
         given: "Angenommen ich habe einen Event-Store"
         EntityManager entityManager = Mock(EntityManager)
 
-        def store = new JpaEreignislager<Haushaltsbuch, UUID>(entityManager, uhr)
+        def store = new JpaEreignislager<Haushaltsbuch>(entityManager, uhr)
         Collection<Domänenereignis<Haushaltsbuch>> ereignisse = new ArrayList<Domänenereignis<Haushaltsbuch>>()
 
         when: "Wenn ich einen neues Event-Stream erzeuge"
@@ -52,7 +52,7 @@ class HibernateEventStoreTest extends Specification {
         }
 
         given:
-        def store = new JpaEreignislager<Haushaltsbuch, UUID>(entityManager, uhr)
+        def store = new JpaEreignislager<Haushaltsbuch>(entityManager, uhr)
 
         when:
         store.neuenEreignisstromErzeugen(streamName, ereignisse)
@@ -77,7 +77,7 @@ class HibernateEventStoreTest extends Specification {
         }
 
         given:
-        def store = new JpaEreignislager<Haushaltsbuch, UUID>(entityManager, uhr)
+        def store = new JpaEreignislager<Haushaltsbuch>(entityManager, uhr)
 
         when:
         store.ereignisseDemStromHinzufügen(streamName, 0L, ereignisse)

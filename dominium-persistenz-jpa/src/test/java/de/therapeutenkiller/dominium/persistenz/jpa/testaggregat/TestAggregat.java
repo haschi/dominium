@@ -3,11 +3,13 @@ package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
-public class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
+import java.util.UUID;
+
+public class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
 
     long zustand;
 
-    public TestAggregat(final Long identitätsmerkmal) {
+    public TestAggregat(final UUID identitätsmerkmal) {
         super(identitätsmerkmal);
     }
 
@@ -17,7 +19,7 @@ public class TestAggregat extends Aggregatwurzel<TestAggregat, Long> {
     }
 
     @Override
-    public final Schnappschuss<TestAggregat, Long> schnappschussErstellen() {
+    public final Schnappschuss<TestAggregat, UUID> schnappschussErstellen() {
         return null;
     }
 

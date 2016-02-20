@@ -19,14 +19,14 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
         final String streamName = this.streamNameFor(identitätsmerkmal);
 
         final Optional<Schnappschuss<A, I>> snapshot = this.ereignislager.getNeuesterSchnappschuss(
-                streamName);
+                identitätsmerkmal);
 
         if (snapshot.isPresent()) {
 
             final Versionsbereich bereich = new Versionsbereich(snapshot.get().getVersion(), Long.MAX_VALUE);
 
             final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisListe(
-                    streamName, bereich);
+                    identitätsmerkmal, bereich);
 
             final A aggregat = snapshot.get().wiederherstellen();
             for (final Domänenereignis<A> ereignis : stream) {
@@ -38,7 +38,7 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
         }
 
         final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
-        final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisListe(streamName, bereich);
+        final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisListe(identitätsmerkmal, bereich);
 
         final A haushaltsbuch = this.neuesAggregatErzeugen(identitätsmerkmal);
 
@@ -56,14 +56,14 @@ public abstract class Repository<A extends Aggregatwurzel<A, I>, I> {
         final String streamName = this.streamNameFor(aggregat.getIdentitätsmerkmal());
         final List<Domänenereignis<A>> änderungen = aggregat.getÄnderungen();
 
-        this.ereignislager.neuenEreignisstromErzeugen(streamName, änderungen);
+        this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
     public final void save(final A aggregat) throws KonkurrierenderZugriff {
         final String streamName = this.streamNameFor(aggregat.getIdentitätsmerkmal());
 
         this.ereignislager.ereignisseDemStromHinzufügen(
-                streamName,
+                aggregat.getIdentitätsmerkmal(),
                 aggregat.getInitialversion(),
                 aggregat.getÄnderungen()
         );
