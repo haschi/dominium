@@ -62,7 +62,6 @@ public class JpaDomänenereignisUmschlag<A>
         return this.getEreignis();
     }
 
-
     @Override
     public final String toString() {
         return new ToStringBuilder(this)

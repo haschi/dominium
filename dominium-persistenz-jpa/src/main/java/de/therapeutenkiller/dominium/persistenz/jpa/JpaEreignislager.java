@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("checkstyle:designforextension")
 public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
         implements Ereignislager<A, I> {
 
@@ -32,7 +33,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Transactional
     @Override
-    public final void neuenEreignisstromErzeugen(
+    public void neuenEreignisstromErzeugen(
             final String streamName,
             final Collection<Domänenereignis<A>> domänenereignisse) {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
@@ -47,7 +48,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Transactional
     @Override
-    public final void ereignisseDemStromHinzufügen(
+    public void ereignisseDemStromHinzufügen(
             final String streamName,
             final long erwarteteVersion, final Collection<Domänenereignis<A>> domänenereignisse)
             throws KonkurrierenderZugriff {
@@ -64,7 +65,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
+    public List<Domänenereignis<A>> getEreignisListe(final String streamName, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.name = :name "
@@ -86,7 +87,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
 
     @Transactional
     @Override
-    public final void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
+    public void schnappschussHinzufügen(final String streamName, final Schnappschuss<A, I> snapshot)
             throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {
@@ -102,7 +103,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, I>, I>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
+    public Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(
             final String streamName) throws EreignisstromNichtVorhanden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
         if (strom == null) {

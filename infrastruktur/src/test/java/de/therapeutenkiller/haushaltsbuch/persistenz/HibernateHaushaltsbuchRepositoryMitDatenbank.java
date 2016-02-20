@@ -11,7 +11,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 @RunWith(CdiTestRunner.class)
-public final class HibernateHaushaltsbuchRepositoryMitDatenbank {
+@SuppressWarnings("checkstyle:designforextension")
+public class HibernateHaushaltsbuchRepositoryMitDatenbank {
 
     @Inject
     private EntityManager entityManager; // NOPMD
