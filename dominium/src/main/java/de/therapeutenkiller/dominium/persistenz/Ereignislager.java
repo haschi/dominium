@@ -18,7 +18,7 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
 
     void neuenEreignisstromErzeugen(
             I identitätsmerkmal,
-            Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
+            Collection<Domänenereignis<A>> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             I identitätsmerkmal,

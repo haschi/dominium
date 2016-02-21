@@ -41,7 +41,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I>, I>
     @Override
     public final void neuenEreignisstromErzeugen(
             final I identitätsmerkmal,
-            final Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff {
+            final Collection<Domänenereignis<A>> domänenereignisse) {
 
         if (this.ereignisströme.containsKey(identitätsmerkmal)) {
             throw new IllegalArgumentException();

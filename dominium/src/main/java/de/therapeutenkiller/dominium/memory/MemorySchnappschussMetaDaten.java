@@ -1,8 +1,10 @@
 package de.therapeutenkiller.dominium.memory;
 
+import de.therapeutenkiller.dominium.modell.Wertobjekt;
+
 import java.time.LocalDateTime;
 
-public final class MemorySchnappschussMetaDaten<I> {
+public final class MemorySchnappschussMetaDaten<I> extends Wertobjekt {
 
     private final I ereignisstrom;
     private final LocalDateTime zeitstempel;

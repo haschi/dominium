@@ -36,9 +36,9 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     @Transactional
     @Override
     public void neuenEreignisstromErzeugen(
-            final UUID streamName,
+            final UUID identitätsmerkmal,
             final Collection<Domänenereignis<A>> domänenereignisse) {
-        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(streamName);
+        final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(identitätsmerkmal);
 
         for (final Domänenereignis<A> ereignis : domänenereignisse) {
             this.entityManager.persist(ereignisstrom.registrieren(ereignis));
@@ -51,11 +51,12 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     @Transactional
     @Override
     public void ereignisseDemStromHinzufügen(
-            final UUID streamName,
-            final long erwarteteVersion, final Collection<Domänenereignis<A>> domänenereignisse)
+            final UUID identitätsmerkmal,
+            final long erwarteteVersion,
+            final Collection<Domänenereignis<A>> domänenereignisse)
             throws KonkurrierenderZugriff {
 
-        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
 
         if (strom.getVersion() != erwarteteVersion) {
             throw new KonkurrierenderZugriff(erwarteteVersion, strom.getVersion());
@@ -67,7 +68,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     }
 
     @Override
-    public List<Domänenereignis<A>> getEreignisliste(final UUID streamName, final Versionsbereich bereich) {
+    public List<Domänenereignis<A>> getEreignisliste(final UUID identitätsmerkmal, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
@@ -78,7 +79,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
 
         query.setParameter("vonVersion", bereich.getVon());
         query.setParameter("bisVersion", bereich.getBis());
-        query.setParameter("identitätsmerkmal", streamName);
+        query.setParameter("identitätsmerkmal", identitätsmerkmal);
 
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
 
@@ -89,15 +90,15 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
 
     @Transactional
     @Override
-    public void schnappschussHinzufügen(final UUID streamName, final Schnappschuss<A, UUID> snapshot)
+    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final Schnappschuss<A, UUID> snapshot)
             throws AggregatNichtGefunden {
-        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
         if (strom == null) {
             throw new AggregatNichtGefunden();
         }
 
         final JpaSchnappschussUmschlag<A> umschlag = new JpaSchnappschussUmschlag<>(
-                streamName,
+                identitätsmerkmal,
                 this.uhr.jetzt(),
                 snapshot);
 
@@ -106,8 +107,9 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
 
     @Override
     public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
-            final UUID streamName) throws AggregatNichtGefunden {
-        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, streamName);
+            final UUID identitätsmerkmal)
+            throws AggregatNichtGefunden {
+        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
         if (strom == null) {
             throw new AggregatNichtGefunden();
         }
@@ -119,7 +121,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
                 JpaSchnappschussUmschlag.class);
 
         final List<JpaSchnappschussUmschlag> resultList = query
-                .setParameter("identitätsmerkmal", streamName)
+                .setParameter("identitätsmerkmal", identitätsmerkmal)
                 .setMaxResults(1)
                 .getResultList();
 
