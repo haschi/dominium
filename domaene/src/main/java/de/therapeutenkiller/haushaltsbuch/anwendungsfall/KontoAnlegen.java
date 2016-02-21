@@ -8,6 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnl
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,14 +16,14 @@ import javax.inject.Singleton;
 @Singleton
 public final class KontoAnlegen {
     private final HaushaltsbuchRepository repository;
-    private final AnfangsbestandBuchen anfangsbestandBuchen;
+    private final Event<AnfangsbestandBuchenKommando> anfangsbestandBuchenKommandoEvent;
 
     @Inject
     public KontoAnlegen(
             final HaushaltsbuchRepository repository,
-            final AnfangsbestandBuchen anfangsbestandBuchen) {
+            final Event<AnfangsbestandBuchenKommando> anfangsbestandBuchenKommandoEvent) {
         this.repository = repository;
-        this.anfangsbestandBuchen = anfangsbestandBuchen;
+        this.anfangsbestandBuchenKommandoEvent = anfangsbestandBuchenKommandoEvent;
     }
 
     public void ausführen(@Observes final KontoMitAnfangsbestandAnlegenKommando kommando)
@@ -40,7 +41,7 @@ public final class KontoAnlegen {
                 kommando.kontoname,
                 kommando.betrag);
 
-        this.anfangsbestandBuchen.ausführen(anfangsbestandBuchenKommando);
+        this.anfangsbestandBuchenKommandoEvent.fire(anfangsbestandBuchenKommando);
     }
 
     public void ausführen(@Observes final KontoAnlegenKommando kommando)

@@ -8,19 +8,13 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public final class AnfangsbestandBuchen {
     private final HaushaltsbuchRepository repository;
-    private final BuchungssatzHinzufügen buchungssatzHinzufügen;
 
     @Inject
-    public AnfangsbestandBuchen(
-            final HaushaltsbuchRepository repository,
-            final BuchungssatzHinzufügen buchungssatzHinzufügen) {
+    public AnfangsbestandBuchen(final HaushaltsbuchRepository repository) {
         this.repository = repository;
-        this.buchungssatzHinzufügen = buchungssatzHinzufügen;
     }
 
     public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando)
