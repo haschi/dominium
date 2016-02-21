@@ -15,6 +15,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -24,26 +25,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AnfangsbestandBuchenSteps {
 
-    private final DieWelt kontext;
-    private final SaldoAbfrage kontoSaldieren;
+    @Inject
+    private DieWelt kontext;
 
     @Inject
-    public AnfangsbestandBuchenSteps(
-            final DieWelt kontext,
-            final SaldoAbfrage kontoSaldieren) {
-        this.kontext = kontext;
-        this.kontoSaldieren = kontoSaldieren;
-    }
+    private SaldoAbfrage kontoSaldieren;
+
+    @Inject
+    private Event<AnfangsbestandBuchenKommando> bucheAnfangsbestand;
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) buche$")
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
             final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
+        final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
                 this.kontext.getAktuelleHaushaltsbuchId(),
                 konto,
-                betrag));
+                betrag);
+
+        this.bucheAnfangsbestand.fire(befehl);
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -77,10 +78,12 @@ public final class AnfangsbestandBuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
+        final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
                 this.kontext.getAktuelleHaushaltsbuchId(),
                 kontoname,
-                währungsbetrag));
+                währungsbetrag);
+
+        this.bucheAnfangsbestand.fire(befehl);
     }
 
     @Wenn("^ich weitere (-?\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")

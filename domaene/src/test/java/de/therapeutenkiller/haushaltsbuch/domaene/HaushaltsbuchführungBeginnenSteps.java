@@ -9,6 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBegi
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -20,20 +21,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class HaushaltsbuchführungBeginnenSteps {
 
-    private final DieWelt kontext;
-    private final AlleHaushaltsbücher alleHaushaltsbücher;
+    @Inject
+    Event<HaushaltsbuchführungBeginnenKommando> beginneHaushaltsbuchführung;
 
     @Inject
-    public HaushaltsbuchführungBeginnenSteps(final DieWelt kontext, final AlleHaushaltsbücher alleHaushaltsbücher) {
+    DieWelt kontext;
 
-        this.kontext = kontext;
-        this.alleHaushaltsbücher = alleHaushaltsbücher;
-    }
+    @Inject
+    AlleHaushaltsbücher alleHaushaltsbücher;
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId));
+        this.beginneHaushaltsbuchführung.fire(new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId));
         this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 
