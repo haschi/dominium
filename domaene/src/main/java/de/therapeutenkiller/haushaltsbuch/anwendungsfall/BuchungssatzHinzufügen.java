@@ -2,15 +2,13 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.money.MonetaryAmount;
-import java.util.UUID;
 
-@Singleton
 public final class BuchungssatzHinzufügen {
 
     private final HaushaltsbuchRepository repository;
@@ -21,16 +19,16 @@ public final class BuchungssatzHinzufügen {
         this.repository = repository;
     }
 
-    public void ausführen(
-            final UUID haushaltsbuchId,
-            final String sollkonto,
-            final String habenkonto,
-            final MonetaryAmount betrag)
+    public void ausführen(@Observes final FügeBuchungssatzHinzu befehl)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
-        final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.suchen(befehl.identitätsmerkmal);
 
-        haushaltsbuch.buchungssatzHinzufügen(sollkonto, habenkonto, betrag);
+        haushaltsbuch.buchungssatzHinzufügen(
+                befehl.sollkonto,
+                befehl.habenkonto,
+                befehl.betrag);
+
         this.repository.speichern(haushaltsbuch);
     }
 }

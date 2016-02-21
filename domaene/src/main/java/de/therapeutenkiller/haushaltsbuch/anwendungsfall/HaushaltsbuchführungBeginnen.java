@@ -9,11 +9,8 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
-@SuppressWarnings("checkstyle:designforextension")
-public class HaushaltsbuchführungBeginnen {
+public final class HaushaltsbuchführungBeginnen {
     private final HaushaltsbuchRepository repository;
 
     @Inject
@@ -29,10 +26,6 @@ public class HaushaltsbuchführungBeginnen {
                 Konto.ANFANGSBESTAND.getBezeichnung(),
                 Kontoart.Aktiv);
 
-        this.getRepository().hinzufügen(haushaltsbuch);
-    }
-
-    private HaushaltsbuchRepository getRepository() {
-        return this.repository;
+        this.repository.hinzufügen(haushaltsbuch);
     }
 }

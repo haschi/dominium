@@ -3,30 +3,29 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
 
-import javax.ejb.Singleton;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-@Singleton
 public final class EinnahmeBuchen {
 
-    private final BuchungssatzHinzufügen buchungssatzHinzufügen;
+    private final Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent;
 
     @Inject
-    public EinnahmeBuchen(final BuchungssatzHinzufügen buchungssatzHinzufügen) {
+    public EinnahmeBuchen(final Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent) {
 
-        this.buchungssatzHinzufügen = buchungssatzHinzufügen;
+        this.fügeBuchungssatzHinzuEvent = fügeBuchungssatzHinzuEvent;
     }
 
     public void ausführen(@Observes final EinnahmeBuchenKommando kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
-        // TODO ggf. später prüfen, ob die Kontenarten korrekt sind.
-        this.buchungssatzHinzufügen.ausführen(
+        this.fügeBuchungssatzHinzuEvent.fire(new FügeBuchungssatzHinzu(
                 kommando.haushaltsbuchId,
                 kommando.sollkonto,
                 kommando.habenkonto,
-                kommando.währungsbetrag);
+                kommando.währungsbetrag));
     }
 }

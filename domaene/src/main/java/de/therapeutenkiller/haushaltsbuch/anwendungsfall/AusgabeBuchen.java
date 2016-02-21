@@ -8,9 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public final class AusgabeBuchen {
 
     private final HaushaltsbuchRepository repository;

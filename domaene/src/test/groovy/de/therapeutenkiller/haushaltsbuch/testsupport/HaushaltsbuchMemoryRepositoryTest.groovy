@@ -20,6 +20,7 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
         HaushaltsbuchEreignislager lager = new HaushaltsbuchEreignislager(uhr);
         HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager)
         UUID haushaltsbuchId = UUID.randomUUID()
+
         new HaushaltsbuchführungBeginnen(repository).ausführen(
                 new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId))
 
