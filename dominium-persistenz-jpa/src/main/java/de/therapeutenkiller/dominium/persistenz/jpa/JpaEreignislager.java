@@ -45,7 +45,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
         }
 
         this.entityManager.persist(ereignisstrom);
-        this.entityManager.flush();
+
     }
 
     @Transactional
