@@ -30,8 +30,7 @@ public abstract class Ereignisstrom<I, M> extends Wertobjekt {
 
     public final <A> Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
         this.version = this.version + 1;
-        final Umschlag<Domänenereignis<A>, M> domänenereignisUmschlag = this.umschlagErzeugen(ereignis);
-        return domänenereignisUmschlag;
+        return this.umschlagErzeugen(ereignis);
     }
 
     protected abstract <A> Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);

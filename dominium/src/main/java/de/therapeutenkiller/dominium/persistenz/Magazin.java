@@ -16,18 +16,16 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
     }
 
     public final A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
-        final Optional<Schnappschuss<A, I>> snapshot = this.ereignislager.getNeuesterSchnappschuss(
+        final Optional<Schnappschuss<A, I>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
 
-        if (snapshot.isPresent()) {
+        if (schnappschuss.isPresent()) {
 
-            final Versionsbereich bereich = new Versionsbereich(snapshot.get().getVersion(), Long.MAX_VALUE);
+            final Versionsbereich bereich = new Versionsbereich(schnappschuss.get().getVersion(), Long.MAX_VALUE);
+            final List<Domänenereignis<A>> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
+            final A aggregat = schnappschuss.get().wiederherstellen();
 
-            final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisliste(
-                    identitätsmerkmal, bereich);
-
-            final A aggregat = snapshot.get().wiederherstellen();
-            for (final Domänenereignis<A> ereignis : stream) {
+            for (final Domänenereignis<A> ereignis : ereignisse) {
                 aggregat.anwenden(ereignis);
                 aggregat.setInitialversion(aggregat.getVersion());
             }
@@ -37,7 +35,6 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
 
         final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
         final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
-
         final A haushaltsbuch = this.neuesAggregatErzeugen(identitätsmerkmal);
 
         for (final Domänenereignis<A> ereignis : stream) {
@@ -50,9 +47,8 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
 
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
 
-    public final void hinzufügen(final A aggregat) throws KonkurrierenderZugriff {
+    public final void hinzufügen(final A aggregat) {
         final List<Domänenereignis<A>> änderungen = aggregat.getÄnderungen();
-
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
