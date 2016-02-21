@@ -205,6 +205,9 @@
                         <testResource>
                             <directory>src/test/resources-h2</directory>
                         </testResource>
+                        <testResource>
+                            <directory>src/test/resources</directory>
+                        </testResource>
                     </testResources>
                 </build>
                 <dependencies>
