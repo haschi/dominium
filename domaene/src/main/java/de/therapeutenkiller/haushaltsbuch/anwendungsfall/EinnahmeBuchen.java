@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheEinnahme;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
 
 import javax.enterprise.event.Event;
@@ -19,7 +19,7 @@ public final class EinnahmeBuchen {
         this.fügeBuchungssatzHinzuEvent = fügeBuchungssatzHinzuEvent;
     }
 
-    public void ausführen(@Observes final EinnahmeBuchenKommando kommando)
+    public void ausführen(@Observes final BucheEinnahme kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         this.fügeBuchungssatzHinzuEvent.fire(new FügeBuchungssatzHinzu(

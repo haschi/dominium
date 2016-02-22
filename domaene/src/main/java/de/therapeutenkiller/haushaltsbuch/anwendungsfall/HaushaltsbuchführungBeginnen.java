@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
@@ -18,7 +18,7 @@ public final class HaushaltsbuchführungBeginnen {
         this.repository = repository;
     }
 
-    public void ausführen(@Observes final HaushaltsbuchführungBeginnenKommando kommando)
+    public void ausführen(@Observes final BeginneHaushaltsbuchführung kommando)
             throws KonkurrierenderZugriff {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(kommando.identitätsmerkmal);
 

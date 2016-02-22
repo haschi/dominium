@@ -8,8 +8,8 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoMitAnfangsbestandAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
@@ -31,16 +31,16 @@ public final class BuchenSteps {
     private DieWelt welt;
 
     @Inject
-    private Event<KontoMitAnfangsbestandAnlegenKommando> kontoMitAnfangsbestandAnlegen;
+    private Event<LegeKontoMitAnfangsbestandAn> kontoMitAnfangsbestandAnlegen;
 
     @Inject
-    private Event<HaushaltsbuchführungBeginnenKommando> haushaltsbuchführungBeginnen;
+    private Event<BeginneHaushaltsbuchführung> haushaltsbuchführungBeginnen;
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) {
 
         final UUID identitätsmerkmal = UUID.randomUUID();
-        this.haushaltsbuchführungBeginnen.fire(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
+        this.haushaltsbuchführungBeginnen.fire(new BeginneHaushaltsbuchführung(identitätsmerkmal));
         this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);
 
         kontostände.stream()
@@ -53,7 +53,7 @@ public final class BuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final KontoMitAnfangsbestandAnlegenKommando kommando = new KontoMitAnfangsbestandAnlegenKommando(
+        final LegeKontoMitAnfangsbestandAn kommando = new LegeKontoMitAnfangsbestandAn(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 Kontoart.Aktiv,

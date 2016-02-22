@@ -11,7 +11,7 @@ import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoAn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
@@ -51,7 +51,7 @@ public final class KontoErstellenSteps {
     public void wenn_ich_das_Konto_anlege(final String kontoname) {
 
         final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
-        this.kontext.kommandoAusführen(new KontoAnlegenKommando(haushaltsbuchId, kontoname, Kontoart.Aktiv));
+        this.kontext.kommandoAusführen(new LegeKontoAn(haushaltsbuchId, kontoname, Kontoart.Aktiv));
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")

@@ -8,7 +8,7 @@ import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.AusgabeBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAusgabe;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
@@ -30,7 +30,7 @@ public final class AusgabeBuchenSteps {
     private DieWelt welt;
 
     @Inject
-    private Event<AusgabeBuchenKommando> ausgabeBuchen;
+    private Event<BucheAusgabe> ausgabeBuchen;
 
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
@@ -38,14 +38,14 @@ public final class AusgabeBuchenSteps {
             final String sollkonto,
             final String habenkonto)  {
 
-        final AusgabeBuchenKommando ausgabeBuchenKommando = new AusgabeBuchenKommando(
+        final BucheAusgabe bucheAusgabe = new BucheAusgabe(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
                 währungsbetrag
         );
 
-        this.ausgabeBuchen.fire(ausgabeBuchenKommando);
+        this.ausgabeBuchen.fire(bucheAusgabe);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")

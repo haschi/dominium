@@ -9,7 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
@@ -30,14 +30,14 @@ public final class AnfangsbestandBuchenSteps {
     private SaldoAbfrage kontoSaldieren;
 
     @Inject
-    private Event<AnfangsbestandBuchenKommando> bucheAnfangsbestand;
+    private Event<BucheAnfangsbestand> bucheAnfangsbestand;
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" (?:den Anfangsbestand von) (-?\\d+,\\d{2} [A-Z]{3}) buche$")
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
             final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
+        final BucheAnfangsbestand befehl = new BucheAnfangsbestand(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 konto,
                 betrag);
@@ -76,7 +76,7 @@ public final class AnfangsbestandBuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
-        final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
+        final BucheAnfangsbestand befehl = new BucheAnfangsbestand(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag);
@@ -89,7 +89,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String kontoname) throws Throwable {
 
-        this.welt.kommandoAusführen(new AnfangsbestandBuchenKommando(
+        this.welt.kommandoAusführen(new BucheAnfangsbestand(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));

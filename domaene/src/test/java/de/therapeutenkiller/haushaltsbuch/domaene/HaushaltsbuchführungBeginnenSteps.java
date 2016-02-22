@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableCollection;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleHaushaltsbücher;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 
 import javax.enterprise.event.Event;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class HaushaltsbuchführungBeginnenSteps {
 
     @Inject
-    Event<HaushaltsbuchführungBeginnenKommando> beginneHaushaltsbuchführung;
+    Event<BeginneHaushaltsbuchführung> beginneHaushaltsbuchführung;
 
     @Inject
     DieWelt kontext;
@@ -29,7 +29,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.beginneHaushaltsbuchführung.fire(new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId));
+        this.beginneHaushaltsbuchführung.fire(new BeginneHaushaltsbuchführung(haushaltsbuchId));
         this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 

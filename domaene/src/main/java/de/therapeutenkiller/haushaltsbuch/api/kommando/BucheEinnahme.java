@@ -5,13 +5,13 @@ import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class AusgabeBuchenKommando extends Wertobjekt {
+public class BucheEinnahme extends Wertobjekt {
     public final UUID haushaltsbuchId;
     public final String sollkonto;
     public final String habenkonto;
     public final MonetaryAmount währungsbetrag;
 
-    public AusgabeBuchenKommando(
+    public BucheEinnahme(
             final UUID haushaltsbuchId,
             final String sollkonto,
             final String habenkonto,

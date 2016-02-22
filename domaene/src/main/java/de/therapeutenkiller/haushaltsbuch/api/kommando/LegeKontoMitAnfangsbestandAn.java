@@ -6,14 +6,14 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class KontoMitAnfangsbestandAnlegenKommando extends Wertobjekt {
+public class LegeKontoMitAnfangsbestandAn extends Wertobjekt {
 
     public final UUID haushaltsbuchId;
     public final String kontoname;
     public final Kontoart kontoart;
     public final MonetaryAmount betrag;
 
-    public KontoMitAnfangsbestandAnlegenKommando(
+    public LegeKontoMitAnfangsbestandAn(
             final UUID haushaltsbuchId,
             final String kontoname,
             final Kontoart kontoart,

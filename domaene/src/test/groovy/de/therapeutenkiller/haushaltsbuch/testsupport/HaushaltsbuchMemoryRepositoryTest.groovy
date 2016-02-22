@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.testsupport
 
 import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
-import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchEreignislager
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchMemoryRepository
@@ -22,7 +22,7 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
         UUID haushaltsbuchId = UUID.randomUUID()
 
         new HaushaltsbuchführungBeginnen(repository).ausführen(
-                new HaushaltsbuchführungBeginnenKommando(haushaltsbuchId))
+                new BeginneHaushaltsbuchführung(haushaltsbuchId))
 
 
         when:

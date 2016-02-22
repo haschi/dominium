@@ -2,8 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene;
 
 import cucumber.api.java.de.Angenommen;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.HaushaltsbuchführungBeginnenKommando;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.KontoAnlegenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoAn;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 
 import javax.enterprise.event.Event;
@@ -16,22 +16,22 @@ public final class GemeinsameSteps {
     private DieWelt welt;
 
     @Inject
-    private Event<HaushaltsbuchführungBeginnenKommando> haushaltsbuchführungBeginnen;
+    private Event<BeginneHaushaltsbuchführung> haushaltsbuchführungBeginnen;
 
     @Inject
-    private Event<KontoAnlegenKommando> kontoAnlegen;
+    private Event<LegeKontoAn> kontoAnlegen;
 
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
     public void ich_habe_mit_der_Haushaltsbuchführung_begonnen() {
         final UUID identitätsmerkmal = UUID.randomUUID();
-        this.haushaltsbuchführungBeginnen.fire(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
+        this.haushaltsbuchführungBeginnen.fire(new BeginneHaushaltsbuchführung(identitätsmerkmal));
         this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);
     }
 
     @Angenommen("ich habe das Konto \"([^\"]*)\" angelegt")
     public void ich_habe_das_Konto_angelegt(final String kontoname) {
 
-        final KontoAnlegenKommando kommando = new KontoAnlegenKommando(
+        final LegeKontoAn kommando = new LegeKontoAn(
                 this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 Kontoart.Aktiv);

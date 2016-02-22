@@ -2,7 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -17,7 +17,7 @@ public final class AnfangsbestandBuchen {
         this.repository = repository;
     }
 
-    public void ausführen(@Observes final AnfangsbestandBuchenKommando kommando)
+    public void ausführen(@Observes final BucheAnfangsbestand kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(kommando.haushaltsbuchId);
