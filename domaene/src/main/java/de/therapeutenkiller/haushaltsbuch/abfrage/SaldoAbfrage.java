@@ -15,13 +15,8 @@ public class SaldoAbfrage {
     @Inject
     private HaushaltsbuchRepository repository;
 
-    //@Inject
-    //public SaldoAbfrage(final HaushaltsbuchRepository repository) {
-    //    this.repository = repository;
-    //}
-
     public final Saldo abfragen(final UUID haushaltsbuchId, final String kontoname) throws AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
-        return haushaltsbuch.kontostandBerechnen(kontoname); // NOPMD LoD TODO
+        return haushaltsbuch.kontostandBerechnen(kontoname);
     }
 }
