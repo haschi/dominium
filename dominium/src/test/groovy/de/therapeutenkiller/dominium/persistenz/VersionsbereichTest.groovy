@@ -25,6 +25,7 @@ class VersionsbereichTest extends Specification {
         2   | 999 || 999
     }
 
+    @Unroll
     def "In einem Versionsbereich (#von, #bis) liegt #zahl außerhalb"() {
 
         when:
@@ -44,15 +45,15 @@ class VersionsbereichTest extends Specification {
     }
 
     @Unroll
-    def "Die Zahl #zahl liegt innerhalb des Versionsbereichs ALLE_VERSIONEN"() {
+    def "Die Zahl #zahl liegt innerhalb des Versionsbereichs ALLE_VERSIONEN"(long zahl) {
         expect:
         Versionsbereich.ALLE_VERSIONEN.liegtInnerhalb(zahl)
 
         where:
-        zahl | _
-        1              | _
-        100            | _
-        Long.MAX_VALUE | _
+        zahl           || _
+        1              || _
+        100            || _
+        Long.MAX_VALUE || _
     }
 
     def "Die untere Grenze des Versionsbereichs darf nicht größer als die obere Grenze sein"() {
@@ -61,12 +62,12 @@ class VersionsbereichTest extends Specification {
         new Versionsbereich(von, bis)
 
         then:
-        thrown(exception)
+        thrown exception
 
         where:
-        von | bis | exception
-        2   | 1   | IllegalArgumentException
-        100 | 99  | IllegalArgumentException
+        von | bis || exception
+        2   | 1   || IllegalArgumentException
+        100 | 99  || IllegalArgumentException
     }
 
     def "Versionsbereiche mit gleichen Grenzen sind identisch"() {
@@ -81,9 +82,9 @@ class VersionsbereichTest extends Specification {
         thrown IllegalArgumentException
 
         where:
-        von  | _
-        0    | _
-        -1   | _
-        -100 | _
+        von  || _
+        0    || _
+        -1   || _
+        -100 || _
     }
 }

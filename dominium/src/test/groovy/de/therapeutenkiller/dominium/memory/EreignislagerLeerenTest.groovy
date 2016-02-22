@@ -11,38 +11,39 @@ class EreignislagerLeerenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
     MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr);
+    UUID identitätsmerkmal = UUID.randomUUID()
 
     def "Ereignisse des Ereignis-Lagers leeren"() {
         given:
-        lager.neuenEreignisstromErzeugen("test-strom", [new ZustandWurdeGeändert(42L)])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [new ZustandWurdeGeändert(42L)])
 
         when:
         lager.clear()
 
         then:
-        lager.getEreignisliste("test-strom", Versionsbereich.ALLE_VERSIONEN) == []
+        lager.getEreignisliste(identitätsmerkmal, Versionsbereich.ALLE_VERSIONEN) == []
     }
 
     def "Schnappschüsse des Ereignis-Lagers leeren"() {
         given:
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
-        lager.neuenEreignisstromErzeugen("test-strom", [])
-        lager.schnappschussHinzufügen("test-strom", schnappschuss)
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
+        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
 
         when:
         lager.clear()
 
         then:
-        !lager.getNeuesterSchnappschuss("test-strom").isPresent()
+        !lager.getNeuesterSchnappschuss(identitätsmerkmal).isPresent()
     }
 
     def "Ereignis-Ströme des Ereignis-Lagers leeren"() {
         given:
-        lager.neuenEreignisstromErzeugen("test-strom", [])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         when:
         lager.clear()
-        lager.ereignisseDemStromHinzufügen("test-strom", 1L, [])
+        lager.ereignisseDemStromHinzufügen(identitätsmerkmal, 1L, [])
 
         then:
         thrown IllegalArgumentException

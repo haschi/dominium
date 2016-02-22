@@ -10,6 +10,7 @@ import spock.lang.Unroll
 class EreignisseImEreignislagerAblegenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
+    UUID identitätsmerkmal = UUID.randomUUID()
 
     @Unroll
     def "Neue Ereignis-Ströme erzeugen"() {
@@ -18,10 +19,10 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
 
         when: "ich einen neuen Ereignisstrom mit Ereignissen erzeuge"
-        lager.neuenEreignisstromErzeugen("test-strom", testEreignisse)
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, testEreignisse)
 
         then: "werde ich die Ereignisse für den Ereignisstrom aus dem Lager lesen können"
-        def liste = lager.getEreignisliste("test-strom", Versionsbereich.ALLE_VERSIONEN)
+        def liste = lager.getEreignisliste(identitätsmerkmal, Versionsbereich.ALLE_VERSIONEN)
         liste == testEreignisse
 
         where:
@@ -36,7 +37,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
 
         when:
-        lager.neuenEreignisstromErzeugen("test-strom", null)
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, null)
 
         then:
         thrown ArgumentIstNullException
@@ -56,10 +57,10 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
     def "Doppelte Namen für Ereignis-Ströme sind nicht erlaubt"() {
         given:
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen("test-strom", [])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         when:
-        lager.neuenEreignisstromErzeugen("test-strom", [])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         then:
         thrown IllegalArgumentException

@@ -20,10 +20,10 @@ public final class MemoryEreignisstrom<I> extends Ereignisstrom<I, MemoryEreigni
 
     @Override
     protected <A> MemoryDomänenereignisUmschlag<A, I> umschlagErzeugen(final Domänenereignis<A> ereignis) {
-        final MemoryEreignisMetaDaten<I> metaDaten = new MemoryEreignisMetaDaten<I>();
+        final MemoryEreignisMetaDaten<I> metaDaten = new MemoryEreignisMetaDaten<>();
         metaDaten.ereignisstrom = this.identitätsmerkmal;
         metaDaten.version = this.version;
 
-        return new MemoryDomänenereignisUmschlag<A, I>(ereignis, metaDaten);
+        return new MemoryDomänenereignisUmschlag<>(ereignis, metaDaten);
     }
 }

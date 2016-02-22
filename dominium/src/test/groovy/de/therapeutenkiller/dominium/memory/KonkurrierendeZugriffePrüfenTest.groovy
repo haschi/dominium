@@ -12,18 +12,19 @@ class KonkurrierendeZugriffePrüfenTest extends  Specification {
 
     def "Konkurrierende Zugriffe werden beim Hinzufügen weiterer Ereignisse geprüft"() {
         given: "ich habe ein Ereignis-Lager mit Versionsstand 2"
+        UUID identitätsmerkmal = UUID.randomUUID()
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen("test-strom", [new ZustandWurdeGeändert(42L)])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [new ZustandWurdeGeändert(42L)])
 
         when: "ich die Version 0 beim Hinzufügen weiterer Ereignisse erwarte"
-        lager.ereignisseDemStromHinzufügen "test-strom", version, []
+        lager.ereignisseDemStromHinzufügen identitätsmerkmal, version, []
 
         then: "werde ich eine Ausnahme erhalten"
         thrown KonkurrierenderZugriff
 
         where:
-        version | _
-        0L      | _
-        2L      | _
+        version || _
+        0L      || _
+        2L      || _
     }
 }

@@ -40,7 +40,7 @@ public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten<U
     @Override
     protected <A> JpaDomänenereignisUmschlag<A> umschlagErzeugen(final Domänenereignis<A> ereignis) {
 
-        final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<UUID>(
+        final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<>(
                 this.getIdentitätsmerkmal(),
                 this.getVersion());
 

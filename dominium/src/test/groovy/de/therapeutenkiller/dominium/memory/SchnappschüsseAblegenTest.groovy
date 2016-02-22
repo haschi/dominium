@@ -9,18 +9,19 @@ import spock.lang.Unroll
 class SchnappschüsseAblegenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
+    UUID identitätsmerkmal = UUID.randomUUID()
 
     def "Schnappschüsse eines existierenden Aggregats ablegen"() {
         given:
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen("test-strom", [])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
 
         when:
-        lager.schnappschussHinzufügen("test-strom", schnappschuss)
+        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
 
         then:
-        lager.getNeuesterSchnappschuss("test-strom").get() == schnappschuss
+        lager.getNeuesterSchnappschuss(identitätsmerkmal).get() == schnappschuss
     }
 
     def "Schnappschüsse eines nicht existierenden Aggregats ablegen"() {
@@ -29,7 +30,7 @@ class SchnappschüsseAblegenTest extends Specification {
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
 
         when:
-        lager.schnappschussHinzufügen("test-strom", schnappschuss)
+        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
 
         then:
         thrown IllegalArgumentException
@@ -39,7 +40,7 @@ class SchnappschüsseAblegenTest extends Specification {
     def "Neuesten Schnappschuss ermitteln"() {
         given:
         MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen("test-strom", [])
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         schnappschüsse.each {
             String uhrzeit = (String)it[0]
@@ -52,11 +53,11 @@ class SchnappschüsseAblegenTest extends Specification {
                     .build()
 
             uhr.stellen uhrzeit
-            lager.schnappschussHinzufügen("test-strom", schnappschuss)
+            lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
         }
 
         when:
-        def neusterSchnappschuss = lager.getNeuesterSchnappschuss("test-strom").get()
+        def neusterSchnappschuss = lager.getNeuesterSchnappschuss(identitätsmerkmal).get()
         def aggregat = neusterSchnappschuss.wiederherstellen()
 
         then:

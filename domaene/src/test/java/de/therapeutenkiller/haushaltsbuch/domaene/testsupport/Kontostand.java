@@ -17,7 +17,7 @@ public class Kontostand {
 
     public Kontoart kontoart;
 
-    public static final Function<Kontostand, LegeKontoMitAnfangsbestandAn>
+    public static Function<Kontostand, LegeKontoMitAnfangsbestandAn>
         alsKontoMitKontostandAnlegenKommando(final UUID haushaltsbuchId) {
         return (Kontostand kontostand) -> new LegeKontoMitAnfangsbestandAn(
                 haushaltsbuchId,

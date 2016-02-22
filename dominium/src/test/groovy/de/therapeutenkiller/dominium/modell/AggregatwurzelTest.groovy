@@ -66,13 +66,14 @@ class AggregatwurzelTest extends Specification {
 
         given: "ich habe ein Schnappschuss des Aggregats"
 
-        def schnappschuss = TestAggregatSchnappschuss.builder()
+        TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
                 .payload(4711L)
                 .version(42)
                 .identitätsmerkmal(UUID.randomUUID())
                 .build()
 
         when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
+        //noinspection GroovyAssignabilityCheck
         TestAggregat aggregat = new TestAggregat(schnappschuss)
 
         then: "wird das Aggregat die Version des Schnappschusses besitzen"
@@ -86,6 +87,7 @@ class AggregatwurzelTest extends Specification {
         schnappschuss.identitätsmerkmal = UUID.randomUUID()
 
         when: "ich das Aggregat aus dem Schnappschuss wiederherstelle"
+        //noinspection GroovyAssignabilityCheck
         TestAggregat aggregat = new TestAggregat(schnappschuss)
 
         then: "wird das Aggregat die Identität aus dem Schnappschuss erhalten"
