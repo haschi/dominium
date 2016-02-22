@@ -6,6 +6,7 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.EinnahmeBuchenKommando;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -13,12 +14,11 @@ import javax.money.MonetaryAmount;
 @Singleton
 public final class EinnahmeBuchenSteps {
 
-    private final DieWelt kontext;
+    @Inject
+    private DieWelt kontext;
 
     @Inject
-    public EinnahmeBuchenSteps(final DieWelt kontext) {
-        this.kontext = kontext;
-    }
+    private Event<EinnahmeBuchenKommando> einnahmeBuchen;
 
     @Wenn("^ich meine Einnahme von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void ich_meine_einnahme_per_an_buche(
@@ -26,10 +26,13 @@ public final class EinnahmeBuchenSteps {
             final String sollkonto,
             final String habenkonto) {
 
-        this.kontext.kommandoAusführen(new EinnahmeBuchenKommando(
+        final EinnahmeBuchenKommando kommando = new EinnahmeBuchenKommando(
                 this.kontext.getAktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
-                währungsbetrag));
+                währungsbetrag);
+
+        this.einnahmeBuchen.fire(kommando);
+
     }
 }

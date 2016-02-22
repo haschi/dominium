@@ -30,24 +30,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class BuchenSteps {
 
     @Inject
-    private DieWelt kontext;
+    private DieWelt welt;
 
     @Inject
     private Event<KontoMitAnfangsbestandAnlegenKommando> kontoMitAnfangsbestandAnlegen;
+
+    @Inject
+    private Event<HaushaltsbuchführungBeginnenKommando> haushaltsbuchführungBeginnen;
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) {
 
         final UUID identitätsmerkmal = UUID.randomUUID();
-        this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
-        this.kontext.setAktuelleHaushaltsbuchId(identitätsmerkmal);
+        this.haushaltsbuchführungBeginnen.fire(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
+        this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);
 
         kontostände.stream()
-            .map(kontostand -> new KontoMitAnfangsbestandAnlegenKommando(
-                this.kontext.getAktuelleHaushaltsbuchId(),
-                kontostand.kontoname,
-                kontostand.kontoart,
-                kontostand.betrag))
+            .map(Kontostand.alsKontoMitKontostandAnlegenKommando(identitätsmerkmal))
             .forEach(kommando -> this.kontoMitAnfangsbestandAnlegen.fire(kommando));
     }
 
@@ -56,28 +55,29 @@ public final class BuchenSteps {
             final String kontoname,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
-        this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando(
-                haushaltsbuchId,
+        final KontoMitAnfangsbestandAnlegenKommando kommando = new KontoMitAnfangsbestandAnlegenKommando(
+                this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 Kontoart.Aktiv,
-                betrag));
+                betrag);
+
+        this.kontoMitAnfangsbestandAnlegen.fire(kommando);
     }
 
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
-                this.kontext.getAktuelleHaushaltsbuchId());
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.welt.getStream(
+                this.welt.getAktuelleHaushaltsbuchId());
 
-        assertThat(stream).contains(fehlermeldung); // NOPMD LoD TODO
+        assertThat(stream).contains(fehlermeldung);
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz) {
 
-        final List<Domänenereignis<Haushaltsbuch>> stream = this.kontext.getStream(
-                this.kontext.getAktuelleHaushaltsbuchId());
+        final List<Domänenereignis<Haushaltsbuch>> stream = this.welt.getStream(
+                this.welt.getAktuelleHaushaltsbuchId());
 
         final List<Buchungssatz> buchungssätze = stream.stream()
                 .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
@@ -85,6 +85,6 @@ public final class BuchenSteps {
                 .map(BuchungWurdeAusgeführt::getBuchungssatz)
                 .collect(Collectors.toList());
 
-        assertThat(buchungssätze.toString()).contains(erwarteterBuchungssatz); // NOPMD LoD TODO
+        assertThat(buchungssätze.toString()).contains(erwarteterBuchungssatz);
     }
 }
