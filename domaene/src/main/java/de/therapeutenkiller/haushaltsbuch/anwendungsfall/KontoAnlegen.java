@@ -11,9 +11,7 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public final class KontoAnlegen {
     private final HaushaltsbuchRepository repository;
     private final Event<AnfangsbestandBuchenKommando> anfangsbestandBuchenKommandoEvent;

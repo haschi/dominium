@@ -7,10 +7,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.UUID;
 
-@Singleton
 public final class AlleKonten {
 
     private final HaushaltsbuchRepository repository;

@@ -6,10 +6,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.UUID;
 
-@Singleton
 public class SaldoAbfrage {
 
     @Inject
