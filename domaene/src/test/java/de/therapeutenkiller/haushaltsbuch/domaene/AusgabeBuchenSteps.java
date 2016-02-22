@@ -16,13 +16,11 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Singleton
 public final class AusgabeBuchenSteps {
 
     @Inject

@@ -8,10 +8,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 
-@Singleton
 public final class EinnahmeBuchenSteps {
 
     @Inject
@@ -33,6 +31,5 @@ public final class EinnahmeBuchenSteps {
                 währungsbetrag);
 
         this.einnahmeBuchen.fire(kommando);
-
     }
 }

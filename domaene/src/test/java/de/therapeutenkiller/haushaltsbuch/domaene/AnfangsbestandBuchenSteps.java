@@ -17,12 +17,10 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Singleton
 public final class AnfangsbestandBuchenSteps {
 
     @Inject

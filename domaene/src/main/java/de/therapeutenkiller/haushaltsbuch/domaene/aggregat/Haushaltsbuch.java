@@ -58,10 +58,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
-    public void neuesKontoHinzufügen(final Konto konto) {
-        this.konten.add(konto);
-    }
-
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
         if (this.istKontoVorhanden(kontoname)) {
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
@@ -86,15 +82,15 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     }
 
     public ImmutableCollection<Konto> getKonten() {
-        return ImmutableList.copyOf(this.konten); // NOPMD LoD TODO
+        return ImmutableList.copyOf(this.konten);
     }
 
     private boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
         final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
         final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
 
-        return sollkonto.kannAusgabeBuchen(buchungssatz) // NOPMD LoD TODO
-                && habenkonto.kannAusgabeBuchen(buchungssatz); // NOPMD LoD TODO
+        return sollkonto.kannAusgabeBuchen(buchungssatz)
+                && habenkonto.kannAusgabeBuchen(buchungssatz);
     }
 
     // Journal -- Alle Methoden fürs Journal
@@ -163,13 +159,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                     .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 
-    public void neueBuchungHinzufügen(
-            final String sollkonto,
-            final String habenkonto,
-            final MonetaryAmount betrag) {
-        this.buchungssätze.add(new Buchungssatz(sollkonto, habenkonto, betrag));
-    }
-
     public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
     }
@@ -180,7 +169,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 kontoWurdeAngelegt.kontoname);
 
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
-        this.neuesKontoHinzufügen(konto);
+        this.konten.add(konto);
     }
 
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
@@ -193,10 +182,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
 
-        this.neueBuchungHinzufügen(
-                buchungWurdeAusgeführt.soll,
-                buchungWurdeAusgeführt.haben,
-                buchungWurdeAusgeführt.betrag);
+        this.buchungssätze.add(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
     public void anfangsbestandBuchen(
@@ -217,6 +203,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
             final String fehlermeldung = this.fehlermeldungFürFehlendeKontenErzeugen(
                     sollkonto,
                     habenkonto);
+
             this.bewirkt(new BuchungWurdeAbgelehnt(fehlermeldung));
         }
     }
