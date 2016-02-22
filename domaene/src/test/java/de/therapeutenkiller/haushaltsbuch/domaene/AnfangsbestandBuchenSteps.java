@@ -10,8 +10,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.AnfangsbestandBuchenKommando;
-import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AnfangsbestandBuchenSteps {
 
     @Inject
-    private DieWelt kontext;
+    private DieWelt welt;
 
     @Inject
     private SaldoAbfrage kontoSaldieren;
@@ -34,13 +34,13 @@ public final class AnfangsbestandBuchenSteps {
     @Inject
     private Event<AnfangsbestandBuchenKommando> bucheAnfangsbestand;
 
-    @Wenn("^ich auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) buche$")
+    @Wenn("^ich auf das Konto \"([^\"]*)\" (?:den Anfangsbestand von) (-?\\d+,\\d{2} [A-Z]{3}) buche$")
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
             final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
         final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+                this.welt.getAktuelleHaushaltsbuchId(),
                 konto,
                 betrag);
 
@@ -53,11 +53,11 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
             throws AggregatNichtGefunden {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+        final Saldo saldo = this.kontoSaldieren.abfragen(
+                this.welt.getAktuelleHaushaltsbuchId(),
                 konto);
 
-        assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
+        assertThat(saldo).isEqualTo(erwarteterSaldo);
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -66,11 +66,11 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo)
             throws AggregatNichtGefunden {
 
-        final Saldo tatsächlicherSaldo = this.kontoSaldieren.abfragen(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+        final Saldo saldo = this.kontoSaldieren.abfragen(
+                this.welt.getAktuelleHaushaltsbuchId(),
                 konto);
 
-        assertThat(tatsächlicherSaldo).isEqualTo(erwarteterSaldo); // NOPMD LoD OK für AssertJ
+        assertThat(saldo).isEqualTo(erwarteterSaldo);
     }
 
     @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) gebucht$")
@@ -79,7 +79,7 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag) {
 
         final AnfangsbestandBuchenKommando befehl = new AnfangsbestandBuchenKommando(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+                this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag);
 
@@ -91,8 +91,8 @@ public final class AnfangsbestandBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String kontoname) throws Throwable {
 
-        this.kontext.kommandoAusführen(new AnfangsbestandBuchenKommando(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+        this.welt.kommandoAusführen(new AnfangsbestandBuchenKommando(
+                this.welt.getAktuelleHaushaltsbuchId(),
                 kontoname,
                 währungsbetrag));
     }

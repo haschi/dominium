@@ -16,6 +16,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -28,26 +29,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class BuchenSteps {
 
-    private final DieWelt kontext;
+    @Inject
+    private DieWelt kontext;
 
-    @Inject public BuchenSteps(final DieWelt kontext) {
-        this.kontext = kontext;
-    }
+    @Inject
+    private Event<KontoMitAnfangsbestandAnlegenKommando> kontoMitAnfangsbestandAnlegen;
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
-    public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) { // NOPMD Datenfluss
+    public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände) {
 
         final UUID identitätsmerkmal = UUID.randomUUID();
         this.kontext.kommandoAusführen(new HaushaltsbuchführungBeginnenKommando(identitätsmerkmal));
         this.kontext.setAktuelleHaushaltsbuchId(identitätsmerkmal);
 
-        for (final Kontostand kontostand : kontostände) {
-            this.kontext.kommandoAusführen(new KontoMitAnfangsbestandAnlegenKommando( // NOPMD
-                    this.kontext.getAktuelleHaushaltsbuchId(),
-                    kontostand.kontoname,
-                    kontostand.kontoart,
-                    kontostand.betrag));
-        }
+        kontostände.stream()
+            .map(kontostand -> new KontoMitAnfangsbestandAnlegenKommando(
+                this.kontext.getAktuelleHaushaltsbuchId(),
+                kontostand.kontoname,
+                kontostand.kontoart,
+                kontostand.betrag))
+            .forEach(kommando -> this.kontoMitAnfangsbestandAnlegen.fire(kommando));
     }
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")

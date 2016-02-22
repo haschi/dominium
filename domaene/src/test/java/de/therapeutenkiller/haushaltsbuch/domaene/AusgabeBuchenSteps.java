@@ -14,6 +14,7 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.money.MonetaryAmount;
@@ -24,16 +25,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Singleton
 public final class AusgabeBuchenSteps {
 
-    private final SaldoAbfrage kontoSaldieren;
-    private final DieWelt kontext;
+    @Inject
+    private SaldoAbfrage kontoSaldieren;
 
     @Inject
-    AusgabeBuchenSteps(
-            final DieWelt kontext,
-            final SaldoAbfrage kontoSaldieren) {
-        this.kontext = kontext;
-        this.kontoSaldieren = kontoSaldieren;
-    }
+    private DieWelt welt;
+
+    @Inject
+    private Event<AusgabeBuchenKommando> ausgabeBuchen;
 
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
@@ -41,12 +40,14 @@ public final class AusgabeBuchenSteps {
             final String sollkonto,
             final String habenkonto)  {
 
-        this.kontext.kommandoAusführen(new AusgabeBuchenKommando(
-                this.kontext.getAktuelleHaushaltsbuchId(),
+        final AusgabeBuchenKommando ausgabeBuchenKommando = new AusgabeBuchenKommando(
+                this.welt.getAktuelleHaushaltsbuchId(),
                 sollkonto,
                 habenkonto,
                 währungsbetrag
-        ));
+        );
+
+        this.ausgabeBuchen.fire(ausgabeBuchenKommando);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
@@ -55,7 +56,7 @@ public final class AusgabeBuchenSteps {
 
         for (final Kontostand kontostand : kontostände) {
             final Saldo saldo = this.kontoSaldieren.abfragen(
-                    this.kontext.getAktuelleHaushaltsbuchId(),
+                    this.welt.getAktuelleHaushaltsbuchId(),
                     kontostand.kontoname);
 
             // TODO Besser in einem Konverter
