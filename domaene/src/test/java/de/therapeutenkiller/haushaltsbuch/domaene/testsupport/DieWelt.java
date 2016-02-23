@@ -23,6 +23,10 @@ public class DieWelt {
         this.repository = repository;
     }
 
+    public final List<Domänenereignis<Haushaltsbuch>> aktuellerEreignisstrom() {
+        return this.getStream(this.getAktuelleHaushaltsbuchId());
+    }
+
     public final <T> void kommandoAusführen(final T kommando) {
         this.manager.fireEvent(kommando);
     }

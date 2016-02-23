@@ -22,6 +22,9 @@ public final class HaushaltsbuchführungBeginnen {
             throws KonkurrierenderZugriff {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(kommando.identitätsmerkmal);
 
+        haushaltsbuch.hauptbuchAnlegen();
+        haushaltsbuch.journalAnlegen();
+
         haushaltsbuch.neuesKontoHinzufügen(
                 Konto.ANFANGSBESTAND.getBezeichnung(),
                 Kontoart.Aktiv);

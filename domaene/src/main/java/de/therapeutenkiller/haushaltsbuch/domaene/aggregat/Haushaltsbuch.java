@@ -13,6 +13,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
 import org.javamoney.moneta.Money;
@@ -34,6 +36,8 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public long initialVersion;
+    private Hauptbuch hauptbuch;
+    private Journal journal;
 
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
@@ -185,6 +189,14 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
         this.buchungssätze.add(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
+    public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
+        this.hauptbuch = new Hauptbuch();
+    }
+
+    public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
+        this.journal = new Journal();
+    }
+
     public void anfangsbestandBuchen(
             final String kontoname,
             final MonetaryAmount betrag)
@@ -226,5 +238,13 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     @Override
     protected Haushaltsbuch getSelf() {
         return this;
+    }
+
+    public void hauptbuchAnlegen() {
+        bewirkt(new HauptbuchWurdeAngelegt(this.getIdentitätsmerkmal()));
+    }
+
+    public void journalAnlegen() {
+        bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 }

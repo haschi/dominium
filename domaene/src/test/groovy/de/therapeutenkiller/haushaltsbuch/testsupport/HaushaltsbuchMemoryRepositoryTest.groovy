@@ -4,6 +4,10 @@ import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBe
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchEreignislager
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchMemoryRepository
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.TestUhr
@@ -31,6 +35,10 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
         repository.speichern(haushaltsbuch2)
 
         then:
-        repository.getStream(haushaltsbuchId).size() == 2
+        repository.getStream(haushaltsbuchId) == [
+            new HauptbuchWurdeAngelegt(haushaltsbuchId),
+            new JournalWurdeAngelegt(haushaltsbuchId),
+            new KontoWurdeAngelegt(Konto.ANFANGSBESTAND.bezeichnung, Kontoart.Aktiv),
+            new KontoWurdeAngelegt("Girokonto", Kontoart.Aktiv)]
     }
 }
