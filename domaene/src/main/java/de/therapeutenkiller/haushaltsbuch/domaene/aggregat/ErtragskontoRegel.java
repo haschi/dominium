@@ -1,5 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
+import javax.money.MonetaryAmount;
+
 public final class ErtragskontoRegel implements Buchungsregel {
 
     private final String konto;
@@ -11,6 +13,16 @@ public final class ErtragskontoRegel implements Buchungsregel {
 
     @Override
     public boolean kannErtragBuchen(final Buchungssatz buchungssatz) {
-        return !buchungssatz.getSollkonto().equals(this.konto); // NOPMD LoD TODO
+        return !buchungssatz.getSollkonto().equals(this.konto);
+    }
+
+    @Override
+    public boolean kannVerlustBuchen(final Buchungssatz buchungssatz) {
+        return false;
+    }
+
+    @Override
+    public Buchungssatz buchungssatzFürAnfangsbestand(final String kontoname, final MonetaryAmount betrag) {
+        return new Buchungssatz(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
     }
 }

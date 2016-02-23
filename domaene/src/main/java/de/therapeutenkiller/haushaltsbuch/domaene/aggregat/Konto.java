@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.money.MonetaryAmount;
+
 public final class Konto {
 
     public static final Konto ANFANGSBESTAND = new Konto("Anfangsbestand", new KeineRegel());
@@ -39,6 +41,14 @@ public final class Konto {
         return this.regel.kannErtragBuchen(buchungssatz);
     }
 
+    public boolean kannTilgungGebuchtWerden(final Buchungssatz buchungssatz) {
+        return this.regel.kannVerlustBuchen(buchungssatz);
+    }
+
+    public Buchungssatz buchungssatzFürAnfangsbestand(final MonetaryAmount betrag) {
+        return this.regel.buchungssatzFürAnfangsbestand(this.kontoname, betrag);
+    }
+
     @Override
     public boolean equals(@DarfNullSein final Object object) {
         if (this == object) {
@@ -62,4 +72,5 @@ public final class Konto {
                 .append(this.kontoname)
                 .toHashCode();
     }
+
 }

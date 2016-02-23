@@ -20,7 +20,7 @@ import java.util.UUID;
 public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
-    private Journal2 journal2 = Journal2.UNDEFINIERT;
+    private Journal journal = Journal.UNDEFINIERT;
     private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
 
     public long initialVersion;
@@ -34,6 +34,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         super(uuid);
     }
 
+    // ???
     public ImmutableSet<Konto> getKonten() {
         return this.hauptbuch.getKonten();
     }
@@ -45,13 +46,14 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
                 this.getVersion());
 
         schnappschuss.konten = this.hauptbuch.getKonten();
-        schnappschuss.buchungssätze = this.journal2.getBuchungssätze();
+        schnappschuss.buchungssätze = this.journal.getBuchungssätze();
 
         return schnappschuss;
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
+    // !!!
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
         if (this.hauptbuch.istKontoVorhanden(kontoname)) {
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
@@ -60,8 +62,8 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         }
     }
 
-    // Journal -- Alle Methoden fürs Journal
 
+    // ???
     public Saldo kontostandBerechnen(final String kontoname) {
         final Konto konto = this.hauptbuch.suchen(kontoname);
         return this.kontostandBerechnen(konto);
@@ -70,10 +72,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
     private Saldo kontostandBerechnen(final Konto konto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
-        final MonetaryAmount summerDerSollBuchungen = this.journal2.summeFür(sollkonto);
+        final MonetaryAmount summerDerSollBuchungen = this.journal.summeFür(sollkonto);
 
         final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(konto);
-        final MonetaryAmount summerDerHabenBuchungen = this.journal2.summeFür(habenkonto);
+        final MonetaryAmount summerDerHabenBuchungen = this.journal.summeFür(habenkonto);
 
         return this.saldieren(summerDerSollBuchungen, summerDerHabenBuchungen);
     }
@@ -90,6 +92,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
     }
 
+    // !!!
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
         final Buchungsregel regel = BuchungsregelFabrik.erzeugen(
                 kontoWurdeAngelegt.kontoart,
@@ -99,38 +102,52 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         this.hauptbuch.hinzufügen(konto);
     }
 
+    // !!!
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
         // Do Nothing
     }
 
+    // !!!
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
         // Nichts tun.
     }
 
+    // !!!
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
 
-        this.journal2.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
+        this.journal.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
+    // !!!
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
         this.hauptbuch = new Hauptbuch();
     }
 
+    // !!!
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
-        this.journal2 = new Journal2();
+        this.journal = new Journal();
     }
 
+    // !!!
     public void anfangsbestandBuchen(
             final String kontoname,
             final MonetaryAmount betrag)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
-        if (this.journal2.istAnfangsbestandFürKontoVorhanden(kontoname)) {
+        if (this.journal.istAnfangsbestandFürKontoVorhanden(kontoname)) {
             this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
-            this.buchungssatzHinzufügen(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
+            final Konto konto = this.hauptbuch.suchen(kontoname);
+
+            final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(betrag);
+
+            this.buchungssatzHinzufügen(
+                    buchungssatz.getSollkonto(),
+                    buchungssatz.getHabenkonto(),
+                    buchungssatz.getWährungsbetrag());
         }
     }
 
+    // !!! private und dann mit buchungssaz als parameter
     public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
             this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
@@ -143,6 +160,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         }
     }
 
+    // !!! Parameter: besser Buchungssatz?
     public void ausgabeBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
 
@@ -158,20 +176,39 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
         }
     }
 
+    public void tilgungBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount währungsbetrag) {
+        final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, währungsbetrag);
+
+        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
+            if (this.hauptbuch.kannTilgungGebuchtWerden(buchungssatz)) {
+                this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, währungsbetrag));
+            } else {
+                this.bewirkt(new BuchungWurdeAbgelehnt("Tilgung kann nicht auf Konto gebucht werden."));
+            }
+        } else {
+            final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto);
+            this.bewirkt( new BuchungWurdeAbgelehnt(grund));
+        }
+    }
+
     @Override
     protected Haushaltsbuch getSelf() {
         return this;
     }
 
+    // !!!
     public void hauptbuchAnlegen() {
         bewirkt(new HauptbuchWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 
+    // !!!
     public void journalAnlegen() {
         bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 
+    // ???
     public boolean istHauptbuchUndefiniert() {
         return this.hauptbuch == Hauptbuch.UNDEFINIERT;
     }
+
 }

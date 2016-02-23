@@ -47,6 +47,14 @@ public final class Hauptbuch {
                 && habenkonto.kannAusgabeBuchen(buchungssatz);
     }
 
+    public boolean kannTilgungGebuchtWerden(final Buchungssatz buchungssatz) {
+        final Konto sollkonto = this.suchen(buchungssatz.getSollkonto());
+        final Konto habenkonto = this.suchen(buchungssatz.getHabenkonto());
+
+        return sollkonto.kannTilgungGebuchtWerden(buchungssatz)
+                && habenkonto.kannTilgungGebuchtWerden(buchungssatz);
+    }
+
     boolean istKontoVorhanden(final String konto) {
         final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
         return this.getKonten().stream().anyMatch(kontoname::istErfülltVon);
@@ -69,4 +77,5 @@ public final class Hauptbuch {
     public void hinzufügen(final Konto konto) {
         this.konten.add(konto);
     }
+
 }

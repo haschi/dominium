@@ -10,6 +10,7 @@ final class BuchungsregelFabrik {
     public static Buchungsregel erzeugen(final Kontoart kontoart, final String kontoname) {
         switch (kontoart) { // NOPMD
             case Ertrag: return new ErtragskontoRegel(kontoname);
+            case Passiv: return new PassivkontoRegel(kontoname);
             default: return new KeineRegel();
         }
     }

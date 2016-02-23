@@ -5,6 +5,7 @@ import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
+import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheTilgung;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
@@ -32,6 +33,8 @@ public final class AusgabeBuchenSteps {
     @Inject
     private Event<BucheAusgabe> ausgabeBuchen;
 
+    @Inject Event<BucheTilgung> tilgungBuchen;
+
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
@@ -46,6 +49,21 @@ public final class AusgabeBuchenSteps {
         );
 
         this.ausgabeBuchen.fire(bucheAusgabe);
+    }
+
+    @Wenn("^ich meine Tilgung von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
+    public void wenn_ich_meine_tilgung_buche(
+            @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
+            final String sollkonto,
+            final String habenkonto) {
+
+        final BucheTilgung bucheTilgung = new BucheTilgung(
+                this.welt.getAktuelleHaushaltsbuchId(),
+                sollkonto,
+                habenkonto,
+                währungsbetrag);
+
+        this.tilgungBuchen.fire(bucheTilgung);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
@@ -64,12 +82,14 @@ public final class AusgabeBuchenSteps {
     }
 
     private static Saldo saldoFürKonto(final Kontostand kontostand) {
-        if (kontostand.kontoart.equals(Kontoart.Aktiv)) { //NOPMD LoD TODO
-            return new Sollsaldo(kontostand.betrag); // NOPMD
-        } else if (kontostand.kontoart.equals(Kontoart.Ertrag)) { //NOPMD LoD TODO
-            return new Habensaldo(kontostand.betrag); //NOPMD LoD TODO
-        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) { //NOPMD LoD TODO
-            return new Sollsaldo(kontostand.betrag); //NOPMD LoD TODO
+        if (kontostand.kontoart.equals(Kontoart.Aktiv)) {
+            return new Sollsaldo(kontostand.betrag);
+        } else if (kontostand.kontoart.equals(Kontoart.Ertrag)) {
+            return new Habensaldo(kontostand.betrag);
+        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) {
+            return new Sollsaldo(kontostand.betrag);
+        } else if (kontostand.kontoart.equals(Kontoart.Passiv)) {
+            return new Sollsaldo(kontostand.betrag);
         }
         return null;
     }
