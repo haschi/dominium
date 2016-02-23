@@ -93,6 +93,6 @@ class HibernateHaushaltsbuchRepositoryTest extends Specification {
 
         then:
 
-        ergebnis.konten.konten.find {it.bezeichnung == "Girokonto"}
+        ergebnis.hauptbuch.konten.find {it.bezeichnung == "Girokonto"}
     }
 }

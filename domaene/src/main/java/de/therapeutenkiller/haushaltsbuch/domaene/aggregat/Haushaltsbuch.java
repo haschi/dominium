@@ -29,11 +29,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 
-    public final Konten konten = new Konten();
+    public Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public long initialVersion;
-    private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
     private Journal journal = Journal.LEER;
 
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
@@ -51,7 +50,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 this.getIdentitätsmerkmal(),
                 this.getVersion());
 
-        schnappschuss.konten = this.konten.getKonten();
+        schnappschuss.konten = this.hauptbuch.getKonten();
         schnappschuss.buchungssätze = ImmutableList.of(this.buchungssätze);
 
         return schnappschuss;
@@ -60,7 +59,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
-        if (this.konten.istKontoVorhanden(kontoname)) {
+        if (this.hauptbuch.istKontoVorhanden(kontoname)) {
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
             this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
@@ -70,7 +69,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     // Journal -- Alle Methoden fürs Journal
 
     public Saldo kontostandBerechnen(final String kontoname) {
-        final Konto konto = this.konten.suchen(kontoname);
+        final Konto konto = this.hauptbuch.suchen(kontoname);
         return this.kontostandBerechnen(konto);
     }
 
@@ -115,7 +114,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 kontoWurdeAngelegt.kontoname);
 
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
-        this.konten.hinzufügen(konto);
+        this.hauptbuch.hinzufügen(konto);
     }
 
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
@@ -151,10 +150,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     }
 
     public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
-        if (this.konten.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
+        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
             this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
         } else {
-            final String fehlermeldung = this.konten.fehlermeldungFürFehlendeKontenErzeugen(
+            final String fehlermeldung = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
                     sollkonto,
                     habenkonto);
 
@@ -165,15 +164,15 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     public void ausgabeBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
 
-        if (this.konten.sindAlleBuchungskontenVorhanden(buchungssatz)) {
-            if (this.konten.kannAusgabeGebuchtWerden(buchungssatz)) {
+        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
+            if (this.hauptbuch.kannAusgabeGebuchtWerden(buchungssatz)) {
                 this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
             } else {
                 this.bewirkt(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
             }
         } else {
             this.bewirkt(new BuchungWurdeAbgelehnt(
-                            this.konten.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
+                            this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
         }
     }
 
