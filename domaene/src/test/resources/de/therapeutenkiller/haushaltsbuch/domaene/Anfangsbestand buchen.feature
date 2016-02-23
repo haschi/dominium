@@ -1,7 +1,7 @@
 # language: de
 Funktionalität: Anfangsbestand buchen
   Als Hausmann möchte ich den Anfangsbestand meiner Konten verbuchen
-  damit ich eine Übersicht meines Vermögens erhalte
+  damit ich eine Übersicht meines Startvermögens erhalte
 
   Grundlage:
     Angenommen ich habe mit der Haushaltsbuchführung begonnen

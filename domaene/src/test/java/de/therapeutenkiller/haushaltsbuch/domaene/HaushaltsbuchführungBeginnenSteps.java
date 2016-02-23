@@ -35,10 +35,6 @@ public final class HaushaltsbuchführungBeginnenSteps {
         this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 
-    @Wenn("^ich nicht mit der Haushaltsbuchführung beginne$")
-    public void ich_nicht_mit_der_Haushaltsbuchführung_beginne() {
-    }
-
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben")
     public void dann_werde_ich_ein_neues_haushaltsbuch_angelegt_haben()  {
 
@@ -57,10 +53,5 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void dann_werde_ich_ein_journal_zum_haushaltsbuch_anlegen() {
         assertThat(this.kontext.aktuellerEreignisstrom())
                 .contains(new JournalWurdeAngelegt(this.kontext.getAktuelleHaushaltsbuchId()));
-    }
-
-    @Dann("^werde ich kein neues Haushaltsbuch anlegen$")
-    public void werde_ich_kein_neues_Haushaltsbuch_angelegt_haben() {
-        assertThat(this.alleHaushaltsbücher.abfragen()).isEmpty();
     }
 }

@@ -1,15 +1,12 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.dominium.aggregat.Spezifikation;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
-import de.therapeutenkiller.haushaltsbuch.domaene.KontonameSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
@@ -32,7 +29,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
 
-    private final Set<Konto> konten = new HashSet<>();
+    public final Konten konten = new Konten();
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public long initialVersion;
@@ -54,7 +51,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 this.getIdentitätsmerkmal(),
                 this.getVersion());
 
-        schnappschuss.konten = ImmutableSet.copyOf(this.konten);
+        schnappschuss.konten = this.konten.getKonten();
         schnappschuss.buchungssätze = ImmutableList.of(this.buchungssätze);
 
         return schnappschuss;
@@ -63,72 +60,17 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
-        if (this.istKontoVorhanden(kontoname)) {
+        if (this.konten.istKontoVorhanden(kontoname)) {
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
             this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
         }
     }
 
-    public Konto kontoSuchen(final String kontoname) {
-
-        final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
-
-        return this.konten.stream()
-                .filter(kontonameSpezifikation::istErfülltVon)
-                .findFirst()
-                .get();
-    }
-
-    private boolean istKontoVorhanden(final String konto) {
-        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
-        return this.konten.stream().anyMatch(kontoname::istErfülltVon);
-    }
-
-    public ImmutableCollection<Konto> getKonten() {
-        return ImmutableList.copyOf(this.konten);
-    }
-
-    private boolean kannAusgabeGebuchtWerden(final Buchungssatz buchungssatz) {
-        final Konto sollkonto = this.kontoSuchen(buchungssatz.getSollkonto());
-        final Konto habenkonto = this.kontoSuchen(buchungssatz.getHabenkonto());
-
-        return sollkonto.kannAusgabeBuchen(buchungssatz)
-                && habenkonto.kannAusgabeBuchen(buchungssatz);
-    }
-
     // Journal -- Alle Methoden fürs Journal
 
-    private String fehlermeldungFürFehlendeKontenErzeugen(
-            final String soll,
-            final String haben) {
-
-        if (!this.istKontoVorhanden(soll) && this.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", soll);
-        }
-
-        if (this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
-            return String.format("Das Konto %s existiert nicht.", haben);
-        }
-
-        if (!this.istKontoVorhanden(soll) && !this.istKontoVorhanden(haben)) {
-
-            return String.format("Die Konten %s und %s existieren nicht.", soll, haben);
-        }
-
-        throw new IllegalArgumentException("Die Fehlermeldung kann nicht erzeugt werden, da kein Fehler vorliegt.");
-    }
-
-    private boolean sindAlleBuchungskontenVorhanden(final String sollkonto, final String habenkonto) {
-        return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
-    }
-
-    private boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
-        return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
-    }
-
     public Saldo kontostandBerechnen(final String kontoname) {
-        final Konto konto = this.kontoSuchen(kontoname);
+        final Konto konto = this.konten.suchen(kontoname);
         return this.kontostandBerechnen(konto);
     }
 
@@ -173,7 +115,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 kontoWurdeAngelegt.kontoname);
 
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
-        this.konten.add(konto);
+        this.konten.hinzufügen(konto);
     }
 
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
@@ -209,10 +151,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     }
 
     public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
-        if (this.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
+        if (this.konten.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
             this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
         } else {
-            final String fehlermeldung = this.fehlermeldungFürFehlendeKontenErzeugen(
+            final String fehlermeldung = this.konten.fehlermeldungFürFehlendeKontenErzeugen(
                     sollkonto,
                     habenkonto);
 
@@ -223,15 +165,15 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     public void ausgabeBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
         final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
 
-        if (this.sindAlleBuchungskontenVorhanden(buchungssatz)) {
-            if (this.kannAusgabeGebuchtWerden(buchungssatz)) {
+        if (this.konten.sindAlleBuchungskontenVorhanden(buchungssatz)) {
+            if (this.konten.kannAusgabeGebuchtWerden(buchungssatz)) {
                 this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
             } else {
                 this.bewirkt(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
             }
         } else {
             this.bewirkt(new BuchungWurdeAbgelehnt(
-                            this.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
+                            this.konten.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
         }
     }
 
