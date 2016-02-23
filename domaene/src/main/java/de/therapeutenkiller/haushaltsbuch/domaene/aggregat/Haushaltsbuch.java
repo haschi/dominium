@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import com.google.common.collect.ImmutableList;
-import de.therapeutenkiller.dominium.aggregat.Spezifikation;
+import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
@@ -14,26 +13,17 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWur
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
-import org.javamoney.moneta.Money;
-import org.javamoney.moneta.function.MonetaryFunctions;
 
-import javax.money.Monetary;
 import javax.money.MonetaryAmount;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
 import java.util.UUID;
 
-public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { // NOPMD
-    // Klasse zu groß TODO
+public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
-
-    public Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
-    private final Set<Buchungssatz> buchungssätze = new HashSet<>();
+    private Journal2 journal2 = Journal2.UNDEFINIERT;
+    private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
 
     public long initialVersion;
-    private Journal journal = Journal.LEER;
 
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
@@ -44,6 +34,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
         super(uuid);
     }
 
+    public ImmutableSet<Konto> getKonten() {
+        return this.hauptbuch.getKonten();
+    }
+
     @Override
     public HaushaltsbuchSchnappschuss schnappschussErstellen() {
         final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
@@ -51,7 +45,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
                 this.getVersion());
 
         schnappschuss.konten = this.hauptbuch.getKonten();
-        schnappschuss.buchungssätze = ImmutableList.of(this.buchungssätze);
+        schnappschuss.buchungssätze = this.journal2.getBuchungssätze();
 
         return schnappschuss;
     }
@@ -76,10 +70,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     private Saldo kontostandBerechnen(final Konto konto) {
 
         final SollkontoSpezifikation sollkonto = new SollkontoSpezifikation(konto);
-        final MonetaryAmount summerDerSollBuchungen = this.summeFür(sollkonto);
+        final MonetaryAmount summerDerSollBuchungen = this.journal2.summeFür(sollkonto);
 
         final HabenkontoSpezifikation habenkonto = new HabenkontoSpezifikation(konto);
-        final MonetaryAmount summerDerHabenBuchungen = this.summeFür(habenkonto);
+        final MonetaryAmount summerDerHabenBuchungen = this.journal2.summeFür(habenkonto);
 
         return this.saldieren(summerDerSollBuchungen, summerDerHabenBuchungen);
     }
@@ -94,18 +88,6 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
         }
 
         return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
-    }
-
-    private MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzSpezifikation) {
-        return this.buchungssätze.stream()
-                    .filter(buchungssatzSpezifikation::istErfülltVon)
-                    .map(Buchungssatz::getWährungsbetrag)
-                    .reduce(MonetaryFunctions.sum())
-                    .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
-    }
-
-    public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
-        return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
     }
 
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
@@ -127,7 +109,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
 
-        this.buchungssätze.add(buchungWurdeAusgeführt.getBuchungssatz());
+        this.journal2.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
@@ -135,14 +117,14 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     }
 
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
-        this.journal = new Journal();
+        this.journal2 = new Journal2();
     }
 
     public void anfangsbestandBuchen(
             final String kontoname,
             final MonetaryAmount betrag)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
-        if (this.istAnfangsbestandFürKontoVorhanden(kontoname)) {
+        if (this.journal2.istAnfangsbestandFürKontoVorhanden(kontoname)) {
             this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
             this.buchungssatzHinzufügen(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
