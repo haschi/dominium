@@ -36,8 +36,8 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public long initialVersion;
-    private Hauptbuch hauptbuch;
-    private Journal journal;
+    private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
+    private Journal journal = Journal.LEER;
 
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
@@ -246,5 +246,9 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> { /
 
     public void journalAnlegen() {
         bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
+    }
+
+    public boolean istHauptbuchUndefiniert() {
+        return this.hauptbuch == Hauptbuch.UNDEFINIERT;
     }
 }
