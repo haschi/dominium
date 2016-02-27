@@ -1,8 +1,8 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ public final class BuchungWurdeAbgelehnt extends Wertobjekt implements Haushalts
     }
 
     @Override
-    public void anwendenAuf(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final HaushaltsbuchEreignisziel aggregat) {
         aggregat.falls(this);
     }
 }

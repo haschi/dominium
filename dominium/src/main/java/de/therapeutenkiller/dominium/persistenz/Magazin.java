@@ -7,25 +7,25 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
 
-    private final Ereignislager<A, I> ereignislager;
+    private final Ereignislager<A, I, T> ereignislager;
 
-    protected Magazin(final Ereignislager<A, I> ereignislager) {
+    protected Magazin(final Ereignislager<A, I, T> ereignislager) {
         this.ereignislager = ereignislager;
     }
 
     public final A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
-        final Optional<Schnappschuss<A, I>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
+        final Optional<Schnappschuss<A, I, T>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
 
         if (schnappschuss.isPresent()) {
 
             final Versionsbereich bereich = new Versionsbereich(schnappschuss.get().getVersion(), Long.MAX_VALUE);
-            final List<Domänenereignis<A>> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
+            final List<Domänenereignis<T>> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
             final A aggregat = schnappschuss.get().wiederherstellen();
 
-            for (final Domänenereignis<A> ereignis : ereignisse) {
+            for (final Domänenereignis<T> ereignis : ereignisse) {
                 aggregat.anwenden(ereignis);
                 aggregat.setInitialversion(aggregat.getVersion());
             }
@@ -34,10 +34,10 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
         }
 
         final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
-        final List<Domänenereignis<A>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
+        final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
         final A haushaltsbuch = this.neuesAggregatErzeugen(identitätsmerkmal);
 
-        for (final Domänenereignis<A> ereignis : stream) {
+        for (final Domänenereignis<T> ereignis : stream) {
             haushaltsbuch.anwenden(ereignis);
         }
 
@@ -48,7 +48,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
 
     public final void hinzufügen(final A aggregat) {
-        final List<Domänenereignis<A>> änderungen = aggregat.getÄnderungen();
+        final List<Domänenereignis<T>> änderungen = aggregat.getÄnderungen();
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
@@ -60,7 +60,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I>, I> {
         );
     }
 
-    protected final Ereignislager<A, I> getEreignislager() {
+    protected final Ereignislager<A, I, T> getEreignislager() {
         return this.ereignislager;
     }
 }

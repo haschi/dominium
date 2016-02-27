@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+<f:metadata>
+    <f:viewParam name="id" value="#{hauptbuch.id}"></f:viewParam>
+    <f:viewAction action="#{hauptbuch.init}"/>
+</f:metadata>
+    <ui:composition template="WEB-INF/template.xhtml">
+        <h1>Haushaltsbuch</h1>
+        <h2>Hauptbuch</h2>
+        <div>
+            <h3>Kredite</h3>
+        </div>
+        <div>
+            <h3>Vermögen</h3>
+            <ul>
+            <ui:repeat value="#{hauptbuch.aktivkonten}" var="aktivkonto">
+                <li>#{aktivkonto.name}</li>
+            </ui:repeat>
+            </ul>
+        </div>
+        <div>
+            <h3>Einnahmen</h3>
+        </div>
+        <div>
+            <h3>Ausgaben</h3>
+        </div>
+        <f:view>
+
+        </f:view>
+    </ui:composition>
+</body>
+</html>

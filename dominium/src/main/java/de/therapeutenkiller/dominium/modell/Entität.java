@@ -11,16 +11,16 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * Jeweils zwei Entitäten sind gleich, wenn sie das gleiche
  * Identitätsmerkmal besitzen.
  *
- * @param <T> Der Typ des Identitätsmerkmals
+ * @param <I> Der Typ des Identitätsmerkmals
  */
-public class Entität<T> {
-    private final T identitätsmerkmal;
+public class Entität<I> {
+    private final I identitätsmerkmal;
 
-    protected Entität(final T identitätsmerkmal) {
+    protected Entität(final I identitätsmerkmal) {
         this.identitätsmerkmal = identitätsmerkmal;
     }
 
-    public final T getIdentitätsmerkmal() {
+    public final I getIdentitätsmerkmal() {
         return this.identitätsmerkmal;
     }
 

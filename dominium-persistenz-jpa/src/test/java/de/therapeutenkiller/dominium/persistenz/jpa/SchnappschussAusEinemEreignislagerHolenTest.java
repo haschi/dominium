@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
+import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
 import de.therapeutenkiller.testing.TestUhr;
@@ -22,7 +23,7 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private JpaEreignislager<TestAggregat> store;
+    private JpaEreignislager<TestAggregat, TestAggregatEreignisziel> store;
     private TestUhr uhr = new TestUhr();
     private UUID id = UUID.randomUUID();
 
@@ -68,14 +69,14 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
 
     @Test
     public void wenn_ich_den_neusten_schnappschuss_anfordere() throws AggregatNichtGefunden {
-        final Schnappschuss<TestAggregat, UUID> schnappschuss =
+        final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id).get();
 
         this.dann_werde_ich_den_jüngsten_schnappschuss_erhalten(schnappschuss);
     }
 
     private void dann_werde_ich_den_jüngsten_schnappschuss_erhalten(
-            final Schnappschuss<TestAggregat, UUID> schnappschuss) {
+            final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss) {
         assertThat(schnappschuss).isEqualTo(this.neuerSchnappschuss);
     }
 }

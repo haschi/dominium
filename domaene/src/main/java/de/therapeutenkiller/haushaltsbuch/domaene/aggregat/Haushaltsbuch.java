@@ -17,7 +17,8 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNi
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
+public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
+        implements HaushaltsbuchEreignisziel {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
     private Journal journal = Journal.UNDEFINIERT;
@@ -93,6 +94,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
     }
 
     // !!!
+    @Override
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
         final Buchungsregel regel = BuchungsregelFabrik.erzeugen(
                 kontoWurdeAngelegt.kontoart,
@@ -103,27 +105,32 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
     }
 
     // !!!
+    @Override
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
         // Do Nothing
     }
 
     // !!!
+    @Override
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
         // Nichts tun.
     }
 
     // !!!
+    @Override
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
 
         this.journal.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
     // !!!
+    @Override
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
         this.hauptbuch = new Hauptbuch();
     }
 
     // !!!
+    @Override
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
         this.journal = new Journal();
     }
@@ -192,7 +199,7 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID> {
     }
 
     @Override
-    protected Haushaltsbuch getSelf() {
+    protected HaushaltsbuchEreignisziel getSelf() {
         return this;
     }
 

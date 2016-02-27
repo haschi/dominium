@@ -3,7 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 
-public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestAggregat> {
+public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestAggregatEreignisziel> {
 
     private long payload;
 
@@ -16,7 +16,7 @@ public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereigni
     }
 
     @Override
-    public final void anwendenAuf(final TestAggregat aggregat) {
+    public final void anwendenAuf(final TestAggregatEreignisziel aggregat) {
         aggregat.falls(this);
     }
 }

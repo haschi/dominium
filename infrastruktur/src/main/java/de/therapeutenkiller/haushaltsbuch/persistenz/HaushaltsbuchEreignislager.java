@@ -3,11 +3,12 @@ package de.therapeutenkiller.haushaltsbuch.persistenz;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignislager;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-public class HaushaltsbuchEreignislager extends JpaEreignislager<Haushaltsbuch> {
+public class HaushaltsbuchEreignislager extends JpaEreignislager<Haushaltsbuch, HaushaltsbuchEreignisziel> {
 
     @Inject
     public HaushaltsbuchEreignislager(final EntityManager entityManager, final Uhr uhr) {

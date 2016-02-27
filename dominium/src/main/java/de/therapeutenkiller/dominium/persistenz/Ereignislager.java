@@ -14,21 +14,21 @@ import java.util.stream.Stream;
  *
  * @param <A> Der Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen.
  */
-public interface Ereignislager<A extends Aggregatwurzel<A, I>, I> {
+public interface Ereignislager<A extends Aggregatwurzel<A, I, T>, I, T> {
 
     void neuenEreignisstromErzeugen(
             I identitätsmerkmal,
-            Collection<Domänenereignis<A>> domänenereignisse);
+            Collection<Domänenereignis<T>> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             I identitätsmerkmal,
-            long erwarteteVersion, Collection<Domänenereignis<A>> domänenereignisse) throws KonkurrierenderZugriff;
+            long erwarteteVersion, Collection<Domänenereignis<T>> domänenereignisse) throws KonkurrierenderZugriff;
 
-    List<Domänenereignis<A>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
+    List<Domänenereignis<T>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws AggregatNichtGefunden;
+    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I, T> snapshot) throws AggregatNichtGefunden;
 
-    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
+    Optional<Schnappschuss<A, I, T>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
 
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.

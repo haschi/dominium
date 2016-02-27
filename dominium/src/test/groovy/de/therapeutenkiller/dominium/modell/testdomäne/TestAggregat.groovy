@@ -1,9 +1,9 @@
 package de.therapeutenkiller.dominium.modell.testdomäne
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel
-import de.therapeutenkiller.dominium.modell.Schnappschuss
 
-class TestAggregat extends Aggregatwurzel<TestAggregat, UUID> {
+class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel>
+    implements TestAggregatEreignisziel {
 
     public long zustand; // NOPMD
 

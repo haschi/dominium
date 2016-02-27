@@ -9,6 +9,12 @@
             <f:view>
                 <h:outputLabel value="Hello, world"/>
             </f:view>
+
+            <h:outputLabel value="#{haushaltsbuchführung.identitätsmerkmal}"></h:outputLabel>
+
+            <h:link value="Hauptbuch" outcome="hauptbuch">
+                <f:param name="id" value="#{haushaltsbuchführung.identitätsmerkmal}"/>
+            </h:link>
             <h:form>
                 <h:commandButton value="Haushaltsbuchführung beginnen" action="#{haushaltsbuchführung.beginnen}"/>
             </h:form>

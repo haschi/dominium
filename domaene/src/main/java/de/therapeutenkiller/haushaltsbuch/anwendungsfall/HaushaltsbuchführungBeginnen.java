@@ -7,16 +7,23 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
-public final class HaushaltsbuchführungBeginnen {
-    private final HaushaltsbuchRepository repository;
+@Stateless
+@SuppressWarnings("checkstyle:designforextension")
+public class HaushaltsbuchführungBeginnen {
 
     @Inject
+    private HaushaltsbuchRepository repository = null;
+
     public HaushaltsbuchführungBeginnen(final HaushaltsbuchRepository repository) {
         this.repository = repository;
+    }
+
+    public HaushaltsbuchführungBeginnen() {
     }
 
     public void ausführen(

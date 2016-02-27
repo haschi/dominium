@@ -2,8 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
 import javax.money.MonetaryAmount;
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public final class BuchungWurdeAusgeführt extends Wertobjekt implements Haushal
     }
 
     @Override
-    public void anwendenAuf(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final HaushaltsbuchEreignisziel aggregat) {
         aggregat.falls(this);
     }
 }

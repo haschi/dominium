@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
 import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
@@ -10,7 +11,7 @@ import spock.lang.Specification
 class EreignislagerLeerenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
-    MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr);
+    MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr);
     UUID identitätsmerkmal = UUID.randomUUID()
 
     def "Ereignisse des Ereignis-Lagers leeren"() {
@@ -26,7 +27,7 @@ class EreignislagerLeerenTest extends Specification {
 
     def "Schnappschüsse des Ereignis-Lagers leeren"() {
         given:
-        Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
+        Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss = new TestAggregatSchnappschuss()
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
         lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
 

@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID>>
+public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID, T>, T>
         extends Wertobjekt
-        implements Umschlag<Schnappschuss<A, UUID>, JpaSchnappschussMetaDaten<UUID>> {
+        implements Umschlag<Schnappschuss<A, UUID, T>, JpaSchnappschussMetaDaten<UUID>> {
 
     @EmbeddedId
     private final JpaSchnappschussMetaDaten<UUID> meta;
@@ -26,7 +26,7 @@ public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID>>
     public  JpaSchnappschussUmschlag(
             final UUID streamName,
             final LocalDateTime jetzt,
-            final Schnappschuss<A, UUID> snapshot) {
+            final Schnappschuss<A, UUID, T> snapshot) {
 
         this.meta = new JpaSchnappschussMetaDaten<>(streamName, jetzt);
 
@@ -47,9 +47,9 @@ public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID>>
         return this.meta;
     }
 
-    public final Schnappschuss<A, UUID> öffnen() {
+    public final Schnappschuss<A, UUID, T> öffnen() {
         try {
-            return (Schnappschuss<A, UUID>)EventSerializer.deserialize(this.snapshot);
+            return (Schnappschuss<A, UUID, T>)EventSerializer.deserialize(this.snapshot);
         } catch (final IOException | ClassNotFoundException grund) {
             throw new Serialisierungsfehler(grund);
         }

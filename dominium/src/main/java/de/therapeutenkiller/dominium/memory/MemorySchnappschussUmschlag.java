@@ -5,15 +5,15 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
-public final class MemorySchnappschussUmschlag<A extends Aggregatwurzel<A, I>, I>
+public final class MemorySchnappschussUmschlag<A extends Aggregatwurzel<A, I, T>, I, T>
         extends Wertobjekt
-        implements Umschlag<Schnappschuss<A, I>, MemorySchnappschussMetaDaten> {
+        implements Umschlag<Schnappschuss<A, I, T>, MemorySchnappschussMetaDaten> {
 
-    private final Schnappschuss<A, I> snapshot;
+    private final Schnappschuss<A, I, T> snapshot;
     private final MemorySchnappschussMetaDaten meta;
 
     public <E> MemorySchnappschussUmschlag(
-            final Schnappschuss<A, I> schnappschuss,
+            final Schnappschuss<A, I, T> schnappschuss,
             final MemorySchnappschussMetaDaten meta) {
 
         this.snapshot = schnappschuss;
@@ -26,7 +26,7 @@ public final class MemorySchnappschussUmschlag<A extends Aggregatwurzel<A, I>, I
     }
 
     @Override
-    public Schnappschuss<A, I> öffnen() {
+    public Schnappschuss<A, I, T> öffnen() {
         return this.snapshot;
     }
 }

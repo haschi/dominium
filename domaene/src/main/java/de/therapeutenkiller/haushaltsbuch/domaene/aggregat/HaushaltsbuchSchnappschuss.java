@@ -7,7 +7,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.Set;
 import java.util.UUID;
 
-public final class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID> {
+public final class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel> {
     public final long version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;

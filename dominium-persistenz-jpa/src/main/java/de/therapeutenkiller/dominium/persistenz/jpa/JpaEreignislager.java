@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings("checkstyle:designforextension")
-public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
-        implements Ereignislager<A, UUID> {
+public class JpaEreignislager<A extends Aggregatwurzel<A, UUID, T>, T>
+        implements Ereignislager<A, UUID, T> {
 
     private final EntityManager entityManager;
     private final Uhr uhr;
@@ -37,10 +37,10 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     @Override
     public void neuenEreignisstromErzeugen(
             final UUID identitätsmerkmal,
-            final Collection<Domänenereignis<A>> domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(identitätsmerkmal);
 
-        for (final Domänenereignis<A> ereignis : domänenereignisse) {
+        for (final Domänenereignis<T> ereignis : domänenereignisse) {
             this.entityManager.persist(ereignisstrom.registrieren(ereignis));
         }
 
@@ -53,7 +53,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     public void ereignisseDemStromHinzufügen(
             final UUID identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<Domänenereignis<A>> domänenereignisse)
+            final Collection<Domänenereignis<T>> domänenereignisse)
             throws KonkurrierenderZugriff {
 
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
@@ -62,13 +62,13 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
             throw new KonkurrierenderZugriff(erwarteteVersion, strom.getVersion());
         }
 
-        for (final Domänenereignis<A> ereignis : domänenereignisse) {
+        for (final Domänenereignis<T> ereignis : domänenereignisse) {
             this.entityManager.persist(strom.registrieren(ereignis));
         }
     }
 
     @Override
-    public List<Domänenereignis<A>> getEreignisliste(final UUID identitätsmerkmal, final Versionsbereich bereich) {
+    public List<Domänenereignis<T>> getEreignisliste(final UUID identitätsmerkmal, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
@@ -84,20 +84,20 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
 
         return resultList.stream()
-                .map(JpaDomänenereignisUmschlag<A>::öffnen)
+                .map(JpaDomänenereignisUmschlag<T>::öffnen)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final Schnappschuss<A, UUID> snapshot)
+    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final Schnappschuss<A, UUID, T> snapshot)
             throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
         if (strom == null) {
             throw new AggregatNichtGefunden();
         }
 
-        final JpaSchnappschussUmschlag<A> umschlag = new JpaSchnappschussUmschlag<>(
+        final JpaSchnappschussUmschlag<A, T> umschlag = new JpaSchnappschussUmschlag<>(
                 identitätsmerkmal,
                 this.uhr.jetzt(),
                 snapshot);
@@ -106,7 +106,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
     }
 
     @Override
-    public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
+    public Optional<Schnappschuss<A, UUID, T>> getNeuesterSchnappschuss(
             final UUID identitätsmerkmal)
             throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
@@ -126,8 +126,8 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID>>
                 .getResultList();
 
 
-        final Stream<Schnappschuss<A, UUID>> schnappschussStream = resultList.stream()
-                .map(JpaSchnappschussUmschlag<A>::öffnen);
+        final Stream<Schnappschuss<A, UUID, T>> schnappschussStream = resultList.stream()
+                .map(JpaSchnappschussUmschlag<A, T>::öffnen);
 
         return schnappschussStream.findFirst();
     }

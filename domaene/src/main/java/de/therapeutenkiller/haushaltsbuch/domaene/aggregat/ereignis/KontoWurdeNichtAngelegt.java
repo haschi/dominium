@@ -2,8 +2,8 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
@@ -24,7 +24,7 @@ public final class KontoWurdeNichtAngelegt extends Wertobjekt implements Haushal
     }
 
     @Override
-    public void anwendenAuf(final Haushaltsbuch aggregat) {
+    public void anwendenAuf(final HaushaltsbuchEreignisziel aggregat) {
         aggregat.falls(this);
     }
 

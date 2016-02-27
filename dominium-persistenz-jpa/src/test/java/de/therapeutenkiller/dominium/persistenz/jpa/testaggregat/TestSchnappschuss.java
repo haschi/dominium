@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public final class TestSchnappschuss
         extends Wertobjekt
-        implements Schnappschuss<TestAggregat, UUID>, Serializable {
+        implements Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel>, Serializable {
 
     private long zustand;
     private UUID identitätsmerkmal;
