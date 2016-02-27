@@ -58,11 +58,12 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
                 this.id,
                 2L,
                 new ArrayList<Domänenereignis<TestAggregatEreignisziel>>() {
-            {
-                add(new ZustandWurdeGeändert(44L));
-                add(new ZustandWurdeGeändert(45L));
-            }
-        });
+                    {
+                        add(new ZustandWurdeGeändert(44L));
+                        add(new ZustandWurdeGeändert(45L));
+                    }
+                }
+        );
 
         this.entityManager.flush();
         this.entityManager.clear();

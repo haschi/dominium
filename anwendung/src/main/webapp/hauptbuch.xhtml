@@ -6,33 +6,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <body>
-<f:metadata>
-    <f:viewParam name="id" value="#{hauptbuch.id}"></f:viewParam>
-    <f:viewAction action="#{hauptbuch.init}"/>
-</f:metadata>
     <ui:composition template="WEB-INF/template.xhtml">
-        <h1>Haushaltsbuch</h1>
-        <h2>Hauptbuch</h2>
-        <div>
-            <h3>Kredite</h3>
-        </div>
-        <div>
-            <h3>Vermögen</h3>
-            <ul>
-            <ui:repeat value="#{hauptbuch.aktivkonten}" var="aktivkonto">
-                <li>#{aktivkonto.name}</li>
-            </ui:repeat>
-            </ul>
-        </div>
-        <div>
-            <h3>Einnahmen</h3>
-        </div>
-        <div>
-            <h3>Ausgaben</h3>
-        </div>
-        <f:view>
-
-        </f:view>
+        <f:metadata>
+            <f:viewParam name="id" value="#{hauptbuch.id}" />
+            <f:viewAction action="#{hauptbuch.init}"/>
+        </f:metadata>
+        <ui:define name="content">
+            <h1>Haushaltsbuch</h1>
+            <h2>Hauptbuch</h2>
+            (<h:outputLabel value="#{hauptbuch.id}"/>)
+            <div>
+                <h3>Vermögen</h3>
+                <ul>
+                <ui:repeat value="#{hauptbuch.vermögen}" var="v">
+                    <li><h:outputLabel value="#{v}"/></li>
+                </ui:repeat>
+                </ul>
+            </div>
+        </ui:define>
     </ui:composition>
 </body>
 </html>

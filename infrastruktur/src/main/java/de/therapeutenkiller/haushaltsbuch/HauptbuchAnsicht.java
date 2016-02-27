@@ -9,6 +9,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurde
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ public final class HauptbuchAnsicht implements HaushaltsbuchEreignisziel {
 
     public HauptbuchAnsicht(final UUID haushaltsbuchId) {
 
+        this.aktivkonten = new ArrayList<String>();
         this.haushaltsbuchId = haushaltsbuchId;
     }
 

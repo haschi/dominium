@@ -6,8 +6,10 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführ
 
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
-import javax.faces.bean.ViewScoped;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -15,7 +17,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Named
-@ViewScoped
+@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class Haushaltsbuchführung implements Serializable {

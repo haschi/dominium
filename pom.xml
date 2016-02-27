@@ -200,7 +200,7 @@
                 <groupId>org.apache.deltaspike.core</groupId>
                 <artifactId>deltaspike-core-impl</artifactId>
                 <version>${version.deltaspike}</version>
-                <scope>runtime</scope>
+                <scope>test</scope>
             </dependency>
 
             <!-- auslagern nach jee.bom -->
@@ -224,7 +224,7 @@
                 <groupId>org.apache.deltaspike.modules</groupId>
                 <artifactId>deltaspike-jpa-module-impl</artifactId>
                 <version>${version.deltaspike}</version>
-                <scope>runtime</scope>
+                <scope>test</scope>
             </dependency>
 
             <!-- auslagern nach jee-test.bom -->

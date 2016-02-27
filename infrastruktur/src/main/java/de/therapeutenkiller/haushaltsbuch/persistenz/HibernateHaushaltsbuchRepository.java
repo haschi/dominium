@@ -9,12 +9,10 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.interceptor.Interceptor;
 import java.util.UUID;
 
 @Priority(Interceptor.Priority.APPLICATION + 10)
-@Singleton
 public final class HibernateHaushaltsbuchRepository
         extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
         implements HaushaltsbuchRepository {

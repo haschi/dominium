@@ -1,13 +1,14 @@
 package de.therapeutenkiller.haushaltsbuch;
 
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @Named
-@ViewScoped
+@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 public class Hauptbuch implements Serializable {
 
@@ -21,16 +22,16 @@ public class Hauptbuch implements Serializable {
         this.id = id;
     }
 
-    public String id = "";
+    private String id = "";
 
     @Inject
     private HauptbuchAbfrage abfrage;
 
-    private List<String> getAktivkonten() {
+    public List<String> getVermögen() {
         return this.ansicht.aktivkonten;
     }
 
     public void init() {
-        // this.ansicht = this.abfrage.abfragen(this.hauptbuchId);
+        this.ansicht = this.abfrage.abfragen(UUID.fromString(this.id));
     }
 }
