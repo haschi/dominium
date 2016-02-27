@@ -571,6 +571,7 @@
         <module>infrastruktur</module>
         <module>dominium</module>
         <module>dominium-persistenz-jpa</module>
+        <module>anwendung</module>
     </modules>
 </project>
 
