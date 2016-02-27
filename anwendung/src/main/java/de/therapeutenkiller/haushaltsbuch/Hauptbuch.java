@@ -31,6 +31,18 @@ public class Hauptbuch implements Serializable {
         return this.ansicht.aktivkonten;
     }
 
+    public List<String> getSchulden() {
+        return this.ansicht.passivkonten;
+    }
+
+    public List<String> getEinnahmen() {
+        return this.ansicht.ertragskonten;
+    }
+
+    public List<String> getAusgaben() {
+        return this.ansicht.aufwandskonten;
+    }
+
     public void init() {
         this.ansicht = this.abfrage.abfragen(UUID.fromString(this.id));
     }

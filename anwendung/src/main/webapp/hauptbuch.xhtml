@@ -23,6 +23,30 @@
                 </ui:repeat>
                 </ul>
             </div>
+            <div>
+                <h3>Schulden</h3>
+                <ul>
+                    <ui:repeat value="#{hauptbuch.schulden}" var="s">
+                        <li><h:outputLabel value="#{s}"/> </li>
+                    </ui:repeat>
+                </ul>
+            </div>
+            <div>
+                <h3>Einnahmen</h3>
+                <ul>
+                    <ui:repeat value="#{hauptbuch.einnahmen}" var="e">
+                        <li><h:outputLabel value="#{e}"/></li>
+                    </ui:repeat>
+                </ul>
+            </div>
+            <div>
+                <h3>Ausgaben</h3>
+                <ul>
+                    <ui:repeat value="#{hauptbuch.ausgaben}" var="a">
+                        <li><h:outputLabel value="#{a}"/></li>
+                    </ui:repeat>
+                </ul>
+            </div>
         </ui:define>
     </ui:composition>
 </body>
