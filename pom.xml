@@ -67,6 +67,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <artifactId>infrastruktur</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- auslagern nach test.bom -->
             <dependency>
                 <groupId>org.assertj</groupId>
