@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+    <ui:composition template="WEB-INF/template.xhtml">
+        <f:metadata>
+            <f:viewParam name="id" value="#{ausgabeBuchen.id}" required="true"/>
+            <f:viewAction action="#{ausgabeBuchen.init}"/>
+        </f:metadata>
+
+        <ui:define name="content">
+            <h1>Haushaltsbuch</h1>
+            <h2>Ausgabe buchen</h2>
+            <h:link value="zurück" outcome="hauptbuch">
+                <f:param name="id" value="#{ausgabeBuchen.id}"/>
+            </h:link>
+            <h:form>
+                <label for="aktivkonto">Von</label>
+                <h:selectOneListbox id="aktivkonto" value="#{ausgabeBuchen.sollkonto}">
+                    <f:selectItems value="#{ausgabeBuchen.aktivkonten}"/>
+                </h:selectOneListbox>
+
+                <label for="aufwandskonto">An</label>
+                <h:selectOneListbox id="aufwandskonto" value="#{ausgabeBuchen.habenkonto}">
+                    <f:selectItems value="#{ausgabeBuchen.aufwandskonten}"/>
+                </h:selectOneListbox>
+
+                <label for="betrag">Betrag</label>
+                <h:inputText id="betrag" value="#{ausgabeBuchen.betrag}">
+
+                </h:inputText>
+
+                <h:inputHidden value="#{ausgabeBuchen.id}" id="id"/>
+
+                <h:commandButton value="Ausgabe buchen" action="#{ausgabeBuchen.ausführen}">
+                    <f:param name="id" value="#{param.id}"/>
+                </h:commandButton>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

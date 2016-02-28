@@ -6,16 +6,16 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-public final class AnfangsbestandBuchen {
-    private final HaushaltsbuchRepository repository;
+@Stateless
+@SuppressWarnings("checkstyle:designforextension")
+public class AnfangsbestandBuchen {
 
     @Inject
-    public AnfangsbestandBuchen(final HaushaltsbuchRepository repository) {
-        this.repository = repository;
-    }
+    private HaushaltsbuchRepository repository;
 
     public void ausführen(@Observes final BucheAnfangsbestand kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
