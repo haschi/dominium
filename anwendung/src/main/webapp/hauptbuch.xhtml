@@ -15,6 +15,14 @@
             <h1>Haushaltsbuch</h1>
             <h2>Hauptbuch</h2>
             (<h:outputLabel value="#{hauptbuch.id}"/>)
+            <ul>
+                <li><a href="http://www.google.de">Google</a> </li>
+                <li>
+                    <h:link value="Konto anlegen" outcome="kontoAnlegen">
+                        <f:param name="id" value="#{hauptbuch.id}"/>
+                    </h:link>
+                </li>
+            </ul>
             <div>
                 <h3>Vermögen</h3>
                 <ul>

@@ -8,23 +8,25 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestan
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
-public final class KontoAnlegen {
-    private final HaushaltsbuchRepository repository;
-    private final Event<BucheAnfangsbestand> anfangsbestandBuchenKommandoEvent;
+@Stateless
+@SuppressWarnings("checkstyle:designforextension")
+public class KontoAnlegen {
 
     @Inject
-    public KontoAnlegen(
-            final HaushaltsbuchRepository repository,
-            final Event<BucheAnfangsbestand> anfangsbestandBuchenKommandoEvent) {
-        this.repository = repository;
-        this.anfangsbestandBuchenKommandoEvent = anfangsbestandBuchenKommandoEvent;
-    }
+    private HaushaltsbuchRepository repository;
 
-    public void ausführen(@Observes final LegeKontoMitAnfangsbestandAn kommando)
+    @Inject
+    private Event<BucheAnfangsbestand> anfangsbestandBuchenKommandoEvent;
+
+    public void ausführen(
+            @Observes(during = TransactionPhase.BEFORE_COMPLETION)
+            final LegeKontoMitAnfangsbestandAn kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         final LegeKontoAn anlegenKommando = new LegeKontoAn(
@@ -42,7 +44,9 @@ public final class KontoAnlegen {
         this.anfangsbestandBuchenKommandoEvent.fire(bucheAnfangsbestand);
     }
 
-    public void ausführen(@Observes final LegeKontoAn kommando)
+    public void ausführen(
+            @Observes(during = TransactionPhase.BEFORE_COMPLETION)
+            final LegeKontoAn kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.getRepository()
                 .suchen(kommando.haushaltsbuchId);
