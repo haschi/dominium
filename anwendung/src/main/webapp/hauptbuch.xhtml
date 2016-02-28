@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <body>
@@ -15,51 +15,59 @@
             <h1>Haushaltsbuch</h1>
             <h2>Hauptbuch</h2>
             (<h:outputLabel value="#{hauptbuch.id}"/>)
-            <ul>
-                <li><a href="http://www.google.de">Google</a> </li>
-                <li>
-                    <h:link value="Konto anlegen" outcome="kontoAnlegen">
+            <br/>
+            <b:row>
+                <b:buttonGroup>
+                    <b:button value="Konto anlegen" outcome="kontoAnlegen">
                         <f:param name="id" value="#{hauptbuch.id}"/>
-                    </h:link>
-                </li>
-                <li>
-                    <h:link value="Ausgabe buchen" outcome="ausgabeBuchen">
+                    </b:button>
+                    <b:button value="Ausgabe buchen" outcome="ausgabeBuchen">
                         <f:param name="id" value="#{hauptbuch.id}"/>
-                    </h:link>
-                </li>
-            </ul>
-            <div>
-                <h3>Vermögen</h3>
-                <ul>
-                <ui:repeat value="#{hauptbuch.vermögen}" var="v">
-                    <li><h:outputLabel value="#{v}"/></li>
-                </ui:repeat>
-                </ul>
-            </div>
-            <div>
-                <h3>Schulden</h3>
-                <ul>
-                    <ui:repeat value="#{hauptbuch.schulden}" var="s">
-                        <li><h:outputLabel value="#{s}"/> </li>
-                    </ui:repeat>
-                </ul>
-            </div>
-            <div>
-                <h3>Einnahmen</h3>
-                <ul>
-                    <ui:repeat value="#{hauptbuch.einnahmen}" var="e">
-                        <li><h:outputLabel value="#{e}"/></li>
-                    </ui:repeat>
-                </ul>
-            </div>
-            <div>
-                <h3>Ausgaben</h3>
-                <ul>
-                    <ui:repeat value="#{hauptbuch.ausgaben}" var="a">
-                        <li><h:outputLabel value="#{a}"/></li>
-                    </ui:repeat>
-                </ul>
-            </div>
+                    </b:button>
+                </b:buttonGroup>
+            </b:row>
+            <br/>
+            <b:row>
+                <b:column span="6">
+                    <b:panel collapsed="true" title="Vermögen">
+                        <ul>
+                            <ui:repeat value="#{hauptbuch.vermögen}" var="v">
+                                <li><h:outputLabel value="#{v}"/></li>
+                            </ui:repeat>
+                        </ul>
+                    </b:panel>
+                </b:column>
+                <b:column span="6">
+                    <b:panel collapsed="true" title="Schulden">
+                        <ul>
+                            <ui:repeat value="#{hauptbuch.schulden}" var="s">
+                                <li><h:outputLabel value="#{s}"/> </li>
+                            </ui:repeat>
+                        </ul>
+                    </b:panel>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                <b:column span="6">
+                    <b:panel collapsed="true" title="Einnahmen">
+                        <ul>
+                            <ui:repeat value="#{hauptbuch.einnahmen}" var="e">
+                                <li><h:outputLabel value="#{e}"/></li>
+                            </ui:repeat>
+                        </ul>
+                    </b:panel>
+                </b:column>
+                <b:column span="6">
+                    <b:panel collapsed="true" title="Ausgaben">
+                        <ul>
+                            <ui:repeat value="#{hauptbuch.ausgaben}" var="a">
+                                <li><h:outputLabel value="#{a}"/></li>
+                            </ui:repeat>
+                        </ul>
+                    </b:panel>
+                </b:column>
+            </b:row>
         </ui:define>
     </ui:composition>
 </body>

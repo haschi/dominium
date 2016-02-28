@@ -34,14 +34,14 @@ public class Haushaltsbuchführung implements Serializable {
 
     private String identitätsmerkmal = "";
 
-    public void beginnen() throws IOException, KonkurrierenderZugriff {
+    public String beginnen() throws IOException, KonkurrierenderZugriff {
         this.identitätsmerkmal = UUID.randomUUID().toString();
+
         final BeginneHaushaltsbuchführung befehl = new BeginneHaushaltsbuchführung(
                 UUID.fromString(this.identitätsmerkmal));
-        // this.beginneHaushaltsbuchführungEvent.fire(befehl);
+
         this.beginnen.ausführen(befehl);
 
-        final String url = String.format("hauptbuch.jsf?id=%s", this.identitätsmerkmal);
-        // FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+        return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", identitätsmerkmal);
     }
 }

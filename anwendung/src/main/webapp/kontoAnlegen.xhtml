@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <body>
@@ -12,24 +12,49 @@
         </f:metadata>
 
         <ui:define name="content">
-            <h1>Haushaltsbuch</h1>
-            <h2>Konto anlegen</h2>
-            <h:link value="zurück" outcome="hauptbuch">
-                <f:param name="id" value="#{kontoAnlegen.id}"/>
-            </h:link>
             <h:form>
-                <label for="kontoname">Kontoname</label>
-                <h:inputText id="kontoname" value="#{kontoAnlegen.kontoname}">
-                    <f:validateRequired />
-                </h:inputText>
-                <label for="kontoart">Kontoart</label>
-                <h:selectOneListbox id="kontoart" value="#{kontoAnlegen.kontoart}">
-                    <f:selectItems value="#{kontoAnlegen.kontoarten}"
-                                   var="kontoart"
-                                   itemValue="#{kontoart}"
-                                   itemLabel="#{kontoart.bezeichnung}"/>
-                </h:selectOneListbox>
-                <h:commandButton value="Konto anlegen" action="#{kontoAnlegen.ausführen()}"/>
+                <b:panel title="Konto anlegen" look="primary" collapsible="false">
+                    <b:row>
+                        <b:column colMd="2">
+                            <label for="kontoname">Kontoname</label>
+                        </b:column>
+                        <b:column colMd="4">
+                            <b:inputText id="kontoname" value="#{kontoAnlegen.kontoname}"
+                                         placeholder="Kontonamen hier eingeben">
+                                <f:validateRequired />
+                            </b:inputText>
+                        </b:column>
+                        <b:column colMd="6">
+                            <b:message for="kontoname"/>
+                        </b:column>
+                    </b:row>
+                    <b:row>
+                        <b:column colMd="2">
+                            <label for="kontoart">Kontoart</label>
+                        </b:column>
+                        <b:column colMd="4">
+                            <b:selectOneMenu id="kontoart" value="#{kontoAnlegen.kontoart}">
+                                <f:selectItems value="#{kontoAnlegen.kontoarten}"
+                                               var="kontoart"
+                                               itemValue="#{kontoart}"
+                                               itemLabel="#{kontoart.bezeichnung}"/>
+                            </b:selectOneMenu>
+                        </b:column>
+                    </b:row>
+                    <hr/>
+                    <b:row>
+                        <b:column colMd="2" offsetMd="2">
+                            <b:button value="Zurück" outcome="hauptbuch">
+                                <f:param name="id" value="#{kontoAnlegen.id}"/>
+                            </b:button>
+                        </b:column>
+                        <b:column colMd="2">
+                            <b:commandButton value="Konto anlegen"
+                                             action="#{kontoAnlegen.ausführen()}"
+                                             look="primary"/>
+                        </b:column>
+                    </b:row>
+                </b:panel>
             </h:form>
         </ui:define>
     </ui:composition>

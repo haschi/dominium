@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -13,32 +13,33 @@
         </f:metadata>
 
         <ui:define name="content">
-            <h1>Haushaltsbuch</h1>
-            <h2>Ausgabe buchen</h2>
-            <h:link value="zurück" outcome="hauptbuch">
-                <f:param name="id" value="#{ausgabeBuchen.id}"/>
-            </h:link>
+
             <h:form>
-                <label for="aktivkonto">Von</label>
-                <h:selectOneListbox id="aktivkonto" value="#{ausgabeBuchen.sollkonto}">
-                    <f:selectItems value="#{ausgabeBuchen.aktivkonten}"/>
-                </h:selectOneListbox>
-
-                <label for="aufwandskonto">An</label>
-                <h:selectOneListbox id="aufwandskonto" value="#{ausgabeBuchen.habenkonto}">
-                    <f:selectItems value="#{ausgabeBuchen.aufwandskonten}"/>
-                </h:selectOneListbox>
-
-                <label for="betrag">Betrag</label>
-                <h:inputText id="betrag" value="#{ausgabeBuchen.betrag}">
-
-                </h:inputText>
-
+            <b:panel>
+                <b:row>
+                    <b:inputText id="betrag" value="#{ausgabeBuchen.betrag}"  span="2" placeholder="Betrag"/>
+                    <b:selectOneMenu id="aktivkonto" value="#{ausgabeBuchen.sollkonto}" span="4" placeholder="von">
+                        <f:selectItems value="#{ausgabeBuchen.aktivkonten}"/>
+                    </b:selectOneMenu>
+                    <b:selectOneMenu id="aufwandskonto" value="#{ausgabeBuchen.habenkonto}" span="4" placeholder="an">
+                        <f:selectItems value="#{ausgabeBuchen.aufwandskonten}"/>
+                    </b:selectOneMenu>
+                </b:row>
+                <hr/>
                 <h:inputHidden value="#{ausgabeBuchen.id}" id="id"/>
-
-                <h:commandButton value="Ausgabe buchen" action="#{ausgabeBuchen.ausführen}">
-                    <f:param name="id" value="#{param.id}"/>
-                </h:commandButton>
+                <b:row>
+                    <b:column span="2" offset="2">
+                        <b:button value="zurück" outcome="hauptbuch">
+                            <f:param name="id" value="#{ausgabeBuchen.id}"/>
+                        </b:button>
+                    </b:column>
+                    <b:column span="2">
+                        <b:commandButton value="Ausgabe buchen" action="#{ausgabeBuchen.ausführen}">
+                            <f:param name="id" value="#{param.id}"/>
+                        </b:commandButton>
+                    </b:column>
+                </b:row>
+            </b:panel>
             </h:form>
         </ui:define>
     </ui:composition>
