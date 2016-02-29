@@ -24,11 +24,8 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID, Hau
     private Journal journal = Journal.UNDEFINIERT;
     private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
 
-    public long initialVersion;
-
     public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
         super(snapshot);
-        this.initialVersion = snapshot.version;
     }
 
     public Haushaltsbuch(final UUID uuid) {
