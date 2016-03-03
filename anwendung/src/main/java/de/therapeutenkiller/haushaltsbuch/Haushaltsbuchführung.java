@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+import de.therapeutenkiller.haushaltsbuch.system.Logged;
 
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
+@Logged
 public class Haushaltsbuchführung implements Serializable {
 
     @Inject
@@ -40,8 +42,8 @@ public class Haushaltsbuchführung implements Serializable {
         final BeginneHaushaltsbuchführung befehl = new BeginneHaushaltsbuchführung(
                 UUID.fromString(this.identitätsmerkmal));
 
-        this.beginnen.ausführen(befehl);
-
-        return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", identitätsmerkmal);
+        // this.beginnen.ausführen(befehl);
+        this.beginneHaushaltsbuchführungEvent.fire(befehl);
+        return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.identitätsmerkmal);
     }
 }

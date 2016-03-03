@@ -5,6 +5,7 @@ import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
+import de.therapeutenkiller.haushaltsbuch.system.Logged;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;
@@ -13,7 +14,9 @@ import javax.interceptor.Interceptor;
 import java.util.UUID;
 
 @Priority(Interceptor.Priority.APPLICATION + 10)
-public final class HibernateHaushaltsbuchRepository
+@Logged
+@SuppressWarnings("checkstyle:designforextension")
+public class HibernateHaushaltsbuchRepository
         extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
         implements HaushaltsbuchRepository {
 

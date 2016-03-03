@@ -13,6 +13,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWur
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
@@ -215,4 +216,10 @@ public final class Haushaltsbuch extends Aggregatwurzel<Haushaltsbuch, UUID, Hau
         return this.hauptbuch == Hauptbuch.UNDEFINIERT;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("identitätsmerkmal", this.getIdentitätsmerkmal())
+                .toString();
+    }
 }

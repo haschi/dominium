@@ -7,6 +7,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("checkstyle:designforextension")
 public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
 
     private final Ereignislager<A, I, T> ereignislager;
@@ -15,7 +16,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
         this.ereignislager = ereignislager;
     }
 
-    public final A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
+    public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
         final Optional<Schnappschuss<A, I, T>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
 
@@ -47,12 +48,12 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
 
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
 
-    public final void hinzufügen(final A aggregat) {
+    public void hinzufügen(final A aggregat) {
         final List<Domänenereignis<T>> änderungen = aggregat.getÄnderungen();
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
-    public final void speichern(final A aggregat) throws KonkurrierenderZugriff {
+    public void speichern(final A aggregat) throws KonkurrierenderZugriff {
         this.ereignislager.ereignisseDemStromHinzufügen(
                 aggregat.getIdentitätsmerkmal(),
                 aggregat.getInitialversion(),
@@ -60,7 +61,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
         );
     }
 
-    protected final Ereignislager<A, I, T> getEreignislager() {
+    protected Ereignislager<A, I, T> getEreignislager() {
         return this.ereignislager;
     }
 }

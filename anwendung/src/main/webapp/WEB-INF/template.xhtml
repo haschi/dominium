@@ -3,22 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>Haushaltsbuch</title>
     <meta charset="utf-8"></meta>
 </h:head>
 <h:body>
-    <b:navBar brand="Haushaltsbuch" brandHref="index.jsf" inverse="true" fixed="true">
-        <b:navLink value="Google" href="http://www.google.de"/>
-    </b:navBar>
 
-    <b:container>
+    <p:panel>
             <ui:insert name="content">
                 [Template content will be inserted here]
             </ui:insert>
-    </b:container>
+    </p:panel>
     <div id="footer">
         <p>(C) 2016 Matthias Haschka</p>
     </div>

@@ -11,7 +11,7 @@ public interface HaushaltsbuchRepository {
 
     Haushaltsbuch suchen(UUID identitätsmerkmal) throws AggregatNichtGefunden;
 
-    void hinzufügen(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
+    void hinzufügen(Haushaltsbuch haushaltsbuch);
 
     void speichern(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
 
