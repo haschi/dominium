@@ -2,61 +2,58 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <body>
-    <ui:composition template="WEB-INF/template.xhtml">
-        <f:metadata>
-            <f:viewParam name="id" value="#{kontoAnlegen.id}" />
-        </f:metadata>
+<ui:composition template="WEB-INF/template.xhtml">
+    <f:metadata>
+        <f:viewParam name="id" value="#{kontoAnlegen.id}" required="true"/>
+        <f:viewParam name="kontoart" value="#{kontoAnlegen.kontoart}"/>
+    </f:metadata>
 
-        <ui:define name="content">
-            <h:form>
-                <p:panel title="Konto anlegen" look="primary" collapsible="false">
-                    <p:row>
-                        <p:column colMd="2">
-                            <label for="kontoname">Kontoname</label>
-                        </p:column>
-                        <p:column colMd="4">
-                            <p:inputText id="kontoname" value="#{kontoAnlegen.kontoname}"
-                                         placeholder="Kontonamen hier eingeben">
-                                <f:validateRequired />
-                            </p:inputText>
-                        </p:column>
-                        <p:column colMd="6">
-                            <p:message for="kontoname"/>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colMd="2">
-                            <label for="kontoart">Kontoart</label>
-                        </p:column>
-                        <p:column colMd="4">
-                            <p:selectOneMenu id="kontoart" value="#{kontoAnlegen.kontoart}">
-                                <f:selectItems value="#{kontoAnlegen.kontoarten}"
-                                               var="kontoart"
-                                               itemValue="#{kontoart}"
-                                               itemLabel="#{kontoart.bezeichnung}"/>
-                            </p:selectOneMenu>
-                        </p:column>
-                    </p:row>
+    <ui:define name="content">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h2>Konto anlegen</h2></div>
+            <div class="panel-body">
+                <h:form>
+                    <div class="form-group">
+                        <label for="kontoname">Kontoname</label>
+                        <h:inputText id="kontoname"
+                                     value="#{kontoAnlegen.kontoname}"
+                                     styleClass="form-control"
+                                     placeholder="Kontonamen hier eingeben">
+                            <f:validateRequired/>
+                        </h:inputText>
+                    </div>
+                    <div class="form-group">
+                        <label for="kontoart">Kontoart</label>
+                        <h:selectOneMenu id="kontoart"
+                                         rendered="#{!param.kontoart}"
+                                         styleClass="form-control"
+                                         value="#{kontoAnlegen.kontoart}">
+                            <f:selectItems value="#{kontoAnlegen.kontoarten}"
+                                           var="kontoart"
+                                           itemValue="#{kontoart}"
+                                           itemLabel="#{kontoart.bezeichnung}"/>
+                        </h:selectOneMenu>
+                    </div>
                     <hr/>
-                    <p:row>
-                        <p:column colMd="2" offsetMd="2">
-                            <p:button value="Zurück" outcome="hauptbuch">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <h:button value="Zurück" outcome="hauptbuch" styleClass="btn btn-default">
                                 <f:param name="id" value="#{kontoAnlegen.id}"/>
-                            </p:button>
-                        </p:column>
-                        <p:column colMd="2">
-                            <p:commandButton value="Konto anlegen"
+                            </h:button>
+                        </div>
+                        <div class="col-md-2">
+                            <h:commandButton value="Konto anlegen" styleClass="btn btn-primary"
                                              action="#{kontoAnlegen.ausführen()}"
                                              look="primary"/>
-                        </p:column>
-                    </p:row>
-                </p:panel>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
 </body>
 </html>
