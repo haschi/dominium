@@ -69,14 +69,14 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
 
     @Test
     public void wenn_ich_den_neusten_schnappschuss_anfordere() throws AggregatNichtGefunden {
-        final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss =
+        final Schnappschuss<TestAggregat, UUID> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id).get();
 
         this.dann_werde_ich_den_jüngsten_schnappschuss_erhalten(schnappschuss);
     }
 
     private void dann_werde_ich_den_jüngsten_schnappschuss_erhalten(
-            final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss) {
+            final Schnappschuss<TestAggregat, UUID> schnappschuss) {
         assertThat(schnappschuss).isEqualTo(this.neuerSchnappschuss);
     }
 }

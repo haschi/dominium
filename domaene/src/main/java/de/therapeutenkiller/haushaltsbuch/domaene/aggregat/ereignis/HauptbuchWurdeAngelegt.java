@@ -16,7 +16,7 @@ public final class HauptbuchWurdeAngelegt extends Wertobjekt implements Haushalt
     }
 
     @Override
-    public void anwendenAuf(final HaushaltsbuchEreignisziel aggregat) {
-        aggregat.falls(this);
+    public void anwendenAuf(final HaushaltsbuchEreignisziel ereignisZiel) {
+        ereignisZiel.falls(this);
     }
 }

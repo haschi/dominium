@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import spock.lang.Specification
@@ -10,7 +11,7 @@ class AggregatAusSchnappschussWiederherstellenTest extends Specification {
     def "Aggregat aus Schnappschuss wiederherstellen"() {
         given:
         Uhr uhr = new TestUhr()
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         TestAggregat aggregat = new TestAggregat(UUID.randomUUID())
         aggregat.zustandÄndern(42L)
 

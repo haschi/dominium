@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import spock.lang.Specification
@@ -16,7 +17,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
     def "Neue Ereignis-Ströme erzeugen"() {
 
         given: "ich habe ein Ereignislager"
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when: "ich einen neuen Ereignisstrom mit Ereignissen erzeuge"
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, testEreignisse)
@@ -34,7 +35,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Ereignis-Liste erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, null)
@@ -45,7 +46,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Namen erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen(null, [])
@@ -56,7 +57,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Doppelte Namen für Ereignis-Ströme sind nicht erlaubt"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         when:

@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -13,7 +14,7 @@ class SchnappschüsseAblegenTest extends Specification {
 
     def "Schnappschüsse eines existierenden Aggregats ablegen"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
 
@@ -26,7 +27,7 @@ class SchnappschüsseAblegenTest extends Specification {
 
     def "Schnappschüsse eines nicht existierenden Aggregats ablegen"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
 
         when:
@@ -39,7 +40,7 @@ class SchnappschüsseAblegenTest extends Specification {
     @Unroll
     def "Neuesten Schnappschuss ermitteln"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         schnappschüsse.each {

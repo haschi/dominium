@@ -17,7 +17,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
     }
 
     public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
-        final Optional<Schnappschuss<A, I, T>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
+        final Optional<Schnappschuss<A, I>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
 
         if (schnappschuss.isPresent()) {

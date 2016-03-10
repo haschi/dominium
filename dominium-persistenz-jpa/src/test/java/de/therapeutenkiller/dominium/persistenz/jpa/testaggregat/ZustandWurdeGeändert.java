@@ -16,7 +16,7 @@ public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereigni
     }
 
     @Override
-    public final void anwendenAuf(final TestAggregatEreignisziel aggregat) {
-        aggregat.falls(this);
+    public final void anwendenAuf(final TestAggregatEreignisziel ereignisZiel) {
+        ereignisZiel.falls(this);
     }
 }

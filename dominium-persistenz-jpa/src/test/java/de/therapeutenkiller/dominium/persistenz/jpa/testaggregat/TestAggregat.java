@@ -20,7 +20,7 @@ public class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestAggrega
     }
 
     @Override
-    public final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschussErstellen() {
+    public final Schnappschuss<TestAggregat, UUID> schnappschussErstellen() {
         return null;
     }
 

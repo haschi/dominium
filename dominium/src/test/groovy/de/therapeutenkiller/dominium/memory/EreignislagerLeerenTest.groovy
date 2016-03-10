@@ -27,7 +27,7 @@ class EreignislagerLeerenTest extends Specification {
 
     def "Schnappschüsse des Ereignis-Lagers leeren"() {
         given:
-        Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> schnappschuss = new TestAggregatSchnappschuss()
+        Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
         lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
 

@@ -3,7 +3,9 @@ package de.therapeutenkiller.dominium.modell;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T> extends Entität<I> {
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T>
+        extends Entität<I>
+        implements SchnappschussQuelle<A, I> {
 
     private final List<Domänenereignis<T>> änderungen = new ArrayList<>();
     private long version;
@@ -14,7 +16,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T> ex
         this.version = 0L;
     }
 
-    protected Aggregatwurzel(final Schnappschuss<A, I, T> schnappschuss) {
+    protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
         super(schnappschuss.getIdentitätsmerkmal());
         this.version = schnappschuss.getVersion();
     }
@@ -33,7 +35,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T> ex
         return this.änderungen;
     }
 
-    public abstract Schnappschuss<A, I, T> schnappschussErstellen();
+    public abstract Schnappschuss<A, I> schnappschussErstellen();
 
     protected abstract T getSelf();
 

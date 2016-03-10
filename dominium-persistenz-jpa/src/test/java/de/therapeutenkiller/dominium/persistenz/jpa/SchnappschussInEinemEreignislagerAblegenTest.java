@@ -51,7 +51,7 @@ public final class SchnappschussInEinemEreignislagerAblegenTest {
 
     private void dann_werde_ich_das_aggregat_mit_schnappschuss_wiederherstellen() throws AggregatNichtGefunden {
 
-        final Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> neuesterSchnappschuss =
+        final Schnappschuss<TestAggregat, UUID> neuesterSchnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id).get();
 
         assertThat(neuesterSchnappschuss).isEqualTo(this.testSchnappschuss);

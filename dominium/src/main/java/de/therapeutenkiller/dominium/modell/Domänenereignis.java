@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Domänenereignisse enthalten die Informationen der Zustandsänderungen
  * für ein Aggregat.
  *
- * @param <A> Der Typ des Aggregats, zu dem das Ereignis gehört.
+ * @param <A> Der Typ des Ereignis-Ziels, auf das ein Ereignis angewendet wird.
  */
 public interface Domänenereignis<A> extends Serializable {
 
@@ -19,12 +19,12 @@ public interface Domänenereignis<A> extends Serializable {
      * soll seinen Zustand dem Domänenereignis entsprechend aktualisieren.
      *
      * {@code
-     * void anwendenAuf(BeispielAggregat aggregat) {
-     *     aggregat.falls(this);
+     * void anwendenAuf(EreignisZiel ereignisZiel) {
+     *     ereignisZiel.falls(this);
      * }
      * }
      *
-     * @param aggregat Ein Aggregat.
+     * @param ereignisZiel Das Ziel-Objekt, auf das ein Ereignis angewendet wird.
      */
-    void anwendenAuf(A aggregat);
+    void anwendenAuf(A ereignisZiel);
 }

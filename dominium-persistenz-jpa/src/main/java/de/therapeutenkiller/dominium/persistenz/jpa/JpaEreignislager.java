@@ -90,7 +90,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID, T>, T>
 
     @Transactional
     @Override
-    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final Schnappschuss<A, UUID, T> snapshot)
+    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final Schnappschuss<A, UUID> snapshot)
             throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
         if (strom == null) {
@@ -106,7 +106,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID, T>, T>
     }
 
     @Override
-    public Optional<Schnappschuss<A, UUID, T>> getNeuesterSchnappschuss(
+    public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
             final UUID identitätsmerkmal)
             throws AggregatNichtGefunden {
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
@@ -126,7 +126,7 @@ public class JpaEreignislager<A extends Aggregatwurzel<A, UUID, T>, T>
                 .getResultList();
 
 
-        final Stream<Schnappschuss<A, UUID, T>> schnappschussStream = resultList.stream()
+        final Stream<Schnappschuss<A, UUID>> schnappschussStream = resultList.stream()
                 .map(JpaSchnappschussUmschlag<A, T>::öffnen);
 
         return schnappschussStream.findFirst();

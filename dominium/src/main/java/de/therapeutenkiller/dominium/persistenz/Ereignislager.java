@@ -26,9 +26,9 @@ public interface Ereignislager<A extends Aggregatwurzel<A, I, T>, I, T> {
 
     List<Domänenereignis<T>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I, T> snapshot) throws AggregatNichtGefunden;
+    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws AggregatNichtGefunden;
 
-    Optional<Schnappschuss<A, I, T>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
+    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
 
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.

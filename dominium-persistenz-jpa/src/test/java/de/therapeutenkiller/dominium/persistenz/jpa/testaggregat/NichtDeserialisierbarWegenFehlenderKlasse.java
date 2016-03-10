@@ -13,5 +13,5 @@ public class NichtDeserialisierbarWegenFehlenderKlasse implements Domänenereign
     }
 
     @Override
-    public void anwendenAuf(final TestAggregat aggregat) { }
+    public void anwendenAuf(final TestAggregat ereignisZiel) { }
 }

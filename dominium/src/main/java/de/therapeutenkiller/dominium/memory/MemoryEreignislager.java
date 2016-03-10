@@ -111,7 +111,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
     }
 
     @Override
-    public final void schnappschussHinzufügen(final I identitätsmerkmal, final Schnappschuss<A, I, T> snapshot) {
+    public final void schnappschussHinzufügen(final I identitätsmerkmal, final Schnappschuss<A, I> snapshot) {
 
         if (!this.ereignisströme.containsKey(identitätsmerkmal)) {
             throw new IllegalArgumentException();
@@ -129,7 +129,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, I, T>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
+    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
 
         final Comparator<? super MemorySchnappschussUmschlag<A, I, T>> nachZeitstempelAbsteigend = (left, right) ->
                 -1 * left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());

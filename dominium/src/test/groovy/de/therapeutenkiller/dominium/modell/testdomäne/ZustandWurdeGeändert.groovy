@@ -15,8 +15,8 @@ class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestA
     }
 
     @Override
-    public void anwendenAuf(final TestAggregat aggregat) {
-        aggregat.falls(this);
+    public void anwendenAuf(final TestAggregat ereignisZiel) {
+        ereignisZiel.falls(this);
     }
 
     public long getPayload() {

@@ -6,7 +6,7 @@ import jdk.nashorn.internal.ir.annotations.Immutable
 
 @Builder
 @Immutable
-class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID, TestAggregatEreignisziel> {
+class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
 
     long version;
     long payload;

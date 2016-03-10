@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @param <I> Der Typ des Identitätsmerkmals des Aggregats zu dem der Schnappschuss gehört.
  * @param <T> Die Schnittstelle des Ereignis-Ziels.
  */
-public interface Schnappschuss<A extends Aggregatwurzel<A, I, T>, I, T> extends Serializable {
+public interface Schnappschuss<A, I> extends Serializable {
     I getIdentitätsmerkmal();
 
     long getVersion();

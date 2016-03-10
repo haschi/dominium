@@ -13,6 +13,6 @@ public class NichtDeserialisierbar implements Domänenereignis<TestAggregat> {
     }
 
     @Override
-    public void anwendenAuf(final TestAggregat aggregat) { }
+    public void anwendenAuf(final TestAggregat ereignisZiel) { }
 }
 
