@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html>
+<!DOCTYPE html [
+<!ENTITY nbsp "&#160;">
+<!ENTITY copy "&#169;"> ]>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -12,6 +15,8 @@
 </h:head>
 <h:body>
 
+    <b:activateLibraries id="activate" rendered="true"></b:activateLibraries>
+    <div id="wrap" style="min-height: 100%; height: auto !important; margin: 0 auto -60px">
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -21,7 +26,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.jsf">Haushaltsbuch</a>
+                <h:link styleClass="navbar-brand" outcome="index" value="Haushaltsbuch">
+                    XXX
+                </h:link>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-right">
@@ -32,14 +39,19 @@
             </div>
         </div>
     </nav>
-
     <div class="container">
             <ui:insert name="content">
                 [Template content will be inserted here]
             </ui:insert>
     </div>
-    <div class="footer">
-        <p>(C) 2016 Matthias Haschka</p>
+        <div id="push" style="height: 60px"></div>
+    </div>
+
+
+    <div id="footer" style="height: 60px; background-color: #f5f5f5">
+        <div class="container">
+            <p class="text-muted" style="margin: 20px 0">&copy; 2016 Matthias Haschka</p>
+        </div>
     </div>
 </h:body>
 </html>

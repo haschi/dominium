@@ -22,7 +22,9 @@
                     <div class="form-group">
                         <label class="col-md-2" for="betrag">Betrag</label>
                         <div class="col-md-10">
-                            <h:inputText id="betrag" value="#{ausgabeBuchen.betrag}" span="2" placeholder="Betrag"/>
+                            <h:inputText id="betrag" value="#{ausgabeBuchen.betrag}" span="2" placeholder="Betrag">
+                                <f:validateRequired />
+                            </h:inputText>
                         </div>
                     </div>
 
