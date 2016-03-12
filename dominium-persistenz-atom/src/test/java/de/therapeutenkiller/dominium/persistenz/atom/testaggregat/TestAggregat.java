@@ -33,4 +33,14 @@ public final class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestA
     public void falls(final ZustandWurdeGeändert zustandWurdeGeändert) {
         this.wert = zustandWurdeGeändert.getWert();
     }
+
+    public void ereignisseErzeugen(final long anzahl) {
+        for (long i = 0; i < anzahl; i++) {
+            this.einenZustandÄndern(i);
+        }
+    }
+
+    public long getWert() {
+        return this.wert;
+    }
 }

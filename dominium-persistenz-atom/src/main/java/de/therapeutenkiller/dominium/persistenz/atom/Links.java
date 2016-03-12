@@ -1,8 +1,8 @@
 package de.therapeutenkiller.dominium.persistenz.atom;
 
-import java.net.URI;
+import java.net.URL;
 
 public class Links {
-    public URI uri;
+    public URL uri;
     public String relation;
 }

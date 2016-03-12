@@ -18,6 +18,8 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collection;
@@ -62,7 +64,7 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
                         .header("ES-EventType", URLEncoder.encode(ereignis.getClass().getCanonicalName(), "UTF-8"))
                         .post(requestBody)
                         .build();
-            } catch (final UnsupportedEncodingException ausnahme) {
+            } catch (final UnsupportedEncodingException | MalformedURLException ausnahme) {
                 throw new EreignisNichtGespeichert(ereignis, ausnahme);
             }
 
@@ -79,8 +81,8 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
         }
     }
 
-    private final String streamUrl(final UUID identitätsmerkmal) {
-        return "http://127.0.0.1:2113/streams/" + identitätsmerkmal.toString();
+    private final URL streamUrl(final UUID identitätsmerkmal) throws MalformedURLException {
+        return new URL("http://127.0.0.1:2113/streams/" + identitätsmerkmal.toString());
     }
 
     @Override
@@ -97,10 +99,49 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
             final UUID identitätsmerkmal,
             final Versionsbereich bereich) {
 
+        boolean weiter = false;
+
+        try {
+            Ereignisstrom ereignisstrom = this.eineStromSeiteLesen(this.streamUrl(identitätsmerkmal));
+            if (ereignisstrom.headOfStream) {
+                final Optional<Links> last = ereignisstrom.links.stream()
+                        .filter(link -> link.relation.equals("last"))
+                        .findFirst();
+
+                if (last.isPresent()) {
+                    ereignisstrom = this.eineStromSeiteLesen(last.get().uri);
+                }
+            }
+
+            Stream<Eintrag> alleEreignisse = Stream.empty();
+
+            do {
+                alleEreignisse = Stream.concat(alleEreignisse, ereignisstrom.entries.stream());
+
+                weiter = !ereignisstrom.headOfStream;
+                if (weiter) {
+                    ereignisstrom = this.eineStromSeiteLesen(ereignisstrom.links.stream()
+                            .filter(link -> link.relation.equals("previous"))
+                            .findFirst().get().uri);
+                }
+            } while (weiter);
+
+            return alleEreignisse
+                    .sorted((entry, t1) -> entry.updated.compareTo(t1.updated))
+                    .map(i -> this.ereignisLaden(i))
+                    .collect(Collectors.toList());
+
+
+        } catch (final MalformedURLException ausnahme) {
+            throw new EreignisstromNichtLesbar(ausnahme);
+        }
+    }
+
+    private Ereignisstrom eineStromSeiteLesen(final URL url) {
         final OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .header("Accept", "application/vnd.eventstore.atom+json")
-                .url(this.streamUrl(identitätsmerkmal)/*+"?embed=body"*/)
+                .url(url)
                 .build();
         final Response response;
         try {
@@ -108,24 +149,17 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
         } catch (final IOException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);
         }
+
+        final String body;
         try {
-            final String body = response.body().string();
+            body = response.body().string();
             final ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             final Ereignisstrom ereignisstrom = mapper.readValue(body, Ereignisstrom.class);
-            System.out.println(ereignisstrom.id);
-            System.out.println(body);
 
-            final List<Domänenereignis<T>> ereignisse = ereignisstrom.entries.stream()
-                    .sorted((entry, t1) -> entry.updated.compareTo(t1.updated))
-                    .map(e -> this.ereignisLaden(e))
-                    .collect(Collectors.toList());
-
-            return ereignisse;
-
-        } catch (final IOException e) {
-            System.out.println(e.getMessage());
-            throw new EreignisstromNichtLesbar(e);
+            return ereignisstrom;
+        } catch (final IOException ausnahme) {
+            throw new EreignisstromNichtLesbar(ausnahme);
         }
     }
 

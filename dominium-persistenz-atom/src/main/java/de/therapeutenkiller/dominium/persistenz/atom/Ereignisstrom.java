@@ -5,7 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class Ereignisstrom {
+public final class Ereignisstrom {
     public String title;
     public URI id;
     public ZonedDateTime updated;
@@ -17,4 +17,9 @@ public class Ereignisstrom {
     public String eTag;
     public List<Links> links;
     public List<Eintrag> entries;
+
+    public boolean hatVorgänger() {
+        return this.links.stream()
+            .anyMatch(link -> link.relation.equals("previous"));
+    }
 }
