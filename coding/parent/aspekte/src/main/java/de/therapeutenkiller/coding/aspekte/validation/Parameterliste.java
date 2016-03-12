@@ -9,7 +9,7 @@ class Parameterliste {
     final CodeSignature signature;
     private final Parameter[] parameter;
 
-    public Parameterliste(CodeSignature signature, Parameter[] parameter) {
+    public Parameterliste(final CodeSignature signature, final Parameter[] parameter) {
         this.signature = signature;
         this.parameter = parameter;
     }
@@ -17,8 +17,8 @@ class Parameterliste {
     public final void argumentePrüfen(final Object... argumente) {
         for (int i = 0; i < argumente.length; i++) {
             if (!(this.istOptionalerParameter(i) || this.istGültig(i, argumente[i]))) {
-                String name = signature.getParameterNames()[i];
-                String fehlermeldung = String.format("Parameter '%s' ist null.", name);
+                final String name = this.signature.getParameterNames()[i];
+                final String fehlermeldung = String.format("Parameter '%s' ist null.", name);
 
                 throw new ArgumentIstNullException(fehlermeldung);
             }

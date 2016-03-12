@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> implements Repository<A,I,T> {
 
     private final Ereignislager<A, I, T> ereignislager;
 
@@ -16,6 +16,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
         this.ereignislager = ereignislager;
     }
 
+    @Override
     public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
         final Optional<Schnappschuss<A, I>> schnappschuss = this.ereignislager.getNeuesterSchnappschuss(
                 identitätsmerkmal);
@@ -48,11 +49,13 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T> {
 
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
 
+    @Override
     public void hinzufügen(final A aggregat) {
         final List<Domänenereignis<T>> änderungen = aggregat.getÄnderungen();
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 
+    @Override
     public void speichern(final A aggregat) throws KonkurrierenderZugriff {
         this.ereignislager.ereignisseDemStromHinzufügen(
                 aggregat.getIdentitätsmerkmal(),

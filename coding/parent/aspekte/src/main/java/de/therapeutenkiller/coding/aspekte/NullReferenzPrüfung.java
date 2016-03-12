@@ -27,11 +27,10 @@ public class NullReferenzPrüfung {
     @Before("execution(!private (!(is(InnerType) || is(AnonymousType)) && *).new(..)) && "
             + "!within(de.therapeutenkiller.coding.aspekte..*)")
     public final void konstruktorArgumentePrüfen(final JoinPoint joinPoint) {
-        ConstructorSignature signature = (ConstructorSignature) joinPoint.getSignature();
+        final ConstructorSignature signature = (ConstructorSignature) joinPoint.getSignature();
         final Konstruktor konstruktor = new Konstruktor(signature);
         konstruktor.argumentePrüfen(joinPoint.getArgs());
     }
-
 
     @AfterReturning(value = "execution(public !void *(..)) && "
         + "! within(de.therapeutenkiller.coding.aspekte..*)",

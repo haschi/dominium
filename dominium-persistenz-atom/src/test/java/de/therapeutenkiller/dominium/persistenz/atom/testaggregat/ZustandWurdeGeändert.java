@@ -1,0 +1,34 @@
+package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
+
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+public final class ZustandWurdeGeändert extends Wertobjekt
+        implements Domänenereignis<TestAggregatEreignisziel> {
+    private long wert;
+
+    private ZustandWurdeGeändert() {
+        this.wert = 0L;
+    }
+
+    public ZustandWurdeGeändert(final long wert) {
+        this.wert = wert;
+    }
+
+    @Override
+    public void anwendenAuf(final TestAggregatEreignisziel ereignisZiel) {
+        ereignisZiel.falls(this);
+    }
+
+    public long getWert() {
+        return this.wert;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("wert", this.wert)
+                .toString();
+    }
+}

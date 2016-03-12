@@ -580,6 +580,7 @@
         <module>dominium-persistenz-jpa</module>
         <module>anwendung</module>
         <module>coding</module>
+        <module>dominium-persistenz-atom</module>
     </modules>
 </project>
 

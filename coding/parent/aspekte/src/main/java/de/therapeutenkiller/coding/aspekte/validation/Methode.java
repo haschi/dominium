@@ -18,7 +18,7 @@ public final class Methode {
     public void argumentePrüfen(final Object... arguments) {
         final Parameterliste parameterliste = new Parameterliste(
                 this.signatur,
-                signatur.getMethod().getParameters());
+                this.signatur.getMethod().getParameters());
 
         parameterliste.argumentePrüfen(arguments);
     }
