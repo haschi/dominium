@@ -10,7 +10,7 @@ public final class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestA
 
     private long wert;
 
-    protected TestAggregat(final UUID identitätsmerkmal) {
+    public TestAggregat(final UUID identitätsmerkmal) {
         super(identitätsmerkmal);
     }
 

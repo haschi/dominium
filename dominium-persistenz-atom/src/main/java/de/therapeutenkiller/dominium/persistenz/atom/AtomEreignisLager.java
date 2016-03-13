@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +33,15 @@ import java.util.stream.Stream;
 public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
         implements Ereignislager<A, UUID, T> {
 
+    final ObjectMapper mapper;
+    final OkHttpClient client;
+
+    public AtomEreignisLager() {
+        this.mapper = new ObjectMapper();
+        this.mapper.registerModule(new JavaTimeModule());
+        this.client = new OkHttpClient();
+    }
+
     @Override
     public final void neuenEreignisstromErzeugen(
             final UUID identitätsmerkmal,
@@ -45,15 +55,14 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
             final Collection<Domänenereignis<T>> domänenereignisse) {
         for (final Domänenereignis<T> ereignis : domänenereignisse) {
 
-            final ObjectMapper mapper = new ObjectMapper();
             final String json;
             try {
-                json = mapper.writeValueAsString(ereignis);
+                json = this.mapper.writeValueAsString(ereignis);
             } catch (final JsonProcessingException exception) {
                 throw new EreignisNichtSerialisierbar(ereignis, exception);
             }
 
-            final OkHttpClient client = new OkHttpClient();
+
             final MediaType jsonMediaType = MediaType.parse("application/json");
             final RequestBody requestBody = RequestBody.create(jsonMediaType, json);
             final Request request;
@@ -70,7 +79,7 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
 
             final Response response;
             try {
-                response = client.newCall(request).execute();
+                response = this.client.newCall(request).execute();
             } catch (final IOException e) {
                 throw new EreignisNichtGespeichert(ereignis, e);
             }
@@ -118,7 +127,7 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
             do {
                 alleEreignisse = Stream.concat(alleEreignisse, ereignisstrom.entries.stream());
 
-                weiter = !ereignisstrom.headOfStream;
+                weiter = !(ereignisstrom.headOfStream || ereignisstrom == ereignisstrom.LEER);
                 if (weiter) {
                     ereignisstrom = this.eineStromSeiteLesen(ereignisstrom.links.stream()
                             .filter(link -> link.relation.equals("previous"))
@@ -138,14 +147,13 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
     }
 
     private Ereignisstrom eineStromSeiteLesen(final URL url) {
-        final OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .header("Accept", "application/vnd.eventstore.atom+json")
                 .url(url)
                 .build();
         final Response response;
         try {
-            response = client.newCall(request).execute();
+            response = this.client.newCall(request).execute();
         } catch (final IOException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);
         }
@@ -153,9 +161,12 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
         final String body;
         try {
             body = response.body().string();
-            final ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-            final Ereignisstrom ereignisstrom = mapper.readValue(body, Ereignisstrom.class);
+
+            if (StringUtils.isEmpty(body)) {
+                return Ereignisstrom.LEER;
+            }
+
+            final Ereignisstrom ereignisstrom = this.mapper.readValue(body, Ereignisstrom.class);
 
             return ereignisstrom;
         } catch (final IOException ausnahme) {
@@ -164,18 +175,16 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
     }
 
     private Domänenereignis<T> ereignisLaden(final Eintrag eintrag) {
-        final OkHttpClient client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .header("Accept", "application/json")
                 .url(eintrag.id.toString())
                 .build();
         final Response response;
         try {
-            response = client.newCall(request).execute();
+            response = this.client.newCall(request).execute();
             final String json = response.body().string();
-            final ObjectMapper mapper = new ObjectMapper();
             final Class<?> ereignistyp = this.ereignistypAusEintrag(eintrag);
-            final Object event = mapper.readValue(json, ereignistyp);
+            final Object event = this.mapper.readValue(json, ereignistyp);
             return (Domänenereignis<T>)event;
 
         } catch (final IOException ausnahme) {
