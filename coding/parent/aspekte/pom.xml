@@ -101,11 +101,7 @@
 
     <reporting>
         <plugins>
-            <!-- surefire report -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-            </plugin>
+
         </plugins>
     </reporting>
 </project>

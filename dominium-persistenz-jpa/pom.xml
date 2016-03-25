@@ -135,12 +135,17 @@
                     <scope>test</scope>
                 </dependency>
 
-                <dependency>
+                <!--dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-entitymanager</artifactId>
                     <version>${hibernate.version}</version>
-                </dependency>
-
+                    <scope>provided</scope>
+                </dependency-->
+                <!--dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <scope>provided</scope>
+                </dependency-->
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
