@@ -31,7 +31,7 @@ public class Wertobjekt {
 
     @Override
     public final int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
+        return HashCodeBuilder.reflectionHashCode(this, "id");
     }
 
     // s. http://www.artima.com/lejava/articles/equality.html

@@ -3,10 +3,12 @@ package de.therapeutenkiller.dominium.memory
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.Uhr
+import spock.lang.Ignore
 import spock.lang.Specification
 
 class AggregatAusSchnappschussWiederherstellenTest extends Specification {
 
+    @Ignore
     def "Aggregat aus Schnappschuss wiederherstellen"() {
         given:
         Uhr uhr = new TestUhr()

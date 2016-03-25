@@ -4,6 +4,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -12,6 +13,7 @@ class SchnappschüsseAblegenTest extends Specification {
     TestUhr uhr = new TestUhr()
     UUID identitätsmerkmal = UUID.randomUUID()
 
+    @Ignore
     def "Schnappschüsse eines existierenden Aggregats ablegen"() {
         given:
         MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
@@ -25,6 +27,7 @@ class SchnappschüsseAblegenTest extends Specification {
         lager.getNeuesterSchnappschuss(identitätsmerkmal).get() == schnappschuss
     }
 
+    @Ignore
     def "Schnappschüsse eines nicht existierenden Aggregats ablegen"() {
         given:
         MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
@@ -37,6 +40,7 @@ class SchnappschüsseAblegenTest extends Specification {
         thrown IllegalArgumentException
     }
 
+    @Ignore
     @Unroll
     def "Neuesten Schnappschuss ermitteln"() {
         given:

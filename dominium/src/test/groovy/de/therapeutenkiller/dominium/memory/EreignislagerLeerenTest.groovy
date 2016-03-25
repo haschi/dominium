@@ -7,6 +7,7 @@ import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss
 import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert
+import spock.lang.Ignore
 import spock.lang.Specification
 
 class EreignislagerLeerenTest extends Specification {
@@ -26,6 +27,7 @@ class EreignislagerLeerenTest extends Specification {
         lager.getEreignisliste(identitätsmerkmal, Versionsbereich.ALLE_VERSIONEN) == []
     }
 
+    @Ignore
     def "Schnappschüsse des Ereignis-Lagers leeren"() {
         given:
         Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
