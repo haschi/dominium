@@ -1,7 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch;
 
-import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoAn;
+//import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
+//import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoAn;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
@@ -34,26 +34,26 @@ public class KontoAnlegen {
         this.kontoname = kontoname;
     }
 
-    private Kontoart kontoart = Kontoart.Aktiv;
+   // private Kontoart kontoart = Kontoart.Aktiv;
 
-    public Kontoart getKontoart() {
-        return this.kontoart;
-    }
+    //public Kontoart getKontoart() {
+    //    return this.kontoart;
+   // }
 
-    public void setKontoart(final Kontoart kontoart) {
-        this.kontoart = kontoart;
-    }
+    //public void setKontoart(final Kontoart kontoart) {
+    //    this.kontoart = kontoart;
+    //}
 
-    public Kontoart[] getKontoarten() {
-        return Kontoart.values();
-    }
+    //public Kontoart[] getKontoarten() {
+    //    return Kontoart.values();
+    //}
 
-    @Inject
-    private Event<LegeKontoAn> legeKontoAnEvent;
+    //@Inject
+    //private Event<LegeKontoAn> legeKontoAnEvent;
 
     public String ausführen() {
-        final LegeKontoAn befehl = new LegeKontoAn(UUID.fromString(this.id), this.kontoname, this.kontoart);
-        this.legeKontoAnEvent.fire(befehl);
+        //final LegeKontoAn befehl = new LegeKontoAn(UUID.fromString(this.id), this.kontoname, this.kontoart);
+        //this.legeKontoAnEvent.fire(befehl);
 
         return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.id);
     }

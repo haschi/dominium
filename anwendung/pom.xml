@@ -14,6 +14,8 @@
     <packaging>war</packaging>
 
     <dependencies>
+
+        <!--
         <dependency>
             <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
             <artifactId>domaene</artifactId>
@@ -23,6 +25,7 @@
             <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
             <artifactId>infrastruktur</artifactId>
         </dependency>
+        -->
 
         <dependency>
             <groupId>de.larmic.butterfaces</groupId>
@@ -96,11 +99,11 @@
         <profile>
             <id>h2</id>
             <dependencies>
-                <!--dependency>
+                <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-core</artifactId>
 
-                </dependency-->
+                </dependency>
 
                 <!--dependency>
                     <groupId>org.hibernate</groupId>
@@ -126,10 +129,12 @@
                     <version>${h2.version}</version>
                 </dependency-->
 
+                <!--
                 <dependency>
                     <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
                     <artifactId>dominium-persistenz-jpa</artifactId>
                 </dependency>
+                -->
             </dependencies>
         </profile>
         <profile>

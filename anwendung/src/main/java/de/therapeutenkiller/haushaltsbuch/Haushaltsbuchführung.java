@@ -1,9 +1,9 @@
 package de.therapeutenkiller.haushaltsbuch;
 
-import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
-import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
-import de.therapeutenkiller.haushaltsbuch.system.Logged;
+//import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
+//import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
+//import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+//import de.therapeutenkiller.haushaltsbuch.system.Logged;
 
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -21,14 +21,14 @@ import java.util.UUID;
 @RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-@Logged
+//@Logged
 public class Haushaltsbuchführung implements Serializable {
 
-    @Inject
-    private Event<BeginneHaushaltsbuchführung> beginneHaushaltsbuchführungEvent;
+    //@Inject
+    //private Event<BeginneHaushaltsbuchführung> beginneHaushaltsbuchführungEvent;
 
-    @Inject
-    private HaushaltsbuchführungBeginnen beginnen;
+    //@Inject
+    //private HaushaltsbuchführungBeginnen beginnen;
 
     public String getIdentitätsmerkmal() {
         return this.identitätsmerkmal;
@@ -36,14 +36,14 @@ public class Haushaltsbuchführung implements Serializable {
 
     private String identitätsmerkmal = "";
 
-    public String beginnen() throws IOException, KonkurrierenderZugriff {
+    public String beginnen() throws IOException/*, KonkurrierenderZugriff*/ {
         this.identitätsmerkmal = UUID.randomUUID().toString();
 
-        final BeginneHaushaltsbuchführung befehl = new BeginneHaushaltsbuchführung(
-                UUID.fromString(this.identitätsmerkmal));
+        //final BeginneHaushaltsbuchführung befehl = new BeginneHaushaltsbuchführung(
+        //        UUID.fromString(this.identitätsmerkmal));
 
         // this.beginnen.ausführen(befehl);
-        this.beginneHaushaltsbuchführungEvent.fire(befehl);
+        //this.beginneHaushaltsbuchführungEvent.fire(befehl);
         return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.identitätsmerkmal);
     }
 }

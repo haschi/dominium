@@ -1,15 +1,16 @@
 package de.therapeutenkiller.haushaltsbuch;
 
-import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAusgabe;
+//import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAusgabe;
 
 import javax.enterprise.event.Event;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.money.MonetaryAmount;
-import javax.money.format.MonetaryAmountFormat;
-import javax.money.format.MonetaryFormats;
+//import javax.money.MonetaryAmount;
+//import javax.money.format.MonetaryAmountFormat;
+//import javax.money.format.MonetaryFormats;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -31,17 +32,19 @@ public class AusgabeBuchen implements Serializable {
         this.id = id;
     }
 
-    private HauptbuchAnsicht hauptbuch;
+    //private HauptbuchAnsicht hauptbuch;
 
-    @Inject
-    private HauptbuchAbfrage abfrage;
+    //@Inject
+    //private HauptbuchAbfrage abfrage;
 
     public void init() {
-        this.hauptbuch = this.abfrage.abfragen(UUID.fromString(this.id));
+        //this.hauptbuch = this.abfrage.abfragen(UUID.fromString(this.id));
     }
 
     public List<String> getAktivkonten() {
-        return this.hauptbuch.aktivkonten;
+        //return this.hauptbuch.aktivkonten;
+        return new ArrayList<String>();
+
     }
 
     public String getSollkonto() {
@@ -55,7 +58,8 @@ public class AusgabeBuchen implements Serializable {
     private String sollkonto = "";
 
     public List<String> getAufwandskonten() {
-        return this.hauptbuch.aufwandskonten;
+        //return this.hauptbuch.aufwandskonten;
+        return new ArrayList<String>();
     }
 
     public String getHabenkonto() {
@@ -78,20 +82,20 @@ public class AusgabeBuchen implements Serializable {
 
     private String betrag = "";
 
-    @Inject
-    private Event<BucheAusgabe> bucheAusgabeEvent;
+    //@Inject
+    //private Event<BucheAusgabe> bucheAusgabeEvent;
 
     public String ausführen() {
-        final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        final MonetaryAmount währungsbetrag = format.parse(this.betrag + " EUR");
+        //final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
+        //final MonetaryAmount währungsbetrag = format.parse(this.betrag + " EUR");
 
-        final BucheAusgabe befehl = new BucheAusgabe(
-                UUID.fromString(this.id),
-                this.sollkonto,
-                this.habenkonto,
-                währungsbetrag);
+        //final BucheAusgabe befehl = new BucheAusgabe(
+        //        UUID.fromString(this.id),
+        //        this.sollkonto,
+        //        this.habenkonto,
+        //        währungsbetrag);
 
-        this.bucheAusgabeEvent.fire(befehl);
+        //this.bucheAusgabeEvent.fire(befehl);
         return String.format("hauptbuch?faces-redirect=true&id=%s", this.id);
     }
 }
