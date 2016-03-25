@@ -1,8 +1,9 @@
 package de.therapeutenkiller.dominium.persistenz
 
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+
 import de.therapeutenkiller.dominium.persistenz.tools.TestEreignisMetaDaten
 import de.therapeutenkiller.dominium.persistenz.tools.TestEreignisstrom
+import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 
 class EreignisstromTest extends Specification {

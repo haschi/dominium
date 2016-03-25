@@ -40,6 +40,11 @@
         <skipTests>false</skipTests>
         <groovy.version>2.4.5</groovy.version>
         <groovy.classifier>indy</groovy.classifier>
+
+        <h2.version>1.4.191</h2.version>
+        <hibernate.version>5.0.7.Final</hibernate.version>
+        <version.jboss.bom>10.0.0.Final</version.jboss.bom>
+
     </properties>
 
     <scm>
@@ -70,6 +75,12 @@
             <dependency>
                 <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
                 <artifactId>infrastruktur</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <artifactId>dominium-persistenz-atom</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -105,13 +116,20 @@
             </dependency>
 
             <!-- auslagern nach jee.bom -->
-            <dependency>
+            <!--dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
                 <version>7.0</version>
                 <scope>provided</scope>
-            </dependency>
+            </dependency-->
 
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-javaee7-with-tools</artifactId>
+                <version>${version.jboss.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- Abhängigkeiten für die Komponententests -->
             <!-- auslagern nach test.bom -->
@@ -315,6 +333,31 @@
             <version>2.19.1</version>
         </dependency>
 
+        <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
+        <!--dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency-->
+        <!-- Import the Common Annotations API (JSR-250), we use provided scope
+        as the API is included in WildFly -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Import the Servlet API, we use provided scope as the API is included in WildFly -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

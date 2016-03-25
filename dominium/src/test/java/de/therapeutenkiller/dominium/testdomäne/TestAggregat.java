@@ -1,9 +1,12 @@
-package de.therapeutenkiller.dominium.modell.testdomäne
+package de.therapeutenkiller.dominium.testdomäne;
 
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel
+import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 
-class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel>
-    implements TestAggregatEreignisziel {
+import java.util.UUID;
+
+public final class TestAggregat
+        extends Aggregatwurzel<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel>
+        implements TestAggregatEreignisziel {
 
     public long zustand; // NOPMD
 
@@ -12,20 +15,15 @@ class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreign
     }
 
     @Override
-    TestAggregatSchnappschuss schnappschussErstellen() {
+    public TestAggregatSchnappschuss schnappschussErstellen() {
 
-        return TestAggregatSchnappschuss.builder()
-            .identitätsmerkmal(this.identitätsmerkmal)
-            .version(this.version)
-            .payload(this.zustand)
-            .build()
+        return null;
     }
 
     protected TestAggregat(final TestAggregatSchnappschuss schnappschuss) {
         super(schnappschuss);
-        this.zustand = schnappschuss.payload
+        this.zustand = schnappschuss.getPayload();
     }
-
 
     @Override
     protected TestAggregat getSelf() {

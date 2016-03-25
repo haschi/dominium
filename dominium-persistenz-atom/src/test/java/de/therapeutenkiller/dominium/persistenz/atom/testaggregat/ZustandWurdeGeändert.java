@@ -1,11 +1,8 @@
 package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public final class ZustandWurdeGeändert extends Wertobjekt
-        implements Domänenereignis<TestAggregatEreignisziel> {
+public final class ZustandWurdeGeändert extends TestAggregatEreignis {
     private long wert;
 
     private ZustandWurdeGeändert() {

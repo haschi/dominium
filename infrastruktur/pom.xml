@@ -25,11 +25,6 @@
         </dependency>
 
         <dependency>
-            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
-            <artifactId>dominium-persistenz-jpa</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -37,11 +32,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
         </dependency>
 
         <!-- test -->
@@ -129,10 +119,14 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <version>1.2</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.spec.javax.interceptor</groupId>
+            <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
@@ -177,14 +171,28 @@
             </testResources>
         </build>
         <dependencies>
+            <dependency>
+                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <artifactId>dominium-persistenz-jpa</artifactId>
+                <scope>compile</scope>
+            </dependency>
 
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>1.4.190</version>
+                <version>${h2.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
+        </profile>
+        <profile>
+            <id>event-store</id>
+            <dependencies>
+                <dependency>
+                    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                    <artifactId>dominium-persistenz-atom</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 </project>

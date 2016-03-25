@@ -84,8 +84,15 @@
 
         <!-- Erforderlich für CDI Annotationen -->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->
@@ -218,15 +225,14 @@
                 <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-entitymanager</artifactId>
-                    <version>4.3.11.Final</version>
                     <scope>test</scope>
-                    <!-- <version>5.0.7.Final</version> -->
+                    <version>${hibernate.version}</version>
                 </dependency>
 
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
-                    <version>1.4.190</version>
+                    <version>${h2.version}</version>
                     <scope>test</scope>
                 </dependency>
 

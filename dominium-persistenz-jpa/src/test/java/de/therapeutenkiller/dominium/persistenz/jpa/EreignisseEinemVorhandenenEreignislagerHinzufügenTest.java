@@ -1,10 +1,10 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
+import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
@@ -30,7 +30,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
     private EntityManager entityManager;
-    private JpaEreignislager<TestAggregat, TestAggregatEreignisziel> store;
+    private JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store;
 
     private Uhr uhr = new TestUhr();
     private UUID id = UUID.randomUUID();
@@ -43,7 +43,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
         this.entityManager = this.datenbankRegel.getEntityManager();
         this.store = new JpaEreignislager<>(this.entityManager, this.uhr);
-        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<Domänenereignis<TestAggregatEreignisziel>>() {
+        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<TestAggregatEreignis>() {
             {
                 add(new ZustandWurdeGeändert(42L));
                 add(new ZustandWurdeGeändert(43L));
@@ -57,7 +57,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
         this.store.ereignisseDemStromHinzufügen(
                 this.id,
                 2L,
-                new ArrayList<Domänenereignis<TestAggregatEreignisziel>>() {
+                new ArrayList<TestAggregatEreignis>() {
                     {
                         add(new ZustandWurdeGeändert(44L));
                         add(new ZustandWurdeGeändert(45L));
@@ -89,7 +89,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     }
 
     private void dann_werden_die_ereignisse_dem_ereignisstrom_hinzugefügt_worden_sein() {
-        final List<Domänenereignis<TestAggregatEreignisziel>> ereignisListe = this.store.getEreignisliste(
+        final List<TestAggregatEreignis> ereignisListe = this.store.getEreignisliste(
                 this.id,
                 Versionsbereich.ALLE_VERSIONEN);
 

@@ -1,6 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 
 import javax.persistence.Entity;
@@ -38,7 +37,7 @@ public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten<U
     }
 
     @Override
-    protected <A> JpaDomänenereignisUmschlag<A> umschlagErzeugen(final Domänenereignis<A> ereignis) {
+    protected <A> JpaDomänenereignisUmschlag<A> umschlagErzeugen(final A ereignis) {
 
         final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<>(
                 this.getIdentitätsmerkmal(),

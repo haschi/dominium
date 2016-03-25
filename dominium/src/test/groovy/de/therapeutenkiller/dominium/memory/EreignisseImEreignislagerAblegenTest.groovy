@@ -1,10 +1,11 @@
 package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
+
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
+import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 import spock.lang.Unroll
 

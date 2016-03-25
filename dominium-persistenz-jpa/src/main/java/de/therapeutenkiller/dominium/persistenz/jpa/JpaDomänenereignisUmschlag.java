@@ -1,56 +1,47 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
-import java.io.IOException;
+import javax.persistence.OneToOne;
 import java.util.UUID;
 
 /**
  * Ein DomänenereignisUmschlag für Domänenereignisse zum Speichern in einer
  * Datenbank mit JPA.
- * @param <A> Der Typ des Aggregats, dessen Domänenereignisse gekapselt werden.
- */
+  */
 @Entity
-public class JpaDomänenereignisUmschlag<A>
+public class JpaDomänenereignisUmschlag<E>
         extends Wertobjekt
-        implements Umschlag<Domänenereignis<A>, JpaEreignisMetaDaten<UUID>> {
+        implements Umschlag<E, JpaEreignisMetaDaten<UUID>> {
 
     @EmbeddedId
     private JpaEreignisMetaDaten<UUID> meta = null;
 
-    @Lob
-    private byte[] ereignis = null; // NOPMD
+    // @Lob
+    // private byte[] ereignis = null; // NOPMD
+
+    @OneToOne(targetEntity = JpaDomänenereignis.class)
+    public E ereignis;
 
     public JpaDomänenereignisUmschlag(
-            final Domänenereignis<A> ereignis,
+            final E ereignis,
             final JpaEreignisMetaDaten<UUID> meta) {
         super();
 
         this.meta = meta;
-
-        try {
-            this.ereignis = EventSerializer.serialize(ereignis);
-        } catch (final IOException exception) {
-            throw new IllegalArgumentException("Das war nix.", exception);
-        }
+        this.ereignis = ereignis;
     }
 
     public JpaDomänenereignisUmschlag() {
         super();
     }
 
-    public final Domänenereignis<A> getEreignis() {
-        try {
-            return (Domänenereignis<A>) EventSerializer.deserialize(this.ereignis);
-        } catch (final IOException | ClassNotFoundException exception) {
-            throw new Serialisierungsfehler(exception);
-        }
+    public final E getEreignis() {
+        return this.ereignis;
     }
 
     @Override
@@ -59,7 +50,7 @@ public class JpaDomänenereignisUmschlag<A>
     }
 
     @Override
-    public final Domänenereignis<A> öffnen() {
+    public final E öffnen() {
         return this.getEreignis();
     }
 

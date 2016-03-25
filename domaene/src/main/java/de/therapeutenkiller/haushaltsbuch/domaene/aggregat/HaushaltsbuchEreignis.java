@@ -1,5 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignis;
 
-public interface HaushaltsbuchEreignis extends Domänenereignis<HaushaltsbuchEreignisziel> { }
+public abstract class HaushaltsbuchEreignis extends JpaDomänenereignis<HaushaltsbuchEreignisziel> { }

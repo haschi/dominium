@@ -1,11 +1,9 @@
 package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 
-/**
- * Created by matthias on 12.03.16.
- */
-public interface Repository<A extends Aggregatwurzel<A, I, T>, I, T> {
+public interface Repository<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T> {
     A suchen(I identitätsmerkmal) throws AggregatNichtGefunden;
 
     void hinzufügen(A aggregat);

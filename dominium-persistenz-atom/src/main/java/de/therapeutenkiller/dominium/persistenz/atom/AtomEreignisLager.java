@@ -2,11 +2,9 @@ package de.therapeutenkiller.dominium.persistenz.atom;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
@@ -30,8 +28,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
-        implements Ereignislager<A, UUID, T> {
+public class AtomEreignisLager<E extends Domänenereignis<T>, T>
+        implements Ereignislager<E, UUID, T> {
 
     final ObjectMapper mapper;
     final OkHttpClient client;
@@ -39,21 +37,22 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
     public AtomEreignisLager() {
         this.mapper = new ObjectMapper();
         this.mapper.registerModule(new JavaTimeModule());
+        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         this.client = new OkHttpClient();
     }
 
     @Override
     public final void neuenEreignisstromErzeugen(
             final UUID identitätsmerkmal,
-            final Collection<Domänenereignis<T>> domänenereignisse) {
+            final Collection<E> domänenereignisse) {
 
         this.ereignisseSpeichern(identitätsmerkmal, domänenereignisse);
     }
 
     private void ereignisseSpeichern(
             final UUID identitätsmerkmal,
-            final Collection<Domänenereignis<T>> domänenereignisse) {
-        for (final Domänenereignis<T> ereignis : domänenereignisse) {
+            final Collection<E> domänenereignisse) {
+        for (final E ereignis : domänenereignisse) {
 
             final String json;
             try {
@@ -98,13 +97,13 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
     public final void ereignisseDemStromHinzufügen(
             final UUID identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<Domänenereignis<T>> domänenereignisse) throws KonkurrierenderZugriff {
+            final Collection<E> domänenereignisse) throws KonkurrierenderZugriff {
 
         this.ereignisseSpeichern(identitätsmerkmal, domänenereignisse);
     }
 
     @Override
-    public final List<Domänenereignis<T>> getEreignisliste(
+    public final List<E> getEreignisliste(
             final UUID identitätsmerkmal,
             final Versionsbereich bereich) {
 
@@ -174,7 +173,7 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
         }
     }
 
-    private Domänenereignis<T> ereignisLaden(final Eintrag eintrag) {
+    private E ereignisLaden(final Eintrag eintrag) {
         final Request request = new Request.Builder()
                 .header("Accept", "application/json")
                 .url(eintrag.id.toString())
@@ -185,7 +184,7 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
             final String json = response.body().string();
             final Class<?> ereignistyp = this.ereignistypAusEintrag(eintrag);
             final Object event = this.mapper.readValue(json, ereignistyp);
-            return (Domänenereignis<T>)event;
+            return (E)event;
 
         } catch (final IOException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);
@@ -197,19 +196,6 @@ public class AtomEreignisLager<A extends Aggregatwurzel<A, UUID, T>, T>
     private Class<?> ereignistypAusEintrag(final Eintrag eintrag) throws ClassNotFoundException {
         final String klassenname = URLDecoder.decode(eintrag.summary);
         return Class.forName(klassenname);
-    }
-
-    @Override
-    public void schnappschussHinzufügen(
-            final UUID identitätsmerkmal,
-            final Schnappschuss<A, UUID> snapshot) throws AggregatNichtGefunden {
-
-    }
-
-    @Override
-    public final Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
-            final UUID identitätsmerkmal) throws AggregatNichtGefunden {
-        return null;
     }
 
     @Override

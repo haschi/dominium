@@ -1,11 +1,17 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereignis<TestAggregatEreignisziel> {
+import javax.persistence.Entity;
+
+@Entity
+public class ZustandWurdeGeändert extends TestAggregatEreignis {
 
     private long payload;
+
+    private ZustandWurdeGeändert() {
+
+    }
 
     public ZustandWurdeGeändert(final long payload) {
         this.payload = payload;
@@ -18,5 +24,12 @@ public class ZustandWurdeGeändert extends Wertobjekt implements Domänenereigni
     @Override
     public final void anwendenAuf(final TestAggregatEreignisziel ereignisZiel) {
         ereignisZiel.falls(this);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("payload", payload)
+                .toString();
     }
 }

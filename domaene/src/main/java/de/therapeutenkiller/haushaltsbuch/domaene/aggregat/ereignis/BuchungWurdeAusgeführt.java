@@ -1,20 +1,32 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import org.apache.commons.lang3.StringUtils;
+import org.javamoney.moneta.Money;
 
 import javax.money.MonetaryAmount;
+import javax.money.format.MonetaryAmountFormat;
+import javax.money.format.MonetaryFormats;
+import javax.persistence.Entity;
 import java.io.Serializable;
+import java.util.Locale;
 
-public final class BuchungWurdeAusgeführt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+@Entity
+public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public final String soll;
     public final String haben;
-    public final MonetaryAmount betrag;
+    protected final double betrag;
+
+    protected BuchungWurdeAusgeführt() {
+        this.soll = StringUtils.EMPTY;
+        this.haben = StringUtils.EMPTY;
+        this.betrag = 0;
+    }
 
     public BuchungWurdeAusgeführt(final String soll, final String haben, final MonetaryAmount betrag) {
 
@@ -22,11 +34,16 @@ public final class BuchungWurdeAusgeführt extends Wertobjekt implements Haushal
 
         this.soll = soll;
         this.haben = haben;
-        this.betrag = betrag;
+        this.betrag = betrag.getNumber().doubleValueExact();
+    }
+
+    public MonetaryAmount getBetrag() {
+        final MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY);
+        return Money.of(this.betrag, "EUR");
     }
 
     public Buchungssatz getBuchungssatz() {
-        return new Buchungssatz(this.soll, this.haben, this.betrag);
+        return new Buchungssatz(this.soll, this.haben, this.getBetrag());
     }
 
     @Override

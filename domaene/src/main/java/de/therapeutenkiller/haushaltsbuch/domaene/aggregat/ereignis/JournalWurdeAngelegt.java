@@ -1,15 +1,20 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.UUID;
 
-public final class JournalWurdeAngelegt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+@Entity
+public final class JournalWurdeAngelegt extends HaushaltsbuchEreignis implements Serializable {
     private final UUID aktuelleHaushaltsbuchId;
 
+    protected JournalWurdeAngelegt() {
+        this.aktuelleHaushaltsbuchId = null;
+    }
+    
     public JournalWurdeAngelegt(final UUID aktuelleHaushaltsbuchId) {
         this.aktuelleHaushaltsbuchId = aktuelleHaushaltsbuchId;
     }

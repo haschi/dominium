@@ -1,8 +1,7 @@
 package de.therapeutenkiller.dominium.memory
 
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
+import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.Uhr
 import spock.lang.Specification
 

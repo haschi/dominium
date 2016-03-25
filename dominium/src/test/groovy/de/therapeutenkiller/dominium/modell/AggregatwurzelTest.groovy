@@ -1,8 +1,8 @@
 package de.therapeutenkiller.dominium.modell
 
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatSchnappschuss
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss
+import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 
 

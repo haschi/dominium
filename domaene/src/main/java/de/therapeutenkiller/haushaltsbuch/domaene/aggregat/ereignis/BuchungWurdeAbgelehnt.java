@@ -1,12 +1,13 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
-public final class BuchungWurdeAbgelehnt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+@Entity
+public final class BuchungWurdeAbgelehnt extends HaushaltsbuchEreignis implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String grund;

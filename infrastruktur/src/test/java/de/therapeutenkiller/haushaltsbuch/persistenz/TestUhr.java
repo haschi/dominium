@@ -1,13 +1,11 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import de.therapeutenkiller.dominium.persistenz.Uhr;
-
 import java.time.LocalDateTime;
 
-public final class TestUhr implements Uhr {
+public final class TestUhr /*implements Uhr */ {
     LocalDateTime jetzt;
 
-    @Override
+    /*@Override*/
     public LocalDateTime jetzt() {
         return this.jetzt;
     }

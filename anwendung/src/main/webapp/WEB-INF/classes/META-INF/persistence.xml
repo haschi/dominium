@@ -10,6 +10,11 @@
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignis</class>
+        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
+        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt</class>
+        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
+        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

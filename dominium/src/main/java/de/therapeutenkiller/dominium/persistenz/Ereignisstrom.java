@@ -1,6 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 
 /**
@@ -28,10 +27,10 @@ public abstract class Ereignisstrom<I, M> extends Wertobjekt {
 
     public abstract I getIdentitätsmerkmal();
 
-    public final <A> Umschlag<Domänenereignis<A>, M> registrieren(final Domänenereignis<A> ereignis) {
+    public final <A> Umschlag<A, M> registrieren(final A ereignis) {
         this.version = this.version + 1;
         return this.umschlagErzeugen(ereignis);
     }
 
-    protected abstract <A> Umschlag<Domänenereignis<A>, M> umschlagErzeugen(Domänenereignis<A> ereignis);
+    protected abstract <A> Umschlag<A, M> umschlagErzeugen(A ereignis);
 }

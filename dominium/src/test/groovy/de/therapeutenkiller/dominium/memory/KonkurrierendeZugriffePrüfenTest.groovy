@@ -1,10 +1,11 @@
 package de.therapeutenkiller.dominium.memory
 
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregat
-import de.therapeutenkiller.dominium.modell.testdomäne.TestAggregatEreignisziel
-import de.therapeutenkiller.dominium.modell.testdomäne.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
+
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff
 import de.therapeutenkiller.dominium.persistenz.Uhr
+import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert
 import spock.lang.Specification
 
 class KonkurrierendeZugriffePrüfenTest extends  Specification {

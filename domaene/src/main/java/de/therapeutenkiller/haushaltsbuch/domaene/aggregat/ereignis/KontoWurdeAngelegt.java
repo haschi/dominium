@@ -1,18 +1,25 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 
-public final class KontoWurdeAngelegt extends Wertobjekt implements HaushaltsbuchEreignis, Serializable {
+@Entity
+public final class KontoWurdeAngelegt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public final String kontoname;
     public final Kontoart kontoart;
+
+    protected KontoWurdeAngelegt() {
+        this.kontoname = StringUtils.EMPTY;
+        this.kontoart = Kontoart.Aktiv;
+    }
 
     public KontoWurdeAngelegt(final String kontoname, final Kontoart kontoart) {
 

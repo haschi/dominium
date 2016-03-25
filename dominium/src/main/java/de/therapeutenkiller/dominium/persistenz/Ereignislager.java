@@ -1,34 +1,30 @@
 package de.therapeutenkiller.dominium.persistenz;
 
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
  * Dauerhafte Ablage für Domänenereignisse.
  *
- * @param <A> Der Typ der Aggregatwurzel, auf das sich die Domänenereignisse beziehen.
- */
-public interface Ereignislager<A extends Aggregatwurzel<A, I, T>, I, T> {
+  */
+public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
 
     void neuenEreignisstromErzeugen(
             I identitätsmerkmal,
-            Collection<Domänenereignis<T>> domänenereignisse);
+            Collection<E> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             I identitätsmerkmal,
-            long erwarteteVersion, Collection<Domänenereignis<T>> domänenereignisse) throws KonkurrierenderZugriff;
+            long erwarteteVersion, Collection<E> domänenereignisse) throws KonkurrierenderZugriff;
 
-    List<Domänenereignis<T>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
+    List<E> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
-    void schnappschussHinzufügen(I identitätsmerkmal, Schnappschuss<A, I> snapshot) throws AggregatNichtGefunden;
+    // void schnappschussHinzufügen(I identitätsmerkmal, S snapshot) throws AggregatNichtGefunden;
 
-    Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
+    // Optional<S> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
 
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.

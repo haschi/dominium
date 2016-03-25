@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,8 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("checkstyle:designforextension")
 public class HibernateHaushaltsbuchRepositoryMitDatenbank {
 
-    @Inject
-    private EntityManager entityManager; // NOPMD
+    //@Inject
+    //private EntityManager entityManager; // NOPMD
 
     @Inject
     private HaushaltsbuchRepository repository; // NOPMD

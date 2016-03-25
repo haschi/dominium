@@ -2,10 +2,10 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository
-        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
+        extends Magazin<Haushaltsbuch, HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel>
         implements HaushaltsbuchRepository {
 
     @Inject
@@ -30,7 +30,7 @@ public class HaushaltsbuchMemoryRepository
         return new Haushaltsbuch(identitätsmerkmal);
     }
 
-    public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {
+    public final List<HaushaltsbuchEreignis> getStream(final UUID haushaltsbuchId) {
         return this.getEreignislager().getEreignisliste(haushaltsbuchId, Versionsbereich.ALLE_VERSIONEN);
     }
 

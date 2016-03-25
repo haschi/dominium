@@ -1,8 +1,8 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
+import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
@@ -39,7 +39,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final JpaEreignislager<TestAggregat, TestAggregatEreignisziel> store = new JpaEreignislager<>(
+        final JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store = new JpaEreignislager<>(
                 entityManager,
                 this.uhr);
 
@@ -70,8 +70,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
         query.setParameter("identitätsmerkmal", this.id);
 
-        final List<Domänenereignis<TestAggregatEreignisziel>> domänenereignisse = query.getResultList().stream()
-                .map(JpaDomänenereignisUmschlag<TestAggregatEreignisziel>::öffnen)
+        final List<TestAggregatEreignis> domänenereignisse = query.getResultList().stream()
+                .map(JpaDomänenereignisUmschlag<TestAggregatEreignis>::öffnen)
                 .collect(Collectors.toList());
 
         assertThat(domänenereignisse)

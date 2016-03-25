@@ -25,29 +25,28 @@
         </dependency>
 
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.11.Final</version>
-            <scope>provided</scope>
-            <!-- <version>5.0.7.Final</version> -->
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.190</version>
-        </dependency>
-
-        <dependency>
             <groupId>de.larmic.butterfaces</groupId>
             <artifactId>components-mojarra</artifactId>
             <version>1.10.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -92,4 +91,38 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>h2</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <scope>provided</scope>
+                    <version>${hibernate.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>${h2.version}</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                    <artifactId>dominium-persistenz-jpa</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>event-store</id>
+            <dependencies>
+                <dependency>
+                    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                    <artifactId>dominium-persistenz-atom</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

@@ -1,8 +1,6 @@
 package de.therapeutenkiller.dominium.memory;
 
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
@@ -15,7 +13,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,12 +23,12 @@ import java.util.stream.Stream;
  *
  * @param <A> Der Typ des Aggregates, dessen Ereignisse verwaltet werden
  */
-public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
-        implements Ereignislager<A, I, T> {
+public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
+        implements Ereignislager<E, I, T> {
 
     private final Map<I, MemoryEreignisstrom<I>> ereignisströme = new ConcurrentHashMap<>();
-    private final List<Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
-    private final List<MemorySchnappschussUmschlag<A, I, T>> schnappschüsse = new ArrayList<>();
+    private final List<Umschlag<E, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
+    // private final List<MemorySchnappschussUmschlag<E, I, T>> schnappschüsse = new ArrayList<>();
     private final Uhr uhr;
 
     public MemoryEreignislager(final Uhr uhr) {
@@ -41,7 +38,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
     @Override
     public final void neuenEreignisstromErzeugen(
             final I identitätsmerkmal,
-            final Collection<Domänenereignis<T>> domänenereignisse) {
+            final Collection<E> domänenereignisse) {
 
         if (this.ereignisströme.containsKey(identitätsmerkmal)) {
             throw new IllegalArgumentException();
@@ -56,7 +53,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
     public final void ereignisseDemStromHinzufügen(
             final I identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<Domänenereignis<T>> domänenereignisse)
+            final Collection<E> domänenereignisse)
             throws KonkurrierenderZugriff {
 
         if (!this.ereignisströme.containsKey(identitätsmerkmal)) {
@@ -71,8 +68,8 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
 
     private void ereignisseHinzufügen(
             final MemoryEreignisstrom<I> ereignisstrom,
-            final Collection<Domänenereignis<T>> domänenereignisse) {
-        for (final Domänenereignis<T> ereignis : domänenereignisse) {
+            final Collection<E> domänenereignisse) {
+        for (final E ereignis : domänenereignisse) {
             this.ereignisse.add(ereignisstrom.registrieren(ereignis));
         }
     }
@@ -88,9 +85,9 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
     }
 
     @Override
-    public final List<Domänenereignis<T>> getEreignisliste(final I identitätsmerkmal, final Versionsbereich bereich) {
+    public final List<E> getEreignisliste(final I identitätsmerkmal, final Versionsbereich bereich) {
 
-        final Comparator<Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>>>
+        final Comparator<Umschlag<E, MemoryEreignisMetaDaten<I>>>
                 byVersion = (left, right) -> Long.compare(
                     left.getMetaDaten().version,
                     right.getMetaDaten().version);
@@ -105,11 +102,12 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
 
     private boolean gehörtZumStream(
             final I identitätsmerkmal,
-            final Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>> ereignis) {
+            final Umschlag<E, MemoryEreignisMetaDaten<I>> ereignis) {
 
         return ereignis.getMetaDaten().ereignisstrom.equals(identitätsmerkmal);
     }
 
+    /*
     @Override
     public final void schnappschussHinzufügen(final I identitätsmerkmal, final Schnappschuss<A, I> snapshot) {
 
@@ -127,7 +125,9 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
 
         this.schnappschüsse.add(wrapper);
     }
+    */
 
+    /*
     @Override
     public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
 
@@ -140,7 +140,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
                 .map(MemorySchnappschussUmschlag::öffnen)
                 .findFirst();
     }
-
+*/
     @Override
     public final Stream<I> getEreignisströme() {
         return this.ereignisströme.values().stream().map(Ereignisstrom::getIdentitätsmerkmal);
@@ -148,7 +148,7 @@ public class MemoryEreignislager<A extends Aggregatwurzel<A, I, T>, I, T>
 
     public final void clear() {
         this.ereignisse.clear();
-        this.schnappschüsse.clear();
+        //this.schnappschüsse.clear();
         this.ereignisströme.clear();
     }
 }

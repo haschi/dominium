@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, UUID, T>, T>
+public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, E, UUID, T>, E extends Domänenereignis<T>, T>
         extends Wertobjekt
         implements Umschlag<Schnappschuss<A, UUID>, JpaSchnappschussMetaDaten<UUID>> {
 

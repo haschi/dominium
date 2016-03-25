@@ -26,7 +26,7 @@ public class Wertobjekt {
     }
 
     private boolean gleicht(final Wertobjekt that) {
-        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that);
+        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that, "id");
     }
 
     @Override

@@ -1,8 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import com.google.common.collect.ImmutableCollection;
+import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 import de.therapeutenkiller.haushaltsbuch.system.Logged;
@@ -17,11 +19,12 @@ import java.util.UUID;
 @Logged
 @SuppressWarnings("checkstyle:designforextension")
 public class HibernateHaushaltsbuchRepository
-        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
+        extends Magazin<Haushaltsbuch, HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel>
         implements HaushaltsbuchRepository {
 
     @Inject
-    public HibernateHaushaltsbuchRepository(final HaushaltsbuchEreignislager eventStore) {
+    public HibernateHaushaltsbuchRepository(
+            final Ereignislager<HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel> eventStore) {
         super(eventStore);
     }
 
