@@ -11,7 +11,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 @Stateless
-public final class EinnahmeBuchen {
+public class EinnahmeBuchen {
 
     private Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent = null;
 

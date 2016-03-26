@@ -11,7 +11,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 @Stateless
-public final class TilgungBuchen {
+public class TilgungBuchen {
 
     @Inject
     HaushaltsbuchRepository repository;

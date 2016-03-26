@@ -11,7 +11,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 @Stateless
-public final class BuchungssatzHinzufügen {
+public class BuchungssatzHinzufügen {
 
     @Inject
     private HaushaltsbuchRepository repository;

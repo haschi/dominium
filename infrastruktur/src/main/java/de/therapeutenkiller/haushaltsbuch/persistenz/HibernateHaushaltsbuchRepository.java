@@ -7,7 +7,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
-import de.therapeutenkiller.haushaltsbuch.system.Logged;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;

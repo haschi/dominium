@@ -136,7 +136,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
 
             return alleEreignisse
                     .sorted((entry, t1) -> entry.updated.compareTo(t1.updated))
-                    .map(i -> this.ereignisLaden(i))
+                    .map(this::ereignisLaden)
                     .collect(Collectors.toList());
 
 
@@ -186,9 +186,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
             final Object event = this.mapper.readValue(json, ereignistyp);
             return (E)event;
 
-        } catch (final IOException ausnahme) {
-            throw new EreignisstromNichtLesbar(ausnahme);
-        } catch (final ClassNotFoundException ausnahme) {
+        } catch (final IOException | ClassNotFoundException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);
         }
     }

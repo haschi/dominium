@@ -8,7 +8,6 @@ import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
-import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
 @Stateless
