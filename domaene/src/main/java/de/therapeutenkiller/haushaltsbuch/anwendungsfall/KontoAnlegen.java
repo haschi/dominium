@@ -14,6 +14,7 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
+@Stateless
 @SuppressWarnings("checkstyle:designforextension")
 public class KontoAnlegen {
 

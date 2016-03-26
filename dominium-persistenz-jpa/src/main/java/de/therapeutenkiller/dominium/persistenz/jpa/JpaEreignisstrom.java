@@ -2,19 +2,21 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @SuppressWarnings("checkstyle:designforextension")
 @Entity
-public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten<UUID>> {
+public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten> {
 
     public JpaEreignisstrom() {
         super(UUID.randomUUID());
     }
 
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     @Override
     public UUID getIdentitätsmerkmal() {
         return this.identitätsmerkmal;
@@ -39,7 +41,7 @@ public class JpaEreignisstrom extends Ereignisstrom<UUID, JpaEreignisMetaDaten<U
     @Override
     protected <A> JpaDomänenereignisUmschlag<A> umschlagErzeugen(final A ereignis) {
 
-        final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<>(
+        final JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten(
                 this.getIdentitätsmerkmal(),
                 this.getVersion());
 

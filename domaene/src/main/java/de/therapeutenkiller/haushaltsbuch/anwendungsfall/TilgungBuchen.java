@@ -6,9 +6,11 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheTilgung;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+@Stateless
 public final class TilgungBuchen {
 
     @Inject

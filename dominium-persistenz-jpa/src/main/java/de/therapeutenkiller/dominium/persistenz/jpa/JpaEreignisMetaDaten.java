@@ -3,13 +3,16 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Embeddable
-public final class JpaEreignisMetaDaten<I> extends Wertobjekt implements Serializable {
+public final class JpaEreignisMetaDaten extends Wertobjekt implements Serializable {
 
-    private I identitätsmerkmal;
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID identitätsmerkmal;
 
     private long version;
 
@@ -18,7 +21,7 @@ public final class JpaEreignisMetaDaten<I> extends Wertobjekt implements Seriali
         this.version = 0;
     }
 
-    public JpaEreignisMetaDaten(final I name, final long version) {
+    public JpaEreignisMetaDaten(final UUID name, final long version) {
 
         this.identitätsmerkmal = name;
         this.version = version;

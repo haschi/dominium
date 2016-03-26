@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+@Stateless
 @SuppressWarnings("checkstyle:designforextension")
 public class AnfangsbestandBuchen {
 

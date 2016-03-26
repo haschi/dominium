@@ -7,6 +7,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+// import javax.ejb.Stateless;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
@@ -27,7 +28,7 @@ public class HaushaltsbuchführungBeginnen {
     }
 
     public void ausführen(
-            @Observes(during = TransactionPhase.BEFORE_COMPLETION)
+            @Observes(during = TransactionPhase.IN_PROGRESS)
             final BeginneHaushaltsbuchführung kommando)
             throws KonkurrierenderZugriff {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(kommando.identitätsmerkmal);

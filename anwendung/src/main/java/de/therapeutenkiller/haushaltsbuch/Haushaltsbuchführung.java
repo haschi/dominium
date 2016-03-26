@@ -4,14 +4,16 @@ import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 
+
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
@@ -34,13 +36,15 @@ public class Haushaltsbuchführung implements Serializable {
 
     private String identitätsmerkmal = "";
 
+    @PersistenceContext
+    private EntityManager em;
+
     public String beginnen() throws IOException, KonkurrierenderZugriff {
         this.identitätsmerkmal = UUID.randomUUID().toString();
 
         final BeginneHaushaltsbuchführung befehl = new BeginneHaushaltsbuchführung(
                 UUID.fromString(this.identitätsmerkmal));
 
-        this.beginnen.ausführen(befehl);
         this.beginneHaushaltsbuchführungEvent.fire(befehl);
         return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.identitätsmerkmal);
     }

@@ -6,17 +6,23 @@ import de.therapeutenkiller.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
+import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+@Stateless
 public final class BuchungssatzHinzufügen {
 
-    private final HaushaltsbuchRepository repository;
+    @Inject
+    private HaushaltsbuchRepository repository;
 
     @Inject
     public BuchungssatzHinzufügen(final HaushaltsbuchRepository repository) {
 
         this.repository = repository;
+    }
+
+    public BuchungssatzHinzufügen() {
     }
 
     public void ausführen(@Observes final FügeBuchungssatzHinzu befehl)

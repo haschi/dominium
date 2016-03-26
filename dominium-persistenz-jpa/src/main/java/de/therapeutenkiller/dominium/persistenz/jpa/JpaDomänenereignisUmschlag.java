@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import java.util.UUID;
 
 /**
  * Ein DomänenereignisUmschlag für Domänenereignisse zum Speichern in einer
@@ -16,10 +15,10 @@ import java.util.UUID;
 @Entity
 public class JpaDomänenereignisUmschlag<E>
         extends Wertobjekt
-        implements Umschlag<E, JpaEreignisMetaDaten<UUID>> {
+        implements Umschlag<E, JpaEreignisMetaDaten> {
 
     @EmbeddedId
-    private JpaEreignisMetaDaten<UUID> meta = null;
+    private JpaEreignisMetaDaten meta = null;
 
     // @Lob
     // private byte[] ereignis = null; // NOPMD
@@ -29,7 +28,7 @@ public class JpaDomänenereignisUmschlag<E>
 
     public JpaDomänenereignisUmschlag(
             final E ereignis,
-            final JpaEreignisMetaDaten<UUID> meta) {
+            final JpaEreignisMetaDaten meta) {
         super();
 
         this.meta = meta;
@@ -45,7 +44,7 @@ public class JpaDomänenereignisUmschlag<E>
     }
 
     @Override
-    public final JpaEreignisMetaDaten<UUID> getMetaDaten() {
+    public final JpaEreignisMetaDaten getMetaDaten() {
         return this.meta;
     }
 

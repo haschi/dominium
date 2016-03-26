@@ -27,7 +27,7 @@ public class DomänenereignisUmschlagPersistierenTest {
     @Test
     public void domänenereignis_umschlag_kann_persistiert_werden() {
         final TestAggregatEreignis ereignis = new ZustandWurdeGeändert(42L);
-        final JpaEreignisMetaDaten<UUID> meta = new JpaEreignisMetaDaten<>(this.id, 1L);
+        final JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten(this.id, 1L);
         final JpaDomänenereignisUmschlag<TestAggregatEreignis> umschlag = new JpaDomänenereignisUmschlag<>(
                 ereignis,
                 meta);
