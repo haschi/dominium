@@ -4,8 +4,10 @@ Haushaltsbuch
 Eine Buchhaltung für den Privathaushalt.
 
 1. [Anleitung für das Schreiben von Funktionalitäten und Szenarien](
-domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/README.md)
+domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Anleitung.md)
+2. [Funktionalitäten](domaene/src/test/resources/README.md)
 2. [Buchführungsregeln](domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Buchführungsregeln.md)
+3. [Coding-Style - nicht aktuell](Codestyle.md)
 
 Getestet unter
 --------------
