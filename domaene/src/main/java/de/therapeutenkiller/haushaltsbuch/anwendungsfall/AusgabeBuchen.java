@@ -11,7 +11,6 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
-@Stateless
 @SuppressWarnings("checkstyle:designforextension")
 public class AusgabeBuchen {
 
@@ -19,7 +18,7 @@ public class AusgabeBuchen {
     private HaushaltsbuchRepository repository;
 
     public void ausführen(
-            @Observes(during = TransactionPhase.BEFORE_COMPLETION)
+            @Observes
             final BucheAusgabe kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(kommando.haushaltsbuchId);

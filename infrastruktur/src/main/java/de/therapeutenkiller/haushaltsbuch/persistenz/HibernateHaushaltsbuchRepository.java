@@ -16,7 +16,6 @@ import javax.interceptor.Interceptor;
 import java.util.UUID;
 
 @Priority(Interceptor.Priority.APPLICATION + 10)
-@Logged
 @SuppressWarnings("checkstyle:designforextension")
 public class HibernateHaushaltsbuchRepository
         extends Magazin<Haushaltsbuch, HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel>

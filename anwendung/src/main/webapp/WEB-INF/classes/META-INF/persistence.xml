@@ -8,7 +8,7 @@
 <persistence-unit name="primary" transaction-type="JTA">
     <jta-data-source>java:/hhbDS</jta-data-source>
 
-    <!--
+
     <class>de.therapeutenkiller.dominium.persistenz.Umschlag</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
@@ -19,7 +19,7 @@
     <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt</class>
     <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
     <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
-    -->
+
     <properties>
         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
         <property name="hibernate.show_sql" value="false"/>

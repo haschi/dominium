@@ -15,17 +15,16 @@
 
     <dependencies>
 
-        <!--
         <dependency>
             <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
             <artifactId>domaene</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
             <artifactId>infrastruktur</artifactId>
         </dependency>
-        -->
 
         <dependency>
             <groupId>de.larmic.butterfaces</groupId>

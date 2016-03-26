@@ -14,7 +14,6 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
 import javax.inject.Inject;
 
-@Stateless
 @SuppressWarnings("checkstyle:designforextension")
 public class KontoAnlegen {
 
@@ -25,7 +24,7 @@ public class KontoAnlegen {
     private Event<BucheAnfangsbestand> anfangsbestandBuchenKommandoEvent;
 
     public void ausführen(
-            @Observes(during = TransactionPhase.BEFORE_COMPLETION)
+            @Observes
             final LegeKontoMitAnfangsbestandAn kommando)
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
