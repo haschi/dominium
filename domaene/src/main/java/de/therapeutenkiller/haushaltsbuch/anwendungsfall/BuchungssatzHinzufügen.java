@@ -11,6 +11,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 @Stateless
+@SuppressWarnings("checkstyle:designforextension")
 public class BuchungssatzHinzufügen {
 
     @Inject

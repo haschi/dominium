@@ -4,7 +4,6 @@ import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 
-
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 

@@ -22,7 +22,7 @@ class DomänenereignisseInUmschlagPackenTest extends Specification {
 
         given: "ich habe ein Domänenereignis-Umschlag mit einem Ereignis"
         ZustandWurdeGeändert ereignis = new ZustandWurdeGeändert(42L)
-        JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten("test-strom", 1L)
+        JpaEreignisMetaDaten meta = new JpaEreignisMetaDaten(UUID.randomUUID(), 1L)
         JpaDomänenereignisUmschlag<TestAggregatEreignis> umschlag = new JpaDomänenereignisUmschlag<>(ereignis, meta)
 
         when: "ich den Umschlag öffne"
