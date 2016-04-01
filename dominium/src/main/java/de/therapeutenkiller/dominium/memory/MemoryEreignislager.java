@@ -4,7 +4,6 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 
@@ -27,10 +26,8 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
 
     private final Map<I, MemoryEreignisstrom<I>> ereignisströme = new ConcurrentHashMap<>();
     private final List<Umschlag<E, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
-    private final Uhr uhr;
 
-    public MemoryEreignislager(final Uhr uhr) {
-        this.uhr = uhr;
+    public MemoryEreignislager() {
     }
 
     @Override

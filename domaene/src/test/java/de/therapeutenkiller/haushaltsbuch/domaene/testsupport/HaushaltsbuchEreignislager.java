@@ -13,6 +13,6 @@ public class HaushaltsbuchEreignislager
 
     @Inject
     public HaushaltsbuchEreignislager(final Uhr uhr) {
-        super(uhr);
+        super();
     }
 }

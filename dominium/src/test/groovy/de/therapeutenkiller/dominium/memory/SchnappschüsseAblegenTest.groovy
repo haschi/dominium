@@ -19,7 +19,7 @@ class SchnappschüsseAblegenTest extends Specification {
 
     def setup() {
         MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> ereignislager =
-                new MemoryEreignislager<>(uhr)
+                new MemoryEreignislager<>()
 
         schnappschussLager = new MemorySchnappschussLager<>()
 

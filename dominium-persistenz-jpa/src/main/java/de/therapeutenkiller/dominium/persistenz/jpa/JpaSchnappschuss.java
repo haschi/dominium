@@ -13,6 +13,7 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class JpaSchnappschuss<T> extends Schnappschuss<T, UUID> {
 
+    @SuppressWarnings("FieldCanBeLocal")
     @Id
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;

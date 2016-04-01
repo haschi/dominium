@@ -18,7 +18,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
     def "Neue Ereignis-Ströme erzeugen"() {
 
         given: "ich habe ein Ereignislager"
-        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>()
 
         when: "ich einen neuen Ereignisstrom mit Ereignissen erzeuge"
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, testEreignisse)
@@ -36,7 +36,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Ereignis-Liste erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>()
 
         when:
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, null)
@@ -47,7 +47,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Namen erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>()
 
         when:
         lager.neuenEreignisstromErzeugen(null, [])
@@ -58,7 +58,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Doppelte Namen für Ereignis-Ströme sind nicht erlaubt"() {
         given:
-        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>()
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         when:
