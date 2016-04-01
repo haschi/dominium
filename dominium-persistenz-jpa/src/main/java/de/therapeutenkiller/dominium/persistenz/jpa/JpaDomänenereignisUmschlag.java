@@ -20,9 +20,6 @@ public class JpaDomänenereignisUmschlag<E>
     @EmbeddedId
     private JpaEreignisMetaDaten meta = null;
 
-    // @Lob
-    // private byte[] ereignis = null; // NOPMD
-
     @OneToOne(targetEntity = JpaDomänenereignis.class)
     public E ereignis;
 

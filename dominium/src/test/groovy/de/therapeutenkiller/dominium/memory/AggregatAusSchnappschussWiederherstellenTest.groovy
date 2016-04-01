@@ -1,26 +1,29 @@
 package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.Uhr
-import spock.lang.Ignore
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss
 import spock.lang.Specification
 
 class AggregatAusSchnappschussWiederherstellenTest extends Specification {
 
-    @Ignore
     def "Aggregat aus Schnappschuss wiederherstellen"() {
         given:
-        Uhr uhr = new TestUhr()
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
-        TestAggregat aggregat = new TestAggregat(UUID.randomUUID())
-        aggregat.zustandÄndern(42L)
+        def lager = new MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID>()
 
-        lager.neuenEreignisstromErzeugen(aggregat.identitätsmerkmal, aggregat.änderungen)
-        lager.schnappschussHinzufügen(aggregat.identitätsmerkmal, aggregat.schnappschussErstellen())
+        def identitätsmerkmal = UUID.randomUUID()
+
+        lager.schnappschussHinzufügen(
+                TestAggregatSchnappschuss.builder()
+                        .identitätsmerkmal(identitätsmerkmal)
+                        .payload(42L)
+                        .version(1L)
+                        .build())
 
         when:
-        def schnappschuss = lager.getNeuesterSchnappschuss(aggregat.identitätsmerkmal).get()
+        def schnappschuss = lager.getNeuesterSchnappschuss(identitätsmerkmal).get()
         def wiederhergestellt = schnappschuss.wiederherstellen()
 
         then:

@@ -21,8 +21,10 @@ public class HaushaltsbuchMemoryRepository
         implements HaushaltsbuchRepository {
 
     @Inject
-    public HaushaltsbuchMemoryRepository(final HaushaltsbuchEreignislager ereignislager) {
-        super(ereignislager);
+    public HaushaltsbuchMemoryRepository(
+            final HaushaltsbuchEreignislager ereignislager,
+            final HaushaltsbuchMemorySchnappschussLager schnappschussLager) {         
+        super(ereignislager, schnappschussLager);
     }
 
     @Override

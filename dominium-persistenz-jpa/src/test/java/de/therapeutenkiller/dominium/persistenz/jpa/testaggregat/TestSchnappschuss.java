@@ -1,18 +1,18 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
 
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
-
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.UUID;
 
-public final class TestSchnappschuss
-        extends Wertobjekt
-        implements Schnappschuss<TestAggregat, UUID>, Serializable {
+@Entity
+public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
+
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID identitätsmerkmal;
+
+    private long version;
 
     private long zustand;
-    private UUID identitätsmerkmal;
-    private long version;
 
     public TestSchnappschuss() {
     }
@@ -34,5 +34,32 @@ public final class TestSchnappschuss
     @Override
     public TestAggregat wiederherstellen() {
         return new TestAggregat(this);
+    }
+
+    public static TestSchnappschussBuilder builder() {
+        return new TestSchnappschussBuilder();
+    }
+
+    public static final class TestSchnappschussBuilder {
+        private TestSchnappschuss instanz = new TestSchnappschuss();
+
+        public TestSchnappschussBuilder identitätsmerkmal(final UUID uuid) {
+            this.instanz.identitätsmerkmal = uuid;
+            return this;
+        }
+
+        public TestSchnappschussBuilder version(final long version) {
+            this.instanz.version = version;
+            return this;
+        }
+
+        public TestSchnappschussBuilder zustand(final long zustand) {
+            this.instanz.zustand = zustand;
+            return this;
+        }
+
+        public TestSchnappschuss get() {
+            return this.instanz;
+        }
     }
 }

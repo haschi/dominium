@@ -10,6 +10,9 @@
         <class>de.therapeutenkiller.dominium.persistenz.Ereignisstrom</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisMetaDaten</class>
+        <class>de.therapeutenkiller.dominium.modell.Schnappschuss</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatSchnappschussBasis</class>
+        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
         <properties>

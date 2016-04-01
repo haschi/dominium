@@ -1,58 +1,43 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import javax.persistence.OneToOne;
 
 @Entity
-public class JpaSchnappschussUmschlag<A extends Aggregatwurzel<A, E, UUID, T>, E extends Domänenereignis<T>, T>
+public class JpaSchnappschussUmschlag<S>
         extends Wertobjekt
-        implements Umschlag<Schnappschuss<A, UUID>, JpaSchnappschussMetaDaten<UUID>> {
+        implements Umschlag<S, JpaSchnappschussMetaDaten>  {
 
     @EmbeddedId
-    private final JpaSchnappschussMetaDaten<UUID> meta;
+    private final JpaSchnappschussMetaDaten meta;
 
-    @Lob
-    private final byte[] snapshot;
+    @OneToOne(targetEntity = JpaSchnappschuss.class)
+    public S ereignis;
 
     public  JpaSchnappschussUmschlag(
-            final UUID streamName,
-            final LocalDateTime jetzt,
-            final Schnappschuss<A, UUID> snapshot) {
+            final S snapshot,
+            final JpaSchnappschussMetaDaten meta) {
 
-        this.meta = new JpaSchnappschussMetaDaten<>(streamName, jetzt);
+        this.meta = meta;
+        this.ereignis = snapshot;
 
-        try {
-            this.snapshot = EventSerializer.serialize(snapshot);
-        } catch (final IOException grund) {
-            throw new Serialisierungsfehler(grund);
-        }
     }
 
     protected JpaSchnappschussUmschlag() {
         this.meta = null;
-        this.snapshot = null;
+        this.ereignis = null;
     }
 
     @Override
-    public final JpaSchnappschussMetaDaten<UUID> getMetaDaten() {
+    public final JpaSchnappschussMetaDaten getMetaDaten() {
         return this.meta;
     }
 
-    public final Schnappschuss<A, UUID> öffnen() {
-        try {
-            return (Schnappschuss<A, UUID>)EventSerializer.deserialize(this.snapshot);
-        } catch (final IOException | ClassNotFoundException grund) {
-            throw new Serialisierungsfehler(grund);
-        }
+    public final S öffnen() {
+        return this.ereignis;
     }
 }

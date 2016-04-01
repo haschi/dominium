@@ -4,11 +4,15 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
 
-public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
+public final class TestAggregatSchnappschuss extends Schnappschuss<TestAggregat, UUID> {
 
     long version;
     long payload;
     UUID identitätsmerkmal;
+
+    // Da ist ein Fehler im NullReferenzPrüfung Aspekt: Dieser Konstruktur wird geprüft und erzeugt einen Fehler
+    // private TestAggregatSchnappschuss() {
+    // }
 
     @Override
     public UUID getIdentitätsmerkmal() {
@@ -33,7 +37,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
         return new TestAggregatSchnappschussBuilder();
     }
 
-    private static final class TestAggregatSchnappschussBuilder {
+    public static final class TestAggregatSchnappschussBuilder {
         TestAggregatSchnappschuss instanz = new TestAggregatSchnappschuss();
 
         public TestAggregatSchnappschussBuilder payload(final long payload) {

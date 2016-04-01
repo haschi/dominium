@@ -46,7 +46,7 @@ public class EreignisstromPersistierenTest {
         final JpaEreignisstrom doppelt = new JpaEreignisstrom(this.id);
 
         assertThatExceptionOfType(EntityExistsException.class)
-            .isThrownBy(() -> { this.entityManager.persist(doppelt); })
+            .isThrownBy(() -> this.entityManager.persist(doppelt))
             .withMessageStartingWith(
                     "A different object with the same identifier value was already associated with the session");
     }

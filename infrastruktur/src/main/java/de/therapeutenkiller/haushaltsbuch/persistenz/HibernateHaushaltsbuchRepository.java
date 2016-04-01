@@ -1,7 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import com.google.common.collect.ImmutableCollection;
-import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
@@ -22,8 +21,9 @@ public class HibernateHaushaltsbuchRepository
 
     @Inject
     public HibernateHaushaltsbuchRepository(
-            final Ereignislager<HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel> eventStore) {
-        super(eventStore);
+            final JpaHaushaltsbuchEreignislager ereignisLager,
+            final JpaHaushaltsbuchSchnappschussLager schnappschussLager) {
+        super(ereignisLager, schnappschussLager);
     }
 
     @Override

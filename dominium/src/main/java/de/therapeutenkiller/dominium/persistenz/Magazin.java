@@ -7,24 +7,37 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * @param <A> Der Typ der Aggregate, die im Magazin abgelegt werden.
+ * @param <E> Der Typ der Domänenereignisse, die vom Aggregat ausgesendet werden
+ * @param <I> Der Typ des Identitätsmerkmals der Aggregate
+ * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
+ */
 @SuppressWarnings("checkstyle:designforextension")
 public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T>
         implements Repository<A,E,I,T> {
 
     private final Ereignislager<E, I, T> ereignislager;
 
-    protected Magazin(final Ereignislager<E, I, T> ereignislager) {
+    private SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
+
+    protected Magazin(
+            final Ereignislager<E, I, T> ereignislager,
+            final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager) {
         this.ereignislager = ereignislager;
+        this.schnappschussLager = schnappschussLager;
     }
 
     @Override
     public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
-        final Optional<Schnappschuss<A, I>> schnappschuss = Optional.empty();
-        // this.ereignislager.getNeuesterSchnappschuss(identitätsmerkmal);
+
+        final Optional<? extends Schnappschuss<A, I>> schnappschuss =
+                this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
         if (schnappschuss.isPresent()) {
 
-            final Versionsbereich bereich = new Versionsbereich(schnappschuss.get().getVersion(), Long.MAX_VALUE);
+            final Versionsbereich bereich = new Versionsbereich(schnappschuss.get().getVersion() + 1, Long.MAX_VALUE);
             final List<E> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
             final A aggregat = schnappschuss.get().wiederherstellen();
 
@@ -63,6 +76,23 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
                 aggregat.getInitialversion(),
                 aggregat.getÄnderungen()
         );
+    }
+
+    public <S extends Schnappschuss<A, I>> void speichern(final S  schnappschuss) throws AggregatNichtGefunden {
+        if (!this.ereignislager.existiertEreignisStrom(schnappschuss.getIdentitätsmerkmal())) {
+            throw new AggregatNichtGefunden();
+        }
+
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
+    }
+
+    public void schnappschussSpeichern(final A aggregat) throws ÄnderungenSindVorhandenGewesen {
+        if (!aggregat.getÄnderungen().isEmpty()) {
+            throw new ÄnderungenSindVorhandenGewesen();
+        }
+
+        final Schnappschuss<A, I> schnappschuss = aggregat.schnappschussErstellen();
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
     }
 
     protected Ereignislager<E, I, T> getEreignislager() {

@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 /**
  * Dauerhafte Ablage für Domänenereignisse.
  *
-  */
+ */
 public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
 
     void neuenEreignisstromErzeugen(
@@ -22,12 +22,10 @@ public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
 
     List<E> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
-    // void schnappschussHinzufügen(I identitätsmerkmal, S snapshot) throws AggregatNichtGefunden;
-
-    // Optional<S> getNeuesterSchnappschuss(I identitätsmerkmal) throws AggregatNichtGefunden;
-
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.
      */
     Stream<I> getEreignisströme();
+
+    boolean existiertEreignisStrom(I identitätsmerkmal);
 }

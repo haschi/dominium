@@ -27,20 +27,6 @@ class EreignislagerLeerenTest extends Specification {
         lager.getEreignisliste(identitätsmerkmal, Versionsbereich.ALLE_VERSIONEN) == []
     }
 
-    @Ignore
-    def "Schnappschüsse des Ereignis-Lagers leeren"() {
-        given:
-        Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
-        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
-        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
-
-        when:
-        lager.clear()
-
-        then:
-        !lager.getNeuesterSchnappschuss(identitätsmerkmal).isPresent()
-    }
-
     def "Ereignis-Ströme des Ereignis-Lagers leeren"() {
         given:
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])

@@ -1,10 +1,12 @@
 package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss
+import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden
+import de.therapeutenkiller.dominium.persistenz.Magazin
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -12,68 +14,74 @@ class SchnappschüsseAblegenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
     UUID identitätsmerkmal = UUID.randomUUID()
+    Magazin<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel> magazin
+    private MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> schnappschussLager
 
-    @Ignore
-    def "Schnappschüsse eines existierenden Aggregats ablegen"() {
+    def setup() {
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> ereignislager =
+                new MemoryEreignislager<>(uhr)
+
+        schnappschussLager = new MemorySchnappschussLager<>()
+
+        magazin = new Magazin<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel>(
+            ereignislager, schnappschussLager) {
+                @Override
+                protected TestAggregat neuesAggregatErzeugen(UUID identitätsmerkmal) {
+                    return new TestAggregat(identitätsmerkmal)
+                }
+            }
+    }
+
+    def "Schnappschüsse eines Aggregats können im Schnappschuss-Lager abgelegt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
-        Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
+        MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> lager = new MemorySchnappschussLager<>()
+
+        Schnappschuss<TestAggregat, UUID> schnappschuss = TestAggregatSchnappschuss.builder()
+                .identitätsmerkmal(identitätsmerkmal).build()
 
         when:
-        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
+        lager.schnappschussHinzufügen(schnappschuss)
 
         then:
         lager.getNeuesterSchnappschuss(identitätsmerkmal).get() == schnappschuss
     }
 
-    @Ignore
     def "Schnappschüsse eines nicht existierenden Aggregats ablegen"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
-        Schnappschuss<TestAggregat, UUID> schnappschuss = new TestAggregatSchnappschuss()
+
+        Schnappschuss<TestAggregat, UUID> schnappschuss = TestAggregatSchnappschuss.builder()
+                .identitätsmerkmal(identitätsmerkmal)
+                .build()
 
         when:
-        lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
+        magazin.speichern(schnappschuss)
 
         then:
-        thrown IllegalArgumentException
+        thrown AggregatNichtGefunden
     }
 
-    @Ignore
     @Unroll
-    def "Neuesten Schnappschuss ermitteln"() {
+    def "Magazin stellt Aggregat aus Schnappschuss wieder her"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
-        lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
+        TestAggregat aggregat = new TestAggregat(identitätsmerkmal)
+        aggregat.zustandÄndern(1L)
+        magazin.hinzufügen(aggregat)
 
-        schnappschüsse.each {
-            String uhrzeit = (String)it[0]
-            long payload = (long)it[1]
-
-            def schnappschuss = TestAggregatSchnappschuss.builder()
-                    .identitätsmerkmal(UUID.randomUUID())
-                    .version(1)
-                    .payload(payload)
-                    .build()
-
-            uhr.stellen uhrzeit
-            lager.schnappschussHinzufügen(identitätsmerkmal, schnappschuss)
-        }
+        TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
+            .payload(payload)
+            .identitätsmerkmal(identitätsmerkmal)
+            .version(aggregat.version)
+            .build()
 
         when:
-        def neusterSchnappschuss = lager.getNeuesterSchnappschuss(identitätsmerkmal).get()
-        def aggregat = neusterSchnappschuss.wiederherstellen()
+        schnappschussLager.schnappschussHinzufügen(schnappschuss)
 
         then:
-        aggregat.zustand == payload;
+        magazin.suchen(identitätsmerkmal).zustand == payload;
 
         where:
-        schnappschüsse << [
-                [["2016-01-31T13:22:00Z", 42L], ["2016-01-31T13:21:00Z", 43L]],
-                [["2016-01-31T13:22:00Z", 42L], ["2016-01-31T13:23:00Z", 43L]]
-        ]
-
-        payload << [42L, 43L]
+        payload || _
+        42L     || _
+        43L     || _
     }
 }

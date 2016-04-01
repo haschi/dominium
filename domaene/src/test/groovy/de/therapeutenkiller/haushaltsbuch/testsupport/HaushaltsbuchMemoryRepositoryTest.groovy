@@ -10,6 +10,7 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurde
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchEreignislager
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchMemoryRepository
+import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HaushaltsbuchMemorySchnappschussLager
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.TestUhr
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository
 import spock.lang.Shared
@@ -22,7 +23,9 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
     def "X"() {
         given:
         HaushaltsbuchEreignislager lager = new HaushaltsbuchEreignislager(uhr);
-        HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager)
+        HaushaltsbuchMemorySchnappschussLager schnapschussLager = new HaushaltsbuchMemorySchnappschussLager()
+
+        HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager, schnapschussLager)
         UUID haushaltsbuchId = UUID.randomUUID()
 
         new HaushaltsbuchführungBeginnen(repository).ausführen(

@@ -21,14 +21,12 @@ import java.util.stream.Stream;
  * Das MemoryEreignislager ist ein Ereignislager, der Ereignisse im
  * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests verwendet.
  *
- * @param <A> Der Typ des Aggregates, dessen Ereignisse verwaltet werden
- */
+  */
 public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
         implements Ereignislager<E, I, T> {
 
     private final Map<I, MemoryEreignisstrom<I>> ereignisströme = new ConcurrentHashMap<>();
     private final List<Umschlag<E, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
-    // private final List<MemorySchnappschussUmschlag<E, I, T>> schnappschüsse = new ArrayList<>();
     private final Uhr uhr;
 
     public MemoryEreignislager(final Uhr uhr) {
@@ -107,48 +105,18 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
         return ereignis.getMetaDaten().ereignisstrom.equals(identitätsmerkmal);
     }
 
-    /*
-    @Override
-    public final void schnappschussHinzufügen(final I identitätsmerkmal, final Schnappschuss<A, I> snapshot) {
-
-        if (!this.ereignisströme.containsKey(identitätsmerkmal)) {
-            throw new IllegalArgumentException();
-        }
-
-        final MemorySchnappschussMetaDaten<I> meta = new MemorySchnappschussMetaDaten<>(
-                identitätsmerkmal,
-                this.uhr.jetzt());
-
-        final MemorySchnappschussUmschlag<A, I, T> wrapper = new MemorySchnappschussUmschlag<>(
-                snapshot,
-                meta);
-
-        this.schnappschüsse.add(wrapper);
-    }
-    */
-
-    /*
-    @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
-
-        final Comparator<? super MemorySchnappschussUmschlag<A, I, T>> nachZeitstempelAbsteigend = (left, right) ->
-                -1 * left.getMetaDaten().getZeitstempel().compareTo(right.getMetaDaten().getZeitstempel());
-
-        return this.schnappschüsse.stream()
-                .filter(wrapper -> wrapper.getMetaDaten().getEreignisstrom().equals(identitätsmerkmal))
-                .sorted(nachZeitstempelAbsteigend)
-                .map(MemorySchnappschussUmschlag::öffnen)
-                .findFirst();
-    }
-*/
     @Override
     public final Stream<I> getEreignisströme() {
         return this.ereignisströme.values().stream().map(Ereignisstrom::getIdentitätsmerkmal);
     }
 
+    @Override
+    public final boolean existiertEreignisStrom(final I identitätsmerkmal) {
+        return this.ereignisströme.containsKey(identitätsmerkmal);
+    }
+
     public final void clear() {
         this.ereignisse.clear();
-        //this.schnappschüsse.clear();
         this.ereignisströme.clear();
     }
 }

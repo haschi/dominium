@@ -2,12 +2,12 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss;
 
 import java.util.Set;
 import java.util.UUID;
 
-public final class HaushaltsbuchSchnappschuss implements Schnappschuss<Haushaltsbuch, UUID> {
+public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushaltsbuch> {
     public final long version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;

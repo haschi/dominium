@@ -3,13 +3,14 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Embeddable
-public class JpaSchnappschussMetaDaten<I> implements Serializable {
-    final I identitätsmerkmal;
+public final class JpaSchnappschussMetaDaten implements Serializable {
+    final UUID identitätsmerkmal;
     final LocalDateTime erstellungszeitpunkt;
 
-    public JpaSchnappschussMetaDaten(final I identitätsmerkmal, final LocalDateTime jetzt) {
+    public JpaSchnappschussMetaDaten(final UUID identitätsmerkmal, final LocalDateTime jetzt) {
         this.identitätsmerkmal = identitätsmerkmal;
         this.erstellungszeitpunkt = jetzt;
     }

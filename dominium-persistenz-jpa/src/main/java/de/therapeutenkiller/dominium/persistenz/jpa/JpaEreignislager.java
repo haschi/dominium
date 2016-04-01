@@ -10,6 +10,7 @@ import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
@@ -86,54 +87,18 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    /*
-    public void schnappschussHinzufügen(final UUID identitätsmerkmal, final S snapshot)
-            throws AggregatNichtGefunden {
-        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
-        if (strom == null) {
-            throw new AggregatNichtGefunden();
-        }
-
-        final JpaSchnappschussUmschlag<A, T> umschlag = new JpaSchnappschussUmschlag<>(
-                identitätsmerkmal,
-                this.uhr.jetzt(),
-                snapshot);
-
-        this.entityManager.persist(umschlag);
-    }
-    */
-
-    /*
-    public Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(
-            final UUID identitätsmerkmal)
-            throws AggregatNichtGefunden {
-        final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
-        if (strom == null) {
-            throw new AggregatNichtGefunden();
-        }
-
-        final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
-                "SELECT i FROM JpaSchnappschussUmschlag i "
-                        + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
-                        + "ORDER BY i.meta.erstellungszeitpunkt DESC",
-                JpaSchnappschussUmschlag.class);
-
-        final List<JpaSchnappschussUmschlag> resultList = query
-                .setParameter("identitätsmerkmal", identitätsmerkmal)
-                .setMaxResults(1)
-                .getResultList();
-
-
-        final Stream<Schnappschuss<A, UUID>> schnappschussStream = resultList.stream()
-                .map(JpaSchnappschussUmschlag<A, T>::öffnen);
-
-        return schnappschussStream.findFirst();
-    }
-    */
-
     @Override
     public Stream<UUID> getEreignisströme() {
         throw new NotImplementedException("Die Methode ist nicht implementiert.");
+    }
+
+    @Override
+    public boolean existiertEreignisStrom(UUID identitätsmerkmal) {
+        final Query query = this.entityManager.createQuery(
+                "SELECT COUNT(JpaEreignisstrom.id) FROM JpaEreignisstrom s "
+                        + "where s.id = :identitätsmerkmal");
+
+        query.setParameter("identitätsmerkmal", identitätsmerkmal);
+        return ((long)query.getSingleResult()) == 1L;
     }
 }

@@ -16,8 +16,11 @@ public final class TestAggregat
 
     @Override
     public TestAggregatSchnappschuss schnappschussErstellen() {
-
-        return null;
+        return TestAggregatSchnappschuss.builder()
+                .identitätsmerkmal(this.getIdentitätsmerkmal())
+                .payload(this.zustand)
+                .version(this.getVersion())
+                .build();
     }
 
     protected TestAggregat(final TestAggregatSchnappschuss schnappschuss) {
