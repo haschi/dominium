@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * Das MemoryEreignislager ist ein Ereignislager, der Ereignisse im
  * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests verwendet.
  *
-  */
+ */
 public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
         implements Ereignislager<E, I, T> {
 

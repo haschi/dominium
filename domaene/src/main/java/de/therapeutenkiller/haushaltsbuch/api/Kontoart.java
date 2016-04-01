@@ -8,7 +8,7 @@ public enum Kontoart {
 
     private final String bezeichnung;
 
-    private Kontoart(final String bezeichnung) {
+    Kontoart(final String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
