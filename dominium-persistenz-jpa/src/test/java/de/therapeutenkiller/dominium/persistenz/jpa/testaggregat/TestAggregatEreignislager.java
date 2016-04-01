@@ -8,6 +8,6 @@ import javax.persistence.EntityManager;
 public class TestAggregatEreignislager extends JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> {
 
     public TestAggregatEreignislager(final EntityManager entityManager, final Uhr uhr) {
-        super(entityManager, uhr);
+        super(entityManager);
     }
 }

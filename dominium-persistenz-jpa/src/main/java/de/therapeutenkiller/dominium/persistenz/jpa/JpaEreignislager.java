@@ -22,13 +22,11 @@ import java.util.stream.Stream;
 public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereignislager<E, UUID, T> {
 
     private final EntityManager entityManager;
-    private final Uhr uhr;
 
     @Inject
-    public JpaEreignislager(final EntityManager entityManager, final Uhr uhr) {
+    public JpaEreignislager(final EntityManager entityManager) {
 
         this.entityManager = entityManager;
-        this.uhr = uhr;
     }
 
     @Transactional

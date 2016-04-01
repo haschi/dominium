@@ -40,8 +40,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
         final JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store = new JpaEreignislager<>(
-                entityManager,
-                this.uhr);
+                entityManager
+        );
 
         store.neuenEreignisstromErzeugen(this.id, aggregat.getÄnderungen());
         entityManager.flush();

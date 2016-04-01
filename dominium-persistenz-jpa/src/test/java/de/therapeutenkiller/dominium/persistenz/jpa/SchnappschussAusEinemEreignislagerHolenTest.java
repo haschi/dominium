@@ -43,7 +43,7 @@ public final class SchnappschussAusEinemEreignislagerHolenTest {
 
     @Before
     public void angenommen_ich_habe_schnappschüsse_in_einem_ereignislager() throws AggregatNichtGefunden {
-        this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager(), this.uhr);
+        this.store = new JpaEreignislager<>(this.datenbankRegel.getEntityManager());
         this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<>());
 
         final LocalDateTime jetzt = LocalDateTime.now();

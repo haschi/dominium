@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.atom
 import de.therapeutenkiller.dominium.modell.Domänenereignis
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregat
+import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignis
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.ZustandWurdeGeändert
 import spock.lang.Specification
@@ -11,7 +12,7 @@ import spock.lang.Unroll
 class EreignisseSpeichernTest extends Specification {
 
     UUID identitätsmerkmal = UUID.randomUUID();
-    AtomEreignisLager<TestAggregat, TestAggregatEreignisziel> lager = new AtomEreignisLager<>()
+    AtomEreignisLager<TestAggregatEreignis, TestAggregatEreignisziel> lager = new AtomEreignisLager<>()
 
     def "Leeren Ereignis-Strom lesen"() {
         when:

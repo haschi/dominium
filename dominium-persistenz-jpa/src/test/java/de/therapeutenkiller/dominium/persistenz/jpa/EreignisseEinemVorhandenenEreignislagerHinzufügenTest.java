@@ -42,7 +42,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
         aggregat.einenZustandÄndern(43L);
 
         this.entityManager = this.datenbankRegel.getEntityManager();
-        this.store = new JpaEreignislager<>(this.entityManager, this.uhr);
+        this.store = new JpaEreignislager<>(this.entityManager);
         this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<TestAggregatEreignis>() {
             {
                 add(new ZustandWurdeGeändert(42L));

@@ -14,6 +14,6 @@ public class JpaHaushaltsbuchEreignislager
 
     @Inject
     public JpaHaushaltsbuchEreignislager(final EntityManager entityManager, final Uhr uhr) {
-        super(entityManager, uhr);
+        super(entityManager);
     }
 }

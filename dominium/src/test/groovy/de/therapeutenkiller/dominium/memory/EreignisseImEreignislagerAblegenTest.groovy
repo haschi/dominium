@@ -1,7 +1,6 @@
 package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
-import de.therapeutenkiller.dominium.testdomäne.TestAggregat
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 
