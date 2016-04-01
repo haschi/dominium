@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
@@ -18,7 +19,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
     def "Neue Ereignis-Ströme erzeugen"() {
 
         given: "ich habe ein Ereignislager"
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when: "ich einen neuen Ereignisstrom mit Ereignissen erzeuge"
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, testEreignisse)
@@ -36,7 +37,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Ereignis-Liste erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, null)
@@ -47,7 +48,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Ein neuer Ereignis-Strom darf nicht ohne Namen erzeugt werden"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
 
         when:
         lager.neuenEreignisstromErzeugen(null, [])
@@ -58,7 +59,7 @@ class EreignisseImEreignislagerAblegenTest extends Specification {
 
     def "Doppelte Namen für Ereignis-Ströme sind nicht erlaubt"() {
         given:
-        MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
+        MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr)
         lager.neuenEreignisstromErzeugen(identitätsmerkmal, [])
 
         when:

@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel
 
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
@@ -13,7 +14,7 @@ import spock.lang.Specification
 class EreignislagerLeerenTest extends Specification {
 
     TestUhr uhr = new TestUhr()
-    MemoryEreignislager<TestAggregat, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr);
+    MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> lager = new MemoryEreignislager<>(uhr);
     UUID identitätsmerkmal = UUID.randomUUID()
 
     def "Ereignisse des Ereignis-Lagers leeren"() {
