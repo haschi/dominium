@@ -6,9 +6,8 @@ import spock.lang.Specification
 class WertobjektTest extends Specification {
 
     final class EinWertobjekt extends Wertobjekt {
-        final String vorname;
-        final String nachname;
-        final Date geburtsdatum;
+        final String vorname = "Matthias";
+        final String nachname = "Haschka";
     }
 
     def "Konkrete Wertobjekte erfüllen die Äquivalenzregeln"() {

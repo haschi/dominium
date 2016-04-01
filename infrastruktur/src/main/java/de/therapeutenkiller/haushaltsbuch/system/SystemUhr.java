@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public class SystemUhr implements Uhr {
 
     public LocalDateTime jetzt() {
-        return LocalDateTime.MAX.now();
+        return LocalDateTime.now();
     }
 }

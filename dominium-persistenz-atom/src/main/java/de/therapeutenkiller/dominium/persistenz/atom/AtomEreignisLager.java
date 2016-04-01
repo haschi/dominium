@@ -165,9 +165,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
                 return Ereignisstrom.LEER;
             }
 
-            final Ereignisstrom ereignisstrom = this.mapper.readValue(body, Ereignisstrom.class);
-
-            return ereignisstrom;
+            return this.mapper.readValue(body, Ereignisstrom.class);
         } catch (final IOException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);
         }

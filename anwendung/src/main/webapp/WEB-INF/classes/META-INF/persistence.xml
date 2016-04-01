@@ -11,6 +11,7 @@
 
     <class>de.therapeutenkiller.dominium.persistenz.Umschlag</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
+    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
