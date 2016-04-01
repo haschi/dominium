@@ -1,11 +1,15 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
 
+import de.therapeutenkiller.dominium.modell.Schnappschuss;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.UUID;
 
 @Entity
 public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
+
+    public static final Schnappschuss<TestAggregat, UUID> LEER = builder().get();
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID identitätsmerkmal;

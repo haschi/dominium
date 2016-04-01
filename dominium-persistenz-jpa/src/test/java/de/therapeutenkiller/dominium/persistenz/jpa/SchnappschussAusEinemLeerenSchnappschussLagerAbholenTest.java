@@ -36,12 +36,12 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
         final Optional<Schnappschuss<TestAggregat, UUID>> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id);
 
-        this.dann_werde_ich_keinen_schnappschuss_erhalten(schnappschuss);
+        this.dann_werde_ich_keinen_schnappschuss_erhalten(schnappschuss.orElse(TestSchnappschuss.LEER));
     }
 
     private void dann_werde_ich_keinen_schnappschuss_erhalten(
-            final Optional<Schnappschuss<TestAggregat, UUID>> schnappschuss) {
+            final Schnappschuss<TestAggregat, UUID> schnappschuss) {
 
-        assertThat(schnappschuss).isEmpty();
+        assertThat(schnappschuss).isEqualTo(TestSchnappschuss.LEER);
     }
 }
