@@ -8,7 +8,7 @@ class SchnappschussLagerLeerenTest extends  Specification {
 
     def "Nach dem Leeren befinden sich keine Schnappschüsse im Lager"() {
         given:
-        def lager = new MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID>()
+        def lager = new MemorySchnappschussLager<TestAggregat, UUID>()
         def identitätsmerkmal = UUID.randomUUID()
         lager.schnappschussHinzufügen(TestAggregatSchnappschuss.builder().identitätsmerkmal(identitätsmerkmal).build())
 

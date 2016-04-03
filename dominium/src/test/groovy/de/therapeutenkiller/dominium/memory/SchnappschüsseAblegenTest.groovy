@@ -15,7 +15,7 @@ class SchnappschüsseAblegenTest extends Specification {
     TestUhr uhr = new TestUhr()
     UUID identitätsmerkmal = UUID.randomUUID()
     Magazin<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel> magazin
-    private MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> schnappschussLager
+    private MemorySchnappschussLager<TestAggregat, UUID> schnappschussLager
 
     def setup() {
         MemoryEreignislager<TestAggregatEreignis, UUID, TestAggregatEreignisziel> ereignislager =
@@ -34,7 +34,7 @@ class SchnappschüsseAblegenTest extends Specification {
 
     def "Schnappschüsse eines Aggregats können im Schnappschuss-Lager abgelegt werden"() {
         given:
-        MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> lager = new MemorySchnappschussLager<>()
+        MemorySchnappschussLager<TestAggregat, UUID> lager = new MemorySchnappschussLager<>()
 
         Schnappschuss<TestAggregat, UUID> schnappschuss = TestAggregatSchnappschuss.builder()
                 .identitätsmerkmal(identitätsmerkmal).build()

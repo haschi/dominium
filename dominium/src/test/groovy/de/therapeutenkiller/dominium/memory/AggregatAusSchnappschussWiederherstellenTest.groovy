@@ -11,7 +11,7 @@ class AggregatAusSchnappschussWiederherstellenTest extends Specification {
 
     def "Aggregat aus Schnappschuss wiederherstellen"() {
         given:
-        def lager = new MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID>()
+        def lager = new MemorySchnappschussLager<TestAggregat, UUID>()
 
         def identitätsmerkmal = UUID.randomUUID()
 
