@@ -32,14 +32,19 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
     @Override
     public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
 
-        final Optional<? extends Schnappschuss<A, I>> schnappschuss =
+        final Optional<Schnappschuss<A, I>> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
         if (schnappschuss.isPresent()) {
 
-            final Versionsbereich bereich = new Versionsbereich(schnappschuss.get().getVersion() + 1, Long.MAX_VALUE);
-            final List<E> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
-            final A aggregat = schnappschuss.get().wiederherstellen();
+            final Schnappschuss<A, I> schnappschuss1 = schnappschuss.get();
+            final Versionsbereich bereich = new Versionsbereich(schnappschuss1.getVersion() + 1, Long.MAX_VALUE);
+
+            final List<E> ereignisse = this.ereignislager.getEreignisliste(
+                identitätsmerkmal,
+                bereich);
+
+            final A aggregat = schnappschuss1.wiederherstellen();
 
             for (final E ereignis : ereignisse) {
                 aggregat.anwenden(ereignis);
