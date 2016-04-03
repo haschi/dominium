@@ -25,11 +25,13 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
     private JpaSchnappschussLager<TestSchnappschuss, TestAggregat> store;
     private TestUhr uhr = new TestUhr();
 
+    private static final long EREIGNIS_NUTZLAST = 42L;
+
     @SuppressWarnings("LawOfDemeter")
     private TestSchnappschuss testSchnappschuss = TestSchnappschuss.builder()
             .identitätsmerkmal(UUID.randomUUID())
             .version(1L)
-            .zustand(42L)
+            .zustand(EREIGNIS_NUTZLAST)
             .get();
 
     @Before

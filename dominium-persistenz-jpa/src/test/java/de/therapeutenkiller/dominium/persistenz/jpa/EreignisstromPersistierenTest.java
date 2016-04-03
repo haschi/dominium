@@ -25,10 +25,12 @@ public class EreignisstromPersistierenTest {
     private EntityManager entityManager;
     private UUID id = UUID.randomUUID();
 
+    private static final long VERSION = 42L;
+
     @Test
     public void ereignisströme_können_persistiert_werden() {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(this.id);
-        ereignisstrom.setVersion(42L);
+        ereignisstrom.setVersion(VERSION);
 
         this.entityManager.persist(ereignisstrom);
         this.entityManager.flush();
