@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
+package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
 /**
  * Created by matthias on 27.02.16.

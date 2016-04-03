@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
 import javax.annotation.Priority;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Produces;
 import javax.interceptor.Interceptor;
@@ -12,6 +13,7 @@ import javax.persistence.Persistence;
 public final class EntityManagerProducer {
 
     @Produces
+    @RequestScoped
     public static EntityManager entityManagerErzeugen() {
         return Persistence.createEntityManagerFactory("test-infrastruktur").createEntityManager();
     }

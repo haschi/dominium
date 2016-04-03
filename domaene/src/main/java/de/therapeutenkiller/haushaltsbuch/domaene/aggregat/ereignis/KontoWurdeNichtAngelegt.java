@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
@@ -22,6 +23,13 @@ public final class KontoWurdeNichtAngelegt extends HaushaltsbuchEreignis impleme
 
         this.kontoname = kontoname;
         this.kontoart = kontoart;
+    }
+
+    public KontoWurdeNichtAngelegt() {
+        super();
+
+        this.kontoname = StringUtils.EMPTY;
+        this.kontoart = Kontoart.Aktiv;
     }
 
     @Override

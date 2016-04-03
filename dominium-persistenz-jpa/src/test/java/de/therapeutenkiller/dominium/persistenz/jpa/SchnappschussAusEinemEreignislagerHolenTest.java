@@ -2,10 +2,10 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregat;
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignis;
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignisziel;
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestSchnappschuss;
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis;
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
 import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;

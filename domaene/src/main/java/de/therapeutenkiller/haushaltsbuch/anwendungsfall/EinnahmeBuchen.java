@@ -18,11 +18,13 @@ public class EinnahmeBuchen {
 
     @Inject
     public EinnahmeBuchen(final Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent) {
+        super();
 
         this.fügeBuchungssatzHinzuEvent = fügeBuchungssatzHinzuEvent;
     }
 
     public EinnahmeBuchen() {
+        super();
     }
 
     public void ausführen(@Observes final BucheEinnahme kommando)

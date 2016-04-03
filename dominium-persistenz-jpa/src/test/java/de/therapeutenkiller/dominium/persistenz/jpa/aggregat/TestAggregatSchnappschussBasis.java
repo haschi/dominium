@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
+package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss;
 

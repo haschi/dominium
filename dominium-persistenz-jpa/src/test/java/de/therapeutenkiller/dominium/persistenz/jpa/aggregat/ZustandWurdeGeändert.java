@@ -1,4 +1,4 @@
-package de.therapeutenkiller.dominium.persistenz.jpa.testaggregat;
+package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

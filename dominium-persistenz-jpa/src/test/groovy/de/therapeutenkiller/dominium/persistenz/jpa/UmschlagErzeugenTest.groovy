@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa
 
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert
 import spock.lang.Shared
 import spock.lang.Specification
 

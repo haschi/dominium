@@ -4,7 +4,7 @@ Buchführungsregeln
 Abweichend von den Regeln der doppelten Buchführung werden zur Vereinfachung der Buchführung in einem Privathaushalt
 folgende Annahmen getroffen:
 
-Bis zur Einführung eines Lagerbuches werden Einkäufe als Aufwand gebucht:
+Bis zur Einführung eines Lagerbuchs werden Einkäufe als Aufwand gebucht:
 
 
 

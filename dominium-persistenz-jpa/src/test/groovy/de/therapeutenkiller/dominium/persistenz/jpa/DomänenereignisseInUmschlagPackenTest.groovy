@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa
 
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.TestAggregatEreignis
-import de.therapeutenkiller.dominium.persistenz.jpa.testaggregat.ZustandWurdeGeändert
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis
+import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert
 import spock.lang.Specification
 
 class DomänenereignisseInUmschlagPackenTest extends Specification {

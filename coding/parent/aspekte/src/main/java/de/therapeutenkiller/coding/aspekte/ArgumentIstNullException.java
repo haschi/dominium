@@ -1,5 +1,6 @@
 package de.therapeutenkiller.coding.aspekte;
 
+@SuppressWarnings("ClassUnconnectedToPackage")
 public class ArgumentIstNullException extends RuntimeException {
 
     private static final long serialVersionUID = 1997753363232807009L;

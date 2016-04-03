@@ -14,13 +14,16 @@ import javax.persistence.Persistence;
  * innerhalb einer Datenbank-Transaktion ausgeführt werden.
  */
 public class DatenbankRegel implements TestRule {
+    private String persistenceUnit = "test";
+    private boolean rollback = false;
+
     private final ThreadLocal<EntityManager> em = new ThreadLocal<>();
 
     public final Statement apply(final Statement base, final Description description) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                final EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+                final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnit);
                 final EntityManager entityManager = emf.createEntityManager();
                 DatenbankRegel.this.em.set(entityManager);
                 try {
@@ -40,6 +43,16 @@ public class DatenbankRegel implements TestRule {
         return this.em.get();
     }
 
+    public DatenbankRegel persistenceUnit(String name) {
+        this.persistenceUnit = name;
+        return this;
+    }
+
+    public DatenbankRegel rollback() {
+        this.rollback = true;
+        return this;
+    }
+
     public final void transaction(final ThrowingConsumer<EntityManager> task) {
         final EntityManager entityManager = this.em.get();
         final EntityTransaction transaction = entityManager.getTransaction();
@@ -53,7 +66,11 @@ public class DatenbankRegel implements TestRule {
             throw e;
         } finally {
             if (!cancelled) {
-                transaction.commit();
+                if (this.rollback) {
+                    transaction.rollback();
+                } else {
+                    transaction.commit();
+                }
             }
         }
     }

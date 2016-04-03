@@ -23,9 +23,9 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
     def "X"() {
         given:
         HaushaltsbuchEreignislager lager = new HaushaltsbuchEreignislager(uhr);
-        HaushaltsbuchMemorySchnappschussLager schnapschussLager = new HaushaltsbuchMemorySchnappschussLager()
+        HaushaltsbuchMemorySchnappschussLager schnappschussLager = new HaushaltsbuchMemorySchnappschussLager()
 
-        HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager, schnapschussLager)
+        HaushaltsbuchRepository repository = new HaushaltsbuchMemoryRepository(lager, schnappschussLager)
         UUID haushaltsbuchId = UUID.randomUUID()
 
         new HaushaltsbuchführungBeginnen(repository).ausführen(

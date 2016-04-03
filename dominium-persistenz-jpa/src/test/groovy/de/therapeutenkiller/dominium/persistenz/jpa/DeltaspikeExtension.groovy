@@ -17,6 +17,7 @@ import javax.enterprise.context.SessionScoped
 import javax.enterprise.context.spi.Contextual
 import javax.enterprise.context.spi.CreationalContext
 import javax.enterprise.inject.Typed
+import javax.enterprise.inject.spi.AnnotatedType
 import javax.enterprise.inject.spi.BeanManager
 import javax.enterprise.inject.spi.InjectionTarget
 
@@ -112,7 +113,7 @@ class DeltaspikeExtension extends  AbstractAnnotationDrivenExtension<Deltaspike>
 
         CreationalContext creationalContext = beanManager.createCreationalContext(null);
 
-        javax.enterprise.inject.spi.AnnotatedType annotatedType = beanManager.createAnnotatedType(spec.reflection);
+        AnnotatedType annotatedType = beanManager.createAnnotatedType(spec.reflection);
 
         InjectionTarget injectionTarget = beanManager.createInjectionTarget(annotatedType);
         injectionTarget.inject(iMethodInvocation.instance, creationalContext);
