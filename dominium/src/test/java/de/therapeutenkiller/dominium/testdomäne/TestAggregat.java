@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss.TestAggregatSchnappschussBuilder;
 
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ public final class TestAggregat
         extends Aggregatwurzel<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel>
         implements TestAggregatEreignisziel {
 
-    public long zustand; // NOPMD
+    private long zustand;
 
     public TestAggregat(final UUID identitätsmerkmal) {
         super(identitätsmerkmal);
@@ -16,11 +17,14 @@ public final class TestAggregat
 
     @Override
     public TestAggregatSchnappschuss schnappschussErstellen() {
-        return TestAggregatSchnappschuss.builder()
-                .identitätsmerkmal(this.getIdentitätsmerkmal())
-                .payload(this.zustand)
-                .version(this.getVersion())
-                .build();
+        final TestAggregatSchnappschussBuilder builder = TestAggregatSchnappschuss.builder();
+
+        return this.schnappschussErstellen(builder).build();
+    }
+
+    private TestAggregatSchnappschussBuilder schnappschussErstellen(final TestAggregatSchnappschussBuilder builder) {
+        return builder.aggregat(this)
+            .payload(this.zustand);
     }
 
     protected TestAggregat(final TestAggregatSchnappschuss schnappschuss) {
@@ -34,7 +38,7 @@ public final class TestAggregat
     }
 
     public void zustandÄndern(final long payload) {
-        bewirkt(new ZustandWurdeGeändert(payload));
+        this.bewirkt(new ZustandWurdeGeändert(payload));
     }
 
     public void falls(final ZustandWurdeGeändert zustandWurdeGeändert) {
