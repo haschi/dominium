@@ -29,6 +29,8 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
+    private static final long[] EREIGNIS_NUTZLAST = {42L, 43L, 44L, 45L};
+
     private EntityManager entityManager;
     private JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store;
 
@@ -38,15 +40,15 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() throws KonkurrierenderZugriff {
         final TestAggregat aggregat = new TestAggregat(this.id);
-        aggregat.einenZustandÄndern(42L);
-        aggregat.einenZustandÄndern(43L);
+        aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
+        aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 
         this.entityManager = this.datenbankRegel.getEntityManager();
         this.store = new JpaEreignislager<>(this.entityManager);
         this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<TestAggregatEreignis>() {
             {
-                add(new ZustandWurdeGeändert(42L));
-                add(new ZustandWurdeGeändert(43L));
+                add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]));
+                add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]));
             }
         });
     }
@@ -59,8 +61,8 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
                 2L,
                 new ArrayList<TestAggregatEreignis>() {
                     {
-                        add(new ZustandWurdeGeändert(44L));
-                        add(new ZustandWurdeGeändert(45L));
+                        add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]));
+                        add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3]));
                     }
                 }
         );
@@ -94,9 +96,9 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
                 Versionsbereich.ALLE_VERSIONEN);
 
         assertThat(ereignisListe).containsExactly(
-                new ZustandWurdeGeändert(42L),
-                new ZustandWurdeGeändert(43L),
-                new ZustandWurdeGeändert(44L),
-                new ZustandWurdeGeändert(45L));
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]),
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]),
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]),
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3]));
     }
 }
