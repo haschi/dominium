@@ -19,12 +19,14 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
         implements Repository<A,E,I,T> {
 
     private final Ereignislager<E, I, T> ereignislager;
-
     private final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
 
     protected Magazin(
             final Ereignislager<E, I, T> ereignislager,
             final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager) {
+
+        super();
+
         this.ereignislager = ereignislager;
         this.schnappschussLager = schnappschussLager;
     }
@@ -39,23 +41,12 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
         final Long bis = Long.MAX_VALUE;
         final Versionsbereich versionsbereich = new Versionsbereich(von, bis);
 
-        if (schnappschuss.isPresent()) {
-
-            final Schnappschuss<A, I> schnappschuss1 = schnappschuss.get();
-            final A aggregat = schnappschuss1.wiederherstellen();
-
-            final List<E> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
-            aggregat.anwenden(ereignisse);
-            aggregat.setInitialversion(aggregat.getVersion());
-
-            return aggregat;
-        }
-
-        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal);
+        final A aggregat = schnappschuss.map(Schnappschuss::wiederherstellen)
+            .orElse(this.neuesAggregatErzeugen(identitätsmerkmal));
 
         final List<E> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
-        aggregat.anwenden(stream);
-        aggregat.setInitialversion(aggregat.getVersion());
+
+        aggregat.aktualisieren(stream);
 
         return aggregat;
     }
