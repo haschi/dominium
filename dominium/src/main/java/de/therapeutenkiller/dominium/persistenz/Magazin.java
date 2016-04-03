@@ -48,9 +48,9 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
 
             for (final E ereignis : ereignisse) {
                 aggregat.anwenden(ereignis);
-                aggregat.setInitialversion(aggregat.getVersion());
             }
 
+            aggregat.setInitialversion(aggregat.getVersion());
             return aggregat;
         }
 
