@@ -20,7 +20,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
 
     private final Ereignislager<E, I, T> ereignislager;
 
-    private SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
+    private final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
 
     protected Magazin(
             final Ereignislager<E, I, T> ereignislager,
@@ -35,35 +35,29 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
         final Optional<Schnappschuss<A, I>> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
+        final Long von = schnappschuss.map(s -> s.getVersion() + 1L).orElse(1L);
+        final Long bis = Long.MAX_VALUE;
+        final Versionsbereich versionsbereich = new Versionsbereich(von, bis);
+
         if (schnappschuss.isPresent()) {
 
             final Schnappschuss<A, I> schnappschuss1 = schnappschuss.get();
-            final Versionsbereich bereich = new Versionsbereich(schnappschuss1.getVersion() + 1, Long.MAX_VALUE);
-
-            final List<E> ereignisse = this.ereignislager.getEreignisliste(
-                identitätsmerkmal,
-                bereich);
-
             final A aggregat = schnappschuss1.wiederherstellen();
 
-            for (final E ereignis : ereignisse) {
-                aggregat.anwenden(ereignis);
-            }
-
+            final List<E> ereignisse = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
+            aggregat.anwenden(ereignisse);
             aggregat.setInitialversion(aggregat.getVersion());
+
             return aggregat;
         }
 
-        final Versionsbereich bereich = new Versionsbereich(1, Long.MAX_VALUE);
-        final List<E> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, bereich);
-        final A haushaltsbuch = this.neuesAggregatErzeugen(identitätsmerkmal);
+        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal);
 
-        for (final E ereignis : stream) {
-            haushaltsbuch.anwenden(ereignis);
-        }
+        final List<E> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
+        aggregat.anwenden(stream);
+        aggregat.setInitialversion(aggregat.getVersion());
 
-        haushaltsbuch.setInitialversion(haushaltsbuch.getVersion());
-        return haushaltsbuch;
+        return aggregat;
     }
 
     protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);

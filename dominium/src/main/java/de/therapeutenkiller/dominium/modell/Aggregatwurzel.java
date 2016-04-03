@@ -31,6 +31,12 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E ext
         ereignis.anwendenAuf(this.getSelf());
     }
 
+    public final void anwenden(final List<E> ereignisse) {
+        for (final E ereignis : ereignisse) {
+            this.anwenden(ereignis);
+        }
+    }
+
     public final List<E> getÄnderungen() {
         return this.änderungen;
     }
