@@ -27,6 +27,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     @Rule
     public final DatenbankRegel datenbankRegel = new DatenbankRegel();
 
+    private static final long[] EREIGNIS_NUTZLAST = {42L, 43L};
+
     private Uhr uhr = new TestUhr();
     private UUID id = UUID.randomUUID();
 
@@ -34,8 +36,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
 
         final TestAggregat aggregat = new TestAggregat(this.id);
-        aggregat.einenZustandÄndern(42L);
-        aggregat.einenZustandÄndern(43L);
+        aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
+        aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
@@ -75,6 +77,8 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
                 .collect(Collectors.toList());
 
         assertThat(domänenereignisse)
-            .containsExactly(new ZustandWurdeGeändert(42L), new ZustandWurdeGeändert(43L));
+            .containsExactly(
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]),
+                new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]));
     }
 }
