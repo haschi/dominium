@@ -1,13 +1,10 @@
 package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
-// import javax.ejb.Stateless;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.TransactionPhase;
@@ -31,15 +28,8 @@ public class HaushaltsbuchführungBeginnen {
             @Observes(during = TransactionPhase.IN_PROGRESS)
             final BeginneHaushaltsbuchführung kommando)
             throws KonkurrierenderZugriff {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(kommando.identitätsmerkmal);
 
-        haushaltsbuch.hauptbuchAnlegen();
-        haushaltsbuch.journalAnlegen();
-
-        haushaltsbuch.neuesKontoHinzufügen(
-                Konto.ANFANGSBESTAND.getBezeichnung(),
-                Kontoart.Aktiv);
-
+        final Haushaltsbuch haushaltsbuch = Haushaltsbuch.erzeugen(kommando.identitätsmerkmal);
         this.repository.hinzufügen(haushaltsbuch);
     }
 }

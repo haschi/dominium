@@ -34,6 +34,19 @@ public final class Haushaltsbuch
         super(uuid);
     }
 
+    public static Haushaltsbuch erzeugen(final UUID identitätsmerkmal) {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal);
+
+        haushaltsbuch.hauptbuchAnlegen();
+        haushaltsbuch.journalAnlegen();
+
+        haushaltsbuch.neuesKontoHinzufügen(
+                Konto.ANFANGSBESTAND.getBezeichnung(),
+                Kontoart.Aktiv);
+
+        return haushaltsbuch;
+    }
+
     // ???
     public ImmutableSet<Konto> getKonten() {
         return this.hauptbuch.getKonten();
