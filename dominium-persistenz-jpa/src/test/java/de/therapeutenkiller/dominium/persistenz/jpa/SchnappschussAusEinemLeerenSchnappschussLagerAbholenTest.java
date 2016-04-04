@@ -21,14 +21,14 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
     private JpaSchnappschussLager<TestSchnappschuss, TestAggregat> store;
-    private TestUhr uhr = new TestUhr();
-    private UUID id = UUID.randomUUID();
+    private final TestUhr uhr = new TestUhr();
+    private final UUID id = UUID.randomUUID();
 
     @Before
     public void angenommen_ich_habe_ein_ereignislager_ohne_schnappschüsse_angelegt() {
         this.store = new JpaSchnappschussLager<>(
-                datenbankRegel.getEntityManager(),
-                uhr);
+            this.datenbankRegel.getEntityManager(),
+            this.uhr);
     }
 
     @Test

@@ -45,7 +45,7 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
     }
 
     public static final class TestSchnappschussBuilder {
-        private TestSchnappschuss instanz = new TestSchnappschuss();
+        private final TestSchnappschuss instanz = new TestSchnappschuss();
 
         public TestSchnappschussBuilder identitätsmerkmal(final UUID uuid) {
             this.instanz.identitätsmerkmal = uuid;

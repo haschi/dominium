@@ -3,7 +3,7 @@ package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public final class ZustandWurdeGeändert extends TestAggregatEreignis {
-    private long wert;
+    private final long wert;
 
     private ZustandWurdeGeändert() {
         this.wert = 0L;
