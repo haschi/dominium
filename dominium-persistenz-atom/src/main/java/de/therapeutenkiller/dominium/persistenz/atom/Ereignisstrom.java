@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public final class Ereignisstrom extends Wertobjekt {
 
-    public static Ereignisstrom LEER = new Ereignisstrom();
+    public static final Ereignisstrom LEER = new Ereignisstrom();
 
     public String title;
     public URI id;

@@ -4,11 +4,15 @@ import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
 final class BuchungsregelFabrik {
 
-    private BuchungsregelFabrik() {
+    private final Kontoart kontoart;
+
+    BuchungsregelFabrik(final Kontoart kontoart) {
+        super();
+        this.kontoart = kontoart;
     }
 
-    public static Buchungsregel erzeugen(final Kontoart kontoart, final String kontoname) {
-        switch (kontoart) { // NOPMD
+    Buchungsregel erzeugen(final String kontoname) {
+        switch (this.kontoart) {
             case Ertrag: return new ErtragskontoRegel(kontoname);
             case Passiv: return new PassivkontoRegel(kontoname);
             default: return new KeineRegel();

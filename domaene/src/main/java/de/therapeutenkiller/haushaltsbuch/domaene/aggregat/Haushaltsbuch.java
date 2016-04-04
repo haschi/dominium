@@ -108,11 +108,10 @@ public final class Haushaltsbuch
     // !!!
     @Override
     public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
-        final Buchungsregel regel = BuchungsregelFabrik.erzeugen(
-                kontoWurdeAngelegt.kontoart,
-                kontoWurdeAngelegt.kontoname);
-
+        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoWurdeAngelegt.kontoart);
+        final Buchungsregel regel = fabrik.erzeugen(kontoWurdeAngelegt.kontoname);
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
+
         this.hauptbuch.hinzufügen(konto);
     }
 
