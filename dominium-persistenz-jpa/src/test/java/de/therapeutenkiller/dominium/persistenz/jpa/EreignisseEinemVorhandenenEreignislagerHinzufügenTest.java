@@ -1,14 +1,13 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
-import de.therapeutenkiller.testing.TestUhr;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,11 +33,10 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     private EntityManager entityManager;
     private JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store;
 
-    private Uhr uhr = new TestUhr();
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     @Before
-    public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() throws KonkurrierenderZugriff {
+    public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() {
         final TestAggregat aggregat = new TestAggregat(this.id);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);

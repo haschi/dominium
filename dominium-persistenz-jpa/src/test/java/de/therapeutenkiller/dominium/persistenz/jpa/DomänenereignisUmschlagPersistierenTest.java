@@ -22,7 +22,7 @@ public class DomänenereignisUmschlagPersistierenTest {
     @Inject
     EntityManager entityManager;
 
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     @Test
     public void domänenereignis_umschlag_kann_persistiert_werden() {

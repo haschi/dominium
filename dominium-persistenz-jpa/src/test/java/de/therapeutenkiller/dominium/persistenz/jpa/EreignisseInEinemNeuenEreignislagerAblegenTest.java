@@ -1,12 +1,10 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;
-import de.therapeutenkiller.testing.TestUhr;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,8 +27,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
     private static final long[] EREIGNIS_NUTZLAST = {42L, 43L};
 
-    private Uhr uhr = new TestUhr();
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     @Before
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
