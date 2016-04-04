@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushaltsbuch> {
+
+    private static final long serialVersionUID = -2656820980971196374L;
+
     public final long version;
     private final UUID identität;
     public ImmutableSet<Konto> konten;
@@ -19,12 +22,12 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
     }
 
     @Override
-    public final UUID getIdentitätsmerkmal() {
+    public UUID getIdentitätsmerkmal() {
         return this.identität;
     }
 
     @Override
-    public final long getVersion() {
+    public long getVersion() {
         return this.version;
     }
 

@@ -89,7 +89,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
         }
     }
 
-    private final URL streamUrl(final UUID identitätsmerkmal) throws MalformedURLException {
+    private URL streamUrl(final UUID identitätsmerkmal) throws MalformedURLException {
         return new URL("http://127.0.0.1:2113/streams/" + identitätsmerkmal.toString());
     }
 
