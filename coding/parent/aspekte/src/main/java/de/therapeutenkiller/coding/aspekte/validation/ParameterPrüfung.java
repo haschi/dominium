@@ -4,10 +4,13 @@ import java.lang.reflect.Parameter;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 
-class Parameterprüfung {
+class ParameterPrüfung {
     private final Parameter parameter;
 
-    public Parameterprüfung(final Parameter parameter) {
+    ParameterPrüfung(final Parameter parameter) {
+
+        super();
+
         this.parameter = parameter;
     }
 

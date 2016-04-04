@@ -9,7 +9,10 @@ class Parameterliste {
     final CodeSignature signature;
     private final Parameter[] parameter;
 
-    public Parameterliste(final CodeSignature signature, final Parameter[] parameter) {
+    Parameterliste(final CodeSignature signature, final Parameter[] parameter) {
+
+        super();
+
         this.signature = signature;
         this.parameter = parameter;
     }
@@ -30,9 +33,9 @@ class Parameterliste {
     }
 
     private boolean istGültig(final int parameterIndex, final Object argument) {
-        final Parameterprüfung parameterprüfung = new Parameterprüfung(
+        final ParameterPrüfung parameterPrüfung = new ParameterPrüfung(
             this.parameter[parameterIndex]);
 
-        return parameterprüfung.istGültig(argument);
+        return parameterPrüfung.istGültig(argument);
     }
 }

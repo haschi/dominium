@@ -6,7 +6,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 class IchTueNichts  {
     private final Integer zahl;
 
-    public IchTueNichts(final Integer zahl) {
+    IchTueNichts(final Integer zahl) {
         super();
         this.zahl = zahl;
     }

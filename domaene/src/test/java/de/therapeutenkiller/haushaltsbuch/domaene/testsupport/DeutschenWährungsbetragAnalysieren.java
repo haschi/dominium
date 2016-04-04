@@ -9,7 +9,8 @@ class DeutschenWährungsbetragAnalysieren {
 
     private final MonetaryAmountFormat format;
 
-    public DeutschenWährungsbetragAnalysieren() {
+    DeutschenWährungsbetragAnalysieren() {
+        super();
         this.format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
     }
 

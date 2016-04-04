@@ -8,7 +8,8 @@ import java.lang.reflect.Method;
 class Rückgabewert {
     private final Method method;
 
-    public Rückgabewert(final Method method) {
+    Rückgabewert(final Method method) {
+        super();
         this.method = method;
     }
 
