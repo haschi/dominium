@@ -2,8 +2,6 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
-import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
-import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
@@ -147,10 +145,7 @@ public final class Haushaltsbuch
     }
 
     // !!!
-    public void anfangsbestandBuchen(
-            final String kontoname,
-            final MonetaryAmount betrag)
-            throws KonkurrierenderZugriff, AggregatNichtGefunden {
+    public void anfangsbestandBuchen(final String kontoname, final MonetaryAmount betrag) {
         if (this.journal.istAnfangsbestandFürKontoVorhanden(kontoname)) {
             this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
         } else {
@@ -158,24 +153,25 @@ public final class Haushaltsbuch
 
             final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(betrag);
 
-            this.buchungssatzHinzufügen(
-                    buchungssatz.getSollkonto(),
-                    buchungssatz.getHabenkonto(),
-                    buchungssatz.getWährungsbetrag());
+            this.buchungssatzHinzufügen(buchungssatz);
         }
     }
 
-    // !!! private und dann mit buchungssaz als parameter
-    public void buchungssatzHinzufügen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
-        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(sollkonto, habenkonto)) {
-            this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
-        } else {
-            final String fehlermeldung = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
-                    sollkonto,
-                    habenkonto);
+    public void buchungssatzHinzufügen(final Buchungssatz buchungssatz) {
 
-            this.bewirkt(new BuchungWurdeAbgelehnt(fehlermeldung));
+        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
+            this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
+        } else {
+            this.bewirkt(this.buchungAblehnen(buchungssatz));
         }
+    }
+
+    private BuchungWurdeAbgelehnt buchungAblehnen(final Buchungssatz buchungssatz) {
+        final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+            buchungssatz.getSollkonto(),
+            buchungssatz.getHabenkonto());
+
+        return new BuchungWurdeAbgelehnt(grund);
     }
 
     // !!! Parameter: besser Buchungssatz?
@@ -216,12 +212,12 @@ public final class Haushaltsbuch
 
     // !!!
     public void hauptbuchAnlegen() {
-        bewirkt(new HauptbuchWurdeAngelegt(this.getIdentitätsmerkmal()));
+        this.bewirkt(new HauptbuchWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 
     // !!!
     public void journalAnlegen() {
-        bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
+        this.bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 
     // ???

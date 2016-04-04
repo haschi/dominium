@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 
-@WebServlet(value = "/hello")
+@WebServlet("/hello")
 public class HelloWorld extends HttpServlet {
 
     @Override

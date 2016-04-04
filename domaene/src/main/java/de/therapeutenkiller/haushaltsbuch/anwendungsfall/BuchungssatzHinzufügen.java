@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.anwendungsfall;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -30,11 +31,8 @@ public class BuchungssatzHinzufügen {
             throws KonkurrierenderZugriff, AggregatNichtGefunden {
 
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(befehl.identitätsmerkmal);
-
-        haushaltsbuch.buchungssatzHinzufügen(
-                befehl.sollkonto,
-                befehl.habenkonto,
-                befehl.betrag);
+        final Buchungssatz buchungssatz = new Buchungssatz(befehl.sollkonto, befehl.habenkonto, befehl.betrag);
+        haushaltsbuch.buchungssatzHinzufügen(buchungssatz);
 
         this.repository.speichern(haushaltsbuch);
     }

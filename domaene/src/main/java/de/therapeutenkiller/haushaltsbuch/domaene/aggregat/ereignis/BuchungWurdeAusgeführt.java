@@ -37,6 +37,10 @@ public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis impleme
         this.betrag = betrag.getNumber().doubleValueExact();
     }
 
+    public BuchungWurdeAusgeführt(final Buchungssatz buchungssatz) {
+        this(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto(), buchungssatz.getWährungsbetrag());
+    }
+
     public MonetaryAmount getBetrag() {
         final MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         return Money.of(this.betrag, "EUR");

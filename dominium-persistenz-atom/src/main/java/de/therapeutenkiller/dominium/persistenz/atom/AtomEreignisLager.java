@@ -126,7 +126,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
             do {
                 alleEreignisse = Stream.concat(alleEreignisse, ereignisstrom.entries.stream());
 
-                weiter = !(ereignisstrom.headOfStream || ereignisstrom == ereignisstrom.LEER);
+                weiter = !(ereignisstrom.headOfStream || ereignisstrom == Ereignisstrom.LEER);
                 if (weiter) {
                     ereignisstrom = this.eineStromSeiteLesen(ereignisstrom.links.stream()
                             .filter(link -> link.relation.equals("previous"))

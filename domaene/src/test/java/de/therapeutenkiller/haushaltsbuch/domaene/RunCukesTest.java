@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
     monochrome = true,
     strict = true,
     plugin = {"pretty", "html:target/site/cucumber-pretty", "json:target/cucumber.json"},
-    tags = {"~@ignore"})
+    tags = "~@ignore")
 @RunWith(Cucumber.class)
 public class RunCukesTest {
 }
