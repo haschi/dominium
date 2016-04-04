@@ -23,7 +23,7 @@ public class EreignisstromPersistierenTest {
 
     @Inject
     private EntityManager entityManager;
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     private static final long VERSION = 42L;
 
