@@ -6,10 +6,12 @@ public final class ZustandWurdeGeändert extends TestAggregatEreignis {
     private final long wert;
 
     private ZustandWurdeGeändert() {
+        super();
         this.wert = 0L;
     }
 
     public ZustandWurdeGeändert(final long wert) {
+        super();
         this.wert = wert;
     }
 

@@ -7,6 +7,7 @@ public class Konstruktor {
     private final ConstructorSignature constructor;
 
     public Konstruktor(final ConstructorSignature constructor) {
+        super();
         this.constructor = constructor;
     }
 

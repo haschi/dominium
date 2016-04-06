@@ -18,6 +18,7 @@ public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
     private final Uhr uhr;
 
     public JpaSchnappschussLager(final EntityManager entityManager, final Uhr uhr) {
+        super();
         this.entityManager = entityManager;
         this.uhr = uhr;
     }

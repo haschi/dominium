@@ -16,6 +16,7 @@ public final class Journal {
     public final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public Journal() {
+        super();
     }
 
     public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {

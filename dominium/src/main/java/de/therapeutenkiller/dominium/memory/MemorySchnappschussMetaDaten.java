@@ -10,6 +10,7 @@ public final class MemorySchnappschussMetaDaten<I> extends Wertobjekt {
     private final LocalDateTime zeitstempel;
 
     public MemorySchnappschussMetaDaten(final I ereignisstrom, final LocalDateTime zeitstempel) {
+        super();
 
         this.ereignisstrom = ereignisstrom;
         this.zeitstempel = zeitstempel;

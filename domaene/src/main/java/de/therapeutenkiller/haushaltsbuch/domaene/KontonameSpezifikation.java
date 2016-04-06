@@ -7,6 +7,7 @@ public final class KontonameSpezifikation implements Spezifikation<Konto> {
     private final String kontoname;
 
     public KontonameSpezifikation(final String kontoname) {
+        super();
         this.kontoname = kontoname;
     }
 

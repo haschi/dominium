@@ -17,6 +17,7 @@ public final class KontoWurdeAngelegt extends HaushaltsbuchEreignis implements S
     public final Kontoart kontoart;
 
     protected KontoWurdeAngelegt() {
+        super();
         this.kontoname = StringUtils.EMPTY;
         this.kontoart = Kontoart.Aktiv;
     }

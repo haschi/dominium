@@ -17,6 +17,7 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 
     public HaushaltsbuchSchnappschuss(final UUID identität, final long version) {
+        super();
         this.identität = identität;
         this.version = version;
     }

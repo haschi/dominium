@@ -28,6 +28,7 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
     private final List<Umschlag<E, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
 
     public MemoryEreignislager() {
+        super();
     }
 
     @Override

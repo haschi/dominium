@@ -12,10 +12,12 @@ public final class JournalWurdeAngelegt extends HaushaltsbuchEreignis implements
     private final UUID aktuelleHaushaltsbuchId;
 
     protected JournalWurdeAngelegt() {
+        super();
         this.aktuelleHaushaltsbuchId = null;
     }
     
     public JournalWurdeAngelegt(final UUID aktuelleHaushaltsbuchId) {
+        super();
         this.aktuelleHaushaltsbuchId = aktuelleHaushaltsbuchId;
     }
 

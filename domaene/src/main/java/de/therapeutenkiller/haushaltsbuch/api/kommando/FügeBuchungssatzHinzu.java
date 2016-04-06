@@ -17,6 +17,7 @@ public class FügeBuchungssatzHinzu extends Wertobjekt {
             final String sollkonto,
             final String habenkonto,
             final MonetaryAmount betrag) {
+        super();
         this.identitätsmerkmal = identitätsmerkmal;
         this.sollkonto = sollkonto;
         this.habenkonto = habenkonto;

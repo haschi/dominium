@@ -10,6 +10,7 @@ public class EreignisNichtSerialisierbar extends RuntimeException {
     public <T> EreignisNichtSerialisierbar(
             final Domänenereignis<T> ereignis,
             final JsonProcessingException exception) {
+        super();
         this.ereignis = ereignis;
         this.exception = exception;
     }

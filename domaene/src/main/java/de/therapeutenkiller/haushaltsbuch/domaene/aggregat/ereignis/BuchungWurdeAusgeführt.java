@@ -23,6 +23,7 @@ public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis impleme
     protected final double betrag;
 
     protected BuchungWurdeAusgeführt() {
+        super();
         this.soll = StringUtils.EMPTY;
         this.haben = StringUtils.EMPTY;
         this.betrag = 0;

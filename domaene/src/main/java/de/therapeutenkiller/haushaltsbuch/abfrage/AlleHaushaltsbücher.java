@@ -12,6 +12,7 @@ public class AlleHaushaltsbücher {
 
     @Inject
     public AlleHaushaltsbücher(final HaushaltsbuchRepository repository) {
+        super();
         this.repository = repository;
     }
 

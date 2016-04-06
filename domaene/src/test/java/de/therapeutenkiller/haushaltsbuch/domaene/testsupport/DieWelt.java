@@ -19,6 +19,7 @@ public class DieWelt {
 
     @Inject
     public DieWelt(final HaushaltsbuchMemoryRepository repository) {
+        super();
         this.repository = repository;
     }
 

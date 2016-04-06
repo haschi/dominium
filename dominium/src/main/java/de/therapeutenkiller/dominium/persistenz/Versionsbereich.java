@@ -11,6 +11,7 @@ public final class Versionsbereich {
     public static final Versionsbereich ALLE_VERSIONEN = new Versionsbereich(1L, Long.MAX_VALUE);
 
     public Versionsbereich(final long von, final long bis) {
+        super();
 
         if (von > bis) {
             throw new IllegalArgumentException();

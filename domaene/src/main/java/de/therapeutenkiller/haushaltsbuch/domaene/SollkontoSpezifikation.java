@@ -9,6 +9,7 @@ public final class SollkontoSpezifikation implements Spezifikation<Buchungssatz>
     private final Konto konto;
 
     public SollkontoSpezifikation(final Konto konto) {
+        super();
 
         this.konto = konto;
     }

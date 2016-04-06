@@ -18,6 +18,7 @@ public abstract class JpaDomänenereignis<T> extends Domänenereignis<T> {
     UUID id;
 
     public JpaDomänenereignis() {
+        super();
         this.id = UUID.randomUUID();
     }
 }

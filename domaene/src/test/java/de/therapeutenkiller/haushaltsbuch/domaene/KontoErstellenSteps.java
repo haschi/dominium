@@ -40,6 +40,7 @@ public final class KontoErstellenSteps {
             final DieWelt kontext,
             final SaldoAbfrage saldieren,
             final AlleKonten alleKonten) {
+        super();
 
         this.kontext = kontext;
         this.saldieren = saldieren;

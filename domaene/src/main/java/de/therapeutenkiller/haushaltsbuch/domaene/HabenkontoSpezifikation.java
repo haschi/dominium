@@ -8,6 +8,7 @@ public class HabenkontoSpezifikation implements Spezifikation<Buchungssatz> {
     private final Konto konto;
 
     public HabenkontoSpezifikation(final Konto einKonto) {
+        super();
 
         this.konto = einKonto;
     }

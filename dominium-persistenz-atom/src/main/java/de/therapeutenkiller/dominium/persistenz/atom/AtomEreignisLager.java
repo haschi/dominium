@@ -35,6 +35,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     final OkHttpClient client;
 
     public AtomEreignisLager() {
+        super();
         this.mapper = new ObjectMapper();
         this.mapper.registerModule(new JavaTimeModule());
         this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

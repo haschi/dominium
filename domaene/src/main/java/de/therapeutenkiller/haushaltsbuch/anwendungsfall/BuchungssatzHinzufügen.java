@@ -20,11 +20,13 @@ public class BuchungssatzHinzufügen {
 
     @Inject
     public BuchungssatzHinzufügen(final HaushaltsbuchRepository repository) {
+        super();
 
         this.repository = repository;
     }
 
     public BuchungssatzHinzufügen() {
+        super();
     }
 
     public void ausführen(@Observes final FügeBuchungssatzHinzu befehl)

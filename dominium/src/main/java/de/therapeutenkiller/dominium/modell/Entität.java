@@ -17,6 +17,7 @@ public class Entität<I> {
     private final I identitätsmerkmal;
 
     protected Entität(final I identitätsmerkmal) {
+        super();
         this.identitätsmerkmal = identitätsmerkmal;
     }
 

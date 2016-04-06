@@ -18,10 +18,12 @@ public class HaushaltsbuchführungBeginnen {
     private HaushaltsbuchRepository repository = null;
 
     public HaushaltsbuchführungBeginnen(final HaushaltsbuchRepository repository) {
+        super();
         this.repository = repository;
     }
 
     public HaushaltsbuchführungBeginnen() {
+        super();
     }
 
     public void ausführen(

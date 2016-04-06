@@ -6,13 +6,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 
-public abstract class Saldo { // NOPMD TODO Regel ändern
+public abstract class Saldo {
 
     protected final MonetaryAmount betrag;
 
     public abstract MonetaryAmount getBetrag();
 
     Saldo(final MonetaryAmount betrag) {
+        super();
         this.betrag = betrag;
     }
 

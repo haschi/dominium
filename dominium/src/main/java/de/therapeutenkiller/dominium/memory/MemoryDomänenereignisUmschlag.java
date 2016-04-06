@@ -9,6 +9,7 @@ public final class MemoryDomänenereignisUmschlag<A, I>
     private final MemoryEreignisMetaDaten<I> meta;
 
     public MemoryDomänenereignisUmschlag(final A ereignis, final MemoryEreignisMetaDaten<I> meta) {
+        super();
 
         this.ereignis = ereignis;
         this.meta = meta;

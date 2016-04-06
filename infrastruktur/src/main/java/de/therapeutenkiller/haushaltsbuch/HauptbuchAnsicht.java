@@ -23,6 +23,7 @@ public final class HauptbuchAnsicht implements HaushaltsbuchEreignisziel {
     public List<String> aufwandskonten;
 
     public HauptbuchAnsicht(final UUID haushaltsbuchId) {
+        super();
 
         this.aktivkonten = new ArrayList<>();
         this.passivkonten = new ArrayList<>();

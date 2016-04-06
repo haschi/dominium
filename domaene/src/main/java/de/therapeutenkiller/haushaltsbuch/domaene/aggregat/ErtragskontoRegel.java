@@ -7,6 +7,7 @@ public final class ErtragskontoRegel implements Buchungsregel {
     private final String konto;
 
     public ErtragskontoRegel(final String konto) {
+        super();
 
         this.konto = konto;
     }

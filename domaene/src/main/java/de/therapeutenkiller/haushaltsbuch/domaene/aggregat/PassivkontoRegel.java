@@ -6,6 +6,7 @@ public final class PassivkontoRegel implements Buchungsregel {
     private final String kontoname;
 
     public PassivkontoRegel(final String kontoname) {
+        super();
         this.kontoname = kontoname;
     }
 

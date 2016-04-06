@@ -17,6 +17,7 @@ public class BucheTilgung extends Wertobjekt {
             final String sollkonto,
             final String habenkonto,
             final MonetaryAmount währungsbetrag) {
+        super();
 
         this.haushaltsbuchId = haushaltsbuchId;
         this.sollkonto = sollkonto;

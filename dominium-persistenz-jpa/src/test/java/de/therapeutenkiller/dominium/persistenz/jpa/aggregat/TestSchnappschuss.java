@@ -19,6 +19,7 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
     private long zustand;
 
     public TestSchnappschuss() {
+        super();
     }
 
     @Override

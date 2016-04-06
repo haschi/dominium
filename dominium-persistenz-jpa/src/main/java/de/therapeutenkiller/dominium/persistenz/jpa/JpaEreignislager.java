@@ -25,6 +25,7 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
 
     @Inject
     public JpaEreignislager(final EntityManager entityManager) {
+        super();
 
         this.entityManager = entityManager;
     }

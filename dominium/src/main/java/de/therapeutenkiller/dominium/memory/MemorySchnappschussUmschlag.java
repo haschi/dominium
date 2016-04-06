@@ -16,6 +16,7 @@ public final class MemorySchnappschussUmschlag<A extends Aggregatwurzel<A, E, I,
     public <E> MemorySchnappschussUmschlag(
             final Schnappschuss<A, I> schnappschuss,
             final MemorySchnappschussMetaDaten meta) {
+        super();
 
         this.snapshot = schnappschuss;
         this.meta = meta;

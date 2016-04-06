@@ -6,6 +6,7 @@ public class EreignisNichtGespeichert extends RuntimeException {
     private final Domänenereignis<?> ereignis;
 
     public <T> EreignisNichtGespeichert(final Domänenereignis<T> ereignis) {
+        super();
         this.ereignis = ereignis;
     }
 

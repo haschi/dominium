@@ -10,10 +10,11 @@ public class ZustandWurdeGeändert extends TestAggregatEreignis {
     private long payload;
 
     private ZustandWurdeGeändert() {
-
+        super();
     }
 
     public ZustandWurdeGeändert(final long payload) {
+        super();
         this.payload = payload;
     }
 

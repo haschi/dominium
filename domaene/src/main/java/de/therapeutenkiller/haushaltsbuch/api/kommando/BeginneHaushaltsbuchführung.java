@@ -6,6 +6,7 @@ public class BeginneHaushaltsbuchführung {
     public final UUID identitätsmerkmal;
 
     public BeginneHaushaltsbuchführung(final UUID identitätsmerkmal) {
+        super();
 
         this.identitätsmerkmal = identitätsmerkmal;
     }

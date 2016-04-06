@@ -14,10 +14,12 @@ public final class HauptbuchWurdeAngelegt extends HaushaltsbuchEreignis implemen
     private final UUID haushaltsbuchId;
 
     protected HauptbuchWurdeAngelegt() {
+        super();
         this.haushaltsbuchId = null;
     }
 
     public HauptbuchWurdeAngelegt(final UUID haushaltsbuchId) {
+        super();
         this.haushaltsbuchId = haushaltsbuchId;
     }
 

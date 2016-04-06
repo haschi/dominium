@@ -11,11 +11,13 @@ public final class JpaSchnappschussMetaDaten implements Serializable {
     final LocalDateTime erstellungszeitpunkt;
 
     public JpaSchnappschussMetaDaten(final UUID identitätsmerkmal, final LocalDateTime jetzt) {
+        super();
         this.identitätsmerkmal = identitätsmerkmal;
         this.erstellungszeitpunkt = jetzt;
     }
 
     protected JpaSchnappschussMetaDaten() {
+        super();
         this.identitätsmerkmal = null;
         this.erstellungszeitpunkt = null;
     }

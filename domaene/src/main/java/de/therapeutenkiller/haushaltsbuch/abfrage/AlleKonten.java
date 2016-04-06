@@ -15,6 +15,7 @@ public final class AlleKonten {
 
     @Inject
     public AlleKonten(final HaushaltsbuchRepository repository) {
+        super();
         this.repository = repository;
     }
 

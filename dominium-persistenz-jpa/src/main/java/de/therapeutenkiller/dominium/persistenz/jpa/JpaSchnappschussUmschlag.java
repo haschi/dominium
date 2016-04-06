@@ -21,13 +21,14 @@ public class JpaSchnappschussUmschlag<S>
     public  JpaSchnappschussUmschlag(
             final S snapshot,
             final JpaSchnappschussMetaDaten meta) {
+        super();
 
         this.meta = meta;
         this.ereignis = snapshot;
-
     }
 
     protected JpaSchnappschussUmschlag() {
+        super();
         this.meta = null;
         this.ereignis = null;
     }

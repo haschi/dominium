@@ -7,6 +7,7 @@ public final class Methode {
     private final MethodSignature signatur;
 
     public Methode(final MethodSignature signatur) {
+        super();
         this.signatur = signatur;
     }
 
