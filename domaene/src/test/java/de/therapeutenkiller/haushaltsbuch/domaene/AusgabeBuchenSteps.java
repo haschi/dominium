@@ -11,7 +11,6 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAusgabe;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
-import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.Kontostand;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
@@ -82,15 +81,12 @@ public final class AusgabeBuchenSteps {
     }
 
     private static Saldo saldoFürKonto(final Kontostand kontostand) {
-        if (kontostand.kontoart.equals(Kontoart.Aktiv)) {
-            return new Sollsaldo(kontostand.betrag);
-        } else if (kontostand.kontoart.equals(Kontoart.Ertrag)) {
-            return new Habensaldo(kontostand.betrag);
-        } else if (kontostand.kontoart.equals(Kontoart.Aufwand)) {
-            return new Sollsaldo(kontostand.betrag);
-        } else if (kontostand.kontoart.equals(Kontoart.Passiv)) {
-            return new Sollsaldo(kontostand.betrag);
+        switch (kontostand.kontoart) {
+            case Aktiv: return new Sollsaldo(kontostand.betrag);
+            case Ertrag: return new Habensaldo(kontostand.betrag);
+            case Aufwand: return new Sollsaldo(kontostand.betrag);
+            case Passiv: return new Sollsaldo(kontostand.betrag);
+            default: throw new IllegalArgumentException("kontostand");
         }
-        return null;
     }
 }
