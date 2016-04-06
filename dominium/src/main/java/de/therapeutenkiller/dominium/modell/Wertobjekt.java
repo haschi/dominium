@@ -22,7 +22,7 @@ public class Wertobjekt {
     @Override
     public final boolean equals(@DarfNullSein final Object that) {
 
-        return that == this || that instanceof Wertobjekt && this.gleicht((Wertobjekt) that);
+        return (that == this) || ((that instanceof Wertobjekt) && (this.gleicht((Wertobjekt) that)));
     }
 
     private boolean gleicht(final Wertobjekt that) {
@@ -36,6 +36,6 @@ public class Wertobjekt {
 
     // s. http://www.artima.com/lejava/articles/equality.html
     private boolean canEqual(@DarfNullSein final Object other) {
-        return other != null && this.getClass() == other.getClass();
+        return (other != null) && (this.getClass() == other.getClass());
     }
 }

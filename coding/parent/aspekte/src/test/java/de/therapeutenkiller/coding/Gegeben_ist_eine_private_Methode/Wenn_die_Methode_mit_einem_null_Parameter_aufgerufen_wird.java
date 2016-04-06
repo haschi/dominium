@@ -9,9 +9,9 @@ public class Wenn_die_Methode_mit_einem_null_Parameter_aufgerufen_wird {
 
     @Test
     public void dann_wird_keine_Ausnahme_ausgelöst() {
-        privateMethode(null);
+        this.privateMethode(null);
     }
 
-    private void privateMethode(Object o) {
+    private void privateMethode(final Object o) {
     }
 }

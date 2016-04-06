@@ -15,7 +15,7 @@ class ParameterPrüfung {
     }
 
     public final boolean istGültig(final Object argument) {
-        return argument != null || this.darfNullSein();
+        return (argument != null) || this.darfNullSein();
     }
 
     public final boolean darfNullSein() {

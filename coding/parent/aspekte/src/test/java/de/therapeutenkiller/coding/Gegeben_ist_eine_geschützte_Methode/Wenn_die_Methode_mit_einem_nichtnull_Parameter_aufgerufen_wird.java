@@ -9,6 +9,6 @@ public final class Wenn_die_Methode_mit_einem_nichtnull_Parameter_aufgerufen_wir
         this.geschützteMethode("Hello World");
     }
 
-    protected void geschützteMethode(Object einWert) {
+    protected void geschützteMethode(final Object einWert) {
     }
 }

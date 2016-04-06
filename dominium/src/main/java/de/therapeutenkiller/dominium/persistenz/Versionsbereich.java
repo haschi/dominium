@@ -26,7 +26,7 @@ public final class Versionsbereich {
     }
 
     public boolean liegtInnerhalb(final long zahl) {
-        return this.von <= zahl && zahl <= this.bis;
+        return (this.von <= zahl) && (zahl <= this.bis);
     }
 
     @Override

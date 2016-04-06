@@ -15,7 +15,7 @@ import javax.persistence.Persistence;
  */
 public class DatenbankRegel implements TestRule {
     private String persistenceUnit = "test";
-    private boolean rollback = false;
+    private boolean rollback;
 
     private final ThreadLocal<EntityManager> em = new ThreadLocal<>();
 
@@ -23,7 +23,8 @@ public class DatenbankRegel implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnit);
+                final EntityManagerFactory emf = Persistence.createEntityManagerFactory(
+                    DatenbankRegel.this.persistenceUnit);
                 final EntityManager entityManager = emf.createEntityManager();
                 DatenbankRegel.this.em.set(entityManager);
                 try {
@@ -43,7 +44,7 @@ public class DatenbankRegel implements TestRule {
         return this.em.get();
     }
 
-    public DatenbankRegel persistenceUnit(String name) {
+    public DatenbankRegel persistenceUnit(final String name) {
         this.persistenceUnit = name;
         return this;
     }

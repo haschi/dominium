@@ -47,7 +47,7 @@ public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
 
         final JpaSchnappschussMetaDaten meta = new JpaSchnappschussMetaDaten(
             testSchnappschuss.getIdentitätsmerkmal(),
-            uhr.jetzt());
+            this.uhr.jetzt());
 
         final JpaSchnappschussUmschlag<Schnappschuss<A, UUID>> umschlag = new JpaSchnappschussUmschlag<>(
             testSchnappschuss,

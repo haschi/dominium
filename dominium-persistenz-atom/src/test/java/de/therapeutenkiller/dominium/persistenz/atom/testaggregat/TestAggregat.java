@@ -27,7 +27,7 @@ public final class TestAggregat
 
     public void einenZustandÄndern(final long wert) {
 
-        bewirkt(new ZustandWurdeGeändert(wert));
+        this.bewirkt(new ZustandWurdeGeändert(wert));
     }
 
     @Override

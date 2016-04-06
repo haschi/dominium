@@ -14,7 +14,7 @@ import javax.inject.Inject;
 @SuppressWarnings("checkstyle:designforextension")
 public class EinnahmeBuchen {
 
-    private Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent = null;
+    private Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent;
 
     @Inject
     public EinnahmeBuchen(final Event<FügeBuchungssatzHinzu> fügeBuchungssatzHinzuEvent) {

@@ -15,7 +15,7 @@ class Rückgabewert {
 
     public final void prüfen() {
         if (!this.method.getReturnType().equals(Void.TYPE)
-            && this.method.getAnnotation(DarfNullSein.class) == null) {
+            && (this.method.getAnnotation(DarfNullSein.class) == null)) {
             throw new RückgabewertIstNullException(this.method);
         }
     }

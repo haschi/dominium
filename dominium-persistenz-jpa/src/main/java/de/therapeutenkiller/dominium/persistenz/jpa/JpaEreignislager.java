@@ -92,7 +92,7 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
     }
 
     @Override
-    public boolean existiertEreignisStrom(UUID identitätsmerkmal) {
+    public boolean existiertEreignisStrom(final UUID identitätsmerkmal) {
         final Query query = this.entityManager.createQuery(
                 "SELECT COUNT(JpaEreignisstrom.id) FROM JpaEreignisstrom s "
                         + "where s.id = :identitätsmerkmal");

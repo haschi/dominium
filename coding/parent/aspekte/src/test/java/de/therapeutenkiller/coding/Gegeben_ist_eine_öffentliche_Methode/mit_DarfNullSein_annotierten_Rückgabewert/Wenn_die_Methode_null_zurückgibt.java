@@ -12,7 +12,7 @@ public class Wenn_die_Methode_null_zurückgibt {
 
     @Test
     public void dann_wird_keine_Ausnahme_ausgelöst() {
-        öffentlicheMitDarfNullSeinAnnotierteMethode();
+        this.öffentlicheMitDarfNullSeinAnnotierteMethode();
     }
 
     @DarfNullSein

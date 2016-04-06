@@ -15,7 +15,7 @@ import javax.inject.Inject;
 public class HaushaltsbuchführungBeginnen {
 
     @Inject
-    private HaushaltsbuchRepository repository = null;
+    private HaushaltsbuchRepository repository;
 
     public HaushaltsbuchführungBeginnen(final HaushaltsbuchRepository repository) {
         super();

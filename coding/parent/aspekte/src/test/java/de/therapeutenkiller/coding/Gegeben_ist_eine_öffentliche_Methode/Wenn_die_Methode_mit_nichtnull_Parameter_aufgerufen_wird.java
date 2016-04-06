@@ -9,9 +9,9 @@ public class Wenn_die_Methode_mit_nichtnull_Parameter_aufgerufen_wird {
 
     @Test
     public void dann_wird_keine_Ausnahme_ausgelöst() {
-        öffentlicheMethode("Hello World");
+        this.öffentlicheMethode("Hello World");
     }
 
-    public void öffentlicheMethode(Object s) {
+    public void öffentlicheMethode(final Object s) {
     }
 }

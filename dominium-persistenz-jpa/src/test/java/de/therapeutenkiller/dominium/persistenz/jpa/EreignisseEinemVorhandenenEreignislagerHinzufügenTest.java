@@ -45,8 +45,8 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
         this.store = new JpaEreignislager<>(this.entityManager);
         this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<TestAggregatEreignis>() {
             {
-                add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]));
-                add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]));
+                this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]));
+                this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]));
             }
         });
     }
@@ -59,8 +59,8 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
                 2L,
                 new ArrayList<TestAggregatEreignis>() {
                     {
-                        add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]));
-                        add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3]));
+                        this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]));
+                        this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3]));
                     }
                 }
         );

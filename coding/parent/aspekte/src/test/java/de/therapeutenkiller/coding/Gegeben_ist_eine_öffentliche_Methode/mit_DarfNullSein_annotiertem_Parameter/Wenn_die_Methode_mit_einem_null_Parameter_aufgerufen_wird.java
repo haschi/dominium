@@ -11,9 +11,9 @@ public class Wenn_die_Methode_mit_einem_null_Parameter_aufgerufen_wird {
 
     @Test
     public void dann_wird_keine_Ausnahme_asugelöst() {
-        öffentlicheMethodeMitDarfNullSeinParameter(null);
+        this.öffentlicheMethodeMitDarfNullSeinParameter(null);
     }
 
-    public void öffentlicheMethodeMitDarfNullSeinParameter(@DarfNullSein Object o) {
+    public void öffentlicheMethodeMitDarfNullSeinParameter(@DarfNullSein final Object o) {
     }
 }

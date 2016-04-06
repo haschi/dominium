@@ -8,7 +8,7 @@ public class Wenn_die_innere_Klasse_mit_null_instanziiert_wird {
     }
 
     private class InnereKlasse {
-        InnereKlasse(Object o) {
+        InnereKlasse(final Object o) {
             super();
         }
     }

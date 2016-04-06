@@ -11,6 +11,7 @@ import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +68,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
             final RequestBody requestBody = RequestBody.create(jsonMediaType, json);
             final Request request;
             try {
-                request = new Request.Builder()
+                request = new Builder()
                         .url(this.streamUrl(identitätsmerkmal))
                         .header("ES-EventId", UUID.randomUUID().toString())
                         .header("ES-EventType", URLEncoder.encode(ereignis.getClass().getCanonicalName(), "UTF-8"))
@@ -127,7 +128,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
             do {
                 alleEreignisse = Stream.concat(alleEreignisse, ereignisstrom.entries.stream());
 
-                weiter = !(ereignisstrom.headOfStream || ereignisstrom == Ereignisstrom.LEER);
+                weiter = !(ereignisstrom.headOfStream || (ereignisstrom == Ereignisstrom.LEER));
                 if (weiter) {
                     ereignisstrom = this.eineStromSeiteLesen(ereignisstrom.links.stream()
                             .filter(link -> link.relation.equals("previous"))
@@ -147,7 +148,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     }
 
     private Ereignisstrom eineStromSeiteLesen(final URL url) {
-        final Request request = new Request.Builder()
+        final Request request = new Builder()
                 .header("Accept", "application/vnd.eventstore.atom+json")
                 .url(url)
                 .build();
@@ -173,7 +174,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     }
 
     private E ereignisLaden(final Eintrag eintrag) {
-        final Request request = new Request.Builder()
+        final Request request = new Builder()
                 .header("Accept", "application/json")
                 .url(eintrag.id.toString())
                 .build();

@@ -18,7 +18,7 @@ public class JpaDomänenereignisUmschlag<E>
         implements Umschlag<E, JpaEreignisMetaDaten> {
 
     @EmbeddedId
-    private JpaEreignisMetaDaten meta = null;
+    private JpaEreignisMetaDaten meta;
 
     @OneToOne(targetEntity = JpaDomänenereignis.class)
     public E ereignis;

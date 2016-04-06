@@ -9,9 +9,9 @@ public class Wenn_die_Methode_mit_einem_null_Parameter_aufgerufen_wird {
 
     @Test
     public void dann_wird_keine_Ausnahme_ausgelöst() {
-        geschützteMethode(null);
+        this.geschützteMethode(null);
     }
 
-    protected void geschützteMethode(Object o) {
+    protected void geschützteMethode(final Object o) {
     }
 }
