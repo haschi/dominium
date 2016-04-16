@@ -44,12 +44,12 @@ public class DatenbankRegel implements TestRule {
         return this.em.get();
     }
 
-    public DatenbankRegel persistenceUnit(final String name) {
+    public final DatenbankRegel persistenceUnit(final String name) {
         this.persistenceUnit = name;
         return this;
     }
 
-    public DatenbankRegel rollback() {
+    public final DatenbankRegel rollback() {
         this.rollback = true;
         return this;
     }

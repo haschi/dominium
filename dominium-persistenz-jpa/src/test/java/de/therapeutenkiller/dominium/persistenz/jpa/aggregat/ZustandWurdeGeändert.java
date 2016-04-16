@@ -28,7 +28,7 @@ public class ZustandWurdeGeändert extends TestAggregatEreignis {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return new ToStringBuilder(this)
                 .append("payload", this.payload)
                 .toString();

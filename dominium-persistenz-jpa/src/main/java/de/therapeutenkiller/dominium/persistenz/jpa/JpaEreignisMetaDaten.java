@@ -35,7 +35,7 @@ public class JpaEreignisMetaDaten extends Wertobjekt implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return new ToStringBuilder(this)
                 .append("identitätsmerkmal", this.identitätsmerkmal)
                 .append("version", this.version)

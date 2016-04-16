@@ -3,7 +3,6 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Uhr;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;

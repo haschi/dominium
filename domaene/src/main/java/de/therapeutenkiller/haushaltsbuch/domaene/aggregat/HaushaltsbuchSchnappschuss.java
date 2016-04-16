@@ -12,19 +12,19 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
     private static final long serialVersionUID = -2656820980971196374L;
 
     public final long version;
-    private final UUID identität;
+    private final UUID identitätsmerkmal;
     public ImmutableSet<Konto> konten;
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 
     public HaushaltsbuchSchnappschuss(final UUID identität, final long version) {
         super();
-        this.identität = identität;
+        this.identitätsmerkmal = identität;
         this.version = version;
     }
 
     @Override
     public UUID getIdentitätsmerkmal() {
-        return this.identität;
+        return this.identitätsmerkmal;
     }
 
     @Override
