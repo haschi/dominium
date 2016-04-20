@@ -1,12 +1,11 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.coding.aspekte.DarfNullSein;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 
+@ValueObject(exclude = "regel")
 public final class Konto {
 
     public static final Konto ANFANGSBESTAND = new Konto("Anfangsbestand", new KeineRegel());
@@ -48,29 +47,4 @@ public final class Konto {
     public Buchungssatz buchungssatzFürAnfangsbestand(final MonetaryAmount betrag) {
         return this.regel.buchungssatzFürAnfangsbestand(this.kontoname, betrag);
     }
-
-    @Override
-    public boolean equals(@DarfNullSein final Object object) {
-        if (this == object) {
-            return true;
-        }
-
-        if (!(object instanceof Konto)) {
-            return false;
-        }
-
-        final Konto konto = (Konto) object;
-
-        return new EqualsBuilder()
-                .append(this.kontoname, konto.kontoname)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(this.kontoname)
-                .toHashCode();
-    }
-
 }

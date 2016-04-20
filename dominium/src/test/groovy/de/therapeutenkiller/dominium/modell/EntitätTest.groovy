@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.modell
 
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException
+import de.therapeutenkiller.coding.aspekte.ValueObject
 import groovy.transform.CompileStatic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
@@ -50,6 +51,6 @@ class EntitätTest extends Specification {
     }
 
     def "Für Abgeleitete Klassen gelten die Äquivalenzregeln"() {
-        expect: EqualsVerifier.forClass(Person).verify()
+        expect: EqualsVerifier.forClass(Person).withOnlyTheseFields("identitätsmerkmal")verify()
     }
 }

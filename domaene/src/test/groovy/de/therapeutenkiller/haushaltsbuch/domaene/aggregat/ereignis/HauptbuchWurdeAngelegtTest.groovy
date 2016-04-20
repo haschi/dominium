@@ -6,6 +6,6 @@ import spock.lang.Specification
 class HauptbuchWurdeAngelegtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier.forClass HauptbuchWurdeAngelegt withRedefinedSuperclass() verify()
+        expect: EqualsVerifier.forClass HauptbuchWurdeAngelegt withIgnoredFields "id" withRedefinedSuperclass() verify()
     }
 }

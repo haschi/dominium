@@ -8,6 +8,7 @@ public class BuchungWurdeAusgeführtTest extends Specification {
     def "erfüllt die equals und hashCode Spezifikation"() {
         expect: EqualsVerifier
                 .forClass(BuchungWurdeAusgeführt)
+                .withIgnoredFields("id")
                 .withRedefinedSuperclass()
                 .verify()
     }

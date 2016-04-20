@@ -1,8 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
-import com.google.common.collect.ImmutableCollection;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
-import de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import de.therapeutenkiller.haushaltsbuch.system.Logged;
@@ -12,13 +10,9 @@ import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Logged
 @SuppressWarnings("checkstyle:designforextension")
@@ -66,7 +60,7 @@ public class SchnappschussDienst {
                         haushaltsbuchId.toString());
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             this.logger.error(e);
         }
     }
