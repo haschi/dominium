@@ -19,7 +19,7 @@
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.version>3.3</maven.compiler.version>
+        <maven.compiler.version>3.5.1</maven.compiler.version>
 
         <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
         <checkstyle.version>6.14.1</checkstyle.version>
@@ -33,18 +33,19 @@
 
         <slf4j.version>1.7.13</slf4j.version>
         <junit.version>4.12</junit.version>
-        <junit.version>4.12</junit.version>
+        <oleaster.version>0.1.2</oleaster.version>
         <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+        <aspectj.version>1.8.9</aspectj.version>
 
         <skipTests>false</skipTests>
-        <groovy.version>2.4.5</groovy.version>
-        <groovy.classifier>indy</groovy.classifier>
 
         <h2.version>1.4.191</h2.version>
         <hibernate.version>5.0.7.Final</hibernate.version>
         <version.jboss.bom>10.0.0.Final</version.jboss.bom>
 
+        <unwoven-classes.directory>${project.build.directory}/unwoven-classes</unwoven-classes.directory>
+        <unwoven-test-classes.directory>${project.build.directory}/unwoven-test-classes</unwoven-test-classes.directory>
     </properties>
 
     <scm>
@@ -131,42 +132,25 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- Abhängigkeiten für die Komponententests -->
-            <!-- auslagern nach test.bom -->
-            <dependency>
-                <groupId>org.spockframework</groupId>
-                <artifactId>spock-core</artifactId>
-                <version>1.0-groovy-2.4</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-all</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- Spock: zum Mocken erforderlich -->
-            <!-- auslagern nach test.bom -->
-            <dependency>
-                <groupId>cglib</groupId>
-                <artifactId>cglib-nodep</artifactId>
-                <version>3.2.0</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-                <classifier>${groovy.classifier}</classifier>
-            </dependency>
-
             <!-- auslagern nach test.bom -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mscharhag.oleaster</groupId>
+                <artifactId>oleaster-runner</artifactId>
+                <version>${oleaster.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mscharhag.oleaster</groupId>
+                <artifactId>oleaster-matcher</artifactId>
+                <version>${oleaster.version}</version>
                 <scope>test</scope>
             </dependency>
 
@@ -323,11 +307,10 @@
     <dependencies>
 
 
-        <dependency>
+        <!-- dependency>
             <groupId>de.therapeutenkiller</groupId>
             <artifactId>aspekte</artifactId>
-            <version>${version.de.therapeutenkiller.coding}</version>
-        </dependency>
+        </dependency -->
 
 
         <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
@@ -357,57 +340,27 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>de.therapeutenkiller</groupId>
+                    <artifactId>mojo</artifactId>
+                    <version>${version.de.therapeutenkiller.coding}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
+
                 <!-- aspectj -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>aspectj-maven-plugin</artifactId>
                     <version>1.8</version>
-                    <executions>
-                        <execution>
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>test-compile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <showWeaveInfo>true</showWeaveInfo>
-
-                        <complianceLevel>1.8</complianceLevel>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                    </configuration>
-                    <dependencies>
-                            <dependency>
-                                <groupId>org.aspectj</groupId>
-                                <artifactId>aspectjtools</artifactId>
-                                <version>1.8.9</version>
-                            </dependency>
-                    </dependencies>
                 </plugin>
-
-                <!-- gmavenplus (für Tests mit Spock-Framework -->
-
-                <plugin>
-                    <groupId>org.codehaus.gmavenplus</groupId>
-                    <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.5</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>testCompile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <targetBytecode>1.8</targetBytecode>
-                        <warningLevel>2</warningLevel>
-                        <invokeDynamic>true</invokeDynamic>
-                    </configuration>
-                </plugin>
-
 
                 <!-- checkstyle -->
                 <!-- TODO: auslagern nach test.bom -->
@@ -484,43 +437,116 @@
 
             </plugins>
         </pluginManagement>
-
         <plugins>
-            <!-- gmavenplus (für Tests mit Spock-Framework) -->
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <useIncrementalCompilation>false</useIncrementalCompilation>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <compilerArguments>
+                                <d>${unwoven-classes.directory}</d>
+                            </compilerArguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <compilerArguments>
+                                <d>${unwoven-test-classes.directory}</d>
+                            </compilerArguments>
+                        </configuration>
+                    </execution>
+                </executions>
+
             </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <configuration>
-                    <detail>true</detail>
+                    <proc>none</proc>
+
+                    <!-- Bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=423795 -->
+                    <showWeaveInfo>false</showWeaveInfo>
+                    <complianceLevel>1.8</complianceLevel>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+
+                    <detail>false</detail>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>de.therapeutenkiller</groupId>
                             <artifactId>aspekte</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
+
                 </configuration>
+
                 <executions>
                     <execution>
+                        <id>weave-classes</id>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <weaveDirectories>
+                                <weaveDirectory>${unwoven-classes.directory}</weaveDirectory>
+                            </weaveDirectories>
+                            <Xreweavable>false</Xreweavable>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>weave-test-classes</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
                             <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <weaveDirectories>
+                                <weaveDirectory>${unwoven-test-classes.directory}</weaveDirectory>
+                            </weaveDirectories>
+                            <Xreweavable>false</Xreweavable>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+            <plugin>
+                <groupId>de.therapeutenkiller</groupId>
+                <artifactId>mojo</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>create-directories</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
@@ -541,17 +567,13 @@
 
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.8</version>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.19.1</version>
             </plugin>
+
         </plugins>
     </reporting>
 

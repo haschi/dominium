@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -13,8 +13,8 @@ import javax.persistence.OneToOne;
  * Datenbank mit JPA.
   */
 @Entity
+@ValueObject
 public class JpaDomänenereignisUmschlag<E>
-        extends Wertobjekt
         implements Umschlag<E, JpaEreignisMetaDaten> {
 
     @EmbeddedId

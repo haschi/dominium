@@ -1,7 +1,9 @@
 package de.therapeutenkiller.dominium.memory;
 
+// import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
+// @ValueObject
 public final class MemoryDomänenereignisUmschlag<A, I>
         implements Umschlag<A, MemoryEreignisMetaDaten<I>> {
 

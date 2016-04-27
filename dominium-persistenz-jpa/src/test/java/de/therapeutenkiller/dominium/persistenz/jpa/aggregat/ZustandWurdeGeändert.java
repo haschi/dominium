@@ -1,10 +1,12 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
 
 @Entity
+@ValueObject
 public class ZustandWurdeGeändert extends TestAggregatEreignis {
 
     private long payload;

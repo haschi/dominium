@@ -1,11 +1,14 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.annotation.Builder;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 
 import java.util.UUID;
 
-public class LegeKontoAn extends Wertobjekt {
+@Builder
+@ValueObject
+public class LegeKontoAn {
     public final UUID haushaltsbuchId;
     public final String kontoname;
     public final Kontoart kontoart;

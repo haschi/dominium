@@ -1,5 +1,7 @@
 package de.therapeutenkiller.dominium.modell;
 
+// import de.therapeutenkiller.coding.aspekte.ValueObject;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -12,7 +14,8 @@ import java.io.Serializable;
  * @param <A> Der Typ des Ereignis-Ziels, auf das ein Ereignis angewendet wird.
  */
 @Embeddable
-public abstract class Domänenereignis<A> extends Wertobjekt implements Serializable {
+// @ValueObject
+public abstract class Domänenereignis<A> implements Serializable {
 
     /**
      * Wendet eine durch das Domänenereignis beschriebene Zustandsänderung auf

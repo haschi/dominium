@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Column;
@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-public class JpaEreignisMetaDaten extends Wertobjekt implements Serializable {
+@ValueObject
+public class JpaEreignisMetaDaten implements Serializable {
 
     private static final long serialVersionUID = 7136630060440710008L;
 

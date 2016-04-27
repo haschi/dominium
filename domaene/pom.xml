@@ -147,27 +147,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Mandatory dependencies for using Spock -->
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <!--scope>test</scope-->
-        </dependency>
-
-        <!-- Spock: zum Mocken erforderlich -->
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <classifier>${groovy.classifier}</classifier>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
             <artifactId>deltaspike-cdictrl-weld</artifactId>

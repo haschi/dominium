@@ -1,11 +1,14 @@
 package de.therapeutenkiller.haushaltsbuch.api.kommando;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.annotation.Builder;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-public class BucheEinnahme extends Wertobjekt {
+@Builder
+@ValueObject
+public class BucheEinnahme {
     public final UUID haushaltsbuchId;
     public final String sollkonto;
     public final String habenkonto;

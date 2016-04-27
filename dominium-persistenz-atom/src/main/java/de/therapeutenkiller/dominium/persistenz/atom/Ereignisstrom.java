@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.atom;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 
 import java.net.URI;
 import java.time.ZonedDateTime;
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Ereignisstrom extends Wertobjekt {
+@ValueObject
+public final class Ereignisstrom {
 
     public static final Ereignisstrom LEER = new Ereignisstrom();
 

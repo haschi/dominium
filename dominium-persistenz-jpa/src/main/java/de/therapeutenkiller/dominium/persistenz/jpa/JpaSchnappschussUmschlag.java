@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
 import javax.persistence.EmbeddedId;
@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
+@ValueObject
 public class JpaSchnappschussUmschlag<S>
-        extends Wertobjekt
         implements Umschlag<S, JpaSchnappschussMetaDaten>  {
 
     @EmbeddedId

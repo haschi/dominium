@@ -1,6 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 
 /**
  * Ereignisstrom für die Domänenereignisse eines Aggregats. Der Ereignisstrom registriert
@@ -11,7 +11,8 @@ import de.therapeutenkiller.dominium.modell.Wertobjekt;
  * einen Umschlag mit Meta-Daten für das Ereignis erzeugen
  *
  */
-public abstract class Ereignisstrom<I, M> extends Wertobjekt {
+@ValueObject
+public abstract class Ereignisstrom<I, M> {
 
     protected I identitätsmerkmal;
     protected long version;

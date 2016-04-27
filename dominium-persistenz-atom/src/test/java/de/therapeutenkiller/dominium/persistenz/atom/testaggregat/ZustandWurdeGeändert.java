@@ -1,7 +1,9 @@
 package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@ValueObject
 public final class ZustandWurdeGeändert extends TestAggregatEreignis {
     private final long wert;
 

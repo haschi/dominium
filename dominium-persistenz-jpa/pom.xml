@@ -38,17 +38,6 @@
             <artifactId>equalsverifier</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <classifier>${groovy.classifier}</classifier>
-        </dependency>
-
         <!-- Erforderlich für CDI Annotationen in der Domäne -->
         <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
         <dependency>
@@ -119,6 +108,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
                 <executions>
 
 

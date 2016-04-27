@@ -11,7 +11,6 @@
 
     <artifactId>dominium</artifactId>
 
-
     <dependencies>
 
         <dependency>
@@ -25,19 +24,12 @@
         </dependency>
 
         <dependency>
+            <groupId>de.therapeutenkiller</groupId>
+            <artifactId>aspekte</artifactId>
+        </dependency>
+        <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <classifier>${groovy.classifier}</classifier>
         </dependency>
 
         <!-- compile -->
@@ -63,7 +55,14 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>de.therapeutenkiller</groupId>
+                <artifactId>mojo</artifactId>
             </plugin>
         </plugins>
     </build>

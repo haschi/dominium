@@ -1,13 +1,16 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
+import de.therapeutenkiller.coding.annotation.Builder;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-public class Buchungssatz extends Wertobjekt {
+@Builder
+@ValueObject
+public class Buchungssatz {
 
     private final String sollkonto;
     private final String habenkonto;

@@ -1,5 +1,7 @@
 package de.therapeutenkiller.dominium.modell;
 
+// import de.therapeutenkiller.coding.aspekte.ValueObject;
+
 import java.io.Serializable;
 
 /**
@@ -13,8 +15,8 @@ import java.io.Serializable;
  * @param <A> Der Typ des Aggregats, zu dem der Schnappschuss gehört.
  * @param <I> Der Typ des Identitätsmerkmals des Aggregats zu dem der Schnappschuss gehört.
  */
-
-public abstract class Schnappschuss<A, I> extends Wertobjekt implements Serializable {
+// @ValueObject
+public abstract class Schnappschuss<A, I> implements Serializable {
     @SuppressWarnings("JpaAttributeMemberSignatureInspection")
     public abstract I getIdentitätsmerkmal();
 

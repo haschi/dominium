@@ -1,13 +1,13 @@
 package de.therapeutenkiller.dominium.memory;
 
+// import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
-import de.therapeutenkiller.dominium.modell.Wertobjekt;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
+// @ValueObject
 public final class MemorySchnappschussUmschlag<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T>
-        extends Wertobjekt
         implements Umschlag<Schnappschuss<A, I>, MemorySchnappschussMetaDaten> {
 
     private final Schnappschuss<A, I> snapshot;

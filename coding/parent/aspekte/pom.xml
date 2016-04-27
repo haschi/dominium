@@ -43,6 +43,11 @@
             <version>3.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -55,6 +60,7 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
 
@@ -86,6 +92,18 @@
 
                     </weaveWithAspectsInMainSourceFolder>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
 

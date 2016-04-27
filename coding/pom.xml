@@ -63,6 +63,7 @@
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <version.maven-surefire-plugin>2.18.1</version.maven-surefire-plugin>
+        <aspectj.version>1.8.9</aspectj.version>
     </properties>
 
     <dependencyManagement>
@@ -70,7 +71,7 @@
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
-                <version>1.8.7</version>
+                <version>${aspectj.version}</version>
             </dependency>
 
             <dependency>
@@ -163,21 +164,6 @@
         </plugins>
     </build>
 
-    <reporting>
-        <plugins>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
-            -->
-
-            <!-- surefire report -->
-
-        </plugins>
-    </reporting>
-
     <distributionManagement>
         <repository>
             <id>release-deployment</id>
@@ -191,11 +177,5 @@
             <url>http://development12:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
 
-        <!--
-        <site>
-            <url>dav:http://development12.fritz.box:8081/nexus/content/sites/websites/</url>
-            <id>nexus</id>
-        </site>
-        -->
     </distributionManagement>
 </project>
