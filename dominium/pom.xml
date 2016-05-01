@@ -24,6 +24,16 @@
         </dependency>
 
         <dependency>
+            <groupId>com.mscharhag.oleaster</groupId>
+            <artifactId>oleaster-runner</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mscharhag.oleaster</groupId>
+            <artifactId>oleaster-matcher</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>de.therapeutenkiller</groupId>
             <artifactId>aspekte</artifactId>
         </dependency>

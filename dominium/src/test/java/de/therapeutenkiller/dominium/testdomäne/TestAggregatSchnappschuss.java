@@ -1,10 +1,12 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
 
+@ValueObject
 public final class TestAggregatSchnappschuss extends Schnappschuss<TestAggregat, UUID> {
 
     long version;

@@ -51,43 +51,14 @@ public class BuilderProcessor extends AbstractProcessor {
 
                     Properties properties = new Properties();
                     URL url = this.getClass().getClassLoader().getResource("velocity.properties");
-                        //this.getClass().getClassLoader().
                     properties.load(url.openStream());
 
-                            Velocity.setProperty("resource.loader", "class");
-                        Velocity.setProperty("class.resource.loader.class",
-                            "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 
-                        Velocity.init();
-
-                        try {
-                            final Template template = Velocity.getTemplate("vorlage1.vm", "UTF-8");
-                        } catch (ResourceNotFoundException e) {
-                            processingEnv.getMessager().printMessage(Kind.NOTE, e.getMessage(), element);
-                        }
-
-                        try {
-                            final Template template = Velocity.getTemplate("vorlage2.vm", "UTF-8");
-                        } catch (ResourceNotFoundException e) {
-                            processingEnv.getMessager().printMessage(Kind.NOTE, e.getMessage(), element);
-                        }
-
-                        try {
-                            final Template template = Velocity.getTemplate("vorlage3.vm", "UTF-8");
-                        } catch (ResourceNotFoundException e) {
-                            processingEnv.getMessager().printMessage(Kind.NOTE, e.getMessage(), element);
-                        }
-
-                        VelocityEngine ve = new VelocityEngine(properties);
-                    // VelocityEngine ve = new VelocityEngine();
+                    VelocityEngine ve = new VelocityEngine(properties);
                     processingEnv.getMessager().printMessage(Kind.NOTE, "3", element);
-                    //    ve.setProperty("resource.loader", "class");
-                    //    ve.setProperty("class.resource.loader.class",
-                    //        "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 
-
-                        ve.init();
-                        processingEnv.getMessager().printMessage(Kind.NOTE, "2", element);
+                    ve.init();
+                    processingEnv.getMessager().printMessage(Kind.NOTE, "2", element);
                     VelocityContext vc = new VelocityContext();
                     vc.put("className", className);
                     vc.put("packageName", packageName);
