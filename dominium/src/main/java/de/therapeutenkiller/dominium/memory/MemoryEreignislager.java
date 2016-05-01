@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.memory;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
+import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
@@ -50,10 +51,10 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
             final I identitätsmerkmal,
             final long erwarteteVersion,
             final Collection<E> domänenereignisse)
-            throws KonkurrierenderZugriff {
+            throws KonkurrierenderZugriff, EreignisstromWurdeNichtGefunden {
 
         if (!this.ereignisströme.containsKey(identitätsmerkmal)) {
-            throw new IllegalArgumentException();
+            throw new EreignisstromWurdeNichtGefunden();
         }
 
         final MemoryEreignisstrom<I> ereignisstrom = this.ereignisströme.get(identitätsmerkmal); // NOPMD

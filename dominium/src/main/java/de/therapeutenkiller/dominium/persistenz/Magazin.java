@@ -60,12 +60,16 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
     }
 
     @Override
-    public void speichern(final A aggregat) throws KonkurrierenderZugriff {
-        this.ereignislager.ereignisseDemStromHinzufügen(
-                aggregat.getIdentitätsmerkmal(),
-                aggregat.getInitialversion(),
-                aggregat.getÄnderungen()
-        );
+    public void speichern(final A aggregat) throws KonkurrierenderZugriff, AggregatNichtGefunden {
+        try {
+            this.ereignislager.ereignisseDemStromHinzufügen(
+                    aggregat.getIdentitätsmerkmal(),
+                    aggregat.getInitialversion(),
+                    aggregat.getÄnderungen()
+            );
+        } catch (EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
+            throw new AggregatNichtGefunden(ereignisstromWurdeNichtGefunden);
+        }
     }
 
     public <S extends Schnappschuss<A, I>> void speichern(final S  schnappschuss) throws AggregatNichtGefunden {

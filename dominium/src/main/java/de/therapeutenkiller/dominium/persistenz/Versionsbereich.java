@@ -25,6 +25,10 @@ public final class Versionsbereich {
         this.bis = bis;
     }
 
+    private Versionsbereich(final VersionsbereichBuilder versionsbereichBuilder) {
+        this(versionsbereichBuilder.von, versionsbereichBuilder.bis);
+    }
+
     public boolean liegtInnerhalb(final long zahl) {
         return (this.von <= zahl) && (zahl <= this.bis);
     }
@@ -61,5 +65,25 @@ public final class Versionsbereich {
 
     public long getBis() {
         return this.bis;
+    }
+
+    public static VersionsbereichBuilderInterface von(final long i) {
+        return new VersionsbereichBuilder().von(i);
+    }
+
+    private static class VersionsbereichBuilder implements VersionsbereichBuilderInterface {
+
+        private long von;
+        private long bis;
+
+        private VersionsbereichBuilderInterface von(final long i) {
+            this.von = i;
+            return this;
+        }
+
+        public Versionsbereich bis(final long i) {
+            this.bis = i;
+            return new Versionsbereich(this);
+        }
     }
 }

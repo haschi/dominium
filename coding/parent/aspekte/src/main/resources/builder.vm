@@ -1,4 +1,18 @@
 package ${packageName};
 
+// Dieser Code wurde automatisch generiert.
 public class ${className}Builder {
+    #foreach($feld in ${felder})
+        private $feld.getType() $feld.getName();
+
+        public ${className}Builder $feld.getName()(final $feld.getType() wert) {
+            this.$feld.getName() = wert;
+            return this;
+        }
+
+    #end
+
+    public ${fqClassName} build() {
+        return new ${fqClassName}(${felder.alsParameter()});
+    }
 }

@@ -9,9 +9,9 @@ public aspect ValueObjectAspect {
     private interface ValueObjectInterface {}
     declare parents : (@de.therapeutenkiller.coding.aspekte.ValueObject *) implements ValueObjectInterface;
 
-    public String ValueObjectInterface.toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
+    // public String ValueObjectInterface.toString() {
+    //    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    //}
 
     public final boolean ValueObjectInterface.equals(@DarfNullSein final Object that) {
         return (that == this)
@@ -21,17 +21,17 @@ public aspect ValueObjectAspect {
 
     private boolean ValueObjectInterface.gleicht(final ValueObjectInterface that) {
 
-        //final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
-        //final String[] exclude = annotation.exclude();
+        final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
+        final String[] exclude = annotation.exclude();
 
-        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that);
+        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that, exclude);
     }
 
     public final int ValueObjectInterface.hashCode() {
-        //final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
-        //final String[] exclude = annotation.exclude();
+        final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
+        final String[] exclude = annotation.exclude();
 
-        return HashCodeBuilder.reflectionHashCode(this);
+        return HashCodeBuilder.reflectionHashCode(this, exclude);
     }
 
     // s. http://www.artima.com/lejava/articles/equality.html

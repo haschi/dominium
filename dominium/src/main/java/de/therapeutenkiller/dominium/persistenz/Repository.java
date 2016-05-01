@@ -8,5 +8,5 @@ public interface Repository<A extends Aggregatwurzel<A, E, I, T>, E extends Dom√
 
     void hinzuf√ºgen(A aggregat);
 
-    void speichern(A aggregat) throws KonkurrierenderZugriff;
+    void speichern(A aggregat) throws KonkurrierenderZugriff, AggregatNichtGefunden;
 }

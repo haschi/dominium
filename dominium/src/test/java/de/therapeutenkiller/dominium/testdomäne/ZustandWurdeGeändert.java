@@ -1,5 +1,8 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
+
+@ValueObject
 public final class ZustandWurdeGeändert extends TestAggregatEreignis {
 
     private final long payload;

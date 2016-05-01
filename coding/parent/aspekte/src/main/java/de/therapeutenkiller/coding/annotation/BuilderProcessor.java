@@ -13,6 +13,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.PackageElement;
@@ -21,6 +22,7 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 import java.io.Writer;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -62,7 +64,12 @@ public class BuilderProcessor extends AbstractProcessor {
                     VelocityContext vc = new VelocityContext();
                     vc.put("className", className);
                     vc.put("packageName", packageName);
-                    Template vt = ve.getTemplate("vorlage1.vm", "UTF-8");
+                        vc.put("fqClassName", fqClassName);
+
+                        vc.put("felder", new Fields(classElement));
+
+                    // Template vt = ve.getTemplate("vorlage1.vm", "UTF-8");
+                    Template vt = ve.getTemplate("builder.vm", "UTF-8");
                     processingEnv.getMessager().printMessage(Kind.NOTE, "1", element);
                     JavaFileObject jfo = null;
 

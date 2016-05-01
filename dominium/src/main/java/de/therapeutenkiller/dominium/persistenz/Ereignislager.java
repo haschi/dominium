@@ -18,7 +18,8 @@ public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
 
     void ereignisseDemStromHinzufügen(
             I identitätsmerkmal,
-            long erwarteteVersion, Collection<E> domänenereignisse) throws KonkurrierenderZugriff;
+            long erwarteteVersion, Collection<E> domänenereignisse)
+        throws KonkurrierenderZugriff, EreignisstromWurdeNichtGefunden;
 
     List<E> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 

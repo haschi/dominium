@@ -1,9 +1,9 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.coding.annotation.Builder;
-// import de.therapeutenkiller.coding.aspekte.ValueObject;
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 
-// @ValueObject
+@ValueObject
 @Builder
 public final class EinWertobjekt {
     public final String vorname;
