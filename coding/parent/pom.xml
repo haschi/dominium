@@ -14,7 +14,6 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <modules>
-        <module>mojo</module>
         <module>richtlinien</module>
         <module>aspekte</module>
     </modules>
