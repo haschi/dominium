@@ -27,7 +27,6 @@ class UmschlagErzeugenTest extends Specification {
         def umschlag = ereignisstrom.registrieren(new ZustandWurdeGeändert(42L))
 
         then: "werde ich Meta-Daten um Umschlag des Ereignisses erhalten"
-        umschlag.metaDaten.version == 1
-        umschlag.metaDaten.identitätsmerkmal == id
+        umschlag.metaDaten == new JpaEreignisMetaDaten(id, 1)
     }
 }
