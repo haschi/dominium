@@ -9,10 +9,10 @@ class VersionsbereichTest extends Specification {
     @Unroll
     def "In einem Versionsbereich (#von, #bis) liegt #zahl innerhalb"() {
 
-        when:
+        when: "ich habe einen Versionsbereich von #von bis #bis"
         Versionsbereich versionsbereich = new Versionsbereich(von, bis)
 
-        then:
+        then: "liegt #zahl innerhalb des Versionsbereichs"
         versionsbereich.liegtInnerhalb zahl
 
         where:
