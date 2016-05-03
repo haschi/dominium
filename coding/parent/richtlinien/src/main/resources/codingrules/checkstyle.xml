@@ -72,7 +72,7 @@
         </module>
 
         <module name="AvoidStaticImport" >
-            <property name="excludes" value="java.lang.System.out,java.lang.Math.*, org.assertj.core.api.Assertions.*"/>
+            <property name="excludes" value="java.lang.System.out,java.lang.Math.*, org.assertj.core.api.Assertions.*, com.mscharhag.oleaster.runner.StaticRunnerSupport.*"/>
         </module>
 
         <module name="OneTopLevelClass"/>

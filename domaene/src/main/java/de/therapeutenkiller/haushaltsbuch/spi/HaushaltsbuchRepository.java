@@ -13,7 +13,7 @@ public interface HaushaltsbuchRepository {
 
     void hinzufügen(Haushaltsbuch haushaltsbuch);
 
-    void speichern(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff;
+    void speichern(Haushaltsbuch haushaltsbuch) throws KonkurrierenderZugriff, AggregatNichtGefunden;
 
     ImmutableCollection<UUID> alle();
 }

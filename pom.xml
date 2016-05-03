@@ -300,7 +300,11 @@
                 <scope>test</scope>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -331,6 +335,10 @@
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.1_spec</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
         </dependency>
     </dependencies>
 
@@ -445,7 +453,9 @@
                     <execution>
                         <id>default-compile</id>
                         <phase>compile</phase>
+
                         <configuration>
+
                             <compilerArguments>
                                 <d>${unwoven-classes.directory}</d>
                             </compilerArguments>
@@ -460,7 +470,7 @@
                             </compilerArguments>
                         </configuration>
                     </execution>
-                </executions>
+                </executions >
 
             </plugin>
 
@@ -469,14 +479,15 @@
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <configuration>
                     <proc>none</proc>
-
+                    <forceAjcCompile>true</forceAjcCompile>
+                    <verbose>true</verbose>
                     <!-- Bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=423795 -->
                     <showWeaveInfo>false</showWeaveInfo>
                     <complianceLevel>1.8</complianceLevel>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
 
-                    <detail>false</detail>
+                    <detail>true</detail>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>de.therapeutenkiller</groupId>
@@ -494,6 +505,8 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
+                            <proc>none</proc>
+                            <sources/>
                             <weaveDirectories>
                                 <weaveDirectory>${unwoven-classes.directory}</weaveDirectory>
                             </weaveDirectories>
@@ -507,31 +520,33 @@
                             <goal>test-compile</goal>
                         </goals>
                         <configuration>
+                            <proc>none</proc>
+                            <testSources/>
                             <weaveDirectories>
                                 <weaveDirectory>${unwoven-test-classes.directory}</weaveDirectory>
                             </weaveDirectories>
-                            <Xreweavable>false</Xreweavable>
+                            <Xreweavable>true</Xreweavable>
                         </configuration>
                     </execution>
                 </executions>
 
                 <dependencies>
-                    <dependency>
+                    <!--dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjtools</artifactId>
                         <version>${aspectj.version}</version>
-                    </dependency>
+                    </dependency-->
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjrt</artifactId>
                         <version>${aspectj.version}</version>
                     </dependency>
 
-                    <dependency>
+                    <!--dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
-                    </dependency>
+                    </dependency-->
                 </dependencies>
 
             </plugin>

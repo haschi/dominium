@@ -24,7 +24,7 @@ public class NullReferenzPrüfung {
         methode.argumentePrüfen(joinPoint.getArgs());
     }
 
-    @Before("execution(!private (!(is(InnerType) || is(AnonymousType)) && public).new(..)) && "
+    @Before("execution(!private (!(is(InnerType) || is(AnonymousType)) && *).new(..)) && "
             + "!within(de.therapeutenkiller.coding.aspekte..*)")
     public final void konstruktorArgumentePrüfen(final JoinPoint joinPoint) {
         final ConstructorSignature signature = (ConstructorSignature) joinPoint.getSignature();

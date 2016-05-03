@@ -1,19 +1,14 @@
 package de.therapeutenkiller.coding.annotation;
 
-import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.PackageElement;
@@ -22,7 +17,6 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 import java.io.Writer;
 import java.net.URL;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -31,8 +25,8 @@ import java.util.Set;
 public class BuilderProcessor extends AbstractProcessor {
 
     @Override
-    public boolean process(final Set<? extends TypeElement> set, final RoundEnvironment roundEnvironment) {
-        for (Element element : roundEnvironment.getElementsAnnotatedWith(Builder.class)) {
+    public final boolean process(final Set<? extends TypeElement> set, final RoundEnvironment roundEnvironment) {
+        for (final Element element : roundEnvironment.getElementsAnnotatedWith(Builder.class)) {
             final String message = String.format("Processing Class %s", element.getSimpleName(), element);
             this.processingEnv.getMessager().printMessage(Kind.NOTE, message);
 

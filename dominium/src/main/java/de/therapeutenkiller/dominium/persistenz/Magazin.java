@@ -67,7 +67,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
                     aggregat.getInitialversion(),
                     aggregat.getÄnderungen()
             );
-        } catch (EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
+        } catch (final EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
             throw new AggregatNichtGefunden(ereignisstromWurdeNichtGefunden);
         }
     }
