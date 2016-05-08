@@ -62,7 +62,6 @@ public class BuilderProcessor extends AbstractProcessor {
 
                         vc.put("felder", new Fields(classElement));
 
-                    // Template vt = ve.getTemplate("vorlage1.vm", "UTF-8");
                     Template vt = ve.getTemplate("builder.vm", "UTF-8");
                     processingEnv.getMessager().printMessage(Kind.NOTE, "1", element);
                     JavaFileObject jfo = null;

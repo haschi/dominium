@@ -10,7 +10,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl innerhalb"() {
 
         when: "ich habe einen Versionsbereich von #von bis #bis"
-        Versionsbereich versionsbereich = new Versionsbereich(von, bis)
+        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
 
         then: "liegt #zahl innerhalb des Versionsbereichs"
         versionsbereich.liegtInnerhalb zahl
@@ -29,7 +29,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl außerhalb"() {
 
         when:
-        Versionsbereich versionsbereich = new Versionsbereich(von, bis)
+        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
 
         then:
         !(versionsbereich.liegtInnerhalb(zahl))
@@ -59,7 +59,7 @@ class VersionsbereichTest extends Specification {
     def "Die untere Grenze des Versionsbereichs darf nicht größer als die obere Grenze sein"() {
 
         when:
-        new Versionsbereich(von, bis)
+        Versionsbereich.von von bis bis
 
         then:
         thrown exception
@@ -76,7 +76,7 @@ class VersionsbereichTest extends Specification {
 
     def "Die untere Grenze des Versionsbereichs muss eine positive Zahl sein"() {
         when:
-        new Versionsbereich(von, 100)
+        Versionsbereich.von von bis 100
 
         then:
         thrown IllegalArgumentException

@@ -37,7 +37,7 @@ public class EreignisstromPersistierenTest {
         this.entityManager.clear();
 
         final JpaEreignisstrom materialisiert = this.entityManager.find(JpaEreignisstrom.class, this.id);
-        assertThat(materialisiert).isEqualTo(ereignisstrom);
+        assertThat(materialisiert.equals(ereignisstrom)).isTrue();
     }
 
     @Test

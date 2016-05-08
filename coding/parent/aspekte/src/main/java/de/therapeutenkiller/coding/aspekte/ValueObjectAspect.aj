@@ -14,25 +14,34 @@ public aspect ValueObjectAspect {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
-    public boolean ValueObjectInterface.equals(Object that) {
+    public boolean ValueObjectInterface.equals(final Object that) {
+
+        final String[] exclude = this.getExcludeFields();
+
         return (that == this)
             || ((that instanceof ValueObjectInterface)
-            && (this.gleicht((ValueObjectInterface) that)));
+            && (((ValueObjectInterface) that).canEqual(this)
+            && EqualsBuilder.reflectionEquals(this, that, exclude)));
     }
 
-    private boolean ValueObjectInterface.gleicht(final ValueObjectInterface that) {
+    private String[] ValueObjectInterface.getExcludeFields() {
+        Class<?> klasse = this.getClass();
 
-        final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
-        final String[] exclude = annotation.exclude();
+        while (!(klasse.equals(Object.class))) {
+            final ValueObject annotation = klasse.getAnnotation(ValueObject.class);
 
-        return that.canEqual(this) && EqualsBuilder.reflectionEquals(this, that, exclude);
+            if (annotation != null) {
+                return annotation.exclude();
+            }
+
+            klasse = klasse.getSuperclass();
+        }
+
+        throw new IllegalStateException("Internal Aspect Failure");
     }
 
     public final int ValueObjectInterface.hashCode() {
-        final ValueObject annotation = this.getClass().getAnnotation(ValueObject.class);
-        final String[] exclude = annotation.exclude();
-
-        return HashCodeBuilder.reflectionHashCode(this, exclude);
+        return HashCodeBuilder.reflectionHashCode(this, this.getExcludeFields());
     }
 
     // s. http://www.artima.com/lejava/articles/equality.html
