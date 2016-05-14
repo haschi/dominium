@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 @Entity
+@ValueObject(exclude = {"id"})
 public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;

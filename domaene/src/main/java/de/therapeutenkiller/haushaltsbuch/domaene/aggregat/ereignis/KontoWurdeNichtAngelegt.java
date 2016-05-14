@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis;
 
+import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
+@ValueObject(exclude = {"id"})
 public final class KontoWurdeNichtAngelegt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;

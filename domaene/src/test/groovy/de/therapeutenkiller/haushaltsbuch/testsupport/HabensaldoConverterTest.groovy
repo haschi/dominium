@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.testsupport
 
+import de.therapeutenkiller.coding.aspekte.DarfNullSein
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Habensaldo
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.HabensaldoConverter
 import spock.lang.Specification
@@ -28,7 +29,9 @@ class HabensaldoConverterTest extends Specification {
     }
 
     @Unroll
-    def "Ungültige Eingabe #zeichenfolge transformieren"(final String zeichenfolge, final Class ausnahme) {
+    def "Ungültige Eingabe #zeichenfolge transformieren"(
+            @DarfNullSein final String zeichenfolge,
+            final Class ausnahme) {
 
         given: "Angenommen ich habe einen HabensaldoConverter"
         def converter = new HabensaldoConverter();

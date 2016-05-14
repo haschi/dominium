@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.testsupport
 
+import de.therapeutenkiller.coding.aspekte.DarfNullSein
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.SollsaldoConverter
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -29,7 +30,7 @@ public class SollsaldoConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung der ungültigen Eingabe #zeichenfolge in ein Sollsaldo"(
-            final String zeichenfolge,
+            @DarfNullSein final String zeichenfolge,
             final Class ausnahme) {
 
         given: "Angenommen ich habe einen SollsaldoConverter"

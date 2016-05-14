@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.testsupport
 
+import de.therapeutenkiller.coding.aspekte.DarfNullSein
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.MoneyConverter
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -27,7 +28,9 @@ class MoneyConverterTest  extends Specification {
     }
 
     @Unroll
-    def "Umwandlung von #zeichenfolge führt zu #ausnahme"(final String zeichenfolge, final Class ausnahme) {
+    def "Umwandlung von #zeichenfolge führt zu #ausnahme"(
+            @DarfNullSein final String zeichenfolge,
+            final Class ausnahme) {
 
         given: "Angenommen ich habe einen MoneyConverter"
         def converter = new MoneyConverter();

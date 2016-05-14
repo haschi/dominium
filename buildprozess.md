@@ -2,7 +2,7 @@ Hinweise zum Build-Prozess
 ==========================
 
 Der Build-Prozess ist (wer hätte das gedacht) nicht trivial. Zur Realisierung werden Annotation Processing, Aspekte
-Orientiert Programmierung (AOP) und Groovy verwendet. Dieses Dokument Listet die problematischen Werkzeuge auf und
+Orientiert Programmierung (AOP) und Groovy verwendet. Dieser Artikel listet die problematischen Werkzeuge auf und
 erklärt die wichtigsten Fallstricke, die bei deren Verwendung zu beachten sind:
 
 Compiler mit Annotation Processing
@@ -28,3 +28,6 @@ Groovy
 
 Groovy Compiler wird im zweiten Schritt in der Übersetzungsphase benutzt. Groovy wird für das Spock-Framework verwendet,
 mit dem die Tests geschrieben werden.
+
+Joint Compilation ist nicht vorgesehen. Groovy sollte ausschließlich im Test verwendet werden. Sollen für Java und
+Groovy beim Test gemeinsame Klassen verwendet werden, müssen diese in Java vorliegen.

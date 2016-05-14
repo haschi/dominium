@@ -10,7 +10,7 @@ import java.util.Locale;
 
 @Builder
 @ValueObject
-public class Buchungssatz {
+public final class Buchungssatz {
 
     private final String sollkonto;
     private final String habenkonto;
@@ -28,27 +28,27 @@ public class Buchungssatz {
         this.währungsbetrag = währungsbetrag;
     }
 
-    public final boolean hatSollkonto(final String konto) {
+    public boolean hatSollkonto(final String konto) {
         return this.sollkonto.equals(konto);
     }
 
-    public final boolean hatHabenkonto(final String konto) {
+    public boolean hatHabenkonto(final String konto) {
         return this.habenkonto.equals(konto);
     }
 
-    public final String getSollkonto() {
+    public String getSollkonto() {
         return this.sollkonto;
     }
 
-    public final String getHabenkonto() {
+    public String getHabenkonto() {
         return this.habenkonto;
     }
 
-    public final MonetaryAmount getWährungsbetrag() {
+    public MonetaryAmount getWährungsbetrag() {
         return this.währungsbetrag;
     }
 
-    public final boolean istAnfangsbestandFür(final String konto) {
+    public boolean istAnfangsbestandFür(final String konto) {
         return (this.habenkonto.equals(konto)
                 && this.sollkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()))
                 || (this.habenkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung())
@@ -56,7 +56,7 @@ public class Buchungssatz {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final String betrag = format.format(this.währungsbetrag); // NOPMD LoD TODO
 
