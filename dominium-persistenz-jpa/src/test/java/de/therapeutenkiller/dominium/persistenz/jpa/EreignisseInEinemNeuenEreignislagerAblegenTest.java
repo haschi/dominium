@@ -38,7 +38,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
 
         final EntityManager entityManager = this.datenbankRegel.getEntityManager();
 
-        final JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store = new JpaEreignislager<>(
+        final JpaEreignislager<TestAggregatEreignisziel> store = new JpaEreignislager<>(
                 entityManager
         );
 

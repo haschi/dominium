@@ -22,8 +22,7 @@ import java.util.stream.Stream;
  * Arbeitsspeicher verwaltet. Er wird Hauptsächlich für Tests verwendet.
  *
  */
-public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
-        implements Ereignislager<E, I, T> {
+public class MemoryEreignislager<I, T> implements Ereignislager<I, T> {
 
     private final Map<I, MemoryEreignisstrom<I>> ereignisströme = new ConcurrentHashMap<>();
     private final List<Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();

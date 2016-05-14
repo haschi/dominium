@@ -12,7 +12,7 @@ import spock.lang.Unroll
 class EreignisseSpeichernTest extends Specification {
 
     UUID identitätsmerkmal = UUID.randomUUID();
-    AtomEreignisLager<TestAggregatEreignis, TestAggregatEreignisziel> lager = new AtomEreignisLager<>()
+    AtomEreignisLager<TestAggregatEreignisziel> lager = new AtomEreignisLager<>()
 
     def "Leeren Ereignis-Strom lesen"() {
         when:

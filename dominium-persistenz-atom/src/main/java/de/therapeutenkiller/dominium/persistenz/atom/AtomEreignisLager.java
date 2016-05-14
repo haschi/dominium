@@ -29,8 +29,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AtomEreignisLager<E extends Domänenereignis<T>, T>
-        implements Ereignislager<E, UUID, T> {
+public class AtomEreignisLager<T>        implements Ereignislager<UUID, T> {
 
     final ObjectMapper mapper;
     final OkHttpClient client;
@@ -173,7 +172,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
         }
     }
 
-    private E ereignisLaden(final Eintrag eintrag) {
+    private Domänenereignis<T> ereignisLaden(final Eintrag eintrag) {
         final Request request = new Builder()
                 .header("Accept", "application/json")
                 .url(eintrag.id.toString())
@@ -184,7 +183,7 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
             final String json = response.body().string();
             final Class<?> ereignistyp = this.ereignistypAusEintrag(eintrag);
             final Object event = this.mapper.readValue(json, ereignistyp);
-            return (E)event;
+            return (Domänenereignis<T>) event;
 
         } catch (final IOException | ClassNotFoundException ausnahme) {
             throw new EreignisstromNichtLesbar(ausnahme);

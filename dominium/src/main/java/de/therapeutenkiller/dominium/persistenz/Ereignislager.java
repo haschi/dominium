@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Dauerhafte Ablage für Domänenereignisse.
  *
  */
-public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
+public interface Ereignislager<I, T> {
 
     void neuenEreignisstromErzeugen(
             I identitätsmerkmal,

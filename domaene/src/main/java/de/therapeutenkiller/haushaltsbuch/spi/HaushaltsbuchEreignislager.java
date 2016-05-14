@@ -1,6 +1,5 @@
 package de.therapeutenkiller.haushaltsbuch.spi;
 
-import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
@@ -16,6 +15,5 @@ public class HaushaltsbuchEreignislager extends JpaEreignislager<Haushaltsbuch, 
 }
 */
 
-public interface HaushaltsbuchEreignislager
-        extends Ereignislager<Domänenereignis<HaushaltsbuchEreignisziel>, UUID, HaushaltsbuchEreignisziel> {
+public interface HaushaltsbuchEreignislager extends Ereignislager<UUID, HaushaltsbuchEreignisziel> {
 }

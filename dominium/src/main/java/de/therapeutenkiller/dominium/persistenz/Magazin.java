@@ -17,11 +17,11 @@ import java.util.Optional;
 public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
         implements Repository<A,I,T> {
 
-    private final Ereignislager<Domänenereignis<T>, I, T> ereignislager;
+    private final Ereignislager<I, T> ereignislager;
     private final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
 
     protected Magazin(
-            final Ereignislager<Domänenereignis<T>, I, T> ereignislager,
+            final Ereignislager<I, T> ereignislager,
             final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager) {
 
         super();
@@ -88,7 +88,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
         this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
     }
 
-    protected Ereignislager<Domänenereignis<T>, I, T> getEreignislager() {
+    protected Ereignislager<I, T> getEreignislager() {
         return this.ereignislager;
     }
 }

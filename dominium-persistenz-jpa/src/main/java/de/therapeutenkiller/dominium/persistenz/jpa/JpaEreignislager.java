@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SuppressWarnings("checkstyle:designforextension")
-public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereignislager<E, UUID, T> {
+public class JpaEreignislager<T> implements Ereignislager<UUID, T> {
 
     private final EntityManager entityManager;
 

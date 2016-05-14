@@ -32,7 +32,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     private static final long[] EREIGNIS_NUTZLAST = {42L, 43L, 44L, 45L};
 
     private EntityManager entityManager;
-    private JpaEreignislager<TestAggregatEreignis, TestAggregatEreignisziel> store;
+    private JpaEreignislager<TestAggregatEreignisziel> store;
 
     private final UUID id = UUID.randomUUID();
 
