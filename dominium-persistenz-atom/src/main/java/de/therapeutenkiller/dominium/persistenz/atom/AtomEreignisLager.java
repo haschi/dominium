@@ -200,4 +200,9 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     public final Stream<UUID> getEreignisströme() {
         return null;
     }
+
+    @Override
+    public final boolean existiertEreignisStrom(final UUID identitätsmerkmal) {
+        return false;
+    }
 }
