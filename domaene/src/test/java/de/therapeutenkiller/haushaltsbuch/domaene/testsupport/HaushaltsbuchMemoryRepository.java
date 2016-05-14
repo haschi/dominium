@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
@@ -32,7 +33,7 @@ public class HaushaltsbuchMemoryRepository
         return new Haushaltsbuch(identitätsmerkmal);
     }
 
-    public final List<HaushaltsbuchEreignis> getStream(final UUID haushaltsbuchId) {
+    public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {
         return this.getEreignislager().getEreignisliste(haushaltsbuchId, Versionsbereich.ALLE_VERSIONEN);
     }
 

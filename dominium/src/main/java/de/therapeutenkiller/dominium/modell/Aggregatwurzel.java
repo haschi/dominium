@@ -14,7 +14,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E ext
         extends Entität<I>
         implements SchnappschussQuelle<A, I> {
 
-    private final List<E> änderungen = new ArrayList<>();
+    private final List<Domänenereignis<T>> änderungen = new ArrayList<>();
     private long version;
     private long initialversion;
 
@@ -28,7 +28,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E ext
         this.version = schnappschuss.getVersion();
     }
 
-    protected final void bewirkt(final E ereignis) {
+    protected final void bewirkt(final Domänenereignis<T> ereignis) {
         this.änderungen.add(ereignis);
         this.anwenden(ereignis);
     }
@@ -38,18 +38,18 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E ext
         ereignis.anwendenAuf(this.getSelf());
     }
 
-    private void anwenden(final List<E> ereignisse) {
-        for (final E ereignis : ereignisse) {
+    private void anwenden(final List<Domänenereignis<T>> ereignisse) {
+        for (final Domänenereignis<T> ereignis : ereignisse) {
             this.anwenden(ereignis);
         }
     }
 
-    public final void aktualisieren(final List<E> stream) {
+    public final void aktualisieren(final List<Domänenereignis<T>> stream) {
         this.anwenden(stream);
         this.setInitialversion(this.getVersion());
     }
 
-    public final List<E> getÄnderungen() {
+    public final List<Domänenereignis<T>> getÄnderungen() {
         return this.änderungen;
     }
 

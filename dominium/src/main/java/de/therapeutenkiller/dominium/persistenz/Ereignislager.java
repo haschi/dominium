@@ -14,14 +14,14 @@ public interface Ereignislager<E extends Domänenereignis<T>, I, T> {
 
     void neuenEreignisstromErzeugen(
             I identitätsmerkmal,
-            Collection<E> domänenereignisse);
+            Collection<Domänenereignis<T>> domänenereignisse);
 
     void ereignisseDemStromHinzufügen(
             I identitätsmerkmal,
-            long erwarteteVersion, Collection<E> domänenereignisse)
+            long erwarteteVersion, Collection<Domänenereignis<T>> domänenereignisse)
         throws KonkurrierenderZugriff, EreignisstromWurdeNichtGefunden;
 
-    List<E> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
+    List<Domänenereignis<T>> getEreignisliste(I identitätsmerkmal, Versionsbereich bereich);
 
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.

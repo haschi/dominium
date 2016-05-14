@@ -44,7 +44,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
         final A aggregat = schnappschuss.map(Schnappschuss::wiederherstellen)
             .orElse(this.neuesAggregatErzeugen(identitätsmerkmal));
 
-        final List<E> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
+        final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
 
         aggregat.aktualisieren(stream);
 
@@ -55,7 +55,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
 
     @Override
     public void hinzufügen(final A aggregat) {
-        final List<E> änderungen = aggregat.getÄnderungen();
+        final List<Domänenereignis<T>> änderungen = aggregat.getÄnderungen();
         this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
     }
 

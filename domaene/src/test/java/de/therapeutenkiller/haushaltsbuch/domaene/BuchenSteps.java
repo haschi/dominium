@@ -4,11 +4,12 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
 import de.therapeutenkiller.haushaltsbuch.domaene.testsupport.DieWelt;
@@ -64,7 +65,7 @@ public final class BuchenSteps {
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
 
-        final List<HaushaltsbuchEreignis> stream = this.welt.getStream(
+        final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream = this.welt.getStream(
                 this.welt.getAktuelleHaushaltsbuchId());
 
         assertThat(stream).contains(fehlermeldung);
@@ -73,7 +74,7 @@ public final class BuchenSteps {
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz) {
 
-        final List<HaushaltsbuchEreignis> stream = this.welt.getStream(
+        final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream = this.welt.getStream(
                 this.welt.getAktuelleHaushaltsbuchId());
 
         final List<Buchungssatz> buchungssätze = stream.stream()

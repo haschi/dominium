@@ -33,7 +33,7 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
 
     public void neuenEreignisstromErzeugen(
             final UUID identitätsmerkmal,
-            final Collection<E> domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(identitätsmerkmal);
 
         for (final Domänenereignis<T> ereignis : domänenereignisse) {
@@ -49,7 +49,7 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
     public void ereignisseDemStromHinzufügen(
             final UUID identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<E> domänenereignisse)
+            final Collection<Domänenereignis<T>> domänenereignisse)
             throws KonkurrierenderZugriff {
 
         final JpaEreignisstrom strom = this.entityManager.find(JpaEreignisstrom.class, identitätsmerkmal);
@@ -58,12 +58,12 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
             throw new KonkurrierenderZugriff(erwarteteVersion, strom.getVersion());
         }
 
-        for (final E ereignis : domänenereignisse) {
+        for (final Domänenereignis<T> ereignis : domänenereignisse) {
             this.entityManager.persist(strom.registrieren(ereignis));
         }
     }
 
-    public List<E> getEreignisliste(final UUID identitätsmerkmal, final Versionsbereich bereich) {
+    public List<Domänenereignis<T>> getEreignisliste(final UUID identitätsmerkmal, final Versionsbereich bereich) {
         final TypedQuery<JpaDomänenereignisUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaDomänenereignisUmschlag i "
                         + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
@@ -79,7 +79,7 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
 
         return resultList.stream()
-                .map(JpaDomänenereignisUmschlag<E>::öffnen)
+                .map(JpaDomänenereignisUmschlag<Domänenereignis<T>>::öffnen)
                 .collect(Collectors.toList());
     }
 

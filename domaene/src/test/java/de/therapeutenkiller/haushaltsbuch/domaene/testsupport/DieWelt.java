@@ -1,6 +1,7 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ public class DieWelt {
         this.repository = repository;
     }
 
-    public final List<HaushaltsbuchEreignis> aktuellerEreignisstrom() {
+    public final List<Domänenereignis<HaushaltsbuchEreignisziel>> aktuellerEreignisstrom() {
         return this.getStream(this.getAktuelleHaushaltsbuchId());
     }
 
@@ -31,7 +32,7 @@ public class DieWelt {
         this.manager.fireEvent(kommando);
     }
 
-    public final List<HaushaltsbuchEreignis> getStream(final UUID haushaltsbuchId) {
+    public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {
         return this.repository.getStream(haushaltsbuchId);
     }
 

@@ -46,15 +46,15 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     @Override
     public final void neuenEreignisstromErzeugen(
             final UUID identitätsmerkmal,
-            final Collection<E> domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
 
         this.ereignisseSpeichern(identitätsmerkmal, domänenereignisse);
     }
 
     private void ereignisseSpeichern(
             final UUID identitätsmerkmal,
-            final Collection<E> domänenereignisse) {
-        for (final E ereignis : domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
+        for (final Domänenereignis<T> ereignis : domänenereignisse) {
 
             final String json;
             try {
@@ -99,13 +99,13 @@ public class AtomEreignisLager<E extends Domänenereignis<T>, T>
     public final void ereignisseDemStromHinzufügen(
             final UUID identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<E> domänenereignisse) throws KonkurrierenderZugriff {
+            final Collection<Domänenereignis<T>> domänenereignisse) throws KonkurrierenderZugriff {
 
         this.ereignisseSpeichern(identitätsmerkmal, domänenereignisse);
     }
 
     @Override
-    public final List<E> getEreignisliste(
+    public final List<Domänenereignis<T>> getEreignisliste(
             final UUID identitätsmerkmal,
             final Versionsbereich bereich) {
 

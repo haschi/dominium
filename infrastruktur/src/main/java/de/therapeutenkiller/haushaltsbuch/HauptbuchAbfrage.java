@@ -2,7 +2,6 @@ package de.therapeutenkiller.haushaltsbuch;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchEreignislager;
 
@@ -16,7 +15,7 @@ public class HauptbuchAbfrage {
     private HaushaltsbuchEreignislager ereignislager;
 
     public HauptbuchAnsicht abfragen(final UUID haushaltsbuchId) {
-        final List<HaushaltsbuchEreignis> ereignisse = this.ereignislager.getEreignisliste(
+        final List<Domänenereignis<HaushaltsbuchEreignisziel>> ereignisse = this.ereignislager.getEreignisliste(
                 haushaltsbuchId,
                 Versionsbereich.ALLE_VERSIONEN);
 

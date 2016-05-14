@@ -4,12 +4,13 @@ import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.haushaltsbuch.abfrage.AlleKonten;
 import de.therapeutenkiller.haushaltsbuch.abfrage.SaldoAbfrage;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.api.kommando.LegeKontoAn;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.KeineRegel;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Konto;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Saldo;
@@ -60,7 +61,7 @@ public final class KontoErstellenSteps {
         final UUID haushaltsbuchId = this.kontext.getAktuelleHaushaltsbuchId();
         final KontoWurdeAngelegt sollwert = new KontoWurdeAngelegt(kontoname, Kontoart.Aktiv);
 
-        final List<HaushaltsbuchEreignis> ereignisse = this.kontext.getStream(haushaltsbuchId);
+        final List<Domänenereignis<HaushaltsbuchEreignisziel>> ereignisse = this.kontext.getStream(haushaltsbuchId);
         assertThat(ereignisse).contains(sollwert); // NOPMD AssertJ OK TODO
     }
 
@@ -82,7 +83,7 @@ public final class KontoErstellenSteps {
                 kontoname,
                 Kontoart.Aktiv);
 
-        final List<HaushaltsbuchEreignis> ereignisse = this.kontext.getStream(
+        final List<Domänenereignis<HaushaltsbuchEreignisziel>> ereignisse = this.kontext.getStream(
                 this.kontext.getAktuelleHaushaltsbuchId());
 
         assertThat(ereignisse).contains(expected); // NOPMD LoD AssertJ OK TODO

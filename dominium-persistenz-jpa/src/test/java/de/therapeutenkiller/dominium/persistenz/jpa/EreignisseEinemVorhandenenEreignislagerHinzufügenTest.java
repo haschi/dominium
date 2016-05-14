@@ -1,5 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
@@ -43,7 +44,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
         this.entityManager = this.datenbankRegel.getEntityManager();
         this.store = new JpaEreignislager<>(this.entityManager);
-        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<TestAggregatEreignis>() {
+        this.store.neuenEreignisstromErzeugen(this.id, new ArrayList<Domänenereignis<TestAggregatEreignisziel>>() {
             {
                 this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0]));
                 this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]));
@@ -57,7 +58,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
         this.store.ereignisseDemStromHinzufügen(
                 this.id,
                 2L,
-                new ArrayList<TestAggregatEreignis>() {
+                new ArrayList<Domänenereignis<TestAggregatEreignisziel>>() {
                     {
                         this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]));
                         this.add(new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3]));
@@ -89,7 +90,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
     }
 
     private void dann_werden_die_ereignisse_dem_ereignisstrom_hinzugefügt_worden_sein() {
-        final List<TestAggregatEreignis> ereignisListe = this.store.getEreignisliste(
+        final List<Domänenereignis<TestAggregatEreignisziel>> ereignisListe = this.store.getEreignisliste(
                 this.id,
                 Versionsbereich.ALLE_VERSIONEN);
 

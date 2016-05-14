@@ -26,7 +26,7 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
         implements Ereignislager<E, I, T> {
 
     private final Map<I, MemoryEreignisstrom<I>> ereignisströme = new ConcurrentHashMap<>();
-    private final List<Umschlag<E, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
+    private final List<Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>>> ereignisse = new ArrayList<>();
 
     public MemoryEreignislager() {
         super();
@@ -35,7 +35,7 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
     @Override
     public final void neuenEreignisstromErzeugen(
             final I identitätsmerkmal,
-            final Collection<E> domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
 
         if (this.ereignisströme.containsKey(identitätsmerkmal)) {
             throw new IllegalArgumentException();
@@ -50,7 +50,7 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
     public final void ereignisseDemStromHinzufügen(
             final I identitätsmerkmal,
             final long erwarteteVersion,
-            final Collection<E> domänenereignisse)
+            final Collection<Domänenereignis<T>> domänenereignisse)
             throws KonkurrierenderZugriff, EreignisstromWurdeNichtGefunden {
 
         if (!this.ereignisströme.containsKey(identitätsmerkmal)) {
@@ -65,8 +65,8 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
 
     private void ereignisseHinzufügen(
             final MemoryEreignisstrom<I> ereignisstrom,
-            final Collection<E> domänenereignisse) {
-        for (final E ereignis : domänenereignisse) {
+            final Collection<Domänenereignis<T>> domänenereignisse) {
+        for (final Domänenereignis<T> ereignis : domänenereignisse) {
             this.ereignisse.add(ereignisstrom.registrieren(ereignis));
         }
     }
@@ -82,9 +82,9 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
     }
 
     @Override
-    public final List<E> getEreignisliste(final I identitätsmerkmal, final Versionsbereich bereich) {
+    public final List<Domänenereignis<T>> getEreignisliste(final I identitätsmerkmal, final Versionsbereich bereich) {
 
-        final Comparator<Umschlag<E, MemoryEreignisMetaDaten<I>>>
+        final Comparator<Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>>>
                 byVersion = (left, right) -> Long.compare(
                     left.getMetaDaten().version,
                     right.getMetaDaten().version);
@@ -99,7 +99,7 @@ public class MemoryEreignislager<E extends Domänenereignis<T>, I, T>
 
     private boolean gehörtZumStream(
             final I identitätsmerkmal,
-            final Umschlag<E, MemoryEreignisMetaDaten<I>> ereignis) {
+            final Umschlag<Domänenereignis<T>, MemoryEreignisMetaDaten<I>> ereignis) {
 
         return ereignis.getMetaDaten().ereignisstrom.equals(identitätsmerkmal);
     }
