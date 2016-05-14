@@ -3,6 +3,13 @@ package de.therapeutenkiller.dominium.modell;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @param <A> Der Typ einer konkreten Ableitung von Aggregatwurzel.
+ * @param <E> Der Basistyp der Domänenereignisse, die das Aggregat erzeugt bzw. konsumiert.
+ * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
+ * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
+ */
 public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T>
         extends Entität<I>
         implements SchnappschussQuelle<A, I> {
@@ -26,7 +33,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E ext
         this.anwenden(ereignis);
     }
 
-    public final void anwenden(final E ereignis) {
+    public final void anwenden(final Domänenereignis<T> ereignis) {
         this.version = this.version + 1L;
         ereignis.anwendenAuf(this.getSelf());
     }
