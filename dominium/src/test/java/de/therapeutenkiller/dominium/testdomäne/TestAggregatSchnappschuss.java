@@ -63,7 +63,7 @@ public final class TestAggregatSchnappschuss extends Schnappschuss<TestAggregat,
         }
 
         public TestAggregatSchnappschussBuilder aggregat(
-            final Aggregatwurzel<TestAggregat, TestAggregatEreignis, UUID, TestAggregatEreignisziel> testAggregat) {
+            final Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel> testAggregat) {
             return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
                 .version(testAggregat.getVersion());
         }

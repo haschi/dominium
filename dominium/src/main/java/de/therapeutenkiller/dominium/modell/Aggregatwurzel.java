@@ -6,11 +6,10 @@ import java.util.List;
 /**
  *
  * @param <A> Der Typ einer konkreten Ableitung von Aggregatwurzel.
- * @param <E> Der Basistyp der Domänenereignisse, die das Aggregat erzeugt bzw. konsumiert.
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
  */
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T>
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T>
         extends Entität<I>
         implements SchnappschussQuelle<A, I> {
 

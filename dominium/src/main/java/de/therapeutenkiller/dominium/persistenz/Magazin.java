@@ -10,19 +10,18 @@ import java.util.Optional;
 /**
  *
  * @param <A> Der Typ der Aggregate, die im Magazin abgelegt werden.
- * @param <E> Der Typ der Domänenereignisse, die vom Aggregat ausgesendet werden
  * @param <I> Der Typ des Identitätsmerkmals der Aggregate
  * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
  */
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Domänenereignis<T>, I, T>
-        implements Repository<A,E,I,T> {
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
+        implements Repository<A,I,T> {
 
-    private final Ereignislager<E, I, T> ereignislager;
+    private final Ereignislager<Domänenereignis<T>, I, T> ereignislager;
     private final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
 
     protected Magazin(
-            final Ereignislager<E, I, T> ereignislager,
+            final Ereignislager<Domänenereignis<T>, I, T> ereignislager,
             final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager) {
 
         super();
@@ -89,7 +88,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, E, I, T>, E extends Do
         this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
     }
 
-    protected Ereignislager<E, I, T> getEreignislager() {
+    protected Ereignislager<Domänenereignis<T>, I, T> getEreignislager() {
         return this.ereignislager;
     }
 }

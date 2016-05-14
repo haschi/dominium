@@ -6,7 +6,6 @@ import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository
-        extends Magazin<Haushaltsbuch, HaushaltsbuchEreignis, UUID, HaushaltsbuchEreignisziel>
+        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
         implements HaushaltsbuchRepository {
 
     @Inject
