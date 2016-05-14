@@ -7,11 +7,9 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
 
-@Entity
-@ValueObject(exclude = {"id"})
+@ValueObject
 public final class KontoWurdeNichtAngelegt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -1,12 +1,14 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import java.io.IOException;
 
 /**
  * Ein DomänenereignisUmschlag für Domänenereignisse zum Speichern in einer
@@ -20,8 +22,11 @@ public class JpaDomänenereignisUmschlag<E>
     @EmbeddedId
     private JpaEreignisMetaDaten meta;
 
-    @OneToOne(targetEntity = JpaDomänenereignis.class)
-    public E ereignis;
+    @Column
+    private String ereignis;
+
+    @Column
+    private String klasse;
 
     public JpaDomänenereignisUmschlag(
             final E ereignis,
@@ -29,15 +34,17 @@ public class JpaDomänenereignisUmschlag<E>
         super();
 
         this.meta = meta;
-        this.ereignis = ereignis;
+        klasse = ereignis.getClass().getCanonicalName();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            this.ereignis = mapper.writeValueAsString(ereignis);
+        } catch (final JsonProcessingException e) {
+            throw new Serialisierungsfehler(e);
+        }
     }
 
     public JpaDomänenereignisUmschlag() {
         super();
-    }
-
-    public final E getEreignis() {
-        return this.ereignis;
     }
 
     @Override
@@ -47,13 +54,12 @@ public class JpaDomänenereignisUmschlag<E>
 
     @Override
     public final E öffnen() {
-        return this.getEreignis();
-    }
-
-    @Override
-    public final String toString() {
-        return new ToStringBuilder(this)
-                .append("meta", this.meta)
-                .toString();
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            final Class<?> k = Class.forName(this.klasse);
+            return (E)mapper.readValue(this.ereignis, k);
+        } catch (final ClassNotFoundException | IOException e) {
+            throw new Serialisierungsfehler(e);
+        }
     }
 }

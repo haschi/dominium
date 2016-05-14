@@ -32,7 +32,6 @@ public class DomänenereignisUmschlagPersistierenTest {
                 ereignis,
                 meta);
 
-        this.entityManager.persist(ereignis);
         this.entityManager.persist(umschlag);
 
         this.entityManager.flush();

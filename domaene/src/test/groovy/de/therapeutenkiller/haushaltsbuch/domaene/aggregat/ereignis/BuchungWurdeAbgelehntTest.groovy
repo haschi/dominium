@@ -6,11 +6,7 @@ import spock.lang.Specification
 class BuchungWurdeAbgelehntTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier
-                .forClass(BuchungWurdeAbgelehnt)
-                .withIgnoredFields("id")
-                .withRedefinedSuperclass()
-                .verify()
+        expect: EqualsVerifier.forClass BuchungWurdeAbgelehnt withRedefinedSuperclass() verify()
     }
 
     def "Die Methode toString() liefert die Fehlermeldung zurück"() {

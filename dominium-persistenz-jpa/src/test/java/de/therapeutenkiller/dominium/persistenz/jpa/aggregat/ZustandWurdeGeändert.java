@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
 
-@Entity
 @ValueObject(exclude = {"id"})
 public class ZustandWurdeGeändert extends TestAggregatEreignis {
 

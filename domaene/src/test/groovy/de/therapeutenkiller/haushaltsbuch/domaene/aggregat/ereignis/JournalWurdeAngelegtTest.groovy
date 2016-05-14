@@ -7,6 +7,6 @@ class JournalWurdeAngelegtTest extends Specification {
 
     def "Erfüllt die equals und hashCode Spezifikation"() {
         expect:
-        EqualsVerifier.forClass JournalWurdeAngelegt withIgnoredFields "id" withRedefinedSuperclass() verify()
+        EqualsVerifier.forClass JournalWurdeAngelegt withRedefinedSuperclass() verify()
     }
 }

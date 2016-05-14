@@ -37,7 +37,6 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
         final JpaEreignisstrom ereignisstrom = new JpaEreignisstrom(identitätsmerkmal);
 
         for (final Domänenereignis<T> ereignis : domänenereignisse) {
-            this.entityManager.persist(ereignis);
             this.entityManager.persist(ereignisstrom.registrieren(ereignis));
         }
 
@@ -60,7 +59,6 @@ public class JpaEreignislager<E extends Domänenereignis<T>, T> implements Ereig
         }
 
         for (final E ereignis : domänenereignisse) {
-            this.entityManager.persist(ereignis);
             this.entityManager.persist(strom.registrieren(ereignis));
         }
     }

@@ -1,12 +1,10 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
-import de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignis;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class TestAggregatEreignis extends JpaDomänenereignis<TestAggregatEreignisziel> {
+public abstract class TestAggregatEreignis extends Domänenereignis<TestAggregatEreignisziel> {
 }

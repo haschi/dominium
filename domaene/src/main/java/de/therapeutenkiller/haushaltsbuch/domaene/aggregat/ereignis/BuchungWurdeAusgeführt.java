@@ -10,12 +10,10 @@ import org.javamoney.moneta.Money;
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Locale;
 
-@Entity
-@ValueObject(exclude = {"id"})
+@ValueObject
 public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;
