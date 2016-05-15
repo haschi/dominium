@@ -33,7 +33,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         this.anwenden(ereignis);
     }
 
-    public final void anwenden(final Domänenereignis<T> ereignis) {
+    private void anwenden(final Domänenereignis<T> ereignis) {
         this.version = this.version.nachfolger();
         ereignis.anwendenAuf(this.getSelf());
     }
