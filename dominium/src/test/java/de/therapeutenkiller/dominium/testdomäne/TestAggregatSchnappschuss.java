@@ -41,7 +41,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
     }
 
     public static final class TestAggregatSchnappschussBuilder {
-        TestAggregatSchnappschuss instanz = new TestAggregatSchnappschuss();
+        final TestAggregatSchnappschuss instanz = new TestAggregatSchnappschuss();
 
         public TestAggregatSchnappschussBuilder payload(final long payload) {
             this.instanz.payload = payload;
