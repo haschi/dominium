@@ -20,7 +20,7 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private JpaSchnappschussLager<TestSchnappschuss, TestAggregat> store;
+    private JpaSchnappschussLager<TestSchnappschuss> store;
     private final TestUhr uhr = new TestUhr();
     private final UUID id = UUID.randomUUID();
 
@@ -39,8 +39,7 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
         this.dann_werde_ich_keinen_schnappschuss_erhalten(schnappschuss.orElse(TestSchnappschuss.LEER));
     }
 
-    private void dann_werde_ich_keinen_schnappschuss_erhalten(
-            final Schnappschuss<TestAggregat, UUID> schnappschuss) {
+    private void dann_werde_ich_keinen_schnappschuss_erhalten(final Schnappschuss<UUID> schnappschuss) {
 
         assertThat(schnappschuss).isEqualTo(TestSchnappschuss.LEER);
     }

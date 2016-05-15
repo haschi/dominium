@@ -8,7 +8,7 @@ import de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss;
 import java.util.Set;
 import java.util.UUID;
 
-public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushaltsbuch> {
+public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss {
 
     private static final long serialVersionUID = -2656820980971196374L;
 

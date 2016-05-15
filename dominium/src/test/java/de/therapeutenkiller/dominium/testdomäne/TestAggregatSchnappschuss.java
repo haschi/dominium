@@ -7,7 +7,7 @@ import de.therapeutenkiller.dominium.modell.Version;
 import java.util.UUID;
 
 @ValueObject
-public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
+public final class TestAggregatSchnappschuss implements Schnappschuss<UUID> {
 
     private static final long serialVersionUID = -4081721724050392813L;
 

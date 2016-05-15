@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
-        implements SchnappschussLager<S, A, UUID> {
+public class JpaSchnappschussLager<S extends Schnappschuss<UUID>>
+        implements SchnappschussLager<S, UUID> {
 
     private final EntityManager entityManager;
     private final Uhr uhr;

@@ -16,15 +16,15 @@ import java.util.Optional;
  * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
  */
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<A, I>>
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<I>>
         implements Repository<A, I, T, S> {
 
     private final Ereignislager<I, T> ereignislager;
-    private final SchnappschussLager<S, A, I> schnappschussLager;
+    private final SchnappschussLager<S, I> schnappschussLager;
 
     protected Magazin(
             final Ereignislager<I, T> ereignislager,
-            final SchnappschussLager<S, A, I> schnappschussLager) {
+            final SchnappschussLager<S, I> schnappschussLager) {
 
         super();
 

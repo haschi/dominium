@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MemorySchnappschussLager<S extends Schnappschuss<A, I>, A, I>
-        implements SchnappschussLager<S, A, I> {
+public class MemorySchnappschussLager<S extends Schnappschuss<I>, I>
+        implements SchnappschussLager<S, I> {
 
     private final Map<I, S> listen = new HashMap<>();
 

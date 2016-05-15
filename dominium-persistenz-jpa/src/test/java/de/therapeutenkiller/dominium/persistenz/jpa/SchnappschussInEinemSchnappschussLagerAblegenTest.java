@@ -21,7 +21,7 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
     @Rule
     public DatenbankRegel datenbankRegel = new DatenbankRegel();
 
-    private JpaSchnappschussLager<TestSchnappschuss, TestAggregat> store;
+    private JpaSchnappschussLager<TestSchnappschuss> store;
     private final TestUhr uhr = new TestUhr();
 
     private static final long EREIGNIS_NUTZLAST = 42L;
@@ -51,7 +51,7 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
 
     private void dann_werde_ich_das_aggregat_mit_schnappschuss_wiederherstellen() {
 
-        final Schnappschuss<TestAggregat, UUID> neuesterSchnappschuss = this.store.getNeuesterSchnappschuss(
+        final Schnappschuss<UUID> neuesterSchnappschuss = this.store.getNeuesterSchnappschuss(
             this.testSchnappschuss.getIdentitätsmerkmal())
             .orElseThrow(() -> new EntityNotFoundException("Schnappschuss nicht gefunden"));
 

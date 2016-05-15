@@ -2,7 +2,6 @@ package de.therapeutenkiller.dominium.memory;
 
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import de.therapeutenkiller.dominium.modell.Version;
-import de.therapeutenkiller.dominium.testdomäne.TestAggregat;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss;
 import org.junit.runner.RunWith;
 
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class MemorySchnappschussLagerTest {
 
-    private MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> subjectUnderTest;
+    private MemorySchnappschussLager<TestAggregatSchnappschuss, UUID> subjectUnderTest;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();

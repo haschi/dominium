@@ -9,7 +9,7 @@ import java.util.List;
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
  */
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<A, I>>
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<I>>
         extends Entität<I>
         implements SchnappschussQuelle<A, I> {
 
@@ -23,7 +23,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         this.initialversion = version;
     }
 
-    protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
+    protected Aggregatwurzel(final Schnappschuss<I> schnappschuss) {
         super(schnappschuss.getIdentitätsmerkmal());
         this.version = schnappschuss.getVersion();
     }
