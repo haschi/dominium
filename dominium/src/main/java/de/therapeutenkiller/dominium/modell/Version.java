@@ -10,6 +10,7 @@ public final class Version implements Comparable<Version> {
     public final long version;
 
     public Version() {
+        super();
         this.version = 0L;
     }
 

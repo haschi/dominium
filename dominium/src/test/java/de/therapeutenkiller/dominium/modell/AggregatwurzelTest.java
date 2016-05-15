@@ -17,6 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class AggregatwurzelTest {
 
+    private static final long[] EREIGNIS_NUTZLAST = {42L, 43L, 44L, 45L};
+
     private TestAggregat subjectUnderTest;
 
     {
@@ -48,11 +50,11 @@ public class AggregatwurzelTest {
             });
 
             Arrays.asList(
-                new ZustandWurdeGeändert[]{new ZustandWurdeGeändert(42L)},
+                new ZustandWurdeGeändert[]{new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0])},
                 new ZustandWurdeGeändert[]{
-                    new ZustandWurdeGeändert(43L),
-                    new ZustandWurdeGeändert(44L),
-                    new ZustandWurdeGeändert(45)})
+                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]),
+                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]),
+                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3])})
                 .forEach(testfall -> {
                     final String description = String.format("mit %d Änderungen nacheinander", testfall.length);
                     describe(description, () -> {

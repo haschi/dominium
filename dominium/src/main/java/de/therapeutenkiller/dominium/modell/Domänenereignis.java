@@ -26,5 +26,5 @@ public interface Domänenereignis<A> extends Serializable {
      *
      * @param ereignisZiel Das Ziel-Objekt, auf das ein Ereignis angewendet wird.
      */
-    abstract void anwendenAuf(A ereignisZiel);
+    void anwendenAuf(A ereignisZiel);
 }
