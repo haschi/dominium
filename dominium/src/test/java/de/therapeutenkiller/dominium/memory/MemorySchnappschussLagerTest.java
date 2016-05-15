@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class MemorySchnappschussLagerTest {
 
-    private MemorySchnappschussLager<TestAggregat, UUID> subjectUnderTest;
+    private MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> subjectUnderTest;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();

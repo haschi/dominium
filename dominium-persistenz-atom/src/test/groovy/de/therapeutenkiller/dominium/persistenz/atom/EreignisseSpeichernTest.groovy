@@ -3,7 +3,6 @@ package de.therapeutenkiller.dominium.persistenz.atom
 import de.therapeutenkiller.dominium.modell.Domänenereignis
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregat
-import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignis
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.ZustandWurdeGeändert
 import spock.lang.Specification
@@ -25,7 +24,7 @@ class EreignisseSpeichernTest extends Specification {
     @Unroll
     def "Ereignisse #anzahl in einem neuen Ereignis-Strom ablegen"(int anzahl) {
         given:
-        TestAggregat aggregat = new TestAggregat(identitätsmerkmal)
+        TestAggregat aggregat = new TestAggregat(identitätsmerkmal, 0L)
         aggregat.ereignisseErzeugen(anzahl)
 
         when:

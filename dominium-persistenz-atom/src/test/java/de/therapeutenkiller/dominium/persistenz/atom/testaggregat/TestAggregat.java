@@ -1,18 +1,22 @@
 package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel>
+        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel, TestAggregatSchnappschuss>
         implements TestAggregatEreignisziel {
 
     private long wert;
 
-    public TestAggregat(final UUID identitätsmerkmal) {
-        super(identitätsmerkmal);
+    public TestAggregat(final UUID identitätsmerkmal, final long version) {
+        super(identitätsmerkmal, version);
+    }
+
+    @Override
+    public void wiederherstellenAus(final TestAggregatSchnappschuss schnappschuss) {
+        this.wert = schnappschuss.getWert();
     }
 
     @Override
@@ -21,7 +25,7 @@ public final class TestAggregat
     }
 
     @Override
-    public Schnappschuss<TestAggregat, UUID> schnappschussErstellen() {
+    public TestAggregatSchnappschuss schnappschussErstellen() {
         return null;
     }
 

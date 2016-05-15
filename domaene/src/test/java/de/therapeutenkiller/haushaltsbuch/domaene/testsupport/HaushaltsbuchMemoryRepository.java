@@ -7,6 +7,7 @@ import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import de.therapeutenkiller.haushaltsbuch.spi.HaushaltsbuchRepository;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository
-        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
+        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
         implements HaushaltsbuchRepository {
 
     @Inject
@@ -28,8 +29,8 @@ public class HaushaltsbuchMemoryRepository
     }
 
     @Override
-    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal) {
-        return new Haushaltsbuch(identitätsmerkmal);
+    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final long version) {
+        return new Haushaltsbuch(identitätsmerkmal, version);
     }
 
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {

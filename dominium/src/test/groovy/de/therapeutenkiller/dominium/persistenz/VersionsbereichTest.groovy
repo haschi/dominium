@@ -51,6 +51,7 @@ class VersionsbereichTest extends Specification {
 
         where:
         zahl           || _
+        0              || _
         1              || _
         100            || _
         Long.MAX_VALUE || _
@@ -83,7 +84,6 @@ class VersionsbereichTest extends Specification {
 
         where:
         von  || _
-        0    || _
         -1   || _
         -100 || _
     }

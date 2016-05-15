@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MemorySchnappschussLager<A, I>
-        implements SchnappschussLager<Schnappschuss<A, I>, A, I> {
+public class MemorySchnappschussLager<S extends Schnappschuss<A, I>, A, I>
+        implements SchnappschussLager<S, A, I> {
 
-    private final Map<I, Schnappschuss<A, I>> listen = new HashMap<>();
+    private final Map<I, S> listen = new HashMap<>();
 
     @Override
-    public final Optional<Schnappschuss<A, I>> getNeuesterSchnappschuss(final I identitätsmerkmal) {
+    public final Optional<S> getNeuesterSchnappschuss(final I identitätsmerkmal) {
         if (this.listen.containsKey(identitätsmerkmal)) {
             return Optional.of(this.listen.get(identitätsmerkmal));
         }
@@ -22,7 +22,7 @@ public class MemorySchnappschussLager<A, I>
     }
 
     @Override
-    public final void schnappschussHinzufügen(final Schnappschuss<A, I> schnappschuss) {
+    public final void schnappschussHinzufügen(final S schnappschuss) {
         final I identitätsmerkmal = schnappschuss.getIdentitätsmerkmal();
 
         if (this.listen.containsKey(identitätsmerkmal)) {

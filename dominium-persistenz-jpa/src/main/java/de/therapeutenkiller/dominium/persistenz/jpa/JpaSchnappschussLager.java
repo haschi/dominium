@@ -12,8 +12,8 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
-        // implements SchnappschussLager<S, A, UUID> {
-        implements SchnappschussLager<Schnappschuss<A, UUID>, A, UUID> {
+        implements SchnappschussLager<S, A, UUID> {
+
     private final EntityManager entityManager;
     private final Uhr uhr;
 
@@ -24,7 +24,7 @@ public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
     }
 
     @Override
-    public final Optional<Schnappschuss<A, UUID>> getNeuesterSchnappschuss(final UUID id) {
+    public final Optional<S> getNeuesterSchnappschuss(final UUID id) {
         final TypedQuery<JpaSchnappschussUmschlag> query = this.entityManager.createQuery(
                 "SELECT i FROM JpaSchnappschussUmschlag i "
                         + "WHERE i.meta.identitätsmerkmal = :identitätsmerkmal "
@@ -36,20 +36,20 @@ public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
                 .setMaxResults(1)
                 .getResultList();
 
-        final Stream<Schnappschuss<A, UUID>> schnappschussStream = resultList.stream()
-                .map(JpaSchnappschussUmschlag<Schnappschuss<A, UUID>>::öffnen);
+        final Stream<S> schnappschussStream = resultList.stream()
+                .map(JpaSchnappschussUmschlag<S>::öffnen);
 
         return schnappschussStream.findFirst();
     }
 
     @Override
-    public final void schnappschussHinzufügen(final Schnappschuss<A, UUID> testSchnappschuss) {
+    public final void schnappschussHinzufügen(final S testSchnappschuss) {
 
         final JpaSchnappschussMetaDaten meta = new JpaSchnappschussMetaDaten(
             testSchnappschuss.getIdentitätsmerkmal(),
             this.uhr.jetzt());
 
-        final JpaSchnappschussUmschlag<Schnappschuss<A, UUID>> umschlag = new JpaSchnappschussUmschlag<>(
+        final JpaSchnappschussUmschlag<S> umschlag = new JpaSchnappschussUmschlag<>(
             testSchnappschuss,
             meta);
 

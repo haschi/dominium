@@ -6,13 +6,18 @@ import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss.TestA
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel>
+        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel, TestAggregatSchnappschuss>
         implements TestAggregatEreignisZiel {
 
     private long zustand;
 
-    public TestAggregat(final UUID identitätsmerkmal) {
-        super(identitätsmerkmal);
+    public TestAggregat(final UUID identitätsmerkmal, final long version) {
+        super(identitätsmerkmal, version);
+    }
+
+    @Override
+    public void wiederherstellenAus(final TestAggregatSchnappschuss schnappschuss) {
+        this.zustand = schnappschuss.getPayload();
     }
 
     @Override

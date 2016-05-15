@@ -1,7 +1,6 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.coding.aspekte.ValueObject;
-import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
@@ -33,11 +32,6 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
         return this.payload;
     }
 
-    @Override
-    public TestAggregat wiederherstellen() {
-        return new TestAggregat(this);
-    }
-
     public static TestAggregatSchnappschussBuilder builder() {
         return new TestAggregatSchnappschussBuilder();
     }
@@ -64,8 +58,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
             return this.instanz;
         }
 
-        public TestAggregatSchnappschussBuilder aggregat(
-            final Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel> testAggregat) {
+        public TestAggregatSchnappschussBuilder aggregat(final TestAggregat testAggregat) {
             return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
                 .version(testAggregat.getVersion());
         }

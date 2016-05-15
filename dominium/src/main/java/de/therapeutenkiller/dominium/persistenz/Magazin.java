@@ -14,15 +14,15 @@ import java.util.Optional;
  * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
  */
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
-        implements Repository<A,I,T> {
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<A, I>>
+        implements Repository<A, I, T, S> {
 
     private final Ereignislager<I, T> ereignislager;
-    private final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager;
+    private final SchnappschussLager<S, A, I> schnappschussLager;
 
     protected Magazin(
             final Ereignislager<I, T> ereignislager,
-            final SchnappschussLager<Schnappschuss<A, I>, A, I> schnappschussLager) {
+            final SchnappschussLager<S, A, I> schnappschussLager) {
 
         super();
 
@@ -33,24 +33,23 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
     @Override
     public A suchen(final I identitätsmerkmal) throws AggregatNichtGefunden {
 
-        final Optional<Schnappschuss<A, I>> schnappschuss =
+        final Optional<S> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
-        final Long von = schnappschuss.map(s -> s.getVersion() + 1L).orElse(1L);
+        final Long von = schnappschuss.map(s -> s.getVersion()).orElse(0L);
         final Long bis = Long.MAX_VALUE;
         final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(bis);
 
-        final A aggregat = schnappschuss.map(Schnappschuss::wiederherstellen)
-            .orElse(this.neuesAggregatErzeugen(identitätsmerkmal));
+        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von);
+        schnappschuss.ifPresent(s -> aggregat.wiederherstellenAus(s));
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
-
         aggregat.aktualisieren(stream);
 
         return aggregat;
     }
 
-    protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal);
+    protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal, final long version);
 
     @Override
     public void hinzufügen(final A aggregat) {
@@ -71,7 +70,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
         }
     }
 
-    public <S extends Schnappschuss<A, I>> void speichern(final S  schnappschuss) throws AggregatNichtGefunden {
+    public void speichern(final S  schnappschuss) throws AggregatNichtGefunden {
         if (!this.ereignislager.existiertEreignisStrom(schnappschuss.getIdentitätsmerkmal())) {
             throw new AggregatNichtGefunden();
         }
@@ -84,7 +83,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T>, I, T>
             throw new ÄnderungenSindVorhandenGewesen();
         }
 
-        final Schnappschuss<A, I> schnappschuss = aggregat.schnappschussErstellen();
+        final S schnappschuss = aggregat.schnappschussErstellen();
         this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
     }
 

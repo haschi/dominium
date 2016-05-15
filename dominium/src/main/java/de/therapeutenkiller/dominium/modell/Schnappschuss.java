@@ -18,10 +18,8 @@ import java.io.Serializable;
 public interface Schnappschuss<A, I> extends Serializable {
 
     @SuppressWarnings("JpaAttributeMemberSignatureInspection")
-    abstract I getIdentitätsmerkmal();
+    I getIdentitätsmerkmal();
 
     @SuppressWarnings("JpaAttributeMemberSignatureInspection")
-    abstract long getVersion();
-
-    abstract A wiederherstellen();
+    long getVersion();
 }

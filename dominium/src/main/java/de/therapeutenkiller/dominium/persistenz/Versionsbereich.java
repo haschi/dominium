@@ -8,7 +8,7 @@ public final class Versionsbereich {
     private final long von;
     private final long bis;
 
-    public static final Versionsbereich ALLE_VERSIONEN = new Versionsbereich(1L, Long.MAX_VALUE);
+    public static final Versionsbereich ALLE_VERSIONEN = new Versionsbereich(0L, Long.MAX_VALUE);
 
     private Versionsbereich(final long von, final long bis) {
         super();
@@ -17,7 +17,7 @@ public final class Versionsbereich {
             throw new IllegalArgumentException();
         }
 
-        if (von < 1L) {
+        if (von < 0L) {
             throw new IllegalArgumentException();
         }
 

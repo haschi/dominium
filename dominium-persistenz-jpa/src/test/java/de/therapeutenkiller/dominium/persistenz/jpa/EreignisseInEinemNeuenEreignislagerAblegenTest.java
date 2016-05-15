@@ -32,7 +32,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     @Before
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
 
-        final TestAggregat aggregat = new TestAggregat(this.id);
+        final TestAggregat aggregat = new TestAggregat(this.id, 0L);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 

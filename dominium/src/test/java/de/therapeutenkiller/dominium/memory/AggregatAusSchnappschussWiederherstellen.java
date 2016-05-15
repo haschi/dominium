@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.memory;
 
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat;
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss;
 import de.therapeutenkiller.dominium.testmittel.Testdaten;
 import org.junit.runner.RunWith;
 
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(OleasterRunner.class)
 public class AggregatAusSchnappschussWiederherstellen {
-    private MemorySchnappschussLager<TestAggregat, UUID> lager;
+    private MemorySchnappschussLager<TestAggregatSchnappschuss, TestAggregat, UUID> lager;
 
     {
         describe("Ein MemorySchnappschussLager", () -> {

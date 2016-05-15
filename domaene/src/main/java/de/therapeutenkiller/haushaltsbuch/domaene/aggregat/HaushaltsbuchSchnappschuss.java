@@ -31,9 +31,4 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
     public long getVersion() {
         return this.version;
     }
-
-    @Override
-    public Haushaltsbuch wiederherstellen() {
-        return new Haushaltsbuch(this);
-    }
 }

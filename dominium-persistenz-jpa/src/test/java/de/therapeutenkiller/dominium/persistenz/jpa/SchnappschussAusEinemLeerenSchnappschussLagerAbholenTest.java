@@ -33,7 +33,7 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
 
     @Test
     public void wenn_ich_den_neuesten_schnappschuss_anfordere() throws AggregatNichtGefunden {
-        final Optional<Schnappschuss<TestAggregat, UUID>> schnappschuss =
+        final Optional<TestSchnappschuss> schnappschuss =
                 this.store.getNeuesterSchnappschuss(this.id);
 
         this.dann_werde_ich_keinen_schnappschuss_erhalten(schnappschuss.orElse(TestSchnappschuss.LEER));

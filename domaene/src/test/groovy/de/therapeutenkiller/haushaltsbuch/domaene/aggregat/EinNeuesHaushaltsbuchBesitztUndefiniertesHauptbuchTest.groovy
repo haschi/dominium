@@ -8,7 +8,7 @@ class EinNeuesHaushaltsbuchBesitztUndefiniertesHauptbuchTest extends Specificati
         UUID id = UUID.randomUUID()
 
         when: "wenn ich ein neues Haushaltsbuch anlege"
-        Haushaltsbuch haushaltsbuch = new Haushaltsbuch(id);
+        Haushaltsbuch haushaltsbuch = new Haushaltsbuch(id, 0L);
 
         then: "dann ist das Hauptbuch undefiniert"
         haushaltsbuch.istHauptbuchUndefiniert()

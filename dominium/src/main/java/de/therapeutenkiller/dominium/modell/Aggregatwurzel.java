@@ -9,7 +9,7 @@ import java.util.List;
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
  */
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T>
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<A, I>>
         extends Entität<I>
         implements SchnappschussQuelle<A, I> {
 
@@ -17,9 +17,10 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T>
     private long version;
     private long initialversion;
 
-    protected Aggregatwurzel(final I identitätsmerkmal) {
+    protected Aggregatwurzel(final I identitätsmerkmal, final long version) {
         super(identitätsmerkmal);
-        this.version = 0L;
+        this.version = version;
+        this.initialversion = version;
     }
 
     protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
@@ -47,6 +48,12 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T>, I, T>
         this.anwenden(stream);
         this.setInitialversion(this.getVersion());
     }
+
+    // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
+    // Können diese in eine eigene Schnittstelle ausgelagert werden?
+    public abstract void wiederherstellenAus(final S schnappschuss);
+
+    public abstract S schnappschussErstellen();
 
     public final List<Domänenereignis<T>> getÄnderungen() {
         return this.änderungen;

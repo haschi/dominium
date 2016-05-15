@@ -35,7 +35,7 @@ public class Angenommen_ich_habe_ein_haushaltsbuch_magazin {
     @Before
     public void aggregatErzeugen() {
         this.identitätsmerkmal = UUID.randomUUID();
-        this.haushaltsbuch = new Haushaltsbuch(this.identitätsmerkmal);
+        this.haushaltsbuch = new Haushaltsbuch(this.identitätsmerkmal, 0L);
         this.haushaltsbuch.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv);
     }
 

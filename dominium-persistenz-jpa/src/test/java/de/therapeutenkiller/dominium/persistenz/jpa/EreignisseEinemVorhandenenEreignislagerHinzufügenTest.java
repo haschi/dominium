@@ -38,7 +38,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() {
-        final TestAggregat aggregat = new TestAggregat(this.id);
+        final TestAggregat aggregat = new TestAggregat(this.id, 0L);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 

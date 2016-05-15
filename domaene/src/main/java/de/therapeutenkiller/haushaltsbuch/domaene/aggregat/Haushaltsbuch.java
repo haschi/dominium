@@ -17,7 +17,7 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 public final class Haushaltsbuch
-        extends Aggregatwurzel<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel>
+        extends Aggregatwurzel<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
         implements HaushaltsbuchEreignisziel {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
@@ -28,12 +28,22 @@ public final class Haushaltsbuch
         super(snapshot);
     }
 
-    public Haushaltsbuch(final UUID uuid) {
-        super(uuid);
+    public Haushaltsbuch(final UUID uuid, final long version) {
+        super(uuid, version);
+    }
+
+    @Override
+    public void wiederherstellenAus(final HaushaltsbuchSchnappschuss schnappschuss) {
+        this.hauptbuch = new Hauptbuch();
+        schnappschuss.konten.forEach(k -> this.hauptbuch.hinzufügen(k));
+
+        this.journal = new Journal();
+        //  TBD: Da ist ein Fehler: das darf nur eine Liste sein.
+        // schnappschuss.buchungssätze.forEach(b -> journal.buchungssatzHinzufügen(b));
     }
 
     public static Haushaltsbuch erzeugen(final UUID identitätsmerkmal) {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal);
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, 0L);
 
         haushaltsbuch.hauptbuchAnlegen();
         haushaltsbuch.journalAnlegen();

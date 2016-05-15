@@ -11,7 +11,7 @@ import java.util.UUID;
 @ValueObject
 public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
 
-    public static final Schnappschuss<TestAggregat, UUID> LEER = builder().get();
+    public static final TestSchnappschuss LEER = builder().get();
 
     @Column(columnDefinition = "BINARY(16)")
     private UUID identitätsmerkmal;
@@ -36,11 +36,6 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
     @Override
     public long getVersion() {
         return this.version;
-    }
-
-    @Override
-    public TestAggregat wiederherstellen() {
-        return new TestAggregat(this);
     }
 
     public static TestSchnappschussBuilder builder() {
