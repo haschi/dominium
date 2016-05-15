@@ -15,12 +15,12 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     private final List<Domänenereignis<T>> änderungen = new ArrayList<>();
     private Version version;
-    private long initialversion;
+    private Version initialversion;
 
     protected Aggregatwurzel(final I identitätsmerkmal, final long version) {
         super(identitätsmerkmal);
         this.version = new Version(version);
-        this.initialversion = version;
+        this.initialversion = new Version(version);
     }
 
     protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
@@ -66,11 +66,11 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     }
 
     public final void setInitialversion(final long initialversion) {
-        this.initialversion = initialversion;
+        this.initialversion = new Version(initialversion);
     }
 
     public final long getInitialversion() {
-        return this.initialversion;
+        return this.initialversion.alsLong();
     }
 }
 
