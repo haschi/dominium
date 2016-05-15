@@ -7,7 +7,7 @@ import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import java.util.UUID;
 
 @ValueObject
-public final class TestAggregatSchnappschuss extends Schnappschuss<TestAggregat, UUID> {
+public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
 
     long version;
     long payload;

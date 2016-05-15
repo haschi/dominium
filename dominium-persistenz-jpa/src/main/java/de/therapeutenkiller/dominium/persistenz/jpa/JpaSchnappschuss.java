@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class JpaSchnappschuss<T> extends Schnappschuss<T, UUID> {
+public abstract class JpaSchnappschuss<T> implements Schnappschuss<T, UUID> {
 
     private static final long serialVersionUID = -5757129473844941841L;
 
