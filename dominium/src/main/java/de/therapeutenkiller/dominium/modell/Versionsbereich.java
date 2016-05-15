@@ -5,19 +5,19 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public final class Versionsbereich {
 
-    private final long von;
-    private final long bis;
+    private final Version von;
+    private final Version bis;
 
-    public static final Versionsbereich ALLE_VERSIONEN = new Versionsbereich(0L, Long.MAX_VALUE);
+    public static final Versionsbereich ALLE_VERSIONEN = new Versionsbereich(Version.NEU, Version.MAX);
 
-    private Versionsbereich(final long von, final long bis) {
+    private Versionsbereich(final Version von, final Version bis) {
         super();
 
-        if (von > bis) {
+        if (von.compareTo(bis) > 0) {
             throw new IllegalArgumentException();
         }
 
-        if (von < 0L) {
+        if (von.compareTo(Version.NEU) < 0) {
             throw new IllegalArgumentException();
         }
 
@@ -27,11 +27,11 @@ public final class Versionsbereich {
 
     // tbd: Der Konstruktor muss private sein. Der Aspekt NullReferenzPrüfung ist fehlerhaft.
     public Versionsbereich(final VersionsbereichBuilder versionsbereichBuilder) {
-        this(versionsbereichBuilder.von, versionsbereichBuilder.bis);
+        this(new Version(versionsbereichBuilder.von), new Version(versionsbereichBuilder.bis));
     }
 
     public boolean liegtInnerhalb(final long zahl) {
-        return (this.von <= zahl) && (zahl <= this.bis);
+        return (this.von.compareTo(new Version(zahl)) < 1) && (new Version(zahl).compareTo(this.bis) < 1);
     }
 
     @Override
@@ -61,11 +61,11 @@ public final class Versionsbereich {
     }
 
     public long getVon() {
-        return this.von;
+        return this.von.alsLong();
     }
 
     public long getBis() {
-        return this.bis;
+        return this.bis.alsLong();
     }
 
     public static VersionsbereichBuilderInterface von(final long wert) {

@@ -39,10 +39,27 @@ class VersionsbereichTest extends Specification {
         von | bis || zahl
         1   | 10  || 0
         1   | 10  || 11
-        1   | 10  || -100
         1   | 10  || 100
         2   | 999 || 1
         2   | 999 || 1000
+    }
+
+    @Unroll
+    def "In einem Versionsbereich (#von, #bis) können keine ungültigen Versionen liegen"() {
+
+        given: "Ich habe einen Versionsbereich #von #bis"
+        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
+
+        when: "ich prüfe, ob #zahl innerhalb des Versionsbereiches liegt"
+        versionsbereich.liegtInnerhalb zahl
+
+        then: "werde ich eine Ausnahme erhalten"
+        thrown IllegalArgumentException
+
+        where:
+        von     | bis   || zahl
+        1       | 10    || -1L
+        10      | 100   || Long.MIN_VALUE
     }
 
     @Unroll

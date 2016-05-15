@@ -27,6 +27,10 @@ public final class Version implements Comparable<Version> {
         return new Version(this.version + 1);
     }
 
+    public long alsLong() {
+        return this.version;
+    }
+
     @Override
     public boolean equals(@DarfNullSein final Object anderes) {
         if (this == anderes) {
