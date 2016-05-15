@@ -44,7 +44,7 @@ public class AggregatwurzelTest {
 
             it("hat eine Initialversion = 1", () -> {
                 assertThat(this.subjectUnderTest.getInitialversion())
-                    .isEqualTo(Version.NEU.alsLong());
+                    .isEqualTo(Version.NEU);
             });
 
             Arrays.asList(
@@ -84,7 +84,7 @@ public class AggregatwurzelTest {
 
                         it("erhöht die Version des Aggregats", () -> {
                             assertThat(this.subjectUnderTest.getVersion())
-                                .isEqualTo(testfall.length);
+                                .isEqualTo(new Version(testfall.length));
                         });
 
                         it("setzt die Initialversion des Aggregats", () -> {
@@ -116,7 +116,7 @@ public class AggregatwurzelTest {
 
                 it("erhält die Version aus dem Schnappschuss", () -> {
                     assertThat(this.subjectUnderTest.getVersion())
-                        .isEqualTo(123L);
+                        .isEqualTo(new Version(123L));
                 });
 
                 it("erhält das Identitätsmerkmal aus dem Schnappschuss", () -> {

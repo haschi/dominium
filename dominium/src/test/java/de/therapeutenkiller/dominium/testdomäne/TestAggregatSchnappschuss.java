@@ -61,7 +61,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<UUID> {
 
         public TestAggregatSchnappschussBuilder aggregat(final TestAggregat testAggregat) {
             return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
-                .version(new Version(testAggregat.getVersion()));
+                .version(testAggregat.getVersion());
         }
     }
 }

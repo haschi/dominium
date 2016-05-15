@@ -64,7 +64,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         try {
             this.ereignislager.ereignisseDemStromHinzufügen(
                     aggregat.getIdentitätsmerkmal(),
-                    aggregat.getInitialversion(),
+                    aggregat.getInitialversion().alsLong(),
                     aggregat.getÄnderungen()
             );
         } catch (final EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {

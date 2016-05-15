@@ -61,12 +61,12 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     protected abstract T getSelf();
 
-    public final long getVersion() {
-        return this.version.alsLong();
+    public final Version getVersion() {
+        return this.version;
     }
 
-    public final long getInitialversion() {
-        return this.initialversion.alsLong();
+    public final Version getInitialversion() {
+        return this.initialversion;
     }
 }
 
