@@ -10,6 +10,8 @@ public final class EinWertobjekt {
     public final String nachname;
 
     public EinWertobjekt(final String vorname, final String nachname) {
+        super();
+
         this.vorname = vorname;
         this.nachname = nachname;
     }
