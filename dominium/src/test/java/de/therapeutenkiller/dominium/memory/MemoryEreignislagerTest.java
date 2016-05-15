@@ -6,7 +6,7 @@ import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis;
-import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisziel;
+import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisZiel;
 import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert;
 import org.junit.runner.RunWith;
 
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 @RunWith(OleasterRunner.class)
 public class MemoryEreignislagerTest {
 
-    private MemoryEreignislager<UUID, TestAggregatEreignisziel> lager;
+    private MemoryEreignislager<UUID, TestAggregatEreignisZiel> lager;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();

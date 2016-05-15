@@ -13,7 +13,7 @@ public final class ZustandWurdeGeändert extends TestAggregatEreignis {
     }
 
     @Override
-    public void anwendenAuf(final TestAggregatEreignisziel ereignisZiel) {
+    public void anwendenAuf(final TestAggregatEreignisZiel ereignisZiel) {
         ereignisZiel.falls(this);
     }
 

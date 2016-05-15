@@ -6,8 +6,8 @@ import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss.TestA
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel>
-        implements TestAggregatEreignisziel {
+        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel>
+        implements TestAggregatEreignisZiel {
 
     private long zustand;
 

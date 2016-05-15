@@ -28,7 +28,7 @@ public class EntitätTest {
                 assertThat(this.subjectUnderTest.getIdentitätsmerkmal()).isEqualTo(identitätsmerkmal);
             });
 
-            it("benutzt das Identitätsmerkmal für den Äquivalenzvergleich", () -> {
+            it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () -> {
                 EqualsVerifier.forClass(TestAggregat.class)
                     .withOnlyTheseFields("identitätsmerkmal")
                     .verify();

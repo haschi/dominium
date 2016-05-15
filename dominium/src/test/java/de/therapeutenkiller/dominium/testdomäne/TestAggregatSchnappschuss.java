@@ -13,7 +13,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
     long payload;
     UUID identitätsmerkmal;
 
-    // Da ist ein Fehler im NullReferenzPrüfung Aspekt: Dieser Konstruktur wird geprüft und erzeugt einen Fehler
+    // Da ist ein Fehler im NullReferenzPrüfung Aspekt: Dieser Konstruktor wird geprüft und erzeugt einen Fehler
     // private TestAggregatSchnappschuss() {
     // }
 
@@ -63,7 +63,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
         }
 
         public TestAggregatSchnappschussBuilder aggregat(
-            final Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel> testAggregat) {
+            final Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel> testAggregat) {
             return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
                 .version(testAggregat.getVersion());
         }
