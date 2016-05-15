@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 
 import java.util.UUID;
 
@@ -9,10 +10,10 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
     private static final long serialVersionUID = 3640767131800449347L;
 
     private final UUID identitätsmerkmal;
-    private final long version;
+    private final Version version;
     private long wert;
 
-    public TestAggregatSchnappschuss(final UUID identitätsmerkmal, final long version, final long wert) {
+    public TestAggregatSchnappschuss(final UUID identitätsmerkmal, final Version version, final long wert) {
 
         this.identitätsmerkmal = identitätsmerkmal;
         this.version = version;
@@ -29,7 +30,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
     }
 
     @Override
-    public long getVersion() {
-        return 0;
+    public Version getVersion() {
+        return this.version;
     }
 }

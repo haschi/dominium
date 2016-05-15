@@ -21,5 +21,5 @@ public interface Schnappschuss<A, I> extends Serializable {
     I getIdentitätsmerkmal();
 
     @SuppressWarnings("JpaAttributeMemberSignatureInspection")
-    long getVersion();
+    Version getVersion();
 }

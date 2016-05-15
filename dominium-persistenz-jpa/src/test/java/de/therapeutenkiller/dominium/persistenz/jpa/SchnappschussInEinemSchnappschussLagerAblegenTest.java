@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
@@ -28,7 +29,7 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
     @SuppressWarnings("LawOfDemeter")
     private final TestSchnappschuss testSchnappschuss = TestSchnappschuss.builder()
             .identitätsmerkmal(UUID.randomUUID())
-            .version(1L)
+            .version(Version.NEU.nachfolger())
             .zustand(EREIGNIS_NUTZLAST)
             .get();
 

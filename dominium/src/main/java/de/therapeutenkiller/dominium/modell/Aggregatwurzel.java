@@ -25,7 +25,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
         super(schnappschuss.getIdentitätsmerkmal());
-        this.version = new Version(schnappschuss.getVersion());
+        this.version = schnappschuss.getVersion();
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {

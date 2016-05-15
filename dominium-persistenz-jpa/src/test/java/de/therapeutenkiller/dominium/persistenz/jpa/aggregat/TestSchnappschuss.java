@@ -1,22 +1,22 @@
 package de.therapeutenkiller.dominium.persistenz.jpa.aggregat;
 
 import de.therapeutenkiller.coding.aspekte.ValueObject;
-import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import java.util.UUID;
 
-@Entity
 @ValueObject
 public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
 
     public static final TestSchnappschuss LEER = builder().get();
 
+    private static final long serialVersionUID = 2104674116259819695L;
+
     @Column(columnDefinition = "BINARY(16)")
     private UUID identitätsmerkmal;
 
-    private long version;
+    private Version version;
 
     private long zustand;
 
@@ -34,7 +34,7 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
     }
 
     @Override
-    public long getVersion() {
+    public Version getVersion() {
         return this.version;
     }
 
@@ -50,7 +50,7 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
             return this;
         }
 
-        public TestSchnappschussBuilder version(final long version) {
+        public TestSchnappschussBuilder version(final Version version) {
             this.instanz.version = version;
             return this;
         }

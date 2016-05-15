@@ -6,7 +6,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class TestAggregatSchnappschussBasis extends JpaSchnappschuss<TestAggregat> {
+
+    private static final long serialVersionUID = -1219697897616903455L;
 }

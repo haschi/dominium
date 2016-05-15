@@ -2,6 +2,7 @@ package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
 
     private static final long serialVersionUID = -4081721724050392813L;
 
-    long version;
+    Version version;
     long payload;
     UUID identitätsmerkmal;
 
@@ -24,7 +25,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
     }
 
     @Override
-    public long getVersion() {
+    public Version getVersion() {
         return this.version;
     }
 
@@ -44,7 +45,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
             return this;
         }
 
-        public TestAggregatSchnappschussBuilder version(final long version) {
+        public TestAggregatSchnappschussBuilder version(final Version version) {
             this.instanz.version = version;
             return this;
         }
@@ -60,7 +61,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggreg
 
         public TestAggregatSchnappschussBuilder aggregat(final TestAggregat testAggregat) {
             return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
-                .version(testAggregat.getVersion());
+                .version(new Version(testAggregat.getVersion()));
         }
     }
 }

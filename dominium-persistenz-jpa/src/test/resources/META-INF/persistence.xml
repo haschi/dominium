@@ -15,6 +15,7 @@
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
+        <class>de.therapeutenkiller.dominium.modell.Version</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
@@ -25,6 +26,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+
         </properties>
 
     </persistence-unit>

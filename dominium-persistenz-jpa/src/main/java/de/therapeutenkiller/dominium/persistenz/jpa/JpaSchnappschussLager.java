@@ -53,7 +53,6 @@ public class JpaSchnappschussLager<S extends Schnappschuss<A, UUID>, A>
             testSchnappschuss,
             meta);
 
-        this.entityManager.persist(testSchnappschuss);
         this.entityManager.persist(umschlag);
     }
 }

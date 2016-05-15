@@ -7,7 +7,11 @@ public final class Version implements Comparable<Version> {
     public static final Version NEU = new Version(0L);
     public static final Version MAX = new Version(Long.MAX_VALUE);
 
-    private final long version;
+    public final long version;
+
+    public Version() {
+        this.version = 0L;
+    }
 
     public Version(final long version) {
         super();

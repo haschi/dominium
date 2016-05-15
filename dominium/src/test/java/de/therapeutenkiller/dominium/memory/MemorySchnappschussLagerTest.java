@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.memory;
 
 import com.mscharhag.oleaster.runner.OleasterRunner;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss;
 import org.junit.runner.RunWith;
@@ -24,19 +25,19 @@ public class MemorySchnappschussLagerTest {
 
         final TestAggregatSchnappschuss[] schnappschüsse = {
             TestAggregatSchnappschuss.builder()
-                .version(1L)
+                .version(new Version(1L))
                 .payload(42L)
                 .identitätsmerkmal(identitätsmerkmal)
                 .build(),
 
             TestAggregatSchnappschuss.builder()
-                .version(2L)
+                .version(new Version(2L))
                 .payload(43L)
                 .identitätsmerkmal(identitätsmerkmal)
                 .build(),
 
             TestAggregatSchnappschuss.builder()
-                .version(3L)
+                .version(new Version(3L))
                 .payload(44L)
                 .identitätsmerkmal(identitätsmerkmal)
                 .build()

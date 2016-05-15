@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss;
 
 import java.util.Set;
@@ -11,12 +12,12 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
 
     private static final long serialVersionUID = -2656820980971196374L;
 
-    public final long version;
+    public final Version version;
     private final UUID identitätsmerkmal;
     public ImmutableSet<Konto> konten;
     public ImmutableList<Set<Buchungssatz>> buchungssätze;
 
-    public HaushaltsbuchSchnappschuss(final UUID identität, final long version) {
+    public HaushaltsbuchSchnappschuss(final UUID identität, final Version version) {
         super();
         this.identitätsmerkmal = identität;
         this.version = version;
@@ -28,7 +29,7 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss<Haushalts
     }
 
     @Override
-    public long getVersion() {
+    public Version getVersion() {
         return this.version;
     }
 }

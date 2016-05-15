@@ -37,14 +37,14 @@ public class AggregatwurzelTest {
                 assertThat(this.subjectUnderTest.schnappschussErstellen())
                     .isEqualTo(TestAggregatSchnappschuss.builder()
                     .identitätsmerkmal(identitätsmerkmal)
-                    .version(0L) // TODO sollte 1 sein!
+                    .version(Version.NEU)
                     .payload(0L)
                     .build());
             });
 
             it("hat eine Initialversion = 1", () -> {
                 assertThat(this.subjectUnderTest.getInitialversion())
-                    .isEqualTo(0L); // TODO sollte 1 sein.
+                    .isEqualTo(Version.NEU.alsLong());
             });
 
             Arrays.asList(
@@ -69,7 +69,7 @@ public class AggregatwurzelTest {
                         it("wendet Änderungen auf eigenen Zustand an", () -> {
                             assertThat(this.subjectUnderTest.schnappschussErstellen())
                                 .isEqualTo(TestAggregatSchnappschuss.builder()
-                                    .version(testfall.length)
+                                    .version(new Version(testfall.length))
                                     .identitätsmerkmal(identitätsmerkmal)
                                     .payload(testfall[testfall.length - 1].getPayload())
                                     .build());
@@ -106,12 +106,10 @@ public class AggregatwurzelTest {
                     final TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
                         .identitätsmerkmal(anderesIdentitätsmerkmal)
                         .payload(4711L)
-                        .version(123L)
+                        .version(new Version(123L))
                         .build();
 
-                    this.subjectUnderTest = new TestAggregat(
-                        anderesIdentitätsmerkmal,
-                        new Version(schnappschuss.getVersion()));
+                    this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.getVersion());
 
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);
                 });

@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.modell.Versionsbereich;
 
 import java.util.List;
@@ -37,11 +38,11 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         final Optional<S> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
-        final Long von = schnappschuss.map(s -> s.getVersion()).orElse(0L);
+        final Version von = schnappschuss.map(s -> s.getVersion()).orElse(Version.NEU);
         final Long bis = Long.MAX_VALUE;
-        final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(bis);
+        final Versionsbereich versionsbereich = Versionsbereich.von(von.alsLong()).bis(bis);
 
-        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von);
+        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von.alsLong());
         schnappschuss.ifPresent(s -> aggregat.wiederherstellenAus(s));
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);

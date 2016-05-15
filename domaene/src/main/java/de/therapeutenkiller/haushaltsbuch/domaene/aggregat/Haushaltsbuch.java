@@ -65,7 +65,7 @@ public final class Haushaltsbuch
     public HaushaltsbuchSchnappschuss schnappschussErstellen() {
         final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
                 this.getIdentitätsmerkmal(),
-                this.getVersion());
+                new Version(this.getVersion()));
 
         schnappschuss.konten = this.hauptbuch.getKonten();
         schnappschuss.buchungssätze = this.journal.getBuchungssätze();
