@@ -14,18 +14,18 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         implements SchnappschussQuelle<A, I> {
 
     private final List<Domänenereignis<T>> änderungen = new ArrayList<>();
-    private long version;
+    private Version version;
     private long initialversion;
 
     protected Aggregatwurzel(final I identitätsmerkmal, final long version) {
         super(identitätsmerkmal);
-        this.version = version;
+        this.version = new Version(version);
         this.initialversion = version;
     }
 
     protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {
         super(schnappschuss.getIdentitätsmerkmal());
-        this.version = schnappschuss.getVersion();
+        this.version = new Version(schnappschuss.getVersion());
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
@@ -34,7 +34,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     }
 
     public final void anwenden(final Domänenereignis<T> ereignis) {
-        this.version = this.version + 1L;
+        this.version = this.version.nachfolger();
         ereignis.anwendenAuf(this.getSelf());
     }
 
@@ -62,7 +62,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     protected abstract T getSelf();
 
     public final long getVersion() {
-        return this.version;
+        return this.version.alsLong();
     }
 
     public final void setInitialversion(final long initialversion) {
