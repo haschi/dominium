@@ -16,6 +16,7 @@ import java.io.Serializable;
  * @param <I> Der Typ des Identitätsmerkmals des Aggregats zu dem der Schnappschuss gehört.
  */
 public interface Schnappschuss<A, I> extends Serializable {
+
     @SuppressWarnings("JpaAttributeMemberSignatureInspection")
     abstract I getIdentitätsmerkmal();
 

@@ -9,6 +9,8 @@ import java.util.UUID;
 @ValueObject
 public final class TestAggregatSchnappschuss implements Schnappschuss<TestAggregat, UUID> {
 
+    private static final long serialVersionUID = -4081721724050392813L;
+
     long version;
     long payload;
     UUID identitätsmerkmal;
