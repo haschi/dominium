@@ -4,51 +4,23 @@ import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
-import org.apache.commons.lang3.StringUtils;
-import org.javamoney.moneta.Money;
 
-import javax.money.MonetaryAmount;
-import javax.money.format.MonetaryAmountFormat;
-import javax.money.format.MonetaryFormats;
 import java.io.Serializable;
-import java.util.Locale;
 
 @ValueObject
 public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public final String soll;
-    public final String haben;
-    protected final double betrag;
-
-    protected BuchungWurdeAusgeführt() {
-        super();
-        this.soll = StringUtils.EMPTY;
-        this.haben = StringUtils.EMPTY;
-        this.betrag = 0;
-    }
-
-    public BuchungWurdeAusgeführt(final String soll, final String haben, final MonetaryAmount betrag) {
-
-        super();
-
-        this.soll = soll;
-        this.haben = haben;
-        this.betrag = betrag.getNumber().doubleValueExact();
-    }
+    private final Buchungssatz buchungssatz;
 
     public BuchungWurdeAusgeführt(final Buchungssatz buchungssatz) {
-        this(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto(), buchungssatz.getWährungsbetrag());
-    }
-
-    public MonetaryAmount getBetrag() {
-        final MonetaryAmountFormat amountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        return Money.of(this.betrag, "EUR");
+        super();
+        this.buchungssatz = buchungssatz;
     }
 
     public Buchungssatz getBuchungssatz() {
-        return new Buchungssatz(this.soll, this.haben, this.getBetrag());
+        return this.buchungssatz;
     }
 
     @Override

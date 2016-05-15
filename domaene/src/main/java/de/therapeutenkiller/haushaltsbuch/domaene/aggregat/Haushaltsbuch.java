@@ -180,7 +180,7 @@ public final class Haushaltsbuch
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannAusgabeGebuchtWerden(buchungssatz)) {
-                this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, betrag));
+                this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
             } else {
                 this.bewirkt(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
             }
@@ -195,7 +195,7 @@ public final class Haushaltsbuch
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannTilgungGebuchtWerden(buchungssatz)) {
-                this.bewirkt(new BuchungWurdeAusgeführt(sollkonto, habenkonto, währungsbetrag));
+                this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
             } else {
                 this.bewirkt(new BuchungWurdeAbgelehnt("Tilgung kann nicht auf Konto gebucht werden."));
             }
