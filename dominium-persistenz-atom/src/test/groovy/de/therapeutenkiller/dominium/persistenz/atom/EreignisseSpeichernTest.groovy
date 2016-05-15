@@ -1,7 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.atom
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich
+import de.therapeutenkiller.dominium.modell.Versionsbereich
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregat
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignisziel
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.ZustandWurdeGeändert

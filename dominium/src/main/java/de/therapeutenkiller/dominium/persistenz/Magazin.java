@@ -3,6 +3,7 @@ package de.therapeutenkiller.dominium.persistenz;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 
 import java.util.List;
 import java.util.Optional;

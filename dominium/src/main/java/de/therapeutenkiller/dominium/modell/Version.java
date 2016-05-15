@@ -4,6 +4,9 @@ import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 
 public final class Version implements Comparable<Version> {
 
+    public static final Version NEU = new Version(0L);
+    public static final Version MAX = new Version(Long.MAX_VALUE);
+
     private final long version;
 
     public Version(final long version) {
@@ -17,8 +20,8 @@ public final class Version implements Comparable<Version> {
     }
 
     public Version nachfolger() {
-        if (this.version == Long.MAX_VALUE) {
-            throw new IllegalStateException("Versionsüberlauf");
+        if (this.equals(MAX)) {
+            throw new IllegalStateException("Version-Überlauf");
         }
 
         return new Version(this.version + 1);

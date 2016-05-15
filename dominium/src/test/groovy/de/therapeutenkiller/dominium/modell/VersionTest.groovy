@@ -74,4 +74,9 @@ class VersionTest extends Specification {
         then:
         thrown IllegalStateException;
     }
+
+    def "Es gibt eine Initialversion"() {
+        expect:
+        Version.NEU == new Version(0L)
+    }
 }

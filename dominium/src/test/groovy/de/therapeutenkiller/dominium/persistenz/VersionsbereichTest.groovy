@@ -1,5 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz
 
+import de.therapeutenkiller.dominium.modell.Versionsbereich
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 import spock.lang.Unroll

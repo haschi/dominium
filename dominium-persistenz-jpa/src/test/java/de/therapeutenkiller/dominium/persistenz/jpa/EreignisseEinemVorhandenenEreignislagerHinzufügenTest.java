@@ -2,9 +2,8 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
-import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert;
 import de.therapeutenkiller.testing.DatenbankRegel;

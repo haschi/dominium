@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 
 import java.util.Collection;
 import java.util.List;

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
 import de.therapeutenkiller.dominium.persistenz.Ereignislager;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

@@ -6,7 +6,7 @@ import de.therapeutenkiller.dominium.persistenz.Ereignisstrom;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 
 import java.util.ArrayList;
 import java.util.Collection;

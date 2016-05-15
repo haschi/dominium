@@ -4,7 +4,7 @@ import com.mscharhag.oleaster.runner.OleasterRunner;
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.persistenz.Versionsbereich;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisZiel;
 import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert;
