@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @param <A> Der Typ des Ereignis-Ziels, auf das ein Ereignis angewendet wird.
  */
-public abstract class Domänenereignis<A> implements Serializable {
+public interface Domänenereignis<A> extends Serializable {
 
     /**
      * Wendet eine durch das Domänenereignis beschriebene Zustandsänderung auf
@@ -26,5 +26,5 @@ public abstract class Domänenereignis<A> implements Serializable {
      *
      * @param ereignisZiel Das Ziel-Objekt, auf das ein Ereignis angewendet wird.
      */
-    public abstract void anwendenAuf(A ereignisZiel);
+    abstract void anwendenAuf(A ereignisZiel);
 }

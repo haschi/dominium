@@ -2,7 +2,7 @@ package de.therapeutenkiller.dominium.memory;
 
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregat;
-import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss;
+import de.therapeutenkiller.dominium.testmittel.Testdaten;
 import org.junit.runner.RunWith;
 
 import java.util.UUID;
@@ -21,34 +21,24 @@ public class AggregatAusSchnappschussWiederherstellen {
 
             final UUID identitätsmerkmal = UUID.randomUUID();
 
-            final TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
-                .identitätsmerkmal(identitätsmerkmal)
-                .payload(42L)
-                .version(1L)
-                .build();
-
-
             describe("dass leer ist", () -> {
-                before(() -> {
-                    this.lager = new MemorySchnappschussLager<>();
-                });
+                before(() -> this.lager = new MemorySchnappschussLager<>());
 
-                it("kann keinen Schnappschuss wiederherstellen", () -> {
-                    assertThat(this.lager.getNeuesterSchnappschuss(identitätsmerkmal)).isEmpty();
-                });
+                it("kann keinen Schnappschuss wiederherstellen", () ->
+                    assertThat(this.lager.getNeuesterSchnappschuss(identitätsmerkmal)).isEmpty());
             });
 
             describe("mit mindestens einem Schnappschuss", () -> {
 
                 before(() -> {
                     this.lager = new MemorySchnappschussLager<>();
-                    this.lager.schnappschussHinzufügen(schnappschuss);
+                    this.lager.schnappschussHinzufügen(Testdaten.getSchnappschuss(identitätsmerkmal));
                 });
 
-                it("kann neuesten Schnappschuss wiederherstellen", () -> {
-                    assertThat(this.lager.getNeuesterSchnappschuss(identitätsmerkmal).get())
-                        .isEqualTo(schnappschuss);
-                });
+                it("kann neuesten Schnappschuss wiederherstellen", () ->
+                    assertThat(this.lager.getNeuesterSchnappschuss(identitätsmerkmal)
+                            .orElseThrow(IllegalStateException::new))
+                        .isEqualTo(Testdaten.getSchnappschuss(identitätsmerkmal)));
             });
         });
     }
