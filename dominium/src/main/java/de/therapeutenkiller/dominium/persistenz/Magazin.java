@@ -38,12 +38,12 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         final Optional<S> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
-        final Version von = schnappschuss.map(s -> s.getVersion()).orElse(Version.NEU);
+        final Version von = schnappschuss.map(Schnappschuss::getVersion).orElse(Version.NEU);
         final Long bis = Long.MAX_VALUE;
         final Versionsbereich versionsbereich = Versionsbereich.von(von.alsLong()).bis(bis);
 
         final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von.alsLong());
-        schnappschuss.ifPresent(s -> aggregat.wiederherstellenAus(s));
+        schnappschuss.ifPresent(aggregat::wiederherstellenAus);
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
         aggregat.aktualisieren(stream);

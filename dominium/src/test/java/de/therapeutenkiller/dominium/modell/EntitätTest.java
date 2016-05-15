@@ -24,15 +24,13 @@ public class EntitätTest {
 
         describe("Eine Entität", () -> {
 
-            it("besitzt eine nicht veränderbare Identität", () -> {
-                assertThat(this.subjectUnderTest.getIdentitätsmerkmal()).isEqualTo(identitätsmerkmal);
-            });
+            it("besitzt eine nicht veränderbare Identität", () ->
+                assertThat(this.subjectUnderTest.getIdentitätsmerkmal()).isEqualTo(identitätsmerkmal));
 
-            it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () -> {
+            it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () ->
                 EqualsVerifier.forClass(TestAggregat.class)
                     .withOnlyTheseFields("identitätsmerkmal")
-                    .verify();
-            });
+                    .verify());
         });
     }
 }

@@ -20,11 +20,9 @@ public class ÄnderungenSpeichern<I, T> implements AggregatProcessor<I, T> {
         final long initialversion) {
         try {
             this.ereignislager.ereignisseDemStromHinzufügen(identitätsmerkmal, initialversion, änderungen);
-        } catch (final KonkurrierenderZugriff konkurrierenderZugriff) {
+        } catch (final KonkurrierenderZugriff | EreignisstromWurdeNichtGefunden ausnahme) {
 
-            konkurrierenderZugriff.printStackTrace();
-        } catch (final EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
-            ereignisstromWurdeNichtGefunden.printStackTrace();
+            ausnahme.printStackTrace();
         }
     }
 }

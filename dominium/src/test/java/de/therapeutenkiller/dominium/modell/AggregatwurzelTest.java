@@ -27,27 +27,25 @@ public class AggregatwurzelTest {
 
         describe("Eine Aggregatwurzel", () -> {
 
-            it("hat ein Identitätsmerkmal", () -> {
-                assertThat(this.subjectUnderTest.getIdentitätsmerkmal()).isEqualTo(identitätsmerkmal);
-            });
+            it("hat ein Identitätsmerkmal", () ->
+                assertThat(this.subjectUnderTest.getIdentitätsmerkmal())
+                    .isEqualTo(identitätsmerkmal));
 
-            it("hat zu Beginn keine Änderungen", () -> {
-                assertThat(this.subjectUnderTest.getÄnderungen()).isEmpty();
-            });
+            it("hat zu Beginn keine Änderungen", () ->
+                assertThat(this.subjectUnderTest.getÄnderungen())
+                    .isEmpty());
 
-            it("kann einen Schnappschuss erstellen", () -> {
+            it("kann einen Schnappschuss erstellen", () ->
                 assertThat(this.subjectUnderTest.schnappschussErstellen())
                     .isEqualTo(TestAggregatSchnappschuss.builder()
                     .identitätsmerkmal(identitätsmerkmal)
                     .version(Version.NEU)
                     .payload(0L)
-                    .build());
-            });
+                    .build()));
 
-            it("hat eine Initialversion = 1", () -> {
+            it("hat eine Initialversion = 1", () ->
                 assertThat(this.subjectUnderTest.getInitialversion())
-                    .isEqualTo(Version.NEU);
-            });
+                    .isEqualTo(Version.NEU));
 
             Arrays.asList(
                 new ZustandWurdeGeändert[]{new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0])},
@@ -58,46 +56,38 @@ public class AggregatwurzelTest {
                 .forEach(testfall -> {
                     final String description = String.format("mit %d Änderungen nacheinander", testfall.length);
                     describe(description, () -> {
-                        beforeEach(() -> {
-                            Arrays.asList(testfall).forEach(ereignis -> {
-                                this.subjectUnderTest.zustandÄndern(ereignis.getPayload());
-                            });
-                        });
+                        beforeEach(() ->
+                            Arrays.asList(testfall).forEach(ereignis ->
+                                this.subjectUnderTest.zustandÄndern(ereignis.getPayload())));
 
-                        it("besitzt " + testfall.length + " Änderungen", () -> {
-                            assertThat(this.subjectUnderTest.getÄnderungen()).containsExactly(testfall);
-                        });
+                        it("besitzt " + testfall.length + " Änderungen", () ->
+                            assertThat(this.subjectUnderTest.getÄnderungen()).containsExactly(testfall));
 
-                        it("wendet Änderungen auf eigenen Zustand an", () -> {
+                        it("wendet Änderungen auf eigenen Zustand an", () ->
                             assertThat(this.subjectUnderTest.schnappschussErstellen())
                                 .isEqualTo(TestAggregatSchnappschuss.builder()
                                     .version(new Version(testfall.length))
                                     .identitätsmerkmal(identitätsmerkmal)
                                     .payload(testfall[testfall.length - 1].getPayload())
-                                    .build());
-                        });
+                                    .build()));
                     });
 
                     final String description2 = String.format("mit %d Aktualisierungen", testfall.length);
                     describe(description2, () -> {
-                        beforeEach(() -> {
-                            this.subjectUnderTest.aktualisieren(Arrays.asList(testfall));
-                        });
+                        beforeEach(() ->
+                            this.subjectUnderTest.aktualisieren(Arrays.asList(testfall)));
 
-                        it("erhöht die Version des Aggregats", () -> {
+                        it("erhöht die Version des Aggregats", () ->
                             assertThat(this.subjectUnderTest.getVersion())
-                                .isEqualTo(new Version(testfall.length));
-                        });
+                                .isEqualTo(new Version(testfall.length)));
 
-                        it("setzt die Initialversion des Aggregats", () -> {
+                        it("setzt die Initialversion des Aggregats", () ->
                             assertThat(this.subjectUnderTest.getInitialversion())
-                                .isEqualTo(this.subjectUnderTest.getVersion());
-                        });
+                                .isEqualTo(this.subjectUnderTest.getVersion()));
 
-                        it("hat keine Änderungen", () -> {
+                        it("hat keine Änderungen", () ->
                             assertThat(this.subjectUnderTest.getÄnderungen())
-                                .isEmpty();
-                        });
+                                .isEmpty());
                     });
                 });
 
@@ -116,15 +106,13 @@ public class AggregatwurzelTest {
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);
                 });
 
-                it("erhält die Version aus dem Schnappschuss", () -> {
+                it("erhält die Version aus dem Schnappschuss", () ->
                     assertThat(this.subjectUnderTest.getVersion())
-                        .isEqualTo(new Version(123L));
-                });
+                        .isEqualTo(new Version(123L)));
 
-                it("erhält das Identitätsmerkmal aus dem Schnappschuss", () -> {
+                it("erhält das Identitätsmerkmal aus dem Schnappschuss", () ->
                     assertThat(this.subjectUnderTest.getIdentitätsmerkmal())
-                        .isEqualTo(anderesIdentitätsmerkmal);
-                });
+                        .isEqualTo(anderesIdentitätsmerkmal));
             });
         });
     }

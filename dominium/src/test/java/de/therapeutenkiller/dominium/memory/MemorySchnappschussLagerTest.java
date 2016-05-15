@@ -47,10 +47,9 @@ public class MemorySchnappschussLagerTest {
         describe("Ein Schnappschuss-Lager", () -> {
 
             describe("ohne Schnappschüsse für ein Aggregat", () -> {
-                it("liefert keine Schnappschüsse", () -> {
+                it("liefert keine Schnappschüsse", () ->
                     assertThat(this.subjectUnderTest.getNeuesterSchnappschuss(identitätsmerkmal))
-                        .isEmpty();
-                });
+                        .isEmpty());
             });
 
             Arrays.asList(
@@ -62,26 +61,21 @@ public class MemorySchnappschussLagerTest {
                         testfall.length);
 
                     describe(description, () -> {
-                        beforeEach(() -> {
-                            Arrays.asList(testfall).forEach(schnappschuss -> {
-                                this.subjectUnderTest.schnappschussHinzufügen(schnappschuss);
-                            });
-                        });
+                        beforeEach(() ->
+                            Arrays.asList(testfall).forEach(schnappschuss ->
+                                this.subjectUnderTest.schnappschussHinzufügen(schnappschuss)));
 
-                        it("liefert den zuletzt hinzugefügten Schnappschuss", () -> {
+                        it("liefert den zuletzt hinzugefügten Schnappschuss", () ->
                             assertThat(this.subjectUnderTest.getNeuesterSchnappschuss(identitätsmerkmal))
-                                .isEqualTo(Optional.of(Arrays.asList(testfall).get(testfall.length - 1)));
-                        });
+                                .isEqualTo(Optional.of(Arrays.asList(testfall).get(testfall.length - 1))));
 
                         describe("wenn es geleert wird", () -> {
-                            beforeEach(() -> {
-                                this.subjectUnderTest.leeren();
-                            });
+                            beforeEach(() ->
+                                this.subjectUnderTest.leeren());
 
-                            it("liefert keine Schnappschüsse", () -> {
+                            it("liefert keine Schnappschüsse", () ->
                                 assertThat(this.subjectUnderTest.getNeuesterSchnappschuss(identitätsmerkmal))
-                                    .isEmpty();
-                            });
+                                    .isEmpty());
                         });
                     });
                 });

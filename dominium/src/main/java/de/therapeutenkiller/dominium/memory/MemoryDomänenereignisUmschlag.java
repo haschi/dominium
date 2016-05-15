@@ -8,18 +8,18 @@ public final class MemoryDomänenereignisUmschlag<A, I>
         implements Umschlag<A, MemoryEreignisMetaDaten<I>> {
 
     private final A ereignis;
-    private final MemoryEreignisMetaDaten<I> meta;
+    private final MemoryEreignisMetaDaten<I> metaDaten;
 
     public MemoryDomänenereignisUmschlag(final A ereignis, final MemoryEreignisMetaDaten<I> meta) {
         super();
 
         this.ereignis = ereignis;
-        this.meta = meta;
+        this.metaDaten = meta;
     }
 
     @Override
     public MemoryEreignisMetaDaten<I> getMetaDaten() {
-        return this.meta;
+        return this.metaDaten;
     }
 
     @Override
