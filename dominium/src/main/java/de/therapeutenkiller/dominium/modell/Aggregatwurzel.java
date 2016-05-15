@@ -46,7 +46,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     public final void aktualisieren(final List<Domänenereignis<T>> stream) {
         this.anwenden(stream);
-        this.setInitialversion(this.getVersion());
+        this.initialversion = this.version;
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
@@ -63,10 +63,6 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     public final long getVersion() {
         return this.version.alsLong();
-    }
-
-    public final void setInitialversion(final long initialversion) {
-        this.initialversion = new Version(initialversion);
     }
 
     public final long getInitialversion() {

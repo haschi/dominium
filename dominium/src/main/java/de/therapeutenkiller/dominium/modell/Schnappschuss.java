@@ -1,7 +1,5 @@
 package de.therapeutenkiller.dominium.modell;
 
-// import de.therapeutenkiller.coding.aspekte.ValueObject;
-
 import java.io.Serializable;
 
 /**
@@ -16,9 +14,7 @@ import java.io.Serializable;
  */
 public interface Schnappschuss<I> extends Serializable {
 
-    @SuppressWarnings("JpaAttributeMemberSignatureInspection")
     I getIdentitätsmerkmal();
 
-    @SuppressWarnings("JpaAttributeMemberSignatureInspection")
     Version getVersion();
 }
