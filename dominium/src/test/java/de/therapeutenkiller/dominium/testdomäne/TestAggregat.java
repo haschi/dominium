@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatSchnappschuss.TestAggregatSchnappschussBuilder;
 
 import java.util.UUID;
@@ -11,7 +12,7 @@ public final class TestAggregat
 
     private long zustand;
 
-    public TestAggregat(final UUID identitätsmerkmal, final long version) {
+    public TestAggregat(final UUID identitätsmerkmal, final Version version) {
         super(identitätsmerkmal, version);
     }
 

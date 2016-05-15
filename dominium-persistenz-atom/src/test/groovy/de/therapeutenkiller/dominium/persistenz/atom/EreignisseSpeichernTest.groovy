@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.atom
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis
+import de.therapeutenkiller.dominium.modell.Version
 import de.therapeutenkiller.dominium.modell.Versionsbereich
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregat
 import de.therapeutenkiller.dominium.persistenz.atom.testaggregat.TestAggregatEreignisziel
@@ -24,7 +25,7 @@ class EreignisseSpeichernTest extends Specification {
     @Unroll
     def "Ereignisse #anzahl in einem neuen Ereignis-Strom ablegen"(int anzahl) {
         given:
-        TestAggregat aggregat = new TestAggregat(identitätsmerkmal, 0L)
+        TestAggregat aggregat = new TestAggregat(identitätsmerkmal, Version.NEU)
         aggregat.ereignisseErzeugen(anzahl)
 
         when:
@@ -34,7 +35,6 @@ class EreignisseSpeichernTest extends Specification {
                 Versionsbereich.ALLE_VERSIONEN)
 
         then:
-
         ereignisliste.size() == anzahl
         ereignisliste == (0..anzahl - 1).collect {new ZustandWurdeGeändert(it)}
 

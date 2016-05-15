@@ -17,10 +17,10 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     private Version version;
     private Version initialversion;
 
-    protected Aggregatwurzel(final I identitätsmerkmal, final long version) {
+    protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
-        this.version = new Version(version);
-        this.initialversion = new Version(version);
+        this.version = version;
+        this.initialversion = version;
     }
 
     protected Aggregatwurzel(final Schnappschuss<A, I> schnappschuss) {

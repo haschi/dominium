@@ -20,7 +20,7 @@ public class EntitätTest {
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
 
-        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal, 0L));
+        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal, Version.NEU));
 
         describe("Eine Entität", () -> {
 

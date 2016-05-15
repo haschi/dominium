@@ -21,7 +21,7 @@ public class AggregatwurzelTest {
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
-        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal, 0L));
+        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal, Version.NEU));
 
         describe("Eine Aggregatwurzel", () -> {
 
@@ -109,7 +109,10 @@ public class AggregatwurzelTest {
                         .version(123L)
                         .build();
 
-                    this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.getVersion());
+                    this.subjectUnderTest = new TestAggregat(
+                        anderesIdentitätsmerkmal,
+                        new Version(schnappschuss.getVersion()));
+
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);
                 });
 

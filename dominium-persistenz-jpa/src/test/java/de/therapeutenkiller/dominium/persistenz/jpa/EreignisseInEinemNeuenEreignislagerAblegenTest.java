@@ -1,5 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
@@ -32,7 +33,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
     @Before
     public void wenn_ein_neues_ereignislager_mit_ereignissen_angelegt_wird() {
 
-        final TestAggregat aggregat = new TestAggregat(this.id, 0L);
+        final TestAggregat aggregat = new TestAggregat(this.id, Version.NEU);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 

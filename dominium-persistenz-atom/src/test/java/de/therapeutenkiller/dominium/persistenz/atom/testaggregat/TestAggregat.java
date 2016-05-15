@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.atom.testaggregat;
 
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Version;
 
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public final class TestAggregat
 
     private long wert;
 
-    public TestAggregat(final UUID identitätsmerkmal, final long version) {
+    public TestAggregat(final UUID identitätsmerkmal, final Version version) {
         super(identitätsmerkmal, version);
     }
 

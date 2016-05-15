@@ -3,6 +3,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.testsupport;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.Magazin;
 import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
@@ -30,7 +31,7 @@ public class HaushaltsbuchMemoryRepository
 
     @Override
     protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final long version) {
-        return new Haushaltsbuch(identitätsmerkmal, version);
+        return new Haushaltsbuch(identitätsmerkmal, new Version(version));
     }
 
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {

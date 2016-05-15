@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.domaene.aggregat
 
+import de.therapeutenkiller.dominium.modell.Version
 import spock.lang.Specification
 
 class EinNeuesHaushaltsbuchBesitztUndefiniertesHauptbuchTest extends Specification {
@@ -8,7 +9,7 @@ class EinNeuesHaushaltsbuchBesitztUndefiniertesHauptbuchTest extends Specificati
         UUID id = UUID.randomUUID()
 
         when: "wenn ich ein neues Haushaltsbuch anlege"
-        Haushaltsbuch haushaltsbuch = new Haushaltsbuch(id, 0L);
+        Haushaltsbuch haushaltsbuch = new Haushaltsbuch(id, Version.NEU);
 
         then: "dann ist das Hauptbuch undefiniert"
         haushaltsbuch.istHauptbuchUndefiniert()

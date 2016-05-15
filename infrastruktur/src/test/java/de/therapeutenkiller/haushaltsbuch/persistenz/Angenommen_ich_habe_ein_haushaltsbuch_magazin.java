@@ -1,5 +1,6 @@
 package de.therapeutenkiller.haushaltsbuch.persistenz;
 
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.AggregatNichtGefunden;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
@@ -35,7 +36,7 @@ public class Angenommen_ich_habe_ein_haushaltsbuch_magazin {
     @Before
     public void aggregatErzeugen() {
         this.identitätsmerkmal = UUID.randomUUID();
-        this.haushaltsbuch = new Haushaltsbuch(this.identitätsmerkmal, 0L);
+        this.haushaltsbuch = new Haushaltsbuch(this.identitätsmerkmal, Version.NEU);
         this.haushaltsbuch.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv);
     }
 

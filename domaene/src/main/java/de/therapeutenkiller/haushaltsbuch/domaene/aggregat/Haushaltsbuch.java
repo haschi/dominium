@@ -2,6 +2,7 @@ package de.therapeutenkiller.haushaltsbuch.domaene.aggregat;
 
 import com.google.common.collect.ImmutableSet;
 import de.therapeutenkiller.dominium.modell.Aggregatwurzel;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.haushaltsbuch.api.Kontoart;
 import de.therapeutenkiller.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import de.therapeutenkiller.haushaltsbuch.domaene.SollkontoSpezifikation;
@@ -28,7 +29,7 @@ public final class Haushaltsbuch
         super(snapshot);
     }
 
-    public Haushaltsbuch(final UUID uuid, final long version) {
+    public Haushaltsbuch(final UUID uuid, final Version version) {
         super(uuid, version);
     }
 
@@ -43,7 +44,7 @@ public final class Haushaltsbuch
     }
 
     public static Haushaltsbuch erzeugen(final UUID identitätsmerkmal) {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, 0L);
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, Version.NEU);
 
         haushaltsbuch.hauptbuchAnlegen();
         haushaltsbuch.journalAnlegen();

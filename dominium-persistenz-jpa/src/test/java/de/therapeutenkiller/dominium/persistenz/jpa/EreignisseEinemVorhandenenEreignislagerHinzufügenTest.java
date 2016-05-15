@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Domänenereignis;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
@@ -37,7 +38,7 @@ public final class EreignisseEinemVorhandenenEreignislagerHinzufügenTest {
 
     @Before
     public void angenommen_ich_habe_einen_ereignisstrom_mit_ereignissen_angelegt() {
-        final TestAggregat aggregat = new TestAggregat(this.id, 0L);
+        final TestAggregat aggregat = new TestAggregat(this.id, Version.NEU);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[0]);
         aggregat.einenZustandÄndern(EREIGNIS_NUTZLAST[1]);
 
