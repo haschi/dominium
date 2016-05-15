@@ -1,11 +1,12 @@
 package de.therapeutenkiller.dominium.testdomäne;
 
 import de.therapeutenkiller.coding.aspekte.ValueObject;
+import de.therapeutenkiller.dominium.modell.Domänenereignis;
 
 @ValueObject
-public final class ZustandWurdeGeändert extends TestAggregatEreignis {
+public final class ZustandWurdeGeändert implements Domänenereignis<TestAggregatEreignisZiel> {
 
-    private static final long serialVersionUID = 4335272371696585897L;
+    private static final long serialVersionUID = 5894690972126209956L;
 
     private final long payload;
 

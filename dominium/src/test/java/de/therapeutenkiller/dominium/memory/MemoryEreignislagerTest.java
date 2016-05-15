@@ -5,7 +5,6 @@ import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
 import de.therapeutenkiller.dominium.modell.Versionsbereich;
-import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignis;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisZiel;
 import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert;
 import org.junit.runner.RunWith;
@@ -44,7 +43,7 @@ public class MemoryEreignislagerTest {
         });
 
         describe("mit Ereignisstrom", () -> {
-            final TestAggregatEreignis[] domänenereignisse = {
+            final ZustandWurdeGeändert[] domänenereignisse = {
                 new ZustandWurdeGeändert(42L),
                 new ZustandWurdeGeändert(43L)
             };
@@ -84,7 +83,7 @@ public class MemoryEreignislagerTest {
                     .containsExactly(domänenereignisse[1]));
 
             describe("Ereignisse hinzufügen mit gültiger Versionsnummer", () -> {
-                final TestAggregatEreignis[] weitereEreignisse = {
+                final ZustandWurdeGeändert[] weitereEreignisse = {
                     new ZustandWurdeGeändert(44L),
                     new ZustandWurdeGeändert(45L)
                 };
