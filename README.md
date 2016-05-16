@@ -1,3 +1,16 @@
+Dominium
+========
+
+Ein CQRS/ES Framework für Java EE
+---------------------------------
+
+Zielsetzung:
+
+1. Saubere Architektur. Domänenmodelle dürfen keine technischen Aspekte beinhalten und keinen Bezug zum Framework
+besitzen.
+2. Es darf keinen großen Aufwand erfordern, um mit dem Framework umzugehen.
+
+
 Haushaltsbuch
 =============
 

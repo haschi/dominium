@@ -11,9 +11,10 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<UUID> {
 
     private final UUID identitätsmerkmal;
     private final Version version;
-    private long wert;
+    private final long wert;
 
     public TestAggregatSchnappschuss(final UUID identitätsmerkmal, final Version version, final long wert) {
+        super();
 
         this.identitätsmerkmal = identitätsmerkmal;
         this.version = version;

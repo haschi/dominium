@@ -22,26 +22,28 @@ public class Fields implements Iterable<Field>{
     private final TypeElement classElement;
 
     public Fields(final TypeElement classElement) {
+        super();
+
         this.classElement = classElement;
     }
 
     public String alsParameter() {
-        return getFields().stream().map(f -> "this." + f.getName()).collect(Collectors.joining(",\n"));
+        return this.getFields().stream().map(f -> "this." + f.getName()).collect(Collectors.joining(",\n"));
     }
 
     @Override
     public Iterator<Field> iterator() {
-        ArrayList<Field> fields = getFields();
+        final ArrayList<Field> fields = this.getFields();
 
         return fields.iterator();
     }
 
     private ArrayList<Field> getFields() {
-        ArrayList<Field> fields = new ArrayList<>();
-        FieldVisitor visitor = new FieldVisitor(fields);
+        final ArrayList<Field> fields = new ArrayList<>();
+        final FieldVisitor visitor = new FieldVisitor(fields);
 
         final List<? extends Element> elements = classElement.getEnclosedElements();
-        for (Element subElement : elements) {
+        for (final Element subElement : elements) {
 
             subElement.accept(visitor, null);
         }
@@ -63,12 +65,12 @@ public class Fields implements Iterable<Field>{
         private final ArrayList<Field> fields;
 
         public FieldVisitor(final ArrayList<Field> fields) {
-
+            super();
             this.fields = fields;
         }
 
         @Override @DarfNullSein
-        public Void visit(final Element element, final @DarfNullSein Void aVoid) {
+        public Void visit(final Element element, @DarfNullSein final Void aVoid) {
             return null;
         }
 
@@ -78,17 +80,17 @@ public class Fields implements Iterable<Field>{
         }
 
         @Override @DarfNullSein
-        public Void visitPackage(final PackageElement packageElement, final @DarfNullSein Void aVoid) {
+        public Void visitPackage(final PackageElement packageElement, @DarfNullSein final Void aVoid) {
             return null;
         }
 
         @Override @DarfNullSein
-        public Void visitType(final TypeElement typeElement, final @DarfNullSein Void aVoid) {
+        public Void visitType(final TypeElement typeElement, @DarfNullSein final Void aVoid) {
             return null;
         }
 
         @Override @DarfNullSein
-        public Void visitVariable(final VariableElement variableElement, final @DarfNullSein Void aVoid) {
+        public Void visitVariable(final VariableElement variableElement, @DarfNullSein final Void aVoid) {
             final Name simpleName = variableElement.getSimpleName();
             final TypeMirror typeMirror = variableElement.asType();
 
@@ -97,12 +99,12 @@ public class Fields implements Iterable<Field>{
         }
 
         @Override @DarfNullSein
-        public Void visitExecutable(final ExecutableElement executableElement, final @DarfNullSein Void aVoid) {
+        public Void visitExecutable(final ExecutableElement executableElement, @DarfNullSein final Void aVoid) {
             return null;
         }
 
         @Override @DarfNullSein
-        public Void visitTypeParameter(final TypeParameterElement typeParameterElement, final @DarfNullSein Void aVoid) {
+        public Void visitTypeParameter(final TypeParameterElement typeParameterElement, @DarfNullSein final Void aVoid) {
             return null;
         }
 

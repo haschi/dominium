@@ -1,7 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
@@ -21,7 +19,7 @@ public class JpaSchnappschussUmschlag<S>
 
     @Column
     @Lob
-    private byte[] schnappshuss;
+    private final byte[] schnappshuss;
 
     @Column
     @Lob
@@ -34,9 +32,6 @@ public class JpaSchnappschussUmschlag<S>
 
         this.klasse = snapshot.getClass().getCanonicalName();
         this.meta = meta;
-
-        ObjectMapper mapper = new ObjectMapper()
-            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         try {
             this.schnappshuss = BinärSerialisierer.serialize(snapshot);

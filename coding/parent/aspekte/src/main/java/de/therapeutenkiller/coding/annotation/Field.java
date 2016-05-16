@@ -14,6 +14,7 @@ public class Field {
     private final String name;
 
     public Field(final String type, final String name) {
+        super();
 
         this.type = type;
         this.name = name;

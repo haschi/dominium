@@ -35,8 +35,8 @@ public class BuilderProcessor extends AbstractProcessor {
             String packageName = null;
 
             if (element.getKind() == ElementKind.CLASS) {
-                TypeElement classElement = (TypeElement) element;
-                PackageElement packageElement = (PackageElement) element.getEnclosingElement();
+                final TypeElement classElement = (TypeElement) element;
+                final PackageElement packageElement = (PackageElement) element.getEnclosingElement();
 
                 fqClassName = classElement.getQualifiedName().toString();
                 className = classElement.getSimpleName().toString();
@@ -45,34 +45,34 @@ public class BuilderProcessor extends AbstractProcessor {
                 if (fqClassName != null) {
                     try {
 
-                    Properties properties = new Properties();
-                    URL url = this.getClass().getClassLoader().getResource("velocity.properties");
+                    final Properties properties = new Properties();
+                    final URL url = this.getClass().getClassLoader().getResource("velocity.properties");
                     properties.load(url.openStream());
 
 
-                    VelocityEngine ve = new VelocityEngine(properties);
-                    processingEnv.getMessager().printMessage(Kind.NOTE, "3", element);
+                    final VelocityEngine ve = new VelocityEngine(properties);
+                    this.processingEnv.getMessager().printMessage(Kind.NOTE, "3", element);
 
                     ve.init();
-                    processingEnv.getMessager().printMessage(Kind.NOTE, "2", element);
-                    VelocityContext vc = new VelocityContext();
+                    this.processingEnv.getMessager().printMessage(Kind.NOTE, "2", element);
+                    final VelocityContext vc = new VelocityContext();
                     vc.put("className", className);
                     vc.put("packageName", packageName);
                         vc.put("fqClassName", fqClassName);
 
                         vc.put("felder", new Fields(classElement));
 
-                    Template vt = ve.getTemplate("builder.vm", "UTF-8");
-                    processingEnv.getMessager().printMessage(Kind.NOTE, "1", element);
+                    final Template vt = ve.getTemplate("builder.vm", "UTF-8");
+                    this.processingEnv.getMessager().printMessage(Kind.NOTE, "1", element);
                     JavaFileObject jfo = null;
 
-                        jfo = processingEnv.getFiler().createSourceFile(fqClassName+"Builder");
-                        Writer writer = jfo.openWriter();
+                        jfo = this.processingEnv.getFiler().createSourceFile(fqClassName+"Builder");
+                        final Writer writer = jfo.openWriter();
                         vt.merge(vc, writer);
                         writer.close();
 
-                    } catch (Exception e) {
-                        processingEnv.getMessager().printMessage(Kind.ERROR, e.getMessage(), element);
+                    } catch (final Exception e) {
+                        this.processingEnv.getMessager().printMessage(Kind.ERROR, e.getMessage(), element);
                         return false;
                     }
                 }

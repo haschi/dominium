@@ -15,7 +15,7 @@ public class DomänenereignisConverter implements AttributeConverter<Domänenere
 
         try {
             return mapper.writeValueAsString(domänenereignis);
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             throw new Serialisierungsfehler(e);
         }
     }
@@ -25,7 +25,7 @@ public class DomänenereignisConverter implements AttributeConverter<Domänenere
         final ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(s, Domänenereignis.class);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new Serialisierungsfehler(e);
         }
     }
