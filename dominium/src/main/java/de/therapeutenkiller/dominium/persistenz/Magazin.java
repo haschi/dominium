@@ -42,7 +42,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         final Version bis = Version.MAX;
         final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(bis);
 
-        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von.alsLong());
+        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von);
         schnappschuss.ifPresent(aggregat::wiederherstellenAus);
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
@@ -51,7 +51,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         return aggregat;
     }
 
-    protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal, final long version);
+    protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal, final Version version);
 
     @Override
     public void hinzufügen(final A aggregat) {

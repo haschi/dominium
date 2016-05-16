@@ -30,8 +30,8 @@ public class HaushaltsbuchMemoryRepository
     }
 
     @Override
-    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final long version) {
-        return new Haushaltsbuch(identitätsmerkmal, new Version(version));
+    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final Version version) {
+        return new Haushaltsbuch(identitätsmerkmal, version);
     }
 
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {

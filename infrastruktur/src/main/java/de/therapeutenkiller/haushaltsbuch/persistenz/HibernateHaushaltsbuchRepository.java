@@ -28,8 +28,8 @@ public class HibernateHaushaltsbuchRepository
     }
 
     @Override
-    protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final long version) {
-        return new Haushaltsbuch(identitätsmerkmal, new Version(version));
+    protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final Version version) {
+        return new Haushaltsbuch(identitätsmerkmal, version);
     }
 
     @Override
