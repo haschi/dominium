@@ -2,9 +2,10 @@ package de.therapeutenkiller.dominium.memory;
 
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import de.therapeutenkiller.coding.aspekte.ArgumentIstNullException;
+import de.therapeutenkiller.dominium.modell.Version;
+import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import de.therapeutenkiller.dominium.persistenz.KonkurrierenderZugriff;
-import de.therapeutenkiller.dominium.modell.Versionsbereich;
 import de.therapeutenkiller.dominium.testdomäne.TestAggregatEreignisZiel;
 import de.therapeutenkiller.dominium.testdomäne.ZustandWurdeGeändert;
 import org.junit.runner.RunWith;
@@ -79,7 +80,8 @@ public class MemoryEreignislagerTest {
                     .containsExactly(domänenereignisse));
 
             it("liefert Ereignisliste für Versionsbereich seiner Ereignisströme", () ->
-                assertThat(this.lager.getEreignisliste(identitätsmerkmal, Versionsbereich.von(2).bis(2)))
+                assertThat(this.lager.getEreignisliste(identitätsmerkmal,
+                        Versionsbereich.von(new Version(2L)).bis(2)))
                     .containsExactly(domänenereignisse[1]));
 
             describe("Ereignisse hinzufügen mit gültiger Versionsnummer", () -> {

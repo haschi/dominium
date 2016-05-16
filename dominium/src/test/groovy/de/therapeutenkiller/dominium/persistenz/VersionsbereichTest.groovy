@@ -1,5 +1,6 @@
 package de.therapeutenkiller.dominium.persistenz
 
+import de.therapeutenkiller.dominium.modell.Version
 import de.therapeutenkiller.dominium.modell.Versionsbereich
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
@@ -11,7 +12,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl innerhalb"() {
 
         when: "ich habe einen Versionsbereich von #von bis #bis"
-        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
 
         then: "liegt #zahl innerhalb des Versionsbereichs"
         versionsbereich.liegtInnerhalb zahl
@@ -30,7 +31,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl außerhalb"() {
 
         when:
-        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
 
         then:
         !(versionsbereich.liegtInnerhalb(zahl))
@@ -48,7 +49,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) können keine ungültigen Versionen liegen"() {
 
         given: "Ich habe einen Versionsbereich #von #bis"
-        Versionsbereich versionsbereich = Versionsbereich.von von bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
 
         when: "ich prüfe, ob #zahl innerhalb des Versionsbereiches liegt"
         versionsbereich.liegtInnerhalb zahl
@@ -78,7 +79,7 @@ class VersionsbereichTest extends Specification {
     def "Die untere Grenze des Versionsbereichs darf nicht größer als die obere Grenze sein"() {
 
         when:
-        Versionsbereich.von von bis bis
+        Versionsbereich.von new Version(von) bis bis
 
         then:
         thrown exception
@@ -95,7 +96,7 @@ class VersionsbereichTest extends Specification {
 
     def "Die untere Grenze des Versionsbereichs muss eine positive Zahl sein"() {
         when:
-        Versionsbereich.von von bis 100
+        Versionsbereich.von new Version(von) bis 100
 
         then:
         thrown IllegalArgumentException
