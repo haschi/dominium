@@ -4,11 +4,12 @@ import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 @ValueObject
-public final class JournalWurdeAngelegt extends HaushaltsbuchEreignis implements Serializable {
+public final class JournalWurdeAngelegt implements HaushaltsbuchEreignis {
+
+    private static final long serialVersionUID = 274297407457888074L;
     private final UUID aktuelleHaushaltsbuchId;
 
     protected JournalWurdeAngelegt() {

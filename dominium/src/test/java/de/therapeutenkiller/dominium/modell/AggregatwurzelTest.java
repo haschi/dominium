@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class AggregatwurzelTest {
 
-    private static final long[] EREIGNIS_NUTZLAST = {42L, 43L, 44L, 45L};
+    private static final long[] EREIGNIS_NUTZLAST = {42L, 43L, 44L, 45L, 4711L};
+    private static final Version VERSION = new Version(123L);
 
     private TestAggregat subjectUnderTest;
 
@@ -97,8 +98,8 @@ public class AggregatwurzelTest {
                 beforeEach(() -> {
                     final TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
                         .identitätsmerkmal(anderesIdentitätsmerkmal)
-                        .payload(4711L)
-                        .version(new Version(123L))
+                        .payload(EREIGNIS_NUTZLAST[4])
+                        .version(VERSION)
                         .build();
 
                     this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.getVersion());
@@ -108,7 +109,7 @@ public class AggregatwurzelTest {
 
                 it("erhält die Version aus dem Schnappschuss", () ->
                     assertThat(this.subjectUnderTest.getVersion())
-                        .isEqualTo(new Version(123L)));
+                        .isEqualTo(VERSION));
 
                 it("erhält das Identitätsmerkmal aus dem Schnappschuss", () ->
                     assertThat(this.subjectUnderTest.getIdentitätsmerkmal())

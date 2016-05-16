@@ -4,7 +4,9 @@ import de.therapeutenkiller.coding.aspekte.ValueObject;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @ValueObject
-public final class ZustandWurdeGeändert extends TestAggregatEreignis {
+public final class ZustandWurdeGeändert implements TestAggregatEreignis {
+
+    private static final long serialVersionUID = 8440495216648424151L;
     private final long wert;
 
     private ZustandWurdeGeändert() {

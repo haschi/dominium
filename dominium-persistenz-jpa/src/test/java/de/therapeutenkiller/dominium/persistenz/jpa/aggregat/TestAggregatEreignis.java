@@ -6,5 +6,5 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-public abstract class TestAggregatEreignis implements Domänenereignis<TestAggregatEreignisziel> {
+public interface TestAggregatEreignis extends Domänenereignis<TestAggregatEreignisziel> {
 }

@@ -7,13 +7,10 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.Serializable;
-
 @ValueObject
-public final class KontoWurdeNichtAngelegt extends HaushaltsbuchEreignis implements Serializable {
+public final class KontoWurdeNichtAngelegt implements HaushaltsbuchEreignis {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -6162988326427084703L;
     private final String kontoname;
     private final Kontoart kontoart;
 

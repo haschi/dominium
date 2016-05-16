@@ -39,8 +39,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
         final Version von = schnappschuss.map(Schnappschuss::getVersion).orElse(Version.NEU);
-        final Version bis = Version.MAX;
-        final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(bis);
+        final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(Version.MAX);
 
         final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von);
         schnappschuss.ifPresent(aggregat::wiederherstellenAus);

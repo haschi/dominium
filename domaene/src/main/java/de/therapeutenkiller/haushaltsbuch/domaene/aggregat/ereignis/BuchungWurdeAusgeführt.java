@@ -5,13 +5,10 @@ import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
-import java.io.Serializable;
-
 @ValueObject
-public final class BuchungWurdeAusgeführt extends HaushaltsbuchEreignis implements Serializable {
+public final class BuchungWurdeAusgeführt implements HaushaltsbuchEreignis {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 840178583178747792L;
     private final Buchungssatz buchungssatz;
 
     public BuchungWurdeAusgeführt(final Buchungssatz buchungssatz) {

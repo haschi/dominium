@@ -4,12 +4,10 @@ import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
 import de.therapeutenkiller.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 
-import java.io.Serializable;
-
 @ValueObject
-public final class BuchungWurdeAbgelehnt extends HaushaltsbuchEreignis implements Serializable {
-    private static final long serialVersionUID = 1L;
+public final class BuchungWurdeAbgelehnt implements HaushaltsbuchEreignis {
 
+    private static final long serialVersionUID = 7359242458848812253L;
     private final String grund;
 
     public BuchungWurdeAbgelehnt(final String grund) {
