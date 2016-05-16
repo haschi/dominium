@@ -497,6 +497,11 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>de.therapeutenkiller</groupId>
+                    <artifactId>mojo</artifactId>
+                    <version>${version.de.therapeutenkiller.coding}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
