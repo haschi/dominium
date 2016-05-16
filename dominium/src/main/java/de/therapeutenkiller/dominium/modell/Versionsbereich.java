@@ -60,12 +60,12 @@ public final class Versionsbereich {
                 .toHashCode();
     }
 
-    public long getVon() {
-        return this.von.alsLong();
+    public Version getVon() {
+        return this.von;
     }
 
-    public long getBis() {
-        return this.bis.alsLong();
+    public Version getBis() {
+        return this.bis;
     }
 
     public static VersionsbereichBuilderInterface von(final long wert) {

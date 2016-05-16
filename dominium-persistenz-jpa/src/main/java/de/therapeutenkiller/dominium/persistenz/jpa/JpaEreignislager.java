@@ -72,8 +72,8 @@ public class JpaEreignislager<T> implements Ereignislager<UUID, T> {
                         + "ORDER BY i.meta.version",
                 JpaDomänenereignisUmschlag.class);
 
-        query.setParameter("vonVersion", bereich.getVon());
-        query.setParameter("bisVersion", bereich.getBis());
+        query.setParameter("vonVersion", bereich.getVon().alsLong());
+        query.setParameter("bisVersion", bereich.getBis().alsLong());
         query.setParameter("identitätsmerkmal", identitätsmerkmal);
 
         final List<JpaDomänenereignisUmschlag> resultList = query.getResultList();
