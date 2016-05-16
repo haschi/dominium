@@ -12,7 +12,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl innerhalb"() {
 
         when: "ich habe einen Versionsbereich von #von bis #bis"
-        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis new Version(bis)
 
         then: "liegt #zahl innerhalb des Versionsbereichs"
         versionsbereich.liegtInnerhalb zahl
@@ -31,7 +31,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) liegt #zahl außerhalb"() {
 
         when:
-        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis new Version(bis)
 
         then:
         !(versionsbereich.liegtInnerhalb(zahl))
@@ -49,7 +49,7 @@ class VersionsbereichTest extends Specification {
     def "In einem Versionsbereich (#von, #bis) können keine ungültigen Versionen liegen"() {
 
         given: "Ich habe einen Versionsbereich #von #bis"
-        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis bis
+        Versionsbereich versionsbereich = Versionsbereich.von new Version(von) bis new Version(bis)
 
         when: "ich prüfe, ob #zahl innerhalb des Versionsbereiches liegt"
         versionsbereich.liegtInnerhalb zahl
@@ -79,7 +79,7 @@ class VersionsbereichTest extends Specification {
     def "Die untere Grenze des Versionsbereichs darf nicht größer als die obere Grenze sein"() {
 
         when:
-        Versionsbereich.von new Version(von) bis bis
+        Versionsbereich.von new Version(von) bis new Version(bis)
 
         then:
         thrown exception
@@ -96,8 +96,7 @@ class VersionsbereichTest extends Specification {
 
     def "Die untere Grenze des Versionsbereichs muss eine positive Zahl sein"() {
         when:
-        Versionsbereich.von new Version(von) bis 100
-
+        Versionsbereich.von new Version(von) bis Version.MAX
         then:
         thrown IllegalArgumentException
 

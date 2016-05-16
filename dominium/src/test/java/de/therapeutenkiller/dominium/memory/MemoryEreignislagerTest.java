@@ -81,7 +81,7 @@ public class MemoryEreignislagerTest {
 
             it("liefert Ereignisliste für Versionsbereich seiner Ereignisströme", () ->
                 assertThat(this.lager.getEreignisliste(identitätsmerkmal,
-                        Versionsbereich.von(new Version(2L)).bis(2)))
+                        Versionsbereich.von(new Version(2L)).bis(new Version(2L))))
                     .containsExactly(domänenereignisse[1]));
 
             describe("Ereignisse hinzufügen mit gültiger Versionsnummer", () -> {

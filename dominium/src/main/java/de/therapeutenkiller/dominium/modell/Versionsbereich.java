@@ -27,7 +27,7 @@ public final class Versionsbereich {
 
     // tbd: Der Konstruktor muss private sein. Der Aspekt NullReferenzPrüfung ist fehlerhaft.
     public Versionsbereich(final VersionsbereichBuilder versionsbereichBuilder) {
-        this(versionsbereichBuilder.von, new Version(versionsbereichBuilder.bis));
+        this(versionsbereichBuilder.von, versionsbereichBuilder.bis);
     }
 
     public boolean liegtInnerhalb(final long zahl) {
@@ -75,14 +75,14 @@ public final class Versionsbereich {
     private static class VersionsbereichBuilder implements VersionsbereichBuilderInterface {
 
         private Version von;
-        private long bis;
+        private Version bis;
 
         private VersionsbereichBuilderInterface von(final Version wert) {
             this.von = wert;
             return this;
         }
 
-        public Versionsbereich bis(final long wert) {
+        public Versionsbereich bis(final Version wert) {
             this.bis = wert;
             return new Versionsbereich(this);
         }
