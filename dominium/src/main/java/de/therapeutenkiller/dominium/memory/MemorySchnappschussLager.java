@@ -22,9 +22,7 @@ public class MemorySchnappschussLager<S extends Schnappschuss<I>, I>
     }
 
     @Override
-    public final void schnappschussHinzufügen(final S schnappschuss) {
-        final I identitätsmerkmal = schnappschuss.getIdentitätsmerkmal();
-
+    public final void schnappschussHinzufügen(final S schnappschuss, final I identitätsmerkmal) {
         if (this.listen.containsKey(identitätsmerkmal)) {
             this.listen.replace(identitätsmerkmal, schnappschuss);
         } else {

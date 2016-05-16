@@ -1,7 +1,5 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import de.therapeutenkiller.coding.aspekte.ValueObject;
@@ -11,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import java.io.IOException;
 
 @Entity
@@ -23,7 +20,8 @@ public class JpaSchnappschussUmschlag<S>
     private final JpaSchnappschussMetaDaten meta;
 
     @Column
-    private String schnappshuss;
+    @Lob
+    private byte[] schnappshuss;
 
     @Column
     @Lob
@@ -41,8 +39,8 @@ public class JpaSchnappschussUmschlag<S>
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         try {
-            this.schnappshuss = mapper.writeValueAsString(snapshot);
-        } catch (final JsonProcessingException e) {
+            this.schnappshuss = BinärSerialisierer.serialize(snapshot);
+        } catch (IOException e) {
             throw new Serialisierungsfehler(e);
         }
     }
@@ -59,10 +57,9 @@ public class JpaSchnappschussUmschlag<S>
     }
 
     public final S öffnen() {
-        final ObjectMapper mapper = new ObjectMapper();
         try {
             final Class<?> k = Class.forName(this.klasse);
-            return (S)mapper.readValue(this.schnappshuss, k);
+            return (S)BinärSerialisierer.deserialize(this.schnappshuss);
         } catch (final ClassNotFoundException | IOException e) {
             throw new Serialisierungsfehler(e);
         }

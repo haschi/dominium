@@ -1,6 +1,7 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
+import de.therapeutenkiller.dominium.modell.Version;
 import de.therapeutenkiller.dominium.persistenz.SchnappschussLager;
 import de.therapeutenkiller.dominium.persistenz.Uhr;
 
@@ -43,12 +44,9 @@ public class JpaSchnappschussLager<S extends Schnappschuss<UUID>>
     }
 
     @Override
-    public final void schnappschussHinzufügen(final S testSchnappschuss) {
+    public final void schnappschussHinzufügen(final S testSchnappschuss, final UUID identitätsmerkmal) {
 
-        final JpaSchnappschussMetaDaten meta = new JpaSchnappschussMetaDaten(
-            testSchnappschuss.getIdentitätsmerkmal(),
-            this.uhr.jetzt());
-
+        final JpaSchnappschussMetaDaten meta = new JpaSchnappschussMetaDaten(identitätsmerkmal, this.uhr.jetzt());
         final JpaSchnappschussUmschlag<S> umschlag = new JpaSchnappschussUmschlag<>(
             testSchnappschuss,
             meta);

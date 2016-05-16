@@ -49,7 +49,7 @@ public class SchnappschussDienst {
                 try {
                     final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
                     final HaushaltsbuchSchnappschuss schnappschuss = haushaltsbuch.schnappschussErstellen();
-                    this.lager.schnappschussHinzufügen(schnappschuss);
+                    this.lager.schnappschussHinzufügen(schnappschuss, haushaltsbuchId);
 
                     this.logger.infof("Schnappschuss erstellt für Aggregat %s", haushaltsbuchId.toString());
 

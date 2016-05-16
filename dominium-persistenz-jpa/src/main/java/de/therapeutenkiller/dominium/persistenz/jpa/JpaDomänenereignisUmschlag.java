@@ -1,13 +1,12 @@
 package de.therapeutenkiller.dominium.persistenz.jpa;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.therapeutenkiller.coding.aspekte.ValueObject;
 import de.therapeutenkiller.dominium.persistenz.Umschlag;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.io.IOException;
 
 /**
@@ -23,7 +22,8 @@ public class JpaDomänenereignisUmschlag<E>
     private JpaEreignisMetaDaten meta;
 
     @Column
-    private String ereignis;
+    @Lob
+    private byte[] ereignis;
 
     @Column
     private String klasse;
@@ -35,10 +35,10 @@ public class JpaDomänenereignisUmschlag<E>
 
         this.meta = meta;
         klasse = ereignis.getClass().getCanonicalName();
-        ObjectMapper mapper = new ObjectMapper();
+
         try {
-            this.ereignis = mapper.writeValueAsString(ereignis);
-        } catch (final JsonProcessingException e) {
+            this.ereignis = BinärSerialisierer.serialize(ereignis);
+        } catch (IOException e) {
             throw new Serialisierungsfehler(e);
         }
     }
@@ -54,10 +54,9 @@ public class JpaDomänenereignisUmschlag<E>
 
     @Override
     public final E öffnen() {
-        final ObjectMapper mapper = new ObjectMapper();
         try {
             final Class<?> k = Class.forName(this.klasse);
-            return (E)mapper.readValue(this.ereignis, k);
+            return (E)BinärSerialisierer.deserialize(ereignis);
         } catch (final ClassNotFoundException | IOException e) {
             throw new Serialisierungsfehler(e);
         }

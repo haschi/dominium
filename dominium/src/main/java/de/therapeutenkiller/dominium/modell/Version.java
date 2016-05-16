@@ -2,10 +2,14 @@ package de.therapeutenkiller.dominium.modell;
 
 import de.therapeutenkiller.coding.aspekte.DarfNullSein;
 
-public final class Version implements Comparable<Version> {
+import java.io.Serializable;
+
+public final class Version implements Comparable<Version>, Serializable {
 
     public static final Version NEU = new Version(0L);
     public static final Version MAX = new Version(Long.MAX_VALUE);
+
+    private static final long serialVersionUID = -294764863038542923L;
 
     public final long version;
 

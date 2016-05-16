@@ -2,7 +2,6 @@ package de.therapeutenkiller.dominium.persistenz.jpa;
 
 import de.therapeutenkiller.dominium.modell.Schnappschuss;
 import de.therapeutenkiller.dominium.modell.Version;
-import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestAggregat;
 import de.therapeutenkiller.dominium.persistenz.jpa.aggregat.TestSchnappschuss;
 import de.therapeutenkiller.testing.DatenbankRegel;
 import de.therapeutenkiller.testing.TestUhr;
@@ -42,7 +41,7 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
     @Test
     public void wenn_ich_einen_schnappschuss_ablege() throws Exception {
 
-        this.store.schnappschussHinzufügen(this.testSchnappschuss);
+        this.store.schnappschussHinzufügen(this.testSchnappschuss, this.testSchnappschuss.getIdentitätsmerkmal());
         this.datenbankRegel.getEntityManager().flush();
         this.datenbankRegel.getEntityManager().clear();
 

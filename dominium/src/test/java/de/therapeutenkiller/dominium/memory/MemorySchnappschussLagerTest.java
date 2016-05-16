@@ -63,7 +63,9 @@ public class MemorySchnappschussLagerTest {
                     describe(description, () -> {
                         beforeEach(() ->
                             Arrays.asList(testfall).forEach(schnappschuss ->
-                                this.subjectUnderTest.schnappschussHinzufügen(schnappschuss)));
+                                this.subjectUnderTest.schnappschussHinzufügen(
+                                    schnappschuss,
+                                    schnappschuss.getIdentitätsmerkmal())));
 
                         it("liefert den zuletzt hinzugefügten Schnappschuss", () ->
                             assertThat(this.subjectUnderTest.getNeuesterSchnappschuss(identitätsmerkmal))

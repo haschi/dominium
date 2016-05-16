@@ -32,7 +32,9 @@ public class AggregatAusSchnappschussWiederherstellen {
 
                 before(() -> {
                     this.lager = new MemorySchnappschussLager<>();
-                    this.lager.schnappschussHinzufügen(Testdaten.getSchnappschuss(identitätsmerkmal));
+                    this.lager.schnappschussHinzufügen(
+                        Testdaten.getSchnappschuss(identitätsmerkmal),
+                        identitätsmerkmal);
                 });
 
                 it("kann neuesten Schnappschuss wiederherstellen", () ->

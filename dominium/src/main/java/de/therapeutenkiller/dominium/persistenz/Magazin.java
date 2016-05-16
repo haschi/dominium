@@ -76,7 +76,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
             throw new AggregatNichtGefunden();
         }
 
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, schnappschuss.getIdentitätsmerkmal());
     }
 
     public void schnappschussSpeichern(final A aggregat) throws ÄnderungenSindVorhandenGewesen {
@@ -85,7 +85,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         }
 
         final S schnappschuss = aggregat.schnappschussErstellen();
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss);
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, schnappschuss.getIdentitätsmerkmal());
     }
 
     protected Ereignislager<I, T> getEreignislager() {
