@@ -582,7 +582,7 @@
                             <!-- WICHTIG -->
                             <sources/>
                             <weaveDirectories>
-                                <weaveDirectory>${build.outputDirectory}</weaveDirectory>
+                                <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
                             </weaveDirectories>
                         </configuration>
                     </execution>
@@ -597,7 +597,7 @@
                             <!-- WICHTIG -->
                             <testSources/>
                             <weaveDirectories>
-                                <weaveDirectory>${build.testOutputDirectory}</weaveDirectory>
+                                <weaveDirectory>${project.build.testOutputDirectory}</weaveDirectory>
                             </weaveDirectories>
                         </configuration>
                     </execution>
