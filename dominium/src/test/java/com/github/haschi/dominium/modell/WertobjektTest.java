@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.modell;
 
 import com.github.haschi.dominium.testdomäne.AnderesWertobjekt;
+import com.github.haschi.dominium.testdomäne.ImmutableAnderesWertobjekt;
 import com.github.haschi.dominium.testdomäne.ImmutableEinWertobjekt;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import com.github.haschi.dominium.testdomäne.EinWertobjekt;
@@ -26,9 +27,9 @@ public class WertobjektTest {
         });
 
         it("Wertobjekte können Felder für Äquivalenz ausschließen", () -> {
-            EqualsVerifier.forClass(AnderesWertobjekt.class)
-                .withIgnoredFields("straße")
-                .withRedefinedSuperclass()
+            EqualsVerifier.forClass(ImmutableAnderesWertobjekt.class)
+                .withIgnoredFields("strasse")
+                .suppress(Warning.NULL_FIELDS)
                 .verify();
         });
 

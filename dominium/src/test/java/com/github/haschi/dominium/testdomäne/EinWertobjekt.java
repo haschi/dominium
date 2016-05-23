@@ -1,8 +1,8 @@
 package com.github.haschi.dominium.testdomäne;
 
-import org.immutables.value.Value;
+import org.immutables.value.Value.Immutable;
 
-@Value.Immutable
+@Immutable
 public abstract class EinWertobjekt {
 
     public abstract String vorname();

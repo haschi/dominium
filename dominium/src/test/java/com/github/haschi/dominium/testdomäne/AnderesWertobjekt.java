@@ -1,18 +1,11 @@
 package com.github.haschi.dominium.testdomäne;
 
-import com.github.haschi.coding.aspekte.ValueObject;
+import org.immutables.value.Value.Auxiliary;
+import org.immutables.value.Value.Immutable;
 
-@ValueObject(exclude = "straße")
-public final class AnderesWertobjekt {
-    private final String straße;
-    private final String postleitzahl;
-    private final String ort;
-
-    public AnderesWertobjekt(final String straße, final String postleitzahl, final String ort) {
-        super();
-
-        this.straße = straße;
-        this.postleitzahl = postleitzahl;
-        this.ort = ort;
-    }
+@Immutable
+public abstract class AnderesWertobjekt {
+    @Auxiliary public abstract String strasse();
+    public abstract String postleitzahl();
+    public abstract String ort();
 }
