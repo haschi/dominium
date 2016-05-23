@@ -25,16 +25,12 @@ public class JpaDomänenereignisUmschlag<E>
     @Lob
     private byte[] ereignis;
 
-    @Column
-    private String klasse;
-
     public JpaDomänenereignisUmschlag(
             final E ereignis,
             final JpaEreignisMetaDaten meta) {
         super();
 
         this.meta = meta;
-        klasse = ereignis.getClass().getCanonicalName();
 
         try {
             this.ereignis = BinärSerialisierer.serialize(ereignis);
@@ -55,7 +51,6 @@ public class JpaDomänenereignisUmschlag<E>
     @Override
     public final E öffnen() {
         try {
-            final Class<?> k = Class.forName(this.klasse);
             return (E)BinärSerialisierer.deserialize(ereignis);
         } catch (final ClassNotFoundException | IOException e) {
             throw new Serialisierungsfehler(e);

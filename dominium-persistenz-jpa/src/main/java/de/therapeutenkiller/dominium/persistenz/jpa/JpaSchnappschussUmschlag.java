@@ -19,22 +19,17 @@ public class JpaSchnappschussUmschlag<S>
 
     @Column
     @Lob
-    private final byte[] schnappshuss;
-
-    @Column
-    @Lob
-    private String klasse;
+    private final byte[] schnappschuss;
 
     public  JpaSchnappschussUmschlag(
             final S snapshot,
             final JpaSchnappschussMetaDaten meta) {
         super();
 
-        this.klasse = snapshot.getClass().getCanonicalName();
         this.meta = meta;
 
         try {
-            this.schnappshuss = BinärSerialisierer.serialize(snapshot);
+            this.schnappschuss = BinärSerialisierer.serialize(snapshot);
         } catch (IOException e) {
             throw new Serialisierungsfehler(e);
         }
@@ -43,7 +38,7 @@ public class JpaSchnappschussUmschlag<S>
     protected JpaSchnappschussUmschlag() {
         super();
         this.meta = null;
-        this.schnappshuss = null;
+        this.schnappschuss = null;
     }
 
     @Override
@@ -53,8 +48,7 @@ public class JpaSchnappschussUmschlag<S>
 
     public final S öffnen() {
         try {
-            final Class<?> k = Class.forName(this.klasse);
-            return (S)BinärSerialisierer.deserialize(this.schnappshuss);
+            return (S)BinärSerialisierer.deserialize(this.schnappschuss);
         } catch (final ClassNotFoundException | IOException e) {
             throw new Serialisierungsfehler(e);
         }
