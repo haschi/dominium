@@ -1,6 +1,5 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.dominium.testdomäne.AnderesWertobjekt;
 import com.github.haschi.dominium.testdomäne.ImmutableAnderesWertobjekt;
 import com.github.haschi.dominium.testdomäne.ImmutableEinWertobjekt;
 import com.mscharhag.oleaster.runner.OleasterRunner;
