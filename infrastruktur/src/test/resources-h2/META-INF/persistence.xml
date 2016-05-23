@@ -5,15 +5,15 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="test-infrastruktur" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>de.therapeutenkiller.dominium.persistenz.Umschlag</class>
-        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
-        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
-        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
-        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
-        <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss</class>
+        <class>com.github.haschi.dominium.persistenz.Umschlag</class>
+        <class>com.github.haschi.dominium.persistenz.jpa.JpaEreignisstrom</class>
+        <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
+        <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
+        <class>com.github.haschi.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
+        <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschuss</class>
         <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignis</class>
-        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
-        <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt</class>
+        <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
+        <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1" />

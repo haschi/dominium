@@ -4,10 +4,10 @@
                            http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" bean-discovery-mode="all">
 
     <alternatives>
-        <class>de.therapeutenkiller.haushaltsbuch.persistenz.EntityManagerProducer</class>
-        <class>de.therapeutenkiller.testing.TestUhr</class>
+        <class>com.github.haschi.haushaltsbuch.persistenz.EntityManagerProducer</class>
+        <class>com.github.haschi.testing.TestUhr</class>
     </alternatives>
     <decorators>
-        <class>de.therapeutenkiller.haushaltsbuch.persistenz.FlushingHaushaltsbuchRepository</class>
+        <class>com.github.haschi.haushaltsbuch.persistenz.FlushingHaushaltsbuchRepository</class>
     </decorators>
 </beans>

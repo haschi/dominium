@@ -1,4 +1,4 @@
 moduleName=Test module for specifications
 moduleVersion=${project.version}
-extensionClasses=de.therapeutenkiller.MoneyExtensions
+extensionClasses=com.github.haschi.MoneyExtensions
 staticExtensionClasses=

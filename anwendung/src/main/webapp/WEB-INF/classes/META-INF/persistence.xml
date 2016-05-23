@@ -9,20 +9,20 @@
     <jta-data-source>java:/hhbDS</jta-data-source>
 
 
-    <class>de.therapeutenkiller.dominium.persistenz.Umschlag</class>
-    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaEreignisstrom</class>
-    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschuss</class>
-    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
-    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
-    <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
+    <class>com.github.haschi.dominium.persistenz.Umschlag</class>
+    <class>com.github.haschi.dominium.persistenz.jpa.JpaEreignisstrom</class>
+    <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschuss</class>
+    <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschussMetaDaten</class>
+    <class>com.github.haschi.dominium.persistenz.jpa.JpaSchnappschussUmschlag</class>
+    <class>com.github.haschi.dominium.persistenz.jpa.JpaDomänenereignisUmschlag</class>
     <class>de.therapeutenkiller.dominium.persistenz.jpa.JpaDomänenereignis</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt</class>
-    <class>de.therapeutenkiller.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt</class>
+    <class>com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt</class>
 
     <properties>
         <property name="hibernate.hbm2ddl.auto" value="create-drop" />

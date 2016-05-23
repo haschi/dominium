@@ -89,8 +89,8 @@
                     </aspectLibraries>
                     <weaveMainSourceFolder />
                     <weaveWithAspectsInMainSourceFolder>
-
                     </weaveWithAspectsInMainSourceFolder>
+                        <proc>none</proc>
                 </configuration>
                 <dependencies>
                     <dependency>
