@@ -7,7 +7,7 @@
 
     <parent>
         <artifactId>coding</artifactId>
-        <groupId>de.therapeutenkiller</groupId>
+        <groupId>com.github.haschi</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

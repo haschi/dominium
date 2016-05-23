@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>haushaltsbuch</artifactId>
-        <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+        <groupId>com.github.haschi.haushaltsbuch</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -34,7 +34,7 @@
         </dependency>
 
         <dependency>
-            <groupId>de.therapeutenkiller</groupId>
+            <groupId>com.github.haschi</groupId>
             <artifactId>aspekte</artifactId>
         </dependency>
         <dependency>
@@ -60,6 +60,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.2_spec</artifactId>
             <scope>provided</scope>
@@ -80,10 +86,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>de.therapeutenkiller</groupId>
-                <artifactId>mojo</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -12,6 +12,11 @@ public class Konstruktor {
     }
 
     public final void argumentePrüfen(final Object... arguments) {
+
+        if (this.constructor.getConstructor().isSynthetic()) {
+            return;
+        }
+
         final Parameterliste parameterliste = new Parameterliste(
                 this.constructor,
                 this.constructor.getConstructor().getParameters());

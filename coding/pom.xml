@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.therapeutenkiller</groupId>
+    <groupId>com.github.haschi</groupId>
     <artifactId>coding</artifactId>
     <version>0.0.26-SNAPSHOT</version>
     <packaging>pom</packaging>

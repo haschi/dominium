@@ -1,11 +1,11 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.coding.aspekte.ValueObject;
 import com.github.haschi.dominium.testdomäne.AnderesWertobjekt;
+import com.github.haschi.dominium.testdomäne.ImmutableEinWertobjekt;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import com.github.haschi.dominium.testdomäne.EinWertobjekt;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import org.assertj.core.api.Assertions;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.runner.RunWith;
 
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.beforeEach;
@@ -20,12 +20,9 @@ public class WertobjektTest {
 
     {
         it("Wertobjekte entsprechen den Spezifikationen für equals() und hashCode()",() -> {
-            EqualsVerifier.forClass(EinWertobjekt.class).verify();
-        });
-
-        it("Wertobjekte werden durch @ValueObject Annotation deklariert", () -> {
-            Assertions.assertThat(EinWertobjekt.class.getAnnotation(ValueObject.class))
-                .isNotNull();
+            EqualsVerifier.forClass(ImmutableEinWertobjekt.class)
+                .suppress(Warning.NULL_FIELDS)
+                .verify();
         });
 
         it("Wertobjekte können Felder für Äquivalenz ausschließen", () -> {
@@ -37,12 +34,15 @@ public class WertobjektTest {
 
         describe("Ein Wertobjekt", () -> {
             beforeEach(() -> {
-                this.wertobjekt = new EinWertobjekt("Matthias", "Haschka");
+                this.wertobjekt = ImmutableEinWertobjekt.builder()
+                    .vorname("Matthias")
+                    .nachname("Haschka")
+                    .build();
             });
 
             it("liefert standardmäßig eine JSON ähnliche Repräsentation", () -> {
                 assertThat(this.wertobjekt.toString())
-                    .isEqualTo("{\"vorname\":\"Matthias\",\"nachname\":\"Haschka\"}");
+                    .isEqualTo("EinWertobjekt{vorname=Matthias, nachname=Haschka}");
             });
         });
     }

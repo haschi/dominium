@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>haushaltsbuch</artifactId>
-        <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+        <groupId>com.github.haschi.haushaltsbuch</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -16,13 +16,13 @@
     <dependencies>
 
         <dependency>
-            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>domaene</artifactId>
         </dependency>
 
 
         <dependency>
-            <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>infrastruktur</artifactId>
         </dependency>
 
@@ -131,7 +131,7 @@
 
                 <!--
                 <dependency>
-                    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                    <groupId>com.github.haschi.haushaltsbuch</groupId>
                     <artifactId>dominium-persistenz-jpa</artifactId>
                 </dependency>
                 -->
@@ -141,7 +141,7 @@
             <id>event-store</id>
             <dependencies>
                 <dependency>
-                    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                    <groupId>com.github.haschi.haushaltsbuch</groupId>
                     <artifactId>dominium-persistenz-atom</artifactId>
                 </dependency>
             </dependencies>

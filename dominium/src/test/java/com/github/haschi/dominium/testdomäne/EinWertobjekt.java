@@ -1,16 +1,11 @@
 package com.github.haschi.dominium.testdomäne;
 
-import com.github.haschi.coding.aspekte.ValueObject;
+import org.immutables.value.Value;
 
-@ValueObject
-public final class EinWertobjekt {
-    public final String vorname;
-    public final String nachname;
+@Value.Immutable
+public abstract class EinWertobjekt {
 
-    public EinWertobjekt(final String vorname, final String nachname) {
-        super();
+    public abstract String vorname();
 
-        this.vorname = vorname;
-        this.nachname = nachname;
-    }
+    public abstract String nachname();
 }

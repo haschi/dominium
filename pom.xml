@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+    <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -26,7 +26,7 @@
         <checkstyle.version>6.14.1</checkstyle.version>
 
         <!-- Version für die Codierungunterastützung mit Richtlinien und Aspekten -->
-        <version.de.therapeutenkiller.coding>0.0.26-SNAPSHOT</version.de.therapeutenkiller.coding>
+        <version.com.github.haschi.coding>0.0.26-SNAPSHOT</version.com.github.haschi.coding>
 
 
         <version.deltaspike>1.5.2</version.deltaspike>
@@ -56,31 +56,31 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>dominium</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>dominium-persistenz-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>infrastruktur</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>dominium-persistenz-atom</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -95,9 +95,9 @@
 
             <!-- auslagern nach coding.bom -->
             <dependency>
-                <groupId>de.therapeutenkiller</groupId>
+                <groupId>com.github.haschi</groupId>
                 <artifactId>aspekte</artifactId>
-                <version>${version.de.therapeutenkiller.coding}</version>
+                <version>${version.com.github.haschi.coding}</version>
             </dependency>
 
             <!-- auslagern nach coding.bom -->
@@ -114,6 +114,13 @@
                 <!-- version>19.0</version -->
                 <version>14.0.1</version>
                 <!-- Höhere Versionen führen zu einem Konflikt im Zusammenhang mit Weld Embedded und Arquillian -->
+            </dependency>
+
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>2.2</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- auslagern nach jee.bom -->
@@ -342,7 +349,7 @@
 
 
         <!-- dependency>
-            <groupId>de.therapeutenkiller</groupId>
+            <groupId>com.github.haschi</groupId>
             <artifactId>aspekte</artifactId>
         </dependency -->
 
@@ -385,6 +392,7 @@
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
+                        <useIncrementalCompilation>false</useIncrementalCompilation>
                     </configuration>
                 </plugin>
 
@@ -438,8 +446,8 @@
                         </dependency>
                         <dependency>
                             <artifactId>richtlinien</artifactId>
-                            <groupId>de.therapeutenkiller</groupId>
-                            <version>${version.de.therapeutenkiller.coding}</version>
+                            <groupId>com.github.haschi</groupId>
+                            <version>${version.com.github.haschi.coding}</version>
                         </dependency>
                     </dependencies>
                     <configuration>
@@ -473,8 +481,8 @@
                     <dependencies>
                         <dependency>
                             <artifactId>richtlinien</artifactId>
-                            <groupId>de.therapeutenkiller</groupId>
-                            <version>${version.de.therapeutenkiller.coding}</version>
+                            <groupId>com.github.haschi</groupId>
+                            <version>${version.com.github.haschi.coding}</version>
                         </dependency>
                     </dependencies>
 
@@ -495,12 +503,6 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>de.therapeutenkiller</groupId>
-                    <artifactId>mojo</artifactId>
-                    <version>${version.de.therapeutenkiller.coding}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -568,7 +570,7 @@
                     <detail>true</detail>
                     <aspectLibraries>
                         <aspectLibrary>
-                            <groupId>de.therapeutenkiller</groupId>
+                            <groupId>com.github.haschi</groupId>
                             <artifactId>aspekte</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
