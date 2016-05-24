@@ -2,8 +2,8 @@ package com.github.haschi.dominium.modell;
 
 import com.github.haschi.dominium.testdomäne.TestAggregat;
 import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss;
-import com.mscharhag.oleaster.runner.OleasterRunner;
 import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert;
+import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
@@ -49,17 +49,17 @@ public class AggregatwurzelTest {
                     .isEqualTo(Version.NEU));
 
             Arrays.asList(
-                new ZustandWurdeGeändert[]{new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[0])},
+                new ZustandWurdeGeändert[]{ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[0])},
                 new ZustandWurdeGeändert[]{
-                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[1]),
-                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[2]),
-                    new ZustandWurdeGeändert(EREIGNIS_NUTZLAST[3])})
+                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[1]),
+                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[2]),
+                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[3])})
                 .forEach(testfall -> {
                     final String description = String.format("mit %d Änderungen nacheinander", testfall.length);
                     describe(description, () -> {
                         beforeEach(() ->
                             Arrays.asList(testfall).forEach(ereignis ->
-                                this.subjectUnderTest.zustandÄndern(ereignis.getPayload())));
+                                this.subjectUnderTest.zustandÄndern(ereignis.payload())));
 
                         it("besitzt " + testfall.length + " Änderungen", () ->
                             assertThat(this.subjectUnderTest.getÄnderungen()).containsExactly(testfall));
@@ -69,7 +69,7 @@ public class AggregatwurzelTest {
                                 .isEqualTo(TestAggregatSchnappschuss.builder()
                                     .version(new Version(testfall.length))
                                     .identitätsmerkmal(identitätsmerkmal)
-                                    .payload(testfall[testfall.length - 1].getPayload())
+                                    .payload(testfall[testfall.length - 1].payload())
                                     .build()));
                     });
 

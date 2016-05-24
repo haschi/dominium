@@ -1,13 +1,13 @@
 package com.github.haschi.dominium.memory;
 
+import com.github.haschi.coding.aspekte.ArgumentIstNullException;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
-import com.github.haschi.dominium.testdomäne.TestAggregatEreignisZiel;
-import com.mscharhag.oleaster.runner.OleasterRunner;
-import com.github.haschi.coding.aspekte.ArgumentIstNullException;
 import com.github.haschi.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.testdomäne.TestAggregatEreignisZiel;
 import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert;
+import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class MemoryEreignislagerTest {
 
         describe("mit Ereignisstrom", () -> {
             final ZustandWurdeGeändert[] domänenereignisse = {
-                new ZustandWurdeGeändert(42L),
-                new ZustandWurdeGeändert(43L)
+                ZustandWurdeGeändert.of(42L),
+                ZustandWurdeGeändert.of(43L)
             };
 
             beforeEach(() -> this.lager.neuenEreignisstromErzeugen(
@@ -86,8 +86,8 @@ public class MemoryEreignislagerTest {
 
             describe("Ereignisse hinzufügen mit gültiger Versionsnummer", () -> {
                 final ZustandWurdeGeändert[] weitereEreignisse = {
-                    new ZustandWurdeGeändert(44L),
-                    new ZustandWurdeGeändert(45L)
+                    ZustandWurdeGeändert.of(44L),
+                    ZustandWurdeGeändert.of(45L)
                 };
 
                 final long version = 2;

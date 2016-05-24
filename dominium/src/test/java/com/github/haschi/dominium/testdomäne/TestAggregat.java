@@ -44,10 +44,10 @@ public final class TestAggregat
     }
 
     public void zustandÄndern(final long payload) {
-        this.bewirkt(new ZustandWurdeGeändert(payload));
+        this.bewirkt(ZustandWurdeGeändert.of(payload));
     }
 
-    public void falls(final ZustandWurdeGeändert zustandWurdeGeändert) {
-        this.zustand = zustandWurdeGeändert.getPayload();
+    public void falls(final ZustandWurdeGeändertDefinition zustandWurdeGeändert) {
+        this.zustand = zustandWurdeGeändert.payload();
     }
 }
