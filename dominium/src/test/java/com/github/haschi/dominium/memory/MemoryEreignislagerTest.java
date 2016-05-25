@@ -22,6 +22,8 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+// import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert;
+
 @RunWith(OleasterRunner.class)
 public class MemoryEreignislagerTest {
 
