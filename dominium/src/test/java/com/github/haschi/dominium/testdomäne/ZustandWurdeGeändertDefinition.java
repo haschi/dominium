@@ -4,7 +4,6 @@ import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.DomänenereignisDefinition;
 import org.immutables.value.Value.Parameter;
 
-// @Immutable
 @DomänenereignisDefinition
 abstract class ZustandWurdeGeändertDefinition implements Domänenereignis<TestAggregatEreignisZiel> {
 
