@@ -41,4 +41,18 @@ class EreignisquelleTest extends Specification {
         1 * abonnent1.falls(ZustandWurdeGeändert.of(PAYLOAD))
         1 * abonnent2.falls(ZustandWurdeGeändert.of(PAYLOAD))
     }
+
+    def "Abonnenten können nur einmal registriert werden"() {
+        given: "ich habe eine Ereignisquelle mit einem Abonnenten"
+        Ereignisquelle<TestAggregatEreignisZiel> ereignisquelle = new Ereignisquelle<>()
+        TestAggregatEreignisZiel abonnent = Mock(TestAggregatEreignisZiel)
+        ereignisquelle.abonnieren(abonnent)
+
+        when: "ich den Abonnenten ein zweites mal registriere und ein Ereignis auslöse"
+        ereignisquelle.abonnieren(abonnent)
+        ereignisquelle.bewirkt(ZustandWurdeGeändert.of(PAYLOAD))
+
+        then: "wird der Abonnent das Ereignis nur einmal erhalten"
+        1 * abonnent.falls(ZustandWurdeGeändert.of(PAYLOAD))
+    }
 }
