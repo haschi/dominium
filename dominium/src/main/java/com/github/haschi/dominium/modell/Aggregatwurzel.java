@@ -68,7 +68,11 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     public abstract S schnappschussErstellen();
 
     public final List<Domänenereignis<T>> getÄnderungen() {
-        return this.aggregatverwalter.getÄnderungsverfolgung().alle(ereignis -> ereignis).collect(Collectors.toList());
+        return getAggregateÄnderungen(this.aggregatverwalter);
+    }
+
+    private static <T> List<Domänenereignis<T>> getAggregateÄnderungen(final Aggregatverwalter<T> aggregatverwalter) {
+        return aggregatverwalter.getÄnderungsverfolgung().alle(ereignis -> ereignis).collect(Collectors.toList());
     }
 
     protected abstract T getSelf();
