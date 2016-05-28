@@ -13,19 +13,32 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 
-    private final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
+    private Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
 
     // Der einzig erlaubte Konstruktor. Er greift nicht auf abgeleitete Klassen zu.
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
 
-        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(version));
-        this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
+        this.aggregatverwalter = aggregatInitialisieren(version, this);
+    }
 
-        this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
-        this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
+    private static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,
+                                                                   final EreignisZiel<T> abonnent) {
 
-        this.aggregatverwalter.setInitialversion(version);
+        final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
+
+        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
+        aggregatverwalter.setÄnderungsverfolgung(änderungsverfolgung);
+
+        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
+        aggregatverwalter.setEreignisQuelle(ereignisQuelle);
+
+        aggregatverwalter.getEreignisQuelle().abonnieren(änderungsverfolgung);
+        aggregatverwalter.getEreignisQuelle().abonnieren(abonnent);
+
+        aggregatverwalter.setInitialversion(version);
+
+        return aggregatverwalter;
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
