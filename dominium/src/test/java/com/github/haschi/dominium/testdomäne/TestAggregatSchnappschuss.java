@@ -1,28 +1,20 @@
 package com.github.haschi.dominium.testdomäne;
 
 import com.github.haschi.coding.aspekte.ValueObject;
-import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Schnappschuss;
-
-import java.util.UUID;
+import com.github.haschi.dominium.modell.Version;
 
 @ValueObject
-public final class TestAggregatSchnappschuss implements Schnappschuss<UUID> {
+public final class TestAggregatSchnappschuss implements Schnappschuss {
 
     private static final long serialVersionUID = -4081721724050392813L;
 
     Version version;
     long payload;
-    UUID identitätsmerkmal;
 
     // Da ist ein Fehler im NullReferenzPrüfung Aspekt: Dieser Konstruktor wird geprüft und erzeugt einen Fehler
     // private TestAggregatSchnappschuss() {
     // }
-
-    @Override
-    public UUID getIdentitätsmerkmal() {
-        return this.identitätsmerkmal;
-    }
 
     @Override
     public Version getVersion() {
@@ -50,17 +42,12 @@ public final class TestAggregatSchnappschuss implements Schnappschuss<UUID> {
             return this;
         }
 
-        public TestAggregatSchnappschussBuilder identitätsmerkmal(final UUID identitätsmerkmal) {
-            this.instanz.identitätsmerkmal = identitätsmerkmal;
-            return this;
-        }
-
         public TestAggregatSchnappschuss build() {
             return this.instanz;
         }
 
         public TestAggregatSchnappschussBuilder aggregat(final TestAggregat testAggregat) {
-            return this.identitätsmerkmal(testAggregat.getIdentitätsmerkmal())
+            return this
                 .version(testAggregat.getVersion());
         }
     }

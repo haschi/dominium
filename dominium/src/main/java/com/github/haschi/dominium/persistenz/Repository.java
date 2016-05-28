@@ -3,7 +3,7 @@ package com.github.haschi.dominium.persistenz;
 import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.Schnappschuss;
 
-public interface Repository<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<I>> {
+public interface Repository<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss> {
     A suchen(I identitätsmerkmal) throws AggregatNichtGefunden;
 
     void hinzufügen(A aggregat);

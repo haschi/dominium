@@ -60,7 +60,6 @@ public final class Haushaltsbuch
     @Override
     public HaushaltsbuchSchnappschuss schnappschussErstellen() {
         final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
-                this.getIdentitätsmerkmal(),
                 this.getVersion());
 
         schnappschuss.konten = this.hauptbuch.getKonten();

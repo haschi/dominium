@@ -24,11 +24,6 @@ public final class TestSchnappschuss extends TestAggregatSchnappschussBasis {
         super();
     }
 
-    @Override
-    public UUID getIdentitätsmerkmal() {
-        return this.identitätsmerkmal;
-    }
-
     public long getZustand() {
         return this.zustand;
     }

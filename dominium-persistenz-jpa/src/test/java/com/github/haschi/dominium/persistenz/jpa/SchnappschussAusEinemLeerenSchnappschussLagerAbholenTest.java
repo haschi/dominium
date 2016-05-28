@@ -38,7 +38,7 @@ public final class SchnappschussAusEinemLeerenSchnappschussLagerAbholenTest {
         this.dann_werde_ich_keinen_schnappschuss_erhalten(schnappschuss.orElse(TestSchnappschuss.LEER));
     }
 
-    private void dann_werde_ich_keinen_schnappschuss_erhalten(final Schnappschuss<UUID> schnappschuss) {
+    private void dann_werde_ich_keinen_schnappschuss_erhalten(final Schnappschuss schnappschuss) {
 
         assertThat(schnappschuss).isEqualTo(TestSchnappschuss.LEER);
     }

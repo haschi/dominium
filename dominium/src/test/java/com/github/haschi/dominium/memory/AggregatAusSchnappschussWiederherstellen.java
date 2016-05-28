@@ -33,14 +33,14 @@ public class AggregatAusSchnappschussWiederherstellen {
                 before(() -> {
                     this.lager = new MemorySchnappschussLager<>();
                     this.lager.schnappschussHinzufügen(
-                        Testdaten.getSchnappschuss(identitätsmerkmal),
+                        Testdaten.getSchnappschuss(),
                         identitätsmerkmal);
                 });
 
                 it("kann neuesten Schnappschuss wiederherstellen", () ->
                     assertThat(this.lager.getNeuesterSchnappschuss(identitätsmerkmal)
                             .orElseThrow(IllegalStateException::new))
-                        .isEqualTo(Testdaten.getSchnappschuss(identitätsmerkmal)));
+                        .isEqualTo(Testdaten.getSchnappschuss()));
             });
         });
     }

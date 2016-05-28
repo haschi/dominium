@@ -26,19 +26,16 @@ public class MemorySchnappschussLagerTest {
             TestAggregatSchnappschuss.builder()
                 .version(new Version(1L))
                 .payload(42L)
-                .identitätsmerkmal(identitätsmerkmal)
                 .build(),
 
             TestAggregatSchnappschuss.builder()
                 .version(new Version(2L))
                 .payload(43L)
-                .identitätsmerkmal(identitätsmerkmal)
                 .build(),
 
             TestAggregatSchnappschuss.builder()
                 .version(new Version(3L))
                 .payload(44L)
-                .identitätsmerkmal(identitätsmerkmal)
                 .build()
         };
 
@@ -65,7 +62,7 @@ public class MemorySchnappschussLagerTest {
                             Arrays.asList(testfall).forEach(schnappschuss ->
                                 this.subjectUnderTest.schnappschussHinzufügen(
                                     schnappschuss,
-                                    schnappschuss.getIdentitätsmerkmal())));
+                                    identitätsmerkmal)));
 
                         it("liefert den zuletzt hinzugefügten Schnappschuss", () ->
                             assertThat(this.subjectUnderTest.getNeuesterSchnappschuss(identitätsmerkmal))

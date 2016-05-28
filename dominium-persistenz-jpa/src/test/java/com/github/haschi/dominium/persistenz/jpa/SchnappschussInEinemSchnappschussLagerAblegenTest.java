@@ -22,12 +22,13 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
 
     private JpaSchnappschussLager<TestSchnappschuss> store;
     private final TestUhr uhr = new TestUhr();
+    private final UUID identitätsmerkmal = UUID.randomUUID();
 
     private static final long EREIGNIS_NUTZLAST = 42L;
 
     @SuppressWarnings("LawOfDemeter")
     private final TestSchnappschuss testSchnappschuss = TestSchnappschuss.builder()
-            .identitätsmerkmal(UUID.randomUUID())
+            .identitätsmerkmal(this.identitätsmerkmal)
             .version(Version.NEU.nachfolger())
             .zustand(EREIGNIS_NUTZLAST)
             .get();
@@ -41,7 +42,7 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
     @Test
     public void wenn_ich_einen_schnappschuss_ablege() throws Exception {
 
-        this.store.schnappschussHinzufügen(this.testSchnappschuss, this.testSchnappschuss.getIdentitätsmerkmal());
+        this.store.schnappschussHinzufügen(this.testSchnappschuss, this.identitätsmerkmal);
         this.datenbankRegel.getEntityManager().flush();
         this.datenbankRegel.getEntityManager().clear();
 
@@ -50,8 +51,8 @@ public final class SchnappschussInEinemSchnappschussLagerAblegenTest {
 
     private void dann_werde_ich_das_aggregat_mit_schnappschuss_wiederherstellen() {
 
-        final Schnappschuss<UUID> neuesterSchnappschuss = this.store.getNeuesterSchnappschuss(
-            this.testSchnappschuss.getIdentitätsmerkmal())
+        final Schnappschuss neuesterSchnappschuss = this.store.getNeuesterSchnappschuss(
+            identitätsmerkmal)
             .orElseThrow(() -> new EntityNotFoundException("Schnappschuss nicht gefunden"));
 
         assertThat(neuesterSchnappschuss).isEqualTo(this.testSchnappschuss);

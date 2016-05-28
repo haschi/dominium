@@ -41,7 +41,6 @@ public class AggregatwurzelTest {
             it("kann einen Schnappschuss erstellen", () ->
                 assertThat(this.subjectUnderTest.schnappschussErstellen())
                     .isEqualTo(TestAggregatSchnappschuss.builder()
-                    .identitätsmerkmal(identitätsmerkmal)
                     .version(Version.NEU)
                     .payload(0L)
                     .build()));
@@ -70,7 +69,6 @@ public class AggregatwurzelTest {
                             assertThat(this.subjectUnderTest.schnappschussErstellen())
                                 .isEqualTo(TestAggregatSchnappschuss.builder()
                                     .version(new Version(testfall.length))
-                                    .identitätsmerkmal(identitätsmerkmal)
                                     .payload(testfall[testfall.length - 1].payload())
                                     .build()));
                     });
@@ -101,7 +99,6 @@ public class AggregatwurzelTest {
 
                 beforeEach(() -> {
                     final TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
-                        .identitätsmerkmal(anderesIdentitätsmerkmal)
                         .payload(EREIGNIS_NUTZLAST[4])
                         .version(VERSION)
                         .build();

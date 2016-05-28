@@ -4,7 +4,7 @@ import com.github.haschi.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
 
-public abstract class JpaSchnappschuss implements Schnappschuss<UUID> {
+public abstract class JpaSchnappschuss implements Schnappschuss {
 
     private static final long serialVersionUID = -5757129473844941841L;
 

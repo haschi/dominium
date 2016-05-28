@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.testdomäne;
 
 import com.github.haschi.dominium.modell.Aggregatwurzel;
+import com.github.haschi.dominium.modell.EreignisZiel;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss.TestAggregatSchnappschussBuilder;
 
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 public final class TestAggregat
         extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel, TestAggregatSchnappschuss>
-        implements TestAggregatEreignisZiel {
+        implements TestAggregatEreignisZiel, EreignisZiel<TestAggregatEreignisZiel> {
 
     private long zustand;
 

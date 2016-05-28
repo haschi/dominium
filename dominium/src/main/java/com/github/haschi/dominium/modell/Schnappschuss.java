@@ -10,11 +10,8 @@ import java.io.Serializable;
  *
  * Jedes Aggregat muss einen Implementierung seines Schnappschusses bereitstellen.
  *
- * @param <I> Der Typ des Identitätsmerkmals des Aggregats zu dem der Schnappschuss gehört.
  */
-public interface Schnappschuss<I> extends Serializable {
-
-    I getIdentitätsmerkmal();
+public interface Schnappschuss extends Serializable {
 
     Version getVersion();
 }

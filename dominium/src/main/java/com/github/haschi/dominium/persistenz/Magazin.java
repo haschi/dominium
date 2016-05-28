@@ -16,7 +16,7 @@ import java.util.Optional;
  * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
  */
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<I>>
+public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss>
         implements Repository<A, I, T, S> {
 
     private final Ereignislager<I, T> ereignislager;
@@ -76,12 +76,12 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         }
     }
 
-    public void speichern(final S  schnappschuss) throws AggregatNichtGefunden {
-        if (!this.ereignislager.existiertEreignisStrom(schnappschuss.getIdentitätsmerkmal())) {
+    public void speichern(final I identitätsmerkmal, final S  schnappschuss) throws AggregatNichtGefunden {
+        if (!this.ereignislager.existiertEreignisStrom(identitätsmerkmal)) {
             throw new AggregatNichtGefunden();
         }
 
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, schnappschuss.getIdentitätsmerkmal());
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, identitätsmerkmal);
     }
 
     public void schnappschussSpeichern(final A aggregat) throws ÄnderungenSindVorhandenGewesen {
@@ -90,7 +90,7 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         }
 
         final S schnappschuss = aggregat.schnappschussErstellen();
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, schnappschuss.getIdentitätsmerkmal());
+        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, aggregat.getIdentitätsmerkmal());
     }
 
     protected Ereignislager<I, T> getEreignislager() {

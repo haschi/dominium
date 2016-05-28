@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
  */
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss<I>>
+public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss>
         extends Entität<I>
-        implements SchnappschussQuelle<A, I>, EreignisZiel<T> {
+        implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T> {
 
     private Version initialversion;
     private EreignisQuelle<T> ereignisQuelle;
@@ -48,6 +48,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         this.initialversion = this.änderungen.getVersion();
     }
 
+    @Override
     public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
 
         this.anwenden(stream);
