@@ -56,7 +56,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
-        this.aggregatverwalter.getEreignisQuelle().bewirkt(ereignis);
+        this.aggregatverwalter.bewirkt(ereignis);
     }
 
     private void anwenden(final List<Domänenereignis<T>> ereignisse) {
@@ -74,7 +74,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     protected abstract T getSelf();
 
     public final Version getVersion() {
-        return this.aggregatverwalter.getÄnderungsverfolgung().getVersion();
+        return this.aggregatverwalter.getVersion();
     }
 
     public final Version getInitialversion() {

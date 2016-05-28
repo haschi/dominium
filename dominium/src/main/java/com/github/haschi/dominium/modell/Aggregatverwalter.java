@@ -4,8 +4,7 @@ public final class Aggregatverwalter<T> {
 
     private Version initialversion;
 
-    static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,
-                                                           final EreignisZiel<T> abonnent) {
+    static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,  final EreignisZiel<T> aggregat) {
 
         final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
 
@@ -16,11 +15,19 @@ public final class Aggregatverwalter<T> {
         aggregatverwalter.setEreignisQuelle(ereignisQuelle);
 
         aggregatverwalter.getEreignisQuelle().abonnieren(änderungsverfolgung);
-        aggregatverwalter.getEreignisQuelle().abonnieren(abonnent);
+        aggregatverwalter.getEreignisQuelle().abonnieren(aggregat);
 
         aggregatverwalter.setInitialversion(version);
 
         return aggregatverwalter;
+    }
+
+    Version getVersion() {
+        return this.getÄnderungsverfolgung().getVersion();
+    }
+
+    void bewirkt(final Domänenereignis<T> ereignis) {
+        this.getEreignisQuelle().bewirkt(ereignis);
     }
 
     public Version getInitialversion() {
