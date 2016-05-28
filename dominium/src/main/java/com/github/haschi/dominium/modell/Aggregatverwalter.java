@@ -1,5 +1,8 @@
 package com.github.haschi.dominium.modell;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public final class Aggregatverwalter<T> {
 
     private Version initialversion;
@@ -20,6 +23,10 @@ public final class Aggregatverwalter<T> {
         aggregatverwalter.setInitialversion(version);
 
         return aggregatverwalter;
+    }
+
+    List<Domänenereignis<T>> getÄnderungen() {
+        return this.getÄnderungsverfolgung().alle(ereignis -> ereignis).collect(Collectors.toList());
     }
 
     Version getVersion() {
