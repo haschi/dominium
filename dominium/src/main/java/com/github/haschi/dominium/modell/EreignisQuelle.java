@@ -3,22 +3,22 @@ package com.github.haschi.dominium.modell;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Ereignisquelle<T> {
+public final class EreignisQuelle<T> {
 
     private Version version;
-    private Set<T> abonnenten = new HashSet<>();
+    private final Set<T> abonnenten = new HashSet<>();
 
-    public Ereignisquelle() {
+    public EreignisQuelle() {
         this(Version.NEU);
     }
 
-    public Ereignisquelle(Version version) {
+    public EreignisQuelle(final Version version) {
         super();
         this.version = version;
     }
 
     public void bewirkt(final Domänenereignis<T> ereignis) {
-        abonnenten.forEach(ereignis::anwendenAuf);
+        this.abonnenten.forEach(ereignis::anwendenAuf);
         this.version = this.version.nachfolger();
     }
 
