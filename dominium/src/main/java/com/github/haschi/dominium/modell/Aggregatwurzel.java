@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss>
         extends Entität<I>
-        implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T> {
+        implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 
     private Version initialversion;
     private EreignisQuelle<T> ereignisQuelle;

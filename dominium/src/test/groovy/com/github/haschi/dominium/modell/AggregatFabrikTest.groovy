@@ -4,9 +4,7 @@ import com.github.haschi.dominium.testdomäne.TestAggregat
 import com.github.haschi.dominium.testdomäne.TestAggregatFabrik
 import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss
 import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert
-import spock.lang.Ignore
 import spock.lang.Specification
-
 
 class AggregatFabrikTest extends Specification {
 
@@ -39,7 +37,6 @@ class AggregatFabrikTest extends Specification {
             .build()
     }
 
-    @Ignore
     def "Eine AggregatFabrik kann aus einem Schnappschuss und einem Ereignisstrom ein Aggregat erzeugen"() {
         given:
         TestAggregatFabrik fabrik = new TestAggregatFabrik();
