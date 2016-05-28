@@ -28,21 +28,24 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     public final void wiederherstellenAus(final S schnappschuss, final List<Domänenereignis<T>> stream) {
 
         this.wiederherstellenAus(schnappschuss);
+        this.initialisieren(stream, schnappschuss.getVersion());
+    }
+
+    @Override
+    public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
+        this.aggregatverwalter.initialisieren(this, stream);
+    }
+
+    private void initialisieren(final List<Domänenereignis<T>> stream, final Version version) {
         Aggregatverwalter.anwenden(this, stream);
 
-        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(schnappschuss.getVersion()
-            .nachfolger(stream.size())));
+        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(version.nachfolger(stream.size())));
         this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
 
         this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
         this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
 
         this.aggregatverwalter.setInitialversion(this.aggregatverwalter.getÄnderungsverfolgung().getVersion());
-    }
-
-    @Override
-    public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
-        this.aggregatverwalter.initialisieren(this, stream);
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
