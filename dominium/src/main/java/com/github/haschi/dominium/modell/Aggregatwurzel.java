@@ -19,26 +19,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
 
-        this.aggregatverwalter = aggregatInitialisieren(version, this);
-    }
-
-    private static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,
-                                                                   final EreignisZiel<T> abonnent) {
-
-        final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
-
-        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
-        aggregatverwalter.setÄnderungsverfolgung(änderungsverfolgung);
-
-        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
-        aggregatverwalter.setEreignisQuelle(ereignisQuelle);
-
-        aggregatverwalter.getEreignisQuelle().abonnieren(änderungsverfolgung);
-        aggregatverwalter.getEreignisQuelle().abonnieren(abonnent);
-
-        aggregatverwalter.setInitialversion(version);
-
-        return aggregatverwalter;
+        this.aggregatverwalter = Aggregatverwalter.aggregatInitialisieren(version, this);
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.

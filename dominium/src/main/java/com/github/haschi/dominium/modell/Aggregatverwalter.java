@@ -4,6 +4,25 @@ public final class Aggregatverwalter<T> {
 
     private Version initialversion;
 
+    static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,
+                                                           final EreignisZiel<T> abonnent) {
+
+        final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
+
+        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
+        aggregatverwalter.setÄnderungsverfolgung(änderungsverfolgung);
+
+        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
+        aggregatverwalter.setEreignisQuelle(ereignisQuelle);
+
+        aggregatverwalter.getEreignisQuelle().abonnieren(änderungsverfolgung);
+        aggregatverwalter.getEreignisQuelle().abonnieren(abonnent);
+
+        aggregatverwalter.setInitialversion(version);
+
+        return aggregatverwalter;
+    }
+
     public Version getInitialversion() {
         return this.initialversion;
     }
