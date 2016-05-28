@@ -45,20 +45,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
         this.anwenden(stream);
 
-        Aggregatwurzel.initialisieren(this, stream, this.aggregatverwalter);
-    }
-
-    private static <T> void initialisieren(
-            final EreignisZiel<T> aggregatwurzel,
-            final List<Domänenereignis<T>> stream,
-            final Aggregatverwalter<T> aggregatverwalter) {
-        aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
-        aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
-
-        aggregatverwalter.getEreignisQuelle().abonnieren(aggregatverwalter.getÄnderungsverfolgung());
-        aggregatverwalter.getEreignisQuelle().abonnieren(aggregatwurzel);
-
-        aggregatverwalter.setInitialversion(aggregatverwalter.getÄnderungsverfolgung().getVersion());
+        this.aggregatverwalter.initialisieren(this, stream);
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {

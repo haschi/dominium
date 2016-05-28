@@ -25,6 +25,16 @@ public final class Aggregatverwalter<T> {
         return aggregatverwalter;
     }
 
+    void initialisieren(final EreignisZiel<T> aggregatwurzel, final List<Domänenereignis<T>> stream) {
+        this.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
+        this.setEreignisQuelle(new EreignisQuelle<>());
+
+        this.getEreignisQuelle().abonnieren(this.getÄnderungsverfolgung());
+        this.getEreignisQuelle().abonnieren(aggregatwurzel);
+
+        this.setInitialversion(this.getÄnderungsverfolgung().getVersion());
+    }
+
     List<Domänenereignis<T>> getÄnderungen() {
         return this.getÄnderungsverfolgung().alle(ereignis -> ereignis).collect(Collectors.toList());
     }
