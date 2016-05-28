@@ -10,31 +10,33 @@ public final class Aggregatverwalter<T> {
     static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,  final EreignisZiel<T> aggregat) {
 
         final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
-
-        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
-        aggregatverwalter.setÄnderungsverfolgung(änderungsverfolgung);
-
-        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
-        aggregatverwalter.setEreignisQuelle(ereignisQuelle);
-
-        aggregatverwalter.getEreignisQuelle().abonnieren(änderungsverfolgung);
-        aggregatverwalter.getEreignisQuelle().abonnieren(aggregat);
-
-        aggregatverwalter.setInitialversion(version);
+        aggregatverwalter.initialisieren(aggregat, version);
 
         return aggregatverwalter;
     }
 
-    static <T> void anwenden(final EreignisZiel<T> aggregat, final List<Domänenereignis<T>> ereignisse) {
+    private static <T> void anwenden(final EreignisZiel<T> aggregat, final List<Domänenereignis<T>> ereignisse) {
         for (final Domänenereignis<T> ereignis : ereignisse) {
             aggregat.falls(ereignis);
         }
     }
 
-    void initialisieren(
-            final List<Domänenereignis<T>> stream,
-            final Version version,
-            final EreignisZiel<T> aggregat) {
+    private void initialisieren(
+        final EreignisZiel<T> aggregat, final Version version) {
+        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
+        this.setÄnderungsverfolgung(änderungsverfolgung);
+
+        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
+        this.setEreignisQuelle(ereignisQuelle);
+
+        this.getEreignisQuelle().abonnieren(änderungsverfolgung);
+        this.getEreignisQuelle().abonnieren(aggregat);
+
+        this.setInitialversion(version);
+    }
+
+    public void initialisieren(
+        final EreignisZiel<T> aggregat, final Version version, final List<Domänenereignis<T>> stream) {
         anwenden(aggregat, stream);
 
         this.setÄnderungsverfolgung(new Änderungsverfolgung<>(version.nachfolger(stream.size())));
@@ -46,14 +48,15 @@ public final class Aggregatverwalter<T> {
         this.setInitialversion(this.getÄnderungsverfolgung().getVersion());
     }
 
-    void initialisieren(final EreignisZiel<T> aggregatwurzel, final List<Domänenereignis<T>> stream) {
+    public void initialisieren(
+        final EreignisZiel<T> aggregat, final List<Domänenereignis<T>> stream) {
 
-        anwenden(aggregatwurzel, stream);
+        anwenden(aggregat, stream);
         this.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
         this.setEreignisQuelle(new EreignisQuelle<>());
 
         this.getEreignisQuelle().abonnieren(this.getÄnderungsverfolgung());
-        this.getEreignisQuelle().abonnieren(aggregatwurzel);
+        this.getEreignisQuelle().abonnieren(aggregat);
 
         this.setInitialversion(this.getÄnderungsverfolgung().getVersion());
     }
@@ -74,27 +77,27 @@ public final class Aggregatverwalter<T> {
         return this.initialversion;
     }
 
-    public void setInitialversion(final Version initialversion) {
+    private void setInitialversion(final Version initialversion) {
         this.initialversion = initialversion;
     }
 
     private EreignisQuelle<T> ereignisQuelle;
 
-    public EreignisQuelle<T> getEreignisQuelle() {
+    private EreignisQuelle<T> getEreignisQuelle() {
         return this.ereignisQuelle;
     }
 
-    public void setEreignisQuelle(final EreignisQuelle<T> ereignisQuelle) {
+    private void setEreignisQuelle(final EreignisQuelle<T> ereignisQuelle) {
         this.ereignisQuelle = ereignisQuelle;
     }
 
     private Änderungsverfolgung<T> änderungsverfolgung;
 
-    public Änderungsverfolgung<T> getÄnderungsverfolgung() {
+    private Änderungsverfolgung<T> getÄnderungsverfolgung() {
         return this.änderungsverfolgung;
     }
 
-    public void setÄnderungsverfolgung(final Änderungsverfolgung<T> änderungsverfolgung) {
+    private void setÄnderungsverfolgung(final Änderungsverfolgung<T> änderungsverfolgung) {
         this.änderungsverfolgung = änderungsverfolgung;
     }
 

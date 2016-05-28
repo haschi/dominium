@@ -12,7 +12,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 
-    private Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
+    private final Aggregatverwalter<T> aggregatverwalter;
 
     // Der einzig erlaubte Konstruktor. Er greift nicht auf abgeleitete Klassen zu.
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
@@ -28,7 +28,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     public final void wiederherstellenAus(final S schnappschuss, final List<Domänenereignis<T>> stream) {
 
         this.wiederherstellenAus(schnappschuss);
-        this.aggregatverwalter.initialisieren(stream, schnappschuss.getVersion(), this);
+        this.aggregatverwalter.initialisieren(this, schnappschuss.getVersion(), stream);
     }
 
     @Override
@@ -54,14 +54,6 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     public final Version getInitialversion() {
         return this.aggregatverwalter.getInitialversion();
-    }
-
-    public final EreignisQuelle<T> getEreignisQuelle() {
-        return this.aggregatverwalter.getEreignisQuelle();
-    }
-
-    public final Änderungsverfolgung<T> getÄnderungsverfolgung() {
-        return this.aggregatverwalter.getÄnderungsverfolgung();
     }
 
     @Override
