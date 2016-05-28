@@ -13,21 +13,19 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 
-    private Version initialversion;
-    private EreignisQuelle<T> ereignisQuelle;
-    private Änderungsverfolgung<T> änderungsverfolgung;
+    private final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
 
     // Der einzig erlaubte Konstruktor. Er greift nicht auf abgeleitete Klassen zu.
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
 
-        this.änderungsverfolgung = new Änderungsverfolgung<>(version);
-        this.ereignisQuelle = new EreignisQuelle<>();
+        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(version));
+        this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
 
-        this.ereignisQuelle.abonnieren(this.änderungsverfolgung);
-        this.ereignisQuelle.abonnieren(this);
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
 
-        this.initialversion = version;
+        this.aggregatverwalter.setInitialversion(version);
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
@@ -39,13 +37,14 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         this.wiederherstellenAus(schnappschuss);
         this.anwenden(stream);
 
-        this.änderungsverfolgung = new Änderungsverfolgung<>(schnappschuss.getVersion().nachfolger(stream.size()));
-        this.ereignisQuelle = new EreignisQuelle<>();
+        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(schnappschuss.getVersion()
+            .nachfolger(stream.size())));
+        this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
 
-        this.ereignisQuelle.abonnieren(this.änderungsverfolgung);
-        this.ereignisQuelle.abonnieren(this);
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
 
-        this.initialversion = this.änderungsverfolgung.getVersion();
+        this.aggregatverwalter.setInitialversion(this.aggregatverwalter.getÄnderungsverfolgung().getVersion());
     }
 
     @Override
@@ -53,17 +52,17 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
         this.anwenden(stream);
 
-        this.änderungsverfolgung = new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size()));
-        this.ereignisQuelle = new EreignisQuelle<>();
+        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
+        this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
 
-        this.ereignisQuelle.abonnieren(this.änderungsverfolgung);
-        this.ereignisQuelle.abonnieren(this);
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
+        this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
 
-        this.initialversion = this.änderungsverfolgung.getVersion();
+        this.aggregatverwalter.setInitialversion(this.aggregatverwalter.getÄnderungsverfolgung().getVersion());
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
-        this.ereignisQuelle.bewirkt(ereignis);
+        this.aggregatverwalter.getEreignisQuelle().bewirkt(ereignis);
     }
 
     private void anwenden(final List<Domänenereignis<T>> ereignisse) {
@@ -75,25 +74,25 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     public abstract S schnappschussErstellen();
 
     public final List<Domänenereignis<T>> getÄnderungen() {
-        return this.änderungsverfolgung.alle(ereignis -> ereignis).collect(Collectors.toList());
+        return this.aggregatverwalter.getÄnderungsverfolgung().alle(ereignis -> ereignis).collect(Collectors.toList());
     }
 
     protected abstract T getSelf();
 
     public final Version getVersion() {
-        return this.änderungsverfolgung.getVersion();
+        return this.aggregatverwalter.getÄnderungsverfolgung().getVersion();
     }
 
     public final Version getInitialversion() {
-        return this.initialversion;
+        return this.aggregatverwalter.getInitialversion();
     }
 
     public final EreignisQuelle<T> getEreignisQuelle() {
-        return this.ereignisQuelle;
+        return this.aggregatverwalter.getEreignisQuelle();
     }
 
     public final Änderungsverfolgung<T> getÄnderungsverfolgung() {
-        return this.änderungsverfolgung;
+        return this.aggregatverwalter.getÄnderungsverfolgung();
     }
 
     @Override
