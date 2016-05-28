@@ -19,11 +19,6 @@ public class TestAggregat extends Aggregatwurzel<TestAggregat, UUID, TestAggrega
         this.zustand = schnappschuss.getZustand();
     }
 
-    public TestAggregat(final TestSchnappschuss schnappschuss) {
-        super(schnappschuss);
-        this.zustand = schnappschuss.getZustand();
-    }
-
     @Override
     public final TestSchnappschuss schnappschussErstellen() {
         return null;

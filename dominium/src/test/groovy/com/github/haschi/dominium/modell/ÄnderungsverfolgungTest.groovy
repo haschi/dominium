@@ -10,14 +10,14 @@ class ÄnderungsverfolgungTest extends Specification {
 
     def "Eine neue Änderungsverfolgung besitzt die Versionsnummer NEU"() {
         expect:
-        new Änderungsverfolgung<TestAggregatEreignisZiel>().getVersion() == Version.NEU;
+        new Änderungsverfolgung<TestAggregatEreignisZiel>(Version.NEU).getVersion() == Version.NEU;
     }
 
     @SuppressWarnings("GroovyAssignabilityCheck")
     def "Änderungen führen zur Erhöhung der Version"() {
 
         given: "ich habe eine Änderungsverfolgung mit Version.NEU"
-        Änderungsverfolgung<TestAggregatEreignisZiel> änderung = new Änderungsverfolgung<>()
+        Änderungsverfolgung<TestAggregatEreignisZiel> änderung = new Änderungsverfolgung<>(Version.NEU)
 
         when: "ich Ereignisse behandle"
         ereignisse.each { final ereignis -> änderung.falls ereignis }
@@ -39,7 +39,7 @@ class ÄnderungsverfolgungTest extends Specification {
     def "Ereignisse werden gespeichert"() {
 
         given: "ich habe eine Änderungsverfolgung"
-        Änderungsverfolgung<TestAggregatEreignisZiel> änderung = new Änderungsverfolgung<>()
+        Änderungsverfolgung<TestAggregatEreignisZiel> änderung = new Änderungsverfolgung<>(Version.NEU)
 
         when: "ich Ereignisse behandle"
         ereignisse.each { final ereignis -> änderung.falls ereignis }

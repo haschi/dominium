@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.persistenz.jpa.aggregat;
 
 import com.github.haschi.coding.aspekte.ValueObject;
+import com.github.haschi.dominium.modell.EreignisZiel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @ValueObject(exclude = "id")
@@ -25,6 +26,11 @@ public class ZustandWurdeGeändert implements TestAggregatEreignis {
 
     @Override
     public final void anwendenAuf(final TestAggregatEreignisziel ereignisZiel) {
+        ereignisZiel.falls(this);
+    }
+
+    @Override
+    public void anwendenAuf(final EreignisZiel<TestAggregatEreignisziel> ereignisZiel) {
         ereignisZiel.falls(this);
     }
 

@@ -5,11 +5,11 @@ import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.Magazin;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import com.github.haschi.haushaltsbuch.spi.HaushaltsbuchRepository;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,11 +29,6 @@ public class HaushaltsbuchMemoryRepository
         super(ereignislager, schnappschussLager);
     }
 
-    @Override
-    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final Version version) {
-        return new Haushaltsbuch(identitätsmerkmal, version);
-    }
-
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {
         return this.getEreignislager().getEreignisliste(haushaltsbuchId, Versionsbereich.ALLE_VERSIONEN);
     }
@@ -41,5 +36,22 @@ public class HaushaltsbuchMemoryRepository
     @Override
     public final ImmutableCollection<UUID> alle() {
         return ImmutableList.copyOf(this.getEreignislager().getEreignisströme().collect(Collectors.toList()));
+    }
+
+    @Override
+    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
+                                                  final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, Version.NEU);
+        haushaltsbuch.wiederherstellenAus(stream);
+        return haushaltsbuch;
+    }
+
+    @Override
+    protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
+                                                  final HaushaltsbuchSchnappschuss schnappschuss,
+                                                  final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.getVersion());
+        haushaltsbuch.wiederherstellenAus(schnappschuss, stream);
+        return haushaltsbuch;
     }
 }

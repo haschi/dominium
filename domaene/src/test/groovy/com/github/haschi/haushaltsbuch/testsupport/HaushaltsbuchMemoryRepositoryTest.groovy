@@ -33,8 +33,13 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
 
 
         when:
+        println("0 --------------------------------------------------")
         Haushaltsbuch haushaltsbuch2 = repository.suchen(haushaltsbuchId)
+        println("1 --------------------------------------------------")
         haushaltsbuch2.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv)
+        println("2 --------------------------------------------------")
+        println(haushaltsbuch2.getÄnderungen())
+        println("3 --------------------------------------------------")
         repository.speichern(haushaltsbuch2)
 
         then:

@@ -79,4 +79,15 @@ class VersionTest extends Specification {
         expect:
         Version.NEU == new Version(0L)
     }
+
+    def "Version kann nachfolger mit Abstand"() {
+        expect:
+        Version.NEU.nachfolger(anzahl).alsLong() == anzahl
+
+        where:
+        anzahl || _
+        0      || _
+        1      || _
+        10     || _
+    }
 }

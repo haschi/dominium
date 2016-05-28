@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.persistenz;
 
+import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.persistenz.Magazin;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
@@ -12,6 +13,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.Interceptor;
+import java.util.List;
 import java.util.UUID;
 
 @Priority(Interceptor.Priority.APPLICATION + 10)
@@ -28,12 +30,24 @@ public class HibernateHaushaltsbuchRepository
     }
 
     @Override
-    protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal, final Version version) {
-        return new Haushaltsbuch(identitätsmerkmal, version);
+    public ImmutableCollection<UUID> alle() {
+        throw new NotImplementedException("Die Methode muss implementiert werden");
     }
 
     @Override
-    public ImmutableCollection<UUID> alle() {
-        throw new NotImplementedException("Die Methode muss implementiert werden");
+    protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
+                                                  final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, Version.NEU);
+        haushaltsbuch.wiederherstellenAus(stream);
+        return haushaltsbuch;
+    }
+
+    @Override
+    protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
+                                                  final HaushaltsbuchSchnappschuss schnappschuss,
+                                                  final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.getVersion());
+        haushaltsbuch.wiederherstellenAus(schnappschuss, stream);
+        return haushaltsbuch;
     }
 }

@@ -77,8 +77,10 @@ public class AggregatwurzelTest {
 
                     final String description2 = String.format("mit %d Aktualisierungen", testfall.length);
                     describe(description2, () -> {
-                        beforeEach(() ->
-                            this.subjectUnderTest.aktualisieren(Arrays.asList(testfall)));
+                        beforeEach(() -> {
+                            this.subjectUnderTest = new TestAggregat(identitätsmerkmal, Version.NEU);
+                            this.subjectUnderTest.wiederherstellenAus(Arrays.asList(testfall));
+                        });
 
                         it("erhöht die Version des Aggregats", () ->
                             assertThat(this.subjectUnderTest.getVersion())

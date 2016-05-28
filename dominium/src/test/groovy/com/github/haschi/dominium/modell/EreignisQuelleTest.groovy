@@ -8,23 +8,6 @@ class EreignisQuelleTest extends Specification {
 
     public static final long PAYLOAD = 42L
 
-    def "Ereignisse der Quelle hinzufügen erhöht die Version"() {
-
-        given: "ich habe eine neue Ereignis-Quelle"
-        EreignisQuelle<TestAggregatEreignisZiel> ereignisQuelle = new EreignisQuelle<>(Version.NEU.nachfolger());
-
-        when: "ich der Quelle ein Ereignis auslöst"
-        ereignisQuelle.bewirkt(ZustandWurdeGeändert.of(PAYLOAD))
-
-        then: "wird die Versionsnummer des Aggregats in der Ereignisquelle erhöht"
-        ereignisQuelle.getVersion() == Version.NEU.nachfolger().nachfolger()
-    }
-
-    def "Eine neue Ereignis-Quelle besitzt die Anfangsversion"() {
-        expect:
-        new EreignisQuelle<TestAggregatEreignisZiel>().version == Version.NEU
-    }
-
     def "Ereignisse werde an die Abonnenten weitergeleitet"() {
         given: "ich habe eine Ereignis-Quelle mit Abonnenten"
         EreignisQuelle<TestAggregatEreignisZiel> ereignisQuelle = new EreignisQuelle<>()

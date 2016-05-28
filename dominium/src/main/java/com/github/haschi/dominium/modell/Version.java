@@ -36,6 +36,10 @@ public final class Version implements Comparable<Version>, Serializable {
         return new Version(this.version + 1);
     }
 
+    public Version nachfolger(final int anzahl) {
+        return new Version(this.version + anzahl);
+    }
+
     public long alsLong() {
         return this.version;
     }

@@ -1,17 +1,17 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.SollkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
-import com.google.common.collect.ImmutableSet;
-import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.money.MonetaryAmount;
@@ -22,12 +22,8 @@ public final class Haushaltsbuch
         implements HaushaltsbuchEreignisziel {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
-    private Journal journal = Journal.UNDEFINIERT;
-    private Hauptbuch hauptbuch = Hauptbuch.UNDEFINIERT;
-
-    public Haushaltsbuch(final HaushaltsbuchSchnappschuss snapshot) {
-        super(snapshot);
-    }
+    private final Journal journal = new Journal();
+    private final Hauptbuch hauptbuch = new Hauptbuch();
 
     public Haushaltsbuch(final UUID uuid, final Version version) {
         super(uuid, version);
@@ -35,10 +31,11 @@ public final class Haushaltsbuch
 
     @Override
     public void wiederherstellenAus(final HaushaltsbuchSchnappschuss schnappschuss) {
-        this.hauptbuch = new Hauptbuch();
+        System.out.println(">>> Haushaltsbuch Schnappschuss wird wiederhergestellt.");
+        //this.hauptbuch = new Hauptbuch();
         schnappschuss.konten.forEach(k -> this.hauptbuch.hinzufügen(k));
 
-        this.journal = new Journal();
+        //this.journal = new Journal();
         //  TBD: Da ist ein Fehler: das darf nur eine Liste sein.
         // schnappschuss.buchungssätze.forEach(b -> journal.buchungssatzHinzufügen(b));
     }
@@ -77,7 +74,13 @@ public final class Haushaltsbuch
 
     // !!!
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
+        System.out.println("============== NEUES KONTO HINZUFÜGEN ==============");
+        System.out.println(this.hauptbuch.getKonten());
+        System.out.println("============== ----------------------- ==============");
+
         if (this.hauptbuch.istKontoVorhanden(kontoname)) {
+            System.out.printf(">>> Das Konto soll angeblich schon vorhanden sein: %s %n", kontoname);
+            System.out.println(this.hauptbuch.getKonten());
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
             this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
@@ -122,37 +125,40 @@ public final class Haushaltsbuch
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
 
         this.hauptbuch.hinzufügen(konto);
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "KontoWurdeAngelegt");
     }
 
     // !!!
     @Override
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
-        // Do Nothing
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "KontoWurdeNichtAngelegt");
     }
 
     // !!!
     @Override
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
-        // Nichts tun.
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "BuchungWurdeAbgelehnt");
     }
 
     // !!!
     @Override
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
-
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "BuchungWurdeAusgeführt");
         this.journal.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
     // !!!
     @Override
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
-        this.hauptbuch = new Hauptbuch();
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "HauptbuchWurdeAngelegt");
+        // this.hauptbuch = new Hauptbuch();
     }
 
     // !!!
     @Override
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
-        this.journal = new Journal();
+        System.out.printf(">> Ereignis wird angewendet: %s %n", "JournalWurdeAngelegt");
+        // this.journal = new Journal();
     }
 
     // !!!
@@ -229,11 +235,6 @@ public final class Haushaltsbuch
     // !!!
     public void journalAnlegen() {
         this.bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
-    }
-
-    // ???
-    public boolean istHauptbuchUndefiniert() {
-        return this.hauptbuch == Hauptbuch.UNDEFINIERT;
     }
 
     @Override

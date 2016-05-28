@@ -33,11 +33,6 @@ public final class TestAggregat
             .payload(this.zustand);
     }
 
-    protected TestAggregat(final TestAggregatSchnappschuss schnappschuss) {
-        super(schnappschuss);
-        this.zustand = schnappschuss.getPayload();
-    }
-
     @Override
     protected TestAggregat getSelf() {
         return this;

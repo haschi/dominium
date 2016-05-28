@@ -41,16 +41,23 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         final Version von = schnappschuss.map(Schnappschuss::getVersion).orElse(Version.NEU);
         final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(Version.MAX);
 
-        final A aggregat = this.neuesAggregatErzeugen(identitätsmerkmal, von);
-        schnappschuss.ifPresent(aggregat::wiederherstellenAus);
-
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
-        aggregat.aktualisieren(stream);
 
-        return aggregat;
+        System.out.println("-------------------------------------");
+        System.out.printf("Wiederherstellung: %s Ereignisse%n", stream.size());
+        return schnappschuss
+            .map(s -> this.neuesAggregatErzeugen(identitätsmerkmal, s, stream))
+            .orElse(this.neuesAggregatErzeugen(identitätsmerkmal, stream));
     }
 
-    protected abstract A neuesAggregatErzeugen(final I identitätsmerkmal, final Version version);
+    protected abstract A neuesAggregatErzeugen(
+        final I identitätsmerkmal,
+        final List<Domänenereignis<T>> stream);
+
+    protected abstract A neuesAggregatErzeugen(
+        final I identitätsmerkmal,
+        S schnappschuss,
+        final List<Domänenereignis<T>> stream);
 
     @Override
     public void hinzufügen(final A aggregat) {
