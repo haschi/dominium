@@ -28,7 +28,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     public final void wiederherstellenAus(final S schnappschuss, final List<Domänenereignis<T>> stream) {
 
         this.wiederherstellenAus(schnappschuss);
-        this.anwenden(stream);
+        Aggregatverwalter.anwenden(this, stream);
 
         this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(schnappschuss.getVersion()
             .nachfolger(stream.size())));
@@ -42,20 +42,11 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     @Override
     public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
-
-        this.anwenden(stream);
-
         this.aggregatverwalter.initialisieren(this, stream);
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
         this.aggregatverwalter.bewirkt(ereignis);
-    }
-
-    private void anwenden(final List<Domänenereignis<T>> ereignisse) {
-        for (final Domänenereignis<T> ereignis : ereignisse) {
-            this.falls(ereignis);
-        }
     }
 
     public abstract S schnappschussErstellen();

@@ -25,7 +25,15 @@ public final class Aggregatverwalter<T> {
         return aggregatverwalter;
     }
 
+    static <T> void anwenden(final EreignisZiel<T> aggregat, final List<Domänenereignis<T>> ereignisse) {
+        for (final Domänenereignis<T> ereignis : ereignisse) {
+            aggregat.falls(ereignis);
+        }
+    }
+
     void initialisieren(final EreignisZiel<T> aggregatwurzel, final List<Domänenereignis<T>> stream) {
+
+        anwenden(aggregatwurzel, stream);
         this.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
         this.setEreignisQuelle(new EreignisQuelle<>());
 
