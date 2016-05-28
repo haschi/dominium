@@ -32,7 +32,7 @@ public class NullReferenzPrüfung {
         konstruktor.argumentePrüfen(joinPoint.getArgs());
     }
 
-    @AfterReturning(value = "execution(public !void *(..)) && "
+    @AfterReturning(value = "execution(public !void (!(is(InnerType) || is(AnonymousType)) && *).*(..)) && "
         + "! within(com.github.haschi.coding.aspekte..*)",
         returning = "returnValue")
     public final void rückgabewertPrüfen(final JoinPoint joinPoint, final Object returnValue) {
