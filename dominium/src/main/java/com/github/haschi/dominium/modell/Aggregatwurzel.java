@@ -33,7 +33,8 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
     @Override
     public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
-        this.aggregatverwalter.initialisieren(this, stream);
+
+        this.aggregatverwalter.initialisieren(this, Version.NEU, stream);
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
