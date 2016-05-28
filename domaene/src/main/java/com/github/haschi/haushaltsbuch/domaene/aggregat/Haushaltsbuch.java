@@ -31,8 +31,7 @@ public final class Haushaltsbuch
 
     @Override
     public void wiederherstellenAus(final HaushaltsbuchSchnappschuss schnappschuss) {
-        System.out.println(">>> Haushaltsbuch Schnappschuss wird wiederhergestellt.");
-        //this.hauptbuch = new Hauptbuch();
+        // this.hauptbuch = new Hauptbuch();
         schnappschuss.konten.forEach(k -> this.hauptbuch.hinzufügen(k));
 
         //this.journal = new Journal();
@@ -74,13 +73,7 @@ public final class Haushaltsbuch
 
     // !!!
     public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
-        System.out.println("============== NEUES KONTO HINZUFÜGEN ==============");
-        System.out.println(this.hauptbuch.getKonten());
-        System.out.println("============== ----------------------- ==============");
-
         if (this.hauptbuch.istKontoVorhanden(kontoname)) {
-            System.out.printf(">>> Das Konto soll angeblich schon vorhanden sein: %s %n", kontoname);
-            System.out.println(this.hauptbuch.getKonten());
             this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
         } else {
             this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
@@ -125,40 +118,36 @@ public final class Haushaltsbuch
         final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
 
         this.hauptbuch.hinzufügen(konto);
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "KontoWurdeAngelegt");
     }
 
     // !!!
     @Override
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "KontoWurdeNichtAngelegt");
+        // nicht tun
     }
 
     // !!!
     @Override
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "BuchungWurdeAbgelehnt");
+        // Nichts tun
     }
 
     // !!!
     @Override
     public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "BuchungWurdeAusgeführt");
         this.journal.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
     }
 
     // !!!
     @Override
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "HauptbuchWurdeAngelegt");
-        // this.hauptbuch = new Hauptbuch();
+        // vorläufig nicht tun
     }
 
     // !!!
     @Override
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
-        System.out.printf(">> Ereignis wird angewendet: %s %n", "JournalWurdeAngelegt");
-        // this.journal = new Journal();
+        // vorläufig nichts tun
     }
 
     // !!!

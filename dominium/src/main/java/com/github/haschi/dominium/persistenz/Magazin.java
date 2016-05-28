@@ -43,8 +43,6 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
 
-        System.out.println("-------------------------------------");
-        System.out.printf("Wiederherstellung: %s Ereignisse%n", stream.size());
         return schnappschuss
             .map(s -> this.neuesAggregatErzeugen(identitätsmerkmal, s, stream))
             .orElse(this.neuesAggregatErzeugen(identitätsmerkmal, stream));
