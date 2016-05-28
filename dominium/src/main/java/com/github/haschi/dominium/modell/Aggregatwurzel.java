@@ -45,13 +45,17 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
 
         this.anwenden(stream);
 
-        this.aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
-        this.aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
+        this.initialisieren(stream, this.aggregatverwalter);
+    }
 
-        this.aggregatverwalter.getEreignisQuelle().abonnieren(this.aggregatverwalter.getÄnderungsverfolgung());
-        this.aggregatverwalter.getEreignisQuelle().abonnieren(this);
+    private void initialisieren(final List<Domänenereignis<T>> stream, final Aggregatverwalter<T> aggregatverwalter) {
+        aggregatverwalter.setÄnderungsverfolgung(new Änderungsverfolgung<>(Version.NEU.nachfolger(stream.size())));
+        aggregatverwalter.setEreignisQuelle(new EreignisQuelle<>());
 
-        this.aggregatverwalter.setInitialversion(this.aggregatverwalter.getÄnderungsverfolgung().getVersion());
+        aggregatverwalter.getEreignisQuelle().abonnieren(aggregatverwalter.getÄnderungsverfolgung());
+        aggregatverwalter.getEreignisQuelle().abonnieren(this);
+
+        aggregatverwalter.setInitialversion(aggregatverwalter.getÄnderungsverfolgung().getVersion());
     }
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
