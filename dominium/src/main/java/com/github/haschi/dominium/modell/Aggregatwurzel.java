@@ -18,7 +18,7 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
 
-        this.aggregatverwalter = Aggregatverwalter.aggregatInitialisieren(version, this);
+        this.aggregatverwalter = Aggregatverwalter.erzeugen(this, version);
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.

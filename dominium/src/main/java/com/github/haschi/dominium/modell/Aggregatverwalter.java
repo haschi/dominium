@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.modell;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,10 +8,11 @@ public final class Aggregatverwalter<T> {
 
     private Version initialversion;
 
-    static <T> Aggregatverwalter<T> aggregatInitialisieren(final Version version,  final EreignisZiel<T> aggregat) {
+    static <T> Aggregatverwalter<T> erzeugen(final EreignisZiel<T> aggregat,
+                                             final Version version) {
 
         final Aggregatverwalter<T> aggregatverwalter = new Aggregatverwalter<T>();
-        aggregatverwalter.initialisieren(aggregat, version);
+        aggregatverwalter.initialisieren(aggregat, version, Collections.emptyList());
 
         return aggregatverwalter;
     }
@@ -19,20 +21,6 @@ public final class Aggregatverwalter<T> {
         for (final Domänenereignis<T> ereignis : ereignisse) {
             aggregat.falls(ereignis);
         }
-    }
-
-    private void initialisieren(
-        final EreignisZiel<T> aggregat, final Version version) {
-        final Änderungsverfolgung<T> änderungsverfolgung = new Änderungsverfolgung<>(version);
-        this.setÄnderungsverfolgung(änderungsverfolgung);
-
-        final EreignisQuelle<T> ereignisQuelle = new EreignisQuelle<>();
-        this.setEreignisQuelle(ereignisQuelle);
-
-        this.getEreignisQuelle().abonnieren(änderungsverfolgung);
-        this.getEreignisQuelle().abonnieren(aggregat);
-
-        this.setInitialversion(version);
     }
 
     public void initialisieren(
