@@ -12,7 +12,7 @@ class AggregatKannSchnappschussErstellenTest extends Specification {
         TestAggregat aggregat = new TestAggregat(identitätsmerkmal, Version.NEU.nachfolger(42));
 
         when:
-        TestAggregat.TestAggregatSchnapp schnappschuss = TestAggregat.TestAggregatSchnapp.from(aggregat)
+        TestAggregat.Snapshot schnappschuss = TestAggregat.Snapshot.from(aggregat)
 
         then:
         schnappschuss.version() == Version.NEU.nachfolger(42);
@@ -20,7 +20,7 @@ class AggregatKannSchnappschussErstellenTest extends Specification {
 
     def "Zum Erzeugen eines Schnappschusses muss ein Aggregat existieren"() {
         when: "Wenn ich den Schnappschuss aus einem nicht vorhandenen Aggregat erzeuge"
-        TestAggregat.TestAggregatSchnapp.from(null)
+        TestAggregat.Snapshot.from(null)
 
         then: "werde ich ich eine ArgumentIstNullException Ausnahme erhalten"
         thrown ArgumentIstNullException

@@ -2,12 +2,11 @@ package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.dominium.modell.AggregatFabrik;
 import com.github.haschi.dominium.modell.Version;
-import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
 
 import java.util.UUID;
 
 public class TestAggregatFabrik
-    extends AggregatFabrik<TestAggregat, UUID,  TestAggregatEreignisZiel, TestAggregatSchnapp> {
+    extends AggregatFabrik<TestAggregat, UUID,  TestAggregatEreignisZiel, TestAggregat.Snapshot> {
 
     @Override
     public final TestAggregat erzeugen(final UUID identitätsmerkmal) {

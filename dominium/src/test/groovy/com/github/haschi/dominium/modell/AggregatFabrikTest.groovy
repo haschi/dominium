@@ -35,7 +35,7 @@ class AggregatFabrikTest extends Specification {
     def "Eine AggregatFabrik kann aus einem Schnappschuss und einem Ereignisstrom ein Aggregat erzeugen"() {
         given:
         TestAggregatFabrik fabrik = new TestAggregatFabrik();
-        TestAggregat.TestAggregatSchnapp schnappschuss = Testdaten.schnappschuss(5, 42L);
+        TestAggregat.Snapshot schnappschuss = Testdaten.schnappschuss(5, 42L);
 
         when:
         TestAggregat aggregat = fabrik.erzeugen(identitätsmerkmal, schnappschuss, [ZustandWurdeGeändert.of(4711L)])

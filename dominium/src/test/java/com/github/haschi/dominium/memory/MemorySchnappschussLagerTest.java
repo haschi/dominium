@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.memory;
 
-import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
+import com.github.haschi.dominium.testdomaene.TestAggregat;
+import com.github.haschi.dominium.testdomaene.TestAggregat.Snapshot;
 import com.github.haschi.dominium.testdomaene.Testdaten;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class MemorySchnappschussLagerTest {
 
-    private MemorySchnappschussLager<TestAggregatSchnapp, UUID> subjectUnderTest;
+    private MemorySchnappschussLager<Snapshot, UUID> subjectUnderTest;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
@@ -34,8 +35,8 @@ public class MemorySchnappschussLagerTest {
             });
 
             Arrays.asList(
-                new TestAggregatSchnapp[] {Testdaten.schnappschüsse[0]},
-                new TestAggregatSchnapp[] {
+                new TestAggregat.Snapshot[] {Testdaten.schnappschüsse[0]},
+                new Snapshot[] {
                     Testdaten.schnappschüsse[0],
                     Testdaten.schnappschüsse[1],
                     Testdaten.schnappschüsse[2]})

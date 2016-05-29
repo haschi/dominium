@@ -1,7 +1,6 @@
 package com.github.haschi.dominium.modell;
 
 import com.github.haschi.dominium.testdomaene.TestAggregat;
-import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
 import com.github.haschi.dominium.testdomaene.Testdaten;
 import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert;
 import com.mscharhag.oleaster.runner.OleasterRunner;
@@ -100,7 +99,7 @@ public class AggregatwurzelTest {
                 final UUID anderesIdentitätsmerkmal = UUID.randomUUID();
 
                 beforeEach(() -> {
-                    final TestAggregatSchnapp schnappschuss = Testdaten.schnappschuss(123, EREIGNIS_NUTZLAST[4]);
+                    final TestAggregat.Snapshot schnappschuss = Testdaten.schnappschuss(123, EREIGNIS_NUTZLAST[4]);
                     this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.version());
                     // schnappschuss.restore(this.subjectUnderTest);
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);

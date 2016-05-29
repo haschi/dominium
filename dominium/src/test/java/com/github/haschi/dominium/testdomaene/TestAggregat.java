@@ -2,16 +2,15 @@ package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.EreignisZiel;
+import com.github.haschi.dominium.modell.Memento;
 import com.github.haschi.dominium.modell.Schnappschuss;
 import com.github.haschi.dominium.modell.Version;
-import org.immutables.value.Value;
-import org.immutables.value.Value.Style.BuilderVisibility;
-import org.immutables.value.Value.Style.ImplementationVisibility;
+import com.github.haschi.dominium.testdomaene.TestAggregat.Snapshot;
 
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<UUID, TestAggregatEreignisZiel, TestAggregat.TestAggregatSchnapp>
+        extends Aggregatwurzel<UUID, TestAggregatEreignisZiel, Snapshot>
         implements TestAggregatEreignisZiel, EreignisZiel<TestAggregatEreignisZiel> {
 
     private long zustand;
@@ -21,13 +20,13 @@ public final class TestAggregat
     }
 
     @Override
-    public void wiederherstellenAus(final TestAggregatSchnapp schnappschuss) {
+    public void wiederherstellenAus(final Snapshot schnappschuss) {
         schnappschuss.restore(this);
     }
 
     @Override
-    public TestAggregatSchnapp schnappschussErstellen() {
-        return TestAggregatSchnapp.from(this);
+    public Snapshot schnappschussErstellen() {
+        return Snapshot.from(this);
     }
 
     @Override
@@ -43,20 +42,15 @@ public final class TestAggregat
         this.zustand = zustandWurdeGeändert.payload();
     }
 
-    @Value.Immutable
-    @Value.Style(typeBuilder = "*Erbauer", defaultAsDefault = true,
-        privateNoargConstructor = true,
-        builder = "builder",
-        visibility = ImplementationVisibility.PRIVATE,
-        builderVisibility = BuilderVisibility.PACKAGE)
-    public abstract static class TestAggregatSchnapp implements Schnappschuss {
+    @Memento
+    public abstract static class Snapshot implements Schnappschuss {
 
         private static final long serialVersionUID = -2648479788904679134L;
 
         protected abstract long payload();
 
-        public static TestAggregatSchnapp from(final TestAggregat aggregat) {
-            return new TestAggregatSchnappErbauer()
+        public static Snapshot from(final TestAggregat aggregat) {
+            return new SnapshotErbauer()
                 .payload(aggregat.zustand)
                 .version(aggregat.getAggregatverwalter().getVersion())
                 .build();
@@ -65,7 +59,5 @@ public final class TestAggregat
         public final void restore(final TestAggregat aggregat) {
             aggregat.zustand = this.payload();
         }
-
-        // public static class Builder extends TestAggregatSchnappErbauer {}
     }
 }
