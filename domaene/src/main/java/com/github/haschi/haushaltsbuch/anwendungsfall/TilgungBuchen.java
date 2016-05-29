@@ -21,6 +21,9 @@ public class TilgungBuchen {
             throws AggregatNichtGefunden, KonkurrierenderZugriff {
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(bucheTilgung.haushaltsbuchId);
         haushaltsbuch.tilgungBuchen(bucheTilgung.sollkonto, bucheTilgung.habenkonto, bucheTilgung.währungsbetrag);
-        this.repository.speichern(haushaltsbuch, haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(
+            haushaltsbuch,
+            haushaltsbuch.getIdentitätsmerkmal(),
+            haushaltsbuch.getAggregatverwalter());
     }
 }

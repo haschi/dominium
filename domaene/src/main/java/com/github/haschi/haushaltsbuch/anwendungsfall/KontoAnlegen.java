@@ -52,7 +52,8 @@ public class KontoAnlegen {
                 .suchen(kommando.haushaltsbuchId);
 
         haushaltsbuch.neuesKontoHinzufügen(kommando.kontoname, kommando.kontoart);
-        this.repository.speichern(haushaltsbuch, haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(
+            haushaltsbuch, haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
     }
 
     private HaushaltsbuchRepository getRepository() {

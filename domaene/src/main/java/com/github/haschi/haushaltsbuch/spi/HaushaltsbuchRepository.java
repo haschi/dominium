@@ -17,7 +17,10 @@ public interface HaushaltsbuchRepository {
         UUID identitätsmerkmal,
         Aggregatverwalter<HaushaltsbuchEreignisziel> ziel);
 
-    void speichern(Haushaltsbuch haushaltsbuch, Aggregatverwalter<HaushaltsbuchEreignisziel> ziel)
+    void speichern(
+        Haushaltsbuch haushaltsbuch,
+        UUID identitätsmerkmal,
+        Aggregatverwalter<HaushaltsbuchEreignisziel> ziel)
         throws KonkurrierenderZugriff, AggregatNichtGefunden;
 
     ImmutableCollection<UUID> alle();

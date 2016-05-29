@@ -67,7 +67,8 @@ public class Angenommen_ich_habe_ein_haushaltsbuch_magazin {
 
         this.haushaltsbuch = this.repository.suchen(this.identitätsmerkmal);
         this.haushaltsbuch.neuesKontoHinzufügen("Sparbuch", Kontoart.Aktiv);
-        this.repository.speichern(this.haushaltsbuch, this.haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(
+            this.haushaltsbuch, this.haushaltsbuch.getIdentitätsmerkmal(), this.haushaltsbuch.getAggregatverwalter());
 
         this.dann_werden_die_änderungen_des_aggregats_gespeichert();
     }
