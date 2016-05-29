@@ -1,6 +1,8 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.dominium.modell.Aggregatwurzel;
+import com.github.haschi.dominium.modell.Memento;
+import com.github.haschi.dominium.modell.Schnappschuss;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
@@ -15,6 +17,8 @@ import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.money.MonetaryAmount;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public final class Haushaltsbuch
@@ -230,5 +234,28 @@ public final class Haushaltsbuch
         return new ToStringBuilder(this)
                 .append("identitätsmerkmal", this.getIdentitätsmerkmal())
                 .toString();
+    }
+
+    @Memento
+    public abstract static class Snapshot implements Schnappschuss {
+
+        private static final long serialVersionUID = -518587576725764123L;
+
+        protected abstract Set<Konto> konten();
+
+        protected abstract List<Buchungssatz> buchungssaetze();
+
+        public static Snapshot from(final Haushaltsbuch aggregat) {
+            return ImmutableSnapshot.builder()
+                .version(aggregat.getAggregatverwalter().getVersion())
+                .addAllKonten(aggregat.hauptbuch.konten)
+                .addAllBuchungssaetze(aggregat.journal.buchungssätze)
+                .build();
+        }
+
+        public final void restore(final Haushaltsbuch aggregat) {
+            this.konten().forEach(aggregat.hauptbuch::hinzufügen);
+            this.buchungssaetze().forEach(aggregat.journal::buchungssatzHinzufügen);
+        }
     }
 }

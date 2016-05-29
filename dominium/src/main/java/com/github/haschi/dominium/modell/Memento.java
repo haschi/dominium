@@ -6,12 +6,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
-@Value.Style(typeBuilder = "*Erbauer", defaultAsDefault = true,
+@Value.Style(
+    defaultAsDefault = true,
     privateNoargConstructor = true,
-    builder = "builder",
-    defaults = @Value.Immutable(intern = true),
-    visibility = Value.Style.ImplementationVisibility.PRIVATE,
-    builderVisibility = Value.Style.BuilderVisibility.PACKAGE)
+    visibility = Value.Style.ImplementationVisibility.PACKAGE)
 public @interface Memento {
 
 }

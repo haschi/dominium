@@ -50,7 +50,8 @@ public final class TestAggregat
         protected abstract long payload();
 
         public static Snapshot from(final TestAggregat aggregat) {
-            return new SnapshotErbauer()
+            return
+                ImmutableSnapshot.builder()
                 .payload(aggregat.zustand)
                 .version(aggregat.getAggregatverwalter().getVersion())
                 .build();

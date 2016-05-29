@@ -11,7 +11,7 @@ public class Testdaten {
     };
 
     public static TestAggregat.Snapshot schnappschuss(final int version, final long payload) {
-        return new SnapshotErbauer()
+        return ImmutableSnapshot.builder()
             .version(Version.NEU.nachfolger(version))
             .payload(payload)
             .build();
