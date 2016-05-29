@@ -36,7 +36,7 @@ class HaushaltsbuchMemoryRepositoryTest extends Specification {
         Haushaltsbuch haushaltsbuch2 = repository.suchen(haushaltsbuchId)
         haushaltsbuch2.neuesKontoHinzufügen("Girokonto", Kontoart.Aktiv)
         println(haushaltsbuch2.getÄnderungen())
-        repository.speichern(haushaltsbuch2, haushaltsbuch2.identitätsmerkmal, haushaltsbuch2.getAggregatverwalter())
+        repository.speichern(haushaltsbuch2.identitätsmerkmal, haushaltsbuch2.getAggregatverwalter())
 
         then:
         repository.getStream(haushaltsbuchId) == [

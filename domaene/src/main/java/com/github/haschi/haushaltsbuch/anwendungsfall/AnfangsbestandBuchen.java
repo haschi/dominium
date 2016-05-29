@@ -27,7 +27,6 @@ public class AnfangsbestandBuchen {
                 kommando.währungsbetrag
         );
 
-        this.repository.speichern(
-            haushaltsbuch, haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
     }
 }

@@ -9,6 +9,6 @@ public interface Repository<A extends Aggregatwurzel<A, I, T, S>, I, T, S extend
 
     void hinzufügen(final I identitätsmerkmal, final Aggregatverwalter<T> ziel);
 
-    void speichern(A aggregat, final I identitätsmerkmal, final Aggregatverwalter<T> ziel)
+    void speichern(final I identitätsmerkmal, final Aggregatverwalter<T> ziel)
         throws KonkurrierenderZugriff, AggregatNichtGefunden;
 }

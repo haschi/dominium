@@ -36,7 +36,6 @@ public class BuchungssatzHinzufügen {
         final Buchungssatz buchungssatz = new Buchungssatz(befehl.sollkonto, befehl.habenkonto, befehl.betrag);
         haushaltsbuch.buchungssatzHinzufügen(buchungssatz);
 
-        this.repository.speichern(
-            haushaltsbuch, haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
     }
 }

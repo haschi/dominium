@@ -18,7 +18,6 @@ public interface HaushaltsbuchRepository {
         Aggregatverwalter<HaushaltsbuchEreignisziel> ziel);
 
     void speichern(
-        Haushaltsbuch haushaltsbuch,
         UUID identitätsmerkmal,
         Aggregatverwalter<HaushaltsbuchEreignisziel> ziel)
         throws KonkurrierenderZugriff, AggregatNichtGefunden;

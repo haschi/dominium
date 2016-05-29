@@ -24,7 +24,6 @@ public class AusgabeBuchen {
         final Haushaltsbuch haushaltsbuch = this.repository.suchen(kommando.haushaltsbuchId);
 
         haushaltsbuch.ausgabeBuchen(kommando.sollkonto, kommando.habenkonto, kommando.währungsbetrag);
-        this.repository.speichern(
-            haushaltsbuch, haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
+        this.repository.speichern(haushaltsbuch.getIdentitätsmerkmal(), haushaltsbuch.getAggregatverwalter());
     }
 }

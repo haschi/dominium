@@ -66,14 +66,13 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
 
     @Override
     public void speichern(
-        final A aggregat,
         final I identitätsmerkmal, final Aggregatverwalter<T> ziel)
         throws KonkurrierenderZugriff, AggregatNichtGefunden {
         try {
             this.ereignislager.ereignisseDemStromHinzufügen(
-                    aggregat.getIdentitätsmerkmal(),
-                    aggregat.getInitialversion().alsLong(),
-                    aggregat.getÄnderungen()
+                    identitätsmerkmal,
+                    ziel.getInitialversion().alsLong(),
+                    ziel.getÄnderungen()
             );
         } catch (final EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
             throw new AggregatNichtGefunden(ereignisstromWurdeNichtGefunden);
