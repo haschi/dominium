@@ -1,7 +1,5 @@
 package com.github.haschi.dominium.modell;
 
-import java.util.List;
-
 /**
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
@@ -33,10 +31,6 @@ public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
     }
 
     public abstract S schnappschussErstellen();
-
-    public final List<Domänenereignis<T>> getÄnderungen() {
-        return this.aggregatverwalter.getÄnderungen();
-    }
 
     protected abstract T getSelf();
 

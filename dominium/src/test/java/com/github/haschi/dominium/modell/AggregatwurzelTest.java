@@ -34,9 +34,9 @@ public class AggregatwurzelTest {
                 assertThat(this.subjectUnderTest.getIdentitätsmerkmal())
                     .isEqualTo(identitätsmerkmal));
 
-            it("hat zu Beginn keine Änderungen", () ->
-                assertThat(this.subjectUnderTest.getÄnderungen())
-                    .isEmpty());
+            it("hat zu Beginn keine Änderungen", () -> assertThat(this.subjectUnderTest.getAggregatverwalter()
+                .getÄnderungen())
+                .isEmpty());
 
             it("kann einen Schnappschuss erstellen", () ->
                 assertThat(this.subjectUnderTest.schnappschussErstellen())
@@ -62,8 +62,9 @@ public class AggregatwurzelTest {
                             Arrays.asList(testfall).forEach(ereignis ->
                                 this.subjectUnderTest.zustandÄndern(ereignis.payload())));
 
-                        it("besitzt " + testfall.length + " Änderungen", () ->
-                            assertThat(this.subjectUnderTest.getÄnderungen()).containsExactly(testfall));
+                        it("besitzt " + testfall.length + " Änderungen",
+                            () -> assertThat(this.subjectUnderTest.getAggregatverwalter()
+                                .getÄnderungen()).containsExactly(testfall));
 
                         it("wendet Änderungen auf eigenen Zustand an", () ->
                             assertThat(this.subjectUnderTest.schnappschussErstellen())
@@ -92,9 +93,9 @@ public class AggregatwurzelTest {
                             .getInitialversion())
                             .isEqualTo(this.subjectUnderTest.getAggregatverwalter().getVersion()));
 
-                        it("hat keine Änderungen", () ->
-                            assertThat(this.subjectUnderTest.getÄnderungen())
-                                .isEmpty());
+                        it("hat keine Änderungen", () -> assertThat(this.subjectUnderTest.getAggregatverwalter()
+                            .getÄnderungen())
+                            .isEmpty());
                     });
                 });
 

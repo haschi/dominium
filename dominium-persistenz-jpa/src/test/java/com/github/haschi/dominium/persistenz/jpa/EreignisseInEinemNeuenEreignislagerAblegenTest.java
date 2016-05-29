@@ -43,7 +43,7 @@ public final class EreignisseInEinemNeuenEreignislagerAblegenTest {
                 entityManager
         );
 
-        store.neuenEreignisstromErzeugen(this.id, aggregat.getÄnderungen());
+        store.neuenEreignisstromErzeugen(this.id, aggregat.getAggregatverwalter().getÄnderungen());
         entityManager.flush();
         entityManager.clear();
     }
