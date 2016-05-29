@@ -60,7 +60,7 @@ public final class Haushaltsbuch
     @Override
     public HaushaltsbuchSchnappschuss schnappschussErstellen() {
         final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
-                this.getVersion());
+            this.getAggregatverwalter().getVersion());
 
         schnappschuss.konten = this.hauptbuch.getKonten();
         schnappschuss.buchungssätze = this.journal.getBuchungssätze();

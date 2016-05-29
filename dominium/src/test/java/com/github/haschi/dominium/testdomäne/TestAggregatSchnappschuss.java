@@ -48,7 +48,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss {
 
         public TestAggregatSchnappschussBuilder aggregat(final TestAggregat testAggregat) {
             return this
-                .version(testAggregat.getVersion());
+                .version(testAggregat.getAggregatverwalter().getVersion());
         }
     }
 }

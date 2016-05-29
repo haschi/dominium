@@ -83,14 +83,14 @@ public class AggregatwurzelTest {
                                 Arrays.asList(testfall));
                         });
 
-                        it("erhöht die Version des Aggregats", () ->
-                            assertThat(this.subjectUnderTest.getVersion())
-                                .isEqualTo(new Version(testfall.length)));
+                        it("erhöht die Version des Aggregats", () -> assertThat(this.subjectUnderTest
+                            .getAggregatverwalter().getVersion())
+                            .isEqualTo(new Version(testfall.length)));
 
                         it("setzt die Initialversion des Aggregats", () -> assertThat(this.subjectUnderTest
                             .getAggregatverwalter()
                             .getInitialversion())
-                            .isEqualTo(this.subjectUnderTest.getVersion()));
+                            .isEqualTo(this.subjectUnderTest.getAggregatverwalter().getVersion()));
 
                         it("hat keine Änderungen", () ->
                             assertThat(this.subjectUnderTest.getÄnderungen())
@@ -112,9 +112,9 @@ public class AggregatwurzelTest {
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);
                 });
 
-                it("erhält die Version aus dem Schnappschuss", () ->
-                    assertThat(this.subjectUnderTest.getVersion())
-                        .isEqualTo(VERSION));
+                it("erhält die Version aus dem Schnappschuss", () -> assertThat(
+                    this.subjectUnderTest.getAggregatverwalter().getVersion())
+                    .isEqualTo(VERSION));
 
                 it("erhält das Identitätsmerkmal aus dem Schnappschuss", () ->
                     assertThat(this.subjectUnderTest.getIdentitätsmerkmal())

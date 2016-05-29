@@ -38,7 +38,7 @@ public final class Aggregatverwalter<T> {
         return this.änderungsverfolgung.alle(ereignis -> ereignis).collect(Collectors.toList());
     }
 
-    Version getVersion() {
+    public Version getVersion() {
         return this.änderungsverfolgung.getVersion();
     }
 

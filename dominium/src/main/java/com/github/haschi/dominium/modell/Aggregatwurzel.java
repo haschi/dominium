@@ -40,10 +40,6 @@ public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
 
     protected abstract T getSelf();
 
-    public final Version getVersion() {
-        return this.aggregatverwalter.getVersion();
-    }
-
     @Override
     public final void falls(final Domänenereignis<T> ereignis) {
         ereignis.anwendenAuf(this.getSelf());
