@@ -18,7 +18,7 @@ public abstract class AggregatFabrik<A extends Aggregatwurzel<I, T, S>, I, T, S 
             final List<Domänenereignis<T>> ereignisse) {
         final A aggregat = this.erzeugen(identitätsmerkmal);
         aggregat.wiederherstellenAus(schnappschuss);
-        aggregat.getAggregatverwalter().initialisieren(aggregat, schnappschuss.getVersion(), ereignisse);
+        aggregat.getAggregatverwalter().initialisieren(aggregat, schnappschuss.version(), ereignisse);
         return aggregat;
     }
 }

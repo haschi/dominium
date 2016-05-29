@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.testdomäne;
+package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.DomänenereignisDefinition;

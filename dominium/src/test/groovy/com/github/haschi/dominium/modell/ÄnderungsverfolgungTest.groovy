@@ -1,7 +1,7 @@
 package com.github.haschi.dominium.modell
 
-import com.github.haschi.dominium.testdomäne.TestAggregatEreignisZiel
-import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert
+import com.github.haschi.dominium.testdomaene.TestAggregatEreignisZiel
+import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert
 import spock.lang.Specification
 
 import java.util.stream.Collectors

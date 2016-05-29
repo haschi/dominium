@@ -21,7 +21,7 @@ public final class HaushaltsbuchSchnappschuss extends JpaSchnappschuss {
     }
 
     @Override
-    public Version getVersion() {
+    public Version version() {
         return this.version;
     }
 }

@@ -5,8 +5,8 @@ import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
-import com.github.haschi.dominium.testdomäne.TestAggregatEreignisZiel;
-import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert;
+import com.github.haschi.dominium.testdomaene.TestAggregatEreignisZiel;
+import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 

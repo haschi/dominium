@@ -1,9 +1,9 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.dominium.testdomäne.ImmutableAnderesWertobjekt;
-import com.github.haschi.dominium.testdomäne.ImmutableEinWertobjekt;
+import com.github.haschi.dominium.testdomaene.ImmutableAnderesWertobjekt;
+import com.github.haschi.dominium.testdomaene.ImmutableEinWertobjekt;
 import com.mscharhag.oleaster.runner.OleasterRunner;
-import com.github.haschi.dominium.testdomäne.EinWertobjekt;
+import com.github.haschi.dominium.testdomaene.EinWertobjekt;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.runner.RunWith;

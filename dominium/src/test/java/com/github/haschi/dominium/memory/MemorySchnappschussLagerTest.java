@@ -1,7 +1,7 @@
 package com.github.haschi.dominium.memory;
 
-import com.github.haschi.dominium.modell.Version;
-import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss;
+import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
+import com.github.haschi.dominium.testdomaene.Testdaten;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
@@ -17,27 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class MemorySchnappschussLagerTest {
 
-    private MemorySchnappschussLager<TestAggregatSchnappschuss, UUID> subjectUnderTest;
+    private MemorySchnappschussLager<TestAggregatSchnapp, UUID> subjectUnderTest;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
 
-        final TestAggregatSchnappschuss[] schnappschüsse = {
-            TestAggregatSchnappschuss.builder()
-                .version(new Version(1L))
-                .payload(42L)
-                .build(),
-
-            TestAggregatSchnappschuss.builder()
-                .version(new Version(2L))
-                .payload(43L)
-                .build(),
-
-            TestAggregatSchnappschuss.builder()
-                .version(new Version(3L))
-                .payload(44L)
-                .build()
-        };
 
         beforeEach(() -> this.subjectUnderTest = new MemorySchnappschussLager<>());
 
@@ -50,8 +34,11 @@ public class MemorySchnappschussLagerTest {
             });
 
             Arrays.asList(
-                new TestAggregatSchnappschuss[] {schnappschüsse[0]},
-                new TestAggregatSchnappschuss[] {schnappschüsse[0], schnappschüsse[1], schnappschüsse[2]})
+                new TestAggregatSchnapp[] {Testdaten.schnappschüsse[0]},
+                new TestAggregatSchnapp[] {
+                    Testdaten.schnappschüsse[0],
+                    Testdaten.schnappschüsse[1],
+                    Testdaten.schnappschüsse[2]})
                 .forEach(testfall -> {
                     final String description = String.format(
                         "mit %d Schnappschüssen für ein Aggregat",

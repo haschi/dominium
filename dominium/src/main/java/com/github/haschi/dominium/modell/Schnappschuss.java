@@ -13,5 +13,5 @@ import java.io.Serializable;
  */
 public interface Schnappschuss extends Serializable {
 
-    Version getVersion();
+    Version version();
 }

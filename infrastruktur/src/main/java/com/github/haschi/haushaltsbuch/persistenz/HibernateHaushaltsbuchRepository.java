@@ -47,10 +47,10 @@ public class HibernateHaushaltsbuchRepository
     protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
                                                   final HaushaltsbuchSchnappschuss schnappschuss,
                                                   final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.getVersion());
+        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.version());
 
         haushaltsbuch.wiederherstellenAus(schnappschuss);
-        haushaltsbuch.getAggregatverwalter().initialisieren(haushaltsbuch, schnappschuss.getVersion(), stream);
+        haushaltsbuch.getAggregatverwalter().initialisieren(haushaltsbuch, schnappschuss.version(), stream);
         return haushaltsbuch;
     }
 }

@@ -1,8 +1,8 @@
 package com.github.haschi.dominium.memory;
 
-import com.mscharhag.oleaster.runner.OleasterRunner;
-import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss;
+import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
 import com.github.haschi.dominium.testmittel.Testdaten;
+import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
 import java.util.UUID;
@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(OleasterRunner.class)
 public class AggregatAusSchnappschussWiederherstellen {
-    private MemorySchnappschussLager<TestAggregatSchnappschuss, UUID> lager;
+    private MemorySchnappschussLager<TestAggregatSchnapp, UUID> lager;
 
     {
         describe("Ein MemorySchnappschussLager", () -> {

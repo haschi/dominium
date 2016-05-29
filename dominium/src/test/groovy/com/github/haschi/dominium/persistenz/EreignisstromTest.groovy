@@ -2,7 +2,7 @@ package com.github.haschi.dominium.persistenz
 
 import com.github.haschi.dominium.persistenz.tools.TestEreignisMetaDaten
 import com.github.haschi.dominium.persistenz.tools.TestEreignisstrom
-import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert
+import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert
 import spock.lang.Specification
 
 class EreignisstromTest extends Specification {

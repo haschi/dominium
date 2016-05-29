@@ -22,7 +22,7 @@ public final class TestAggregatSchnappschuss implements Schnappschuss {
     }
 
     @Override
-    public Version getVersion() {
+    public Version version() {
         return this.version;
     }
 }

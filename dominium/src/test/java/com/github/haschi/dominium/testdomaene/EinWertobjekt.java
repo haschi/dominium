@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.testdomäne;
+package com.github.haschi.dominium.testdomaene;
 
 import org.immutables.value.Value.Immutable;
 

@@ -1,8 +1,9 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.dominium.testdomäne.TestAggregat;
-import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss;
-import com.github.haschi.dominium.testdomäne.ZustandWurdeGeändert;
+import com.github.haschi.dominium.testdomaene.TestAggregat;
+import com.github.haschi.dominium.testdomaene.TestAggregat.TestAggregatSchnapp;
+import com.github.haschi.dominium.testdomaene.Testdaten;
+import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import org.junit.runner.RunWith;
 
@@ -40,10 +41,7 @@ public class AggregatwurzelTest {
 
             it("kann einen Schnappschuss erstellen", () ->
                 assertThat(this.subjectUnderTest.schnappschussErstellen())
-                    .isEqualTo(TestAggregatSchnappschuss.builder()
-                    .version(Version.NEU)
-                    .payload(0L)
-                    .build()));
+                    .isEqualTo(Testdaten.schnappschuss(0, 0L)));
 
             it("hat eine Initialversion = 1", () -> assertThat(this.subjectUnderTest.getAggregatverwalter()
                 .getInitialversion())
@@ -68,10 +66,9 @@ public class AggregatwurzelTest {
 
                         it("wendet Änderungen auf eigenen Zustand an", () ->
                             assertThat(this.subjectUnderTest.schnappschussErstellen())
-                                .isEqualTo(TestAggregatSchnappschuss.builder()
-                                    .version(new Version(testfall.length))
-                                    .payload(testfall[testfall.length - 1].payload())
-                                    .build()));
+                                .isEqualTo(Testdaten.schnappschuss(
+                                    testfall.length,
+                                    testfall[testfall.length - 1].payload())));
                     });
 
                     final String description2 = String.format("mit %d Aktualisierungen", testfall.length);
@@ -103,13 +100,9 @@ public class AggregatwurzelTest {
                 final UUID anderesIdentitätsmerkmal = UUID.randomUUID();
 
                 beforeEach(() -> {
-                    final TestAggregatSchnappschuss schnappschuss = TestAggregatSchnappschuss.builder()
-                        .payload(EREIGNIS_NUTZLAST[4])
-                        .version(VERSION)
-                        .build();
-
-                    this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.getVersion());
-
+                    final TestAggregatSchnapp schnappschuss = Testdaten.schnappschuss(123, EREIGNIS_NUTZLAST[4]);
+                    this.subjectUnderTest = new TestAggregat(anderesIdentitätsmerkmal, schnappschuss.version());
+                    // schnappschuss.restore(this.subjectUnderTest);
                     this.subjectUnderTest.wiederherstellenAus(schnappschuss);
                 });
 

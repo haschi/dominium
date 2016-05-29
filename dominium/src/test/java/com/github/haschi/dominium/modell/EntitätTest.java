@@ -1,6 +1,6 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.dominium.testdomäne.TestAggregat;
+import com.github.haschi.dominium.testdomaene.TestAggregat;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.runner.RunWith;

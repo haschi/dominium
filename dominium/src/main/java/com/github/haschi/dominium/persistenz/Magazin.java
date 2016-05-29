@@ -38,7 +38,7 @@ public abstract class Magazin<A , I, T, S extends Schnappschuss>
         final Optional<S> schnappschuss =
                 this.schnappschussLager.getNeuesterSchnappschuss(identitätsmerkmal);
 
-        final Version von = schnappschuss.map(Schnappschuss::getVersion).orElse(Version.NEU);
+        final Version von = schnappschuss.map(Schnappschuss::version).orElse(Version.NEU);
         final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(Version.MAX);
 
         final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
