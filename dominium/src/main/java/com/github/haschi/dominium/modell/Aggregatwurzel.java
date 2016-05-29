@@ -26,19 +26,7 @@ public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
     // Können diese in eine eigene Schnittstelle ausgelagert werden?
-    protected abstract void wiederherstellenAus(final S schnappschuss);
-
-    public final void wiederherstellenAus(final S schnappschuss, final List<Domänenereignis<T>> stream) {
-
-        this.wiederherstellenAus(schnappschuss);
-        this.aggregatverwalter.initialisieren(this, schnappschuss.getVersion(), stream);
-    }
-
-    @Override
-    public final void wiederherstellenAus(final List<Domänenereignis<T>> stream) {
-
-        this.aggregatverwalter.initialisieren(this, Version.NEU, stream);
-    }
+    public abstract void wiederherstellenAus(final S schnappschuss);
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
         this.aggregatverwalter.bewirkt(ereignis);

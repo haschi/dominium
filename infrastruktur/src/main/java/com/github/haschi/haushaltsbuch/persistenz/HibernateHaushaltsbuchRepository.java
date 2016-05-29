@@ -38,7 +38,8 @@ public class HibernateHaushaltsbuchRepository
     protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
                                                   final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, Version.NEU);
-        haushaltsbuch.wiederherstellenAus(stream);
+
+        haushaltsbuch.getAggregatverwalter().initialisieren(haushaltsbuch, Version.NEU, stream);
         return haushaltsbuch;
     }
 
@@ -47,7 +48,9 @@ public class HibernateHaushaltsbuchRepository
                                                   final HaushaltsbuchSchnappschuss schnappschuss,
                                                   final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.getVersion());
-        haushaltsbuch.wiederherstellenAus(schnappschuss, stream);
+
+        haushaltsbuch.wiederherstellenAus(schnappschuss);
+        haushaltsbuch.getAggregatverwalter().initialisieren(haushaltsbuch, schnappschuss.getVersion(), stream);
         return haushaltsbuch;
     }
 }

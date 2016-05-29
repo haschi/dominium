@@ -6,7 +6,7 @@ import com.github.haschi.dominium.modell.Version;
 import java.util.UUID;
 
 public class TestAggregatFabrik
-    extends AggregatFabrik<TestAggregat, TestAggregatSchnappschuss, TestAggregatEreignisZiel, UUID> {
+    extends AggregatFabrik<TestAggregat, UUID,  TestAggregatEreignisZiel, TestAggregatSchnappschuss> {
 
     @Override
     public final TestAggregat erzeugen(final UUID identitätsmerkmal) {
