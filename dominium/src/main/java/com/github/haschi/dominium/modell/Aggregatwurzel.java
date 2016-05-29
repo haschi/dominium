@@ -3,12 +3,11 @@ package com.github.haschi.dominium.modell;
 import java.util.List;
 
 /**
- *
- * @param <A> Der Typ einer konkreten Ableitung von Aggregatwurzel.
  * @param <I> Der Typ des Identitätsmerkmals der Aggregatwurzel.
  * @param <T> Der Schnittstelle des Ereignis-Ziels der Domänenereignisse des Aggregats
+ * @param <S> Der Typ des Schnappschusses, den das Aggregat erzeugt.
  */
-public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss>
+public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 

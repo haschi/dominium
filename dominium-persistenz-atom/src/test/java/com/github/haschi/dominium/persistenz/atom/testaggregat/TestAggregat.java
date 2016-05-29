@@ -6,7 +6,7 @@ import com.github.haschi.dominium.modell.Aggregatwurzel;
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisziel, TestAggregatSchnappschuss>
+        extends Aggregatwurzel<UUID, TestAggregatEreignisziel, TestAggregatSchnappschuss>
         implements TestAggregatEreignisziel {
 
     private long wert;

@@ -18,7 +18,7 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 public final class Haushaltsbuch
-        extends Aggregatwurzel<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
+        extends Aggregatwurzel<UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
         implements HaushaltsbuchEreignisziel {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";

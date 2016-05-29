@@ -8,7 +8,7 @@ import com.github.haschi.dominium.testdomäne.TestAggregatSchnappschuss.TestAggr
 import java.util.UUID;
 
 public final class TestAggregat
-        extends Aggregatwurzel<TestAggregat, UUID, TestAggregatEreignisZiel, TestAggregatSchnappschuss>
+        extends Aggregatwurzel<UUID, TestAggregatEreignisZiel, TestAggregatSchnappschuss>
         implements TestAggregatEreignisZiel, EreignisZiel<TestAggregatEreignisZiel> {
 
     private long zustand;

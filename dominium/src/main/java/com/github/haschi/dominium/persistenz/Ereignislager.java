@@ -26,6 +26,7 @@ public interface Ereignislager<I, T> {
 
     /**
      * @return Liefert die Identitätsmerkmale aller Ereignisströme des Lagers.
+     * TODO Löschen, wird nur für Tests verwendet.
      */
     Stream<I> getEreignisströme();
 
