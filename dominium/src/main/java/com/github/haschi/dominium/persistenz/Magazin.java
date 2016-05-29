@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.persistenz;
 
+import com.github.haschi.dominium.modell.Aggregatverwalter;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.Domänenereignis;
@@ -58,13 +59,15 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         final List<Domänenereignis<T>> stream);
 
     @Override
-    public void hinzufügen(final A aggregat) {
-        final List<Domänenereignis<T>> änderungen = aggregat.getÄnderungen();
-        this.ereignislager.neuenEreignisstromErzeugen(aggregat.getIdentitätsmerkmal(), änderungen);
+    public void hinzufügen(final I identitätsmerkmal, final Aggregatverwalter<T> ziel) {
+        final List<Domänenereignis<T>> änderungen = ziel.getÄnderungen();
+        this.ereignislager.neuenEreignisstromErzeugen(identitätsmerkmal, änderungen);
     }
 
     @Override
-    public void speichern(final A aggregat) throws KonkurrierenderZugriff, AggregatNichtGefunden {
+    public void speichern(
+            final A aggregat,
+            final Aggregatverwalter<T> ziel) throws KonkurrierenderZugriff, AggregatNichtGefunden {
         try {
             this.ereignislager.ereignisseDemStromHinzufügen(
                     aggregat.getIdentitätsmerkmal(),

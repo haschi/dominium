@@ -34,7 +34,7 @@ public final class Aggregatverwalter<T> {
         this.initialversion = this.änderungsverfolgung.getVersion();
     }
 
-    List<Domänenereignis<T>> getÄnderungen() {
+    public List<Domänenereignis<T>> getÄnderungen() {
         return this.änderungsverfolgung.alle(ereignis -> ereignis).collect(Collectors.toList());
     }
 

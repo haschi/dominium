@@ -12,6 +12,10 @@ public abstract class Aggregatwurzel<A extends Aggregatwurzel<A, I, T, S>, I, T,
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
 
+    public final Aggregatverwalter<T> getAggregatverwalter() {
+        return this.aggregatverwalter;
+    }
+
     private final Aggregatverwalter<T> aggregatverwalter;
 
     // Der einzig erlaubte Konstruktor. Er greift nicht auf abgeleitete Klassen zu.

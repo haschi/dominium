@@ -44,7 +44,9 @@ public class Angenommen_ich_habe_ein_haushaltsbuch_magazin {
     public void wenn_ich_ein_neues_haushaltsbuch_mit_änderungen_hinzufüge()
         throws AggregatNichtGefunden {
 
-        this.repository.hinzufügen(this.haushaltsbuch);
+        this.repository.hinzufügen(
+            this.haushaltsbuch.getIdentitätsmerkmal(),
+            this.haushaltsbuch.getAggregatverwalter());
 
         this.dann_werde_ich_das_haushaltsbuch_wiederherstellen_können();
     }
@@ -59,11 +61,13 @@ public class Angenommen_ich_habe_ein_haushaltsbuch_magazin {
     @Test
     public void wenn_ich_ein_vorhandenes_haushaltsbuch_ändere()
         throws Exception {
-        this.repository.hinzufügen(this.haushaltsbuch);
+        this.repository.hinzufügen(
+            this.haushaltsbuch.getIdentitätsmerkmal(),
+            this.haushaltsbuch.getAggregatverwalter());
 
         this.haushaltsbuch = this.repository.suchen(this.identitätsmerkmal);
         this.haushaltsbuch.neuesKontoHinzufügen("Sparbuch", Kontoart.Aktiv);
-        this.repository.speichern(this.haushaltsbuch);
+        this.repository.speichern(this.haushaltsbuch, this.haushaltsbuch.getAggregatverwalter());
 
         this.dann_werden_die_änderungen_des_aggregats_gespeichert();
     }

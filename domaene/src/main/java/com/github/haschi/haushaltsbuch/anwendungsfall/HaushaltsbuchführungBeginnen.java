@@ -32,6 +32,8 @@ public class HaushaltsbuchführungBeginnen {
             throws KonkurrierenderZugriff {
 
         final Haushaltsbuch haushaltsbuch = Haushaltsbuch.erzeugen(kommando.identitätsmerkmal);
-        this.repository.hinzufügen(haushaltsbuch);
+        this.repository.hinzufügen(
+            haushaltsbuch.getIdentitätsmerkmal(),
+            haushaltsbuch.getAggregatverwalter());
     }
 }
