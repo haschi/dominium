@@ -45,9 +45,9 @@ public class AggregatwurzelTest {
                     .payload(0L)
                     .build()));
 
-            it("hat eine Initialversion = 1", () ->
-                assertThat(this.subjectUnderTest.getInitialversion())
-                    .isEqualTo(Version.NEU));
+            it("hat eine Initialversion = 1", () -> assertThat(this.subjectUnderTest.getAggregatverwalter()
+                .getInitialversion())
+                .isEqualTo(Version.NEU));
 
             Arrays.asList(
                 new ZustandWurdeGeändert[]{ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[0])},
@@ -87,9 +87,10 @@ public class AggregatwurzelTest {
                             assertThat(this.subjectUnderTest.getVersion())
                                 .isEqualTo(new Version(testfall.length)));
 
-                        it("setzt die Initialversion des Aggregats", () ->
-                            assertThat(this.subjectUnderTest.getInitialversion())
-                                .isEqualTo(this.subjectUnderTest.getVersion()));
+                        it("setzt die Initialversion des Aggregats", () -> assertThat(this.subjectUnderTest
+                            .getAggregatverwalter()
+                            .getInitialversion())
+                            .isEqualTo(this.subjectUnderTest.getVersion()));
 
                         it("hat keine Änderungen", () ->
                             assertThat(this.subjectUnderTest.getÄnderungen())
