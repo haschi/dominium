@@ -2,7 +2,6 @@ package com.github.haschi.dominium.persistenz;
 
 import com.github.haschi.dominium.modell.Aggregatverwalter;
 import com.github.haschi.dominium.modell.Version;
-import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.Schnappschuss;
 import com.github.haschi.dominium.modell.Versionsbereich;
@@ -17,7 +16,7 @@ import java.util.Optional;
  * @param <T> Der Typ der Schnittstelle, auf die Domänenereignisse des Aggregats angewendet werden.
  */
 @SuppressWarnings("checkstyle:designforextension")
-public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S extends Schnappschuss>
+public abstract class Magazin<A , I, T, S extends Schnappschuss>
         implements Repository<A, I, T, S> {
 
     private final Ereignislager<I, T> ereignislager;
@@ -65,9 +64,8 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
     }
 
     @Override
-    public void speichern(
-        final I identitätsmerkmal, final Aggregatverwalter<T> ziel)
-        throws KonkurrierenderZugriff, AggregatNichtGefunden {
+    public void speichern(final I identitätsmerkmal, final Aggregatverwalter<T> ziel)
+            throws KonkurrierenderZugriff, AggregatNichtGefunden {
         try {
             this.ereignislager.ereignisseDemStromHinzufügen(
                     identitätsmerkmal,
@@ -77,23 +75,6 @@ public abstract class Magazin<A extends Aggregatwurzel<A, I, T, S>, I, T, S exte
         } catch (final EreignisstromWurdeNichtGefunden ereignisstromWurdeNichtGefunden) {
             throw new AggregatNichtGefunden(ereignisstromWurdeNichtGefunden);
         }
-    }
-
-    public void speichern(final I identitätsmerkmal, final S  schnappschuss) throws AggregatNichtGefunden {
-        if (!this.ereignislager.existiertEreignisStrom(identitätsmerkmal)) {
-            throw new AggregatNichtGefunden();
-        }
-
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, identitätsmerkmal);
-    }
-
-    public void schnappschussSpeichern(final A aggregat) throws ÄnderungenSindVorhandenGewesen {
-        if (!aggregat.getÄnderungen().isEmpty()) {
-            throw new ÄnderungenSindVorhandenGewesen();
-        }
-
-        final S schnappschuss = aggregat.schnappschussErstellen();
-        this.schnappschussLager.schnappschussHinzufügen(schnappschuss, aggregat.getIdentitätsmerkmal());
     }
 
     protected Ereignislager<I, T> getEreignislager() {
