@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.persistenz;
 
 import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch.Snapshot;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.system.Logged;
 import org.jboss.logging.Logger;
@@ -48,7 +48,7 @@ public class SchnappschussDienst {
             for (final UUID haushaltsbuchId : resultList) {
                 try {
                     final Haushaltsbuch haushaltsbuch = this.repository.suchen(haushaltsbuchId);
-                    final HaushaltsbuchSchnappschuss schnappschuss = haushaltsbuch.schnappschussErstellen();
+                    final Snapshot schnappschuss = haushaltsbuch.schnappschussErstellen();
                     this.lager.schnappschussHinzufügen(schnappschuss, haushaltsbuchId);
 
                     this.logger.infof("Schnappschuss erstellt für Aggregat %s", haushaltsbuchId.toString());

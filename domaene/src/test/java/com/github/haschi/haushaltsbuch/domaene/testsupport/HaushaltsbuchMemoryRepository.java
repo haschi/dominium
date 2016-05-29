@@ -5,8 +5,8 @@ import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.Magazin;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch.Snapshot;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import com.github.haschi.haushaltsbuch.spi.HaushaltsbuchRepository;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class HaushaltsbuchMemoryRepository
-        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
+        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, Snapshot>
         implements HaushaltsbuchRepository {
 
     @Inject
@@ -49,7 +49,7 @@ public class HaushaltsbuchMemoryRepository
 
     @Override
     protected final Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
-                                                  final HaushaltsbuchSchnappschuss schnappschuss,
+                                                  final Haushaltsbuch.Snapshot schnappschuss,
                                                   final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.version());
 

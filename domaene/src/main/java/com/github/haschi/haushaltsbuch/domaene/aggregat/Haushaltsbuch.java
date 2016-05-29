@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class Haushaltsbuch
-        extends Aggregatwurzel<UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
+        extends Aggregatwurzel<UUID, HaushaltsbuchEreignisziel, Haushaltsbuch.Snapshot>
         implements HaushaltsbuchEreignisziel {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
@@ -34,13 +34,8 @@ public final class Haushaltsbuch
     }
 
     @Override
-    public void wiederherstellenAus(final HaushaltsbuchSchnappschuss schnappschuss) {
-        // this.hauptbuch = new Hauptbuch();
-        schnappschuss.konten.forEach(k -> this.hauptbuch.hinzufügen(k));
-
-        //this.journal = new Journal();
-        //  TBD: Da ist ein Fehler: das darf nur eine Liste sein.
-        // schnappschuss.buchungssätze.forEach(b -> journal.buchungssatzHinzufügen(b));
+    public void wiederherstellenAus(final Snapshot schnappschuss) {
+        schnappschuss.restore(this);
     }
 
     public static Haushaltsbuch erzeugen(final UUID identitätsmerkmal) {
@@ -62,14 +57,8 @@ public final class Haushaltsbuch
     }
 
     @Override
-    public HaushaltsbuchSchnappschuss schnappschussErstellen() {
-        final HaushaltsbuchSchnappschuss schnappschuss = new HaushaltsbuchSchnappschuss(
-            this.getAggregatverwalter().getVersion());
-
-        schnappschuss.konten = this.hauptbuch.getKonten();
-        schnappschuss.buchungssätze = this.journal.getBuchungssätze();
-
-        return schnappschuss;
+    public Snapshot schnappschussErstellen() {
+        return Snapshot.from(this);
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch

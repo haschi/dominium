@@ -4,10 +4,10 @@ import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.persistenz.Magazin;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch.Snapshot;
 import com.github.haschi.haushaltsbuch.spi.HaushaltsbuchRepository;
 import com.google.common.collect.ImmutableCollection;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchSchnappschuss;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Priority;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Priority(Interceptor.Priority.APPLICATION + 10)
 @SuppressWarnings("checkstyle:designforextension")
 public class HibernateHaushaltsbuchRepository
-        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, HaushaltsbuchSchnappschuss>
+        extends Magazin<Haushaltsbuch, UUID, HaushaltsbuchEreignisziel, Snapshot>
         implements HaushaltsbuchRepository {
 
     @Inject
@@ -45,7 +45,7 @@ public class HibernateHaushaltsbuchRepository
 
     @Override
     protected Haushaltsbuch neuesAggregatErzeugen(final UUID identitätsmerkmal,
-                                                  final HaushaltsbuchSchnappschuss schnappschuss,
+                                                  final Haushaltsbuch.Snapshot schnappschuss,
                                                   final List<Domänenereignis<HaushaltsbuchEreignisziel>> stream) {
         final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, schnappschuss.version());
 
