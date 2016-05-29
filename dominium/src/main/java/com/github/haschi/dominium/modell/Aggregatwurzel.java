@@ -7,7 +7,7 @@ package com.github.haschi.dominium.modell;
  */
 public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
         extends Entität<I>
-        implements SchnappschussQuelle, EreignisZiel<T>, Ereignisstromziel<T, S> {
+        implements SchnappschussQuelle, EreignisZiel<T> {
 
     public final Aggregatverwalter<T> getAggregatverwalter() {
         return this.aggregatverwalter;
