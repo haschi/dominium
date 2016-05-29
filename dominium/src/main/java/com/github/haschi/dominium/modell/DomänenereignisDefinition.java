@@ -11,14 +11,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Value.Style(
     defaults = @Value.Immutable,
-    typeAbstract = "*Definition",
-    typeImmutable = "*",
     build = "erzeugen",
     builder = "erbauer",
     privateNoargConstructor = true,
     typeBuilder = "Erbauer",
     typeInnerBuilder = "Erbauer",
-    visibility = Value.Style.ImplementationVisibility.PUBLIC)
+    visibility = Value.Style.ImplementationVisibility.PUBLIC,
+    builderVisibility = Value.Style.BuilderVisibility.SAME)
 public @interface DomänenereignisDefinition {
 
 }

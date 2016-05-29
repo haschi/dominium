@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.modell;
 
+import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeändert;
 import com.github.haschi.dominium.testdomaene.TestAggregat;
 import com.github.haschi.dominium.testdomaene.Testdaten;
 import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert;
@@ -47,11 +48,11 @@ public class AggregatwurzelTest {
                 .isEqualTo(Version.NEU));
 
             Arrays.asList(
-                new ZustandWurdeGeändert[]{ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[0])},
+                new ZustandWurdeGeändert[]{ImmutableZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[0])},
                 new ZustandWurdeGeändert[]{
-                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[1]),
-                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[2]),
-                    ZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[3])})
+                    ImmutableZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[1]),
+                    ImmutableZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[2]),
+                    ImmutableZustandWurdeGeändert.of(EREIGNIS_NUTZLAST[3])})
                 .forEach(testfall -> {
                     final String description = String.format("mit %d Änderungen nacheinander", testfall.length);
                     describe(description, () -> {

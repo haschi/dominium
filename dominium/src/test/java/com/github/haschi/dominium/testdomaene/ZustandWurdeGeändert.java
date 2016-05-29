@@ -6,7 +6,7 @@ import com.github.haschi.dominium.modell.EreignisZiel;
 import org.immutables.value.Value.Parameter;
 
 @DomänenereignisDefinition
-abstract class ZustandWurdeGeändertDefinition implements Domänenereignis<TestAggregatEreignisZiel> {
+public abstract class ZustandWurdeGeändert implements Domänenereignis<TestAggregatEreignisZiel> {
 
     private static final long serialVersionUID = 5894690972126209956L;
 

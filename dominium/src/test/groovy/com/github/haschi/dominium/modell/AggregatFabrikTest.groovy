@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.modell
 
+import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeändert
 import com.github.haschi.dominium.testdomaene.TestAggregat
 import com.github.haschi.dominium.testdomaene.TestAggregatFabrik
 import com.github.haschi.dominium.testdomaene.Testdaten
@@ -26,7 +27,7 @@ class AggregatFabrikTest extends Specification {
         TestAggregatFabrik fabrik = new TestAggregatFabrik();
 
         when:
-        TestAggregat aggregat = fabrik.erzeugen(identitätsmerkmal, [ZustandWurdeGeändert.of(42L)])
+        TestAggregat aggregat = fabrik.erzeugen(identitätsmerkmal, [ImmutableZustandWurdeGeändert.of(42L)])
 
         then:
         aggregat.schnappschussErstellen() == Testdaten.schnappschuss(1, 42L)
@@ -38,7 +39,7 @@ class AggregatFabrikTest extends Specification {
         TestAggregat.Snapshot schnappschuss = Testdaten.schnappschuss(5, 42L);
 
         when:
-        TestAggregat aggregat = fabrik.erzeugen(identitätsmerkmal, schnappschuss, [ZustandWurdeGeändert.of(4711L)])
+        TestAggregat aggregat = fabrik.erzeugen(identitätsmerkmal, schnappschuss, [ImmutableZustandWurdeGeändert.of(4711L)])
 
         then:
         aggregat.schnappschussErstellen() == Testdaten.schnappschuss(6, 4711L)

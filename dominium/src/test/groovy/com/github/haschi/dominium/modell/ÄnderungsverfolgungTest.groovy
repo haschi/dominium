@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.modell
 
+import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeändert
 import com.github.haschi.dominium.testdomaene.TestAggregatEreignisZiel
 import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert
 import spock.lang.Specification
@@ -32,8 +33,8 @@ class ÄnderungsverfolgungTest extends Specification {
         where:
         ereignisse                                                                                  || _
         []                                                                                          || _
-        [ZustandWurdeGeändert.of(42L)]                                                              || _
-        [ZustandWurdeGeändert.of(43L), ZustandWurdeGeändert.of(44L), ZustandWurdeGeändert.of(45L)]  || _
+        [ImmutableZustandWurdeGeändert.of(42L)]                                                              || _
+        [ImmutableZustandWurdeGeändert.of(43L), ImmutableZustandWurdeGeändert.of(44L), ImmutableZustandWurdeGeändert.of(45L)]  || _
     }
 
     def "Ereignisse werden gespeichert"() {
@@ -48,9 +49,9 @@ class ÄnderungsverfolgungTest extends Specification {
         änderung.alle({ereignis -> ereignis}).collect(Collectors.toList()) == ereignisse
 
         where:
-        ereignisse                                                                                  || _
-        []                                                                                          || _
-        [ZustandWurdeGeändert.of(42L)]                                                              || _
-        [ZustandWurdeGeändert.of(43L), ZustandWurdeGeändert.of(44L), ZustandWurdeGeändert.of(45L)]  || _
+        ereignisse                                                                                 || _
+        []                                                                                         || _
+        [ImmutableZustandWurdeGeändert.of(42L)]                                                    || _
+        [ImmutableZustandWurdeGeändert.of(43L), ImmutableZustandWurdeGeändert.of(44L), ImmutableZustandWurdeGeändert.of(45L)] || _
     }
 }

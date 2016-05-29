@@ -5,6 +5,7 @@ import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.EreignisstromWurdeNichtGefunden;
 import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeändert;
 import com.github.haschi.dominium.testdomaene.TestAggregatEreignisZiel;
 import com.github.haschi.dominium.testdomaene.ZustandWurdeGeändert;
 import com.mscharhag.oleaster.runner.OleasterRunner;
@@ -47,8 +48,8 @@ public class MemoryEreignislagerTest {
 
         describe("mit Ereignisstrom", () -> {
             final ZustandWurdeGeändert[] domänenereignisse = {
-                ZustandWurdeGeändert.of(42L),
-                ZustandWurdeGeändert.of(43L)
+                ImmutableZustandWurdeGeändert.of(42L),
+                ImmutableZustandWurdeGeändert.of(43L)
             };
 
             beforeEach(() -> this.lager.neuenEreignisstromErzeugen(
@@ -88,8 +89,8 @@ public class MemoryEreignislagerTest {
 
             describe("Ereignisse hinzufügen mit gültiger Versionsnummer", () -> {
                 final ZustandWurdeGeändert[] weitereEreignisse = {
-                    ZustandWurdeGeändert.of(44L),
-                    ZustandWurdeGeändert.of(45L)
+                    ImmutableZustandWurdeGeändert.of(44L),
+                    ImmutableZustandWurdeGeändert.of(45L)
                 };
 
                 final long version = 2;
