@@ -1,5 +1,7 @@
 package com.github.haschi.dominium.testdomaene;
 
+import com.github.haschi.coding.annotation.AggregateRoot;
+import com.github.haschi.coding.annotation.EventHandler;
 import com.github.haschi.dominium.modell.Aggregatwurzel;
 import com.github.haschi.dominium.modell.EreignisZiel;
 import com.github.haschi.dominium.modell.Memento;
@@ -9,7 +11,9 @@ import com.github.haschi.dominium.testdomaene.TestAggregat.Snapshot;
 
 import java.util.UUID;
 
-public final class TestAggregat
+@AggregateRoot
+@SuppressWarnings("all")
+public class TestAggregat
         extends Aggregatwurzel<UUID, TestAggregatEreignisZiel, Snapshot>
         implements TestAggregatEreignisZiel, EreignisZiel<TestAggregatEreignisZiel> {
 
@@ -35,9 +39,11 @@ public final class TestAggregat
     }
 
     public void zustandÄndern(final long payload) {
-        this.bewirkt(ImmutableZustandWurdeGeändert.of(payload));
+        // this.bewirkt(ImmutableZustandWurdeGeändert.of(payload));
+        this.falls(ImmutableZustandWurdeGeändert.of(payload));
     }
 
+    @EventHandler
     public void falls(final ZustandWurdeGeändert zustandWurdeGeändert) {
         this.zustand = zustandWurdeGeändert.payload();
     }

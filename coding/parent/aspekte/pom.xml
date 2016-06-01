@@ -48,6 +48,13 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
