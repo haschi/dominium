@@ -1,6 +1,6 @@
 package com.github.haschi.dominium.modell
 
-import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeändert
+import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeaendert
 import com.github.haschi.dominium.testdomaene.TestAggregatEreignisZiel
 import spock.lang.Specification
 
@@ -18,11 +18,11 @@ class EreignisQuelleTest extends Specification {
         ereignisQuelle.abonnieren(abonnent2)
 
         when: "ich ein Ereignis auslöse"
-        ereignisQuelle.bewirkt(ImmutableZustandWurdeGeändert.of(PAYLOAD))
+        ereignisQuelle.bewirkt(ImmutableZustandWurdeGeaendert.of(PAYLOAD))
 
         then:
-        1 * abonnent1.falls(ImmutableZustandWurdeGeändert.of(PAYLOAD))
-        1 * abonnent2.falls(ImmutableZustandWurdeGeändert.of(PAYLOAD))
+        1 * abonnent1.falls(ImmutableZustandWurdeGeaendert.of(PAYLOAD))
+        1 * abonnent2.falls(ImmutableZustandWurdeGeaendert.of(PAYLOAD))
     }
 
     def "Abonnenten können nur einmal registriert werden"() {
@@ -33,9 +33,9 @@ class EreignisQuelleTest extends Specification {
 
         when: "ich den Abonnenten ein zweites mal registriere und ein Ereignis auslöse"
         ereignisQuelle.abonnieren(abonnent)
-        ereignisQuelle.bewirkt(ImmutableZustandWurdeGeändert.of(PAYLOAD))
+        ereignisQuelle.bewirkt(ImmutableZustandWurdeGeaendert.of(PAYLOAD))
 
         then: "wird der Abonnent das Ereignis nur einmal erhalten"
-        1 * abonnent.falls(ImmutableZustandWurdeGeändert.of(PAYLOAD))
+        1 * abonnent.falls(ImmutableZustandWurdeGeaendert.of(PAYLOAD))
     }
 }

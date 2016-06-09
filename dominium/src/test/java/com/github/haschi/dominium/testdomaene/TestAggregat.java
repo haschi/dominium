@@ -2,50 +2,49 @@ package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.coding.annotation.AggregateRoot;
 import com.github.haschi.coding.annotation.EventHandler;
-import com.github.haschi.dominium.modell.Aggregatwurzel;
-import com.github.haschi.dominium.modell.EreignisZiel;
 import com.github.haschi.dominium.modell.Memento;
 import com.github.haschi.dominium.modell.Schnappschuss;
-import com.github.haschi.dominium.modell.Version;
-import com.github.haschi.dominium.testdomaene.TestAggregat.Snapshot;
 
 import java.util.UUID;
 
 @AggregateRoot
 @SuppressWarnings("all")
-public class TestAggregat
-        extends Aggregatwurzel<UUID, TestAggregatEreignisZiel, Snapshot>
-        implements TestAggregatEreignisZiel, EreignisZiel<TestAggregatEreignisZiel> {
+public class TestAggregat {
+
+    private final UUID identitätsmerkmal;
 
     private long zustand;
 
-    public TestAggregat(final UUID identitätsmerkmal, final Version version) {
-        super(identitätsmerkmal, version);
-    }
+    private boolean bearbeitbar = true;
 
-    @Override
-    public void wiederherstellenAus(final Snapshot schnappschuss) {
-        schnappschuss.restore(this);
-    }
-
-    @Override
-    public Snapshot schnappschussErstellen() {
-        return Snapshot.from(this);
-    }
-
-    @Override
-    protected TestAggregat getSelf() {
-        return this;
+    public TestAggregat(final UUID identitätsmerkmal) {
+        this.identitätsmerkmal = identitätsmerkmal;
     }
 
     public void zustandÄndern(final long payload) {
-        // this.bewirkt(ImmutableZustandWurdeGeändert.of(payload));
-        this.falls(ImmutableZustandWurdeGeändert.of(payload));
+        this.falls(ImmutableZustandWurdeGeaendert.of(payload));
+    }
+
+    public void bearbeitungBeenden() {
+        if (this.bearbeitbar == false) {
+            throw new IllegalStateException("Bearbeitung bereits beendet");
+        }
+
+        this.falls(new BearbeitungWurdeBeendet());
     }
 
     @EventHandler
-    public void falls(final ZustandWurdeGeändert zustandWurdeGeändert) {
-        this.zustand = zustandWurdeGeändert.payload();
+    protected void falls(final BearbeitungWurdeBeendet bearbeitungWurdeBeendet) {
+        this.bearbeitbar = false;
+    }
+
+    public void nächsterZustand() {
+        this.falls(ImmutableZustandWurdeGeaendert.of(zustand + 1));
+    }
+
+    @EventHandler
+    public void falls(final ZustandWurdeGeaendert zustandWurdeGeaendert) {
+        this.zustand = zustandWurdeGeaendert.payload();
     }
 
     @Memento
@@ -59,7 +58,6 @@ public class TestAggregat
             return
                 ImmutableSnapshot.builder()
                 .payload(aggregat.zustand)
-                .version(aggregat.getAggregatverwalter().getVersion())
                 .build();
         }
 

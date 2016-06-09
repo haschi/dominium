@@ -16,7 +16,7 @@ public class Testdaten {
     }
 
     public static TestAggregat getAggregat() {
-        final TestAggregat aggregat = new TestAggregat(IDENTITÄTSMERKMAL, VERSION);
+        final TestAggregat aggregat = new TestAggregat(IDENTITÄTSMERKMAL);
         aggregat.zustandÄndern(PAYLOAD);
 
         return aggregat;

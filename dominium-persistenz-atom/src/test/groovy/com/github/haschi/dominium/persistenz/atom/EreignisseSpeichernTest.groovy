@@ -29,7 +29,7 @@ class EreignisseSpeichernTest extends Specification {
         aggregat.ereignisseErzeugen(anzahl)
 
         when:
-        lager.neuenEreignisstromErzeugen(identitätsmerkmal, aggregat.getAggregatverwalter().getÄnderungen())
+        lager.neuenEreignisstromErzeugen(identitätsmerkmal, aggregat.getAggregatverwalter().getUncommitedChanges())
         List<Domänenereignis<TestAggregatEreignisziel>> ereignisliste = lager.getEreignisliste(
                 identitätsmerkmal,
                 Versionsbereich.ALLE_VERSIONEN)

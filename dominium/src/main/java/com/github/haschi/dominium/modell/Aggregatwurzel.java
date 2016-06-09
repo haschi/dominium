@@ -9,17 +9,10 @@ public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
         extends Entität<I>
         implements SchnappschussQuelle, EreignisZiel<T> {
 
-    public final Aggregatverwalter<T> getAggregatverwalter() {
-        return this.aggregatverwalter;
-    }
-
-    private final Aggregatverwalter<T> aggregatverwalter;
 
     // Der einzig erlaubte Konstruktor. Er greift nicht auf abgeleitete Klassen zu.
     protected Aggregatwurzel(final I identitätsmerkmal, final Version version) {
         super(identitätsmerkmal);
-
-        this.aggregatverwalter = Aggregatverwalter.erzeugen(this, version);
     }
 
     // Die nachfolgenden zwei Methoden implementieren das Memento Muster.
@@ -27,7 +20,6 @@ public abstract class Aggregatwurzel<I, T, S extends Schnappschuss>
     public abstract void wiederherstellenAus(final S schnappschuss);
 
     protected final void bewirkt(final Domänenereignis<T> ereignis) {
-        this.aggregatverwalter.bewirkt(ereignis);
     }
 
     public abstract S schnappschussErstellen();

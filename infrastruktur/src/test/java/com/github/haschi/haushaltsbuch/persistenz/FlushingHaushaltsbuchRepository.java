@@ -1,6 +1,5 @@
 package com.github.haschi.haushaltsbuch.persistenz;
 
-import com.github.haschi.dominium.modell.Aggregatverwalter;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import com.github.haschi.haushaltsbuch.spi.HaushaltsbuchRepository;
 

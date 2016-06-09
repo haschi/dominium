@@ -15,17 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(OleasterRunner.class)
 public class EntitätTest {
 
-    private Entität<UUID> subjectUnderTest;
+    private TestAggregat subjectUnderTest;
 
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
 
-        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal, Version.NEU));
+        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal));
 
         describe("Eine Entität", () -> {
-
-            it("besitzt eine nicht veränderbare Identität", () ->
-                assertThat(this.subjectUnderTest.getIdentitätsmerkmal()).isEqualTo(identitätsmerkmal));
 
             it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () ->
                 EqualsVerifier.forClass(TestAggregat.class)
