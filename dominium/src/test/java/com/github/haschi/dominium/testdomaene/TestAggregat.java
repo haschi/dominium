@@ -30,7 +30,7 @@ public class TestAggregat {
             throw new IllegalStateException("Bearbeitung bereits beendet");
         }
 
-        this.falls(new BearbeitungWurdeBeendet());
+        this.falls(ImmutableBearbeitungWurdeBeendet.of());
     }
 
     @EventHandler
@@ -48,7 +48,7 @@ public class TestAggregat {
     }
 
     @Memento
-    public abstract static class Snapshot implements Schnappschuss {
+    public abstract static class Snapshot {
 
         private static final long serialVersionUID = -2648479788904679134L;
 

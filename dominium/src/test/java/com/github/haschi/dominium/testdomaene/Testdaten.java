@@ -1,7 +1,5 @@
 package com.github.haschi.dominium.testdomaene;
 
-import com.github.haschi.dominium.modell.Version;
-
 public class Testdaten {
 
     public static final TestAggregat.Snapshot[] schnappschüsse = {
@@ -12,7 +10,6 @@ public class Testdaten {
 
     public static TestAggregat.Snapshot schnappschuss(final int version, final long payload) {
         return ImmutableSnapshot.builder()
-            .version(Version.NEU.nachfolger(version))
             .payload(payload)
             .build();
     }
