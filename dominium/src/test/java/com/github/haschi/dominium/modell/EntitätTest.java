@@ -1,31 +1,25 @@
 package com.github.haschi.dominium.modell;
 
-import com.github.haschi.dominium.testdomaene.TestAggregat;
+import com.github.haschi.dominium.testdomaene.generiert.TestAggregatProxy;
 import com.mscharhag.oleaster.runner.OleasterRunner;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.runner.RunWith;
 
 import java.util.UUID;
 
-import static com.mscharhag.oleaster.runner.StaticRunnerSupport.beforeEach;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.describe;
 import static com.mscharhag.oleaster.runner.StaticRunnerSupport.it;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(OleasterRunner.class)
 public class EntitätTest {
 
-    private TestAggregat subjectUnderTest;
-
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
-
-        beforeEach(() -> this.subjectUnderTest = new TestAggregat(identitätsmerkmal));
 
         describe("Eine Entität", () -> {
 
             it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () ->
-                EqualsVerifier.forClass(TestAggregat.class)
+                EqualsVerifier.forClass(TestAggregatProxy.class)
                     .withOnlyTheseFields("identitätsmerkmal")
                     .verify());
         });

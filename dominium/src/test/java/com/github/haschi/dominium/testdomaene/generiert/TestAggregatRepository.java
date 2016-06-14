@@ -1,11 +1,12 @@
 package com.github.haschi.dominium.testdomaene.generiert;
 
 import com.github.haschi.dominium.modell.Version;
+import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
 
 import java.util.List;
 import java.util.UUID;
 
-public class TestAggregatRepository {
+public final class TestAggregatRepository {
 
     private final TestAggregatEventStore storage;
 
@@ -15,13 +16,18 @@ public class TestAggregatRepository {
     }
 
     public TestAggregatProxy getById(final UUID identitätsmerkmal) {
-        final TestAggregatProxy proxy = new TestAggregatProxy(identitätsmerkmal, Version.NEU);
-        proxy.wiederherstellen(this.storage.getEventsForAggregate(identitätsmerkmal));
+        final List<TestAggregatEvent> events = this.storage.getEventsForAggregate(identitätsmerkmal);
+        final Version version = Version.NEU.nachfolger(events.size());
+        final TestAggregatProxy proxy = new TestAggregatProxy(identitätsmerkmal, version);
+
+        proxy.wiederherstellen(events);
+
         return proxy;
     }
 
-    public void save(final TestAggregatProxy aggregat) {
-        final List<TestAggregatEreignis> changes = aggregat.getUncommitedChanges();
+    public void save(final TestAggregatProxy aggregat) throws KonkurrierenderZugriff {
+        final List<TestAggregatEvent> changes = aggregat.getUncommitedChanges();
         this.storage.saveEvents(aggregat.getIdentitätsmerkmal(), changes, aggregat.getVersion());
+        aggregat.markChangesAsCommitted();
     }
 }

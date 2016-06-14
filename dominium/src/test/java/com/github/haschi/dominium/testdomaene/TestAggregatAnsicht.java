@@ -2,7 +2,7 @@ package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.coding.annotation.EventHandler;
 
-public class TestAggregatAnsicht {
+public final class TestAggregatAnsicht {
 
     private long zustand;
     private boolean beendet;
@@ -18,10 +18,10 @@ public class TestAggregatAnsicht {
     }
 
     public long getZustand() {
-        return zustand;
+        return this.zustand;
     }
 
     public boolean isBeendet() {
-        return beendet;
+        return this.beendet;
     }
 }

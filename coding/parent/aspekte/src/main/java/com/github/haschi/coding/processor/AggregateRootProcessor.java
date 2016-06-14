@@ -24,6 +24,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
@@ -50,14 +52,56 @@ public class AggregateRootProcessor extends AbstractProcessor {
     @Override
     public boolean process(final Set<? extends TypeElement> set, final RoundEnvironment roundEnvironment) {
         this.messager.printMessage(Kind.NOTE, "==== AggregateRootProcessor generating Proxies ======");
-        //        for (final Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(AggregateRoot.class)) {
-        //            if (annotatedElement.getKind() != ElementKind.CLASS) {
-        //                this.error(annotatedElement, "Only classes can be annotated with %s",
-        //                    AggregateRoot.class.getSimpleName());
-        //
-        //                return true;
-        //            }
-        //
+
+        for (final Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(AggregateRoot.class)) {
+            if (annotatedElement.getKind() != ElementKind.CLASS) {
+                this.error(
+                    annotatedElement,
+                    "Only classes can be annotated with %s",
+                    AggregateRoot.class.getSimpleName());
+
+                return true;
+            }
+
+            TypeElement type = (TypeElement)annotatedElement;
+            final PackageElement packageElement = (PackageElement) type.getEnclosingElement();
+            final Name sourcePackageName = packageElement.getQualifiedName();
+            final String targetPackageName = sourcePackageName.toString() + ".generiert";
+            final Name aggragteRootName = type.getSimpleName();
+
+            final ClassName eventInterfaceName = ClassName.get(
+                targetPackageName,
+                aggragteRootName.toString() + "Event");
+
+            final TypeName aggregateRootProxyType = ClassName.get(
+                targetPackageName,
+                aggragteRootName.toString() + "Proxy");
+
+            final ParameterSpec proxyParameter = ParameterSpec.builder(aggregateRootProxyType, "proxy").build();
+            final MethodSpec anwendenAufMethod = MethodSpec.methodBuilder("anwendenAuf")
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addParameter(proxyParameter)
+                .returns(void.class)
+                .build();
+
+            final TypeSpec eventInterface = TypeSpec.interfaceBuilder(eventInterfaceName)
+                .addModifiers(Modifier.PUBLIC)
+                .addMethod(anwendenAufMethod)
+                .build();
+
+            messager.printMessage(
+                Kind.NOTE,
+                String.format("Qualified Name: %s", sourcePackageName.toString()),
+                type);
+
+            final JavaFile javaFile = JavaFile.builder(targetPackageName, eventInterface).build();
+            try {
+                javaFile.writeTo(this.filer);
+            } catch (IOException e) {
+                this.error(type, e.getMessage());
+                return true;
+            }
+
         //            return true;
         //
         //            final ClassName aggregatmanager = ClassName.get(
@@ -138,9 +182,9 @@ public class AggregateRootProcessor extends AbstractProcessor {
         //                this.error(typeElement, e.getMessage());
         //                return true;
         //            }
-        //        }
+        }
 
-        return false;
+        return true;
     }
 
     private void error(final Element annotatedElement, final String message, final Object... args) {

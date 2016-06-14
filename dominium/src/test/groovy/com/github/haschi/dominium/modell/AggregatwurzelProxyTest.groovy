@@ -4,7 +4,7 @@ import com.github.haschi.dominium.testdomaene.ImmutableBearbeitungWurdeBeendet
 import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeaendert
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableBearbeitungWurdeBeendetMessage
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableZustandWurdeGeaendertMessage
-import com.github.haschi.dominium.testdomaene.generiert.TestAggregatEreignis
+import com.github.haschi.dominium.testdomaene.generiert.TestAggregatEvent
 import com.github.haschi.dominium.testdomaene.generiert.TestAggregatProxy
 import spock.lang.Shared
 import spock.lang.Specification
@@ -34,7 +34,7 @@ class AggregatwurzelProxyTest extends Specification {
         given: "ich habe ein Aggregat"
         final TestAggregatProxy proxy = new TestAggregatProxy(identitätsmerkmal, Version.NEU)
 
-        final List<TestAggregatEreignis> ereignisse = [
+        final List<TestAggregatEvent> ereignisse = [
                 ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(42L))
         ]
 

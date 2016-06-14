@@ -4,12 +4,12 @@ import com.github.haschi.dominium.testdomaene.ZustandWurdeGeaendert;
 import org.immutables.value.Value;
 
 @Value.Immutable(builder = false)
-public abstract class ZustandWurdeGeaendertMessage implements TestAggregatEreignis {
+public abstract class ZustandWurdeGeaendertMessage implements TestAggregatEvent {
 
     @Value.Parameter
     public abstract ZustandWurdeGeaendert ereignis();
 
-    public void anwendenAuf(final TestAggregatProxy aggregat) {
+    public final void anwendenAuf(final TestAggregatProxy aggregat) {
         aggregat.verarbeiten(this);
     }
 }

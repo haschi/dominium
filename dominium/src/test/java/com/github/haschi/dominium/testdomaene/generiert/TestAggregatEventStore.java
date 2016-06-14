@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.testdomaene.generiert;
 
 import com.github.haschi.dominium.modell.Version;
+import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
 import org.immutables.value.Value;
 
 import java.util.ArrayList;
@@ -10,41 +11,49 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class TestAggregatEventStore {
+public final class TestAggregatEventStore {
 
-    private Map<UUID, List<TestAggregatEreignisDescriptor>> store = new HashMap<>();
+    private final Map<UUID, List<TestAggregatEreignisDescriptor>> store = new HashMap<>();
 
     public void saveEvents(final UUID identitätsmerkmal,
-                           final List<TestAggregatEreignis> changes,
-                           final Version version) {
+                           final List<TestAggregatEvent> changes,
+                           final Version version) throws KonkurrierenderZugriff {
 
-        Version nächsteVersion = Version.NEU;
+        if (!this.store.containsKey(identitätsmerkmal)) {
+            this.store.put(identitätsmerkmal, new ArrayList<>());
+        }
 
-        for(final TestAggregatEreignis ereignis : changes) {
-            if (!store.containsKey(identitätsmerkmal)) {
-                store.put(identitätsmerkmal, new ArrayList<>());
-            }
+        final List<TestAggregatEreignisDescriptor> stream = this.store.get(identitätsmerkmal);
 
-            List<TestAggregatEreignisDescriptor> stream = store.get(identitätsmerkmal);
+        Version aktuelleVersion = Version.NEU.nachfolger(stream.size());
+        if (!aktuelleVersion.equals(version)) {
+            throw new KonkurrierenderZugriff(version.alsLong(), aktuelleVersion.alsLong());
+        }
+
+        for (final TestAggregatEvent ereignis : changes) {
+
+
 
             stream.add(ImmutableTestAggregatEreignisDescriptor.builder()
                 .ereignis(ereignis)
-                .version(nächsteVersion)
+                .version(aktuelleVersion)
                 .build());
 
-            nächsteVersion = nächsteVersion.nachfolger();
+            aktuelleVersion = aktuelleVersion.nachfolger();
         }
     }
 
-    public List<TestAggregatEreignis> getEventsForAggregate(final UUID identitätsmerkmal) {
-        return store.get(identitätsmerkmal).stream()
+    public List<TestAggregatEvent> getEventsForAggregate(final UUID identitätsmerkmal) {
+        return this.store.get(identitätsmerkmal).stream()
             .map(i -> i.ereignis())
             .collect(Collectors.toList());
     }
 
     @Value.Immutable
     interface TestAggregatEreignisDescriptor {
-        TestAggregatEreignis ereignis();
+
+        TestAggregatEvent ereignis();
+
         Version version();
     }
 }

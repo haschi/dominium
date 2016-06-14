@@ -40,7 +40,8 @@
 //        final Version von = schnappschuss.map(Schnappschuss::version).orElse(Version.NEU);
 //        final Versionsbereich versionsbereich = Versionsbereich.von(von).bis(Version.MAX);
 //
-//        final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(identitätsmerkmal, versionsbereich);
+//        final List<Domänenereignis<T>> stream = this.ereignislager.getEreignisliste(
+//          identitätsmerkmal, versionsbereich);
 //
 //        return schnappschuss
 //            .map(s -> this.neuesAggregatErzeugen(identitätsmerkmal, s, stream))

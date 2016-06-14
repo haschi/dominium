@@ -3,7 +3,6 @@ package com.github.haschi.dominium.testdomaene;
 import com.github.haschi.coding.annotation.AggregateRoot;
 import com.github.haschi.coding.annotation.EventHandler;
 import com.github.haschi.dominium.modell.Memento;
-import com.github.haschi.dominium.modell.Schnappschuss;
 
 import java.util.UUID;
 
