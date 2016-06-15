@@ -27,7 +27,7 @@ public final class TestAggregatRepository {
 
     public void save(final TestAggregatProxy aggregat) throws KonkurrierenderZugriff {
         final List<TestAggregatEvent> changes = aggregat.getUncommitedChanges();
-        this.storage.saveEvents(aggregat.getIdentitätsmerkmal(), changes, aggregat.getVersion());
+        this.storage.saveEvents(aggregat.getId(), changes, aggregat.getVersion());
         aggregat.markChangesAsCommitted();
     }
 }

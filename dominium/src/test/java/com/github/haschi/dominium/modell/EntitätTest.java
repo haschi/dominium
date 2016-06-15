@@ -20,7 +20,7 @@ public class EntitätTest {
 
             it("benutzt das Identitätsmerkmal für den Äquivalenz-Vergleich", () ->
                 EqualsVerifier.forClass(TestAggregatProxy.class)
-                    .withOnlyTheseFields("identitätsmerkmal")
+                    .withOnlyTheseFields("id")
                     .verify());
         });
     }

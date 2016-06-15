@@ -13,6 +13,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementScanner8;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,6 +43,13 @@ public class AggregateRootClass {
         eventHandlerScanner.scan(classElement, 0);
 
         return eventHandlerScanner.eventHandler;
+    }
+
+    Set<TypeMirror> getEvents() {
+        final EventHandlerScanner eventHandlerScanner = new EventHandlerScanner();
+        eventHandlerScanner.scan(classElement, 0);
+
+        return eventHandlerScanner.events;
     }
 
     public List<MethodSpec> getKonstruktoren() {
@@ -77,6 +85,8 @@ public class AggregateRootClass {
 
         public final Set<ExecutableElement> eventHandler = new HashSet<>();
         public final Set<ExecutableElement> konstruktoren = new HashSet<>();
+        public final Set<TypeMirror> events = new HashSet<>();
+
         @Override
         @DarfNullSein
         public Integer visitExecutable(ExecutableElement element, @DarfNullSein  Integer nichts) {
@@ -87,8 +97,21 @@ public class AggregateRootClass {
                     final EventHandler annotation = element.getAnnotation(EventHandler.class);
                     if (annotation != null) {
                         this.eventHandler.add(element);
+
+                        final List<? extends VariableElement> parameters = element.getParameters();
+                        if (parameters.size() != 1) {
+                            throw new IllegalStateException("Event handler must have exactly one Parameter");
+                        }
+
+                        final VariableElement firstParameter = parameters.get(0);
+                        if (this.events.contains(firstParameter.asType())) {
+                            throw new IllegalStateException("Es darf nur einen Event-Handler geben.");
+                        }
+
+                        this.events.add(firstParameter.asType());
                     }
                 }
+
                 nichts+=1;
             }
 
