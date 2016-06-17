@@ -1,5 +1,6 @@
 package com.github.haschi.coding.processor;
 
+import com.github.haschi.coding.annotation.AggregateIdentifier;
 import com.github.haschi.coding.annotation.EventHandler;
 import com.github.haschi.coding.aspekte.DarfNullSein;
 import com.squareup.javapoet.MethodSpec;
@@ -52,6 +53,13 @@ public class AggregateRootClass {
         return eventHandlerScanner.events;
     }
 
+    AggregateIdentifierGenerator getAggregateIdentitfier() {
+        final EventHandlerScanner eventHandlerScanner = new EventHandlerScanner();
+        eventHandlerScanner.scan(classElement, 0);
+
+        return new AggregateIdentifierGenerator(eventHandlerScanner.aggregateIdentifier);
+    }
+
     public List<MethodSpec> getKonstruktoren() {
         final EventHandlerScanner eventHandlerScanner = new EventHandlerScanner();
         eventHandlerScanner.scan(classElement, 0);
@@ -86,6 +94,25 @@ public class AggregateRootClass {
         public final Set<ExecutableElement> eventHandler = new HashSet<>();
         public final Set<ExecutableElement> konstruktoren = new HashSet<>();
         public final Set<TypeMirror> events = new HashSet<>();
+        public VariableElement aggregateIdentifier;
+
+        @Override
+        @DarfNullSein
+        public  Integer visitVariable(final VariableElement variableElement, @DarfNullSein final Integer nichts) {
+            final AggregateIdentifier[] annotationsByType = variableElement.getAnnotationsByType(AggregateIdentifier
+                .class);
+
+            if (annotationsByType.length == 1) {
+                final ElementKind kind = variableElement.getKind();
+                if (kind == ElementKind.FIELD) {
+                    if (aggregateIdentifier == null) {
+                        aggregateIdentifier = variableElement;
+                    }
+                }
+            }
+
+            return super.visitVariable(variableElement, nichts);
+        }
 
         @Override
         @DarfNullSein

@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.testdomaene;
 
+import com.github.haschi.coding.annotation.AggregateIdentifier;
 import com.github.haschi.coding.annotation.AggregateRoot;
 import com.github.haschi.coding.annotation.EventHandler;
 import com.github.haschi.dominium.modell.Memento;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @SuppressWarnings("all")
 public class TestAggregat {
 
+    @AggregateIdentifier
     private final UUID identitätsmerkmal;
 
     private long zustand;

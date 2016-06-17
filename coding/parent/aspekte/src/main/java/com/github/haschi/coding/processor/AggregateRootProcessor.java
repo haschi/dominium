@@ -109,8 +109,11 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 return true;
             }
 
+            final AggregateRootClass arc = new AggregateRootClass(type);
+
             /////////////// BEGIN Aggregat-Proxy ////////////////////////////////
 
+            final AggregateIdentifierGenerator identifier = arc.getAggregateIdentitfier();
             Builder aggregatProxy = TypeSpec.classBuilder(aggregateRootProxyType.simpleName())
                 .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class).addMember("value", "$S", "all").build())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
@@ -126,25 +129,21 @@ public class AggregateRootProcessor extends AbstractProcessor {
                     Modifier.FINAL)
                     .initializer("new $T<>()", ClassName.get("java.util", "ArrayList"))
                     .build())
-                .addField(FieldSpec.builder(
-                    ClassName.get("java.util", "UUID"),
-                    "id",
-                    Modifier.PRIVATE,
-                    Modifier.FINAL).build());
+                .addField(identifier.getFieldSpec());
 
             final MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ClassName.get("java.util", "UUID"), "id", Modifier.FINAL)
+                .addParameter(identifier.getParameterSpec())
                 .addParameter(ClassName.get("com.github.haschi.dominium.modell", "Version"), "version", Modifier.FINAL)
-                .addStatement("super($N)", "id")
-                .addStatement("this.$N = $N", "id", "id")
+                .addStatement("super($N)", identifier.getName())
+                .addStatement("this.$N = $N", identifier.getName(), identifier.getName())
                 .addStatement("this.$N = $N", "version", "version")
                 .build();
 
             final MethodSpec getIdMethod = MethodSpec.methodBuilder("getId")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get("java.util", "UUID"))
-                .addStatement("return this.$N", "id")
+                .returns(identifier.getType())
+                .addStatement("return this.$N", identifier.getName())
                 .build();
 
             final MethodSpec getVersionMethod = MethodSpec.methodBuilder("getVersion")
@@ -189,8 +188,8 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 .addStatement("final $T that = ($T) $N", aggregateRootProxyType, aggregateRootProxyType, "anderes")
                 .addStatement("return new $T().append(this.$N, that.$N).isEquals()",
                     ClassName.get("org.apache.commons.lang3.builder", "EqualsBuilder"),
-                    "id",
-                    "id")
+                    identifier.getName(),
+                    identifier.getName())
                 .build();
 
             final MethodSpec hashCodeMethod = MethodSpec.methodBuilder("hashCode")
@@ -199,7 +198,7 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 .returns(TypeName.INT)
                 .addStatement("return new $T(17, 37).append(this.$N).toHashCode()",
                     ClassName.get("org.apache.commons.lang3.builder", "HashCodeBuilder"),
-                    "id")
+                    identifier.getName())
                 .build();
 
             aggregatProxy
@@ -212,7 +211,7 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 .addMethod(equalsMethod)
                 .addMethod(hashCodeMethod);
 
-            final AggregateRootClass arc = new AggregateRootClass(type);
+
             final Set<ExecutableElement> eventHandler = arc.getEventHandler();
             for (ExecutableElement handler : eventHandler) {
 
