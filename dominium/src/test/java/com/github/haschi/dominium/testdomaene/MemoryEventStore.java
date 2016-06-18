@@ -1,0 +1,55 @@
+package com.github.haschi.dominium.testdomaene;
+
+import com.github.haschi.dominium.modell.Version;
+import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import org.immutables.value.Value;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class MemoryEventStore<T, I> {
+    private final Map<I, List<Descriptor<T>>> store = new HashMap<>();
+
+    public final void saveEvents(final I identitätsmerkmal,
+                           final List<T> changes,
+                           final Version version) throws KonkurrierenderZugriff {
+
+        if (!this.store.containsKey(identitätsmerkmal)) {
+            this.store.put(identitätsmerkmal, new ArrayList<>());
+        }
+
+        final List<Descriptor<T>> stream = this.store.get(identitätsmerkmal);
+
+        Version aktuelleVersion = Version.NEU.nachfolger(stream.size());
+
+        if (!aktuelleVersion.equals(version)) {
+            throw new KonkurrierenderZugriff(version.alsLong(), aktuelleVersion.alsLong());
+        }
+
+        for (final T ereignis : changes) {
+
+            final Descriptor<T> descriptor = ImmutableDescriptor.of(ereignis, version);
+            stream.add(descriptor);
+
+            aktuelleVersion = aktuelleVersion.nachfolger();
+        }
+    }
+
+    public final List<T> getEventsForAggregate(final I identitätsmerkmal) {
+        return this.store.get(identitätsmerkmal).stream()
+            .map(i -> i.ereignis())
+            .collect(Collectors.toList());
+    }
+
+    @Value.Immutable(builder = false)
+    interface Descriptor<T> {
+
+        @Value.Parameter T ereignis();
+
+        @Value.Parameter Version version();
+    }
+
+}
