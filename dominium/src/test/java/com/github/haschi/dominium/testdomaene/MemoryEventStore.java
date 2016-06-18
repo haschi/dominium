@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MemoryEventStore<T, I> {
+public class MemoryEventStore<T, I> implements com.github.haschi.dominium.infrastructure.EventStore<T, I> {
     private final Map<I, List<Descriptor<T>>> store = new HashMap<>();
 
+    @Override
     public final void saveEvents(final I identitätsmerkmal,
-                           final Iterable<T> changes,
-                           final Version version) throws KonkurrierenderZugriff {
+                                 final Iterable<T> changes,
+                                 final Version version) throws KonkurrierenderZugriff {
 
         if (!this.store.containsKey(identitätsmerkmal)) {
             this.store.put(identitätsmerkmal, new ArrayList<>());
@@ -40,6 +41,7 @@ public class MemoryEventStore<T, I> {
         }
     }
 
+    @Override
     public final EventStream<T> getEventsForAggregate(final I identitätsmerkmal) {
         final List<T> stream = this.store.get(identitätsmerkmal).stream()
             .map(i -> i.ereignis())

@@ -7,6 +7,7 @@ import com.squareup.javapoet.TypeName;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 
 class ClassNameFactory {
 
@@ -17,6 +18,12 @@ class ClassNameFactory {
         super();
 
         this.aggregate = aggregate;
+    }
+
+    ClassName getEventTypeName(final TypeMirror eventTypeMirror) {
+        return ClassName.get(
+            this.getTargetPackageName(),
+            ((ClassName)ClassName.get(eventTypeMirror)).simpleName() + "Message");
     }
 
     ClassName getAggregateRootType() {
@@ -56,5 +63,9 @@ class ClassNameFactory {
 
     public ClassName getRepositoryType() {
         return ClassName.get(this.getTargetPackageName(), this.aggregate.getSimpleName().toString() + "Repository");
+    }
+
+    public TypeName getEventStoreType() {
+        return ClassName.get(this.getTargetPackageName(), this.aggregate.getSimpleName().toString() + "EventStore");
     }
 }

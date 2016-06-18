@@ -105,49 +105,45 @@ public class AggregateRootProcessor extends AbstractProcessor {
 
             final TypeMirror commandTypeMirrir = commandParameter.asType();
             final CommandVisitor commandVisitor = new CommandVisitor();
-            try {
-                final CommandIdentifier identifier = commandTypeMirrir.accept(commandVisitor, new CommandIdentifier());
 
-                TypeSpec applicationService = TypeSpec.classBuilder(applicationServiceName)
+            final CommandIdentifier identifier = commandTypeMirrir.accept(commandVisitor, new CommandIdentifier());
+
+            TypeSpec applicationService = TypeSpec.classBuilder(applicationServiceName)
+                .addModifiers(Modifier.PUBLIC)
+                .addField(repositoryField)
+                .addMethod(MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PUBLIC)
-                    .addField(repositoryField)
-                    .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(repositoryParameter)
-                        .addStatement("this.$N = $N", repositoryField, repositoryParameter)
-                        .build())
-                    .addMethod(MethodSpec.methodBuilder("ausführen")
-                        .addModifiers(Modifier.PUBLIC)
-                        .returns(void.class)
-                        .addException(ClassName.get("com.github.haschi.dominium.infrastructure",
-                            "KonkurrierenderZugriff"))
-                        .addParameter(commandParameterx)
-                        .addStatement(
-                            "final $T $N = this.$N.getById($N.$N())",
-                            classNameFactory.getAggregateRootProxyType(),
-                            "aggregat",
-                            repositoryField,
-                            commandParameterx,
-                            identifier.get().getSimpleName())
-                        .addStatement(
-                            "$N.$N($N)",
-                            "aggregat",
-                            method.getSimpleName(),
-                            commandParameterx)
-                        .addStatement(
-                            "this.$N.save($N)",
-                            repositoryField,
-                            "aggregat")
-                        .build())
-                    .build();
+                    .addParameter(repositoryParameter)
+                    .addStatement("this.$N = $N", repositoryField, repositoryParameter)
+                    .build())
+                .addMethod(MethodSpec.methodBuilder("ausführen")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(void.class)
+                    .addException(ClassName.get("com.github.haschi.dominium.infrastructure",
+                        "KonkurrierenderZugriff"))
+                    .addParameter(commandParameterx)
+                    .addStatement(
+                        "final $T $N = this.$N.getById($N.$N())",
+                        classNameFactory.getAggregateRootProxyType(),
+                        "aggregat",
+                        repositoryField,
+                        commandParameterx,
+                        identifier.get().getSimpleName())
+                    .addStatement(
+                        "$N.$N($N)",
+                        "aggregat",
+                        method.getSimpleName(),
+                        commandParameterx)
+                    .addStatement(
+                        "this.$N.save($N)",
+                        repositoryField,
+                        "aggregat")
+                    .build())
+                .build();
 
-                try {
-                    writeTypeTo(classNameFactory, applicationService, this.filer);
-                } catch (IOException e) {
-                    this.error(commandHandlerElement, e.getMessage());
-                    return true;
-                }
-            } catch (Exception e) {
+            try {
+                writeTypeTo(classNameFactory, applicationService, this.filer);
+            } catch (IOException e) {
                 this.error(commandHandlerElement, e.getMessage());
                 return true;
             }
@@ -234,10 +230,19 @@ public class AggregateRootProcessor extends AbstractProcessor {
 
         TypeElement type = (TypeElement)annotatedElement;
         final AggregateRootClass arc = new AggregateRootClass(type);
-
-        /////////////// BEGIN Event Interface //////////////////////
         final ClassNameFactory classNameFactory = new ClassNameFactory(type);
 
+        final TypeSpec repository = buildRepository(classNameFactory, arc);
+
+        try {
+            writeTypeTo(classNameFactory, repository, this.filer);
+        } catch (IOException e) {
+            this.error(type, e.getMessage());
+            return true;
+        }
+
+
+        /////////////// BEGIN Event Interface //////////////////////
         final TypeSpec eventInterface = buildEventInterface(classNameFactory);
 
         try {
@@ -275,11 +280,55 @@ public class AggregateRootProcessor extends AbstractProcessor {
         return false;
     }
 
+    private TypeSpec buildRepository(final ClassNameFactory classNameFactory, final AggregateRootClass arc) {
+        final ClassName repository = classNameFactory.getRepositoryType();
+
+        final TypeName genericRepository = ParameterizedTypeName.get(
+            ClassName.get("com.github.haschi.dominium.infrastructure", "Repository"),
+            classNameFactory.getEventInterfaceName(),
+            arc.getAggregateIdentitfier().type(),
+            classNameFactory.getAggregateRootProxyType());
+
+        final ParameterSpec storage = ParameterSpec.builder(
+                classNameFactory.getEventStoreType(),
+                "storage",
+                Modifier.FINAL)
+            .build();
+
+        final ParameterSpec identitätsmerkmal = ParameterSpec.builder(
+            arc.getAggregateIdentitfier().type(),
+            "id",
+            Modifier.FINAL).build();
+
+        final ParameterSpec version = ParameterSpec.builder(
+            ClassName.get("com.github.haschi.dominium.modell", "Version"),
+            "version",
+            Modifier.FINAL).build();
+
+        return TypeSpec.classBuilder(repository)
+            .superclass(genericRepository)
+            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .addMethod(MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(storage)
+                .addStatement("super($N)", storage).build())
+            .addMethod(MethodSpec.methodBuilder("create")
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .returns(classNameFactory.getAggregateRootProxyType())
+                .addParameter(identitätsmerkmal)
+                .addParameter(version)
+                .addStatement("return new $T($N, $N)",
+                    classNameFactory.getAggregateRootProxyType(),
+                    identitätsmerkmal,
+                    version)
+                .build())
+            .build();
+    }
+
     private TypeSpec buildEventType(final ClassNameFactory factory, final TypeMirror eventTypeMirror) {
 
-        final ClassName eventTypeName = ClassName.get(
-            factory.getTargetPackageName(),
-            ((ClassName)ClassName.get(eventTypeMirror)).simpleName() + "Message");
+        final ClassName eventTypeName = factory.getEventTypeName(eventTypeMirror);
 
         ClassName immutableAnnotationType = ClassName.get("org.immutables.value", "Value", "Immutable");
 
