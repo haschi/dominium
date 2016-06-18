@@ -12,14 +12,14 @@ import java.util.UUID;
 public class TestAggregat {
 
     @AggregateIdentifier
-    private final UUID identitätsmerkmal;
+    protected final UUID id;
 
     private long zustand;
 
     private boolean bearbeitbar = true;
 
     public TestAggregat(final UUID identitätsmerkmal) {
-        this.identitätsmerkmal = identitätsmerkmal;
+        this.id = identitätsmerkmal;
     }
 
     public void zustandÄndern(final long payload) {

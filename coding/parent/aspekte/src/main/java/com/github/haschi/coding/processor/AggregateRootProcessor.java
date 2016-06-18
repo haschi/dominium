@@ -28,7 +28,6 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic.Kind;
@@ -128,22 +127,22 @@ public class AggregateRootProcessor extends AbstractProcessor {
                     Modifier.PRIVATE,
                     Modifier.FINAL)
                     .initializer("new $T<>()", ClassName.get("java.util", "ArrayList"))
-                    .build())
-                .addField(identifier.getFieldSpec());
+                    .build());
+                //.addField(identifier.getFieldSpec());
 
             final MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(identifier.getParameterSpec())
                 .addParameter(ClassName.get("com.github.haschi.dominium.modell", "Version"), "version", Modifier.FINAL)
-                .addStatement("super($N)", identifier.getName())
-                .addStatement("this.$N = $N", identifier.getName(), identifier.getName())
+                .addStatement("super($N)", identifier.name())
+                //.addStatement("this.$N = $N", identifier.name(), identifier.name())
                 .addStatement("this.$N = $N", "version", "version")
                 .build();
 
             final MethodSpec getIdMethod = MethodSpec.methodBuilder("getId")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(identifier.getType())
-                .addStatement("return this.$N", identifier.getName())
+                .returns(identifier.type())
+                .addStatement("return this.$N", identifier.name())
                 .build();
 
             final MethodSpec getVersionMethod = MethodSpec.methodBuilder("getVersion")
@@ -188,8 +187,8 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 .addStatement("final $T that = ($T) $N", aggregateRootProxyType, aggregateRootProxyType, "anderes")
                 .addStatement("return new $T().append(this.$N, that.$N).isEquals()",
                     ClassName.get("org.apache.commons.lang3.builder", "EqualsBuilder"),
-                    identifier.getName(),
-                    identifier.getName())
+                    identifier.name(),
+                    identifier.name())
                 .build();
 
             final MethodSpec hashCodeMethod = MethodSpec.methodBuilder("hashCode")
@@ -198,7 +197,7 @@ public class AggregateRootProcessor extends AbstractProcessor {
                 .returns(TypeName.INT)
                 .addStatement("return new $T(17, 37).append(this.$N).toHashCode()",
                     ClassName.get("org.apache.commons.lang3.builder", "HashCodeBuilder"),
-                    identifier.getName())
+                    identifier.name())
                 .build();
 
             aggregatProxy
