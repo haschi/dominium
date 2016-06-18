@@ -21,7 +21,7 @@ class AggregatwurzelProxyTest extends Specification {
         zustandsänderungen.each {änderung -> aggregat.zustandÄndern(änderung)}
 
         then: "werde ich den Zustand des Aggregats ändern"
-        aggregat.uncommitedChanges ==  ereignisse
+        aggregat.uncommittedChanges ==  ereignisse
 
         where:
         zustandsänderungen  || ereignisse
@@ -43,7 +43,7 @@ class AggregatwurzelProxyTest extends Specification {
         proxy.nächsterZustand()
 
         then:
-        proxy.uncommitedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(43L))]
+        proxy.uncommittedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(43L))]
     }
 
     def "Aggregate können verschiedene Ereignisse erzeugen"() {
@@ -55,6 +55,6 @@ class AggregatwurzelProxyTest extends Specification {
         aggregat.bearbeitungBeenden();
 
         then:
-        aggregat.uncommitedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(42)), ImmutableBearbeitungWurdeBeendetMessage.of(ImmutableBearbeitungWurdeBeendet.of())]
+        aggregat.uncommittedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(42)), ImmutableBearbeitungWurdeBeendetMessage.of(ImmutableBearbeitungWurdeBeendet.of())]
     }
 }

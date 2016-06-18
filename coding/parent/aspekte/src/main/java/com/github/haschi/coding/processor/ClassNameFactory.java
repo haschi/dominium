@@ -3,34 +3,43 @@ package com.github.haschi.coding.processor;
 import com.squareup.javapoet.ClassName;
 
 import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
 
-public class ClassNameFactory {
+class ClassNameFactory {
 
-    private final String targetPackageName;
-    private final Name aggragteRootName;
+    private final TypeElement aggregate;
 
-    public ClassNameFactory(final String targetPackageName, final Name aggragteRootName) {
-        this.targetPackageName = targetPackageName;
-        this.aggragteRootName = aggragteRootName;
+    ClassNameFactory(final TypeElement aggregate) {
+        super();
+
+        this.aggregate = aggregate;
+    }
+
+    ClassName getAggregateRootType() {
+        return ClassName.get(this.getAggregate());
+    }
+
+    private TypeElement getAggregate() {
+        return this.aggregate;
+    }
+
+    String getTargetPackageName() {
+        final PackageElement packageElement = (PackageElement) this.aggregate.getEnclosingElement();
+        final Name sourcePackageName = packageElement.getQualifiedName();
+
+        return sourcePackageName.toString() + ".generiert";
     }
 
     ClassName getAggregateRootProxyType() {
         return ClassName.get(
-                    getTargetPackageName(),
-                    getAggragteRootName().toString() + "Proxy");
+            this.getTargetPackageName(),
+                    this.aggregate.getSimpleName().toString() + "Proxy");
     }
 
     ClassName getEventInterfaceName() {
         return ClassName.get(
-            getTargetPackageName(),
-            getAggragteRootName().toString() + "Event");
-    }
-
-    public String getTargetPackageName() {
-        return targetPackageName;
-    }
-
-    public Name getAggragteRootName() {
-        return aggragteRootName;
+            this.getTargetPackageName(),
+            this.aggregate.getSimpleName().toString() + "Event");
     }
 }

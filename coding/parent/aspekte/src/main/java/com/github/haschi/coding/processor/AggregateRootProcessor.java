@@ -24,8 +24,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
@@ -69,38 +67,17 @@ public class AggregateRootProcessor extends AbstractProcessor {
 
             /////////////// BEGIN Event Interface //////////////////////
             TypeElement type = (TypeElement)annotatedElement;
-            final PackageElement packageElement = (PackageElement) type.getEnclosingElement();
-            final Name sourcePackageName = packageElement.getQualifiedName();
-            final String targetPackageName = sourcePackageName.toString() + ".generiert";
-            final Name aggragteRootName = type.getSimpleName();
 
-            final ClassNameFactory classNameFactory = new ClassNameFactory(targetPackageName, aggragteRootName);
+            final ClassNameFactory classNameFactory = new ClassNameFactory(type);
+            final String targetPackageName = classNameFactory.getTargetPackageName();
 
             final ClassName eventInterfaceName = classNameFactory.getEventInterfaceName();
             final ClassName aggregateRootProxyType = classNameFactory.getAggregateRootProxyType();
 
-            final ParameterSpec proxyParameter = ParameterSpec.builder(aggregateRootProxyType, "proxy").build();
-            final MethodSpec anwendenAufMethod = MethodSpec.methodBuilder("anwendenAuf")
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                .addParameter(proxyParameter)
-                .returns(void.class)
-                .build();
+            final TypeSpec eventInterface = buildEventInterface(classNameFactory);
 
-            final TypeSpec eventInterface = TypeSpec.interfaceBuilder(eventInterfaceName)
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(anwendenAufMethod)
-                .build();
-
-            messager.printMessage(
-                Kind.NOTE,
-                String.format("Qualified Name: %s", sourcePackageName.toString()),
-                type);
-
-            final JavaFile javaFile = JavaFile.builder(targetPackageName, eventInterface)
-                .addFileComment("Generated Code - %s", ZonedDateTime.now().toString())
-                .build();
             try {
-                javaFile.writeTo(this.filer);
+                writeTypeTo(classNameFactory, eventInterface, this.filer);
             } catch (IOException e) {
                 this.error(type, e.getMessage());
                 return true;
@@ -110,154 +87,21 @@ public class AggregateRootProcessor extends AbstractProcessor {
 
             /////////////// BEGIN Aggregat-Proxy ////////////////////////////////
 
-            final AggregateIdentifierGenerator identifier = arc.getAggregateIdentitfier();
-            Builder aggregatProxy = TypeSpec.classBuilder(aggregateRootProxyType.simpleName())
-                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class).addMember("value", "$S", "all").build())
+
+            final Builder aggregatProxy = TypeSpec.classBuilder(classNameFactory.getAggregateRootProxyType().simpleName())
+                .addAnnotation(suppressWarningsAnnotationSpec())
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .superclass(ClassName.get(type))
-                .addField(FieldSpec.builder(ClassName.get("com.github.haschi.dominium.modell", "Version"),
-                    "version",
-                    Modifier.PRIVATE, Modifier.FINAL)
-                    .build())
-                .addField(FieldSpec.builder(
-                    ParameterizedTypeName.get(ClassName.get("java.util", "List"),eventInterfaceName),
-                    "changes",
-                    Modifier.PRIVATE,
-                    Modifier.FINAL)
-                    .initializer("new $T<>()", ClassName.get("java.util", "ArrayList"))
-                    .build());
-                //.addField(identifier.getFieldSpec());
+                .superclass(classNameFactory.getAggregateRootType());
 
-            final MethodSpec constructor = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(identifier.getParameterSpec())
-                .addParameter(ClassName.get("com.github.haschi.dominium.modell", "Version"), "version", Modifier.FINAL)
-                .addStatement("super($N)", identifier.name())
-                //.addStatement("this.$N = $N", identifier.name(), identifier.name())
-                .addStatement("this.$N = $N", "version", "version")
-                .build();
-
-            final MethodSpec getIdMethod = MethodSpec.methodBuilder("getId")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(identifier.type())
-                .addStatement("return this.$N", identifier.name())
-                .build();
-
-            final MethodSpec getVersionMethod = MethodSpec.methodBuilder("getVersion")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(ClassName.get("com.github.haschi.dominium.modell", "Version"))
-                .addStatement("return this.$N", "version")
-                .build();
-
-            final MethodSpec getUncommitedChangesMethod = MethodSpec.methodBuilder("getUncommitedChanges")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(ParameterizedTypeName.get(ClassName.get("java.util", "List"),eventInterfaceName))
-                .addStatement("return this.$N", "changes")
-                .build();
-
-            final MethodSpec markChangesAsCommitedMethod = MethodSpec.methodBuilder("markChangesAsCommitted")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(void.class)
-                .addStatement("this.$N.clear()", "changes")
-                .build();
-
-            final MethodSpec wiederherstellenMethod = MethodSpec.methodBuilder("wiederherstellen")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(void.class)
-                .addParameter(
-                    ParameterizedTypeName.get(ClassName.get("java.util", "List"), eventInterfaceName),
-                    "ereignisse",
-                    Modifier.FINAL)
-                .addStatement("$N.forEach(e -> e.anwendenAuf(this))", "ereignisse")
-                .build();
-
-            final MethodSpec equalsMethod = MethodSpec.methodBuilder("equals")
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(TypeName.BOOLEAN)
-                .addParameter(Object.class, "anderes", Modifier.FINAL)
-                .beginControlFlow("if (this == $N)", "anderes")
-                .addStatement("return true")
-                .endControlFlow()
-                .beginControlFlow("if (!($N instanceof $T))", "anderes", aggregateRootProxyType)
-                .addStatement("return false")
-                .endControlFlow()
-                .addStatement("final $T that = ($T) $N", aggregateRootProxyType, aggregateRootProxyType, "anderes")
-                .addStatement("return new $T().append(this.$N, that.$N).isEquals()",
-                    ClassName.get("org.apache.commons.lang3.builder", "EqualsBuilder"),
-                    identifier.name(),
-                    identifier.name())
-                .build();
-
-            final MethodSpec hashCodeMethod = MethodSpec.methodBuilder("hashCode")
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(TypeName.INT)
-                .addStatement("return new $T(17, 37).append(this.$N).toHashCode()",
-                    ClassName.get("org.apache.commons.lang3.builder", "HashCodeBuilder"),
-                    identifier.name())
-                .build();
-
-            aggregatProxy
-                .addMethod(constructor)
-                .addMethod(getIdMethod)
-                .addMethod(getVersionMethod)
-                .addMethod(getUncommitedChangesMethod)
-                .addMethod(markChangesAsCommitedMethod)
-                .addMethod(wiederherstellenMethod)
-                .addMethod(equalsMethod)
-                .addMethod(hashCodeMethod);
+            final AggregateRootProxyBuilder aggregateRootProxyBuilder = new AggregateRootProxyBuilder(
+                classNameFactory,
+                arc);
 
 
-            final Set<ExecutableElement> eventHandler = arc.getEventHandler();
-            for (ExecutableElement handler : eventHandler) {
-
-                final List<ParameterSpec> parameters = new ArrayList<>();
-
-                for (final VariableElement parameter : handler.getParameters()) {
-                    final TypeName parameterType = ClassName.get(parameter.asType());
-                    final ParameterSpec ps = ParameterSpec
-                        .builder(parameterType, parameter.getSimpleName().toString(), Modifier.FINAL)
-                        .build();
-
-                    parameters.add(ps);
-                }
-
-                // Muss noch erzeugt werden: Soll nicht ImmutableXXXMessage sein, sondern XXXEvent!
-                final TypeMirror handlerParameterType = handler.getParameters().get(0).asType();
-
-                final ClassName handlerParameterTypeName = (ClassName)ClassName.get(handlerParameterType);
-
-                final TypeName immutableEventTypeName = ClassName.get(
-                    targetPackageName,
-                    "Immutable" + handlerParameterTypeName.simpleName() + "Message");
-
-                final TypeName eventTypeName = ClassName.get(
-                    targetPackageName,
-                    handlerParameterTypeName.simpleName() + "Message");
-
-                final MethodSpec handlerMethod = MethodSpec.methodBuilder(handler.getSimpleName().toString())
-                    .addAnnotation(Override.class)
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(void.class)
-                    .addParameters(parameters)
-                    .addStatement("super.$N($N)", handler.getSimpleName(), parameters.get(0).name)
-                    .addStatement("this.$N.add($T.of($N))", "changes",
-                        immutableEventTypeName,
-                        parameters.get(0).name)
-                    .build();
-
-                aggregatProxy.addMethod(handlerMethod);
-
-                final MethodSpec applyEventMethod = MethodSpec.methodBuilder("verarbeiten")
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .returns(void.class)
-                    .addParameter(ParameterSpec.builder(eventTypeName, "ereignis", Modifier.FINAL).build())
-                    .addStatement("super.$N($N.ereignis())", handler.getSimpleName().toString(), "ereignis")
-                    .build();
-
-                aggregatProxy.addMethod(applyEventMethod);
-            }
+            aggregatProxy.addFields(aggregateRootProxyFields(classNameFactory));
+            aggregatProxy.addMethods(aggregateRootProxyBuilder.aggregateRootProxyMethods());
+            aggregatProxy.addMethods(aggregateRootProxyEventHandlerMethodSpecs(classNameFactory, arc));
+            aggregatProxy.addMethods(aggregateRootProxyMessageHandler(classNameFactory, arc));
 
             final JavaFile proxyClassFile = JavaFile.builder(targetPackageName, aggregatProxy.build())
                 .indent("    ")
@@ -272,7 +116,7 @@ public class AggregateRootProcessor extends AbstractProcessor {
             }
 
             /////////////// BEGINN Alle Events ////////////////////
-
+            final AggregateIdentifierGenerator identifier = arc.getAggregateIdentitfier();
             final Set<TypeMirror> events = arc.getEvents();
             for (final TypeMirror eventTypeMirror : events) {
                 final ClassName eventTypeName = ClassName.get(
@@ -326,6 +170,127 @@ public class AggregateRootProcessor extends AbstractProcessor {
         }
 
         return true;
+    }
+
+    private List<MethodSpec> aggregateRootProxyMessageHandler(final ClassNameFactory classNameFactory,
+                                                              final AggregateRootClass arc) {
+        final List<MethodSpec> messageHandler = new ArrayList<>();
+        for (ExecutableElement handler : arc.getEventHandler()) {
+            messageHandler.add(applyEventMethodSpec(handler, classNameFactory));
+        }
+        return messageHandler;
+    }
+
+    private List<MethodSpec> aggregateRootProxyEventHandlerMethodSpecs(final ClassNameFactory classNameFactory,
+                                                                       final AggregateRootClass arc) {
+        final List<MethodSpec> eventHandler = new ArrayList<>();
+        for (ExecutableElement handler : arc.getEventHandler()) {
+            eventHandler.add(eventHandlerMethodSpec(handler, classNameFactory));
+        }
+        return eventHandler;
+    }
+
+    private MethodSpec applyEventMethodSpec(final ExecutableElement handler, final ClassNameFactory factory) {
+
+        // Muss noch erzeugt werden: Soll nicht ImmutableXXXMessage sein, sondern XXXEvent!
+        final TypeMirror handlerParameterType = handler.getParameters().get(0).asType();
+        final ClassName handlerParameterTypeName = (ClassName)ClassName.get(handlerParameterType);
+        final TypeName eventTypeName = ClassName.get(
+            factory.getTargetPackageName(),
+            handlerParameterTypeName.simpleName() + "Message");
+
+
+        return MethodSpec.methodBuilder("verarbeiten")
+                        .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                        .returns(void.class)
+                        .addParameter(ParameterSpec.builder(eventTypeName, "ereignis", Modifier.FINAL).build())
+                        .addStatement("super.$N($N.ereignis())", handler.getSimpleName().toString(), "ereignis")
+                        .build();
+    }
+
+    private MethodSpec eventHandlerMethodSpec(final ExecutableElement handler,
+                                              final ClassNameFactory factory) {
+
+        final TypeMirror handlerParameterType = handler.getParameters().get(0).asType();
+        final ClassName handlerParameterTypeName = (ClassName)ClassName.get(handlerParameterType);
+
+        final List<ParameterSpec> parameters = new ArrayList<>();
+
+        for (final VariableElement parameter : handler.getParameters()) {
+            final TypeName parameterType = ClassName.get(parameter.asType());
+            final ParameterSpec ps = ParameterSpec
+                .builder(parameterType, parameter.getSimpleName().toString(), Modifier.FINAL)
+                .build();
+
+            parameters.add(ps);
+        }
+
+        final TypeName immutableEventTypeName = ClassName.get(
+            factory.getTargetPackageName(),
+            "Immutable" + handlerParameterTypeName.simpleName() + "Message");
+
+        return MethodSpec.methodBuilder(handler.getSimpleName().toString())
+            .addAnnotation(Override.class)
+            .addModifiers(Modifier.PUBLIC)
+            .returns(void.class)
+            .addParameters(parameters)
+            .addStatement("super.$N($N)", handler.getSimpleName(), parameters.get(0).name)
+            .addStatement("this.$N.add($T.of($N))", "changes",
+                immutableEventTypeName,
+                parameters.get(0).name)
+            .build();
+    }
+
+    private List<FieldSpec> aggregateRootProxyFields(final ClassNameFactory classNameFactory) {
+        final List<FieldSpec> fields = new ArrayList<>();
+        fields.add(versionFieldSpec());
+        fields.add(changesFieldSpec(classNameFactory));
+        return fields;
+    }
+
+    private FieldSpec changesFieldSpec(final ClassNameFactory factory) {
+        return FieldSpec.builder(
+            ParameterizedTypeName.get(ClassName.get("java.util", "List"), factory.getEventInterfaceName()),
+            "changes",
+            Modifier.PRIVATE,
+            Modifier.FINAL)
+            .initializer("new $T<>()", ClassName.get("java.util", "ArrayList"))
+            .build();
+    }
+
+    private FieldSpec versionFieldSpec() {
+        return FieldSpec.builder(
+            ClassName.get("com.github.haschi.dominium.modell", "Version"),
+            "version",
+            Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+    }
+
+    private AnnotationSpec suppressWarningsAnnotationSpec() {
+        return AnnotationSpec.builder(SuppressWarnings.class).addMember("value", "$S", "all").build();
+    }
+
+    private void writeTypeTo(final ClassNameFactory classNameFactory, final TypeSpec eventInterface, final Filer filer) throws
+        IOException {
+        final JavaFile javaFile = JavaFile.builder(classNameFactory.getTargetPackageName(), eventInterface)
+            .addFileComment("Generated Code - %s", ZonedDateTime.now().toString())
+            .build();
+
+        javaFile.writeTo(filer);
+    }
+
+    private TypeSpec buildEventInterface(final ClassNameFactory classNameFactory) {
+        final ParameterSpec proxyParameter = ParameterSpec.builder(classNameFactory.getAggregateRootProxyType(), "proxy").build();
+        final MethodSpec anwendenAufMethod = MethodSpec.methodBuilder("anwendenAuf")
+            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+            .addParameter(proxyParameter)
+            .returns(void.class)
+            .build();
+
+        return TypeSpec.interfaceBuilder(classNameFactory.getEventInterfaceName())
+            .addModifiers(Modifier.PUBLIC)
+            .addMethod(anwendenAufMethod)
+            .build();
     }
 
     private void error(final Element annotatedElement, final String message, final Object... args) {

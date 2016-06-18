@@ -31,7 +31,7 @@ class AggregateWerdenInIhremRepositoryAufbewahrtTest extends Specification {
 
         then: "wird das Aggregat keine Änderungen besitzen"
         TestAggregat.Snapshot.from(aggregat) == TestAggregat.Snapshot.from(restored)
-        restored.uncommitedChanges == []
+        restored.uncommittedChanges == []
     }
 
     def "Änderungen an Aggregaten, die dem Repository bekannt sind, können gespeichert werden"() {
@@ -89,7 +89,7 @@ class AggregateWerdenInIhremRepositoryAufbewahrtTest extends Specification {
         repository.save(aggregat)
 
         then: "wird das Aggregat keine Änderungen besitzen"
-        aggregat.uncommitedChanges == []
+        aggregat.uncommittedChanges == []
 
         where:
         payloads        || _
