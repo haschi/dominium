@@ -1,5 +1,6 @@
 package com.github.haschi.dominium.persistenz;
 
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.dominium.modell.Domänenereignis;
 
 import java.util.List;

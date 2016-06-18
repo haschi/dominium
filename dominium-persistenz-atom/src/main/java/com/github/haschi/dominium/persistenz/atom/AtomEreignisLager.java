@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.Ereignislager;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

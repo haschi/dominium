@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.persistenz;
+package com.github.haschi.dominium.infrastructure;
 
 public final class KonkurrierenderZugriff extends Exception {
 

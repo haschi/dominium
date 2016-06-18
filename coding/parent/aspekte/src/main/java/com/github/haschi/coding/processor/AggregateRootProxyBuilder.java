@@ -63,11 +63,7 @@ class AggregateRootProxyBuilder {
         return MethodSpec.methodBuilder("wiederherstellen")
             .addModifiers(Modifier.PUBLIC)
             .returns(void.class)
-            .addParameter(
-                ParameterizedTypeName.get(ClassName.get("java.util", "List"),
-                    this.classNameFactory.getEventInterfaceName()),
-                "ereignisse",
-                Modifier.FINAL)
+            .addParameter(getEventListType(), "ereignisse", Modifier.FINAL)
             .addStatement("$N.forEach(e -> e.anwendenAuf(this))", "ereignisse")
             .build();
     }
@@ -83,10 +79,15 @@ class AggregateRootProxyBuilder {
     private MethodSpec getUncommittedChangesMethodSpec() {
         return MethodSpec.methodBuilder("getUncommittedChanges")
             .addModifiers(Modifier.PUBLIC)
-            .returns(ParameterizedTypeName.get(ClassName.get("java.util", "List"),
-                this.classNameFactory.getEventInterfaceName()))
+            .returns(getEventListType())
             .addStatement("return this.$N", "changes")
             .build();
+    }
+
+    private ParameterizedTypeName getEventListType() {
+        return ParameterizedTypeName.get(
+            ClassName.get("java.lang", "Iterable"),
+            this.classNameFactory.getEventInterfaceName());
     }
 
     private static MethodSpec getVersionMethodSpec() {

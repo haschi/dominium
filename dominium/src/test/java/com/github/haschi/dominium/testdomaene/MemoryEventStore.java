@@ -1,7 +1,9 @@
 package com.github.haschi.dominium.testdomaene;
 
+import com.github.haschi.dominium.infrastructure.EventStream;
+import com.github.haschi.dominium.infrastructure.ImmutableEventStream;
 import com.github.haschi.dominium.modell.Version;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import org.immutables.value.Value;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class MemoryEventStore<T, I> {
     private final Map<I, List<Descriptor<T>>> store = new HashMap<>();
 
     public final void saveEvents(final I identitätsmerkmal,
-                           final List<T> changes,
+                           final Iterable<T> changes,
                            final Version version) throws KonkurrierenderZugriff {
 
         if (!this.store.containsKey(identitätsmerkmal)) {
@@ -38,10 +40,12 @@ public class MemoryEventStore<T, I> {
         }
     }
 
-    public final List<T> getEventsForAggregate(final I identitätsmerkmal) {
-        return this.store.get(identitätsmerkmal).stream()
+    public final EventStream<T> getEventsForAggregate(final I identitätsmerkmal) {
+        final List<T> stream = this.store.get(identitätsmerkmal).stream()
             .map(i -> i.ereignis())
             .collect(Collectors.toList());
+
+        return ImmutableEventStream.of(stream, Version.NEU.nachfolger(stream.size()));
     }
 
     @Value.Immutable(builder = false)
@@ -51,5 +55,4 @@ public class MemoryEventStore<T, I> {
 
         @Value.Parameter Version version();
     }
-
 }

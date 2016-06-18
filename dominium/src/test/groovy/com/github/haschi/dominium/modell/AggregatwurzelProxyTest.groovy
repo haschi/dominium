@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.modell
 
 import com.github.haschi.dominium.testdomaene.ImmutableBearbeitungWurdeBeendet
+import com.github.haschi.dominium.testdomaene.ImmutableBeendeBearbeitung
 import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeaendert
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableBearbeitungWurdeBeendetMessage
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableZustandWurdeGeaendertMessage
@@ -52,7 +53,7 @@ class AggregatwurzelProxyTest extends Specification {
 
         when:
         aggregat.zustandÄndern(42L);
-        aggregat.bearbeitungBeenden();
+        aggregat.bearbeitungBeenden(ImmutableBeendeBearbeitung.of(identitätsmerkmal));
 
         then:
         aggregat.uncommittedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(42)), ImmutableBearbeitungWurdeBeendetMessage.of(ImmutableBearbeitungWurdeBeendet.of())]

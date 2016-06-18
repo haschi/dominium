@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.anwendungsfall;
 
 import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.haushaltsbuch.api.kommando.FügeBuchungssatzHinzu;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;

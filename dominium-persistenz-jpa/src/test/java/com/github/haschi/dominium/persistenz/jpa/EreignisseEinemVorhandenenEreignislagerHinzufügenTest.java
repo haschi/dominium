@@ -3,7 +3,7 @@ package com.github.haschi.dominium.persistenz.jpa;
 import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.dominium.modell.Versionsbereich;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.dominium.persistenz.jpa.aggregat.TestAggregat;
 import com.github.haschi.dominium.persistenz.jpa.aggregat.TestAggregatEreignisziel;
 import com.github.haschi.dominium.persistenz.jpa.aggregat.ZustandWurdeGeändert;

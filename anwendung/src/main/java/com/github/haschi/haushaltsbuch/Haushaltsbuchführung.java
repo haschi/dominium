@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch;
 
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.haushaltsbuch.anwendungsfall.HaushaltsbuchführungBeginnen;
 import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 

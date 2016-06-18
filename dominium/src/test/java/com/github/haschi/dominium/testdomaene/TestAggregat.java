@@ -2,6 +2,7 @@ package com.github.haschi.dominium.testdomaene;
 
 import com.github.haschi.coding.annotation.AggregateIdentifier;
 import com.github.haschi.coding.annotation.AggregateRoot;
+import com.github.haschi.coding.annotation.CommandHandler;
 import com.github.haschi.coding.annotation.EventHandler;
 import com.github.haschi.dominium.modell.Memento;
 
@@ -26,7 +27,13 @@ public class TestAggregat {
         this.falls(ImmutableZustandWurdeGeaendert.of(payload));
     }
 
-    public void bearbeitungBeenden() {
+    @CommandHandler
+    public void zustandÄndern(final ÄndereZustand command) {
+        this.falls(ImmutableZustandWurdeGeaendert.of(command.payload()));
+    }
+
+    @CommandHandler
+    public void bearbeitungBeenden(final BeendeBearbeitung command) {
         if (this.bearbeitbar == false) {
             throw new IllegalStateException("Bearbeitung bereits beendet");
         }

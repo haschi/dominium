@@ -1,6 +1,6 @@
 package com.github.haschi.dominium.modell
 
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff
 import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeaendert
 import com.github.haschi.dominium.testdomaene.TestAggregat
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableZustandWurdeGeaendertMessage
@@ -48,7 +48,7 @@ class AggregateWerdenInIhremRepositoryAufbewahrtTest extends Specification {
         repository.save(restored)
 
         then: "wird das Aggregat keine Änderungen besitzen"
-        storage.getEventsForAggregate(identitätsmerkmal) == [
+        storage.getEventsForAggregate(identitätsmerkmal).events() == [
                 ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(42L)),
                 ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(43L))]
         notThrown Exception
@@ -66,14 +66,14 @@ class AggregateWerdenInIhremRepositoryAufbewahrtTest extends Specification {
         final TestAggregatProxy restored = repository.getById(identitätsmerkmal)
 
         then: "wird das Aggregat keine Änderungen besitzen"
-        restored.version == Version.NEU.nachfolger(version)
-        storage.getEventsForAggregate(identitätsmerkmal).size() == version
+        restored.version == version
+        storage.getEventsForAggregate(identitätsmerkmal).version() == version
 
         where:
         payloads        || version
-        []              || 0
-        [42L]           || 1
-        [42L, 43L, 44L] || 3
+        []              || Version.NEU.nachfolger(0)
+        [42L]           || Version.NEU.nachfolger(1)
+        [42L, 43L, 44L] || Version.NEU.nachfolger(3)
     }
 
 

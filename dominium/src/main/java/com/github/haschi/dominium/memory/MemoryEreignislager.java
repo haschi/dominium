@@ -4,7 +4,7 @@ import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.dominium.persistenz.Ereignislager;
 import com.github.haschi.dominium.persistenz.Ereignisstrom;
 import com.github.haschi.dominium.persistenz.EreignisstromWurdeNichtGefunden;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.dominium.persistenz.Umschlag;
 import com.github.haschi.dominium.modell.Versionsbereich;
 

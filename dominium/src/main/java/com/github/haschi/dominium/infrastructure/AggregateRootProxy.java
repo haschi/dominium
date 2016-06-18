@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.testdomaene.generiert;
+package com.github.haschi.dominium.infrastructure;
 
 import com.github.haschi.dominium.modell.Version;
 

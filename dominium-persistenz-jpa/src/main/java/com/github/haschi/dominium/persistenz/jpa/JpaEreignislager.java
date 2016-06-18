@@ -3,7 +3,7 @@ package com.github.haschi.dominium.persistenz.jpa;
 import com.github.haschi.dominium.modell.Versionsbereich;
 import com.github.haschi.dominium.persistenz.Ereignislager;
 import com.github.haschi.dominium.modell.Domänenereignis;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 

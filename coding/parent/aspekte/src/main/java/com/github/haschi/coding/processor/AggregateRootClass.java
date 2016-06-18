@@ -46,7 +46,7 @@ public class AggregateRootClass {
         return eventHandlerScanner.eventHandler;
     }
 
-    Set<TypeMirror> getEvents() {
+    Set<TypeMirror> getEventTypes() {
         final EventHandlerScanner eventHandlerScanner = new EventHandlerScanner();
         eventHandlerScanner.scan(classElement, 0);
 

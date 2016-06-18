@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.spi;
 
 import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
-import com.github.haschi.dominium.persistenz.KonkurrierenderZugriff;
+import com.github.haschi.dominium.infrastructure.KonkurrierenderZugriff;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
 import com.google.common.collect.ImmutableCollection;

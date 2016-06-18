@@ -1,6 +1,9 @@
 package com.github.haschi.coding.processor;
 
 import com.github.haschi.coding.annotation.AggregateRoot;
+import com.github.haschi.coding.annotation.CommandHandler;
+import com.github.haschi.coding.annotation.TargetAggregateIdentifier;
+import com.github.haschi.coding.aspekte.DarfNullSein;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -26,8 +29,11 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.SimpleElementVisitor8;
+import javax.lang.model.util.TypeKindVisitor8;
 import javax.tools.Diagnostic.Kind;
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -36,7 +42,9 @@ import java.util.List;
 import java.util.Set;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes({"com.github.haschi.coding.annotation.AggregateRoot"})
+@SupportedAnnotationTypes({
+    "com.github.haschi.coding.annotation.AggregateRoot",
+    "com.github.haschi.coding.annotation.CommandHandler"})
 public class AggregateRootProcessor extends AbstractProcessor {
 
     private Messager messager;
@@ -56,120 +64,274 @@ public class AggregateRootProcessor extends AbstractProcessor {
         this.messager.printMessage(Kind.NOTE, "==== AggregateRootProcessor generating Proxies ======");
 
         for (final Element annotatedElement : roundEnvironment.getElementsAnnotatedWith(AggregateRoot.class)) {
-            if (annotatedElement.getKind() != ElementKind.CLASS) {
+            if (processAggregateRoot(annotatedElement)) return true;
+        }
+
+        for (final Element commandHandlerElement : roundEnvironment.getElementsAnnotatedWith(CommandHandler.class)) {
+            this.messager.printMessage(Kind.NOTE, "======= Generating command handler =======");
+            if (commandHandlerElement.getKind() != ElementKind.METHOD) {
                 this.error(
-                    annotatedElement,
-                    "Only classes can be annotated with %s",
-                    AggregateRoot.class.getSimpleName());
+                    commandHandlerElement,
+                    "Nur Parameter dürfen mit %s annotiert sein.",
+                    CommandHandler.class.getSimpleName());
 
                 return true;
             }
 
-            /////////////// BEGIN Event Interface //////////////////////
-            TypeElement type = (TypeElement)annotatedElement;
+            ExecutableElement method = (ExecutableElement)commandHandlerElement;
+            final VariableElement commandParameter = method.getParameters().get(0);
+            final TypeName commandTypeName = ClassName.get(commandParameter.asType());
+            final String commandPackage = ((ClassName) commandTypeName).packageName();
+            final String applicationServiceName = ((ClassName) commandTypeName).simpleName() + "Service";
 
-            final ClassNameFactory classNameFactory = new ClassNameFactory(type);
-            final String targetPackageName = classNameFactory.getTargetPackageName();
+            assert method.getEnclosingElement().getKind() == ElementKind.CLASS;
+            TypeElement aggregate = (TypeElement) method.getEnclosingElement();
+            final ClassNameFactory classNameFactory = new ClassNameFactory(aggregate);
 
-            final ClassName eventInterfaceName = classNameFactory.getEventInterfaceName();
-            final ClassName aggregateRootProxyType = classNameFactory.getAggregateRootProxyType();
+            final FieldSpec repositoryField = FieldSpec.builder(
+                classNameFactory.getRepositoryType(),
+                "repository",
+                Modifier.PRIVATE,
+                Modifier.FINAL).build();
 
-            final TypeSpec eventInterface = buildEventInterface(classNameFactory);
+            final ParameterSpec repositoryParameter = ParameterSpec.builder(
+                classNameFactory.getRepositoryType(),
+                "repository",
+                Modifier.FINAL).build();
 
-            try {
-                writeTypeTo(classNameFactory, eventInterface, this.filer);
-            } catch (IOException e) {
-                this.error(type, e.getMessage());
-                return true;
-            }
-
-            final AggregateRootClass arc = new AggregateRootClass(type);
-
-            /////////////// BEGIN Aggregat-Proxy ////////////////////////////////
-
-
-            final Builder aggregatProxy = TypeSpec.classBuilder(classNameFactory.getAggregateRootProxyType().simpleName())
-                .addAnnotation(suppressWarningsAnnotationSpec())
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .superclass(classNameFactory.getAggregateRootType());
-
-            final AggregateRootProxyBuilder aggregateRootProxyBuilder = new AggregateRootProxyBuilder(
-                classNameFactory,
-                arc);
-
-
-            aggregatProxy.addFields(aggregateRootProxyFields(classNameFactory));
-            aggregatProxy.addMethods(aggregateRootProxyBuilder.aggregateRootProxyMethods());
-            aggregatProxy.addMethods(aggregateRootProxyEventHandlerMethodSpecs(classNameFactory, arc));
-            aggregatProxy.addMethods(aggregateRootProxyMessageHandler(classNameFactory, arc));
-
-            final JavaFile proxyClassFile = JavaFile.builder(targetPackageName, aggregatProxy.build())
-                .indent("    ")
-                .addFileComment("Generated Code - %s", ZonedDateTime.now().toString())
+            final ParameterSpec commandParameterx = ParameterSpec.builder(
+                commandTypeName, "command", Modifier.FINAL)
                 .build();
 
+            final TypeMirror commandTypeMirrir = commandParameter.asType();
+            final CommandVisitor commandVisitor = new CommandVisitor();
             try {
-                proxyClassFile.writeTo(this.filer);
-            } catch (IOException e) {
-                this.error(type, e.getMessage());
-                return true;
-            }
+                final CommandIdentifier identifier = commandTypeMirrir.accept(commandVisitor, new CommandIdentifier());
 
-            /////////////// BEGINN Alle Events ////////////////////
-            final AggregateIdentifierGenerator identifier = arc.getAggregateIdentitfier();
-            final Set<TypeMirror> events = arc.getEvents();
-            for (final TypeMirror eventTypeMirror : events) {
-                final ClassName eventTypeName = ClassName.get(
-                    targetPackageName,
-                    ((ClassName)ClassName.get(eventTypeMirror)).simpleName() + "Message");
-
-                ClassName immutableAnnotationType = ClassName.get("org.immutables.value", "Value", "Immutable");
-
-                final AnnotationSpec immutable = AnnotationSpec.builder(immutableAnnotationType)
-                    .addMember("builder", "false")
-                    .build();
-
-                ClassName parameterAnnotationType = ClassName.get("org.immutables.value", "Value", "Parameter");
-
-                final AnnotationSpec parameterAnnotation = AnnotationSpec.builder(parameterAnnotationType)
-                    .build();
-
-                MethodSpec getEventMethod = MethodSpec.methodBuilder("ereignis")
-                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                    .addAnnotation(parameterAnnotation)
-                    .returns(ClassName.get(eventTypeMirror))
-                    .build();
-
-                MethodSpec applyMethod = MethodSpec.methodBuilder("anwendenAuf")
-                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                    .returns(void.class)
-                    .addParameter(aggregateRootProxyType, "aggregat", Modifier.FINAL)
-                    .addStatement("$N.verarbeiten(this)", "aggregat")
-                    .build();
-
-                TypeSpec eventType = TypeSpec.classBuilder(eventTypeName)
-                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                    .addSuperinterface(eventInterfaceName)
-                    .addAnnotation(immutable)
-                    .addMethod(getEventMethod)
-                    .addMethod(applyMethod)
-                    .build();
-
-                final JavaFile eventClassFile = JavaFile.builder(targetPackageName, eventType)
-                    .indent("    ")
-                    .addFileComment("Generated Code - $S", ZonedDateTime.now().toString())
+                TypeSpec applicationService = TypeSpec.classBuilder(applicationServiceName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addField(repositoryField)
+                    .addMethod(MethodSpec.constructorBuilder()
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(repositoryParameter)
+                        .addStatement("this.$N = $N", repositoryField, repositoryParameter)
+                        .build())
+                    .addMethod(MethodSpec.methodBuilder("ausführen")
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(void.class)
+                        .addException(ClassName.get("com.github.haschi.dominium.infrastructure",
+                            "KonkurrierenderZugriff"))
+                        .addParameter(commandParameterx)
+                        .addStatement(
+                            "final $T $N = this.$N.getById($N.$N())",
+                            classNameFactory.getAggregateRootProxyType(),
+                            "aggregat",
+                            repositoryField,
+                            commandParameterx,
+                            identifier.get().getSimpleName())
+                        .addStatement(
+                            "$N.$N($N)",
+                            "aggregat",
+                            method.getSimpleName(),
+                            commandParameterx)
+                        .addStatement(
+                            "this.$N.save($N)",
+                            repositoryField,
+                            "aggregat")
+                        .build())
                     .build();
 
                 try {
-                    eventClassFile.writeTo(this.filer);
+                    writeTypeTo(classNameFactory, applicationService, this.filer);
                 } catch (IOException e) {
-                    this.error(type, e.getMessage());
+                    this.error(commandHandlerElement, e.getMessage());
                     return true;
                 }
+            } catch (Exception e) {
+                this.error(commandHandlerElement, e.getMessage());
+                return true;
             }
         }
 
-        return true;
+        return false;
+    }
+
+    private class CommandIdentifier {
+
+        private ExecutableElement element;
+
+        void set(ExecutableElement element) {
+
+            this.element = element;
+        }
+
+        final ExecutableElement get() {
+            return element;
+        }
+    }
+
+    private class TargetAggregateIdentifierSuche extends SimpleElementVisitor8<CommandIdentifier, CommandIdentifier> {
+
+        TargetAggregateIdentifierSuche(CommandIdentifier identifier) {
+            super(identifier);
+        }
+
+        @Override
+        public CommandIdentifier visitExecutable(final ExecutableElement executableElement,
+                                                 final CommandIdentifier commandIdentifier) {
+            final TargetAggregateIdentifier annotation = executableElement.getAnnotation(TargetAggregateIdentifier
+                .class);
+            if (annotation != null) {
+                commandIdentifier.set(executableElement);
+            }
+
+            return super.visitExecutable(executableElement, commandIdentifier);
+        }
+
+        @Override
+        public CommandIdentifier visitVariable(final VariableElement variableElement,
+                                               final CommandIdentifier commandIdentifier) {
+            return super.visitVariable(variableElement, commandIdentifier);
+        }
+
+        @Override
+        public CommandIdentifier visitType(final TypeElement typeElement,
+                                           final CommandIdentifier commandIdentifier) {
+
+            CommandIdentifier result = commandIdentifier;
+            for(final Element element : typeElement.getEnclosedElements()) {
+                result = element.accept(this, commandIdentifier);
+            }
+
+            return result;
+        }
+    }
+
+    private class CommandVisitor extends TypeKindVisitor8<CommandIdentifier, CommandIdentifier> {
+
+        @Override
+        @DarfNullSein
+        public CommandIdentifier visitDeclared(final DeclaredType declaredType,
+                                               final CommandIdentifier commandIdentifier) {
+
+
+            TargetAggregateIdentifierSuche v = new TargetAggregateIdentifierSuche(commandIdentifier);
+
+            final TypeElement typeElement = (TypeElement) declaredType.asElement();
+            return typeElement.accept(v, commandIdentifier);
+        }
+    }
+
+    private boolean processAggregateRoot(final Element annotatedElement) {
+        if (annotatedElement.getKind() != ElementKind.CLASS) {
+            this.error(
+                annotatedElement,
+                "Only classes can be annotated with %s",
+                AggregateRoot.class.getSimpleName());
+
+            return true;
+        }
+
+        TypeElement type = (TypeElement)annotatedElement;
+        final AggregateRootClass arc = new AggregateRootClass(type);
+
+        /////////////// BEGIN Event Interface //////////////////////
+        final ClassNameFactory classNameFactory = new ClassNameFactory(type);
+
+        final TypeSpec eventInterface = buildEventInterface(classNameFactory);
+
+        try {
+            writeTypeTo(classNameFactory, eventInterface, this.filer);
+        } catch (IOException e) {
+            this.error(type, e.getMessage());
+            return true;
+        }
+
+        /////////////// BEGIN Aggregat-Proxy ////////////////////////////////
+        final TypeSpec aggregatProxy = buildAggregateRootProxy(classNameFactory, arc);
+
+        try {
+            writeTypeTo(classNameFactory, aggregatProxy, filer);
+        } catch (IOException e) {
+            this.error(type, e.getMessage());
+            return true;
+        }
+
+        /////////////// BEGINN Alle Events ////////////////////
+        final List<TypeSpec> eventTypes = new ArrayList<>();
+        for (final TypeMirror eventTypeMirror : arc.getEventTypes()) {
+            TypeSpec eventType = buildEventType(classNameFactory, eventTypeMirror);
+            eventTypes.add(eventType);
+        }
+
+        for (final TypeSpec t : eventTypes) {
+            try {
+                writeTypeTo(classNameFactory, t, filer);
+            } catch (IOException e) {
+                this.error(type, e.getMessage());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private TypeSpec buildEventType(final ClassNameFactory factory, final TypeMirror eventTypeMirror) {
+
+        final ClassName eventTypeName = ClassName.get(
+            factory.getTargetPackageName(),
+            ((ClassName)ClassName.get(eventTypeMirror)).simpleName() + "Message");
+
+        ClassName immutableAnnotationType = ClassName.get("org.immutables.value", "Value", "Immutable");
+
+        final AnnotationSpec immutable = AnnotationSpec.builder(immutableAnnotationType)
+            .addMember("builder", "false")
+            .build();
+
+        ClassName parameterAnnotationType = ClassName.get("org.immutables.value", "Value", "Parameter");
+
+        final AnnotationSpec parameterAnnotation = AnnotationSpec.builder(parameterAnnotationType)
+            .build();
+
+        MethodSpec getEventMethod = MethodSpec.methodBuilder("ereignis")
+            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+            .addAnnotation(parameterAnnotation)
+            .returns(ClassName.get(eventTypeMirror))
+            .build();
+
+        MethodSpec applyMethod = MethodSpec.methodBuilder("anwendenAuf")
+            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .returns(void.class)
+            .addParameter( factory.getAggregateRootProxyType(), "aggregat", Modifier.FINAL)
+            .addStatement("$N.verarbeiten(this)", "aggregat")
+            .build();
+
+        return TypeSpec.classBuilder(eventTypeName)
+            .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+            .addSuperinterface(factory.getEventInterfaceName())
+            .addAnnotation(immutable)
+            .addMethod(getEventMethod)
+            .addMethod(applyMethod)
+            .build();
+    }
+
+    private TypeSpec buildAggregateRootProxy(final ClassNameFactory classNameFactory,
+                                             final AggregateRootClass arc) {
+        final Builder aggregatProxy = TypeSpec.classBuilder(classNameFactory.getAggregateRootProxyType().simpleName())
+            .addAnnotation(suppressWarningsAnnotationSpec())
+            .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+            .superclass(classNameFactory.getAggregateRootType())
+            .addSuperinterface(classNameFactory.getProxyInterface(arc));
+
+        final AggregateRootProxyBuilder aggregateRootProxyBuilder = new AggregateRootProxyBuilder(
+            classNameFactory,
+            arc);
+
+        aggregatProxy.addFields(aggregateRootProxyFields(classNameFactory));
+        aggregatProxy.addMethods(aggregateRootProxyBuilder.aggregateRootProxyMethods());
+        aggregatProxy.addMethods(aggregateRootProxyEventHandlerMethodSpecs(classNameFactory, arc));
+        aggregatProxy.addMethods(aggregateRootProxyMessageHandler(classNameFactory, arc));
+
+        return aggregatProxy.build();
     }
 
     private List<MethodSpec> aggregateRootProxyMessageHandler(final ClassNameFactory classNameFactory,
@@ -273,6 +435,7 @@ public class AggregateRootProcessor extends AbstractProcessor {
     private void writeTypeTo(final ClassNameFactory classNameFactory, final TypeSpec eventInterface, final Filer filer) throws
         IOException {
         final JavaFile javaFile = JavaFile.builder(classNameFactory.getTargetPackageName(), eventInterface)
+            .indent("    ")
             .addFileComment("Generated Code - %s", ZonedDateTime.now().toString())
             .build();
 
