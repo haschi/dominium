@@ -44,7 +44,7 @@ public class MemoryEventStore<T, I> implements com.github.haschi.dominium.infras
     @Override
     public final EventStream<T> getEventsForAggregate(final I identitätsmerkmal) {
         final List<T> stream = this.store.get(identitätsmerkmal).stream()
-            .map(i -> i.ereignis())
+            .map(Descriptor::ereignis)
             .collect(Collectors.toList());
 
         return ImmutableEventStream.of(stream, Version.NEU.nachfolger(stream.size()));

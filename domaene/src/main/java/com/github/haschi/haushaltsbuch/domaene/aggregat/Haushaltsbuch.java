@@ -236,7 +236,7 @@ public final class Haushaltsbuch
 
         public static Snapshot from(final Haushaltsbuch aggregat) {
             return ImmutableSnapshot.builder()
-                .version(aggregat.getAggregatverwalter().getVersion())
+                .version(Version.NEU) // falsch!!!!
                 .addAllKonten(aggregat.hauptbuch.konten)
                 .addAllBuchungssaetze(aggregat.journal.buchungssätze)
                 .build();

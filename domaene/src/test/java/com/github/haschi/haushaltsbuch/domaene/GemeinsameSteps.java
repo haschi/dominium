@@ -4,7 +4,9 @@ import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
+import cucumber.api.PendingException;
 import cucumber.api.java.de.Angenommen;
+import cucumber.api.java.de.Dann;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -37,5 +39,11 @@ public final class GemeinsameSteps {
                 Kontoart.Aktiv);
 
         this.kontoAnlegen.fire(kommando);
+    }
+
+    @Dann("^werde ich einen Pending Step haben$")
+    public void werdeIchEinenPendingStepHaben() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }

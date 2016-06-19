@@ -14,6 +14,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
+import com.squareup.javapoet.TypeVariableName;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -110,6 +111,9 @@ public class AggregateRootProcessor extends AbstractProcessor {
 
             TypeSpec applicationService = TypeSpec.classBuilder(applicationServiceName)
                 .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(ParameterizedTypeName.get(
+                    ClassName.get("com.github.haschi.dominium.infrastructure", "ApplicationService"),
+                    commandTypeName))
                 .addField(repositoryField)
                 .addMethod(MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PUBLIC)

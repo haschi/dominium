@@ -4,5 +4,4 @@ import org.immutables.value.Value;
 
 @Value.Immutable(builder = false)
 public interface BearbeitungWurdeBeendet {
-
 }

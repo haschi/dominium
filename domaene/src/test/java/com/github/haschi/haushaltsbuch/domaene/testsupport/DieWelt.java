@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.domaene.testsupport;
 
 import com.github.haschi.dominium.modell.Domänenereignis;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
@@ -12,17 +13,10 @@ import java.util.UUID;
 @Singleton
 public class DieWelt {
 
-    private final HaushaltsbuchMemoryRepository repository;
     private UUID aktuelleHaushaltsbuchId;
 
     @Inject
     private BeanManager manager;
-
-    @Inject
-    public DieWelt(final HaushaltsbuchMemoryRepository repository) {
-        super();
-        this.repository = repository;
-    }
 
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> aktuellerEreignisstrom() {
         return this.getStream(this.getAktuelleHaushaltsbuchId());
@@ -33,7 +27,7 @@ public class DieWelt {
     }
 
     public final List<Domänenereignis<HaushaltsbuchEreignisziel>> getStream(final UUID haushaltsbuchId) {
-        return this.repository.getStream(haushaltsbuchId);
+        throw new NotImplementedException("Nicht implementiert");
     }
 
     public final UUID getAktuelleHaushaltsbuchId() {

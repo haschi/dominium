@@ -24,3 +24,4 @@ Funktionalität: Anfangsbestand buchen
     Und ich habe auf das Konto "Sparbuch" den Anfangsbestand von 44444,55 EUR gebucht
     Wenn ich weitere 100,00 EUR auf das Konto "Sparbuch" als Anfangsbestand buche
     Dann werde ich die Buchung mit der Fehlermeldung "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden" abgelehnt haben
+    Dann werde ich einen Pending Step haben

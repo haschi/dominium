@@ -3,6 +3,7 @@ package com.github.haschi.dominium.modell
 import com.github.haschi.dominium.testdomaene.ImmutableBearbeitungWurdeBeendet
 import com.github.haschi.dominium.testdomaene.ImmutableBeendeBearbeitung
 import com.github.haschi.dominium.testdomaene.ImmutableZustandWurdeGeaendert
+import com.github.haschi.dominium.testdomaene.ImmutableÄndereZustandZumNächsten
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableBearbeitungWurdeBeendetMessage
 import com.github.haschi.dominium.testdomaene.generiert.ImmutableZustandWurdeGeaendertMessage
 import com.github.haschi.dominium.testdomaene.generiert.TestAggregatEvent
@@ -41,7 +42,7 @@ class AggregatwurzelProxyTest extends Specification {
 
         when:
         proxy.wiederherstellen(ereignisse)
-        proxy.nächsterZustand()
+        proxy.nächsterZustand(ImmutableÄndereZustandZumNächsten.of(identitätsmerkmal))
 
         then:
         proxy.uncommittedChanges == [ImmutableZustandWurdeGeaendertMessage.of(ImmutableZustandWurdeGeaendert.of(43L))]

@@ -46,7 +46,8 @@ public class TestAggregat {
         this.bearbeitbar = false;
     }
 
-    public void nächsterZustand() {
+    @CommandHandler
+    public void nächsterZustand(final ÄndereZustandZumNächsten command) {
         this.falls(ImmutableZustandWurdeGeaendert.of(zustand + 1));
     }
 

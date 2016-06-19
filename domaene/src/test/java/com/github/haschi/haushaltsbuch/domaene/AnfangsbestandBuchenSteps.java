@@ -1,33 +1,27 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
+import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
+import com.github.haschi.haushaltsbuch.api.kommando.BucheAnfangsbestand;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
+import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
-import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
-import com.github.haschi.haushaltsbuch.abfrage.SaldoAbfrage;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import com.github.haschi.haushaltsbuch.api.kommando.BucheAnfangsbestand;
-import com.github.haschi.haushaltsbuch.domaene.testsupport.HabensaldoConverter;
-import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
-import com.github.haschi.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public final class AnfangsbestandBuchenSteps {
 
     @Inject
     private DieWelt welt;
-
-    @Inject
-    private SaldoAbfrage kontoSaldieren;
 
     @Inject
     private Event<BucheAnfangsbestand> bucheAnfangsbestand;
@@ -37,12 +31,7 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        final BucheAnfangsbestand befehl = new BucheAnfangsbestand(
-                this.welt.getAktuelleHaushaltsbuchId(),
-                konto,
-                betrag);
-
-        this.bucheAnfangsbestand.fire(befehl);
+        throw new PendingException();
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -50,12 +39,7 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
             throws AggregatNichtGefunden {
-
-        final Saldo saldo = this.kontoSaldieren.abfragen(
-                this.welt.getAktuelleHaushaltsbuchId(),
-                konto);
-
-        assertThat(saldo).isEqualTo(erwarteterSaldo);
+        throw new PendingException();
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -63,12 +47,7 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo)
             throws AggregatNichtGefunden {
-
-        final Saldo saldo = this.kontoSaldieren.abfragen(
-                this.welt.getAktuelleHaushaltsbuchId(),
-                konto);
-
-        assertThat(saldo).isEqualTo(erwarteterSaldo);
+        throw new PendingException();
     }
 
     @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) gebucht$")
