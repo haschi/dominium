@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.testdomaene;
+package com.github.haschi.dominium.infrastructure;
 
 import com.github.haschi.dominium.infrastructure.EventStream;
 import com.github.haschi.dominium.infrastructure.ImmutableEventStream;

@@ -1,5 +1,5 @@
 package com.github.haschi.dominium.testdomaene.generiert;
 
-public interface Command {
-    void apply(CommandDispatcher dispatcher);
+public interface Command<T>  {
+    T command();
 }

@@ -1,6 +1,6 @@
 package com.github.haschi.dominium.testdomaene.generiert;
 
-import com.github.haschi.dominium.testdomaene.MemoryEventStore;
+import com.github.haschi.dominium.infrastructure.MemoryEventStore;
 
 import java.util.UUID;
 

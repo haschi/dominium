@@ -7,9 +7,4 @@ import org.immutables.value.Value;
 public abstract class ÄndereZustandCommand implements Command {
     @Value.Parameter
     public abstract ÄndereZustand command();
-
-    @Override
-    public final void apply(final CommandDispatcher dispatcher) {
-        dispatcher.ausführen(this.command());
-    }
 }
