@@ -1,20 +1,16 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.Kontostand;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
-import com.github.haschi.dominium.persistenz.AggregatNichtGefunden;
-import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
-import com.github.haschi.haushaltsbuch.domaene.testsupport.Kontostand;
-import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import java.util.List;
@@ -23,11 +19,6 @@ public final class AusgabeBuchenSteps {
 
     @Inject
     private DieWelt welt;
-
-    @Inject
-    private Event<BucheAusgabe> ausgabeBuchen;
-
-    @Inject Event<BucheTilgung> tilgungBuchen;
 
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
@@ -47,8 +38,7 @@ public final class AusgabeBuchenSteps {
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
-    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände)
-            throws AggregatNichtGefunden {
+    public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) {
         throw new PendingException();
     }
 

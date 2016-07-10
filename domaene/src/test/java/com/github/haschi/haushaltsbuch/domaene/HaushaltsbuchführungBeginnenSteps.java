@@ -1,12 +1,16 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
-import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import cucumber.api.PendingException;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -19,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class HaushaltsbuchführungBeginnenSteps {
 
     @Inject
-    Event<BeginneHaushaltsbuchführung> beginneHaushaltsbuchführung;
+    private CommandGateway commandGateway;
 
     @Inject
     DieWelt kontext;
@@ -27,7 +31,7 @@ public final class HaushaltsbuchführungBeginnenSteps {
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne() {
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.beginneHaushaltsbuchführung.fire(new BeginneHaushaltsbuchführung(haushaltsbuchId));
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(haushaltsbuchId).build());
         this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 
@@ -40,12 +44,16 @@ public final class HaushaltsbuchführungBeginnenSteps {
     public void dann_werde_ich_ein_hauptbuch_mit_kontenrahmen_zum_haushaltsbuch_anlegen() {
 
         assertThat(this.kontext.aktuellerEreignisstrom())
-                .contains(new HauptbuchWurdeAngelegt(this.kontext.getAktuelleHaushaltsbuchId()));
+                .contains(ImmutableHauptbuchWurdeAngelegt.builder()
+                    .haushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+                    .build());
     }
 
     @Dann("^werde ich ein Journal zum Haushaltsbuch angelegt haben")
     public void dann_werde_ich_ein_journal_zum_haushaltsbuch_anlegen() {
         assertThat(this.kontext.aktuellerEreignisstrom())
-                .contains(new JournalWurdeAngelegt(this.kontext.getAktuelleHaushaltsbuchId()));
+                .contains(ImmutableJournalWurdeAngelegt.builder()
+                    .aktuelleHaushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+                    .build());
     }
 }

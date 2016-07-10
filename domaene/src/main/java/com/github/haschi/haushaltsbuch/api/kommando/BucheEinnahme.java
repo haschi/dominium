@@ -1,28 +1,18 @@
 package com.github.haschi.haushaltsbuch.api.kommando;
 
-import com.github.haschi.coding.aspekte.ValueObject;
+import com.github.haschi.coding.annotation.TargetAggregateIdentifier;
+import org.immutables.value.Value;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@ValueObject
-public class BucheEinnahme {
-    public final UUID haushaltsbuchId;
-    public final String sollkonto;
-    public final String habenkonto;
-    public final MonetaryAmount währungsbetrag;
+@Value.Immutable
+public interface BucheEinnahme {
 
-    public BucheEinnahme(
-            final UUID haushaltsbuchId,
-            final String sollkonto,
-            final String habenkonto,
-            final MonetaryAmount währungsbetrag) {
+    @TargetAggregateIdentifier
+    UUID haushaltsbuchId();
 
-        super();
-
-        this.haushaltsbuchId = haushaltsbuchId;
-        this.sollkonto = sollkonto;
-        this.habenkonto = habenkonto;
-        this.währungsbetrag = währungsbetrag;
-    }
+    String sollkonto();
+    String habenkonto();
+    MonetaryAmount waehrungsbetrag();
 }

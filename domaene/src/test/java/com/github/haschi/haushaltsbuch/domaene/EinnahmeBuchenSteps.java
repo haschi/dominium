@@ -1,12 +1,13 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Wenn;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheEinnahme;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 
@@ -16,7 +17,7 @@ public final class EinnahmeBuchenSteps {
     private DieWelt kontext;
 
     @Inject
-    private Event<BucheEinnahme> einnahmeBuchen;
+    private CommandGateway commandGateway;
 
     @Wenn("^ich meine Einnahme von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void ich_meine_einnahme_per_an_buche(
@@ -24,12 +25,13 @@ public final class EinnahmeBuchenSteps {
             final String sollkonto,
             final String habenkonto) {
 
-        final BucheEinnahme kommando = new BucheEinnahme(
-                this.kontext.getAktuelleHaushaltsbuchId(),
-                sollkonto,
-                habenkonto,
-                währungsbetrag);
+        final BucheEinnahme kommando = ImmutableBucheEinnahme.builder()
+            .haushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+            .sollkonto(sollkonto)
+            .habenkonto(habenkonto)
+            .waehrungsbetrag(währungsbetrag)
+            .build();
 
-        this.einnahmeBuchen.fire(kommando);
+        this.commandGateway.sendAndWait(kommando);
     }
 }

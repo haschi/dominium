@@ -1,7 +1,9 @@
 package com.github.haschi.haushaltsbuch;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Event;
@@ -49,11 +51,16 @@ public class KontoAnlegen {
     }
 
     @Inject
-    private Event<LegeKontoAn> legeKontoAnEvent;
+    private CommandGateway commandGateway;
 
     public String ausführen() {
-        final LegeKontoAn befehl = new LegeKontoAn(UUID.fromString(this.id), this.kontoname, this.kontoart);
-        this.legeKontoAnEvent.fire(befehl);
+        final LegeKontoAn befehl = ImmutableLegeKontoAn.builder()
+            .haushaltsbuchId(UUID.fromString(this.id))
+            .kontoname(this.kontoname)
+            .kontoart(this.kontoart)
+            .build();
+
+        this.commandGateway.sendAndWait(befehl);
 
         return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.id);
     }

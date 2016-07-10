@@ -57,18 +57,6 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>dominium</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>dominium-persistenz-jpa</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -76,12 +64,6 @@
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>infrastruktur</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>dominium-persistenz-atom</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -121,6 +103,12 @@
                 <artifactId>value</artifactId>
                 <version>2.2</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-core</artifactId>
+                <version>2.4.4</version>
             </dependency>
 
             <!-- auslagern nach jee.bom -->
@@ -729,11 +717,8 @@
     <modules>
         <module>domaene</module>
         <module>infrastruktur</module>
-        <module>dominium</module>
-        <module>dominium-persistenz-jpa</module>
         <module>anwendung</module>
         <module>coding</module>
-        <module>dominium-persistenz-atom</module>
     </modules>
 </project>
 

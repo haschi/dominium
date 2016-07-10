@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.system;
 
-import com.github.haschi.dominium.persistenz.Uhr;
+import com.github.haschi.haushaltsbuch.api.Uhr;
 
 import java.time.LocalDateTime;
 

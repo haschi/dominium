@@ -29,16 +29,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>dominium</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>dominium-persistenz-jpa</artifactId>
-        </dependency>
-        
-        <dependency>
             <groupId>com.github.haschi</groupId>
             <artifactId>aspekte</artifactId>
         </dependency>
@@ -47,6 +37,11 @@
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
         </dependency>
 
         <dependency>

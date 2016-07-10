@@ -1,4 +1,4 @@
-package com.github.haschi.dominium.persistenz;
+package com.github.haschi.haushaltsbuch.api;
 
 import java.time.LocalDateTime;
 

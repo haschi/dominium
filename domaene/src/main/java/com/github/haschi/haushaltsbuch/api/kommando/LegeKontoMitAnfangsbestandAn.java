@@ -1,30 +1,19 @@
 package com.github.haschi.haushaltsbuch.api.kommando;
 
-import com.github.haschi.coding.aspekte.ValueObject;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.immutables.value.Value;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@ValueObject
-public class LegeKontoMitAnfangsbestandAn {
+@Value.Immutable
+public interface LegeKontoMitAnfangsbestandAn {
 
-    public final UUID haushaltsbuchId;
-    public final String kontoname;
-    public final Kontoart kontoart;
-    public final MonetaryAmount betrag;
+    @TargetAggregateIdentifier
+    UUID haushaltsbuchId();
 
-    public LegeKontoMitAnfangsbestandAn(
-            final UUID haushaltsbuchId,
-            final String kontoname,
-            final Kontoart kontoart,
-            final MonetaryAmount betrag) {
-
-        super();
-
-        this.haushaltsbuchId = haushaltsbuchId;
-        this.kontoname = kontoname;
-        this.kontoart = kontoart;
-        this.betrag = betrag;
-    }
+    String kontoname();
+    Kontoart kontoart();
+    MonetaryAmount betrag();
 }

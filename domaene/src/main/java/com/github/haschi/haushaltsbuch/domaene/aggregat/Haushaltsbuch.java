@@ -1,54 +1,71 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.dominium.modell.Aggregatwurzel;
-import com.github.haschi.dominium.modell.Memento;
-import com.github.haschi.dominium.modell.Schnappschuss;
-import com.github.haschi.dominium.modell.Version;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.SollkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableBuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableBuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHaushaltsbuchAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeNichtAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.axonframework.commandhandling.annotation.CommandHandler;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
+import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
 import javax.money.MonetaryAmount;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
-public final class Haushaltsbuch
-        extends Aggregatwurzel<UUID, HaushaltsbuchEreignisziel, Haushaltsbuch.Snapshot>
-        implements HaushaltsbuchEreignisziel {
+public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
-    private final Journal journal = new Journal();
-    private final Hauptbuch hauptbuch = new Hauptbuch();
+    private static final long serialVersionUID = -4864886584911078356L;
 
-    public Haushaltsbuch(final UUID uuid, final Version version) {
-        super(uuid, version);
+    private final Journal journal;
+    private final Hauptbuch hauptbuch;
+
+    @AggregateIdentifier
+    private UUID id;
+
+    @CommandHandler
+    public Haushaltsbuch(final ImmutableBeginneHaushaltsbuchfuehrung befehl) {
+        super();
+
+        this.hauptbuch = new Hauptbuch();
+        this.journal = new Journal();
+
+        this.apply(ImmutableHaushaltsbuchAngelegt.of(befehl.id()));
+
+        this.apply(ImmutableKontoWurdeAngelegt.builder()
+            .kontoart(Kontoart.Aktiv)
+            .kontoname(Konto.ANFANGSBESTAND.getBezeichnung())
+            .build());
     }
 
-    @Override
-    public void wiederherstellenAus(final Snapshot schnappschuss) {
-        schnappschuss.restore(this);
+    @EventSourcingHandler
+    private void falls(final ImmutableHaushaltsbuchAngelegt ereignis) {
+        this.id = ereignis.id();
     }
 
-    public static Haushaltsbuch erzeugen(final UUID identitätsmerkmal) {
-        final Haushaltsbuch haushaltsbuch = new Haushaltsbuch(identitätsmerkmal, Version.NEU);
-
-        haushaltsbuch.hauptbuchAnlegen();
-        haushaltsbuch.journalAnlegen();
-
-        haushaltsbuch.neuesKontoHinzufügen(
-                Konto.ANFANGSBESTAND.getBezeichnung(),
-                Kontoart.Aktiv);
-
-        return haushaltsbuch;
+    @CommandHandler
+    public void bucheEinnahem(final ImmutableBucheEinnahme befehl) {
+        buchungssatzHinzufügen(new Buchungssatz(
+            befehl.sollkonto(),
+            befehl.habenkonto(),
+            befehl.waehrungsbetrag()));
     }
 
     // ???
@@ -56,19 +73,21 @@ public final class Haushaltsbuch
         return this.hauptbuch.getKonten();
     }
 
-    @Override
-    public Snapshot schnappschussErstellen() {
-        return Snapshot.from(this);
-    }
-
     // Hauptbuch -- Alle Methoden zum Hauptbuch
 
-    // !!!
-    public void neuesKontoHinzufügen(final String kontoname, final Kontoart kontoart) {
-        if (this.hauptbuch.istKontoVorhanden(kontoname)) {
-            this.bewirkt(new KontoWurdeNichtAngelegt(kontoname, kontoart));
+    @CommandHandler
+    public void neuesKontoHinzufügen(final ImmutableLegeKontoAn befehl) {
+        if (this.hauptbuch.istKontoVorhanden(befehl.kontoname())) {
+            this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
+                .kontoname(befehl.kontoname())
+                .kontoart(befehl.kontoart())
+                .build());
+
         } else {
-            this.bewirkt(new KontoWurdeAngelegt(kontoname, kontoart));
+            this.apply(ImmutableKontoWurdeAngelegt.builder()
+            .kontoname(befehl.kontoname())
+            .kontoart(befehl.kontoart())
+            .build());
         }
     }
 
@@ -102,54 +121,43 @@ public final class Haushaltsbuch
         return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
     }
 
-    // !!!
-    @Override
-    public void falls(final KontoWurdeAngelegt kontoWurdeAngelegt) {
-        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoWurdeAngelegt.kontoart);
-        final Buchungsregel regel = fabrik.erzeugen(kontoWurdeAngelegt.kontoname);
-        final Konto konto = new Konto(kontoWurdeAngelegt.kontoname, regel);
+    @EventSourcingHandler
+    public void falls(final ImmutableKontoWurdeAngelegt ereignis) {
+        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
+        final Buchungsregel regel = fabrik.erzeugen(ereignis.kontoname());
+        final Konto konto = new Konto(ereignis.kontoname(), regel);
 
         this.hauptbuch.hinzufügen(konto);
     }
 
-    // !!!
-    @Override
     public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt) {
         // nicht tun
     }
 
-    // !!!
-    @Override
     public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt) {
         // Nichts tun
     }
 
-    // !!!
-    @Override
-    public void falls(final BuchungWurdeAusgeführt buchungWurdeAusgeführt) {
-        this.journal.buchungssatzHinzufügen(buchungWurdeAusgeführt.getBuchungssatz());
+    @EventSourcingHandler
+    public void falls(final BuchungWurdeAusgeführt ereignis) {
+        this.journal.buchungssatzHinzufügen(ereignis.buchungssatz());
     }
 
-    // !!!
-    @Override
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
         // vorläufig nicht tun
     }
 
-    // !!!
-    @Override
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
         // vorläufig nichts tun
     }
 
-    // !!!
-    public void anfangsbestandBuchen(final String kontoname, final MonetaryAmount betrag) {
-        if (this.journal.istAnfangsbestandFürKontoVorhanden(kontoname)) {
-            this.bewirkt(new BuchungWurdeAbgelehnt(FEHLERMELDUNG));
+    @CommandHandler
+    public void anfangsbestandBuchen(final ImmutableBucheAnfangsbestand befehl) {
+        if (this.journal.istAnfangsbestandFürKontoVorhanden(befehl.kontoname())) {
+            apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(FEHLERMELDUNG).build());
         } else {
-            final Konto konto = this.hauptbuch.suchen(kontoname);
-
-            final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(betrag);
+            final Konto konto = this.hauptbuch.suchen(befehl.kontoname());
+            final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.waehrungsbetrag());
 
             this.buchungssatzHinzufügen(buchungssatz);
         }
@@ -158,9 +166,9 @@ public final class Haushaltsbuch
     public void buchungssatzHinzufügen(final Buchungssatz buchungssatz) {
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
-            this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
+            this.apply(ImmutableBuchungWurdeAusgeführt.builder().buchungssatz(buchungssatz).build());
         } else {
-            this.bewirkt(this.buchungAblehnen(buchungssatz));
+            this.apply(buchungAblehnen(buchungssatz));
         }
     }
 
@@ -169,82 +177,66 @@ public final class Haushaltsbuch
             buchungssatz.getSollkonto(),
             buchungssatz.getHabenkonto());
 
-        return new BuchungWurdeAbgelehnt(grund);
+        return ImmutableBuchungWurdeAbgelehnt.builder().grund(grund).build();
     }
 
-    // !!! Parameter: besser Buchungssatz?
-    public void ausgabeBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount betrag) {
-        final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, betrag);
+    @CommandHandler
+    public void ausgabeBuchen(final ImmutableBucheAusgabe befehel) {
+        final Buchungssatz buchungssatz = new Buchungssatz(
+            befehel.sollkonto(),
+            befehel.habenkonto(),
+            befehel.waehrungsbetrag());
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannAusgabeGebuchtWerden(buchungssatz)) {
-                this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
+                this.apply(ImmutableBuchungWurdeAusgeführt.builder()
+                    .buchungssatz(buchungssatz)
+                    .build());
             } else {
-                this.bewirkt(new BuchungWurdeAbgelehnt("Ausgaben können nicht auf Ertragskonten gebucht werden."));
+                this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
+                    .grund("Ausgaben können nicht auf Ertragskonten gebucht werden.")
+                    .build());
             }
         } else {
-            this.bewirkt(new BuchungWurdeAbgelehnt(
-                            this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto)));
+            this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
+                .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(befehel.sollkonto(), befehel.habenkonto()))
+                .build());
         }
     }
 
-    public void tilgungBuchen(final String sollkonto, final String habenkonto, final MonetaryAmount währungsbetrag) {
-        final Buchungssatz buchungssatz = new Buchungssatz(sollkonto, habenkonto, währungsbetrag);
+    @CommandHandler
+    public void tilgungBuchen(final BucheTilgung befehl) {
+        final Buchungssatz buchungssatz = new Buchungssatz(
+            befehl.sollkonto(),
+            befehl.habenkonto(),
+            befehl.waehrungsbetrag());
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannTilgungGebuchtWerden(buchungssatz)) {
-                this.bewirkt(new BuchungWurdeAusgeführt(buchungssatz));
+                this.apply(ImmutableBuchungWurdeAusgeführt.builder()
+                    .buchungssatz(buchungssatz)
+                    .build());
             } else {
-                this.bewirkt(new BuchungWurdeAbgelehnt("Tilgung kann nicht auf Konto gebucht werden."));
+                this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
+                    .grund("Tilgung kann nicht auf Konto gebucht werden.")
+                    .build());
             }
         } else {
-            final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(sollkonto, habenkonto);
-            this.bewirkt( new BuchungWurdeAbgelehnt(grund));
+
+            final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                befehl.sollkonto(),
+                befehl.habenkonto());
+
+            this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
+                .grund(grund)
+                .build());
         }
-    }
-
-    @Override
-    protected HaushaltsbuchEreignisziel getSelf() {
-        return this;
-    }
-
-    // !!!
-    public void hauptbuchAnlegen() {
-        this.bewirkt(new HauptbuchWurdeAngelegt(this.getIdentitätsmerkmal()));
-    }
-
-    // !!!
-    public void journalAnlegen() {
-        this.bewirkt(new JournalWurdeAngelegt(this.getIdentitätsmerkmal()));
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("identitätsmerkmal", this.getIdentitätsmerkmal())
+                .append("identitätsmerkmal", this.id)
                 .toString();
-    }
-
-    @Memento
-    public abstract static class Snapshot implements Schnappschuss {
-
-        private static final long serialVersionUID = -518587576725764123L;
-
-        protected abstract Set<Konto> konten();
-
-        protected abstract List<Buchungssatz> buchungssaetze();
-
-        public static Snapshot from(final Haushaltsbuch aggregat) {
-            return ImmutableSnapshot.builder()
-                .version(Version.NEU) // falsch!!!!
-                .addAllKonten(aggregat.hauptbuch.konten)
-                .addAllBuchungssaetze(aggregat.journal.buchungssätze)
-                .build();
-        }
-
-        public final void restore(final Haushaltsbuch aggregat) {
-            this.konten().forEach(aggregat.hauptbuch::hinzufügen);
-            this.buchungssaetze().forEach(aggregat.journal::buchungssatzHinzufügen);
-        }
     }
 }

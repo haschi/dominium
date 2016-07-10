@@ -12,6 +12,8 @@ import java.util.UUID;
 @SuppressWarnings("checkstyle:designforextension")
 public class Hauptbuch implements Serializable {
 
+    private static final long serialVersionUID = 7723531928992579461L;
+
     private HauptbuchAnsicht ansicht;
 
     public String getId() {
@@ -28,19 +30,19 @@ public class Hauptbuch implements Serializable {
     private HauptbuchAbfrage abfrage;
 
     public List<String> getVermögen() {
-        return this.ansicht.aktivkonten;
+        return this.ansicht.aktivkonten();
     }
 
     public List<String> getSchulden() {
-        return this.ansicht.passivkonten;
+        return this.ansicht.passivkonten();
     }
 
     public List<String> getEinnahmen() {
-        return this.ansicht.ertragskonten;
+        return this.ansicht.ertragskonten();
     }
 
     public List<String> getAusgaben() {
-        return this.ansicht.aufwandskonten;
+        return this.ansicht.aufwandskonten();
     }
 
     public void init() {

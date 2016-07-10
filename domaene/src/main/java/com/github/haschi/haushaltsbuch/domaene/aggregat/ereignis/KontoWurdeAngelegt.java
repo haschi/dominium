@@ -1,40 +1,11 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis;
 
-import com.github.haschi.coding.aspekte.ValueObject;
-import com.github.haschi.dominium.modell.EreignisZiel;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignisziel;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.HaushaltsbuchEreignis;
-import org.apache.commons.lang3.StringUtils;
+import org.immutables.value.Value;
 
-@ValueObject
-public final class KontoWurdeAngelegt implements HaushaltsbuchEreignis {
+@Value.Immutable
+public interface KontoWurdeAngelegt extends HaushaltsbuchEreignis{
 
-    private static final long serialVersionUID = 4000453101989445965L;
-    public final String kontoname;
-    public final Kontoart kontoart;
-
-    protected KontoWurdeAngelegt() {
-        super();
-        this.kontoname = StringUtils.EMPTY;
-        this.kontoart = Kontoart.Aktiv;
-    }
-
-    public KontoWurdeAngelegt(final String kontoname, final Kontoart kontoart) {
-
-        super();
-
-        this.kontoname = kontoname;
-        this.kontoart = kontoart;
-    }
-
-    @Override
-    public void anwendenAuf(final HaushaltsbuchEreignisziel ereignisZiel) {
-        ereignisZiel.falls(this);
-    }
-
-    @Override
-    public void anwendenAuf(final EreignisZiel<HaushaltsbuchEreignisziel> ereignisZiel) {
-        ereignisZiel.falls(this);
-    }
+    String kontoname();
+    Kontoart kontoart();
 }

@@ -3,6 +3,8 @@ package com.github.haschi.haushaltsbuch;
 //import de.therapeutenkiller.haushaltsbuch.api.kommando.BucheAusgabe;
 
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.event.Event;
 import javax.faces.bean.ManagedBean;
@@ -43,7 +45,7 @@ public class AusgabeBuchen implements Serializable {
     }
 
     public List<String> getAktivkonten() {
-        return this.hauptbuch.aktivkonten;
+        return this.hauptbuch.aktivkonten();
 
     }
 
@@ -58,7 +60,7 @@ public class AusgabeBuchen implements Serializable {
     private String sollkonto = "";
 
     public List<String> getAufwandskonten() {
-        return this.hauptbuch.aufwandskonten;
+        return this.hauptbuch.aufwandskonten();
     }
 
     public String getHabenkonto() {
@@ -82,19 +84,20 @@ public class AusgabeBuchen implements Serializable {
     private String betrag = "";
 
     @Inject
-    private Event<BucheAusgabe> bucheAusgabeEvent;
+    private CommandGateway commandGateway;
 
     public String ausführen() {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final MonetaryAmount währungsbetrag = format.parse(this.betrag + " EUR");
 
-        final BucheAusgabe befehl = new BucheAusgabe(
-                UUID.fromString(this.id),
-                this.sollkonto,
-                this.habenkonto,
-                währungsbetrag);
+        final BucheAusgabe befehl = ImmutableBucheAusgabe.builder()
+                .haushaltsbuchId(UUID.fromString(this.id))
+                .sollkonto(this.sollkonto)
+                .habenkonto(this.habenkonto)
+                .waehrungsbetrag(währungsbetrag)
+                .build();
 
-        this.bucheAusgabeEvent.fire(befehl);
+        this.commandGateway.sendAndWait(befehl);
         return String.format("hauptbuch?faces-redirect=true&id=%s", this.id);
     }
 }
