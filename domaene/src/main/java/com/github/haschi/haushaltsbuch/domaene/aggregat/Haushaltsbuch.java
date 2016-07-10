@@ -1,11 +1,11 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
@@ -232,7 +232,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     }
 
     @CommandHandler
-    public void tilgungBuchen(final BucheTilgung befehl) {
+    public void tilgungBuchen(final ImmutableBucheTilgung befehl) {
         final Buchungssatz buchungssatz = new Buchungssatz(
             befehl.sollkonto(),
             befehl.habenkonto(),

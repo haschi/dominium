@@ -1,5 +1,9 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
+import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
+import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
@@ -10,6 +14,7 @@ import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
@@ -20,13 +25,23 @@ public final class AusgabeBuchenSteps {
     @Inject
     private DieWelt welt;
 
+    @Inject
+    private CommandGateway commandGateway;
+
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,
             final String habenkonto)  {
 
-        throw new PendingException();
+        final BucheAusgabe befehl = ImmutableBucheAusgabe.builder()
+            .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
+            .sollkonto(sollkonto)
+            .habenkonto(habenkonto)
+            .waehrungsbetrag(währungsbetrag)
+            .build();
+
+        this.commandGateway.sendAndWait(befehl);
     }
 
     @Wenn("^ich meine Tilgung von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
@@ -34,7 +49,15 @@ public final class AusgabeBuchenSteps {
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
             final String sollkonto,
             final String habenkonto) {
-        throw new PendingException();
+
+        final BucheTilgung befehl = ImmutableBucheTilgung.builder()
+            .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
+            .sollkonto(sollkonto)
+            .habenkonto(habenkonto)
+            .waehrungsbetrag(währungsbetrag)
+            .build();
+
+        this.commandGateway.sendAndWait(befehl);
     }
 
     @Dann("^werde ich folgende Kontostände erhalten:$")

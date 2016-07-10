@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.domaene;
 
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import cucumber.api.PendingException;
@@ -33,7 +34,10 @@ public final class HaushaltsbuchführungBeginnenSteps {
 
     @Dann("^werde ich ein neues Haushaltsbuch angelegt haben")
     public void dann_werde_ich_ein_neues_haushaltsbuch_angelegt_haben()  {
-        throw new PendingException();
+        assertThat(this.kontext.aktuellerEreignisstrom())
+            .contains(ImmutableHaushaltsbuchAngelegt.builder()
+                .id(this.kontext.getAktuelleHaushaltsbuchId())
+                .build());
     }
 
     @Dann("^werde ich ein Hauptbuch mit Kontenrahmen zum Haushaltsbuch angelegt haben")

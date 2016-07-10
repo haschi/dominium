@@ -3,6 +3,8 @@ package com.github.haschi.haushaltsbuch.domaene;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeNichtAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.SollsaldoConverter;
 import cucumber.api.PendingException;
@@ -14,6 +16,8 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.inject.Inject;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class KontoErstellenSteps {
 
@@ -37,7 +41,11 @@ public final class KontoErstellenSteps {
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname) {
 
-        throw new PendingException();
+        assertThat(this.kontext.aktuellerEreignisstrom())
+            .contains(ImmutableKontoWurdeAngelegt.builder()
+            .kontoname(kontoname)
+            .kontoart(Kontoart.Aktiv)
+            .build());
     }
 
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
@@ -50,12 +58,20 @@ public final class KontoErstellenSteps {
     @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt worden sein$")
     public void dann_wird_das_Konto_nicht_angelegt_worden_sein(final String kontoname) {
 
-        throw new PendingException();
+        assertThat(this.kontext.aktuellerEreignisstrom())
+            .contains(ImmutableKontoWurdeNichtAngelegt.builder()
+                .kontoname(kontoname)
+                .kontoart(Kontoart.Aktiv)
+                .build());
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
     public void und_das_Haushaltsbuch_wird_ein_Konto_besitzen(final String konto) throws Throwable {
 
-        throw new PendingException();
+        assertThat(this.kontext.aktuellerEreignisstrom())
+            .contains(ImmutableKontoWurdeAngelegt.builder()
+            .kontoname(konto)
+            .kontoart(Kontoart.Aktiv)
+            .build());
     }
 }

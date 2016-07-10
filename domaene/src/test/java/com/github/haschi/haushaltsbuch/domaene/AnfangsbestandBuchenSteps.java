@@ -31,7 +31,13 @@ public final class AnfangsbestandBuchenSteps {
             final String konto,
             @Transform(MoneyConverter.class) final MonetaryAmount betrag) {
 
-        throw new PendingException();
+        final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand.builder()
+            .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
+            .kontoname(konto)
+            .waehrungsbetrag(betrag)
+            .build();
+
+        commandGateway.sendAndWait(befehl);
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")

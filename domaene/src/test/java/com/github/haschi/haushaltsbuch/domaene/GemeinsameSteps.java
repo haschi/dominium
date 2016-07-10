@@ -43,10 +43,4 @@ public final class GemeinsameSteps {
 
         this.commandGateway.sendAndWait(kommando);
     }
-
-    @Dann("^werde ich einen Pending Step haben$")
-    public void werdeIchEinenPendingStepHaben() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
 }
