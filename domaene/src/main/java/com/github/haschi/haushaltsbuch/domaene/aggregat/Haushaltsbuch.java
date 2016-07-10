@@ -152,7 +152,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     public void falls(final ImmutableKontoWurdeAngelegt ereignis) {
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
         final Buchungsregel regel = fabrik.erzeugen(ereignis.kontoname());
-        final Konto konto = new Konto(ereignis.kontoname(), regel);
+        final Konto konto = new Konto(ereignis.kontoname(), regel, ereignis.kontoart());
 
         this.hauptbuch.hinzufügen(konto);
     }

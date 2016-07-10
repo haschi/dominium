@@ -1,5 +1,8 @@
 package com.github.haschi.haushaltsbuch;
 
+import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
+import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch;
+package com.github.haschi.haushaltsbuch.abfragen;
 
 import org.immutables.value.Value;
 

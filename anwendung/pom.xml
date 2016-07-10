@@ -20,6 +20,11 @@
             <artifactId>domaene</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
