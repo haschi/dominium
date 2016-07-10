@@ -2,7 +2,6 @@ package com.github.haschi.haushaltsbuch.domaene;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
-import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.SollsaldoConverter;

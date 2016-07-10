@@ -14,7 +14,7 @@ public class HauptbuchAbfrage {
     private Repository<Haushaltsbuch> repository;
 
     public HauptbuchAnsicht abfragen(final UUID haushaltsbuchId) {
-        final Haushaltsbuch haushaltsbuch = repository.load(haushaltsbuchId);
+        final Haushaltsbuch haushaltsbuch = this.repository.load(haushaltsbuchId);
 
         final ImmutableSet<Konto> konten = haushaltsbuch.getKonten();
 

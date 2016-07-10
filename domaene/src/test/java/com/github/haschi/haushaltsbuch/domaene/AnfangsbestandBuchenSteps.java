@@ -60,7 +60,7 @@ public final class AnfangsbestandBuchenSteps {
             .waehrungsbetrag(währungsbetrag)
             .build();
 
-        commandGateway.sendAndWait(befehl);
+        this.commandGateway.sendAndWait(befehl);
     }
 
     @Wenn("^ich weitere (-?\\d+,\\d{2} [A-Z]{3}) auf das Konto \"([^\"]*)\" als Anfangsbestand buche$")

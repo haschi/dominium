@@ -45,6 +45,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.kamaladafrica</groupId>
+            <artifactId>axon-cdi</artifactId>
+            <version>master</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -130,16 +137,16 @@
             <artifactId>deltaspike-cdictrl-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jpa-module-api</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.deltaspike.modules</groupId>-->
+            <!--<artifactId>deltaspike-jpa-module-api</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jpa-module-impl</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.deltaspike.modules</groupId>-->
+            <!--<artifactId>deltaspike-jpa-module-impl</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
@@ -229,5 +236,21 @@
                 </dependencies>
             </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+            <name>Jitpack.io Repository</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
+
 </project>
 

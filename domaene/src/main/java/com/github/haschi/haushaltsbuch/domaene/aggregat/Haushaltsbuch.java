@@ -7,6 +7,7 @@ import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.SollkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
@@ -40,6 +41,12 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     @AggregateIdentifier
     private UUID id;
 
+    protected Haushaltsbuch() {
+        super();
+        this.journal = new Journal();
+        this.hauptbuch = new Hauptbuch();
+    }
+
     @CommandHandler
     public Haushaltsbuch(final ImmutableBeginneHaushaltsbuchfuehrung befehl) {
         super();
@@ -55,14 +62,9 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
             .build());
     }
 
-    @EventSourcingHandler
-    private void falls(final ImmutableHaushaltsbuchAngelegt ereignis) {
-        this.id = ereignis.id();
-    }
-
     @CommandHandler
-    public void bucheEinnahem(final ImmutableBucheEinnahme befehl) {
-        buchungssatzHinzufügen(new Buchungssatz(
+    public void on(final ImmutableBucheEinnahme befehl) {
+        this.buchungssatzHinzufügen(new Buchungssatz(
             befehl.sollkonto(),
             befehl.habenkonto(),
             befehl.waehrungsbetrag()));
@@ -85,12 +87,32 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
         } else {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-            .kontoname(befehl.kontoname())
-            .kontoart(befehl.kontoart())
-            .build());
+                .kontoname(befehl.kontoname())
+                .kontoart(befehl.kontoart())
+                .build());
         }
     }
 
+    @CommandHandler
+    public void kontoMitAnfangsbestandAnlegen(final ImmutableLegeKontoMitAnfangsbestandAn befehl) {
+        if (this.hauptbuch.istKontoVorhanden(befehl.kontoname())) {
+            this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
+                .kontoname(befehl.kontoname())
+                .kontoart(befehl.kontoart())
+                .build());
+
+            this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
+                .haushaltsbuchId(befehl.haushaltsbuchId())
+                .kontoname(befehl.kontoname())
+                .waehrungsbetrag(befehl.betrag())
+                .build());
+        } else {
+            this.apply(ImmutableKontoWurdeAngelegt.builder()
+                .kontoname(befehl.kontoname())
+                .kontoart(befehl.kontoart())
+                .build());
+        }
+    }
 
     // ???
     public Saldo kontostandBerechnen(final String kontoname) {
@@ -119,6 +141,11 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
         }
 
         return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
+    }
+
+    @EventSourcingHandler
+    private void falls(final ImmutableHaushaltsbuchAngelegt ereignis) {
+        this.id = ereignis.id();
     }
 
     @EventSourcingHandler
@@ -168,7 +195,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             this.apply(ImmutableBuchungWurdeAusgeführt.builder().buchungssatz(buchungssatz).build());
         } else {
-            this.apply(buchungAblehnen(buchungssatz));
+            this.apply(this.buchungAblehnen(buchungssatz));
         }
     }
 

@@ -13,6 +13,8 @@ public interface BucheAusgabe {
     UUID haushaltsbuchId();
 
     String sollkonto();
+
     String habenkonto();
+
     MonetaryAmount waehrungsbetrag();
 }

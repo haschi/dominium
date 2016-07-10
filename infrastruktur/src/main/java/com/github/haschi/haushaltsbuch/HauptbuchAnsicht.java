@@ -11,7 +11,10 @@ public interface HauptbuchAnsicht  {
     UUID haushaltsbuchId();
 
     List<String> aktivkonten();
+
     List<String> passivkonten();
+
     List<String> ertragskonten();
+
     List<String> aufwandskonten();
 }

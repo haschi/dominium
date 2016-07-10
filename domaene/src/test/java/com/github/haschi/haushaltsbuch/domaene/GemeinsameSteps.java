@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
@@ -11,7 +10,6 @@ import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.util.UUID;
 
@@ -43,7 +41,7 @@ public final class GemeinsameSteps {
                 .kontoart(Kontoart.Aktiv)
                 .build();
 
-        commandGateway.sendAndWait(kommando);
+        this.commandGateway.sendAndWait(kommando);
     }
 
     @Dann("^werde ich einen Pending Step haben$")

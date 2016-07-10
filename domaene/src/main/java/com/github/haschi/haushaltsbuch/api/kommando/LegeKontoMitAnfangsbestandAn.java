@@ -14,6 +14,8 @@ public interface LegeKontoMitAnfangsbestandAn {
     UUID haushaltsbuchId();
 
     String kontoname();
+
     Kontoart kontoart();
+
     MonetaryAmount betrag();
 }

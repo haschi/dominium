@@ -13,6 +13,8 @@ public interface BucheTilgung {
     UUID haushaltsbuchId();
 
     String sollkonto();
+
     String habenkonto();
+
     MonetaryAmount waehrungsbetrag();
 }

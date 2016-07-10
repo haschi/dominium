@@ -1,18 +1,14 @@
 package com.github.haschi.haushaltsbuch.domaene;
 
-import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableJournalWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import cucumber.api.PendingException;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.UUID;

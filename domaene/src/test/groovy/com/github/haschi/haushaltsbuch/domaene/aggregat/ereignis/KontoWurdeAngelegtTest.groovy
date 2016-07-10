@@ -1,14 +1,15 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis
 
 import nl.jqno.equalsverifier.EqualsVerifier
+import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 
 public final class KontoWurdeAngelegtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
         expect: EqualsVerifier
-                .forClass(KontoWurdeAngelegt)
-                .withRedefinedSuperclass()
+                .forClass(ImmutableKontoWurdeAngelegt)
+                .suppress(Warning.NULL_FIELDS)
                 .verify();
     }
 }

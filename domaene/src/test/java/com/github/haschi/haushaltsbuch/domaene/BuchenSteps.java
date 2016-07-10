@@ -8,10 +8,10 @@ import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchEreignis;
+import com.github.haschi.haushaltsbuch.domaene.testsupport.BuchungWurdeAbgelehntTransformer;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.DieWelt;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.Kontostand;
 import com.github.haschi.haushaltsbuch.domaene.testsupport.MoneyConverter;
-import cucumber.api.PendingException;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -46,7 +46,7 @@ public final class BuchenSteps {
 
         kontostände.stream()
             .map(Kontostand.alsKontoMitKontostandAnlegenKommando(identitätsmerkmal))
-            .forEach(kommando -> commandGateway.sendAndWait(kommando));
+            .forEach(kommando -> this.commandGateway.sendAndWait(kommando));
     }
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")
@@ -65,9 +65,10 @@ public final class BuchenSteps {
     }
 
     @Dann("^(?:werde ich|ich werde) die Buchung mit der Fehlermeldung \"([^\"]*)\" abgelehnt haben$")
-    public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(final BuchungWurdeAbgelehnt fehlermeldung) {
+    public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(
+        @Transform(BuchungWurdeAbgelehntTransformer.class) final BuchungWurdeAbgelehnt fehlermeldung) {
 
-        throw new PendingException();
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(fehlermeldung);
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")

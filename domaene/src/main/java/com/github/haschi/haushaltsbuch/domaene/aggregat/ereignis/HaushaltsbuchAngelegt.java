@@ -5,6 +5,6 @@ import org.immutables.value.Value;
 import java.util.UUID;
 
 @Value.Immutable
-public interface HaushaltsbuchAngelegt extends HaushaltsbuchEreignis{
+public interface HaushaltsbuchAngelegt extends HaushaltsbuchEreignis {
     @Value.Parameter UUID id();
 }
