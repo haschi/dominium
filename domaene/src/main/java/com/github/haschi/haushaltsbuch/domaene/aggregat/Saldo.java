@@ -40,4 +40,8 @@ public abstract class Saldo {
                 .append(this.betrag)
                 .toHashCode();
     }
+
+    public abstract Saldo soll(final MonetaryAmount buchungssatz);
+
+    public abstract Saldo haben(final MonetaryAmount währungsbetrag);
 }

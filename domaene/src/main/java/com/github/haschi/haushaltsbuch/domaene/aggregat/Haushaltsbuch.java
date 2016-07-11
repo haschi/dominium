@@ -15,11 +15,15 @@ import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAus
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableBuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableBuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHaushaltsbuchAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableKontoWurdeNichtAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableSaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.JournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeNichtAngelegt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.SaldoWurdeGeaendert;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -35,26 +39,23 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
     private static final long serialVersionUID = -4864886584911078356L;
 
-    private final Journal journal;
-    private final Hauptbuch hauptbuch;
+    private Journal journal;
+    private Hauptbuch hauptbuch;
 
     @AggregateIdentifier
     private UUID id;
 
     protected Haushaltsbuch() {
         super();
-        this.journal = new Journal();
-        this.hauptbuch = new Hauptbuch();
     }
 
     @CommandHandler
     public Haushaltsbuch(final ImmutableBeginneHaushaltsbuchfuehrung befehl) {
         super();
 
-        this.hauptbuch = new Hauptbuch();
-        this.journal = new Journal();
-
         this.apply(ImmutableHaushaltsbuchAngelegt.of(befehl.id()));
+        this.apply(ImmutableJournalWurdeAngelegt.builder().aktuelleHaushaltsbuchId(befehl.id()).build());
+        this.apply(ImmutableHauptbuchWurdeAngelegt.builder().haushaltsbuchId(befehl.id()).build());
 
         this.apply(ImmutableKontoWurdeAngelegt.builder()
             .kontoart(Kontoart.Aktiv)
@@ -63,7 +64,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     }
 
     @CommandHandler
-    public void on(final ImmutableBucheEinnahme befehl) {
+    public void einnahmeBuchen(final ImmutableBucheEinnahme befehl) {
         this.buchungssatzHinzufügen(new Buchungssatz(
             befehl.sollkonto(),
             befehl.habenkonto(),
@@ -100,16 +101,16 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
                 .kontoname(befehl.kontoname())
                 .kontoart(befehl.kontoart())
                 .build());
+        } else {
+            this.apply(ImmutableKontoWurdeAngelegt.builder()
+                .kontoname(befehl.kontoname())
+                .kontoart(befehl.kontoart())
+                .build());
 
             this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(befehl.haushaltsbuchId())
                 .kontoname(befehl.kontoname())
                 .waehrungsbetrag(befehl.betrag())
-                .build());
-        } else {
-            this.apply(ImmutableKontoWurdeAngelegt.builder()
-                .kontoname(befehl.kontoname())
-                .kontoart(befehl.kontoart())
                 .build());
         }
     }
@@ -133,7 +134,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
     private Saldo saldieren(final MonetaryAmount summerDerSollBuchungen, final MonetaryAmount summerDerHabenBuchungen) {
         if (summerDerHabenBuchungen.isEqualTo(summerDerSollBuchungen)) {
-            return new SollHabenSaldo(summerDerHabenBuchungen.subtract(summerDerSollBuchungen));
+            return new SollHabenSaldo();
         }
 
         if (summerDerHabenBuchungen.isGreaterThan(summerDerSollBuchungen)) {
@@ -166,16 +167,23 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     }
 
     @EventSourcingHandler
+    public void falls(final SaldoWurdeGeaendert saldoGeaendert) {
+        this.hauptbuch.saldoÄndern(saldoGeaendert);
+    }
+
+    @EventSourcingHandler
     public void falls(final BuchungWurdeAusgeführt ereignis) {
         this.journal.buchungssatzHinzufügen(ereignis.buchungssatz());
     }
 
+    @EventSourcingHandler
     public void falls(final HauptbuchWurdeAngelegt hauptbuchWurdeAngelegt) {
-        // vorläufig nicht tun
+        this.hauptbuch = new Hauptbuch();
     }
 
+    @EventSourcingHandler
     public void falls(final JournalWurdeAngelegt journalWurdeAngelegt) {
-        // vorläufig nichts tun
+        this.journal = new Journal();
     }
 
     @CommandHandler
@@ -194,6 +202,26 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             this.apply(ImmutableBuchungWurdeAusgeführt.builder().buchungssatz(buchungssatz).build());
+
+            final Konto sollkonto = this.hauptbuch.suchen(buchungssatz.getSollkonto());
+            final Saldo saldo = sollkonto.buchen(buchungssatz);
+
+            final SaldoWurdeGeaendert ereignis = ImmutableSaldoWurdeGeaendert.builder()
+                .kontoname(buchungssatz.getSollkonto())
+                .neuerSaldo(saldo)
+                .build();
+
+            this.apply(ereignis);
+
+            final Konto habenkonto = this.hauptbuch.suchen(buchungssatz.getHabenkonto());
+            final Saldo habenkontosaldo = habenkonto.buchen(buchungssatz);
+            final SaldoWurdeGeaendert habenkontoereignis = ImmutableSaldoWurdeGeaendert.builder()
+                .kontoname(buchungssatz.getHabenkonto())
+                .neuerSaldo(habenkontosaldo)
+                .build();
+
+            this.apply(habenkontoereignis);
+
         } else {
             this.apply(this.buchungAblehnen(buchungssatz));
         }
@@ -216,9 +244,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannAusgabeGebuchtWerden(buchungssatz)) {
-                this.apply(ImmutableBuchungWurdeAusgeführt.builder()
-                    .buchungssatz(buchungssatz)
-                    .build());
+                this.buchungssatzHinzufügen(buchungssatz);
             } else {
                 this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
                     .grund("Ausgaben können nicht auf Ertragskonten gebucht werden.")
@@ -240,9 +266,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
             if (this.hauptbuch.kannTilgungGebuchtWerden(buchungssatz)) {
-                this.apply(ImmutableBuchungWurdeAusgeführt.builder()
-                    .buchungssatz(buchungssatz)
-                    .build());
+                this.buchungssatzHinzufügen(buchungssatz);
             } else {
                 this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
                     .grund("Tilgung kann nicht auf Konto gebucht werden.")

@@ -39,7 +39,7 @@ class SollsaldoTest extends Specification {
         given:
         def betrag = 0.0.euro
         def saldo1 = new Sollsaldo(betrag)
-        def saldo2 = new SollHabenSaldo(betrag)
+        def saldo2 = new SollHabenSaldo()
 
         expect:
         saldo1.equals(saldo2)

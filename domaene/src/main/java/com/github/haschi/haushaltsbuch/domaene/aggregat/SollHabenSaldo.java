@@ -1,8 +1,12 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import org.javamoney.moneta.Money;
+
+import javax.money.Monetary;
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
+import java.math.BigDecimal;
 import java.util.Locale;
 
 
@@ -17,8 +21,18 @@ public class SollHabenSaldo extends Saldo {
         return this.betrag;
     }
 
-    public SollHabenSaldo(final MonetaryAmount betrag) {
-        super(betrag);
+    @Override
+    public final Saldo soll(final MonetaryAmount buchungssatz) {
+        return new Sollsaldo(buchungssatz);
+    }
+
+    @Override
+    public final Saldo haben(final MonetaryAmount währungsbetrag) {
+        return new Habensaldo(währungsbetrag);
+    }
+
+    public SollHabenSaldo() {
+        super(Money.of(BigDecimal.ZERO, Monetary.getCurrency("EUR")));
     }
 
     @Override

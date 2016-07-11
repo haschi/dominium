@@ -11,7 +11,7 @@ public class KontoTest extends Specification {
     def "erfüllt die equals und hashCode Spezifikation"() {
         expect: EqualsVerifier
                 .forClass(Konto)
-                .withIgnoredFields("regel")
+                .withOnlyTheseFields("kontoname")
                 .verify()
     }
 

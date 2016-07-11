@@ -4,6 +4,7 @@ import com.github.haschi.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableSaldoWurdeGeaendert;
 import testsupport.DieWelt;
 import testsupport.HabensaldoConverter;
 import testsupport.MoneyConverter;
@@ -17,6 +18,8 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class AnfangsbestandBuchenSteps {
 
@@ -44,14 +47,24 @@ public final class AnfangsbestandBuchenSteps {
     public void dann_werde_ich_auf_dem_Konto_ein_Sollsaldo_haben(
             final String konto,
             @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo) {
-        throw new PendingException();
+
+        assertThat(this.welt.aktuellerEreignisstrom())
+            .contains(ImmutableSaldoWurdeGeaendert.builder()
+                .kontoname(konto)
+                .neuerSaldo(erwarteterSaldo)
+                .build());
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
     public void dann_werde_ich_auf_dem_Konto_ein_Habensaldo_haben(
             final String konto,
             @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo) {
-        throw new PendingException();
+
+        assertThat(this.welt.aktuellerEreignisstrom())
+            .contains(ImmutableSaldoWurdeGeaendert.builder()
+                .kontoname(konto)
+                .neuerSaldo(erwarteterSaldo)
+                .build());
     }
 
     @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) gebucht$")

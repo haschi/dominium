@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.domaene.KontonameSpezifikation;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.SaldoWurdeGeaendert;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.HashSet;
@@ -10,6 +11,11 @@ public final class Hauptbuch {
 
     public static final Hauptbuch UNDEFINIERT = new Hauptbuch();
     public final Set<Konto> konten = new HashSet<>();
+
+    void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert) {
+        final Konto konto = this.suchen(saldoGeaendert.kontoname());
+        konto.setSaldo(saldoGeaendert.neuerSaldo());
+    }
 
     boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
         return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());

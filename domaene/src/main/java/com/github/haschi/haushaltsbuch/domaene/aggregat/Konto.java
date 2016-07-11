@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.money.MonetaryAmount;
 
-@ValueObject(exclude = "regel")
+@ValueObject(exclude = {"regel", "kontoart", "saldo"})
 public final class Konto {
 
     public static final Konto ANFANGSBESTAND = new Konto("Anfangsbestand", new KeineRegel(), Kontoart.Aktiv);
@@ -14,13 +14,17 @@ public final class Konto {
     private final String kontoname;
 
     private final Buchungsregel regel;
+
     private final Kontoart kontoart;
+
+    private Saldo saldo;
 
     public Konto(final String kontoname, final Buchungsregel regel, final Kontoart kontoart) {
 
         super();
         this.regel = regel;
         this.kontoart = kontoart;
+        this.saldo = new SollHabenSaldo();
 
         if (StringUtils.isBlank(kontoname)) {
             throw new IllegalArgumentException("Der Kontoname darf nicht leer sein");
@@ -31,6 +35,10 @@ public final class Konto {
 
     public String getBezeichnung() {
         return this.kontoname;
+    }
+
+    public void setSaldo(final Saldo saldo) {
+        this.saldo = saldo;
     }
 
     @Override
@@ -53,5 +61,17 @@ public final class Konto {
 
     public Kontoart getKontoart() {
         return this.kontoart;
+    }
+
+    public Saldo buchen(final Buchungssatz buchungssatz) {
+        if (buchungssatz.hatSollkonto(this.getBezeichnung())) {
+            return this.saldo.soll(buchungssatz.getWährungsbetrag());
+        }
+
+        if (buchungssatz.hatHabenkonto(this.getBezeichnung())) {
+            return this.saldo.haben(buchungssatz.getWährungsbetrag());
+        }
+
+        throw new IllegalArgumentException();
     }
 }

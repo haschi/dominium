@@ -7,6 +7,7 @@ import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableSaldoWurdeGeaendert;
 import testsupport.DieWelt;
 import testsupport.Kontostand;
 import testsupport.MoneyConverter;
@@ -19,6 +20,8 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class AusgabeBuchenSteps {
 
@@ -62,7 +65,13 @@ public final class AusgabeBuchenSteps {
 
     @Dann("^werde ich folgende Kontostände erhalten:$")
     public void dann_werde_ich_folgende_Kontostände_erhalten(final List<Kontostand> kontostände) {
-        throw new PendingException();
+        for (final Kontostand kontostand : kontostände) {
+            assertThat(this.welt.aktuellerEreignisstrom())
+                .contains(ImmutableSaldoWurdeGeaendert.builder()
+                    .kontoname(kontostand.kontoname)
+                    .neuerSaldo(saldoFürKonto(kontostand))
+                    .build());
+        }
     }
 
     private static Saldo saldoFürKonto(final Kontostand kontostand) {
