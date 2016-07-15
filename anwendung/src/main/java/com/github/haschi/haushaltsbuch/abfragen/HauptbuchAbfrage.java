@@ -7,10 +7,15 @@ import com.google.common.collect.ImmutableSet;
 import org.axonframework.repository.Repository;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.UUID;
 
 @SuppressWarnings("checkstyle:designforextension")
 public class HauptbuchAbfrage {
+
+    @Inject
+    private EntityManager entityManager;
+
     @Inject
     private Repository<Haushaltsbuch> repository;
 

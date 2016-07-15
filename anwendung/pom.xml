@@ -15,20 +15,22 @@
 
     <dependencies>
 
+        <!-- Abhängigkeiten zu anderen Modulen dieses Projekts -->
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>domaene</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>infrastruktur</artifactId>
+        </dependency>
+
+        <!-- Abhängigkeiten zu Bibliotheken -->
+        <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>infrastruktur</artifactId>
         </dependency>
 
         <dependency>
@@ -43,6 +45,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.kamaladafrica</groupId>
             <artifactId>axon-cdi</artifactId>
             <version>master</version>
@@ -53,6 +65,7 @@
             <artifactId>jboss-jsf-api_2.2_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
@@ -70,6 +83,7 @@
             <artifactId>spock-core</artifactId>
         </dependency>
 
+        <!-- Test -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>

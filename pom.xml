@@ -44,8 +44,7 @@
         <groovy.classifier>indy</groovy.classifier>
 
         <h2.version>1.4.191</h2.version>
-        <hibernate.version>5.0.7.Final</hibernate.version>
-        <version.jboss.bom>10.0.0.Final</version.jboss.bom>
+        <version.jboss.bom>10.0.1.Final</version.jboss.bom>
     </properties>
 
     <scm>
@@ -121,7 +120,7 @@
 
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
-                <artifactId>wildfly-javaee7-with-tools</artifactId>
+                <artifactId>wildfly-javaee7</artifactId>
                 <version>${version.jboss.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -510,6 +509,12 @@
                                 <requireMavenVersion>
                                     <version>[3.3,)</version>
                                 </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                                <requireOS>
+                                    <family>unix</family>
+                                </requireOS>
                             </rules>
                         </configuration>
                     </execution>
