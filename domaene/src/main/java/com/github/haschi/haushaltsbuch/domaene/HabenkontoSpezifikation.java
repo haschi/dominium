@@ -15,6 +15,6 @@ public class HabenkontoSpezifikation implements Spezifikation<Buchungssatz> {
 
     @Override
     public final boolean istErfülltVon(final Buchungssatz buchungssatz) {
-        return buchungssatz.hatHabenkonto(this.konto.getBezeichnung()); // NOPMD false positive? TODO
+        return buchungssatz.hatHabenkonto(this.konto.getName()); // NOPMD false positive? TODO
     }
 }

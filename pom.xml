@@ -420,6 +420,12 @@
                         <debug>true</debug>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <artifactId>jdepend-maven-plugin</artifactId>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <version>2.0</version>
+                </plugin>
                 <!-- checkstyle -->
                 <!-- TODO: auslagern nach test.bom -->
                 <plugin>
@@ -521,6 +527,11 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <artifactId>jdepend-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+
+            </plugin>
             <plugin>
                 <!-- Die Reihenfolge der Plugins ist wichtig und darf nicht geändert werden:
                      1. Compiler und Annotation Processing

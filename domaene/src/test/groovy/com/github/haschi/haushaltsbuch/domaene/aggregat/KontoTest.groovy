@@ -1,10 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat
 
-import com.github.haschi.haushaltsbuch.api.Kontoart
 import nl.jqno.equalsverifier.EqualsVerifier
-import org.apache.commons.lang3.StringUtils
 import spock.lang.Specification
-import spock.lang.Unroll
 
 public class KontoTest extends Specification {
 
@@ -13,19 +10,5 @@ public class KontoTest extends Specification {
                 .forClass(Konto)
                 .withOnlyTheseFields("kontoname")
                 .verify()
-    }
-
-    @Unroll
-    def "Der Kontoname darf nicht leer sein"(final String kontoname) {
-        when:
-        new Konto(kontoname, new KeineRegel(), Kontoart.Aktiv)
-
-        then:
-        thrown IllegalArgumentException
-
-        where:
-        kontoname         | _
-        StringUtils.EMPTY | _
-        StringUtils.SPACE | _
     }
 }

@@ -2,16 +2,19 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.coding.aspekte.ValueObject;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import org.apache.commons.lang3.StringUtils;
+import com.github.haschi.haushaltsbuch.api.Kontoname;
 
 import javax.money.MonetaryAmount;
 
 @ValueObject(exclude = {"regel", "kontoart", "saldo"})
 public final class Konto {
 
-    public static final Konto ANFANGSBESTAND = new Konto("Anfangsbestand", new KeineRegel(), Kontoart.Aktiv);
+    public static final Konto ANFANGSBESTAND = new Konto(
+        Kontoname.of("Anfangsbestand"),
+        new KeineRegel(),
+        Kontoart.Aktiv);
 
-    private final String kontoname;
+    private final Kontoname kontoname;
 
     private final Buchungsregel regel;
 
@@ -19,22 +22,28 @@ public final class Konto {
 
     private Saldo saldo;
 
-    public Konto(final String kontoname, final Buchungsregel regel, final Kontoart kontoart) {
+    public static Konto aktiv(final String kontoname) {
+        return of(kontoname, Kontoart.Aktiv);
+    }
+
+    public static Konto aufwand(final String kontoname) {
+        return of(kontoname, Kontoart.Aufwand);
+    }
+
+    public static Konto of(final String kontoname, final Kontoart kontoart) {
+        final Kontoname name = Kontoname.of(kontoname);
+        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoart);
+        return new Konto(name, fabrik.erzeugen(name), kontoart);
+    }
+
+    public Konto(final Kontoname kontoname, final Buchungsregel regel, final Kontoart kontoart) {
 
         super();
         this.regel = regel;
         this.kontoart = kontoart;
         this.saldo = new SollHabenSaldo();
 
-        if (StringUtils.isBlank(kontoname)) {
-            throw new IllegalArgumentException("Der Kontoname darf nicht leer sein");
-        }
-
         this.kontoname = kontoname;
-    }
-
-    public String getBezeichnung() {
-        return this.kontoname;
     }
 
     public void setSaldo(final Saldo saldo) {
@@ -56,7 +65,7 @@ public final class Konto {
     }
 
     public Buchungssatz buchungssatzFürAnfangsbestand(final MonetaryAmount betrag) {
-        return this.regel.buchungssatzFürAnfangsbestand(this.kontoname, betrag);
+        return this.regel.buchungssatzFürAnfangsbestand(this, betrag);
     }
 
     public Kontoart getKontoart() {
@@ -64,14 +73,18 @@ public final class Konto {
     }
 
     public Saldo buchen(final Buchungssatz buchungssatz) {
-        if (buchungssatz.hatSollkonto(this.getBezeichnung())) {
+        if (buchungssatz.hatSollkonto(this.kontoname)) {
             return this.saldo.soll(buchungssatz.getWährungsbetrag());
         }
 
-        if (buchungssatz.hatHabenkonto(this.getBezeichnung())) {
+        if (buchungssatz.hatHabenkonto(this.kontoname)) {
             return this.saldo.haben(buchungssatz.getWährungsbetrag());
         }
 
         throw new IllegalArgumentException();
+    }
+
+    public Kontoname getName() {
+        return this.kontoname;
     }
 }

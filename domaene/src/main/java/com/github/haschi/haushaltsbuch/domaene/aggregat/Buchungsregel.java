@@ -7,5 +7,5 @@ public interface Buchungsregel {
 
     boolean kannVerlustBuchen(Buchungssatz buchungssatz);
 
-    Buchungssatz buchungssatzFürAnfangsbestand(String kontoname, MonetaryAmount betrag);
+    Buchungssatz buchungssatzFürAnfangsbestand(Konto konto, MonetaryAmount betrag);
 }

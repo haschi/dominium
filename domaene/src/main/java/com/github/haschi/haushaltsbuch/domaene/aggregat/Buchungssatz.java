@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.coding.aspekte.ValueObject;
+import com.github.haschi.haushaltsbuch.api.Kontoname;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
@@ -10,11 +11,11 @@ import java.util.Locale;
 @ValueObject
 public final class Buchungssatz {
 
-    private final String sollkonto;
-    private final String habenkonto;
+    private final Kontoname sollkonto;
+    private final Kontoname habenkonto;
     private final MonetaryAmount währungsbetrag;
 
-    public Buchungssatz(final String sollkonto, final String habenkonto, final MonetaryAmount währungsbetrag) {
+    public Buchungssatz(final Kontoname sollkonto, final Kontoname habenkonto, final MonetaryAmount währungsbetrag) {
         super();
 
         if (währungsbetrag.isNegative()) {
@@ -26,19 +27,19 @@ public final class Buchungssatz {
         this.währungsbetrag = währungsbetrag;
     }
 
-    public boolean hatSollkonto(final String konto) {
+    public boolean hatSollkonto(final Kontoname konto) {
         return this.sollkonto.equals(konto);
     }
 
-    public boolean hatHabenkonto(final String konto) {
+    public boolean hatHabenkonto(final Kontoname konto) {
         return this.habenkonto.equals(konto);
     }
 
-    public String getSollkonto() {
+    public Kontoname getSollkonto() {
         return this.sollkonto;
     }
 
-    public String getHabenkonto() {
+    public Kontoname getHabenkonto() {
         return this.habenkonto;
     }
 
@@ -46,10 +47,10 @@ public final class Buchungssatz {
         return this.währungsbetrag;
     }
 
-    public boolean istAnfangsbestandFür(final String konto) {
+    public boolean istAnfangsbestandFür(final Kontoname konto) {
         return (this.habenkonto.equals(konto)
-                && this.sollkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung()))
-                || (this.habenkonto.equals(Konto.ANFANGSBESTAND.getBezeichnung())
+                && this.sollkonto.equals(Konto.ANFANGSBESTAND.getName()))
+                || (this.habenkonto.equals(Konto.ANFANGSBESTAND.getName())
                 && this.sollkonto.equals(konto));
     }
 
@@ -59,9 +60,9 @@ public final class Buchungssatz {
         final String betrag = format.format(this.währungsbetrag); // NOPMD LoD TODO
 
         return String.format("%s (%s) an %s (%s)", // NOPMD LoD TODO
-                this.sollkonto,
+                this.sollkonto.toString(),
                 betrag,
-                this.habenkonto,
+                this.habenkonto.toString(),
                 betrag);
     }
 }

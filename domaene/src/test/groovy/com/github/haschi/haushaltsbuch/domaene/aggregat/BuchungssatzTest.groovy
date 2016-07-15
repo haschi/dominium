@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat
 
+import com.github.haschi.haushaltsbuch.api.Kontoname
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
@@ -12,11 +13,11 @@ public final class BuchungssatzTest extends Specification {
         def währungsbetrag = 12.23.euro
 
         when: "Wenn ich daraus einen Buchungssatz erzeuge"
-        def buchungssatz = new Buchungssatz("sollkonto", "habenkonto", währungsbetrag);
+        def buchungssatz = new Buchungssatz(Kontoname.of("sollkonto"), Kontoname.of("habenkonto"), währungsbetrag);
 
         then: "Dann sind Sollkonto, Habenkonto und Währungsbetrag Teil des Buchungssatzes"
-        buchungssatz.getHabenkonto() == "habenkonto";
-        buchungssatz.getSollkonto() == "sollkonto";
+        buchungssatz.hatHabenkonto(Kontoname.of("habenkonto"))
+        buchungssatz.hatSollkonto(Kontoname.of("sollkonto"))
         buchungssatz.währungsbetrag == währungsbetrag;
     }
 
@@ -30,7 +31,10 @@ public final class BuchungssatzTest extends Specification {
 
         given:
         def MonetaryAmount währungsbetrag = 123.45.euro
-        def buchungssatz = new Buchungssatz("Girokonto", "Lebensmittel", währungsbetrag)
+        def buchungssatz = new Buchungssatz(
+                Kontoname.of("Girokonto"),
+                Kontoname.of("Lebensmittel"),
+                währungsbetrag)
 
         expect: buchungssatz.toString() == "Girokonto (123,45 EUR) an Lebensmittel (123,45 EUR)"
     }
@@ -39,7 +43,10 @@ public final class BuchungssatzTest extends Specification {
 
         given:
         def MonetaryAmount währungsbetrag = 123.45.euro
-        when: new Buchungssatz("Girokonto", "Lebensmittel", währungsbetrag.negate())
+        when: new Buchungssatz(
+                Kontoname.of("Girokonto"),
+                Kontoname.of("Lebensmittel"),
+                währungsbetrag.negate())
 
         then: def exception = thrown(IllegalArgumentException)
         exception.message == "Buchungssätze dürfen keine negativen Beträge besitzen."

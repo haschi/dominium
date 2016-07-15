@@ -1,11 +1,13 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Kontoname;
+
 import javax.money.MonetaryAmount;
 
 public final class PassivkontoRegel implements Buchungsregel {
-    private final String kontoname;
+    private final Kontoname kontoname;
 
-    public PassivkontoRegel(final String kontoname) {
+    public PassivkontoRegel(final Kontoname kontoname) {
         super();
         this.kontoname = kontoname;
     }
@@ -21,7 +23,7 @@ public final class PassivkontoRegel implements Buchungsregel {
     }
 
     @Override
-    public Buchungssatz buchungssatzFürAnfangsbestand(final String kontoname, final MonetaryAmount betrag) {
-        return new Buchungssatz(Konto.ANFANGSBESTAND.getBezeichnung(), kontoname, betrag);
+    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto kontoname, final MonetaryAmount betrag) {
+        return new Buchungssatz(Konto.ANFANGSBESTAND.getName(), kontoname.getName(), betrag);
     }
 }

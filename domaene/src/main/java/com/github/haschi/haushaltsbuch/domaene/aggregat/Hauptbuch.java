@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Kontoname;
 import com.github.haschi.haushaltsbuch.domaene.KontonameSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.SaldoWurdeGeaendert;
 import com.google.common.collect.ImmutableSet;
@@ -13,21 +14,23 @@ public final class Hauptbuch {
     public final Set<Konto> konten = new HashSet<>();
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert) {
-        final Konto konto = this.suchen(saldoGeaendert.kontoname());
+        final Konto konto = this.suchen(Kontoname.of(saldoGeaendert.kontoname()));
         konto.setSaldo(saldoGeaendert.neuerSaldo());
     }
 
     boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz) {
-        return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
+        return this.sindAlleBuchungskontenVorhanden(
+            buchungssatz.getSollkonto(),
+            buchungssatz.getHabenkonto());
     }
 
-    boolean sindAlleBuchungskontenVorhanden(final String sollkonto, final String habenkonto) {
+    boolean sindAlleBuchungskontenVorhanden(final Kontoname sollkonto, final Kontoname habenkonto) {
         return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
     }
 
     String fehlermeldungFürFehlendeKontenErzeugen(
-            final String soll,
-            final String haben) {
+            final Kontoname soll,
+            final Kontoname haben) {
 
         if (!this.istKontoVorhanden(soll) && this.istKontoVorhanden(haben)) {
             return String.format("Das Konto %s existiert nicht.", soll);
@@ -61,7 +64,7 @@ public final class Hauptbuch {
                 && habenkonto.kannTilgungGebuchtWerden(buchungssatz);
     }
 
-    boolean istKontoVorhanden(final String konto) {
+    boolean istKontoVorhanden(final Kontoname konto) {
         final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
         return this.getKonten().stream().anyMatch(kontoname::istErfülltVon);
     }
@@ -70,11 +73,10 @@ public final class Hauptbuch {
         return ImmutableSet.copyOf(this.konten);
     }
 
-    public Konto suchen(final String kontoname) {
-        final KontonameSpezifikation kontonameSpezifikation = new KontonameSpezifikation(kontoname);
+    public Konto suchen(final Kontoname kontoname) {
 
         return this.getKonten().stream()
-                .filter(kontonameSpezifikation::istErfülltVon)
+                .filter(k -> k.getName().equals(kontoname))
                 .findFirst()
                 .get();
     }

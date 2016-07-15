@@ -1,12 +1,14 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Kontoname;
+
 import javax.money.MonetaryAmount;
 
 public final class ErtragskontoRegel implements Buchungsregel {
 
-    private final String konto;
+    private final Kontoname konto;
 
-    public ErtragskontoRegel(final String konto) {
+    public ErtragskontoRegel(final Kontoname konto) {
         super();
 
         this.konto = konto;
@@ -23,7 +25,7 @@ public final class ErtragskontoRegel implements Buchungsregel {
     }
 
     @Override
-    public Buchungssatz buchungssatzFürAnfangsbestand(final String kontoname, final MonetaryAmount betrag) {
-        return new Buchungssatz(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
+    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto konto, final MonetaryAmount betrag) {
+        return new Buchungssatz(konto.getName(), Konto.ANFANGSBESTAND.getName(), betrag);
     }
 }

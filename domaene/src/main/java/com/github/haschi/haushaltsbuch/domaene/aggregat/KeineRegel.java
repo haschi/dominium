@@ -14,7 +14,7 @@ public final class KeineRegel implements Buchungsregel {
     }
 
     @Override
-    public Buchungssatz buchungssatzFürAnfangsbestand(final String kontoname, final MonetaryAmount betrag) {
-        return new Buchungssatz(kontoname, Konto.ANFANGSBESTAND.getBezeichnung(), betrag);
+    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto konto, final MonetaryAmount betrag) {
+        return new Buchungssatz(konto.getName(), Konto.ANFANGSBESTAND.getName(), betrag);
     }
 }

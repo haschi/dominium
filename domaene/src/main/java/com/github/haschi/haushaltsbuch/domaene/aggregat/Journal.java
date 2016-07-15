@@ -19,8 +19,8 @@ public final class Journal {
         super();
     }
 
-    public boolean istAnfangsbestandFürKontoVorhanden(final String konto) {
-        return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto));
+    public boolean istAnfangsbestandFürKontoVorhanden(final Konto konto) {
+        return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto.getName()));
     }
 
     boolean buchungssatzHinzufügen(final Buchungssatz buchungssatz) {

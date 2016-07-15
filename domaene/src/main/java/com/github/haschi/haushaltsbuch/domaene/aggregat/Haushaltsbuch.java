@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import com.github.haschi.haushaltsbuch.api.Kontoname;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
@@ -59,15 +60,15 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
         this.apply(ImmutableKontoWurdeAngelegt.builder()
             .kontoart(Kontoart.Aktiv)
-            .kontoname(Konto.ANFANGSBESTAND.getBezeichnung())
+            .kontoname(Konto.ANFANGSBESTAND.getName().toString())
             .build());
     }
 
     @CommandHandler
     public void einnahmeBuchen(final ImmutableBucheEinnahme befehl) {
         this.buchungssatzHinzufügen(new Buchungssatz(
-            befehl.sollkonto(),
-            befehl.habenkonto(),
+            Kontoname.of(befehl.sollkonto()),
+            Kontoname.of(befehl.habenkonto()),
             befehl.waehrungsbetrag()));
     }
 
@@ -80,7 +81,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
     @CommandHandler
     public void neuesKontoHinzufügen(final ImmutableLegeKontoAn befehl) {
-        if (this.hauptbuch.istKontoVorhanden(befehl.kontoname())) {
+        if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname()))) {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
                 .kontoname(befehl.kontoname())
                 .kontoart(befehl.kontoart())
@@ -96,7 +97,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
     @CommandHandler
     public void kontoMitAnfangsbestandAnlegen(final ImmutableLegeKontoMitAnfangsbestandAn befehl) {
-        if (this.hauptbuch.istKontoVorhanden(befehl.kontoname())) {
+        if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname()))) {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
                 .kontoname(befehl.kontoname())
                 .kontoart(befehl.kontoart())
@@ -116,7 +117,7 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     }
 
     // ???
-    public Saldo kontostandBerechnen(final String kontoname) {
+    public Saldo kontostandBerechnen(final Kontoname kontoname) {
         final Konto konto = this.hauptbuch.suchen(kontoname);
         return this.kontostandBerechnen(konto);
     }
@@ -152,8 +153,9 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     @EventSourcingHandler
     public void falls(final ImmutableKontoWurdeAngelegt ereignis) {
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
-        final Buchungsregel regel = fabrik.erzeugen(ereignis.kontoname());
-        final Konto konto = new Konto(ereignis.kontoname(), regel, ereignis.kontoart());
+        final Buchungsregel regel = fabrik.erzeugen(Kontoname.of(ereignis.kontoname()));
+
+        final Konto konto = new Konto(Kontoname.of(ereignis.kontoname()), regel, ereignis.kontoart());
 
         this.hauptbuch.hinzufügen(konto);
     }
@@ -188,10 +190,10 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
 
     @CommandHandler
     public void anfangsbestandBuchen(final ImmutableBucheAnfangsbestand befehl) {
-        if (this.journal.istAnfangsbestandFürKontoVorhanden(befehl.kontoname())) {
+        if (this.journal.istAnfangsbestandFürKontoVorhanden(this.hauptbuch.suchen(Kontoname.of(befehl.kontoname())))) {
             apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(FEHLERMELDUNG).build());
         } else {
-            final Konto konto = this.hauptbuch.suchen(befehl.kontoname());
+            final Konto konto = this.hauptbuch.suchen(Kontoname.of(befehl.kontoname()));
             final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.waehrungsbetrag());
 
             this.buchungssatzHinzufügen(buchungssatz);
@@ -207,16 +209,16 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
             final Saldo saldo = sollkonto.buchen(buchungssatz);
 
             final SaldoWurdeGeaendert ereignis = ImmutableSaldoWurdeGeaendert.builder()
-                .kontoname(buchungssatz.getSollkonto())
+                .kontoname(buchungssatz.getSollkonto().toString())
                 .neuerSaldo(saldo)
                 .build();
 
             this.apply(ereignis);
 
-            final Konto habenkonto = this.hauptbuch.suchen(buchungssatz.getHabenkonto());
-            final Saldo habenkontosaldo = habenkonto.buchen(buchungssatz);
+            final Kontoname habenkonto = buchungssatz.getHabenkonto();
+            final Saldo habenkontosaldo = this.hauptbuch.suchen(habenkonto).buchen(buchungssatz);
             final SaldoWurdeGeaendert habenkontoereignis = ImmutableSaldoWurdeGeaendert.builder()
-                .kontoname(buchungssatz.getHabenkonto())
+                .kontoname(buchungssatz.getHabenkonto().toString())
                 .neuerSaldo(habenkontosaldo)
                 .build();
 
@@ -238,8 +240,8 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     @CommandHandler
     public void ausgabeBuchen(final ImmutableBucheAusgabe befehel) {
         final Buchungssatz buchungssatz = new Buchungssatz(
-            befehel.sollkonto(),
-            befehel.habenkonto(),
+            Kontoname.of(befehel.sollkonto()),
+            Kontoname.of(befehel.habenkonto()),
             befehel.waehrungsbetrag());
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
@@ -252,7 +254,8 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
             }
         } else {
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
-                .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(befehel.sollkonto(), befehel.habenkonto()))
+                .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                    Kontoname.of(befehel.sollkonto()), Kontoname.of(befehel.habenkonto())))
                 .build());
         }
     }
@@ -260,8 +263,8 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
     @CommandHandler
     public void tilgungBuchen(final ImmutableBucheTilgung befehl) {
         final Buchungssatz buchungssatz = new Buchungssatz(
-            befehl.sollkonto(),
-            befehl.habenkonto(),
+            Kontoname.of(befehl.sollkonto()),
+            Kontoname.of(befehl.habenkonto()),
             befehl.waehrungsbetrag());
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz)) {
@@ -275,8 +278,8 @@ public final class Haushaltsbuch extends AbstractAnnotatedAggregateRoot<UUID> {
         } else {
 
             final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
-                befehl.sollkonto(),
-                befehl.habenkonto());
+                Kontoname.of(befehl.sollkonto()),
+                Kontoname.of(befehl.habenkonto()));
 
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
                 .grund(grund)
