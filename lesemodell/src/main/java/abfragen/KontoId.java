@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.abfragen;
+package abfragen;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

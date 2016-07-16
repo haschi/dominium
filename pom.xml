@@ -43,7 +43,8 @@
         <groovy.version>2.4.5</groovy.version>
         <groovy.classifier>indy</groovy.classifier>
 
-        <h2.version>1.4.191</h2.version>
+        <h2.version>1.4.190</h2.version>
+        <hibernate.version>5.0.7.Final</hibernate.version>
         <version.jboss.bom>10.0.1.Final</version.jboss.bom>
     </properties>
 
@@ -731,7 +732,9 @@
         </profile>
     </profiles>
     <modules>
+
         <module>domaene</module>
+        <!--<module>lesemodell</module>-->
         <module>infrastruktur</module>
         <module>anwendung</module>
         <module>coding</module>

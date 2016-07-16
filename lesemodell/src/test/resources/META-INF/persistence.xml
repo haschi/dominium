@@ -7,8 +7,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 
-        <class>com.github.haschi.haushaltsbuch.abfragen.Konto</class>
-        <class>com.github.haschi.haushaltsbuch.abfragen.KontoId</class>
+        <class>abfragen.Konto</class>
+        <class>abfragen.KontoId</class>
         <properties>
 
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

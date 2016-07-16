@@ -4,21 +4,15 @@ import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Named
-@RequestScoped
+//@Named
+//@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+// @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class Haushaltsbuchführung implements Serializable {
 
     private static final long serialVersionUID = 5484105498393122925L;

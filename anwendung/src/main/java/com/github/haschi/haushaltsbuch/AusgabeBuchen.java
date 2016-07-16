@@ -8,8 +8,8 @@ import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+//import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-@ViewScoped
-@ManagedBean
+//@ViewScoped
+//@ManagedBean
 @SuppressWarnings("checkstyle:designforextension")
 public class AusgabeBuchen implements Serializable {
 

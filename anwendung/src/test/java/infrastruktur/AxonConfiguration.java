@@ -15,7 +15,7 @@ import org.axonframework.eventsourcing.SnapshotterTrigger;
 import org.axonframework.eventstore.SnapshotEventStore;
 import org.axonframework.eventstore.fs.FileSystemEventStore;
 import org.axonframework.eventstore.fs.SimpleEventFileResolver;
-import org.axonframework.integration.cdi.AutoConfigure;
+// import org.axonframework.integration.cdi.AutoConfigure;
 import org.axonframework.saga.SagaRepository;
 import org.axonframework.saga.repository.inmemory.InMemorySagaRepository;
 
@@ -29,14 +29,14 @@ public final class AxonConfiguration {
     private static final File storageDir = new File("/home/matthias/storage");
 
     @Produces
-    @AutoConfigure
+    // @AutoConfigure
     @ApplicationScoped
     public EventBus eventBus() {
         return new SimpleEventBus();
     }
 
     @Produces
-    @AutoConfigure
+    // @AutoConfigure
     @ApplicationScoped
     public SnapshotEventStore eventStore() {
         System.out.println("Storage path: " + storageDir.getAbsolutePath());
@@ -50,14 +50,14 @@ public final class AxonConfiguration {
     }
 
     @Produces
-    @AutoConfigure
+    // @AutoConfigure
     @ApplicationScoped
     public SagaRepository sagaRepository() {
         return new InMemorySagaRepository();
     }
 
     @Produces
-    @AutoConfigure
+    // @AutoConfigure
     @ApplicationScoped
     public CommandBus commandBus() {
         return new SimpleCommandBus();
@@ -72,7 +72,7 @@ public final class AxonConfiguration {
     // Snapshots
 
     @Produces
-    @AutoConfigure
+    // @AutoConfigure
     @ApplicationScoped
     public Snapshotter snapshotter() {
         return new AggregateSnapshotter();

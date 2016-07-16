@@ -11,7 +11,7 @@
 
     <artifactId>anwendung</artifactId>
 
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
 
     <dependencies>
 
@@ -21,10 +21,10 @@
             <artifactId>domaene</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>infrastruktur</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.haschi.haushaltsbuch</groupId>-->
+            <!--<artifactId>infrastruktur</artifactId>-->
+        <!--</dependency>-->
 
         <!-- Abhängigkeiten zu Bibliotheken -->
         <dependency>
@@ -33,50 +33,61 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>de.larmic.butterfaces</groupId>
-            <artifactId>components-mojarra</artifactId>
-            <version>1.10.6</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>de.larmic.butterfaces</groupId>-->
+            <!--<artifactId>components-mojarra</artifactId>-->
+            <!--<version>1.10.6</version>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-core</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.axonframework</groupId>-->
+            <!--<artifactId>axon-core</artifactId>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+        <!--</dependency>-->
+
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.kamaladafrica</groupId>
-            <artifactId>axon-cdi</artifactId>
-            <version>master</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
+            <version>5.0.7.Final</version>
             <scope>provided</scope>
         </dependency>
 
+        <!-- OK -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.github.kamaladafrica</groupId>-->
+            <!--<artifactId>axon-cdi</artifactId>-->
+            <!--<version>master</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.spec.javax.faces</groupId>-->
+            <!--<artifactId>jboss-jsf-api_2.2_spec</artifactId>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+
+        <!-- OK -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.spec.javax.ejb</groupId>-->
+            <!--<artifactId>jboss-ejb-api_3.2_spec</artifactId>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.spockframework</groupId>
@@ -113,46 +124,80 @@
         </dependency>
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->
+        <!-- OK -->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-api</artifactId>
         </dependency>
 
+        <!-- OK -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-impl</artifactId>
-            <scope>test</scope>
         </dependency>
 
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
             <artifactId>deltaspike-cdictrl-api</artifactId>
         </dependency>
 
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-test-control-module-api</artifactId>
         </dependency>
 
 
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-test-control-module-impl</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- OK -->
         <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
             <artifactId>deltaspike-cdictrl-weld</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- OK -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.190</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- OK -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jpa-module-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- OK -->
         <dependency>
             <groupId>org.jboss</groupId>
             <artifactId>jandex</artifactId>
@@ -163,44 +208,60 @@
 
     <build>
         <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>2.6</version>-->
+                <!--<configuration>-->
+                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.wildfly.plugins</groupId>-->
+                <!--<artifactId>wildfly-maven-plugin</artifactId>-->
+                <!--<version>1.1.0.Alpha6</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>deploy</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<password>matthias</password>-->
+                            <!--<username>matthias</username>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-ejb-plugin</artifactId>-->
+                <!--<version>2.5.1</version>-->
+                <!--<configuration>-->
+                    <!--<ejbVersion>3.1</ejbVersion>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<addClasspath>true</addClasspath>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
+            <!-- OK -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.1.0.Alpha6</version>
+                <artifactId>maven-jar-plugin</artifactId>
                 <executions>
+
+
                     <execution>
-                        <phase>install</phase>
                         <goals>
-                            <goal>deploy</goal>
+                            <goal>test-jar</goal>
+
                         </goals>
-                        <configuration>
-                            <password>matthias</password>
-                            <username>matthias</username>
-                        </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ejb-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <ejbVersion>3.1</ejbVersion>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
-                </configuration>
             </plugin>
         </plugins>
     </build>

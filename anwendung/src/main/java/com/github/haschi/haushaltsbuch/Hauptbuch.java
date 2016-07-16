@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-@Named
-@RequestScoped
+//@Named
+//@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 public class Hauptbuch implements Serializable {
 
