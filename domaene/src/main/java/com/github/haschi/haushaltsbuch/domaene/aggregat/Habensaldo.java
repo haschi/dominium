@@ -5,24 +5,31 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-public final class Habensaldo extends Saldo {
+public final class Habensaldo
+        extends Saldo
+{
 
     @Override
-    public MonetaryAmount getBetrag() {
+    public MonetaryAmount getBetrag()
+    {
         return this.betrag;
     }
 
-    public Habensaldo(final MonetaryAmount betrag) {
+    public Habensaldo(final MonetaryAmount betrag)
+    {
         super(betrag);
     }
 
     @Override
-    public Saldo soll(final MonetaryAmount buchungssatz) {
-        if (this.betrag.isEqualTo(buchungssatz)) {
+    public Saldo soll(final MonetaryAmount buchungssatz)
+    {
+        if (this.betrag.isEqualTo(buchungssatz))
+        {
             return new SollHabenSaldo();
         }
 
-        if (this.betrag.isGreaterThan(buchungssatz)) {
+        if (this.betrag.isGreaterThan(buchungssatz))
+        {
             return new Habensaldo(this.betrag.subtract(buchungssatz));
         }
 
@@ -30,15 +37,16 @@ public final class Habensaldo extends Saldo {
     }
 
     @Override
-    public Saldo haben(final MonetaryAmount währungsbetrag) {
+    public Saldo haben(final MonetaryAmount währungsbetrag)
+    {
         return new Habensaldo(this.betrag.add(währungsbetrag));
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final String betrag = format.format(this.getBetrag()); // NOPMD LoD TODO
-
         return "Habensaldo{" + betrag + "}";
     }
 }

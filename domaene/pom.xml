@@ -42,13 +42,13 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.kamaladafrica</groupId>
             <artifactId>axon-cdi</artifactId>
             <version>master</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <classifier>${groovy.classifier}</classifier>
+            <classifier>indy</classifier>
         </dependency>
 
         <!-- Erforderlich für CDI Annotationen -->
@@ -121,14 +121,14 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.deltaspike.modules</groupId>-->
-            <!--<artifactId>deltaspike-jpa-module-api</artifactId>-->
+        <!--<groupId>org.apache.deltaspike.modules</groupId>-->
+        <!--<artifactId>deltaspike-jpa-module-api</artifactId>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.deltaspike.modules</groupId>-->
-            <!--<artifactId>deltaspike-jpa-module-impl</artifactId>-->
-            <!--<scope>test</scope>-->
+        <!--<groupId>org.apache.deltaspike.modules</groupId>-->
+        <!--<artifactId>deltaspike-jpa-module-impl</artifactId>-->
+        <!--<scope>test</scope>-->
         <!--</dependency>-->
 
         <dependency>
@@ -167,11 +167,6 @@
 
         <plugins>
 
-            <!-- checkstyle -->
-            <plugin>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-            </plugin>
-
         </plugins>
     </build>
 
@@ -182,25 +177,25 @@
     </reporting>
 
     <profiles>
-            <profile>
-                <id>h2</id>
-                <build>
-                    <testResources>
-                        <testResource>
-                            <directory>src/test/resources-h2</directory>
-                        </testResource>
-                        <testResource>
-                            <directory>src/test/resources</directory>
-                        </testResource>
-                    </testResources>
-                </build>
-                <dependencies>
+        <profile>
+            <id>h2</id>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources-h2</directory>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                </testResources>
+            </build>
+            <dependencies>
 
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-core</artifactId>
-                        <scope>provided</scope>
-                    </dependency>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <scope>provided</scope>
+                </dependency>
 
                 <!--dependency>
                     <groupId>org.hibernate</groupId>
@@ -216,8 +211,8 @@
                     <scope>test</scope>
                 </dependency>
 
-                </dependencies>
-            </profile>
+            </dependencies>
+        </profile>
     </profiles>
 
     <repositories>

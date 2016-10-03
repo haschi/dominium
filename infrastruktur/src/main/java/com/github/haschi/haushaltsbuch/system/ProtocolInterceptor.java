@@ -14,29 +14,30 @@ import java.util.stream.Collectors;
 @Logged
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION)
-public class ProtocolInterceptor {
+public class ProtocolInterceptor
+{
 
     @Inject
     private Logger log;
 
     @AroundInvoke
-    protected Object protocolInvocation(final InvocationContext ic) throws Exception {
+    protected Object protocolInvocation(final InvocationContext ic) throws Exception
+    {
         final StringBuilder parameters = new StringBuilder("[");
 
         final String collect = Arrays.asList(ic.getParameters())
-                .stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
+                                     .stream()
+                                     .map(Object::toString)
+                                     .collect(Collectors.joining(", "));
 
         parameters.append(collect);
 
         parameters.append("]");
-        this.log.log(Level.INFO,
+        this.log.log(
+                Level.INFO,
                 "{0}.{1}({2})",
-                new Object[] {
-                        ic.getMethod().getDeclaringClass().getTypeName(),
-                        ic.getMethod().getName(),
-                        parameters.toString() });
+                new Object[]{ic.getMethod()
+                               .getDeclaringClass().getTypeName(), ic.getMethod().getName(), parameters.toString()});
         return ic.proceed();
     }
 }

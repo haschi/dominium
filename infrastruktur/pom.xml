@@ -52,6 +52,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.kamaladafrica</groupId>
+            <artifactId>axon-cdi</artifactId>
+            <version>master</version>
+        </dependency>
+        
+        <dependency>
             <groupId>org.apache.deltaspike.cdictrl</groupId>
             <artifactId>deltaspike-cdictrl-weld</artifactId>
             <scope>test</scope>
@@ -139,7 +145,7 @@
             <scope>test</scope>
         </dependency>
 
-         <dependency>
+        <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.2_spec</artifactId>
             <scope>provided</scope>
@@ -154,55 +160,52 @@
     </dependencies>
 
     <build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-ejb-plugin</artifactId>
-            <version>2.5.1</version>
-            <configuration>
-                <ejbVersion>3.2</ejbVersion>
-            </configuration>
-        </plugin>
-
+        <plugins>
             <plugin>
-                <artifactId>maven-checkstyle-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <ejbVersion>3.2</ejbVersion>
+                </configuration>
             </plugin>
-    </plugins>
+
+        </plugins>
     </build>
 
     <profiles>
         <profile>
-        <id>h2</id>
-        <build>
-            <testResources>
-                <testResource>
-                    <directory>src/test/resources-h2</directory>
-                </testResource>
-            </testResources>
-        </build>
-        <dependencies>
+            <id>h2</id>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources-h2</directory>
+                    </testResource>
+                </testResources>
+            </build>
+            <dependencies>
 
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-                <scope>test</scope>
-            </dependency>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <version>${h2.version}</version>
+                    <scope>test</scope>
+                </dependency>
 
-            <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
-                <version>1.1</version>
-                <scope>test</scope>
-            </dependency>
+                <dependency>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                    <version>1.1</version>
+                    <scope>test</scope>
+                </dependency>
 
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <scope>test</scope>
-            </dependency>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <scope>test</scope>
+                </dependency>
 
-        </dependencies>
+            </dependencies>
         </profile>
         <profile>
             <id>event-store</id>
