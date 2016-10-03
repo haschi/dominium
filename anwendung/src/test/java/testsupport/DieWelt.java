@@ -1,6 +1,5 @@
 package testsupport;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchEreignis;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -50,12 +49,5 @@ public final class DieWelt
 
         final List<HaushaltsbuchEreignis> haushaltsbuchEreignises = this.ereignisse.get(aggregateIdentifier);
         haushaltsbuchEreignises.add(ereignis);
-    }
-
-    @EventHandler
-    public void falls(final HaushaltsbuchAngelegt ereignis)
-    {
-        final String aggregatIdentifier = ereignis.id()
-                                                  .toString();
     }
 }
