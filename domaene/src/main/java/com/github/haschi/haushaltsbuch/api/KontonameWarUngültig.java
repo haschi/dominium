@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.api;
 
-public class KontonameWarUngültig
+public final class KontonameWarUngültig
         extends RuntimeException
 {
 

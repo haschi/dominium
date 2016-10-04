@@ -5,7 +5,7 @@ import org.aspectj.lang.reflect.CodeSignature;
 
 import java.lang.reflect.Parameter;
 
-class Parameterliste
+final class Parameterliste
 {
     final CodeSignature signature;
     private final Parameter[] parameter;

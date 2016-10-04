@@ -31,11 +31,13 @@ public class AusgabeBuchen
 
     private String id = "";
     private HauptbuchAnsicht hauptbuch;
+    @SuppressWarnings("CanBeFinal")
     @Inject
     private HauptbuchAbfrage abfrage;
     private String sollkonto = "";
     private String habenkonto = "";
     private String betrag = "";
+    @SuppressWarnings("CanBeFinal")
     @Inject
     private CommandGateway commandGateway;
 

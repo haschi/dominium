@@ -13,12 +13,16 @@ import java.util.UUID;
 
 public final class GemeinsameSteps
 {
+    private final DieWelt welt;
+
+    private final CommandGateway commandGateway;
 
     @Inject
-    private DieWelt welt;
-
-    @Inject
-    private CommandGateway commandGateway;
+    public GemeinsameSteps(final CommandGateway commandGateway, final DieWelt welt)
+    {
+        this.commandGateway = commandGateway;
+        this.welt = welt;
+    }
 
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
     public void ich_habe_mit_der_Haushaltsbuchführung_begonnen()

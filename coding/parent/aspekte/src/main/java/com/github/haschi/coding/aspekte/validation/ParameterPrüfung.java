@@ -4,7 +4,7 @@ import com.github.haschi.coding.aspekte.DarfNullSein;
 
 import java.lang.reflect.Parameter;
 
-class ParameterPrüfung
+final class ParameterPrüfung
 {
     private final Parameter parameter;
 

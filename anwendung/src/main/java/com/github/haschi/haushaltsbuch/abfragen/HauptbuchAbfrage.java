@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 @Transactional
 public class HauptbuchAbfrage
 {
-
     @Inject
     private EntityManager entityManager;
 

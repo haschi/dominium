@@ -13,12 +13,16 @@ import javax.money.MonetaryAmount;
 
 public final class EinnahmeBuchenSteps
 {
+    private final CommandGateway commandGateway;
+
+    private final DieWelt welt;
 
     @Inject
-    private DieWelt kontext;
-
-    @Inject
-    private CommandGateway commandGateway;
+    public EinnahmeBuchenSteps(final CommandGateway commandGateway, final DieWelt welt)
+    {
+        this.commandGateway = commandGateway;
+        this.welt = welt;
+    }
 
     @Wenn("^ich meine Einnahme von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void ich_meine_einnahme_per_an_buche(
@@ -28,7 +32,7 @@ public final class EinnahmeBuchenSteps
     {
 
         final BucheEinnahme kommando = ImmutableBucheEinnahme.builder()
-                .haushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+                .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
                 .waehrungsbetrag(währungsbetrag)

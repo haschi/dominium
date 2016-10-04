@@ -1,7 +1,7 @@
 package com.github.haschi.coding.aspekte;
 
 @SuppressWarnings("ClassUnconnectedToPackage")
-public class ArgumentIstNullException
+public final class ArgumentIstNullException
         extends RuntimeException
 {
 

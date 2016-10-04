@@ -2,7 +2,7 @@ package com.github.haschi.coding.aspekte;
 
 import java.lang.reflect.Method;
 
-public class RückgabewertIstNullException
+public final class RückgabewertIstNullException
         extends RuntimeException
 {
     public RückgabewertIstNullException(final Method method)

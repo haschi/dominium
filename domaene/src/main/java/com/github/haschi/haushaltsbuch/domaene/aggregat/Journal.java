@@ -26,9 +26,9 @@ public final class Journal
         return this.buchungssätze.stream().anyMatch(buchungssatz -> buchungssatz.istAnfangsbestandFür(konto.getName()));
     }
 
-    boolean buchungssatzHinzufügen(final Buchungssatz buchungssatz)
+    void buchungssatzHinzufügen(final Buchungssatz buchungssatz)
     {
-        return this.buchungssätze.add(buchungssatz);
+        this.buchungssätze.add(buchungssatz);
     }
 
     MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzSpezifikation)

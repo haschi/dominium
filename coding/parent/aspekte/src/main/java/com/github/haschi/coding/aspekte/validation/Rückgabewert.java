@@ -5,7 +5,7 @@ import com.github.haschi.coding.aspekte.RückgabewertIstNullException;
 
 import java.lang.reflect.Method;
 
-class Rückgabewert
+final class Rückgabewert
 {
     private final Method method;
 

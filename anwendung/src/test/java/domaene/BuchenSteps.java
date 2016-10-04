@@ -29,11 +29,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class BuchenSteps
 {
 
-    @Inject
-    private DieWelt welt;
+    private final DieWelt welt;
+
+    private final CommandGateway commandGateway;
 
     @Inject
-    private CommandGateway commandGateway;
+    public BuchenSteps(final CommandGateway commandGateway, final DieWelt welt)
+    {
+        this.commandGateway = commandGateway;
+        this.welt = welt;
+    }
 
     @Angenommen("^mein Haushaltsbuch besitzt folgende Konten:$")
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände)
@@ -46,7 +51,7 @@ public final class BuchenSteps
 
         kontostände.stream()
                 .map(Kontostand.alsKontoMitKontostandAnlegenKommando(identitätsmerkmal))
-                .forEach(kommando -> this.commandGateway.sendAndWait(kommando));
+                .forEach(this.commandGateway::sendAndWait);
     }
 
     @Wenn("^ich das Konto \"([^\"]*)\" mit einem Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) anlege$")

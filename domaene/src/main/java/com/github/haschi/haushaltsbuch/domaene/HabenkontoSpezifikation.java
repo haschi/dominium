@@ -4,7 +4,7 @@ import com.github.haschi.dominium.aggregat.Spezifikation;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Konto;
 
-public class HabenkontoSpezifikation
+public final class HabenkontoSpezifikation
         implements Spezifikation<Buchungssatz>
 {
     private final Konto konto;

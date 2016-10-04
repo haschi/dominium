@@ -83,7 +83,11 @@ public final class Hauptbuch
     public Konto suchen(final Kontoname kontoname)
     {
 
-        return this.getKonten().stream().filter(k -> k.getName().equals(kontoname)).findFirst().get();
+        return this.getKonten()
+                .stream()
+                .filter(k -> k.getName().equals(kontoname))
+                .findFirst()
+                .orElseThrow(() -> new KontoUnbekannt(kontoname));
     }
 
     public void hinzufügen(final Konto konto)

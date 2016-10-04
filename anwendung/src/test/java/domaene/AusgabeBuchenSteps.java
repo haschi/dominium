@@ -24,12 +24,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public final class AusgabeBuchenSteps
 {
+    private final DieWelt welt;
+
+    private final CommandGateway commandGateway;
 
     @Inject
-    private DieWelt welt;
-
-    @Inject
-    private CommandGateway commandGateway;
+    public AusgabeBuchenSteps(final CommandGateway commandGateway, final DieWelt welt)
+    {
+        this.commandGateway = commandGateway;
+        this.welt = welt;
+    }
 
     private static Saldo saldoFürKonto(final Kontostand kontostand)
     {

@@ -5,7 +5,6 @@ import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.eventhandling.scheduling.java.SimpleEventScheduler;
 import org.axonframework.eventsourcing.AggregateSnapshotter;
@@ -24,8 +23,6 @@ import javax.enterprise.inject.Produces;
 import java.io.File;
 import java.util.concurrent.Executors;
 
-// import org.axonframework.integration.cdi.AutoConfigure;
-
 @ApplicationScoped
 public final class AxonConfiguration
 {
@@ -34,17 +31,8 @@ public final class AxonConfiguration
     @Produces
     @AutoConfigure
     @ApplicationScoped
-    public EventBus eventBus()
-    {
-        return new SimpleEventBus();
-    }
-
-    @Produces
-    @AutoConfigure
-    @ApplicationScoped
     public SnapshotEventStore eventStore()
     {
-        System.out.println("Storage path: " + storageDir.getAbsolutePath());
         return new FileSystemEventStore(new SimpleEventFileResolver(storageDir));
     }
 

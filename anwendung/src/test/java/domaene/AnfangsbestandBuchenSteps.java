@@ -23,11 +23,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AnfangsbestandBuchenSteps
 {
 
-    @Inject
-    private DieWelt welt;
+    private final DieWelt welt;
+
+    private final CommandGateway commandGateway;
 
     @Inject
-    private CommandGateway commandGateway;
+    public AnfangsbestandBuchenSteps(final CommandGateway commandGateway, final DieWelt welt)
+    {
+        this.commandGateway = commandGateway;
+        this.welt = welt;
+    }
 
     @Wenn("^ich auf das Konto \"([^\"]*)\" (?:den Anfangsbestand von) (-?\\d+,\\d{2} [A-Z]{3}) buche$")
     public void wenn_ich_auf_das_Konto_den_Anfangsbestand_buche(
