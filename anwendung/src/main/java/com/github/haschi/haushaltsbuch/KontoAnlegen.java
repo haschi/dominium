@@ -6,7 +6,6 @@ import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.UUID;
@@ -14,51 +13,61 @@ import java.util.UUID;
 @Named
 @RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
-public class KontoAnlegen {
+public class KontoAnlegen
+{
 
     private String id = "";
 
-    public String getId() {
+    public String getId()
+    {
         return this.id;
     }
 
-    public void setId(final String id) {
+    public void setId(final String id)
+    {
         this.id = id;
     }
 
     private String kontoname = "";
 
-    public String getKontoname() {
+    public String getKontoname()
+    {
         return this.kontoname;
     }
 
-    public void setKontoname(final String kontoname) {
+    public void setKontoname(final String kontoname)
+    {
         this.kontoname = kontoname;
     }
 
     private Kontoart kontoart = Kontoart.Aktiv;
 
-    public Kontoart getKontoart() {
+    public Kontoart getKontoart()
+    {
         return this.kontoart;
     }
 
-    public void setKontoart(final Kontoart kontoart) {
+    public void setKontoart(final Kontoart kontoart)
+    {
         this.kontoart = kontoart;
     }
 
-    public Kontoart[] getKontoarten() {
+    public Kontoart[] getKontoarten()
+    {
         return Kontoart.values();
     }
 
     @Inject
     private CommandGateway commandGateway;
 
-    public String ausführen() {
-        final LegeKontoAn befehl = ImmutableLegeKontoAn.builder()
-            .haushaltsbuchId(UUID.fromString(this.id))
-            .kontoname(this.kontoname)
-            .kontoart(this.kontoart)
-            .build();
+    public String ausführen()
+    {
+        final LegeKontoAn befehl = ImmutableLegeKontoAn
+                .builder()
+                .haushaltsbuchId(UUID.fromString(this.id))
+                .kontoname(this.kontoname)
+                .kontoart(this.kontoart)
+                .build();
 
         this.commandGateway.sendAndWait(befehl);
 

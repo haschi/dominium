@@ -38,14 +38,12 @@ public class HauptbuchAbfrageTest
 
     @Inject
     EineDomainCdiBean xbean;
-    
+
     @Test
     public void hauptbuchAbfragen()
     {
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder()
-                                                                             .id(haushaltsbuchId)
-                                                                             .build());
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(haushaltsbuchId).build());
 
         this.entityManager.flush();
         this.entityManager.clear();
@@ -74,7 +72,6 @@ public class HauptbuchAbfrageTest
         entityManager.persist(konto);
         //entityManager.getTransaction().begin();
         entityManager.flush();
-        ;
         //entityManager.getTransaction().commit();
 
     }
