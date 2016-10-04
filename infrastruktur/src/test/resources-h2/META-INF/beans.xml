@@ -2,12 +2,4 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                            http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd" bean-discovery-mode="all">
-
-    <alternatives>
-        <class>com.github.haschi.haushaltsbuch.persistenz.EntityManagerProducer</class>
-        <class>com.github.haschi.testing.TestUhr</class>
-    </alternatives>
-    <decorators>
-        <class>com.github.haschi.haushaltsbuch.persistenz.FlushingHaushaltsbuchRepository</class>
-    </decorators>
 </beans>

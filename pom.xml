@@ -96,13 +96,6 @@
             </dependency>
 
             <!-- auslagern nach coding.bom -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <!-- version>19.0</version -->
-                <version>14.0.1</version>
-                <!-- Höhere Versionen führen zu einem Konflikt im Zusammenhang mit Weld Embedded und Arquillian -->
-            </dependency>
 
             <!-- Alles für Arquillian -->
             <!-- auslagern nach jee-test.bom -->
