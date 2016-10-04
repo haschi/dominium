@@ -7,7 +7,8 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 @Value.Immutable
-public interface BucheAusgabe {
+public interface BucheAusgabe
+{
 
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();

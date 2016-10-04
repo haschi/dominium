@@ -24,11 +24,9 @@ public class ProtocolInterceptor
     protected Object protocolInvocation(final InvocationContext ic) throws Exception
     {
         final StringBuilder parameters = new StringBuilder("[");
-
-        final String collect = Arrays.asList(ic.getParameters())
-                                     .stream()
-                                     .map(Object::toString)
-                                     .collect(Collectors.joining(", "));
+        final String collect = Arrays.stream(ic.getParameters())
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
 
         parameters.append(collect);
 
@@ -37,7 +35,7 @@ public class ProtocolInterceptor
                 Level.INFO,
                 "{0}.{1}({2})",
                 new Object[]{ic.getMethod()
-                               .getDeclaringClass().getTypeName(), ic.getMethod().getName(), parameters.toString()});
+                        .getDeclaringClass().getTypeName(), ic.getMethod().getName(), parameters.toString()});
         return ic.proceed();
     }
 }

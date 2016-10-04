@@ -1,4 +1,5 @@
 package com.github.haschi.haushaltsbuch.persistenz;
 
-public class SchnappschüsseErstellenTest {
+public class SchnappschüsseErstellenTest
+{
 }

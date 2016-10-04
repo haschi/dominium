@@ -34,8 +34,7 @@ public final class GemeinsameSteps
     public void ich_habe_das_Konto_angelegt(final String kontoname)
     {
 
-        final LegeKontoAn kommando = ImmutableLegeKontoAn
-                .builder()
+        final LegeKontoAn kommando = ImmutableLegeKontoAn.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .kontoname(kontoname)
                 .kontoart(Kontoart.Aktiv)

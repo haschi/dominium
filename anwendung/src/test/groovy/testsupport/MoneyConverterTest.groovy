@@ -6,7 +6,7 @@ import spock.lang.Unroll
 
 import javax.money.MonetaryAmount
 
-class MoneyConverterTest  extends Specification {
+class MoneyConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung gültiger Eingabe #zeichenfolge in einen Währungsbetrag"(

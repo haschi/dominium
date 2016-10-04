@@ -11,9 +11,8 @@ import java.util.*;
 public final class DieWelt
 {
 
-    private UUID aktuelleHaushaltsbuchId;
-
     private final Map<String, List<HaushaltsbuchEreignis>> ereignisse = new HashMap<>();
+    private UUID aktuelleHaushaltsbuchId;
 
     public List<HaushaltsbuchEreignis> aktuellerEreignisstrom()
     {
@@ -39,8 +38,7 @@ public final class DieWelt
     public void falls(final HaushaltsbuchEreignis ereignis, final DomainEventMessage<HaushaltsbuchEreignis> message)
     {
 
-        final String aggregateIdentifier = message.getAggregateIdentifier()
-                                                  .toString();
+        final String aggregateIdentifier = message.getAggregateIdentifier().toString();
 
         if (!this.ereignisse.containsKey(aggregateIdentifier))
         {

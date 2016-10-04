@@ -8,7 +8,8 @@ import java.util.UUID;
 
 // @Value.Style(generateSuppressAllWarnings = true, jdkOnly = true, passAnnotations = TargetAggregateIdentifier.class)
 @Value.Immutable
-public interface BucheEinnahme {
+public interface BucheEinnahme
+{
 
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();

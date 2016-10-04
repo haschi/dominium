@@ -31,6 +31,23 @@ public final class AusgabeBuchenSteps
     @Inject
     private CommandGateway commandGateway;
 
+    private static Saldo saldoFürKonto(final Kontostand kontostand)
+    {
+        switch (kontostand.kontoart)
+        {
+            case Aktiv:
+                return new Sollsaldo(kontostand.betrag);
+            case Ertrag:
+                return new Habensaldo(kontostand.betrag);
+            case Aufwand:
+                return new Sollsaldo(kontostand.betrag);
+            case Passiv:
+                return new Sollsaldo(kontostand.betrag);
+            default:
+                throw new IllegalArgumentException("kontostand");
+        }
+    }
+
     @Wenn("^ich meine Ausgabe von (-?\\d+,\\d{2} [A-Z]{3}) per \"([^\"]*)\" an \"([^\"]*)\" buche$")
     public void wenn_ich_meine_ausgabe_buche(
             @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag,
@@ -38,8 +55,7 @@ public final class AusgabeBuchenSteps
             final String habenkonto)
     {
 
-        final BucheAusgabe befehl = ImmutableBucheAusgabe
-                .builder()
+        final BucheAusgabe befehl = ImmutableBucheAusgabe.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
@@ -56,8 +72,7 @@ public final class AusgabeBuchenSteps
             final String habenkonto)
     {
 
-        final BucheTilgung befehl = ImmutableBucheTilgung
-                .builder()
+        final BucheTilgung befehl = ImmutableBucheTilgung.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
@@ -72,28 +87,10 @@ public final class AusgabeBuchenSteps
     {
         for (final Kontostand kontostand : kontostände)
         {
-            assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert
-                    .builder()
+            assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
                     .kontoname(kontostand.kontoname)
                     .neuerSaldo(saldoFürKonto(kontostand))
                     .build());
-        }
-    }
-
-    private static Saldo saldoFürKonto(final Kontostand kontostand)
-    {
-        switch (kontostand.kontoart)
-        {
-            case Aktiv:
-                return new Sollsaldo(kontostand.betrag);
-            case Ertrag:
-                return new Habensaldo(kontostand.betrag);
-            case Aufwand:
-                return new Sollsaldo(kontostand.betrag);
-            case Passiv:
-                return new Sollsaldo(kontostand.betrag);
-            default:
-                throw new IllegalArgumentException("kontostand");
         }
     }
 }

@@ -1,24 +1,28 @@
 package com.github.haschi.coding.aspekte.validation;
 
-import java.lang.reflect.Parameter;
-
 import com.github.haschi.coding.aspekte.DarfNullSein;
 
-class ParameterPrüfung {
+import java.lang.reflect.Parameter;
+
+class ParameterPrüfung
+{
     private final Parameter parameter;
 
-    ParameterPrüfung(final Parameter parameter) {
+    ParameterPrüfung(final Parameter parameter)
+    {
 
         super();
 
         this.parameter = parameter;
     }
 
-    public final boolean istGültig(final Object argument) {
+    public final boolean istGültig(final Object argument)
+    {
         return (argument != null) || this.darfNullSein();
     }
 
-    public final boolean darfNullSein() {
+    public final boolean darfNullSein()
+    {
         return this.parameter.getAnnotation(DarfNullSein.class) != null;
     }
 }

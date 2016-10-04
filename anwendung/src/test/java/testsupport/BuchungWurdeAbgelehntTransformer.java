@@ -4,12 +4,13 @@ import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbg
 import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableBuchungWurdeAbgelehnt;
 import cucumber.api.Transformer;
 
-public final class BuchungWurdeAbgelehntTransformer extends Transformer<BuchungWurdeAbgelehnt> {
+public final class BuchungWurdeAbgelehntTransformer
+        extends Transformer<BuchungWurdeAbgelehnt>
+{
 
     @Override
-    public BuchungWurdeAbgelehnt transform(final String grund) {
-        return ImmutableBuchungWurdeAbgelehnt.builder()
-            .grund(grund)
-            .build();
+    public BuchungWurdeAbgelehnt transform(final String grund)
+    {
+        return ImmutableBuchungWurdeAbgelehnt.builder().grund(grund).build();
     }
 }

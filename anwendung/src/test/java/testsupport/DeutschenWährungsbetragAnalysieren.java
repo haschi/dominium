@@ -5,16 +5,19 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-class DeutschenWährungsbetragAnalysieren {
+class DeutschenWährungsbetragAnalysieren
+{
 
     private final MonetaryAmountFormat format;
 
-    DeutschenWährungsbetragAnalysieren() {
+    DeutschenWährungsbetragAnalysieren()
+    {
         super();
         this.format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
     }
 
-    public final MonetaryAmount aus(final String währungsbetrag) {
+    public final MonetaryAmount aus(final String währungsbetrag)
+    {
         return this.format.parse(währungsbetrag);
     }
 }

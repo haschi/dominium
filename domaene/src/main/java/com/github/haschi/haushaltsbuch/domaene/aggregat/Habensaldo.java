@@ -9,15 +9,15 @@ public final class Habensaldo
         extends Saldo
 {
 
+    public Habensaldo(final MonetaryAmount betrag)
+    {
+        super(betrag);
+    }
+
     @Override
     public MonetaryAmount getBetrag()
     {
         return this.betrag;
-    }
-
-    public Habensaldo(final MonetaryAmount betrag)
-    {
-        super(betrag);
     }
 
     @Override

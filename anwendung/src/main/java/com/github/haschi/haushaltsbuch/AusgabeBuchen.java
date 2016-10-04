@@ -8,8 +8,6 @@ import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-//import javax.faces.bean.ManagedBean;
-//import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;
@@ -19,75 +17,86 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+//import javax.faces.bean.ManagedBean;
+//import javax.faces.bean.ViewScoped;
+
 //@ViewScoped
 //@ManagedBean
 @SuppressWarnings("checkstyle:designforextension")
-public class AusgabeBuchen implements Serializable {
+public class AusgabeBuchen
+        implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
     private String id = "";
+    private HauptbuchAnsicht hauptbuch;
+    @Inject
+    private HauptbuchAbfrage abfrage;
+    private String sollkonto = "";
+    private String habenkonto = "";
+    private String betrag = "";
+    @Inject
+    private CommandGateway commandGateway;
 
-    public String getId() {
+    public String getId()
+    {
         return this.id;
     }
 
-    public void setId(final String id) {
+    public void setId(final String id)
+    {
         this.id = id;
     }
 
-    private HauptbuchAnsicht hauptbuch;
-
-    @Inject
-    private HauptbuchAbfrage abfrage;
-
-    public void init() {
+    public void init()
+    {
         this.hauptbuch = this.abfrage.abfragen(UUID.fromString(this.id));
     }
 
-    public List<String> getAktivkonten() {
+    public List<String> getAktivkonten()
+    {
         return this.hauptbuch.aktivkonten();
 
     }
 
-    public String getSollkonto() {
+    public String getSollkonto()
+    {
         return this.sollkonto;
     }
 
-    public void setSollkonto(final String sollkonto) {
+    public void setSollkonto(final String sollkonto)
+    {
         this.sollkonto = sollkonto;
     }
 
-    private String sollkonto = "";
-
-    public List<String> getAufwandskonten() {
+    public List<String> getAufwandskonten()
+    {
         return this.hauptbuch.aufwandskonten();
     }
 
-    public String getHabenkonto() {
+    public String getHabenkonto()
+    {
         return this.habenkonto;
     }
 
-    public void setHabenkonto(final String habenkonto) {
+    public void setHabenkonto(final String habenkonto)
+    {
         this.habenkonto = habenkonto;
     }
 
-    private String habenkonto = "";
-
-    public String getBetrag() {
+    public String getBetrag()
+    {
         return this.betrag;
     }
 
-    public void setBetrag(final String betrag) {
+    public void setBetrag(final String betrag)
+    {
         this.betrag = betrag;
     }
 
-    private String betrag = "";
-
-    @Inject
-    private CommandGateway commandGateway;
-
-    public String ausführen() {
+    public String ausführen()
+    {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
         final MonetaryAmount währungsbetrag = format.parse(this.betrag + " EUR");
 

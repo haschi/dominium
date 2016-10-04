@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                            http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
        bean-discovery-mode="all">
 
     <!--<alternatives>-->
-        <!--<class>com.github.haschi.haushaltsbuch.abfragen.EntityManagerProducer</class>-->
+    <!--<class>com.github.haschi.haushaltsbuch.abfragen.EntityManagerProducer</class>-->
     <!--</alternatives>-->
     <!--<interceptors>-->
-        <!--<class>org.apache.deltaspike.jpa.impl.transaction.TransactionalInterceptor</class>-->
+    <!--<class>org.apache.deltaspike.jpa.impl.transaction.TransactionalInterceptor</class>-->
     <!--</interceptors>-->
 </beans>

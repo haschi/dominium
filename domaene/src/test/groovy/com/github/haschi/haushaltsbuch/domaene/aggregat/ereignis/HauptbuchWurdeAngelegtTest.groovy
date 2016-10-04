@@ -7,6 +7,7 @@ import spock.lang.Specification
 class HauptbuchWurdeAngelegtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier.forClass ImmutableHauptbuchWurdeAngelegt suppress(Warning.NULL_FIELDS) verify()
+        expect:
+        EqualsVerifier.forClass ImmutableHauptbuchWurdeAngelegt suppress(Warning.NULL_FIELDS) verify()
     }
 }

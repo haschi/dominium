@@ -12,7 +12,8 @@ import java.util.UUID;
 
 @RunWith(CdiTestRunner.class)
 @Transactional
-public class HauptbuchAbfrageTest {
+public class HauptbuchAbfrageTest
+{
 
     //@Inject
     //HauptbuchAbfrage abfrage;
@@ -27,27 +28,29 @@ public class HauptbuchAbfrageTest {
     EntityManager entityManager;
 
     @Test
-    public void persistenzTesten() {
+    public void persistenzTesten()
+    {
         KontoId id = new KontoId();
         id.kontoname = "Hello";
         id.haushaltsbuch = UUID.randomUUID();
 
         Konto konto = new Konto();
-        konto .id =id;
+        konto.id = id;
         konto.kontoart = 14;
         konto.währung = "EUR";
         konto.saldo = BigDecimal.ZERO;
 
         entityManager.persist(konto);
         //entityManager.getTransaction().begin();
-        entityManager.flush();;
+        entityManager.flush();
+        ;
         //entityManager.getTransaction().commit();
-
 
     }
 
     @Test
-    public void EinTest() {
+    public void EinTest()
+    {
         bean.testTransaction();
     }
 }

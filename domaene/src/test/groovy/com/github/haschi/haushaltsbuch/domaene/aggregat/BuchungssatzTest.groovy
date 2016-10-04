@@ -22,7 +22,8 @@ public final class BuchungssatzTest extends Specification {
     }
 
     def "Buchungssätze erfüllen die equals und hashCode Anforderungen"() {
-        expect: EqualsVerifier.forClass(Buchungssatz.class)
+        expect:
+        EqualsVerifier.forClass(Buchungssatz.class)
                 .usingGetClass()
                 .verify();
     }
@@ -36,19 +37,22 @@ public final class BuchungssatzTest extends Specification {
                 Kontoname.of("Lebensmittel"),
                 währungsbetrag)
 
-        expect: buchungssatz.toString() == "Girokonto (123,45 EUR) an Lebensmittel (123,45 EUR)"
+        expect:
+        buchungssatz.toString() == "Girokonto (123,45 EUR) an Lebensmittel (123,45 EUR)"
     }
 
     def "Buchungssätze dürfen keine negativen Beträge besitzen"() {
 
         given:
         def MonetaryAmount währungsbetrag = 123.45.euro
-        when: new Buchungssatz(
+        when:
+        new Buchungssatz(
                 Kontoname.of("Girokonto"),
                 Kontoname.of("Lebensmittel"),
                 währungsbetrag.negate())
 
-        then: def exception = thrown(IllegalArgumentException)
+        then:
+        def exception = thrown(IllegalArgumentException)
         exception.message == "Buchungssätze dürfen keine negativen Beträge besitzen."
     }
 }

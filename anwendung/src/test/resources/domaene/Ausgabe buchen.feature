@@ -23,10 +23,10 @@ Funktionalität: Ausgabe buchen
     Dann werde ich die Buchung mit der Fehlermeldung "<Fehlermeldung>" abgelehnt haben
 
     Beispiele:
-    | Sollkonto    | Habenkonto | Fehlermeldung                                        |
-    | Tabakwaren   | Girokonto  | Das Konto Tabakwaren existiert nicht.                |
-    | Lebensmittel | Sparbuch   | Das Konto Sparbuch existiert nicht.                  |
-    | Tabakwaren   | Sparbuch   | Die Konten Tabakwaren und Sparbuch existieren nicht. |
+      | Sollkonto    | Habenkonto | Fehlermeldung                                        |
+      | Tabakwaren   | Girokonto  | Das Konto Tabakwaren existiert nicht.                |
+      | Lebensmittel | Sparbuch   | Das Konto Sparbuch existiert nicht.                  |
+      | Tabakwaren   | Sparbuch   | Die Konten Tabakwaren und Sparbuch existieren nicht. |
 
   Szenario: Ausgabe auf Ertragskonto buchen
     Wenn ich meine Ausgabe von 56,78 EUR per "Gehalt" an "Girokonto" buche
@@ -35,7 +35,7 @@ Funktionalität: Ausgabe buchen
   Szenario: Tilgung eines Verbraucherkredits (Verlust)
     Wenn ich meine Tilgung von 206,60 EUR per "Autokredit" an "Girokonto" buche
     Dann werde ich folgende Kontostände erhalten:
-    | Kontoname  | Betrag       | Kontoart |
-    | Girokonto  |   993,40 EUR | Aktiv    |
-    | Autokredit | 13260,85 EUR | Passiv   |
+      | Kontoname  | Betrag       | Kontoart |
+      | Girokonto  | 993,40 EUR   | Aktiv    |
+      | Autokredit | 13260,85 EUR | Passiv   |
     Und ich werde den Buchungssatz "Autokredit (206,60 EUR) an Girokonto (206,60 EUR)" angelegt haben

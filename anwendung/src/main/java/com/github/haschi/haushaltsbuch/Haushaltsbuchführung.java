@@ -5,7 +5,6 @@ import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuc
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -13,21 +12,23 @@ import java.util.UUID;
 //@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class Haushaltsbuchführung implements Serializable {
+public class Haushaltsbuchführung
+        implements Serializable
+{
 
     private static final long serialVersionUID = 5484105498393122925L;
 
     @Inject
     private CommandGateway commandGateway;
+    private String identitätsmerkmal = "";
 
-
-    public String getIdentitätsmerkmal() {
+    public String getIdentitätsmerkmal()
+    {
         return this.identitätsmerkmal;
     }
 
-    private String identitätsmerkmal = "";
-
-    public String beginnen() throws IOException {
+    public String beginnen()
+    {
         this.identitätsmerkmal = UUID.randomUUID().toString();
 
         final BeginneHaushaltsbuchfuehrung befehl = ImmutableBeginneHaushaltsbuchfuehrung.builder()

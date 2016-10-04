@@ -1,18 +1,18 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.coding.aspekte.ValueObject;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 
-@ValueObject(exclude = {"regel", "kontoart", "saldo"})
-public final class Konto {
+public final class Konto
+{
 
-    public static final Konto ANFANGSBESTAND = new Konto(
-        Kontoname.of("Anfangsbestand"),
-        new KeineRegel(),
-        Kontoart.Aktiv);
+    public static final Konto ANFANGSBESTAND = new Konto(Kontoname.of("Anfangsbestand"),
+            new KeineRegel(),
+            Kontoart.Aktiv);
 
     private final Kontoname kontoname;
 
@@ -22,21 +22,8 @@ public final class Konto {
 
     private Saldo saldo;
 
-    public static Konto aktiv(final String kontoname) {
-        return of(kontoname, Kontoart.Aktiv);
-    }
-
-    public static Konto aufwand(final String kontoname) {
-        return of(kontoname, Kontoart.Aufwand);
-    }
-
-    public static Konto of(final String kontoname, final Kontoart kontoart) {
-        final Kontoname name = Kontoname.of(kontoname);
-        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoart);
-        return new Konto(name, fabrik.erzeugen(name), kontoart);
-    }
-
-    public Konto(final Kontoname kontoname, final Buchungsregel regel, final Kontoart kontoart) {
+    public Konto(final Kontoname kontoname, final Buchungsregel regel, final Kontoart kontoart)
+    {
 
         super();
         this.regel = regel;
@@ -46,45 +33,96 @@ public final class Konto {
         this.kontoname = kontoname;
     }
 
-    public void setSaldo(final Saldo saldo) {
+    public static Konto aktiv(final String kontoname)
+    {
+        return of(kontoname, Kontoart.Aktiv);
+    }
+
+    public static Konto aufwand(final String kontoname)
+    {
+        return of(kontoname, Kontoart.Aufwand);
+    }
+
+    public static Konto of(final String kontoname, final Kontoart kontoart)
+    {
+        final Kontoname name = Kontoname.of(kontoname);
+        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoart);
+        return new Konto(name, fabrik.erzeugen(name), kontoart);
+    }
+
+    public void setSaldo(final Saldo saldo)
+    {
         this.saldo = saldo;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Konto{" + "kontoname='" + this.kontoname + '\'' + '}';
     }
 
     @SuppressWarnings("checkstyle")
-    public boolean kannAusgabeBuchen(final Buchungssatz buchungssatz) {
+    public boolean kannAusgabeBuchen(final Buchungssatz buchungssatz)
+    {
         return this.regel.kannErtragBuchen(buchungssatz);
     }
 
-    public boolean kannTilgungGebuchtWerden(final Buchungssatz buchungssatz) {
+    public boolean kannTilgungGebuchtWerden(final Buchungssatz buchungssatz)
+    {
         return this.regel.kannVerlustBuchen(buchungssatz);
     }
 
-    public Buchungssatz buchungssatzFürAnfangsbestand(final MonetaryAmount betrag) {
+    public Buchungssatz buchungssatzFürAnfangsbestand(final MonetaryAmount betrag)
+    {
         return this.regel.buchungssatzFürAnfangsbestand(this, betrag);
     }
 
-    public Kontoart getKontoart() {
+    public Kontoart getKontoart()
+    {
         return this.kontoart;
     }
 
-    public Saldo buchen(final Buchungssatz buchungssatz) {
-        if (buchungssatz.hatSollkonto(this.kontoname)) {
+    public Saldo buchen(final Buchungssatz buchungssatz)
+    {
+        if (buchungssatz.hatSollkonto(this.kontoname))
+        {
             return this.saldo.soll(buchungssatz.getWährungsbetrag());
         }
 
-        if (buchungssatz.hatHabenkonto(this.kontoname)) {
+        if (buchungssatz.hatHabenkonto(this.kontoname))
+        {
             return this.saldo.haben(buchungssatz.getWährungsbetrag());
         }
 
         throw new IllegalArgumentException();
     }
 
-    public Kontoname getName() {
+    public Kontoname getName()
+    {
         return this.kontoname;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        Konto konto = (Konto) o;
+
+        return new EqualsBuilder().append(kontoname, konto.kontoname).isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 37).append(kontoname).toHashCode();
     }
 }

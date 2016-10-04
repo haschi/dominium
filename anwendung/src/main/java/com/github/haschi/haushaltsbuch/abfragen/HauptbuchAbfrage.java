@@ -34,15 +34,13 @@ public class HauptbuchAbfrage
         final List<Konto> konten = query.getResultList();
 
         return ImmutableHauptbuchAnsicht.builder()
-                                        .addAllAktivkonten(this.kontenliste(konten.stream(), Kontoart.Aktiv))
-                                        .build();
+                .addAllAktivkonten(this.kontenliste(konten.stream(), Kontoart.Aktiv))
+                .build();
     }
 
     private List<String> kontenliste(final Stream<Konto> alle, final Kontoart kontoart)
     {
-        return alle.filter(k -> k.kontoart == kontoart)
-                   .map(k -> k.id.kontoname)
-                   .collect(Collectors.toList());
+        return alle.filter(k -> k.kontoart == kontoart).map(k -> k.id.kontoname).collect(Collectors.toList());
     }
 
     @EventHandler
@@ -50,8 +48,7 @@ public class HauptbuchAbfrage
     {
         final KontoId id = new KontoId();
         id.kontoname = ereignis.kontoname();
-        id.haushaltsbuch = UUID.fromString(message.getAggregateIdentifier()
-                                                  .toString());
+        id.haushaltsbuch = UUID.fromString(message.getAggregateIdentifier().toString());
 
         final Konto k = new Konto();
         k.id = id;

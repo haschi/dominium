@@ -7,6 +7,7 @@ import spock.lang.Specification
 public class BuchungWurdeAusgeführtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier.forClass ImmutableBuchungWurdeAusgeführt suppress(Warning.NULL_FIELDS) verify()
+        expect:
+        EqualsVerifier.forClass ImmutableBuchungWurdeAusgeführt suppress(Warning.NULL_FIELDS) verify()
     }
 }

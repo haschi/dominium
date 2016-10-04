@@ -8,7 +8,8 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 @Value.Immutable
-public interface LegeKontoMitAnfangsbestandAn {
+public interface LegeKontoMitAnfangsbestandAn
+{
 
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();

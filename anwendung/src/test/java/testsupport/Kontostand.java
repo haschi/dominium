@@ -8,7 +8,8 @@ import javax.money.MonetaryAmount;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class Kontostand {
+public class Kontostand
+{
 
     public String kontoname;
 
@@ -17,9 +18,9 @@ public class Kontostand {
 
     public Kontoart kontoart;
 
-    public static Function<Kontostand, ImmutableLegeKontoMitAnfangsbestandAn>
-        alsKontoMitKontostandAnlegenKommando(final UUID haushaltsbuchId) {
-
+    public static Function<Kontostand, ImmutableLegeKontoMitAnfangsbestandAn> alsKontoMitKontostandAnlegenKommando
+            (final UUID haushaltsbuchId)
+    {
 
         return (Kontostand kontostand) -> ImmutableLegeKontoMitAnfangsbestandAn.builder()
                 .haushaltsbuchId(haushaltsbuchId)

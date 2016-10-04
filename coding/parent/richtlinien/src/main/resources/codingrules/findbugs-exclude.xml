@@ -3,7 +3,7 @@
     <!-- Ignoriert alle Groovy Klassen bei der Analyse -->
     <!-- Siehe http://sourceforge.net/p/findbugs/feature-requests/299/ -->
     <Match>
-        <Source name="~.*\.groovy" />
+        <Source name="~.*\.groovy"/>
     </Match>
 </FindBugsFilter>
 

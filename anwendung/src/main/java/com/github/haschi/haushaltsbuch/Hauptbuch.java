@@ -18,6 +18,9 @@ public class Hauptbuch
     private static final long serialVersionUID = 7723531928992579461L;
 
     private HauptbuchAnsicht ansicht;
+    private String id = "";
+    @Inject
+    private HauptbuchAbfrage abfrage;
 
     public String getId()
     {
@@ -28,11 +31,6 @@ public class Hauptbuch
     {
         this.id = id;
     }
-
-    private String id = "";
-
-    @Inject
-    private HauptbuchAbfrage abfrage;
 
     public List<String> getVermögen()
     {

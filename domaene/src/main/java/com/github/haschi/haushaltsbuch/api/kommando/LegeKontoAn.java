@@ -7,7 +7,8 @@ import org.immutables.value.Value;
 import java.util.UUID;
 
 @Value.Immutable
-public interface LegeKontoAn {
+public interface LegeKontoAn
+{
 
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();

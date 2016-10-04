@@ -24,10 +24,9 @@ public final class HaushaltsbuchführungBeginnenSteps
 {
 
     @Inject
-    private CommandGateway commandGateway;
-
-    @Inject
     DieWelt kontext;
+    @Inject
+    private CommandGateway commandGateway;
 
     @Before
     public void configure()
@@ -41,9 +40,7 @@ public final class HaushaltsbuchführungBeginnenSteps
     public void ich_mit_der_Haushaltsbuchführung_beginne()
     {
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder()
-                                                                             .id(haushaltsbuchId)
-                                                                             .build());
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(haushaltsbuchId).build());
         this.kontext.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 
@@ -51,9 +48,8 @@ public final class HaushaltsbuchführungBeginnenSteps
     public void dann_werde_ich_ein_neues_haushaltsbuch_angelegt_haben()
     {
         assertThat(this.kontext.aktuellerEreignisstrom()).contains(ImmutableHaushaltsbuchAngelegt.builder()
-                                                                                                 .id(this.kontext
-                                                                                                         .getAktuelleHaushaltsbuchId())
-                                                                                                 .build());
+                .id(this.kontext.getAktuelleHaushaltsbuchId())
+                .build());
     }
 
     @Dann("^werde ich ein Hauptbuch mit Kontenrahmen zum Haushaltsbuch angelegt haben")
@@ -61,18 +57,15 @@ public final class HaushaltsbuchführungBeginnenSteps
     {
 
         assertThat(this.kontext.aktuellerEreignisstrom()).contains(ImmutableHauptbuchWurdeAngelegt.builder()
-                                                                                                  .haushaltsbuchId
-                                                                                                          (this.kontext.getAktuelleHaushaltsbuchId())
-                                                                                                  .build());
+                .haushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+                .build());
     }
 
     @Dann("^werde ich ein Journal zum Haushaltsbuch angelegt haben")
     public void dann_werde_ich_ein_journal_zum_haushaltsbuch_anlegen()
     {
         assertThat(this.kontext.aktuellerEreignisstrom()).contains(ImmutableJournalWurdeAngelegt.builder()
-                                                                                                .aktuelleHaushaltsbuchId(
-                                                                                                        this.kontext
-                                                                                                                .getAktuelleHaushaltsbuchId())
-                                                                                                .build());
+                .aktuelleHaushaltsbuchId(this.kontext.getAktuelleHaushaltsbuchId())
+                .build());
     }
 }

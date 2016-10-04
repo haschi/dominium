@@ -1,4 +1,3 @@
-
 package abfragen;
 
 import org.apache.deltaspike.jpa.api.entitymanager.PersistenceUnitName;
@@ -16,7 +15,8 @@ import javax.persistence.EntityManagerFactory;
 // @Alternative
 // @Priority(Interceptor.Priority.APPLICATION + 10)
 // @ApplicationScoped
-public class EntityManagerProducer {
+public class EntityManagerProducer
+{
 
     @Inject
     @PersistenceUnitName("test")
@@ -27,12 +27,15 @@ public class EntityManagerProducer {
     @RequestScoped
     // @ApplicationScoped
     // @TransactionScoped
-    public EntityManager entityManager() {
+    public EntityManager entityManager()
+    {
         return this.factory.createEntityManager();
     }
 
-    public void close(@Disposes @Any final EntityManager entityManager) {
-        if (entityManager.isOpen()) {
+    public void close(@Disposes @Any final EntityManager entityManager)
+    {
+        if (entityManager.isOpen())
+        {
             entityManager.close();
         }
     }

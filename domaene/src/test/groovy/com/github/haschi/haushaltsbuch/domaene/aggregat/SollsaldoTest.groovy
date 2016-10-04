@@ -8,11 +8,14 @@ import javax.money.MonetaryAmount
 
 class SollsaldoTest extends Specification {
 
-    @Shared MonetaryAmount betrag1 = 12.00.euro
-    @Shared MonetaryAmount betrag2 = 12.00.euro
+    @Shared
+    MonetaryAmount betrag1 = 12.00.euro
+    @Shared
+    MonetaryAmount betrag2 = 12.00.euro
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier.forClass(Sollsaldo)
+        expect:
+        EqualsVerifier.forClass(Sollsaldo)
                 .verify()
     }
 

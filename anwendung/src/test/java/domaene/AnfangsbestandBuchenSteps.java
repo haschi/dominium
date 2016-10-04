@@ -34,8 +34,7 @@ public final class AnfangsbestandBuchenSteps
             final String konto, @Transform(MoneyConverter.class) final MonetaryAmount betrag)
     {
 
-        final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand
-                .builder()
+        final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .kontoname(konto)
                 .waehrungsbetrag(betrag)
@@ -49,8 +48,7 @@ public final class AnfangsbestandBuchenSteps
             final String konto, @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
     {
 
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert
-                .builder()
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
                 .kontoname(konto)
                 .neuerSaldo(erwarteterSaldo)
                 .build());
@@ -61,8 +59,7 @@ public final class AnfangsbestandBuchenSteps
             final String konto, @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo)
     {
 
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert
-                .builder()
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
                 .kontoname(konto)
                 .neuerSaldo(erwarteterSaldo)
                 .build());
@@ -73,8 +70,7 @@ public final class AnfangsbestandBuchenSteps
             final String kontoname, @Transform(MoneyConverter.class) final MonetaryAmount währungsbetrag)
     {
 
-        final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand
-                .builder()
+        final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .kontoname(kontoname)
                 .waehrungsbetrag(währungsbetrag)
@@ -89,8 +85,7 @@ public final class AnfangsbestandBuchenSteps
             Throwable
     {
 
-        this.commandGateway.sendAndWait(ImmutableBucheAnfangsbestand
-                .builder()
+        this.commandGateway.sendAndWait(ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .kontoname(kontoname)
                 .waehrungsbetrag(währungsbetrag)

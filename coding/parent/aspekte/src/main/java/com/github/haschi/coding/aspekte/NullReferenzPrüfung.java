@@ -14,30 +14,34 @@ import org.aspectj.lang.reflect.MethodSignature;
  * https://bugs.eclipse.org/bugs/show_bug.cgi?id=471347
  */
 @Aspect
-public class NullReferenzPrüfung {
+public class NullReferenzPrüfung
+{
 
-    @Before("execution(public * *(..)) && "
-            + "! (within(com.github.haschi.coding.aspekte..*) "
-            + "|| execution(public boolean *.equals(Object)))")
-    public final void argumentePrüfen(final JoinPoint joinPoint) {
+    @Before("execution(public * *(..)) && " + "! (within(com.github.haschi.coding.aspekte..*) " + "|| execution" + ""
+            + "(public boolean *.equals(Object)))")
+    public final void argumentePrüfen(final JoinPoint joinPoint)
+    {
         final Methode methode = new Methode((MethodSignature) joinPoint.getSignature());
         methode.argumentePrüfen(joinPoint.getArgs());
     }
 
-    @Before("execution(!private (!(is(InnerType) || is(AnonymousType)) && *).new(..)) && "
-            + "!within(com.github.haschi.coding.aspekte..*)")
-    public final void konstruktorArgumentePrüfen(final JoinPoint joinPoint) {
+    @Before("execution(!private (!(is(InnerType) || is(AnonymousType)) && *).new(..)) && " + "!within(com.github" +
+            "" + ".haschi.coding.aspekte..*)")
+    public final void konstruktorArgumentePrüfen(final JoinPoint joinPoint)
+    {
         final ConstructorSignature signature = (ConstructorSignature) joinPoint.getSignature();
         final Konstruktor konstruktor = new Konstruktor(signature);
         konstruktor.argumentePrüfen(joinPoint.getArgs());
     }
 
-    @AfterReturning(value = "execution(public !void (!(is(InnerType) || is(AnonymousType)) && *).*(..)) && "
-        + "! within(com.github.haschi.coding.aspekte..*)",
-        returning = "returnValue")
-    public final void rückgabewertPrüfen(final JoinPoint joinPoint, final Object returnValue) {
+    @AfterReturning(value = "execution(public !void (!(is(InnerType) || is(AnonymousType)) && *).*(..)) && " + "! " +
+            "within(com.github.haschi.coding.aspekte..*)",
+            returning = "returnValue")
+    public final void rückgabewertPrüfen(final JoinPoint joinPoint, final Object returnValue)
+    {
 
-        if (returnValue == null) {
+        if (returnValue == null)
+        {
             final Methode methode = new Methode((MethodSignature) joinPoint.getSignature());
             methode.rückgabewertPrüfen();
         }

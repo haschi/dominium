@@ -1,5 +1,5 @@
 # language: de
-    Funktionalität: Prognose erstellen
+Funktionalität: Prognose erstellen
 
         
     

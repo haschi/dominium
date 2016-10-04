@@ -37,9 +37,9 @@ class KontonameSpec extends Specification {
         notThrown KontonameWarUngültig
 
         where:
-        kontoname     | _
-        "X" * 1       | _
-        "X" * 128     | _
+        kontoname | _
+        "X" * 1   | _
+        "X" * 128 | _
     }
 
     def "Kontoname darf nicht ausschließlich Leerzeichen enthalten"() {
@@ -50,10 +50,10 @@ class KontonameSpec extends Specification {
         thrown KontonameWarUngültig
 
         where:
-        kontoname               | _
-        StringUtils.SPACE       | _
-        StringUtils.SPACE * 2   | _
-        StringUtils.LF          | _
+        kontoname             | _
+        StringUtils.SPACE     | _
+        StringUtils.SPACE * 2 | _
+        StringUtils.LF        | _
     }
 
     def "Kontoname darf Leerzeichen enthalten"() {
@@ -64,8 +64,8 @@ class KontonameSpec extends Specification {
         notThrown KontonameWarUngültig
 
         where:
-        kontoname       | _
-        "Ein Konto"     | _
+        kontoname                           | _
+        "Ein Konto"                         | _
         "X" + StringUtils.SPACE * 126 + "X" | _
     }
 
@@ -77,13 +77,14 @@ class KontonameSpec extends Specification {
         notThrown KontonameWarUngültig
 
         where:
-        kontoname   | _
-        "öäüÖÄüß"   | _
-        "ÜÄ"        | _
+        kontoname | _
+        "öäüÖÄüß" | _
+        "ÜÄ"      | _
     }
 
     def "Kontoname ist ein Wert"() {
-        expect: EqualsVerifier.forClass(Kontoname).verify()
+        expect:
+        EqualsVerifier.forClass(Kontoname).verify()
     }
 
     def "Kontoname hat Zeichenkettenrepräsentation"() {

@@ -5,10 +5,13 @@ import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 
 @WebServlet("/hello")
-public class HelloWorld extends HttpServlet {
+public class HelloWorld
+        extends HttpServlet
+{
 
     @Override
-    public final void service(final ServletRequest request, final ServletResponse response) throws IOException {
+    public final void service(final ServletRequest request, final ServletResponse response) throws IOException
+    {
         response.getWriter().println("Hello World");
 
     }

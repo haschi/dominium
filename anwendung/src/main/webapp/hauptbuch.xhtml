@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns="http://www.w3.org/1999/xhtml">
 <body>
 <ui:composition template="WEB-INF/template.xhtml">
     <f:metadata>
@@ -13,7 +13,9 @@
     <ui:define name="content">
         <h1>Haushaltsbuch</h1>
         <h2>Hauptbuch</h2>
-        (<h:outputLabel value="#{hauptbuch.id}"/>)
+        (
+        <h:outputLabel value="#{hauptbuch.id}"/>
+        )
         <br/>
 
         <div class="btn-group" role="group">
@@ -33,19 +35,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#aktivKonten" aria-expanded="false" aria-controls="aktivKonten">
-                                Vermögen (<h:outputText value="#{hauptbuch.vermögen.size()}"/>)
+                            <a data-toggle="collapse" href="#aktivKonten" aria-expanded="false"
+                               aria-controls="aktivKonten">
+                                Vermögen (
+                                <h:outputText value="#{hauptbuch.vermögen.size()}"/>
+                                )
                                 <i class="glyphicon glyphicon-chevron-left pull-right"></i>
                             </a>
                         </h4>
                     </div>
                     <div class="panel-body">
                         <div id="aktivKonten" class="collapse">
-                        <ul class="list-group">
-                            <ui:repeat value="#{hauptbuch.vermögen}" var="v">
-                                <li class="list-group-item"><h:outputLabel value="#{v}"/></li>
-                            </ui:repeat>
-                        </ul>
+                            <ul class="list-group">
+                                <ui:repeat value="#{hauptbuch.vermögen}" var="v">
+                                    <li class="list-group-item">
+                                        <h:outputLabel value="#{v}"/>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
                         </div>
                         <h:link outcome="kontoAnlegen">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -60,19 +67,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#passivKonten" aria-expanded="false" aria-controls="passivKonten">
-                                Schulden (<h:outputText value="#{hauptbuch.schulden.size()}"/>)
+                            <a data-toggle="collapse" href="#passivKonten" aria-expanded="false"
+                               aria-controls="passivKonten">
+                                Schulden (
+                                <h:outputText value="#{hauptbuch.schulden.size()}"/>
+                                )
                                 <i class="glyphicon glyphicon-chevron-left pull-right"></i>
                             </a>
                         </h4>
                     </div>
                     <div class="panel-body">
                         <div id="passivKonten" class="collapse">
-                        <ul class="list-group">
-                            <ui:repeat value="#{hauptbuch.schulden}" var="s">
-                                <li class="list-group-item"><h:outputLabel value="#{s}"/></li>
-                            </ui:repeat>
-                        </ul>
+                            <ul class="list-group">
+                                <ui:repeat value="#{hauptbuch.schulden}" var="s">
+                                    <li class="list-group-item">
+                                        <h:outputLabel value="#{s}"/>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
                         </div>
 
                         <h:link outcome="kontoAnlegen">
@@ -91,19 +103,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#ertragskonten" aria-expanded="false" aria-controls="ertragskonten">
-                            Einnahmen (<h:outputText value="#{hauptbuch.einnahmen.size()}"/>)
-                            <i class="glyphicon glyphicon-chevron-left pull-right"></i>
-                        </a>
+                            <a data-toggle="collapse" href="#ertragskonten" aria-expanded="false"
+                               aria-controls="ertragskonten">
+                                Einnahmen (
+                                <h:outputText value="#{hauptbuch.einnahmen.size()}"/>
+                                )
+                                <i class="glyphicon glyphicon-chevron-left pull-right"></i>
+                            </a>
                         </h4>
                     </div>
                     <div class="panel-body">
                         <div id="ertragskonten" class="collapse">
-                        <ul class="list-group">
-                            <ui:repeat value="#{hauptbuch.einnahmen}" var="e">
-                                <li class="list-group-item"><h:outputLabel value="#{e}"/></li>
-                            </ui:repeat>
-                        </ul>
+                            <ul class="list-group">
+                                <ui:repeat value="#{hauptbuch.einnahmen}" var="e">
+                                    <li class="list-group-item">
+                                        <h:outputLabel value="#{e}"/>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
                         </div>
                         <h:link outcome="kontoAnlegen">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -119,19 +136,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#aufwandskonten" aria-expanded="false" aria-controls="aufwandskonten">
-                                Ausgaben (<h:outputText value="#{hauptbuch.ausgaben.size()}"/>)
+                            <a data-toggle="collapse" href="#aufwandskonten" aria-expanded="false"
+                               aria-controls="aufwandskonten">
+                                Ausgaben (
+                                <h:outputText value="#{hauptbuch.ausgaben.size()}"/>
+                                )
                                 <i class="glyphicon glyphicon-chevron-left pull-right"></i>
                             </a>
                         </h4>
                     </div>
                     <div class="panel-body">
                         <div id="aufwandskonten" class="collapse">
-                        <ul class="list-group">
-                            <ui:repeat value="#{hauptbuch.ausgaben}" var="a">
-                                <li class="list-group-item"><h:outputLabel value="#{a}"/></li>
-                            </ui:repeat>
-                        </ul>
+                            <ul class="list-group">
+                                <ui:repeat value="#{hauptbuch.ausgaben}" var="a">
+                                    <li class="list-group-item">
+                                        <h:outputLabel value="#{a}"/>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
                         </div>
                         <h:link outcome="kontoAnlegen">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -144,7 +166,7 @@
             </div>
         </div>
         <script>
-            $(function() {
+            $(function () {
                 function toggleChevron(e) {
                     $(e.target)
                             .parent()

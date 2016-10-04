@@ -17,6 +17,10 @@ public class KontoAnlegen
 {
 
     private String id = "";
+    private String kontoname = "";
+    private Kontoart kontoart = Kontoart.Aktiv;
+    @Inject
+    private CommandGateway commandGateway;
 
     public String getId()
     {
@@ -28,8 +32,6 @@ public class KontoAnlegen
         this.id = id;
     }
 
-    private String kontoname = "";
-
     public String getKontoname()
     {
         return this.kontoname;
@@ -39,8 +41,6 @@ public class KontoAnlegen
     {
         this.kontoname = kontoname;
     }
-
-    private Kontoart kontoart = Kontoart.Aktiv;
 
     public Kontoart getKontoart()
     {
@@ -57,13 +57,9 @@ public class KontoAnlegen
         return Kontoart.values();
     }
 
-    @Inject
-    private CommandGateway commandGateway;
-
     public String ausführen()
     {
-        final LegeKontoAn befehl = ImmutableLegeKontoAn
-                .builder()
+        final LegeKontoAn befehl = ImmutableLegeKontoAn.builder()
                 .haushaltsbuchId(UUID.fromString(this.id))
                 .kontoname(this.kontoname)
                 .kontoart(this.kontoart)

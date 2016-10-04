@@ -1,27 +1,21 @@
 package com.github.haschi.haushaltsbuch.api.kommando;
 
-import com.github.haschi.coding.aspekte.ValueObject;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.immutables.value.Value;
 
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@ValueObject
-public class FügeBuchungssatzHinzu {
+@Value.Immutable
+public interface FügeBuchungssatzHinzu
+{
 
-    public final UUID identitätsmerkmal;
-    public final String sollkonto;
-    public final String habenkonto;
-    public final MonetaryAmount betrag;
+    @TargetAggregateIdentifier
+    UUID identitaetsmerkmal();
 
-    public FügeBuchungssatzHinzu(
-            final UUID identitätsmerkmal,
-            final String sollkonto,
-            final String habenkonto,
-            final MonetaryAmount betrag) {
-        super();
-        this.identitätsmerkmal = identitätsmerkmal;
-        this.sollkonto = sollkonto;
-        this.habenkonto = habenkonto;
-        this.betrag = betrag;
-    }
+    String sollkonto();
+
+    String habenkonto();
+
+    MonetaryAmount betrag();
 }

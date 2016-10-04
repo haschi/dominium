@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html [
-<!ENTITY nbsp "&#160;">
-<!ENTITY copy "&#169;"> ]>
+        <!ENTITY nbsp "&#160;">
+        <!ENTITY copy "&#169;"> ]>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://butterfaces.larmic.de/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns="http://www.w3.org/1999/xhtml"
+>
 <h:head>
     <title>Haushaltsbuch</title>
     <meta charset="utf-8"></meta>
@@ -17,33 +17,34 @@
 
     <b:activateLibraries id="activate" rendered="true"></b:activateLibraries>
     <div id="wrap" style="min-height: 100%; height: auto !important; margin: 0 auto -60px">
-    <nav class="navbar navbar-inverse navbar-static-top">
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button"
+                            data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h:link styleClass="navbar-brand" outcome="index" value="Haushaltsbuch">
+                        XXX
+                    </h:link>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="X">X</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-toggle="collapse" data-target="#navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <h:link styleClass="navbar-brand" outcome="index" value="Haushaltsbuch">
-                    XXX
-                </h:link>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="X">X</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
             <ui:insert name="content">
                 [Template content will be inserted here]
             </ui:insert>
-    </div>
+        </div>
         <div id="push" style="height: 60px"></div>
     </div>
 

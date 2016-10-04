@@ -7,6 +7,7 @@ import spock.lang.Specification
 class KontoWurdeNichtAngelegtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
-        expect: EqualsVerifier.forClass ImmutableKontoWurdeNichtAngelegt suppress(Warning.NULL_FIELDS) verify()
+        expect:
+        EqualsVerifier.forClass ImmutableKontoWurdeNichtAngelegt suppress(Warning.NULL_FIELDS) verify()
     }
 }

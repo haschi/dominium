@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-public class KontoId implements Serializable{
+public class KontoId
+        implements Serializable
+{
 
     private static final long serialVersionUID = 5303970782646091575L;
 

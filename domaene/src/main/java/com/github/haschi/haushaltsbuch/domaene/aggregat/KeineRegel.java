@@ -2,19 +2,24 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import javax.money.MonetaryAmount;
 
-public final class KeineRegel implements Buchungsregel {
+public final class KeineRegel
+        implements Buchungsregel
+{
     @Override
-    public boolean kannErtragBuchen(final Buchungssatz buchungssatz) {
+    public boolean kannErtragBuchen(final Buchungssatz buchungssatz)
+    {
         return true;
     }
 
     @Override
-    public boolean kannVerlustBuchen(final Buchungssatz buchungssatz) {
+    public boolean kannVerlustBuchen(final Buchungssatz buchungssatz)
+    {
         return true;
     }
 
     @Override
-    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto konto, final MonetaryAmount betrag) {
+    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto konto, final MonetaryAmount betrag)
+    {
         return new Buchungssatz(konto.getName(), Konto.ANFANGSBESTAND.getName(), betrag);
     }
 }

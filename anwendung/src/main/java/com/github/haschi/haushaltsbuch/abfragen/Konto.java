@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 @Entity
-public class Konto {
+public class Konto
+{
 
-    @EmbeddedId KontoId id;
+    @EmbeddedId
+    KontoId id;
     Kontoart kontoart;
     BigDecimal saldo;
     String währung;
