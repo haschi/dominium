@@ -16,6 +16,8 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(CdiTestRunner.class)
 @Transactional
 public class HauptbuchAbfrageTest
@@ -48,30 +50,32 @@ public class HauptbuchAbfrageTest
         this.entityManager.flush();
         this.entityManager.clear();
 
-        //        final HauptbuchAnsicht abfragen = this.abfrage.abfragen(haushaltsbuchId);
-        //
-        //        assertThat(abfragen).asList()
-        //                            .isEmpty();
-        //        //
-        //        //        this.entityManager.clear();
+        final HauptbuchAnsicht abfragen = this.abfrage.abfragen(haushaltsbuchId);
+
+        assertThat(abfragen).isEqualTo(ImmutableHauptbuchAnsicht.builder()
+                .haushaltsbuchId(haushaltsbuchId)
+                .addAktivkonten("Anfangsbestand")
+                .build());
+
+        this.entityManager.clear();
     }
 
     @Test
     public void persistenzTesten()
     {
-        KontoId id = new KontoId();
+        final KontoId id = new KontoId();
         id.kontoname = "Hello";
         id.haushaltsbuch = UUID.randomUUID();
 
-        Konto konto = new Konto();
+        final Konto konto = new Konto();
         konto.id = id;
         konto.kontoart = Kontoart.Aktiv;
         konto.währung = "EUR";
         konto.saldo = BigDecimal.ZERO;
 
-        entityManager.persist(konto);
+        this.entityManager.persist(konto);
         //entityManager.getTransaction().begin();
-        entityManager.flush();
+        this.entityManager.flush();
         //entityManager.getTransaction().commit();
 
     }
@@ -79,7 +83,7 @@ public class HauptbuchAbfrageTest
     @Test
     public void EinTest()
     {
-        bean.testTransaction();
+        this.bean.testTransaction();
     }
 
     @EventHandler

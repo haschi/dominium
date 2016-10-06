@@ -4,7 +4,7 @@ import com.github.haschi.haushaltsbuch.api.Kontoname;
 
 import javax.money.MonetaryAmount;
 
-public final class PassivkontoRegel
+public class PassivkontoRegel
         implements Buchungsregel
 {
     private final Kontoname kontoname;

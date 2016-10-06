@@ -16,8 +16,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SuppressWarnings("checkstyle:designforextension")
-
 @Transactional
 public class HauptbuchAbfrage
 {
@@ -33,6 +31,7 @@ public class HauptbuchAbfrage
         final List<Konto> konten = query.getResultList();
 
         return ImmutableHauptbuchAnsicht.builder()
+                .haushaltsbuchId(haushaltsbuchId)
                 .addAllAktivkonten(this.kontenliste(konten.stream(), Kontoart.Aktiv))
                 .build();
     }
