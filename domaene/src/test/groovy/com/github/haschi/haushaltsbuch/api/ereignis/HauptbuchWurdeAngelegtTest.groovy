@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis
+package com.github.haschi.haushaltsbuch.api.ereignis
 
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning

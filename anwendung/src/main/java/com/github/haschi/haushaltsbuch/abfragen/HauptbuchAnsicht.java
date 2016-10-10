@@ -1,11 +1,11 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
-import org.immutables.value.Value;
+import com.github.haschi.modeling.de.Information;
 
 import java.util.List;
 import java.util.UUID;
 
-@Value.Immutable
+@Information
 public interface HauptbuchAnsicht
 {
 

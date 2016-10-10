@@ -1,9 +1,9 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis;
+package com.github.haschi.haushaltsbuch.api.ereignis;
 
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import org.immutables.value.Value;
+import com.github.haschi.modeling.de.Ereignis;
 
-@Value.Immutable
+@Ereignis
 public interface BuchungWurdeAusgeführt
         extends HaushaltsbuchEreignis
 {

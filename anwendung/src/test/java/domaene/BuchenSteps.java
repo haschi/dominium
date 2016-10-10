@@ -1,13 +1,13 @@
 package domaene;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchEreignis;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAbgelehnt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.BuchungWurdeAusgeführt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchEreignis;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;

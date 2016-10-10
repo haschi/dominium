@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.*;
+import com.github.haschi.haushaltsbuch.api.ereignis.*;
 
 public interface HaushaltsbuchEreignisziel
 {

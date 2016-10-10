@@ -1,10 +1,10 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableSaldoWurdeGeaendert;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
@@ -45,7 +45,7 @@ public final class AnfangsbestandBuchenSteps
                 .waehrungsbetrag(betrag)
                 .build();
 
-        commandGateway.sendAndWait(befehl);
+        this.commandGateway.sendAndWait(befehl);
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Sollsaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")

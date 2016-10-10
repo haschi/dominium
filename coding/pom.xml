@@ -54,6 +54,8 @@
 
     <modules>
         <module>parent</module>
+        <module>modelldokumentation</module>
+        <module>modeling</module>
     </modules>
 
     <properties>

@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.domaene.KontonameSpezifikation;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.SaldoWurdeGeaendert;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.HashSet;

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modell</title>
+
+    <style> .modell {
+        border: solid 1px black;
+        width: 78mm;
+        height: 78mm;
+        background-color: skyblue;
+        padding: 4mm;
+        margin-right: 4mm;
+        margin-bottom: 4mm;
+        overflow: hidden;
+        float: left;
+    }
+
+    .modell p {
+        font-size: 28pt;
+        font-family: sans-serif;
+        word-break: break-all;
+        width: 70mm;
+    }
+
+    .anweisung {
+        background-color: skyblue;
+    }
+
+    .ereignis {
+        background-color: lightsalmon;
+    }
+
+    .information {
+        background-color: lightgreen;
+    }
+
+    </style>
+
+</head>
+
+<body>
+<h1>Kontext Modell</h1>
+
+#foreach ($anweisung in ${anweisungen})
+<div class="modell anweisung">
+    <p>$anweisung</p>
+</div>
+#end
+
+#foreach ($ereignis in ${ereignisse})
+<div class="modell ereignis">
+    <p>$ereignis</p>
+</div>
+#end
+
+#foreach ($information in ${informationen})
+<div class="modell information">
+    <p>$information</p>
+</div>
+#end
+
+</body>
+</html>

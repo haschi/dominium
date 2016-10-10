@@ -1,0 +1,6 @@
+com.github.haschi.modeling.de.Ereignis
+com.github.haschi.modeling.de.Anweisung
+com.github.haschi.modeling.de.Information
+com.github.haschi.modeling.en.Command
+com.github.haschi.modeling.en.Event
+com.github.haschi.modeling.en.Projection

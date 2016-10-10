@@ -1,9 +1,9 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis;
+package com.github.haschi.haushaltsbuch.api.ereignis;
 
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
-import org.immutables.value.Value;
+import com.github.haschi.modeling.de.Ereignis;
 
-@Value.Immutable
+@Ereignis
 public interface SaldoWurdeGeaendert
         extends HaushaltsbuchEreignis
 {

@@ -2,10 +2,10 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.ereignis.*;
 import com.github.haschi.haushaltsbuch.api.kommando.*;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.SollkontoSpezifikation;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.*;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;

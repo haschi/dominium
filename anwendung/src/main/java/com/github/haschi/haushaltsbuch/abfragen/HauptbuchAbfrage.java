@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HauptbuchWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.KontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.HauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.eventhandling.annotation.EventHandler;

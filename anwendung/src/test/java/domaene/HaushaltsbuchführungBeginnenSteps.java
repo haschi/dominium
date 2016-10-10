@@ -1,9 +1,9 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHaushaltsbuchAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHauptbuchWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableHaushaltsbuchAngelegt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableJournalWurdeAngelegt;
 import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
@@ -36,7 +36,7 @@ public final class HaushaltsbuchführungBeginnenSteps
     @Before
     public void configure()
     {
-        ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
+        final ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
         ctxCtrl.stopContexts();
         ctxCtrl.startContext(RequestScoped.class);
     }

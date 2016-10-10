@@ -1,5 +1,6 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
@@ -7,7 +8,6 @@ import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.ImmutableSaldoWurdeGeaendert;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;

@@ -124,6 +124,12 @@
                 <version>${slf4j.version}</version>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.haschi</groupId>
+                <artifactId>modeling</artifactId>
+                <version>0.0.26-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

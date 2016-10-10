@@ -2,8 +2,8 @@ package com.github.haschi.haushaltsbuch.abfragen;
 
 import com.github.haschi.EineDomainCdiBean;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
+import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchAngelegt;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.axonframework.commandhandling.gateway.CommandGateway;

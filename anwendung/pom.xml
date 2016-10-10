@@ -35,6 +35,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.haschi</groupId>
+            <artifactId>modeling</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>de.larmic.butterfaces</groupId>-->
         <!--<artifactId>components-mojarra</artifactId>-->

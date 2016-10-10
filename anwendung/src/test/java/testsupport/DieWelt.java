@@ -1,6 +1,6 @@
 package testsupport;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.ereignis.HaushaltsbuchEreignis;
+import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchEreignis;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.eventhandling.annotation.EventHandler;
 

@@ -1,0 +1,11 @@
+<svg width="178mm" height="178mm" xmlns="http://www.w3.org/2000/svg" version="1.2">
+    <rect x="0" y="0" width="78mm" height="78mm" fill="skyblue" stroke-width="2" stroke="black"/>
+    <foreignObject width="78mm" height="78mm"
+                   requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <p xmlns="http://www.w3.org/1999/xhtml"
+           style="margin: 0; padding: 0.5em; font-size: 32pt; font-family: sans-serif">Lege
+            Buchung an und noch viel
+            mehr Text 2
+        </p>
+    </foreignObject>
+</svg>
