@@ -7,10 +7,9 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@Anweisung("Lege Konto mit Angangsbestand an")
+@Anweisung("Lege Konto mit Angangs&shy;bestand an")
 public interface LegeKontoMitAnfangsbestandAn
 {
-
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();
 

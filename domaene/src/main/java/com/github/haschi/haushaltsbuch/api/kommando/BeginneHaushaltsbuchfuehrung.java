@@ -5,7 +5,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 import java.util.UUID;
 
-@Anweisung("Beginne Haushaltsbuchführung")
+@Anweisung("Beginne Haus&shy;halts&shy;buch&shy;füh&shy;rung")
 public interface BeginneHaushaltsbuchfuehrung
 {
 

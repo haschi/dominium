@@ -2,13 +2,19 @@ package com.github.haschi.modelldokumentation;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.FileWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class ListClasses
@@ -25,23 +31,39 @@ public class ListClasses
         }
         System.out.println("================================");
 
-        final List<String> anweisungen = new ArrayList<>();
-        final List<String> ereignisse = new ArrayList<>();
-        final List<String> informationen = new ArrayList<>();
+        final Map<String, BoundedContext> boundedContext = new ConcurrentHashMap<>();
 
-        final Map<String, List<String>> modell = new HashMap<>();
+        final ContextMap cm = new ContextMap();
 
-        modell.put("com.github.haschi.modeling.de.Anweisung", anweisungen);
-        modell.put("com.github.haschi.modeling.de.Ereignis", ereignisse);
-        modell.put("com.github.haschi.modeling.de.Information", informationen);
+        for (final PackageDoc packageDoc : root.specifiedPackages())
+        {
+            for (final AnnotationDesc annotationDesc : packageDoc.annotations())
+            {
+                if (annotationDesc.annotationType()
+                        .qualifiedName()
+                        .equals("com.github.haschi.modeling.de.AbgegrenzterKontext"))
+                {
+                    for (final AnnotationDesc.ElementValuePair elementValuePair : annotationDesc.elementValues())
+                    {
+                        if (elementValuePair.element().name().equals("value"))
+                        {
+                            final String name = elementValuePair.value().value().toString();
+                            cm.add(new BoundedContext(packageDoc.name(), name));
+                        }
+                    }
+                }
+            }
+        }
 
         for (final ClassDoc classDoc : root.classes())
         {
             for (final AnnotationDesc annotation : classDoc.annotations())
             {
-                for (final String modellelement : modell.keySet())
+                for (final String modellelement : cm.getModel(classDoc.containingPackage().name()).getModell().keySet())
                 {
-                    final List<String> col = modell.get(modellelement);
+                    final List<String> col = cm.getModel(classDoc.containingPackage().name())
+                            .getModell()
+                            .get(modellelement);
                     if (annotation.annotationType().qualifiedName().equals(modellelement))
                     {
                         boolean gefunden = false;
@@ -69,26 +91,34 @@ public class ListClasses
 
         }
 
-        try
+        for (final BoundedContext c : cm.contexts())
         {
-            Velocity.init();
-            final VelocityContext context = new VelocityContext();
-            context.put("anweisungen", anweisungen);
-            context.put("ereignisse", ereignisse);
-            context.put("informationen", informationen);
 
-            final Template template = Velocity.getTemplate("Modell.html.vm");
-
-            try (final FileWriter writer = new FileWriter("modell.html"))
+            try
             {
-                template.merge(context, writer);
+                Velocity.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+                Velocity.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+
+                Velocity.init();
+                final VelocityContext context = new VelocityContext();
+                context.put("anweisungen", c.getAnweisungen());
+                context.put("ereignisse", c.getEreignisse());
+                context.put("informationen", c.getInformationen());
+                context.put("kontext", c.getName());
+
+                final Template template = Velocity.getTemplate("modell.vm");
+
+                try (final FileWriter writer = new FileWriter("index.html"))
+                {
+                    template.merge(context, writer);
+                }
+
+            } catch (final Exception e)
+            {
+                e.printStackTrace();
             }
 
-        } catch (final Exception e)
-        {
-            e.printStackTrace();
         }
-
         return true;
     }
 }

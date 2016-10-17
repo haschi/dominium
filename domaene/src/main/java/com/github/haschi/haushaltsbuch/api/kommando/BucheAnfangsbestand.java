@@ -6,7 +6,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@Anweisung("Buche Anfangsbestand")
+@Anweisung("Buche Anfangs&shy;bestand")
 public interface BucheAnfangsbestand
 {
     @TargetAggregateIdentifier

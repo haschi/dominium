@@ -6,7 +6,7 @@ import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import javax.money.MonetaryAmount;
 import java.util.UUID;
 
-@Anweisung("Füge Buchungssatz hinzu")
+@Anweisung("Füge Buch&shy;ungs&shy;satz hinzu")
 public interface FügeBuchungssatzHinzu
 {
 

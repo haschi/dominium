@@ -38,7 +38,7 @@
             <artifactId>modeling</artifactId>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
@@ -164,6 +164,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <artifactId>modelldokumentation</artifactId>
+            <groupId>com.github.haschi</groupId>
+            <version>0.0.26-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -186,6 +192,7 @@
                         <groupId>com.github.haschi</groupId>
                         <version>0.0.26-SNAPSHOT</version>
                     </docletArtifact>
+                    <additionalparam></additionalparam>
                     <useStandardDocletOptions>false</useStandardDocletOptions>
                     <debug>true</debug>
                     <additionalDependencies>
@@ -246,9 +253,11 @@
             <name>Jitpack.io Repository</name>
             <releases>
                 <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
 

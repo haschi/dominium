@@ -130,6 +130,12 @@
                 <artifactId>modeling</artifactId>
                 <version>0.0.26-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.haschi</groupId>
+                <artifactId>aspekte</artifactId>
+                <version>0.0.26-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -340,6 +346,41 @@
                 </dependencies>
 
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+
+                <configuration>
+                    <doclet>com.github.haschi.modelldokumentation.ListClasses</doclet>
+                    <docletArtifact>
+                        <artifactId>modelldokumentation</artifactId>
+                        <groupId>com.github.haschi</groupId>
+                        <version>0.0.26-SNAPSHOT</version>
+                    </docletArtifact>
+                    <useStandardDocletOptions>false</useStandardDocletOptions>
+                    <debug>true</debug>
+                    <additionalDependencies>
+                        <additionalDependency>
+                            <groupId>com.github.haschi</groupId>
+                            <artifactId>modeling</artifactId>
+                            <version>0.0.26-SNAPSHOT</version>
+                        </additionalDependency>
+                    </additionalDependencies>
+                </configuration>
+
+
+                <executions>
+                    <execution>
+                        <id>aggregate</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -366,6 +407,7 @@
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.19.1</version>
             </plugin>
+
 
         </plugins>
     </reporting>
