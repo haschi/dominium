@@ -10,11 +10,12 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.FileWriter;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BinaryOperator;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
 
 public class ListClasses
 {
@@ -34,46 +35,62 @@ public class ListClasses
 
         final ContextMap cm = ContextMap.create(root);
 
-        for (final ClassDoc classDoc : root.classes())
+        final List<Modellelement> modellelements = Arrays.stream(root.classes())
+                .filter(classDoc -> Optional.ofNullable(Arrays.stream(classDoc.annotations())
+                        .reduce(null, ReduceToModellelementannotation(cm, classDoc))).isPresent())
+                .map(classDoc -> new Modellelement(
+                        classDoc,
+                        Arrays.stream(classDoc.annotations())
+                                .reduce(null, ReduceToModellelementannotation(cm, classDoc))))
+                .collect(Collectors.toList());
+
+        for (final Modellelement modellelement : modellelements)
         {
-            logger.info("Klasse " + classDoc.name());
-            for (final AnnotationDesc annotation : classDoc.annotations())
-            {
-                logger.info("Annotation " + annotation.annotationType().name());
-                final BoundedContext model = cm.getModel(classDoc.containingPackage().name());
-                logger.info("in Kontext " + model.getName());
-                logger.info(model.getModell().keySet().stream().collect(Collectors.joining(", ")));
+            final String description = modellelement.getDescription();
 
-                for (final String modellelement : model.getModell().keySet())
-                {
-                    logger.info("Suche Modellelement " + modellelement);
-                    final List<String> col = cm.getModel(classDoc.containingPackage().name())
-                            .getModell()
-                            .get(modellelement);
-                    if (annotation.annotationType().qualifiedName().equals(modellelement))
-                    {
-                        logger.info("Modellelement " + modellelement + " gefunden");
-                        boolean gefunden = false;
-                        for (final AnnotationDesc.ElementValuePair elementValuePair : annotation.elementValues())
-                        {
-                            if (ContextName.istAnnotationValue(elementValuePair))
-                            {
-                                final String name = elementValuePair.value().value().toString();
-                                col.add(name);
-                                gefunden = true;
-                            }
-                        }
+            logger.info(modellelement.getClassDoc().name() + " heißt " + description);
 
-                        if (!gefunden)
-                        {
-                            col.add(stream(classDoc.name()
-                                    .split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")).collect(Collectors.joining(
-                                    " ")));
-                        }
-                    }
-                }
-            }
+            cm.getModel(modellelement.getClassDoc().containingPackage().name())
+                    .getModell()
+                    .get(modellelement.getAnnotationDesc().annotationType().qualifiedName())
+                    .add(modellelement.getDescription());
         }
+
+        //        Arrays.stream(root.classes()).forEach(classDoc ->
+        //        {
+        //            for (final AnnotationDesc annotation : classDoc.annotations())
+        //            {
+        //                final BoundedContext model = cm.getModel(classDoc.containingPackage().name());
+        //                for (final String modellelement : model.getModell().keySet())
+        //                {
+        //                    final List<String> col = cm.getModel(classDoc.containingPackage().name())
+        //                            .getModell()
+        //                            .get(modellelement);
+        //                    if (annotation.annotationType().qualifiedName().equals(modellelement))
+        //                    {
+        //                        boolean gefunden = false;
+        //                        for (final AnnotationDesc.ElementValuePair elementValuePair : annotation
+        // .elementValues())
+        //                        {
+        //                            if (ContextName.istAnnotationValue(elementValuePair))
+        //                            {
+        //                                final String name = elementValuePair.value().value().toString();
+        //                                col.add(name);
+        //                                gefunden = true;
+        //                            }
+        //                        }
+        //
+        //                        if (!gefunden)
+        //                        {
+        //                            col.add(stream(classDoc.name()
+        //                                    .split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")).collect
+        // (Collectors.joining(
+        //                                    " ")));
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        });
 
         for (final BoundedContext c : cm.contexts())
         {
@@ -106,4 +123,29 @@ public class ListClasses
         return true;
     }
 
+    private static BinaryOperator<AnnotationDesc> ReduceToModellelementannotation(
+            final ContextMap cm, final ClassDoc classDoc)
+    {
+        return (a, b) ->
+        {
+            if (cm.getModel(classDoc.containingPackage().name())
+                    .getModell()
+                    .keySet()
+                    .contains(b.annotationType().qualifiedName()))
+            {
+                if (a == null)
+                {
+                    return b;
+                }
+                else
+                {
+                    throw new IllegalStateException("Mehr als eine Modellannotation gefunden");
+                }
+            }
+            else
+            {
+                return a;
+            }
+        };
+    }
 }
