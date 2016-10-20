@@ -1,5 +1,7 @@
 package com.github.haschi.modelldokumentation;
 
+import com.sun.javadoc.PackageDoc;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,13 +9,24 @@ import java.util.Map;
 
 public class BoundedContext
 {
+    public BoundedContext(final PackageDoc p)
+    {
+        this.packageName = p.name();
+
+        this.name = new ContextName(p);
+
+        this.modell.put("com.github.haschi.modeling.de.Anweisung", this.anweisungen);
+        this.modell.put("com.github.haschi.modeling.de.Ereignis", this.ereignisse);
+        this.modell.put("com.github.haschi.modeling.de.Information", this.informationen);
+    }
+
     public String getPackageName()
     {
         return this.packageName;
     }
 
     private final String packageName;
-    private final String name;
+    private final ContextName name;
     private final List<String> anweisungen = new ArrayList<>();
     private final List<String> ereignisse = new ArrayList<>();
     private final List<String> informationen = new ArrayList<>();
@@ -25,19 +38,9 @@ public class BoundedContext
 
     private final Map<String, List<String>> modell = new HashMap<>();
 
-    public BoundedContext(final String packageName, final String name)
-    {
-        this.packageName = packageName;
-        this.name = name;
-
-        this.modell.put("com.github.haschi.modeling.de.Anweisung", this.anweisungen);
-        this.modell.put("com.github.haschi.modeling.de.Ereignis", this.ereignisse);
-        this.modell.put("com.github.haschi.modeling.de.Information", this.informationen);
-    }
-
     public String getName()
     {
-        return this.name;
+        return this.name.toString();
     }
 
     public List<String> getAnweisungen()

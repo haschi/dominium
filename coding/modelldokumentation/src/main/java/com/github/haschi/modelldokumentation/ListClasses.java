@@ -2,7 +2,6 @@ package com.github.haschi.modelldokumentation;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -11,16 +10,16 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
 public class ListClasses
 {
+    private static final Logger logger = Logger.getLogger(ListClasses.class.getName());
+
     public static boolean start(final RootDoc root)
     {
         System.out.println("================================");
@@ -33,31 +32,31 @@ public class ListClasses
         }
         System.out.println("================================");
 
-        final ContextMap cm = new ContextMap();
-
-        for (final PackageDoc packageDoc : root.specifiedPackages())
-        {
-            fallsAbgegrenztenKontext(packageDoc, a ->
-            {
-                abgegrenztenKontextHinzufügen(cm, a, packageDoc.name());
-            });
-        }
+        final ContextMap cm = ContextMap.create(root);
 
         for (final ClassDoc classDoc : root.classes())
         {
+            logger.info("Klasse " + classDoc.name());
             for (final AnnotationDesc annotation : classDoc.annotations())
             {
-                for (final String modellelement : cm.getModel(classDoc.containingPackage().name()).getModell().keySet())
+                logger.info("Annotation " + annotation.annotationType().name());
+                final BoundedContext model = cm.getModel(classDoc.containingPackage().name());
+                logger.info("in Kontext " + model.getName());
+                logger.info(model.getModell().keySet().stream().collect(Collectors.joining(", ")));
+
+                for (final String modellelement : model.getModell().keySet())
                 {
+                    logger.info("Suche Modellelement " + modellelement);
                     final List<String> col = cm.getModel(classDoc.containingPackage().name())
                             .getModell()
                             .get(modellelement);
                     if (annotation.annotationType().qualifiedName().equals(modellelement))
                     {
+                        logger.info("Modellelement " + modellelement + " gefunden");
                         boolean gefunden = false;
                         for (final AnnotationDesc.ElementValuePair elementValuePair : annotation.elementValues())
                         {
-                            if (istAnnotationValue(elementValuePair))
+                            if (ContextName.istAnnotationValue(elementValuePair))
                             {
                                 final String name = elementValuePair.value().value().toString();
                                 col.add(name);
@@ -73,7 +72,6 @@ public class ListClasses
                         }
                     }
                 }
-
             }
         }
 
@@ -108,51 +106,4 @@ public class ListClasses
         return true;
     }
 
-    private static void fallsAbgegrenztenKontext(
-            final PackageDoc packageDoc, final Consumer<AnnotationDesc> annotationDescConsumer)
-    {
-        Arrays.stream(packageDoc.annotations())
-                .filter(ListClasses::istAbgegrenzterKontext)
-                .reduce(maximalEinExemplar())
-                .ifPresent(annotationDescConsumer);
-    }
-
-    private static BinaryOperator<AnnotationDesc> maximalEinExemplar()
-    {
-        return (a, b) ->
-        {
-            throw new IllegalStateException();
-        };
-    }
-
-    private static BinaryOperator<String> maximalEinWert()
-    {
-        return (a, b) ->
-        {
-            throw new IllegalStateException();
-        };
-    }
-
-    private static void abgegrenztenKontextHinzufügen(
-            final ContextMap cm, final AnnotationDesc a, final String packageName)
-    {
-        final String kontextName = stream(a.elementValues()).filter(ListClasses::istAnnotationValue)
-                .map(evp -> evp.value().value().toString())
-                .reduce(maximalEinWert())
-                .get();
-
-        cm.add(new BoundedContext(packageName, kontextName));
-    }
-
-    private static boolean istAnnotationValue(final AnnotationDesc.ElementValuePair elementValuePair)
-    {
-        return elementValuePair.element().name().equals("value");
-    }
-
-    private static boolean istAbgegrenzterKontext(final AnnotationDesc annotationDesc)
-    {
-        return annotationDesc.annotationType()
-                .qualifiedName()
-                .equals("com.github.haschi.modeling.de.AbgegrenzterKontext");
-    }
 }
