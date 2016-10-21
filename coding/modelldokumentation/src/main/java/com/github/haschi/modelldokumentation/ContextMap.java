@@ -13,12 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class ContextMap
+class ContextMap
 {
     private static final Logger logger = Logger.getLogger(ContextMap.class.getName());
     private final List<BoundedContext> context = new ArrayList<>();
 
-    static ContextMap create2(final RootDoc root)
+    static ContextMap create(final RootDoc root)
     {
         final ContextMap contextMap = new ContextMap();
 
@@ -103,7 +103,7 @@ public class ContextMap
         throw new IllegalStateException(packageName);
     }
 
-    public List<BoundedContext> contexts()
+    List<BoundedContext> contexts()
     {
         return this.context;
     }

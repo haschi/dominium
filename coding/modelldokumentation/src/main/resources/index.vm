@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Modell</title>
+
+    <style> .modell {
+        border: solid 1px black;
+        width: 70mm;
+        height: 70mm;
+        padding: 4mm;
+        margin: 4mm;
+        overflow: hidden;
+        float: left;
+
+        -moz-hyphens: auto;
+        -o-hyphens: auto;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .modell p {
+        font-size: 28pt;
+        font-family: sans-serif;
+    }
+
+    .anweisung {
+        background-color: skyblue;
+    }
+
+    .ereignis {
+        background-color: lightsalmon;
+    }
+
+    .information {
+        background-color: lightgreen;
+    }
+
+    </style>
+
+</head>
+
+<body>
+<h1>Kontext Landkarte</h1>
+<ul>
+    #foreach($kontext in ${contexts})
+        <li><a href="${kontext.Id}.html">$kontext.Name</a> (Ereignisse: ${kontext.getEreignisse().size()}
+            Anweisungen: ${kontext.getAnweisungen().size()}
+            Informationen: ${kontext.getInformationen().size()})
+        </li>
+    #end
+</ul>
+
+</body>
+</html>

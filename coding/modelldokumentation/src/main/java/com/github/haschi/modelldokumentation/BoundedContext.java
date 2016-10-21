@@ -2,6 +2,7 @@ package com.github.haschi.modelldokumentation;
 
 import com.sun.javadoc.PackageDoc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Map;
 
 public class BoundedContext
 {
+    private File id;
+
     public BoundedContext(final PackageDoc p)
     {
         this.packageName = p.name();
@@ -56,5 +59,11 @@ public class BoundedContext
     public List<String> getInformationen()
     {
         return this.informationen;
+    }
+
+    public String getId()
+    {
+        final String[] path = this.packageName.split("\\.");
+        return path[path.length - 1];
     }
 }
