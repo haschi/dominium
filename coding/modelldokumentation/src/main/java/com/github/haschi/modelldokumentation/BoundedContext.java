@@ -3,17 +3,14 @@ package com.github.haschi.modelldokumentation;
 import com.sun.javadoc.PackageDoc;
 import org.apache.velocity.VelocityContext;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoundedContext
+class BoundedContext
 {
-    private File id;
-
-    public BoundedContext(final PackageDoc p)
+    BoundedContext(final PackageDoc p)
     {
         this.packageName = p.name();
 
@@ -35,7 +32,7 @@ public class BoundedContext
         htmlWriter.writeHtmlFile(context);
     }
 
-    public String getPackageName()
+    String getPackageName()
     {
         return this.packageName;
     }
@@ -46,7 +43,7 @@ public class BoundedContext
     private final List<String> ereignisse = new ArrayList<>();
     private final List<String> informationen = new ArrayList<>();
 
-    public Map<String, List<String>> getModell()
+    Map<String, List<String>> getModell()
     {
         return this.modell;
     }
@@ -58,17 +55,17 @@ public class BoundedContext
         return this.name.toString();
     }
 
-    public List<String> getAnweisungen()
+    private List<String> getAnweisungen()
     {
         return this.anweisungen;
     }
 
-    public List<String> getEreignisse()
+    private List<String> getEreignisse()
     {
         return this.ereignisse;
     }
 
-    public List<String> getInformationen()
+    private List<String> getInformationen()
     {
         return this.informationen;
     }

@@ -5,14 +5,11 @@ import com.sun.javadoc.PackageDoc;
 
 import java.util.Arrays;
 
-/**
- * Created by matthias on 19.10.16.
- */
-public class ContextName
+class ContextName
 {
     private final PackageDoc packageDoc;
 
-    public ContextName(final PackageDoc packageDoc)
+    ContextName(final PackageDoc packageDoc)
     {
         this.packageDoc = packageDoc;
     }
@@ -40,17 +37,17 @@ public class ContextName
                 .toString();
     }
 
-    public static boolean istAbgegrenzterKontext(final PackageDoc p)
+    static boolean istAbgegrenzterKontext(final PackageDoc p)
     {
         return Arrays.stream(p.annotations()).anyMatch(ContextName::istAbgegrenzterKontext);
     }
 
-    public static boolean istAnnotationValue(final AnnotationDesc.ElementValuePair elementValuePair)
+    static boolean istAnnotationValue(final AnnotationDesc.ElementValuePair elementValuePair)
     {
         return elementValuePair.element().name().equals("value");
     }
 
-    public static boolean istAbgegrenzterKontext(final AnnotationDesc annotationDesc)
+    private static boolean istAbgegrenzterKontext(final AnnotationDesc annotationDesc)
     {
         return annotationDesc.annotationType()
                 .qualifiedName()

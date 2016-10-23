@@ -6,23 +6,23 @@ import org.apache.velocity.app.Velocity;
 
 import java.io.FileWriter;
 
-public class HtmlWriter
+class HtmlWriter
 {
-    private final String name;
-    private final String s;
+    private final String template;
+    private final String outputFileName;
 
-    public HtmlWriter(final String name, final String s)
+    HtmlWriter(final String template, final String outputFileName)
     {
-        this.name = name;
-        this.s = s;
+        this.template = template;
+        this.outputFileName = outputFileName;
     }
 
     void writeHtmlFile(final VelocityContext context) throws CanNotCreateDocument
     {
         try
         {
-            final Template template = Velocity.getTemplate(getName());
-            try (final FileWriter writer = new FileWriter(getS()))
+            final Template template = Velocity.getTemplate(this.template);
+            try (final FileWriter writer = new FileWriter(this.outputFileName))
             {
                 template.merge(context, writer);
             }
@@ -32,13 +32,4 @@ public class HtmlWriter
         }
     }
 
-    public String getName()
-    {
-        return this.name;
-    }
-
-    public String getS()
-    {
-        return this.s;
-    }
 }

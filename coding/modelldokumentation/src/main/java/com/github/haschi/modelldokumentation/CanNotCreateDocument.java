@@ -1,9 +1,9 @@
 package com.github.haschi.modelldokumentation;
 
-public class CanNotCreateDocument
+class CanNotCreateDocument
         extends Exception
 {
-    public CanNotCreateDocument(final Exception e)
+    CanNotCreateDocument(final Exception e)
     {
         super(e);
     }
