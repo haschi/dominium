@@ -3,6 +3,7 @@ package com.github.haschi.modelldokumentation;
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.RootDoc;
+import org.apache.velocity.VelocityContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,13 @@ class ContextMap
         contextMap.modellErbauen(root);
 
         return contextMap;
+    }
+
+    void writeIndex(final HtmlWriter htmlWriter) throws CanNotCreateDocument
+    {
+        final VelocityContext context = new VelocityContext();
+        context.put("contexts", contexts());
+        htmlWriter.writeHtmlFile(context);
     }
 
     private void modellErbauen(final RootDoc root)

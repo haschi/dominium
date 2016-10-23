@@ -352,7 +352,7 @@
                 <version>2.10.4</version>
 
                 <configuration>
-                    <doclet>com.github.haschi.modelldokumentation.ListClasses</doclet>
+                    <doclet>com.github.haschi.modelldokumentation.EventStormingModellDoclet</doclet>
                     <docletArtifact>
                         <artifactId>modelldokumentation</artifactId>
                         <groupId>com.github.haschi</groupId>
