@@ -4,7 +4,9 @@ import com.github.haschi.EineDomainCdiBean;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
+import org.apache.deltaspike.testcontrol.api.TestControl;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -19,6 +21,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(CdiTestRunner.class)
+@TestControl(projectStage = ProjectStage.UnitTest.class)
 @Transactional
 public class HauptbuchAbfrageTest
 {
@@ -41,6 +44,9 @@ public class HauptbuchAbfrageTest
     @Inject
     EineDomainCdiBean xbean;
 
+    @Inject
+    ProjectStage stage;
+
     @Test
     public void hauptbuchAbfragen()
     {
@@ -57,6 +63,8 @@ public class HauptbuchAbfrageTest
                 .addAktivkonten("Anfangsbestand")
                 .build());
 
+        assertThat(this.stage).isEqualTo(ProjectStage.UnitTest);
+        
         this.entityManager.clear();
     }
 

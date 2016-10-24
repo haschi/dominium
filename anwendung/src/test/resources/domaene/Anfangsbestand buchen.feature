@@ -6,6 +6,7 @@ Funktionalität: Anfangsbestand buchen
   Grundlage:
     Angenommen ich habe mit der Haushaltsbuchführung begonnen
 
+  @backend
   Szenario: Anfangsbestand auf vorhandenes Konto buchen
     Angenommen ich habe das Konto "Girokonto" angelegt
     Wenn ich auf das Konto "Girokonto" den Anfangsbestand von 1234,56 EUR buche

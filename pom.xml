@@ -95,6 +95,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>anwendung</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- auslagern nach coding.bom -->
 
             <!-- Alles für Arquillian -->
@@ -136,6 +142,13 @@
                 <artifactId>aspekte</artifactId>
                 <version>0.0.26-SNAPSHOT</version>
             </dependency>
+
+            <dependency>
+                <groupId>it.kamaladafrica</groupId>
+                <artifactId>axon-cdi</artifactId>
+                <version>2.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -149,6 +162,7 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -209,6 +223,11 @@
                     <version>2.0</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -243,6 +262,7 @@
                 <groupId>org.codehaus.mojo</groupId>
 
             </plugin>
+
             <plugin>
                 <!-- Die Reihenfolge der Plugins ist wichtig und darf nicht geändert werden:
                      1. Compiler und Annotation Processing
@@ -346,40 +366,42 @@
                 </dependencies>
 
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
 
-                <configuration>
-                    <doclet>com.github.haschi.modelldokumentation.EventStormingModellDoclet</doclet>
-                    <docletArtifact>
-                        <artifactId>modelldokumentation</artifactId>
-                        <groupId>com.github.haschi</groupId>
-                        <version>0.0.26-SNAPSHOT</version>
-                    </docletArtifact>
-                    <useStandardDocletOptions>false</useStandardDocletOptions>
-                    <debug>true</debug>
-                    <additionalDependencies>
-                        <additionalDependency>
-                            <groupId>com.github.haschi</groupId>
-                            <artifactId>modeling</artifactId>
-                            <version>0.0.26-SNAPSHOT</version>
-                        </additionalDependency>
-                    </additionalDependencies>
-                </configuration>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+            <!--<version>2.10.4</version>-->
+
+            <!--<configuration>-->
+            <!--<doclet>com.github.haschi.modelldokumentation.EventStormingModellDoclet</doclet>-->
+            <!--<docletArtifact>-->
+            <!--<artifactId>modelldokumentation</artifactId>-->
+            <!--<groupId>com.github.haschi</groupId>-->
+            <!--<version>0.0.26-SNAPSHOT</version>-->
+            <!--</docletArtifact>-->
+            <!--<useStandardDocletOptions>false</useStandardDocletOptions>-->
+            <!--<debug>true</debug>-->
+            <!--<additionalDependencies>-->
+            <!--<additionalDependency>-->
+            <!--<groupId>com.github.haschi</groupId>-->
+            <!--<artifactId>modeling</artifactId>-->
+            <!--<version>0.0.26-SNAPSHOT</version>-->
+            <!--</additionalDependency>-->
+            <!--</additionalDependencies>-->
+            <!--</configuration>-->
 
 
-                <executions>
-                    <execution>
-                        <id>aggregate</id>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                        <phase>site</phase>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>aggregate</id>-->
+            <!--<goals>-->
+            <!--<goal>aggregate</goal>-->
+            <!--</goals>-->
+            <!--<phase>site</phase>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
 
         </plugins>
     </build>
@@ -477,12 +499,22 @@
             </build>
         </profile>
     </profiles>
-    <modules>
 
-        <module>domaene</module>
-        <!--<module>lesemodell</module>-->
-        <module>infrastruktur</module>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+
+    <modules>
         <module>anwendung</module>
+        <module>domaene</module>
+        <module>infrastruktur</module>
         <module>coding</module>
     </modules>
 </project>

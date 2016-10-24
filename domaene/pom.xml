@@ -52,9 +52,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.kamaladafrica</groupId>
+            <groupId>it.kamaladafrica</groupId>
             <artifactId>axon-cdi</artifactId>
-            <version>master</version>
         </dependency>
 
         <dependency>
@@ -246,22 +245,6 @@
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-            <name>Jitpack.io Repository</name>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
-
-    </repositories>
 
 </project>
 

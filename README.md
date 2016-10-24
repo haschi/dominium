@@ -1,6 +1,13 @@
 Dominium
 ========
 
+Test
+----
+
+Die Tests benötigen Docker. Für die Installation auf Debian siehe
+ https://docs.docker.com/engine/installation/linux/debian/#debian-jessie-80-64-bit
+http://blog.arungupta.me/wildfly-admin-console-docker-image-techtip66/
+
 Ein CQRS/ES Framework für Java EE
 ---------------------------------
 

@@ -1,8 +1,8 @@
 package infrastruktur;
 
+import it.kamaladafrica.cdi.axonframework.AutoConfigure;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.SimpleEventBus;
-import org.axonframework.integration.cdi.AutoConfigure;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

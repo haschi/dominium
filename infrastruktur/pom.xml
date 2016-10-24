@@ -50,9 +50,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.kamaladafrica</groupId>
+            <groupId>it.kamaladafrica</groupId>
             <artifactId>axon-cdi</artifactId>
-            <version>master</version>
         </dependency>
 
         <dependency>

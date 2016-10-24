@@ -176,3 +176,10 @@ VM Options: -ea
 
 
 ![Konfiguration für Cucumber IntelliJ IDEA Plugin](Images/Konfiguration.png)
+
+Konfiguration von Maven
+=======================
+
+Da mehrere Durchläufe erforderlich sind, um den Cucumber Runner für 
+JUnit zu konfigurieren, muss das Failsafe Plugin mehrfach aufgerufen
+werden: https://maven.apache.org/surefire/maven-failsafe-plugin/usage.html

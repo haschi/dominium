@@ -4,15 +4,11 @@ import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHauptbuchWurdeAngel
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
-import cucumber.api.java.Before;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
-import org.apache.deltaspike.cdise.api.ContextControl;
-import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import testsupport.DieWelt;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.UUID;
@@ -31,14 +27,6 @@ public final class HaushaltsbuchführungBeginnenSteps
     {
         this.commandGateway = commandGateway;
         this.welt = welt;
-    }
-
-    @Before
-    public void configure()
-    {
-        final ContextControl ctxCtrl = BeanProvider.getContextualReference(ContextControl.class);
-        ctxCtrl.stopContexts();
-        ctxCtrl.startContext(RequestScoped.class);
     }
 
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")

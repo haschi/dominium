@@ -1,5 +1,6 @@
 package infrastruktur;
 
+import it.kamaladafrica.cdi.axonframework.AutoConfigure;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -14,7 +15,6 @@ import org.axonframework.eventsourcing.SnapshotterTrigger;
 import org.axonframework.eventstore.SnapshotEventStore;
 import org.axonframework.eventstore.fs.FileSystemEventStore;
 import org.axonframework.eventstore.fs.SimpleEventFileResolver;
-import org.axonframework.integration.cdi.AutoConfigure;
 import org.axonframework.saga.SagaRepository;
 import org.axonframework.saga.repository.inmemory.InMemorySagaRepository;
 
