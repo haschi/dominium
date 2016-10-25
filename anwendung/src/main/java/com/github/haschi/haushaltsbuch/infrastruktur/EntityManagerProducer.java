@@ -1,8 +1,7 @@
-package com.github.haschi.haushaltsbuch.abfragen;
+package com.github.haschi.haushaltsbuch.infrastruktur;
 
 import org.apache.deltaspike.core.api.exclude.Exclude;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
-import org.apache.deltaspike.jpa.api.entitymanager.PersistenceUnitName;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Any;
@@ -11,27 +10,24 @@ import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
-@SuppressWarnings("checkstyle:designforextension")
-// @Alternative
-// @Priority(Interceptor.Priority.APPLICATION + 10)
-@Exclude(ifProjectStage = ProjectStage.Production.class)
+@Exclude(exceptIfProjectStage = ProjectStage.Production.class)
 public class EntityManagerProducer
 {
+    //    @Inject
+    //    @PersistenceUnitName("pu")
+    //    private EntityManagerFactory factory;
 
     @Inject
-    @PersistenceUnitName("test")
-    private EntityManagerFactory factory;
+    private EntityManager entityManager;
 
     @Produces
     @Default
     @RequestScoped
-    // @ApplicationScoped
-    // @TransactionScoped
     public EntityManager entityManager()
     {
-        return this.factory.createEntityManager();
+        return this.entityManager;
+        // return this.factory.createEntityManager();
     }
 
     public void close(@Disposes @Any final EntityManager entityManager)
@@ -42,5 +38,3 @@ public class EntityManagerProducer
         }
     }
 }
-
-

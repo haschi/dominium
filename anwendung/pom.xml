@@ -99,7 +99,15 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
+            <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>de.larmic.butterfaces</groupId>
+            <artifactId>components</artifactId>
+            <version>2.1.14</version>
+        </dependency>
+        
         <!--<dependency>-->
         <!--<groupId>org.jboss.spec.javax.ejb</groupId>-->
         <!--<artifactId>jboss-ejb-api_3.2_spec</artifactId>-->
@@ -235,73 +243,92 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.19.1</version>
-                <executions>
-                    <execution>
-                        <id>integration-1</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                        <configuration>
-                            <argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>
-                            <summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>
-                            <includes>
-                                <include>domaene.Integrationstests.java</include>
-                            </includes>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-failsafe-plugin</artifactId>-->
+            <!--<version>2.19.1</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>integration-1</id>-->
+            <!--<goals>-->
+            <!--<goal>integration-test</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>-->
+            <!--<summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>-->
+            <!--<includes>-->
+            <!--<include>domaene.Integrationstests.java</include>-->
+            <!--</includes>-->
 
-                        </configuration>
-                    </execution>
+            <!--</configuration>-->
+            <!--</execution>-->
 
-                    <execution>
-                        <id>backend</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
+            <!--<execution>-->
+            <!--<id>backend</id>-->
+            <!--<goals>-->
+            <!--<goal>integration-test</goal>-->
+            <!--</goals>-->
 
-                        <configuration>
-                            <argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>
-                            <summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>
-                            <includes>
-                                <include>domaene.BackendTests.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
+            <!--<configuration>-->
+            <!--<argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>-->
+            <!--<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>-->
+            <!--<includes>-->
+            <!--<include>domaene.BackendTests.java</include>-->
+            <!--</includes>-->
+            <!--</configuration>-->
+            <!--</execution>-->
 
-                    <execution>
-                        <id>verify</id>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
+            <!--<execution>-->
+            <!--<id>verify</id>-->
+            <!--<goals>-->
+            <!--<goal>verify</goal>-->
+            <!--</goals>-->
 
-                        <configuration>
-                            <summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>
-                            <summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--&lt;!&ndash;<configuration>&ndash;&gt;-->
+            <!--&lt;!&ndash;<summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>&ndash;&gt;-->
+            <!--&lt;!&ndash;<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>&ndash;&gt;-->
+            <!--&lt;!&ndash;</configuration>&ndash;&gt;-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
 
     <reporting>
+
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.19.1</version>
-                <reportSets>
-                    <reportSet>
-                        <id>integration-tests</id>
-                        <reports>
-                            <report>failsafe-report-only</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-surefire-report-plugin</artifactId>-->
+            <!--<version>2.19.1</version>-->
+            <!--<reportSets>-->
+            <!--<reportSet>-->
+            <!--<id>integration-tests</id>-->
+            <!--<reports>-->
+            <!--<report>failsafe-report-only</report>-->
+            <!--</reports>-->
+            <!--<configuration>-->
+            <!--<reportsDirectories>-->
+            <!--<reportsDirectory>${project.build.directory}/cucumber</reportsDirectory>-->
+            <!--</reportsDirectories>-->
+            <!--</configuration>-->
+            <!--</reportSet>-->
+
+            <!--<reportSet>-->
+            <!--<id>unit-tests</id>-->
+            <!--<reports>-->
+            <!--<report>surefire-report-only</report>-->
+            <!--</reports>-->
+            <!--<configuration>-->
+            <!--<reportsDirectories>-->
+            <!--<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>-->
+            <!--</reportsDirectories>-->
+            <!--</configuration>-->
+            <!--</reportSet>-->
+
+            <!--</reportSets>-->
+            <!--</plugin>-->
         </plugins>
     </reporting>
 

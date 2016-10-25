@@ -4,12 +4,14 @@ import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.UUID;
 
-//@Named
-//@RequestScoped
+@Named
+@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class Haushaltsbuchführung
@@ -21,6 +23,10 @@ public class Haushaltsbuchführung
     @Inject
     private CommandGateway commandGateway;
     private String identitätsmerkmal = "";
+
+    public Haushaltsbuchführung()
+    {
+    }
 
     public String getIdentitätsmerkmal()
     {

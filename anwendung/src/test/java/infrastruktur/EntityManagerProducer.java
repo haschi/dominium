@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch;
+package infrastruktur;
 
 import org.apache.deltaspike.core.api.exclude.Exclude;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
@@ -13,16 +13,20 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-@Exclude(exceptIfProjectStage = ProjectStage.Production.class)
+@SuppressWarnings("checkstyle:designforextension")
+@Exclude(ifProjectStage = ProjectStage.Production.class)
 public class EntityManagerProducer
 {
+
     @Inject
-    @PersistenceUnitName("pu")
+    @PersistenceUnitName("test")
     private EntityManagerFactory factory;
 
     @Produces
     @Default
     @RequestScoped
+    // @ApplicationScoped
+    // @TransactionScoped
     public EntityManager entityManager()
     {
         return this.factory.createEntityManager();
@@ -36,3 +40,5 @@ public class EntityManagerProducer
         }
     }
 }
+
+

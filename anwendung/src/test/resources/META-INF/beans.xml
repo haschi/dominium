@@ -6,7 +6,7 @@
        bean-discovery-mode="all">
 
     <!--<alternatives>-->
-    <!--<class>com.github.haschi.haushaltsbuch.abfragen.EntityManagerProducer</class>-->
+    <!--<class>infrastruktur.EntityManagerProducer</class>-->
     <!--</alternatives>-->
     <!--<interceptors>-->
     <!--<class>org.apache.deltaspike.jpa.impl.transaction.TransactionalInterceptor</class>-->

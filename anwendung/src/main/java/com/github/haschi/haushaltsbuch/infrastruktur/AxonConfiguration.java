@@ -1,4 +1,4 @@
-package infrastruktur;
+package com.github.haschi.haushaltsbuch.infrastruktur;
 
 import it.kamaladafrica.cdi.axonframework.AutoConfigure;
 import org.apache.deltaspike.core.api.exclude.Exclude;
@@ -26,10 +26,10 @@ import java.io.File;
 import java.util.concurrent.Executors;
 
 @ApplicationScoped
-@Exclude(ifProjectStage = ProjectStage.Production.class)
+@Exclude(exceptIfProjectStage = ProjectStage.Production.class)
 public final class AxonConfiguration
 {
-    private static final File storageDir = new File("/home/matthias/storage");
+    private static final File storageDir = new File("/tmp/storage");
 
     @Produces
     @AutoConfigure

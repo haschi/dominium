@@ -13,13 +13,14 @@ import java.util.UUID;
 @Path("buchfuehrug")
 public class Haushaltsbuchführung
 {
-    final CommandGateway commandGateway;
-
     @Inject
-    public Haushaltsbuchführung(final CommandGateway commandcommandGateway)
-    {
-        this.commandGateway = commandcommandGateway;
-    }
+    private CommandGateway commandGateway;
+
+    //    @Inject
+    //    public Haushaltsbuchführung(final CommandGateway commandcommandGateway)
+    //    {
+    //        this.commandGateway = commandcommandGateway;
+    //    }
 
     @POST
     @Path("{id}")
