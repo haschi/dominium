@@ -3,23 +3,18 @@ package com.github.haschi.haushaltsbuch.abfragen;
 import com.github.haschi.haushaltsbuch.api.ereignis.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
-import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.domain.DomainEventStream;
 import org.axonframework.domain.Message;
 import org.axonframework.eventstore.EventStore;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-@Transactional
 public class HauptbuchAbfrage
 {
-    @Inject
-    private EntityManager entityManager;
 
     @Inject
     private EventStore eventStore;
@@ -32,14 +27,9 @@ public class HauptbuchAbfrage
         final DomainEventStream domainEventStream = this.eventStore.readEvents(Haushaltsbuch.class.getSimpleName(),
                 haushaltsbuchId);
 
-        int anzahl = 0;
-
         while (domainEventStream.hasNext())
         {
-            anzahl++;
             final DomainEventMessage peek1 = domainEventStream.peek();
-
-            System.out.println(peek1.getPayload().toString());
 
             switchType(peek1,
                     falls(HauptbuchWurdeAngelegt.class, h -> builder.haushaltsbuchId(h.haushaltsbuchId())),
@@ -47,8 +37,6 @@ public class HauptbuchAbfrage
 
             domainEventStream.next();
         }
-
-        System.out.printf("%d Ereignisse verarbeitet%n", anzahl);
 
         return builder.build();
     }

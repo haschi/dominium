@@ -8,7 +8,6 @@ import java.util.UUID;
 @Information
 public interface HauptbuchAnsicht
 {
-
     UUID haushaltsbuchId();
 
     List<String> aktivkonten();

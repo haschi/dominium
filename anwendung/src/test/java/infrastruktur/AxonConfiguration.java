@@ -21,23 +21,18 @@ import org.axonframework.saga.repository.inmemory.InMemorySagaRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import java.io.File;
 import java.util.concurrent.Executors;
 
 @ApplicationScoped
 @Exclude(ifProjectStage = ProjectStage.Production.class)
 public final class AxonConfiguration
 {
-    private static final File storageDir = new File("/home/matthias/storage");
-
     @Produces
     @AutoConfigure
     @ApplicationScoped
     public EventStore eventStore()
     {
-
         return new VolatileEventStore();
-        // return new FileSystemEventStore(new SimpleEventFileResolver(storageDir));
     }
 
     @Produces
@@ -60,11 +55,7 @@ public final class AxonConfiguration
     @ApplicationScoped
     public CommandBus commandBus()
     {
-        //final MyUnitIfWorkFactory myUnitIfWorkFactory = new MyUnitIfWorkFactory();
-        final SimpleCommandBus simpleCommandBus = new SimpleCommandBus();
-        // simpleCommandBus.setTransactionManager(new JeeTransactionManager());
-        //simpleCommandBus.setUnitOfWorkFactory(myUnitIfWorkFactory);
-        return simpleCommandBus;
+        return new SimpleCommandBus();
     }
 
     @Produces
