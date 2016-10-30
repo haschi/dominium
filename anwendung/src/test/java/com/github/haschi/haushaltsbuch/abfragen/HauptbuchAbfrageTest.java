@@ -4,12 +4,16 @@ import com.github.haschi.EineDomainCdiBean;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import infrastruktur.JeeTransactionManager;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 import org.apache.deltaspike.testcontrol.api.TestControl;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.eventstore.EventStore;
+import org.axonframework.unitofwork.DefaultUnitOfWork;
+import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,14 +51,21 @@ public class HauptbuchAbfrageTest
     @Inject
     ProjectStage stage;
 
+    @Inject
+    EventStore eventStore;
+    private HaushaltsbuchAngelegt event;
+
     @Test
+
     public void hauptbuchAbfragen()
     {
+        final UnitOfWork uof = DefaultUnitOfWork.startAndGet(new JeeTransactionManager());
+        //CommandBus cb;
         final UUID haushaltsbuchId = UUID.randomUUID();
         this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(haushaltsbuchId).build());
+        uof.commit();
 
-        this.entityManager.flush();
-        this.entityManager.clear();
+        // assertThat(uof.isTransactional()).isTrue();
 
         final HauptbuchAnsicht abfragen = this.abfrage.abfragen(haushaltsbuchId);
 
@@ -64,7 +75,7 @@ public class HauptbuchAbfrageTest
                 .build());
 
         assertThat(this.stage).isEqualTo(ProjectStage.UnitTest);
-        
+
         this.entityManager.clear();
     }
 
@@ -97,6 +108,7 @@ public class HauptbuchAbfrageTest
     @EventHandler
     public void falls(final HaushaltsbuchAngelegt ereginis)
     {
+        this.event = ereginis;
         System.out.println("Beginne Haushaltsbuchführen");
     }
 }

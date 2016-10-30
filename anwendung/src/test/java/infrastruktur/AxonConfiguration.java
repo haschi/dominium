@@ -14,9 +14,8 @@ import org.axonframework.eventsourcing.AggregateSnapshotter;
 import org.axonframework.eventsourcing.EventCountSnapshotterTrigger;
 import org.axonframework.eventsourcing.Snapshotter;
 import org.axonframework.eventsourcing.SnapshotterTrigger;
-import org.axonframework.eventstore.SnapshotEventStore;
-import org.axonframework.eventstore.fs.FileSystemEventStore;
-import org.axonframework.eventstore.fs.SimpleEventFileResolver;
+import org.axonframework.eventstore.EventStore;
+import org.axonframework.eventstore.supporting.VolatileEventStore;
 import org.axonframework.saga.SagaRepository;
 import org.axonframework.saga.repository.inmemory.InMemorySagaRepository;
 
@@ -34,9 +33,11 @@ public final class AxonConfiguration
     @Produces
     @AutoConfigure
     @ApplicationScoped
-    public SnapshotEventStore eventStore()
+    public EventStore eventStore()
     {
-        return new FileSystemEventStore(new SimpleEventFileResolver(storageDir));
+
+        return new VolatileEventStore();
+        // return new FileSystemEventStore(new SimpleEventFileResolver(storageDir));
     }
 
     @Produces
@@ -59,7 +60,11 @@ public final class AxonConfiguration
     @ApplicationScoped
     public CommandBus commandBus()
     {
-        return new SimpleCommandBus();
+        //final MyUnitIfWorkFactory myUnitIfWorkFactory = new MyUnitIfWorkFactory();
+        final SimpleCommandBus simpleCommandBus = new SimpleCommandBus();
+        // simpleCommandBus.setTransactionManager(new JeeTransactionManager());
+        //simpleCommandBus.setUnitOfWorkFactory(myUnitIfWorkFactory);
+        return simpleCommandBus;
     }
 
     @Produces
