@@ -3,13 +3,15 @@ package com.github.haschi.haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
 
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-//@Named
-//@RequestScoped
+@Named
+@RequestScoped
 @SuppressWarnings("checkstyle:designforextension")
 public class Hauptbuch
         implements Serializable
