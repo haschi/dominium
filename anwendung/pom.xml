@@ -133,6 +133,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--  jboss-logging API -->
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
         <!-- Java EE 7 End -->
 
         <!--<dependency>-->

@@ -4,7 +4,7 @@ import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
