@@ -29,11 +29,30 @@ public class HauptbuchAbfrage
 
         while (domainEventStream.hasNext())
         {
-            final DomainEventMessage peek1 = domainEventStream.peek();
+            final DomainEventMessage message = domainEventStream.peek();
 
-            switchType(peek1,
+            switchType(message,
                     falls(HauptbuchWurdeAngelegt.class, h -> builder.haushaltsbuchId(h.haushaltsbuchId())),
-                    falls(KontoWurdeAngelegt.class, k -> builder.addAktivkonten(k.kontoname())));
+                    falls(KontoWurdeAngelegt.class, k ->
+                    {
+                        switch (k.kontoart())
+                        {
+                            case Aktiv:
+                                builder.addAktivkonten(k.kontoname());
+                                break;
+                            case Passiv:
+                                builder.addPassivkonten(k.kontoname());
+                                break;
+                            case Ertrag:
+                                builder.addErtragskonten(k.kontoname());
+                                break;
+                            case Aufwand:
+                                builder.addAufwandskonten(k.kontoname());
+                                break;
+                            default:
+                                throw new IllegalStateException();
+                        }
+                    }));
 
             domainEventStream.next();
         }

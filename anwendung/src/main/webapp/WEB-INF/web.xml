@@ -7,11 +7,15 @@
 
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <!--<param-value>Development</param-value>-->
+        <param-value>Production</param-value>
     </context-param>
 
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
 
+    <session-config>
+
+    </session-config>
 </web-app>
