@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  haushaltsbuch:
+    image: haushaltsbuch/service:test
+    expose:
+      - "8080"
+      - "9990"
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    networks:
+      net:
+        aliases:
+          - haushaltsbuch
+
+  web:
+    build:
+      context: .
+    image: haushaltsbuch/web:test
+    ports:
+      - "80:80"
+    links:
+      - haushaltsbuch
+    depends_on:
+      - haushaltsbuch
+    networks:
+      - net
+
+networks:
+  net:

@@ -35,11 +35,6 @@
             <artifactId>domaene</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>com.github.haschi.haushaltsbuch</groupId>-->
-        <!--<artifactId>infrastruktur</artifactId>-->
-        <!--</dependency>-->
-
         <!-- Abhängigkeiten zu Bibliotheken -->
         <dependency>
             <groupId>org.immutables</groupId>
@@ -57,37 +52,6 @@
             <groupId>com.github.haschi</groupId>
             <artifactId>aspekte</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>de.larmic.butterfaces</groupId>-->
-        <!--<artifactId>components-mojarra</artifactId>-->
-        <!--<version>1.10.6</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>org.axonframework</groupId>-->
-        <!--<artifactId>axon-core</artifactId>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-core</artifactId>-->
-        <!--</dependency>-->
-
-
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate</groupId>-->
-        <!--<artifactId>hibernate-entitymanager</artifactId>-->
-        <!--<version>5.0.7.Final</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
-        <!-- OK -->
-        <!--<dependency>-->
-        <!--<groupId>org.hibernate.javax.persistence</groupId>-->
-        <!--<artifactId>hibernate-jpa-2.1-api</artifactId>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>it.kamaladafrica</groupId>
@@ -139,15 +103,8 @@
             <artifactId>jboss-logging</artifactId>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- Java EE 7 End -->
 
-        <!--<dependency>-->
-        <!--<groupId>javax</groupId>-->
-        <!--<artifactId>javaee-api</artifactId>-->
-        <!--<version>7.0</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
+        <!-- Java EE 7 End -->
 
         <dependency>
             <groupId>de.larmic.butterfaces</groupId>
@@ -155,15 +112,10 @@
             <version>2.1.14</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.jboss.spec.javax.ejb</groupId>-->
-        <!--<artifactId>jboss-ejb-api_3.2_spec</artifactId>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Test -->
@@ -176,11 +128,13 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java8</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -192,6 +146,8 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+
         </dependency>
 
         <!-- Die Tests liefern eine Laufzeitumgebung mit CDI für die Domäne -->
@@ -240,26 +196,6 @@
             <artifactId>deltaspike-cdictrl-weld</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- OK -->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.deltaspike.modules</groupId>-->
-        <!--<artifactId>deltaspike-jpa-module-api</artifactId>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>com.h2database</groupId>-->
-        <!--<artifactId>h2</artifactId>-->
-        <!--<version>1.4.190</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
-        <!-- OK -->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.deltaspike.modules</groupId>-->
-        <!--<artifactId>deltaspike-jpa-module-impl</artifactId>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <!-- OK -->
         <dependency>
