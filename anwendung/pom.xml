@@ -58,6 +58,13 @@
             <artifactId>axon-cdi</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.5</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Java EE 7 Begin -->
 
         <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->

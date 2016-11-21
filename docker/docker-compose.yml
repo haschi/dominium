@@ -9,10 +9,7 @@ services:
     ports:
       - "8080:8080"
       - "9990:9990"
-    networks:
-      net:
-        aliases:
-          - haushaltsbuch
+    network_mode: "host"
 
   web:
     build:
@@ -20,12 +17,6 @@ services:
     image: haushaltsbuch/web:test
     ports:
       - "80:80"
-    links:
-      - haushaltsbuch
-    depends_on:
-      - haushaltsbuch
-    networks:
-      - net
-
-networks:
-  net:
+#    depends_on:
+#      - haushaltsbuch
+    network_mode: "host"
