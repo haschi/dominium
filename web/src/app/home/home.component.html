@@ -1,0 +1,49 @@
+<div class="app-content"s>
+  <h1 x-large class="sample-content">Sample header</h1>
+  <md-card color="primary">
+    <md-card-title>Card with title</md-card-title>
+    <md-card-content>
+      For hot module reloading run
+      <pre>npm run start:hmr</pre>
+    </md-card-content>
+  </md-card>
+  <hr>
+  <md-card class="wide-card">
+    <md-card-subtitle>More info on Material Design</md-card-subtitle>
+    <md-card-content>
+      <ul>
+        <li><a href="https://github.com/angular/material2">Material2 repo</a></li>
+        <li><a href="https://github.com/angular/material2/blob/master/docs/theming.md">Theming (Note: theming is in beta)</a></li>
+        <li><a href="https://github.com/angular/material2/blob/master/docs/theming-your-components.md">Theming your components</a></li>
+        <li>For docs on specific components look in the folder for the component, eg: <a href="https://github.com/angular/material2/tree/master/src/lib/card">md-card folder</a></li>
+        <li><a href="https://github.com/jelbourn/material2-app">Example app</a></li>
+      </ul>
+    </md-card-content>
+  </md-card>
+  <div>
+    <h4>Local State</h4>
+
+    <md-card>
+      <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+
+      <md-input
+        [value]="localState.value"
+        (input)="localState.value = $event.target.value"
+        placeholder="Submit Local State to App State"
+        autofocus></md-input>
+
+      <button id="submit-button" md-raised-button color="accent">Submit Value</button>
+    </form>
+    </md-card>
+    <!--
+        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
+        Rather than wiring up two-way data-binding ourselves with [value] and (input)
+        we can use Angular's [(ngModel)] syntax
+        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
+      -->
+
+    <pre>this.localState = {{ localState | json }}</pre>
+
+  </div>
+
+</div>

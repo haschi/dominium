@@ -1,0 +1,33 @@
+<md-sidenav-layout>
+  <md-sidenav mode="side">
+    Sidenav
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button>
+      <md-icon>menu</md-icon>
+    </button>
+    Haushaltsbuch
+    <span class="app-toolbar-filler"></span>
+    <button md-button>TOGGLE DARK THEME</button>
+    <!--<button md-button (click)="isDarkTheme = !isDarkTheme">TOGGLE DARK THEME</button>-->
+  </md-toolbar>
+
+
+  <div style="padding: 7px;">
+    <button md-button>
+      <md-icon>home</md-icon>
+      Haushaltsbuchführung beginnen
+    </button>
+
+<form (ngSubmit)="buchfuerungBeginnen()" autocomplete="off">
+
+      <button id="submit-button" md-raised-button color="accent">Buchführung beginnen</button>
+      </form>
+    <ul>
+      <li><a href="/wildfly">Backend Service</a></li>
+      <li><a href="/haushaltsbuch/index.xhtml">Haushaltsbuch</a></li>
+
+    </ul>
+  </div>
+  
+</md-sidenav-layout>
