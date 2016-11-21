@@ -17,6 +17,4 @@ services:
     image: haushaltsbuch/web:test
     ports:
       - "80:80"
-#    depends_on:
-#      - haushaltsbuch
     network_mode: "host"
