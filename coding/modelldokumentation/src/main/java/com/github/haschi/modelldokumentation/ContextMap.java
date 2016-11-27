@@ -44,7 +44,14 @@ class ContextMap
     void writeIndex(final HtmlWriter htmlWriter) throws CanNotCreateDocument
     {
         final VelocityContext context = new VelocityContext();
-        context.put("contexts", contexts());
+        for (final BoundedContext boundedContext : contexts())
+        {
+            logger.log(Level.INFO, "Write " + boundedContext.getName());
+        }
+
+        final List bcs = contexts();
+        context.put("bc", bcs.toArray());
+        context.put("bcstring", contexts().stream().map(c -> c.getName()).collect(Collectors.toList()));
         htmlWriter.writeHtmlFile(context);
     }
 

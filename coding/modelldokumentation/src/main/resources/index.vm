@@ -43,12 +43,18 @@
 
 <body>
 <h1>Kontext Landkarte</h1>
+    $bc
 <ul>
-    #foreach($kontext in ${contexts})
-        <li><a href="${kontext.Id}.html">$kontext.Name</a> (Ereignisse: ${kontext.getEreignisse().size()}
+    #foreach($k in $bc)
+        <li>$k.Name</li>
+        <li><a href="${k.Id}.html">$k.Name</a> (Ereignisse: $kontext.getEreignisse().size()
             Anweisungen: ${kontext.getAnweisungen().size()}
             Informationen: ${kontext.getInformationen().size()})
         </li>
+    #end
+
+    #foreach($s in $bcstring)
+        <li>$s</li>
     #end
 </ul>
 
