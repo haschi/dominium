@@ -72,6 +72,8 @@ buildNumber.properties
 
 ## Directory-based project format:
 .idea/
+!.idea/runConfigurations/Start_Frontend.xml
+!.idea/externalDependencies.xml
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
