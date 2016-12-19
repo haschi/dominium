@@ -35,17 +35,22 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
-                        <phase>generate-resources</phase>
-                    </execution>
-                    <execution>
-                        <id>webpack build</id>
-                        <goals>
-                            <goal>webpack</goal>
-                        </goals>
+                        <phase>initialize</phase>
                         <configuration>
-                            <arguments>-p</arguments>
+                            <nodeVersion>v7.2.1</nodeVersion>
+                            <npmVersion>4.0.2</npmVersion>
                         </configuration>
                     </execution>
+                    <!--<execution>-->
+                    <!--<id>webpack build</id>-->
+                    <!--<goals>-->
+                    <!--<goal>webpack</goal>-->
+                    <!--</goals>-->
+                    <!--<phase>compile</phase>-->
+                    <!--<configuration>-->
+                    <!--<arguments>-p</arguments>-->
+                    <!--</configuration>-->
+                    <!--</execution>-->
 
                     <execution>
                         <id>npm install</id>
@@ -53,6 +58,7 @@
                             <goal>npm</goal>
                         </goals>
 
+                        <phase>initialize</phase>
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install</arguments>
@@ -65,7 +71,7 @@
                         <goals>
                             <goal>npm</goal>
                         </goals>
-
+                        <phase>compile</phase>
                         <configuration>
                             <arguments>run build</arguments>
                         </configuration>
