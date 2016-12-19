@@ -377,6 +377,7 @@
     <!--</repositories>-->
 
     <modules>
+        <module>allgemein</module>
         <module>anwendung</module>
         <module>domaene</module>
         <module>coding</module>

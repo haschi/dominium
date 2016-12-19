@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 	Komponenten für die Entwicklung
+        Werkzeuge deren Zweck es ist,
+        für aspektorientierte Programmierung und Annotation Prozessoren.
+    -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.haschi</groupId>
+    <artifactId>coding-bom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}-${project.version}</name>
+
+    <properties>
+        <aspekte.version>0.0.26-SNAPSHOT</aspekte.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.haschi</groupId>
+                <artifactId>aspekte</artifactId>
+                <version>${aspekte.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
