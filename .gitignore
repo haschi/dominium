@@ -71,10 +71,24 @@ buildNumber.properties
 *.iml
 
 ## Directory-based project format:
-.idea/
-!.idea/runConfigurations/Start_Frontend.xml
-!.idea/externalDependencies.xml
+#.idea/
+#.idea/runConfigurations/Start_Frontend.xml
+#.idea/externalDependencies.xml
 # if you remove the above rule, at least ignore the following:
+
+.idea/artifacts
+.idea/copyright
+.idea/inspectionProfiles
+.idea/libraries
+.idea/.name
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/externalDependencies.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
 
 # User-specific stuff:
 .idea/workspace.xml
@@ -82,11 +96,11 @@ buildNumber.properties
 .idea/dictionaries
 
 # Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
 
 # Gradle:
 # .idea/gradle.xml
