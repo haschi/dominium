@@ -36,7 +36,7 @@
                             <goal>install-node-and-npm</goal>
                             <goal>npm</goal>
                         </goals>
-                        <phase>initialize</phase>
+                        <phase>validate</phase>
                         <configuration>
                             <nodeVersion>v7.2.1</nodeVersion>
                             <npmVersion>4.0.2</npmVersion>
@@ -59,7 +59,7 @@
                             <goal>npm</goal>
                         </goals>
 
-                        <phase>none</phase>
+                        <phase>initialize</phase>
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install</arguments>
