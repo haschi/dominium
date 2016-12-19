@@ -34,6 +34,7 @@
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
+                            <goal>npm</goal>
                         </goals>
                         <phase>initialize</phase>
                         <configuration>
@@ -58,7 +59,7 @@
                             <goal>npm</goal>
                         </goals>
 
-                        <phase>initialize</phase>
+                        <phase>none</phase>
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install</arguments>
