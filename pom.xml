@@ -378,10 +378,22 @@
 
     <modules>
         <module>allgemein</module>
+        <module>coding</module>
         <module>anwendung</module>
         <module>domaene</module>
-        <module>coding</module>
         <module>web</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+    
 </project>
 
