@@ -1,17 +1,20 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
+import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.KontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Haushaltsbuch;
+import javaslang.API;
+import javaslang.Predicates;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.domain.DomainEventStream;
-import org.axonframework.domain.Message;
 import org.axonframework.eventstore.EventStore;
 
 import javax.inject.Inject;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.function.Predicate;
+
+import static javaslang.API.$;
 
 public class HauptbuchAbfrage
 {
@@ -31,28 +34,24 @@ public class HauptbuchAbfrage
         {
             final DomainEventMessage message = domainEventStream.peek();
 
-            switchType(message,
-                    falls(HauptbuchWurdeAngelegt.class, h -> builder.haushaltsbuchId(h.haushaltsbuchId())),
-                    falls(KontoWurdeAngelegt.class, k ->
+            API.Match(message.getPayload()).of(
+                    API.Case(ereignis(HauptbuchWurdeAngelegt.class), h -> builder.haushaltsbuchId(h.haushaltsbuchId())),
+                    API.Case(ereignis(KontoWurdeAngelegt.class), k ->
                     {
-                        switch (k.kontoart())
-                        {
-                            case Aktiv:
-                                builder.addAktivkonten(k.kontoname());
-                                break;
-                            case Passiv:
-                                builder.addPassivkonten(k.kontoname());
-                                break;
-                            case Ertrag:
-                                builder.addErtragskonten(k.kontoname());
-                                break;
-                            case Aufwand:
-                                builder.addAufwandskonten(k.kontoname());
-                                break;
-                            default:
-                                throw new IllegalStateException();
-                        }
-                    }));
+                        return API.Match(k.kontoart())
+                                .of(API.Case(Predicates.is(Kontoart.Aktiv), x -> builder.addAktivkonten(k.kontoname())),
+                                        API.Case(Predicates.is(Kontoart.Passiv),
+                                                x -> builder.addPassivkonten(k.kontoname())),
+                                        API.Case(Predicates.is(Kontoart.Ertrag),
+                                                x -> builder.addErtragskonten(k.kontoname())),
+                                        API.Case(Predicates.is(Kontoart.Aufwand),
+                                                x -> builder.addAufwandskonten(k.kontoname())),
+                                        API.Case($(), () ->
+                                        {
+                                            throw new NoClassDefFoundError();
+                                        }));
+                    }),
+                    API.Case($(), h -> builder));
 
             domainEventStream.next();
         }
@@ -60,21 +59,14 @@ public class HauptbuchAbfrage
         return builder.build();
     }
 
-    public void switchType(final DomainEventMessage message, final Consumer... consumers)
+    public static <T> Predicate<T> ereignis(final Class<? super T> type)
     {
-        for (final Consumer consumer : consumers)
+        return (T obj) ->
         {
-            consumer.accept(message);
-        }
+            final boolean result = type.isAssignableFrom(obj.getClass());
+            System.out.println(result);
+            return result;
+        };
     }
 
-    public static <T> Consumer<DomainEventMessage> falls(
-            final Class<T> clazz, final Consumer<T> consumer)
-    {
-        return (DomainEventMessage obj) -> Optional.of(obj)
-                .filter(m -> clazz.isAssignableFrom(m.getPayloadType()))
-                .map(Message::getPayload)
-                .map(clazz::cast)
-                .ifPresent(consumer);
-    }
 }

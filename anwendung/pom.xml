@@ -24,6 +24,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.javaslang</groupId>
+                <artifactId>javaslang</artifactId>
+                <version>2.0.5</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -65,6 +70,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.javaslang</groupId>
+            <artifactId>javaslang</artifactId>
+            <version>2.0.5</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- Java EE 7 Begin -->
 
         <!-- Import the CDI API, we use provided scope as the API is included in WildFly -->
@@ -122,6 +133,12 @@
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -223,6 +240,19 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <!--<outputDirectory>${project.build.directory}/docker</outputDirectory>-->
                     <outputDirectory>${project.basedir}/docker</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- Unit Tests ausführen: alle Klassen, die auf Test oder Spec enden. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.*</include>
+                        <include>**/*Spec.*</include>
+                    </includes>
                 </configuration>
             </plugin>
 
