@@ -2,14 +2,12 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>haushaltsbuch</artifactId>
-        <groupId>com.github.haschi.haushaltsbuch</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>${project.artifactId}-${project.version}</name>
 
@@ -48,9 +46,35 @@
                             <arguments>-p</arguments>
                         </configuration>
                     </execution>
+
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+
                 </executions>
                 <configuration>
-                    <nodeVersion>v6.9.1</nodeVersion>
+                    <nodeVersion>v7.2.1</nodeVersion>
+                    <npmVersion>4.0.2</npmVersion>
                 </configuration>
             </plugin>
         </plugins>

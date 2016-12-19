@@ -63,3 +63,4 @@ npm-debug.log
 
 # Node #
 /node/
+/src/**/*.js
