@@ -380,6 +380,7 @@
         <module>anwendung</module>
         <module>domaene</module>
         <module>coding</module>
+        <module>web</module>
     </modules>
 </project>
 
