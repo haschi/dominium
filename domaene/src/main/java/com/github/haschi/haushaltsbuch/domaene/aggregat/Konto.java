@@ -78,11 +78,6 @@ public final class Konto
         return this.regel.buchungssatzFürAnfangsbestand(this, betrag);
     }
 
-    public Kontoart getKontoart()
-    {
-        return this.kontoart;
-    }
-
     public Saldo buchen(final Buchungssatz buchungssatz)
     {
         if (buchungssatz.hatSollkonto(this.kontoname))
