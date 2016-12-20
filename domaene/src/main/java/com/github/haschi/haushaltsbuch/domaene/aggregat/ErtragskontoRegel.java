@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 
 import javax.money.MonetaryAmount;
 
@@ -8,9 +8,9 @@ public final class ErtragskontoRegel
         implements Buchungsregel
 {
 
-    private final Kontoname konto;
+    private final Kontobezeichnung konto;
 
-    public ErtragskontoRegel(final Kontoname konto)
+    public ErtragskontoRegel(final Kontobezeichnung konto)
     {
         super();
 

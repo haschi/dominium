@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.api.ereignis.HauptbuchWurdeAngelegt;
@@ -67,8 +67,8 @@ public final class Haushaltsbuch
     public void einnahmeBuchen(final ImmutableBucheEinnahme befehl)
     {
         this.buchungssatzHinzufügen(new Buchungssatz(
-                Kontoname.of(befehl.sollkonto()),
-                Kontoname.of(befehl.habenkonto()),
+                Kontobezeichnung.of(befehl.sollkonto()),
+                Kontobezeichnung.of(befehl.habenkonto()),
                 befehl.waehrungsbetrag()));
     }
 
@@ -77,7 +77,7 @@ public final class Haushaltsbuch
     @CommandHandler
     public void neuesKontoHinzufügen(final ImmutableLegeKontoAn befehl)
     {
-        if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname())))
+        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
                                .kontoname(befehl.kontoname())
@@ -101,7 +101,7 @@ public final class Haushaltsbuch
     @CommandHandler
     public void kontoMitAnfangsbestandAnlegen(final ImmutableLegeKontoMitAnfangsbestandAn befehl)
     {
-        if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname())))
+        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
                                .kontoname(befehl.kontoname())
@@ -133,9 +133,9 @@ public final class Haushaltsbuch
     public void falls(final ImmutableKontoWurdeAngelegt ereignis)
     {
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
-        final Buchungsregel regel = fabrik.erzeugen(Kontoname.of(ereignis.kontoname()));
+        final Buchungsregel regel = fabrik.erzeugen(Kontobezeichnung.of(ereignis.kontoname()));
 
-        final Konto konto = new Konto(Kontoname.of(ereignis.kontoname()), regel);
+        final Konto konto = new Konto(Kontobezeichnung.of(ereignis.kontoname()), regel);
 
         this.hauptbuch.hinzufügen(konto);
     }
@@ -167,13 +167,13 @@ public final class Haushaltsbuch
     @CommandHandler
     public void anfangsbestandBuchen(final ImmutableBucheAnfangsbestand befehl)
     {
-        if (this.journal.istAnfangsbestandFürKontoVorhanden(this.hauptbuch.suchen(Kontoname.of(befehl.kontoname()))))
+        if (this.journal.istAnfangsbestandFürKontoVorhanden(this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontoname()))))
         {
             apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(FEHLERMELDUNG).build());
         }
         else
         {
-            final Konto konto = this.hauptbuch.suchen(Kontoname.of(befehl.kontoname()));
+            final Konto konto = this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontoname()));
             final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.waehrungsbetrag());
 
             this.buchungssatzHinzufügen(buchungssatz);
@@ -183,7 +183,7 @@ public final class Haushaltsbuch
     private void buchungssatzHinzufügen(final Buchungssatz buchungssatz)
     {
 
-        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz))
+        if (this.hauptbuch.sindAlleKontenVorhanden(buchungssatz))
         {
             this.apply(ImmutableBuchungWurdeAusgeführt.builder().buchungssatz(buchungssatz).build());
 
@@ -197,7 +197,7 @@ public final class Haushaltsbuch
 
             this.apply(ereignis);
 
-            final Kontoname habenkonto = buchungssatz.getHabenkonto();
+            final Kontobezeichnung habenkonto = buchungssatz.getHabenkonto();
             final Saldo habenkontosaldo = this.hauptbuch.suchen(habenkonto).buchen(buchungssatz);
             final SaldoWurdeGeaendert habenkontoereignis = ImmutableSaldoWurdeGeaendert.builder()
                     .kontoname(buchungssatz.getHabenkonto().toString())
@@ -222,14 +222,14 @@ public final class Haushaltsbuch
     }
 
     @CommandHandler
-    public void ausgabeBuchen(final ImmutableBucheAusgabe befehel)
+    public void ausgabeBuchen(final ImmutableBucheAusgabe befehl)
     {
         final Buchungssatz buchungssatz = new Buchungssatz(
-                Kontoname.of(befehel.sollkonto()),
-                Kontoname.of(befehel.habenkonto()),
-                befehel.waehrungsbetrag());
+                Kontobezeichnung.of(befehl.sollkonto()),
+                Kontobezeichnung.of(befehl.habenkonto()),
+                befehl.waehrungsbetrag());
 
-        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz))
+        if (this.hauptbuch.sindAlleKontenVorhanden(buchungssatz))
         {
             if (this.hauptbuch.kannAusgabeGebuchtWerden(buchungssatz))
             {
@@ -246,8 +246,8 @@ public final class Haushaltsbuch
         {
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
                                .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
-                                       Kontoname.of(befehel.sollkonto()),
-                                       Kontoname.of(befehel.habenkonto())))
+                                       Kontobezeichnung.of(befehl.sollkonto()),
+                                       Kontobezeichnung.of(befehl.habenkonto())))
                                .build());
         }
     }
@@ -256,11 +256,11 @@ public final class Haushaltsbuch
     public void tilgungBuchen(final ImmutableBucheTilgung befehl)
     {
         final Buchungssatz buchungssatz = new Buchungssatz(
-                Kontoname.of(befehl.sollkonto()),
-                Kontoname.of(befehl.habenkonto()),
+                Kontobezeichnung.of(befehl.sollkonto()),
+                Kontobezeichnung.of(befehl.habenkonto()),
                 befehl.waehrungsbetrag());
 
-        if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz))
+        if (this.hauptbuch.sindAlleKontenVorhanden(buchungssatz))
         {
             if (this.hauptbuch.kannTilgungGebuchtWerden(buchungssatz))
             {
@@ -277,8 +277,8 @@ public final class Haushaltsbuch
         {
 
             final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
-                    Kontoname.of(befehl.sollkonto()),
-                    Kontoname.of(befehl.habenkonto()));
+                    Kontobezeichnung.of(befehl.sollkonto()),
+                    Kontobezeichnung.of(befehl.habenkonto()));
 
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(grund).build());
         }

@@ -1,15 +1,15 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 
 import javax.money.MonetaryAmount;
 
 public final class PassivkontoRegel
         implements Buchungsregel
 {
-    private final Kontoname kontoname;
+    private final Kontobezeichnung kontoname;
 
-    public PassivkontoRegel(final Kontoname kontoname)
+    public PassivkontoRegel(final Kontobezeichnung kontoname)
     {
         super();
         this.kontoname = kontoname;

@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,11 +12,14 @@ import java.util.Locale;
 public final class Buchungssatz
 {
 
-    private final Kontoname sollkonto;
-    private final Kontoname habenkonto;
+    private final Kontobezeichnung sollkonto;
+    private final Kontobezeichnung habenkonto;
     private final MonetaryAmount währungsbetrag;
 
-    public Buchungssatz(final Kontoname sollkonto, final Kontoname habenkonto, final MonetaryAmount währungsbetrag)
+    public Buchungssatz(
+            final Kontobezeichnung sollkonto,
+            final Kontobezeichnung habenkonto,
+            final MonetaryAmount währungsbetrag)
     {
         super();
 
@@ -30,22 +33,22 @@ public final class Buchungssatz
         this.währungsbetrag = währungsbetrag;
     }
 
-    public boolean hatSollkonto(final Kontoname konto)
+    public boolean hatSollkonto(final Kontobezeichnung konto)
     {
         return this.sollkonto.equals(konto);
     }
 
-    public boolean hatHabenkonto(final Kontoname konto)
+    public boolean hatHabenkonto(final Kontobezeichnung konto)
     {
         return this.habenkonto.equals(konto);
     }
 
-    public Kontoname getSollkonto()
+    public Kontobezeichnung getSollkonto()
     {
         return this.sollkonto;
     }
 
-    public Kontoname getHabenkonto()
+    public Kontobezeichnung getHabenkonto()
     {
         return this.habenkonto;
     }
@@ -55,7 +58,7 @@ public final class Buchungssatz
         return this.währungsbetrag;
     }
 
-    public boolean istAnfangsbestandFür(final Kontoname konto)
+    public boolean istAnfangsbestandFür(final Kontobezeichnung konto)
     {
         return (this.habenkonto.equals(konto) && this.sollkonto.equals(Konto.ANFANGSBESTAND.getName())) || (this
                 .habenkonto
@@ -66,14 +69,14 @@ public final class Buchungssatz
     public String toString()
     {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        final String betrag = format.format(this.währungsbetrag); // NOPMD LoD TODO
+        final String betrag = format.format(this.währungsbetrag);
 
-        return String.format("%s (%s) an %s (%s)", // NOPMD LoD TODO
-                this.sollkonto.toString(), betrag, this.habenkonto.toString(), betrag);
+        return String.format("%s (%s) an %s (%s)",
+                             this.sollkonto.toString(), betrag, this.habenkonto.toString(), betrag);
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if (this == o)
         {
@@ -85,17 +88,20 @@ public final class Buchungssatz
             return false;
         }
 
-        Buchungssatz that = (Buchungssatz) o;
+        final Buchungssatz that = (Buchungssatz) o;
 
-        return new EqualsBuilder().append(sollkonto, that.sollkonto)
-                .append(habenkonto, that.habenkonto)
-                .append(währungsbetrag, that.währungsbetrag)
+        return new EqualsBuilder().append(this.sollkonto, that.sollkonto)
+                .append(this.habenkonto, that.habenkonto)
+                .append(this.währungsbetrag, that.währungsbetrag)
                 .isEquals();
     }
 
     @Override
     public int hashCode()
     {
-        return new HashCodeBuilder(17, 37).append(sollkonto).append(habenkonto).append(währungsbetrag).toHashCode();
+        return new HashCodeBuilder(17, 37).append(this.sollkonto)
+                .append(this.habenkonto)
+                .append(this.währungsbetrag)
+                .toHashCode();
     }
 }

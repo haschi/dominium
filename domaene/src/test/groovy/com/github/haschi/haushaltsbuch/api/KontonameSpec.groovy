@@ -9,7 +9,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname darf nicht leer sein"() {
         when:
-        Kontoname.of("")
+        Kontobezeichnung.of("")
 
         then:
         thrown KontonameWarUngültig
@@ -17,7 +17,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname darf nicht länger als 128 Zeichen sein"() {
         when:
-        Kontoname.of(kontoname)
+        Kontobezeichnung.of(kontoname)
 
         then:
         thrown KontonameWarUngültig
@@ -31,7 +31,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname zwischen 1 und 128 Zeichen sind erlaubt"() {
         when:
-        Kontoname.of(kontoname)
+        Kontobezeichnung.of(kontoname)
 
         then:
         notThrown KontonameWarUngültig
@@ -44,7 +44,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname darf nicht ausschließlich Leerzeichen enthalten"() {
         when:
-        Kontoname.of(kontoname)
+        Kontobezeichnung.of(kontoname)
 
         then:
         thrown KontonameWarUngültig
@@ -58,7 +58,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname darf Leerzeichen enthalten"() {
         when:
-        Kontoname.of(kontoname)
+        Kontobezeichnung.of(kontoname)
 
         then:
         notThrown KontonameWarUngültig
@@ -71,7 +71,7 @@ class KontonameSpec extends Specification {
 
     def "Kontoname darf Umlaute enthalten"() {
         when:
-        Kontoname.of(kontoname)
+        Kontobezeichnung.of(kontoname)
 
         then:
         notThrown KontonameWarUngültig
@@ -84,12 +84,12 @@ class KontonameSpec extends Specification {
 
     def "Kontoname ist ein Wert"() {
         expect:
-        EqualsVerifier.forClass(Kontoname).verify()
+        EqualsVerifier.forClass(Kontobezeichnung).verify()
     }
 
     def "Kontoname hat Zeichenkettenrepräsentation"() {
         when:
-        def kontoname = Kontoname.of("Ein Konto")
+        def kontoname = Kontobezeichnung.of("Ein Konto")
 
         then:
         kontoname.toString() == "Ein Konto"

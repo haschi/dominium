@@ -1,9 +1,9 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontoUnbekannt;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontonameSpezifikation;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontobezeichnungSpezifikation;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;
 
@@ -13,22 +13,22 @@ final class Hauptbuch
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
     {
-        final Konto konto = this.suchen(Kontoname.of(saldoGeaendert.kontoname()));
+        final Konto konto = this.suchen(Kontobezeichnung.of(saldoGeaendert.kontoname()));
         konto.setSaldo(saldoGeaendert.neuerSaldo());
     }
 
-    boolean sindAlleBuchungskontenVorhanden(final Buchungssatz buchungssatz)
+    boolean sindAlleKontenVorhanden(final Buchungssatz buchungssatz)
     {
-        return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
+        return this.sindAlleKontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
     }
 
-    private boolean sindAlleBuchungskontenVorhanden(final Kontoname sollkonto, final Kontoname habenkonto)
+    private boolean sindAlleKontenVorhanden(final Kontobezeichnung sollkonto, final Kontobezeichnung habenkonto)
     {
         return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
     }
 
     String fehlermeldungFürFehlendeKontenErzeugen(
-            final Kontoname soll, final Kontoname haben)
+            final Kontobezeichnung soll, final Kontobezeichnung haben)
     {
 
         if (!this.istKontoVorhanden(soll) && this.istKontoVorhanden(haben))
@@ -66,15 +66,15 @@ final class Hauptbuch
         return sollkonto.kannTilgungGebuchtWerden(buchungssatz) && habenkonto.kannTilgungGebuchtWerden(buchungssatz);
     }
 
-    boolean istKontoVorhanden(final Kontoname konto)
+    boolean istKontoVorhanden(final Kontobezeichnung konto)
     {
-        final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
+        final KontobezeichnungSpezifikation kontoname = new KontobezeichnungSpezifikation(konto);
         return this.konten.exists(kontoname::istErfülltVon);
     }
 
-    public Konto suchen(final Kontoname kontoname)
+    public Konto suchen(final Kontobezeichnung kontoname)
     {
-        final KontonameSpezifikation k = new KontonameSpezifikation(kontoname);
+        final KontobezeichnungSpezifikation k = new KontobezeichnungSpezifikation(kontoname);
         return this.konten.find(k::istErfülltVon)
                 .getOrElseThrow(() -> new KontoUnbekannt(kontoname));
     }

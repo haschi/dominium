@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 
 final class BuchungsregelFabrik
 {
@@ -14,7 +14,7 @@ final class BuchungsregelFabrik
         this.kontoart = kontoart;
     }
 
-    Buchungsregel erzeugen(final Kontoname kontoname)
+    Buchungsregel erzeugen(final Kontobezeichnung kontoname)
     {
         switch (this.kontoart)
         {

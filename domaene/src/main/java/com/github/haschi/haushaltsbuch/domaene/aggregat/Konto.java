@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoname;
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,24 +10,24 @@ public final class Konto
 {
 
     public static final Konto ANFANGSBESTAND = new Konto(
-            Kontoname.of("Anfangsbestand"),
+            Kontobezeichnung.of("Anfangsbestand"),
             new KeineRegel()
     );
 
-    private final Kontoname kontoname;
+    private final Kontobezeichnung bezeichnung;
 
     private final Buchungsregel regel;
 
     private Saldo saldo;
 
-    public Konto(final Kontoname kontoname, final Buchungsregel regel)
+    public Konto(final Kontobezeichnung bezeichnung, final Buchungsregel regel)
     {
 
         super();
         this.regel = regel;
         this.saldo = new SollHabenSaldo();
 
-        this.kontoname = kontoname;
+        this.bezeichnung = bezeichnung;
     }
 
     public void setSaldo(final Saldo saldo)
@@ -38,7 +38,7 @@ public final class Konto
     @Override
     public String toString()
     {
-        return "Konto{" + "kontoname='" + this.kontoname + '\'' + '}';
+        return "Konto{" + "bezeichnung='" + this.bezeichnung + '\'' + '}';
     }
 
     @SuppressWarnings("checkstyle")
@@ -59,12 +59,12 @@ public final class Konto
 
     public Saldo buchen(final Buchungssatz buchungssatz)
     {
-        if (buchungssatz.hatSollkonto(this.kontoname))
+        if (buchungssatz.hatSollkonto(this.bezeichnung))
         {
             return this.saldo.soll(buchungssatz.getWährungsbetrag());
         }
 
-        if (buchungssatz.hatHabenkonto(this.kontoname))
+        if (buchungssatz.hatHabenkonto(this.bezeichnung))
         {
             return this.saldo.haben(buchungssatz.getWährungsbetrag());
         }
@@ -72,9 +72,9 @@ public final class Konto
         throw new IllegalArgumentException();
     }
 
-    public Kontoname getName()
+    public Kontobezeichnung getName()
     {
-        return this.kontoname;
+        return this.bezeichnung;
     }
 
     @Override
@@ -92,12 +92,12 @@ public final class Konto
 
         final Konto konto = (Konto) o;
 
-        return new EqualsBuilder().append(this.kontoname, konto.kontoname).isEquals();
+        return new EqualsBuilder().append(this.bezeichnung, konto.bezeichnung).isEquals();
     }
 
     @Override
     public int hashCode()
     {
-        return new HashCodeBuilder(17, 37).append(this.kontoname).toHashCode();
+        return new HashCodeBuilder(17, 37).append(this.bezeichnung).toHashCode();
     }
 }

@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat
 
-import com.github.haschi.haushaltsbuch.api.Kontoname
+import com.github.haschi.haushaltsbuch.api.Kontobezeichnung
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
@@ -13,11 +13,11 @@ final class BuchungssatzTest extends Specification {
         def währungsbetrag = 12.23.euro
 
         when: "Wenn ich daraus einen Buchungssatz erzeuge"
-        def buchungssatz = new Buchungssatz(Kontoname.of("sollkonto"), Kontoname.of("habenkonto"), währungsbetrag)
+        def buchungssatz = new Buchungssatz(Kontobezeichnung.of("sollkonto"), Kontobezeichnung.of("habenkonto"), währungsbetrag)
 
         then: "Dann sind Sollkonto, Habenkonto und Währungsbetrag Teil des Buchungssatzes"
-        buchungssatz.hatHabenkonto(Kontoname.of("habenkonto"))
-        buchungssatz.hatSollkonto(Kontoname.of("sollkonto"))
+        buchungssatz.hatHabenkonto(Kontobezeichnung.of("habenkonto"))
+        buchungssatz.hatSollkonto(Kontobezeichnung.of("sollkonto"))
         buchungssatz.währungsbetrag == währungsbetrag
     }
 
@@ -33,8 +33,8 @@ final class BuchungssatzTest extends Specification {
         given:
         MonetaryAmount währungsbetrag = 123.45.euro
         def buchungssatz = new Buchungssatz(
-                Kontoname.of("Girokonto"),
-                Kontoname.of("Lebensmittel"),
+                Kontobezeichnung.of("Girokonto"),
+                Kontobezeichnung.of("Lebensmittel"),
                 währungsbetrag)
 
         expect:
@@ -47,8 +47,8 @@ final class BuchungssatzTest extends Specification {
         MonetaryAmount währungsbetrag = 123.45.euro
         when:
         new Buchungssatz(
-                Kontoname.of("Girokonto"),
-                Kontoname.of("Lebensmittel"),
+                Kontobezeichnung.of("Girokonto"),
+                Kontobezeichnung.of("Lebensmittel"),
                 währungsbetrag.negate())
 
         then:

@@ -3,7 +3,7 @@ package com.github.haschi.haushaltsbuch.api;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class Kontoname
+public final class Kontobezeichnung
 {
 
     private static final Pattern gültigerName = Pattern.compile(
@@ -12,7 +12,7 @@ public final class Kontoname
 
     private final String kontoname;
 
-    private Kontoname(final String kontoname)
+    private Kontobezeichnung(final String kontoname)
     {
         super();
 
@@ -24,9 +24,9 @@ public final class Kontoname
         this.kontoname = kontoname;
     }
 
-    public static Kontoname of(final String kontoname)
+    public static Kontobezeichnung of(final String kontoname)
     {
-        return new Kontoname(kontoname);
+        return new Kontobezeichnung(kontoname);
     }
 
     @Override
@@ -37,12 +37,12 @@ public final class Kontoname
             return true;
         }
 
-        if (!(objekt instanceof Kontoname))
+        if (!(objekt instanceof Kontobezeichnung))
         {
             return false;
         }
 
-        final Kontoname anderes = (Kontoname) objekt;
+        final Kontobezeichnung anderes = (Kontobezeichnung) objekt;
 
         return Objects.equals(this.kontoname, anderes.kontoname);
     }

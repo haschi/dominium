@@ -9,7 +9,7 @@ class KontoTest extends Specification {
         expect:
         EqualsVerifier
                 .forClass(Konto)
-                .withOnlyTheseFields("kontoname")
+                .withOnlyTheseFields("bezeichnung")
                 .verify()
     }
 }
