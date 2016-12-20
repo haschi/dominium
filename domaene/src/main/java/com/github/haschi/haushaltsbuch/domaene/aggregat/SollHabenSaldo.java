@@ -14,7 +14,7 @@ import java.util.Locale;
  * der Fall, wenn der Saldo 0.00 EUR beträgt. Es kann dann nicht entschieden werden,
  * ob es sich um einen Soll- oder Habensaldo handelt.
  */
-public class SollHabenSaldo
+public final class SollHabenSaldo
         extends Saldo
 {
 

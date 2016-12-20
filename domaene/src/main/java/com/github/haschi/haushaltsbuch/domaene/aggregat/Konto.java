@@ -10,7 +10,8 @@ import javax.money.MonetaryAmount;
 public final class Konto
 {
 
-    public static final Konto ANFANGSBESTAND = new Konto(Kontoname.of("Anfangsbestand"),
+    public static final Konto ANFANGSBESTAND = new Konto(
+            Kontoname.of("Anfangsbestand"),
             new KeineRegel(),
             Kontoart.Aktiv);
 
@@ -43,7 +44,7 @@ public final class Konto
         return of(kontoname, Kontoart.Aufwand);
     }
 
-    public static Konto of(final String kontoname, final Kontoart kontoart)
+    private static Konto of(final String kontoname, final Kontoart kontoart)
     {
         final Kontoname name = Kontoname.of(kontoname);
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoart);
@@ -103,7 +104,7 @@ public final class Konto
     }
 
     @Override
-    public boolean equals(Object o)
+    public boolean equals(final Object o)
     {
         if (this == o)
         {
@@ -115,14 +116,14 @@ public final class Konto
             return false;
         }
 
-        Konto konto = (Konto) o;
+        final Konto konto = (Konto) o;
 
-        return new EqualsBuilder().append(kontoname, konto.kontoname).isEquals();
+        return new EqualsBuilder().append(this.kontoname, konto.kontoname).isEquals();
     }
 
     @Override
     public int hashCode()
     {
-        return new HashCodeBuilder(17, 37).append(kontoname).toHashCode();
+        return new HashCodeBuilder(17, 37).append(this.kontoname).toHashCode();
     }
 }

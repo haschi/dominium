@@ -2,7 +2,7 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import javax.money.MonetaryAmount;
 
-public interface Buchungsregel
+interface Buchungsregel
 {
     boolean kannErtragBuchen(Buchungssatz buchungssatz);
 

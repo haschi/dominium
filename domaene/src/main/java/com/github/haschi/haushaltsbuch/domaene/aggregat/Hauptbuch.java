@@ -10,7 +10,7 @@ public final class Hauptbuch
 {
 
     public static final Hauptbuch UNDEFINIERT = new Hauptbuch();
-    public final Set<Konto> konten = HashSet.empty();
+    private Set<Konto> konten = HashSet.empty();
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
     {
@@ -23,7 +23,7 @@ public final class Hauptbuch
         return this.sindAlleBuchungskontenVorhanden(buchungssatz.getSollkonto(), buchungssatz.getHabenkonto());
     }
 
-    boolean sindAlleBuchungskontenVorhanden(final Kontoname sollkonto, final Kontoname habenkonto)
+    private boolean sindAlleBuchungskontenVorhanden(final Kontoname sollkonto, final Kontoname habenkonto)
     {
         return this.istKontoVorhanden(habenkonto) && this.istKontoVorhanden(sollkonto);
     }
@@ -82,6 +82,6 @@ public final class Hauptbuch
 
     public void hinzufügen(final Konto konto)
     {
-        this.konten.add(konto);
+        this.konten = this.konten.add(konto);
     }
 }

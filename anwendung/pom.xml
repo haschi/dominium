@@ -282,7 +282,7 @@
             <!--<argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>-->
             <!--<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>-->
             <!--<includes>-->
-            <!--<include>domaene.BackendTests.java</include>-->
+            <!--<include>domaene.BackendTest.java</include>-->
             <!--</includes>-->
             <!--</configuration>-->
             <!--</execution>-->

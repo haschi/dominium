@@ -13,7 +13,7 @@ import java.util.Set;
 public final class Journal
 {
     public static final Journal UNDEFINIERT = new Journal();
-    public final Set<Buchungssatz> buchungssätze = new HashSet<>();
+    private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 
     public Journal()
     {

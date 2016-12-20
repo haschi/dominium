@@ -159,16 +159,6 @@ public final class Haushaltsbuch
         this.hauptbuch.hinzufügen(konto);
     }
 
-    public void falls(final KontoWurdeNichtAngelegt kontoWurdeNichtAngelegt)
-    {
-        // nicht tun
-    }
-
-    public void falls(final BuchungWurdeAbgelehnt buchungWurdeAbgelehnt)
-    {
-        // Nichts tun
-    }
-
     @EventSourcingHandler
     public void falls(final SaldoWurdeGeaendert saldoGeaendert)
     {
@@ -209,7 +199,7 @@ public final class Haushaltsbuch
         }
     }
 
-    public void buchungssatzHinzufügen(final Buchungssatz buchungssatz)
+    private void buchungssatzHinzufügen(final Buchungssatz buchungssatz)
     {
 
         if (this.hauptbuch.sindAlleBuchungskontenVorhanden(buchungssatz))

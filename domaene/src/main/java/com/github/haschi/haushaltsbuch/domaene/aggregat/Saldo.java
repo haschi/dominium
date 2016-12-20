@@ -9,7 +9,7 @@ import javax.money.MonetaryAmount;
 public abstract class Saldo
 {
 
-    protected final MonetaryAmount betrag;
+    final MonetaryAmount betrag;
 
     Saldo(final MonetaryAmount betrag)
     {
