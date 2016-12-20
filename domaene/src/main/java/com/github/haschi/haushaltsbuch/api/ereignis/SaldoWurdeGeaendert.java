@@ -8,7 +8,7 @@ public interface SaldoWurdeGeaendert
         extends HaushaltsbuchEreignis
 {
 
-    String kontoname();
+    String kontobezeichnung();
 
     Saldo neuerSaldo();
 }

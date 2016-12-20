@@ -92,9 +92,9 @@ public final class AusgabeBuchenSteps
         for (final Kontostand kontostand : kontostände)
         {
             assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
-                    .kontoname(kontostand.kontoname)
-                    .neuerSaldo(saldoFürKonto(kontostand))
-                    .build());
+                                                                            .kontobezeichnung(kontostand.kontoname)
+                                                                            .neuerSaldo(saldoFürKonto(kontostand))
+                                                                            .build());
         }
     }
 }

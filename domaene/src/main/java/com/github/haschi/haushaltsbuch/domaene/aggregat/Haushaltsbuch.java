@@ -92,7 +92,7 @@ public final class Haushaltsbuch
                                .build());
 
             this.apply(ImmutableSaldoWurdeGeaendert.builder()
-                               .kontoname(befehl.kontobezeichnung())
+                               .kontobezeichnung(befehl.kontobezeichnung())
                                .neuerSaldo(new SollHabenSaldo())
                                .build());
         }
@@ -191,7 +191,7 @@ public final class Haushaltsbuch
             final Saldo saldo = sollkonto.buchen(buchungssatz);
 
             final SaldoWurdeGeaendert ereignis = ImmutableSaldoWurdeGeaendert.builder()
-                    .kontoname(buchungssatz.getSollkonto().toString())
+                    .kontobezeichnung(buchungssatz.getSollkonto().toString())
                     .neuerSaldo(saldo)
                     .build();
 
@@ -200,7 +200,7 @@ public final class Haushaltsbuch
             final Kontobezeichnung habenkonto = buchungssatz.getHabenkonto();
             final Saldo habenkontosaldo = this.hauptbuch.suchen(habenkonto).buchen(buchungssatz);
             final SaldoWurdeGeaendert habenkontoereignis = ImmutableSaldoWurdeGeaendert.builder()
-                    .kontoname(buchungssatz.getHabenkonto().toString())
+                    .kontobezeichnung(buchungssatz.getHabenkonto().toString())
                     .neuerSaldo(habenkontosaldo)
                     .build();
 

@@ -7,12 +7,12 @@ import javax.money.MonetaryAmount;
 public final class PassivkontoRegel
         implements Buchungsregel
 {
-    private final Kontobezeichnung kontoname;
+    private final Kontobezeichnung kontobezeichnung;
 
-    public PassivkontoRegel(final Kontobezeichnung kontoname)
+    public PassivkontoRegel(final Kontobezeichnung kontobezeichnung)
     {
         super();
-        this.kontoname = kontoname;
+        this.kontobezeichnung = kontobezeichnung;
     }
 
     @Override
@@ -24,12 +24,12 @@ public final class PassivkontoRegel
     @Override
     public boolean kannVerlustBuchen(final Buchungssatz buchungssatz)
     {
-        return buchungssatz.getSollkonto().equals(this.kontoname);
+        return buchungssatz.getSollkonto().equals(this.kontobezeichnung);
     }
 
     @Override
-    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto kontoname, final MonetaryAmount betrag)
+    public Buchungssatz buchungssatzFürAnfangsbestand(final Konto konto, final MonetaryAmount betrag)
     {
-        return new Buchungssatz(Konto.ANFANGSBESTAND.getName(), kontoname.getName(), betrag);
+        return new Buchungssatz(Konto.ANFANGSBESTAND.getName(), konto.getName(), betrag);
     }
 }

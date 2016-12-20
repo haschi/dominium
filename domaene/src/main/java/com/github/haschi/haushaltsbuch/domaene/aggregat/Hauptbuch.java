@@ -13,7 +13,7 @@ final class Hauptbuch
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
     {
-        final Konto konto = this.suchen(Kontobezeichnung.of(saldoGeaendert.kontoname()));
+        final Konto konto = this.suchen(Kontobezeichnung.of(saldoGeaendert.kontobezeichnung()));
         konto.setSaldo(saldoGeaendert.neuerSaldo());
     }
 

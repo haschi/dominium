@@ -58,7 +58,7 @@ public final class KontoErstellenSteps
             final String kontoname, @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
     {
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
-                                                                        .kontoname(kontoname)
+                                                                        .kontobezeichnung(kontoname)
                                                                         .neuerSaldo(erwarteterSaldo)
                                                                         .build());
     }

@@ -54,9 +54,9 @@ public final class AnfangsbestandBuchenSteps
     {
 
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
-                .kontoname(konto)
-                .neuerSaldo(erwarteterSaldo)
-                .build());
+                                                                        .kontobezeichnung(konto)
+                                                                        .neuerSaldo(erwarteterSaldo)
+                                                                        .build());
     }
 
     @Dann("^(?:werde ich|ich werde) auf dem Konto \"([^\"]*)\" ein Habensaldo von (-?\\d+,\\d{2} [A-Z]{3}) haben$")
@@ -65,9 +65,9 @@ public final class AnfangsbestandBuchenSteps
     {
 
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
-                .kontoname(konto)
-                .neuerSaldo(erwarteterSaldo)
-                .build());
+                                                                        .kontobezeichnung(konto)
+                                                                        .neuerSaldo(erwarteterSaldo)
+                                                                        .build());
     }
 
     @Und("^ich habe auf das Konto \"([^\"]*)\" den Anfangsbestand von (-?\\d+,\\d{2} [A-Z]{3}) gebucht$")
@@ -91,9 +91,9 @@ public final class AnfangsbestandBuchenSteps
     {
 
         this.commandGateway.sendAndWait(ImmutableBucheAnfangsbestand.builder()
-                .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                .kontoname(kontoname)
-                .waehrungsbetrag(währungsbetrag)
-                .build());
+                                                .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
+                                                .kontoname(kontoname)
+                                                .waehrungsbetrag(währungsbetrag)
+                                                .build());
     }
 }
