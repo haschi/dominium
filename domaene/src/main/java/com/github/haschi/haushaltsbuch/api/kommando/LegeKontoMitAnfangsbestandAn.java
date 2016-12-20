@@ -13,7 +13,7 @@ public interface LegeKontoMitAnfangsbestandAn
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();
 
-    String kontoname();
+    String kontobezeichnung();
 
     Kontoart kontoart();
 

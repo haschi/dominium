@@ -61,7 +61,7 @@ public final class BuchenSteps
 
         final LegeKontoMitAnfangsbestandAn kommando = ImmutableLegeKontoMitAnfangsbestandAn.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                .kontoname(kontoname)
+                .kontobezeichnung(kontoname)
                 .kontoart(Kontoart.Aktiv)
                 .betrag(betrag)
                 .build();

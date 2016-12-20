@@ -39,7 +39,7 @@ public final class KontoErstellenSteps
         final UUID haushaltsbuchId = this.welt.getAktuelleHaushaltsbuchId();
         this.commandGateway.sendAndWait(ImmutableLegeKontoAn.builder()
                                                 .haushaltsbuchId(haushaltsbuchId)
-                                                .kontoname(kontoname)
+                                                .kontobezeichnung(kontoname)
                                                 .kontoart(Kontoart.Aktiv)
                                                 .build());
     }

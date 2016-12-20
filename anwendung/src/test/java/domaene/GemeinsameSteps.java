@@ -40,7 +40,7 @@ public final class GemeinsameSteps
 
         final LegeKontoAn kommando = ImmutableLegeKontoAn.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                .kontoname(kontoname)
+                .kontobezeichnung(kontoname)
                 .kontoart(Kontoart.Aktiv)
                 .build();
 

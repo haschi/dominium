@@ -24,7 +24,7 @@ public class Kontostand
 
         return (Kontostand kontostand) -> ImmutableLegeKontoMitAnfangsbestandAn.builder()
                 .haushaltsbuchId(haushaltsbuchId)
-                .kontoname(kontostand.kontoname)
+                .kontobezeichnung(kontostand.kontoname)
                 .kontoart(kontostand.kontoart)
                 .betrag(kontostand.betrag)
                 .build();

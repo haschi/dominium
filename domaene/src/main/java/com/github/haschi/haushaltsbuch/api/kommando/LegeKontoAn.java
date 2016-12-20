@@ -9,11 +9,10 @@ import java.util.UUID;
 @Anweisung
 public interface LegeKontoAn
 {
-
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();
 
-    String kontoname();
+    String kontobezeichnung();
 
     Kontoart kontoart();
 }

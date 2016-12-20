@@ -61,7 +61,7 @@ public class KontoAnlegen
     {
         final LegeKontoAn befehl = ImmutableLegeKontoAn.builder()
                 .haushaltsbuchId(UUID.fromString(this.id))
-                .kontoname(this.kontoname)
+                .kontobezeichnung(this.kontoname)
                 .kontoart(this.kontoart)
                 .build();
 

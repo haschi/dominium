@@ -77,22 +77,22 @@ public final class Haushaltsbuch
     @CommandHandler
     public void neuesKontoHinzufügen(final ImmutableLegeKontoAn befehl)
     {
-        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
+        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontobezeichnung())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                               .kontobezeichnung(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontobezeichnung())
                                .kontoart(befehl.kontoart())
                                .build());
         }
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                               .kontobezeichnung(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontobezeichnung())
                                .kontoart(befehl.kontoart())
                                .build());
 
             this.apply(ImmutableSaldoWurdeGeaendert.builder()
-                               .kontoname(befehl.kontoname())
+                               .kontoname(befehl.kontobezeichnung())
                                .neuerSaldo(new SollHabenSaldo())
                                .build());
         }
@@ -101,23 +101,23 @@ public final class Haushaltsbuch
     @CommandHandler
     public void kontoMitAnfangsbestandAnlegen(final ImmutableLegeKontoMitAnfangsbestandAn befehl)
     {
-        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
+        if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontobezeichnung())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                               .kontobezeichnung(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontobezeichnung())
                                .kontoart(befehl.kontoart())
                                .build());
         }
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                               .kontobezeichnung(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontobezeichnung())
                                .kontoart(befehl.kontoart())
                                .build());
 
             this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
                                               .haushaltsbuchId(befehl.haushaltsbuchId())
-                                              .kontoname(befehl.kontoname())
+                                              .kontoname(befehl.kontobezeichnung())
                                               .waehrungsbetrag(befehl.betrag())
                                               .build());
         }
