@@ -52,12 +52,6 @@
         </dependency>
 
         <dependency>
-            <groupId>it.kamaladafrica</groupId>
-            <artifactId>axon-cdi</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>io.javaslang</groupId>
             <artifactId>javaslang</artifactId>
             <scope>compile</scope>
