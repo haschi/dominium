@@ -17,6 +17,6 @@ public final class KontonameSpezifikation
     @Override
     public boolean istErfülltVon(final Konto konto)
     {
-        return konto.getName().equals(this.kontoname); // NOPMD TODO
+        return konto.getName().equals(this.kontoname);
     }
 }

@@ -1,13 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.Spezifikation;
-import org.javamoney.moneta.Money;
-import org.javamoney.moneta.function.MonetaryFunctions;
-
-import javax.money.Monetary;
-import javax.money.MonetaryAmount;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 final class Journal
@@ -27,14 +20,5 @@ final class Journal
     void buchungssatzHinzufügen(final Buchungssatz buchungssatz)
     {
         this.buchungssätze.add(buchungssatz);
-    }
-
-    MonetaryAmount summeFür(final Spezifikation<Buchungssatz> buchungssatzSpezifikation)
-    {
-        return this.buchungssätze.stream()
-                .filter(buchungssatzSpezifikation::istErfülltVon)
-                .map(Buchungssatz::getWährungsbetrag)
-                .reduce(MonetaryFunctions.sum())
-                .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
     }
 }

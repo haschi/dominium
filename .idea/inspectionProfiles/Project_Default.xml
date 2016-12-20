@@ -40,7 +40,7 @@
     <inspection_tool class="DisjointPackage" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ELValidationInJSP" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="ElementOnlyUsedFromTestCode" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="EmptyDirectory" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EmptyDirectory" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="FieldCount" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_countConstantFields" value="false" />
       <option name="m_considerStaticFinalFieldsConstant" value="false" />
@@ -81,10 +81,10 @@
     </inspection_tool>
     <inspection_tool class="OnDemandImport" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PackageInMultipleModules" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="PackageWithTooFewClasses" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="PackageWithTooFewClasses" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="limit" value="3" />
     </inspection_tool>
-    <inspection_tool class="PackageWithTooManyClasses" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="PackageWithTooManyClasses" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="limit" value="10" />
     </inspection_tool>
     <inspection_tool class="ParametersPerConstructor" enabled="true" level="WARNING" enabled_by_default="true" />

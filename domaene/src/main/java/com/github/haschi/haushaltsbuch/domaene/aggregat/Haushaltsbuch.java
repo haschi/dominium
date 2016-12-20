@@ -10,7 +10,6 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 
-import javax.money.MonetaryAmount;
 import java.util.UUID;
 
 public final class Haushaltsbuch
@@ -107,21 +106,6 @@ public final class Haushaltsbuch
         }
     }
 
-    private Saldo saldieren(final MonetaryAmount summerDerSollBuchungen, final MonetaryAmount summerDerHabenBuchungen)
-    {
-        if (summerDerHabenBuchungen.isEqualTo(summerDerSollBuchungen))
-        {
-            return new SollHabenSaldo();
-        }
-
-        if (summerDerHabenBuchungen.isGreaterThan(summerDerSollBuchungen))
-        {
-            return new Habensaldo(summerDerHabenBuchungen.subtract(summerDerSollBuchungen));
-        }
-
-        return new Sollsaldo(summerDerSollBuchungen.subtract(summerDerHabenBuchungen));
-    }
-
     @EventSourcingHandler
     private void falls(final ImmutableHaushaltsbuchAngelegt ereignis)
     {
@@ -134,7 +118,7 @@ public final class Haushaltsbuch
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
         final Buchungsregel regel = fabrik.erzeugen(Kontoname.of(ereignis.kontoname()));
 
-        final Konto konto = new Konto(Kontoname.of(ereignis.kontoname()), regel, ereignis.kontoart());
+        final Konto konto = new Konto(Kontoname.of(ereignis.kontoname()), regel);
 
         this.hauptbuch.hinzufügen(konto);
     }

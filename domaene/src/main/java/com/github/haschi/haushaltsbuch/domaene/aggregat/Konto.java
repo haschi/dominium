@@ -1,6 +1,5 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,33 +11,23 @@ public final class Konto
 
     public static final Konto ANFANGSBESTAND = new Konto(
             Kontoname.of("Anfangsbestand"),
-            new KeineRegel(),
-            Kontoart.Aktiv);
+            new KeineRegel()
+    );
 
     private final Kontoname kontoname;
 
     private final Buchungsregel regel;
 
-    private final Kontoart kontoart;
-
     private Saldo saldo;
 
-    public Konto(final Kontoname kontoname, final Buchungsregel regel, final Kontoart kontoart)
+    public Konto(final Kontoname kontoname, final Buchungsregel regel)
     {
 
         super();
         this.regel = regel;
-        this.kontoart = kontoart;
         this.saldo = new SollHabenSaldo();
 
         this.kontoname = kontoname;
-    }
-
-    private static Konto of(final String kontoname, final Kontoart kontoart)
-    {
-        final Kontoname name = Kontoname.of(kontoname);
-        final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(kontoart);
-        return new Konto(name, fabrik.erzeugen(name), kontoart);
     }
 
     public void setSaldo(final Saldo saldo)
