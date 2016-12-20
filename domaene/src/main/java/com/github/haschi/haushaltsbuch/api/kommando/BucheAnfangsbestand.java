@@ -12,7 +12,7 @@ public interface BucheAnfangsbestand
     @TargetAggregateIdentifier
     UUID haushaltsbuchId();
 
-    String kontoname();
+    String kontobezeichnung();
 
     MonetaryAmount waehrungsbetrag();
 }

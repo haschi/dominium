@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch;
 
-import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchfuehrung;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.context.RequestScoped;
@@ -37,7 +37,7 @@ public class Haushaltsbuchführung
     {
         this.identitätsmerkmal = UUID.randomUUID().toString();
 
-        final BeginneHaushaltsbuchfuehrung befehl = ImmutableBeginneHaushaltsbuchfuehrung.builder()
+        final BeginneHaushaltsbuchführung befehl = ImmutableBeginneHaushaltsbuchführung.builder()
                 .id(UUID.fromString(this.identitätsmerkmal))
                 .build();
 

@@ -45,7 +45,7 @@ public final class SollHabenSaldo
     public final String toString()
     {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        final String betrag = format.format(this.getBetrag()); // NOPMD LoD TODO
+        final String betrag = format.format(this.getBetrag());
 
         return "Soll- Habensaldo{" + betrag + "}";
     }

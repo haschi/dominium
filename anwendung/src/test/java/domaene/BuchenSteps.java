@@ -4,7 +4,7 @@ import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchEreignis;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
@@ -45,7 +45,7 @@ public final class BuchenSteps
     {
 
         final UUID identitätsmerkmal = UUID.randomUUID();
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(identitätsmerkmal).build());
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(identitätsmerkmal).build());
 
         this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);
 

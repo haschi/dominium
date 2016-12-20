@@ -68,15 +68,15 @@ final class Hauptbuch
 
     boolean istKontoVorhanden(final Kontobezeichnung konto)
     {
-        final KontobezeichnungSpezifikation kontoname = new KontobezeichnungSpezifikation(konto);
-        return this.konten.exists(kontoname::istErfülltVon);
+        final KontobezeichnungSpezifikation kontobezeichnung = new KontobezeichnungSpezifikation(konto);
+        return this.konten.exists(kontobezeichnung::istErfülltVon);
     }
 
-    public Konto suchen(final Kontobezeichnung kontoname)
+    public Konto suchen(final Kontobezeichnung kontobezeichnung)
     {
-        final KontobezeichnungSpezifikation k = new KontobezeichnungSpezifikation(kontoname);
+        final KontobezeichnungSpezifikation k = new KontobezeichnungSpezifikation(kontobezeichnung);
         return this.konten.find(k::istErfülltVon)
-                .getOrElseThrow(() -> new KontoUnbekannt(kontoname));
+                .getOrElseThrow(() -> new KontoUnbekannt(kontobezeichnung));
     }
 
     public void hinzufügen(final Konto konto)

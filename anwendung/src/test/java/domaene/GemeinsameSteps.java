@@ -1,7 +1,7 @@
 package domaene;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
 import cucumber.api.java.de.Angenommen;
@@ -29,7 +29,7 @@ public final class GemeinsameSteps
     {
         final UUID identitätsmerkmal = UUID.randomUUID();
 
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(identitätsmerkmal).build());
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(identitätsmerkmal).build());
 
         this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);
     }

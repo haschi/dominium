@@ -15,7 +15,7 @@ import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeNichtAnge
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.api.ereignis.JournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
@@ -49,7 +49,7 @@ public final class Haushaltsbuch
     }
 
     @CommandHandler
-    public Haushaltsbuch(final ImmutableBeginneHaushaltsbuchfuehrung befehl)
+    public Haushaltsbuch(final ImmutableBeginneHaushaltsbuchführung befehl)
     {
         super();
 
@@ -117,7 +117,7 @@ public final class Haushaltsbuch
 
             this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
                                               .haushaltsbuchId(befehl.haushaltsbuchId())
-                                              .kontoname(befehl.kontobezeichnung())
+                                              .kontobezeichnung(befehl.kontobezeichnung())
                                               .waehrungsbetrag(befehl.betrag())
                                               .build());
         }
@@ -167,13 +167,13 @@ public final class Haushaltsbuch
     @CommandHandler
     public void anfangsbestandBuchen(final ImmutableBucheAnfangsbestand befehl)
     {
-        if (this.journal.istAnfangsbestandFürKontoVorhanden(this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontoname()))))
+        if (this.journal.istAnfangsbestandFürKontoVorhanden(this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontobezeichnung()))))
         {
             apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(FEHLERMELDUNG).build());
         }
         else
         {
-            final Konto konto = this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontoname()));
+            final Konto konto = this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontobezeichnung()));
             final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.waehrungsbetrag());
 
             this.buchungssatzHinzufügen(buchungssatz);

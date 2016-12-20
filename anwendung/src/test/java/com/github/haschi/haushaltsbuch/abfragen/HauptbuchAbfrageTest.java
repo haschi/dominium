@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
 import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchAngelegt;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.deltaspike.testcontrol.api.TestControl;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
@@ -37,14 +37,14 @@ public class HauptbuchAbfrageTest
     {
         final UnitOfWork uof = DefaultUnitOfWork.startAndGet();
         final UUID haushaltsbuchId = UUID.randomUUID();
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchfuehrung.builder().id(haushaltsbuchId).build());
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(haushaltsbuchId).build());
         uof.commit();
 
         final HauptbuchAnsicht abfragen = this.abfrage.abfragen(haushaltsbuchId);
 
         assertThat(abfragen).isEqualTo(ImmutableHauptbuchAnsicht.builder()
-                .haushaltsbuchId(haushaltsbuchId)
-                .addAktivkonten("Anfangsbestand")
-                .build());
+                                               .haushaltsbuchId(haushaltsbuchId)
+                                               .addAktivkonten("Anfangsbestand")
+                                               .build());
     }
 }

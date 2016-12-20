@@ -14,14 +14,14 @@ final class BuchungsregelFabrik
         this.kontoart = kontoart;
     }
 
-    Buchungsregel erzeugen(final Kontobezeichnung kontoname)
+    Buchungsregel erzeugen(final Kontobezeichnung kontobezeichnung)
     {
         switch (this.kontoart)
         {
             case Ertrag:
-                return new ErtragskontoRegel(kontoname);
+                return new ErtragskontoRegel(kontobezeichnung);
             case Passiv:
-                return new PassivkontoRegel(kontoname);
+                return new PassivkontoRegel(kontobezeichnung);
             default:
                 return new KeineRegel();
         }

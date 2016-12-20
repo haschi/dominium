@@ -41,7 +41,7 @@ public final class AnfangsbestandBuchenSteps
 
         final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                .kontoname(konto)
+                .kontobezeichnung(konto)
                 .waehrungsbetrag(betrag)
                 .build();
 
@@ -77,7 +77,7 @@ public final class AnfangsbestandBuchenSteps
 
         final BucheAnfangsbestand befehl = ImmutableBucheAnfangsbestand.builder()
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                .kontoname(kontoname)
+                .kontobezeichnung(kontoname)
                 .waehrungsbetrag(währungsbetrag)
                 .build();
 
@@ -92,7 +92,7 @@ public final class AnfangsbestandBuchenSteps
 
         this.commandGateway.sendAndWait(ImmutableBucheAnfangsbestand.builder()
                                                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
-                                                .kontoname(kontoname)
+                                                .kontobezeichnung(kontoname)
                                                 .waehrungsbetrag(währungsbetrag)
                                                 .build());
     }
