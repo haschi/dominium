@@ -7,7 +7,7 @@ public final class Kontoname
 {
 
     private static final Pattern gültigerName = Pattern.compile(
-            "[\\p{IsLatin}]{1,2}|[\\p{Alpha}]{1}[\\p{Alpha}\\p{Space}]{1,126}[\\p{Alpha}]{1}",
+            "[\\p{IsLatin}]{1,2}|[\\p{Alpha}][\\p{Alpha}\\p{Space}]{1,126}[\\p{Alpha}]",
             Pattern.UNICODE_CHARACTER_CLASS);
 
     private final String kontoname;

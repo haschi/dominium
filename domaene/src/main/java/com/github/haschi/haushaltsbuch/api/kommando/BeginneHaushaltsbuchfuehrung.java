@@ -8,7 +8,6 @@ import java.util.UUID;
 @Anweisung("Beginne Haus&shy;halts&shy;buch&shy;füh&shy;rung")
 public interface BeginneHaushaltsbuchfuehrung
 {
-
     @TargetAggregateIdentifier
     UUID id();
 }

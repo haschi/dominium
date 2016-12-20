@@ -8,8 +8,6 @@ import javaslang.collection.Set;
 
 public final class Hauptbuch
 {
-
-    public static final Hauptbuch UNDEFINIERT = new Hauptbuch();
     private Set<Konto> konten = HashSet.empty();
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
