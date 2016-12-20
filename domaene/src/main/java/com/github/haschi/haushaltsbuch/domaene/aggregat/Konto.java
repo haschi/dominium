@@ -34,16 +34,6 @@ public final class Konto
         this.kontoname = kontoname;
     }
 
-    public static Konto aktiv(final String kontoname)
-    {
-        return of(kontoname, Kontoart.Aktiv);
-    }
-
-    public static Konto aufwand(final String kontoname)
-    {
-        return of(kontoname, Kontoart.Aufwand);
-    }
-
     private static Konto of(final String kontoname, final Kontoart kontoart)
     {
         final Kontoname name = Kontoname.of(kontoname);
