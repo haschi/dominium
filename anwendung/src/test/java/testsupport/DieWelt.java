@@ -54,7 +54,7 @@ public final class DieWelt
             this.ereignisse.put(aggregateIdentifier, new ArrayList<>());
         }
 
-        final List haushaltsbuchEreignises = this.ereignisse.get(aggregateIdentifier);
+        final List<? super Object> haushaltsbuchEreignises = this.ereignisse.get(aggregateIdentifier);
         haushaltsbuchEreignises.add(ereignis);
     }
 }
