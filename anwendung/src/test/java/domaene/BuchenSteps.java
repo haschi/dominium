@@ -3,11 +3,9 @@ package domaene;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
-import com.github.haschi.haushaltsbuch.api.ereignis.HaushaltsbuchEreignis;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Buchungssatz;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -22,7 +20,6 @@ import javax.inject.Inject;
 import javax.money.MonetaryAmount;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -73,22 +70,16 @@ public final class BuchenSteps
     public void werde_ich_die_Buchung_mit_der_Fehlermeldung_abgelehnt_haben(
             @Transform(BuchungWurdeAbgelehntTransformer.class) final BuchungWurdeAbgelehnt fehlermeldung)
     {
-
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(fehlermeldung);
+        assertThat(this.welt.ereignisstrom()).contains(fehlermeldung);
     }
 
     @Dann("^(?:ich werde|werde ich) den Buchungssatz \"([^\"]*)\" angelegt haben$")
     public void ich_werde_den_Buchungssatz_angelegt_haben(final String erwarteterBuchungssatz)
     {
-
-        final List<HaushaltsbuchEreignis> stream = this.welt.getStream(this.welt.getAktuelleHaushaltsbuchId());
-
-        final List<Buchungssatz> buchungssätze = stream.stream()
-                .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
-                .map(ereignis -> (BuchungWurdeAusgeführt) ereignis)
-                .map(BuchungWurdeAusgeführt::buchungssatz)
-                .collect(Collectors.toList());
-
-        assertThat(buchungssätze.toString()).contains(erwarteterBuchungssatz);
+        assertThat(this.welt.ereignisstrom()
+                           .filter(ereignis -> ereignis instanceof BuchungWurdeAusgeführt)
+                           .map(ereignis -> (BuchungWurdeAusgeführt) ereignis)
+                           .map(ereignis -> ereignis.buchungssatz().toString()))
+                .contains(erwarteterBuchungssatz);
     }
 }

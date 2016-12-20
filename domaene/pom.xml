@@ -94,6 +94,8 @@
             <version>0.0.26-SNAPSHOT</version>
         </dependency>
 
+        <!-- BUG: Wenn Hibernate nicht als provide Abhängigkeit vorhanden ist,
+        gibt es einen Fehler bei der Generierung der Immutables. -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

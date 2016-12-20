@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Ereignis
 public interface HaushaltsbuchAngelegt
-        extends HaushaltsbuchEreignis
 {
     @Value.Parameter
     UUID id();

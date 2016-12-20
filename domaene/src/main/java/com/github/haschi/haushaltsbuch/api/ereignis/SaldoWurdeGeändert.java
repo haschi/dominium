@@ -5,9 +5,7 @@ import com.github.haschi.modeling.de.Ereignis;
 
 @Ereignis
 public interface SaldoWurdeGeändert
-        extends HaushaltsbuchEreignis
 {
-
     String kontobezeichnung();
 
     Saldo neuerSaldo();

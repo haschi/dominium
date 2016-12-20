@@ -6,7 +6,6 @@ import java.util.UUID;
 
 @Ereignis
 public interface HauptbuchWurdeAngelegt
-        extends HaushaltsbuchEreignis
 {
     UUID haushaltsbuchId();
 }

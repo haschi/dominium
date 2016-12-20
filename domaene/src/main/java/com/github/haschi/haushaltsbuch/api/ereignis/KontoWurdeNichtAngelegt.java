@@ -5,9 +5,7 @@ import com.github.haschi.modeling.de.Ereignis;
 
 @Ereignis
 public interface KontoWurdeNichtAngelegt
-        extends HaushaltsbuchEreignis
 {
-
     String kontobezeichnung();
 
     Kontoart kontoart();
