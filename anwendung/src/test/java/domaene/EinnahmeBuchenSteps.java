@@ -35,7 +35,7 @@ public final class EinnahmeBuchenSteps
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
-                .waehrungsbetrag(währungsbetrag)
+                .geldbetrag(währungsbetrag)
                 .build();
 
         this.commandGateway.sendAndWait(kommando);

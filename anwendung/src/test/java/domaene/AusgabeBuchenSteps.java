@@ -63,7 +63,7 @@ public final class AusgabeBuchenSteps
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
-                .waehrungsbetrag(währungsbetrag)
+                .geldbetrag(währungsbetrag)
                 .build();
 
         this.commandGateway.sendAndWait(befehl);
@@ -80,7 +80,7 @@ public final class AusgabeBuchenSteps
                 .haushaltsbuchId(this.welt.getAktuelleHaushaltsbuchId())
                 .sollkonto(sollkonto)
                 .habenkonto(habenkonto)
-                .waehrungsbetrag(währungsbetrag)
+                .geldbetrag(währungsbetrag)
                 .build();
 
         this.commandGateway.sendAndWait(befehl);

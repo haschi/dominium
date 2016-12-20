@@ -10,18 +10,18 @@ import javax.money.MonetaryAmount
 // TODO: Refactor in eigenes Modul
 class MoneyExtensions {
 
-    static def MonetaryAmount getEuro(BigDecimal betrag) {
+    static MonetaryAmount getEuro(BigDecimal betrag) {
 
         CurrencyUnit currency = Monetary.getCurrency("EUR")
         Money.of(betrag, currency)
     }
 
-    static def MonetaryAmount getMark(BigDecimal betrag) {
+    static MonetaryAmount getMark(BigDecimal betrag) {
         CurrencyUnit currency = Monetary.getCurrency("DEM")
         Money.of(betrag, currency)
     }
 
-    static def MonetaryAmount getDollar(BigDecimal betrag) {
+    static MonetaryAmount getDollar(BigDecimal betrag) {
         CurrencyUnit currency = Monetary.getCurrency("USD")
         Money.of(betrag, currency)
     }

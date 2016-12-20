@@ -14,5 +14,5 @@ public interface BucheAnfangsbestand
 
     String kontobezeichnung();
 
-    MonetaryAmount waehrungsbetrag();
+    MonetaryAmount geldbetrag();
 }

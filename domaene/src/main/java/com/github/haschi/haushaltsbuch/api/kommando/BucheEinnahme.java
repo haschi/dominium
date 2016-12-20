@@ -17,5 +17,5 @@ public interface BucheEinnahme
 
     String habenkonto();
 
-    MonetaryAmount waehrungsbetrag();
+    MonetaryAmount geldbetrag();
 }

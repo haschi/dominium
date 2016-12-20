@@ -5,9 +5,9 @@ import org.apache.commons.lang3.StringUtils
 import spock.lang.Specification
 
 
-class KontonameSpec extends Specification {
+class KontobezeichnungSpec extends Specification {
 
-    def "Kontoname darf nicht leer sein"() {
+    def "Kontobezeichnung darf nicht leer sein"() {
         when:
         Kontobezeichnung.of("")
 
@@ -15,7 +15,7 @@ class KontonameSpec extends Specification {
         thrown KontobezeichnungWarUngültig
     }
 
-    def "Kontoname darf nicht länger als 128 Zeichen sein"() {
+    def "Kontobezeichnung darf nicht länger als 128 Zeichen sein"() {
         when:
         Kontobezeichnung.of(kontoname)
 
@@ -29,7 +29,7 @@ class KontonameSpec extends Specification {
         "X" * 999 | _
     }
 
-    def "Kontoname zwischen 1 und 128 Zeichen sind erlaubt"() {
+    def "Kontobezeichnung zwischen 1 und 128 Zeichen sind erlaubt"() {
         when:
         Kontobezeichnung.of(kontoname)
 
@@ -42,7 +42,7 @@ class KontonameSpec extends Specification {
         "X" * 128 | _
     }
 
-    def "Kontoname darf nicht ausschließlich Leerzeichen enthalten"() {
+    def "Kontobezeichnung darf nicht ausschließlich Leerzeichen enthalten"() {
         when:
         Kontobezeichnung.of(kontoname)
 
@@ -56,7 +56,7 @@ class KontonameSpec extends Specification {
         StringUtils.LF        | _
     }
 
-    def "Kontoname darf Leerzeichen enthalten"() {
+    def "Kontobezeichnung darf Leerzeichen enthalten"() {
         when:
         Kontobezeichnung.of(kontoname)
 
@@ -69,7 +69,7 @@ class KontonameSpec extends Specification {
         "X" + StringUtils.SPACE * 126 + "X" | _
     }
 
-    def "Kontoname darf Umlaute enthalten"() {
+    def "Kontobezeichnung darf Umlaute enthalten"() {
         when:
         Kontobezeichnung.of(kontoname)
 
@@ -82,16 +82,16 @@ class KontonameSpec extends Specification {
         "ÜÄ"      | _
     }
 
-    def "Kontoname ist ein Wert"() {
+    def "Kontobezeichnung ist ein Wert"() {
         expect:
         EqualsVerifier.forClass(Kontobezeichnung).verify()
     }
 
-    def "Kontoname hat Zeichenkettenrepräsentation"() {
+    def "Kontobezeichnung hat Repräsentation als Zeichenkette"() {
         when:
-        def kontoname = Kontobezeichnung.of("Ein Konto")
+        def kontobezeichnung = Kontobezeichnung.of("Ein Konto")
 
         then:
-        kontoname.toString() == "Ein Konto"
+        kontobezeichnung.toString() == "Ein Konto"
     }
 }

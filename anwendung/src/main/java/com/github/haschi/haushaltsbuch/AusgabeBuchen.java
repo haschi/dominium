@@ -105,7 +105,7 @@ public class AusgabeBuchen
                 .haushaltsbuchId(UUID.fromString(this.id))
                 .sollkonto(this.sollkonto)
                 .habenkonto(this.habenkonto)
-                .waehrungsbetrag(währungsbetrag)
+                .geldbetrag(währungsbetrag)
                 .build();
 
         this.commandGateway.sendAndWait(befehl);

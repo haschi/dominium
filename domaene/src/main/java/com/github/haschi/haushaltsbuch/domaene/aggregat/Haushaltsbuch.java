@@ -69,7 +69,7 @@ public final class Haushaltsbuch
         this.buchungssatzHinzufügen(new Buchungssatz(
                 Kontobezeichnung.of(befehl.sollkonto()),
                 Kontobezeichnung.of(befehl.habenkonto()),
-                befehl.waehrungsbetrag()));
+                befehl.geldbetrag()));
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch
@@ -118,7 +118,7 @@ public final class Haushaltsbuch
             this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
                                               .haushaltsbuchId(befehl.haushaltsbuchId())
                                               .kontobezeichnung(befehl.kontobezeichnung())
-                                              .waehrungsbetrag(befehl.betrag())
+                                              .geldbetrag(befehl.betrag())
                                               .build());
         }
     }
@@ -174,7 +174,7 @@ public final class Haushaltsbuch
         else
         {
             final Konto konto = this.hauptbuch.suchen(Kontobezeichnung.of(befehl.kontobezeichnung()));
-            final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.waehrungsbetrag());
+            final Buchungssatz buchungssatz = konto.buchungssatzFürAnfangsbestand(befehl.geldbetrag());
 
             this.buchungssatzHinzufügen(buchungssatz);
         }
@@ -227,7 +227,7 @@ public final class Haushaltsbuch
         final Buchungssatz buchungssatz = new Buchungssatz(
                 Kontobezeichnung.of(befehl.sollkonto()),
                 Kontobezeichnung.of(befehl.habenkonto()),
-                befehl.waehrungsbetrag());
+                befehl.geldbetrag());
 
         if (this.hauptbuch.sindAlleKontenVorhanden(buchungssatz))
         {
@@ -258,7 +258,7 @@ public final class Haushaltsbuch
         final Buchungssatz buchungssatz = new Buchungssatz(
                 Kontobezeichnung.of(befehl.sollkonto()),
                 Kontobezeichnung.of(befehl.habenkonto()),
-                befehl.waehrungsbetrag());
+                befehl.geldbetrag());
 
         if (this.hauptbuch.sindAlleKontenVorhanden(buchungssatz))
         {

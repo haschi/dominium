@@ -17,5 +17,5 @@ public interface BucheTilgung
 
     String habenkonto();
 
-    MonetaryAmount waehrungsbetrag();
+    MonetaryAmount geldbetrag();
 }

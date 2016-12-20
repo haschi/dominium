@@ -10,23 +10,23 @@ public final class Kontobezeichnung
             "[\\p{IsLatin}]{1,2}|[\\p{Alpha}][\\p{Alpha}\\p{Space}]{1,126}[\\p{Alpha}]",
             Pattern.UNICODE_CHARACTER_CLASS);
 
-    private final String kontoname;
+    private final String wert;
 
-    private Kontobezeichnung(final String kontoname)
+    private Kontobezeichnung(final String kontobezeichnung)
     {
         super();
 
-        if (!gültigerName.matcher(kontoname).matches())
+        if (!gültigerName.matcher(kontobezeichnung).matches())
         {
             throw new KontobezeichnungWarUngültig();
         }
 
-        this.kontoname = kontoname;
+        this.wert = kontobezeichnung;
     }
 
-    public static Kontobezeichnung of(final String kontoname)
+    public static Kontobezeichnung of(final String kontobezeichnung)
     {
-        return new Kontobezeichnung(kontoname);
+        return new Kontobezeichnung(kontobezeichnung);
     }
 
     @Override
@@ -44,18 +44,18 @@ public final class Kontobezeichnung
 
         final Kontobezeichnung anderes = (Kontobezeichnung) objekt;
 
-        return Objects.equals(this.kontoname, anderes.kontoname);
+        return Objects.equals(this.wert, anderes.wert);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.kontoname);
+        return Objects.hash(this.wert);
     }
 
     @Override
     public String toString()
     {
-        return this.kontoname;
+        return this.wert;
     }
 }

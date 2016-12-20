@@ -14,23 +14,23 @@ public final class Buchungssatz
 
     private final Kontobezeichnung sollkonto;
     private final Kontobezeichnung habenkonto;
-    private final MonetaryAmount währungsbetrag;
+    private final MonetaryAmount geldbetrag;
 
     public Buchungssatz(
             final Kontobezeichnung sollkonto,
             final Kontobezeichnung habenkonto,
-            final MonetaryAmount währungsbetrag)
+            final MonetaryAmount geldbetrag)
     {
         super();
 
-        if (währungsbetrag.isNegative())
+        if (geldbetrag.isNegative())
         {
             throw new IllegalArgumentException("Buchungssätze dürfen keine negativen Beträge besitzen.");
         }
 
         this.sollkonto = sollkonto;
         this.habenkonto = habenkonto;
-        this.währungsbetrag = währungsbetrag;
+        this.geldbetrag = geldbetrag;
     }
 
     public boolean hatSollkonto(final Kontobezeichnung konto)
@@ -53,9 +53,9 @@ public final class Buchungssatz
         return this.habenkonto;
     }
 
-    public MonetaryAmount getWährungsbetrag()
+    public MonetaryAmount getGeldbetrag()
     {
-        return this.währungsbetrag;
+        return this.geldbetrag;
     }
 
     public boolean istAnfangsbestandFür(final Kontobezeichnung konto)
@@ -69,7 +69,7 @@ public final class Buchungssatz
     public String toString()
     {
         final MonetaryAmountFormat format = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        final String betrag = format.format(this.währungsbetrag);
+        final String betrag = format.format(this.geldbetrag);
 
         return String.format("%s (%s) an %s (%s)",
                              this.sollkonto.toString(), betrag, this.habenkonto.toString(), betrag);
@@ -92,7 +92,7 @@ public final class Buchungssatz
 
         return new EqualsBuilder().append(this.sollkonto, that.sollkonto)
                 .append(this.habenkonto, that.habenkonto)
-                .append(this.währungsbetrag, that.währungsbetrag)
+                .append(this.geldbetrag, that.geldbetrag)
                 .isEquals();
     }
 
@@ -101,7 +101,7 @@ public final class Buchungssatz
     {
         return new HashCodeBuilder(17, 37).append(this.sollkonto)
                 .append(this.habenkonto)
-                .append(this.währungsbetrag)
+                .append(this.geldbetrag)
                 .toHashCode();
     }
 }

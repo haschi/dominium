@@ -17,5 +17,5 @@ public interface BucheAusgabe
 
     String habenkonto();
 
-    MonetaryAmount waehrungsbetrag();
+    MonetaryAmount geldbetrag();
 }

@@ -61,12 +61,12 @@ public final class Konto
     {
         if (buchungssatz.hatSollkonto(this.bezeichnung))
         {
-            return this.saldo.soll(buchungssatz.getWährungsbetrag());
+            return this.saldo.soll(buchungssatz.getGeldbetrag());
         }
 
         if (buchungssatz.hatHabenkonto(this.bezeichnung))
         {
-            return this.saldo.haben(buchungssatz.getWährungsbetrag());
+            return this.saldo.haben(buchungssatz.getGeldbetrag());
         }
 
         throw new IllegalArgumentException();
