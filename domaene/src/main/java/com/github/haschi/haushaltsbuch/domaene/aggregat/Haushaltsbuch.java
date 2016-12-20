@@ -6,7 +6,6 @@ import com.github.haschi.haushaltsbuch.api.ereignis.*;
 import com.github.haschi.haushaltsbuch.api.kommando.*;
 import com.github.haschi.haushaltsbuch.domaene.HabenkontoSpezifikation;
 import com.github.haschi.haushaltsbuch.domaene.SollkontoSpezifikation;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -44,23 +43,18 @@ public final class Haushaltsbuch
         this.apply(ImmutableHauptbuchWurdeAngelegt.builder().haushaltsbuchId(befehl.id()).build());
 
         this.apply(ImmutableKontoWurdeAngelegt.builder()
-                .kontoart(Kontoart.Aktiv)
-                .kontoname(Konto.ANFANGSBESTAND.getName().toString())
-                .build());
+                           .kontoart(Kontoart.Aktiv)
+                           .kontoname(Konto.ANFANGSBESTAND.getName().toString())
+                           .build());
     }
 
     @CommandHandler
     public void einnahmeBuchen(final ImmutableBucheEinnahme befehl)
     {
-        this.buchungssatzHinzufügen(new Buchungssatz(Kontoname.of(befehl.sollkonto()),
+        this.buchungssatzHinzufügen(new Buchungssatz(
+                Kontoname.of(befehl.sollkonto()),
                 Kontoname.of(befehl.habenkonto()),
                 befehl.waehrungsbetrag()));
-    }
-
-    // ???
-    public ImmutableSet<Konto> getKonten()
-    {
-        return this.hauptbuch.getKonten();
     }
 
     // Hauptbuch -- Alle Methoden zum Hauptbuch
@@ -71,22 +65,21 @@ public final class Haushaltsbuch
         if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                    .kontoname(befehl.kontoname())
-                    .kontoart(befehl.kontoart())
-                    .build());
-
+                               .kontoname(befehl.kontoname())
+                               .kontoart(befehl.kontoart())
+                               .build());
         }
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                    .kontoname(befehl.kontoname())
-                    .kontoart(befehl.kontoart())
-                    .build());
+                               .kontoname(befehl.kontoname())
+                               .kontoart(befehl.kontoart())
+                               .build());
 
             this.apply(ImmutableSaldoWurdeGeaendert.builder()
-                    .kontoname(befehl.kontoname())
-                    .neuerSaldo(new SollHabenSaldo())
-                    .build());
+                               .kontoname(befehl.kontoname())
+                               .neuerSaldo(new SollHabenSaldo())
+                               .build());
         }
     }
 
@@ -96,22 +89,22 @@ public final class Haushaltsbuch
         if (this.hauptbuch.istKontoVorhanden(Kontoname.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                    .kontoname(befehl.kontoname())
-                    .kontoart(befehl.kontoart())
-                    .build());
+                               .kontoname(befehl.kontoname())
+                               .kontoart(befehl.kontoart())
+                               .build());
         }
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                    .kontoname(befehl.kontoname())
-                    .kontoart(befehl.kontoart())
-                    .build());
+                               .kontoname(befehl.kontoname())
+                               .kontoart(befehl.kontoart())
+                               .build());
 
             this.anfangsbestandBuchen(ImmutableBucheAnfangsbestand.builder()
-                    .haushaltsbuchId(befehl.haushaltsbuchId())
-                    .kontoname(befehl.kontoname())
-                    .waehrungsbetrag(befehl.betrag())
-                    .build());
+                                              .haushaltsbuchId(befehl.haushaltsbuchId())
+                                              .kontoname(befehl.kontoname())
+                                              .waehrungsbetrag(befehl.betrag())
+                                              .build());
         }
     }
 
@@ -241,7 +234,6 @@ public final class Haushaltsbuch
                     .build();
 
             this.apply(habenkontoereignis);
-
         }
         else
         {
@@ -251,7 +243,8 @@ public final class Haushaltsbuch
 
     private BuchungWurdeAbgelehnt buchungAblehnen(final Buchungssatz buchungssatz)
     {
-        final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(buchungssatz.getSollkonto(),
+        final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                buchungssatz.getSollkonto(),
                 buchungssatz.getHabenkonto());
 
         return ImmutableBuchungWurdeAbgelehnt.builder().grund(grund).build();
@@ -260,7 +253,8 @@ public final class Haushaltsbuch
     @CommandHandler
     public void ausgabeBuchen(final ImmutableBucheAusgabe befehel)
     {
-        final Buchungssatz buchungssatz = new Buchungssatz(Kontoname.of(befehel.sollkonto()),
+        final Buchungssatz buchungssatz = new Buchungssatz(
+                Kontoname.of(befehel.sollkonto()),
                 Kontoname.of(befehel.habenkonto()),
                 befehel.waehrungsbetrag());
 
@@ -273,23 +267,25 @@ public final class Haushaltsbuch
             else
             {
                 this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
-                        .grund("Ausgaben können nicht auf Ertragskonten gebucht " + "werden.")
-                        .build());
+                                   .grund("Ausgaben können nicht auf Ertragskonten gebucht " + "werden.")
+                                   .build());
             }
         }
         else
         {
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
-                    .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(Kontoname.of(befehel.sollkonto()),
-                            Kontoname.of(befehel.habenkonto())))
-                    .build());
+                               .grund(this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                                       Kontoname.of(befehel.sollkonto()),
+                                       Kontoname.of(befehel.habenkonto())))
+                               .build());
         }
     }
 
     @CommandHandler
     public void tilgungBuchen(final ImmutableBucheTilgung befehl)
     {
-        final Buchungssatz buchungssatz = new Buchungssatz(Kontoname.of(befehl.sollkonto()),
+        final Buchungssatz buchungssatz = new Buchungssatz(
+                Kontoname.of(befehl.sollkonto()),
                 Kontoname.of(befehl.habenkonto()),
                 befehl.waehrungsbetrag());
 
@@ -302,14 +298,15 @@ public final class Haushaltsbuch
             else
             {
                 this.apply(ImmutableBuchungWurdeAbgelehnt.builder()
-                        .grund("Tilgung kann nicht auf Konto gebucht werden.")
-                        .build());
+                                   .grund("Tilgung kann nicht auf Konto gebucht werden.")
+                                   .build());
             }
         }
         else
         {
 
-            final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(Kontoname.of(befehl.sollkonto()),
+            final String grund = this.hauptbuch.fehlermeldungFürFehlendeKontenErzeugen(
+                    Kontoname.of(befehl.sollkonto()),
                     Kontoname.of(befehl.habenkonto()));
 
             this.apply(ImmutableBuchungWurdeAbgelehnt.builder().grund(grund).build());

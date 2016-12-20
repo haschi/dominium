@@ -3,16 +3,14 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
 import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
 import com.github.haschi.haushaltsbuch.domaene.KontonameSpezifikation;
-import com.google.common.collect.ImmutableSet;
-
-import java.util.HashSet;
-import java.util.Set;
+import javaslang.collection.HashSet;
+import javaslang.collection.Set;
 
 public final class Hauptbuch
 {
 
     public static final Hauptbuch UNDEFINIERT = new Hauptbuch();
-    public final Set<Konto> konten = new HashSet<>();
+    public final Set<Konto> konten = HashSet.empty();
 
     void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
     {
@@ -72,22 +70,14 @@ public final class Hauptbuch
     boolean istKontoVorhanden(final Kontoname konto)
     {
         final KontonameSpezifikation kontoname = new KontonameSpezifikation(konto);
-        return this.getKonten().stream().anyMatch(kontoname::istErfülltVon);
-    }
-
-    public ImmutableSet<Konto> getKonten()
-    {
-        return ImmutableSet.copyOf(this.konten);
+        return this.konten.exists(kontoname::istErfülltVon);
     }
 
     public Konto suchen(final Kontoname kontoname)
     {
-
-        return this.getKonten()
-                .stream()
-                .filter(k -> k.getName().equals(kontoname))
-                .findFirst()
-                .orElseThrow(() -> new KontoUnbekannt(kontoname));
+        final KontonameSpezifikation k = new KontonameSpezifikation(kontoname);
+        return this.konten.find(k::istErfülltVon)
+                .getOrElseThrow(() -> new KontoUnbekannt(kontoname));
     }
 
     public void hinzufügen(final Konto konto)

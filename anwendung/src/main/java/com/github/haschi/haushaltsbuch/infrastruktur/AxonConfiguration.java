@@ -8,6 +8,7 @@ import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventBus;
+import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.eventhandling.scheduling.java.SimpleEventScheduler;
 import org.axonframework.eventsourcing.AggregateSnapshotter;
@@ -37,6 +38,14 @@ public final class AxonConfiguration
     public SnapshotEventStore eventStore()
     {
         return new FileSystemEventStore(new SimpleEventFileResolver(storageDir));
+    }
+
+    @Produces
+    @AutoConfigure
+    @ApplicationScoped
+    public EventBus eventBus()
+    {
+        return new SimpleEventBus();
     }
 
     @Produces
@@ -87,5 +96,4 @@ public final class AxonConfiguration
         trigger.setSnapshotter(snapshotter);
         return trigger;
     }
-
 }

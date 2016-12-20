@@ -113,6 +113,12 @@
                 <version>2.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.javaslang</groupId>
+                <artifactId>javaslang</artifactId>
+                <version>2.0.5</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -394,6 +400,6 @@
             <url>http://jcenter.bintray.com</url>
         </repository>
     </repositories>
-    
+
 </project>
 

@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-//import javax.faces.bean.ManagedBean;
-//import javax.faces.bean.ViewScoped;
-
 //@ViewScoped
 //@ManagedBean
 @SuppressWarnings("checkstyle:designforextension")
@@ -31,12 +28,15 @@ public class AusgabeBuchen
 
     private String id = "";
     private HauptbuchAnsicht hauptbuch;
+
     @SuppressWarnings("CanBeFinal")
     @Inject
     private HauptbuchAbfrage abfrage;
+
     private String sollkonto = "";
     private String habenkonto = "";
     private String betrag = "";
+
     @SuppressWarnings("CanBeFinal")
     @Inject
     private CommandGateway commandGateway;
@@ -59,7 +59,6 @@ public class AusgabeBuchen
     public List<String> getAktivkonten()
     {
         return this.hauptbuch.aktivkonten();
-
     }
 
     public String getSollkonto()

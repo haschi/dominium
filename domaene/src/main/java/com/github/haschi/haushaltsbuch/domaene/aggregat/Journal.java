@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.dominium.aggregat.Spezifikation;
-import com.google.common.collect.ImmutableList;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 
@@ -38,10 +37,5 @@ public final class Journal
                 .map(Buchungssatz::getWährungsbetrag)
                 .reduce(MonetaryFunctions.sum())
                 .orElse(Money.of(0, Monetary.getCurrency(Locale.GERMANY)));
-    }
-
-    ImmutableList<Set<Buchungssatz>> getBuchungssätze()
-    {
-        return ImmutableList.of(this.buchungssätze);
     }
 }
