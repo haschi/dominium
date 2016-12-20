@@ -80,7 +80,7 @@ public final class Haushaltsbuch
         if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                               .kontoname(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontoname())
                                .kontoart(befehl.kontoart())
                                .build());
         }
@@ -104,7 +104,7 @@ public final class Haushaltsbuch
         if (this.hauptbuch.istKontoVorhanden(Kontobezeichnung.of(befehl.kontoname())))
         {
             this.apply(ImmutableKontoWurdeNichtAngelegt.builder()
-                               .kontoname(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontoname())
                                .kontoart(befehl.kontoart())
                                .build());
         }

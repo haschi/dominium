@@ -67,7 +67,7 @@ public final class KontoErstellenSteps
     public void dann_wird_das_Konto_nicht_angelegt_worden_sein(final String kontoname)
     {
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableKontoWurdeNichtAngelegt.builder()
-                                                                        .kontoname(kontoname)
+                                                                        .kontobezeichnung(kontoname)
                                                                         .kontoart(Kontoart.Aktiv)
                                                                         .build());
     }

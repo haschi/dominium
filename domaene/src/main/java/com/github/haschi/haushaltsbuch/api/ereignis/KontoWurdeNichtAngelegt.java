@@ -8,7 +8,7 @@ public interface KontoWurdeNichtAngelegt
         extends HaushaltsbuchEreignis
 {
 
-    String kontoname();
+    String kontobezeichnung();
 
     Kontoart kontoart();
 }
