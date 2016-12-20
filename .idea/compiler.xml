@@ -5,6 +5,7 @@
     <option name="delegateToJavac" value="true" />
   </component>
   <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="ajc" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -23,17 +24,17 @@
       <module name="aspekte" target="1.8" />
       <module name="building" target="1.8" />
       <module name="coding" target="1.8" />
-      <module name="coding-bom" target="1.8" />
-      <module name="common" target="1.8" />
+      <module name="coding-bom" target="1.5" />
+      <module name="common" target="1.5" />
       <module name="domaene" target="1.8" />
       <module name="haushaltsbuch" target="1.8" />
-      <module name="infrastructure-bom" target="1.8" />
+      <module name="infrastructure-bom" target="1.5" />
       <module name="modeling" target="1.8" />
       <module name="modelldokumentation" target="1.8" />
       <module name="parent" target="1.8" />
       <module name="richtlinien" target="1.8" />
-      <module name="testing-bom" target="1.8" />
-      <module name="web" target="1.8" />
+      <module name="testing-bom" target="1.5" />
+      <module name="web" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

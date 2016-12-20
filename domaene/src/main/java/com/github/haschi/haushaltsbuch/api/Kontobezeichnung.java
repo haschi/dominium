@@ -18,7 +18,7 @@ public final class Kontobezeichnung
 
         if (!gültigerName.matcher(kontoname).matches())
         {
-            throw new KontonameWarUngültig();
+            throw new KontobezeichnungWarUngültig();
         }
 
         this.kontoname = kontoname;

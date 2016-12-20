@@ -8,7 +8,7 @@ public interface KontoWurdeAngelegt
         extends HaushaltsbuchEreignis
 {
 
-    String kontoname();
+    String kontobezeichnung();
 
     Kontoart kontoart();
 }

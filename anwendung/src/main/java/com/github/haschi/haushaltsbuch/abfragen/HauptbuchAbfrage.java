@@ -49,10 +49,10 @@ public class HauptbuchAbfrage
             final KontoWurdeAngelegt ereignis)
     {
         return Match(ereignis.kontoart()).of(
-                Case(is(Kontoart.Aktiv), x -> builder.addAktivkonten(ereignis.kontoname())),
-                Case(is(Kontoart.Passiv), x -> builder.addPassivkonten(ereignis.kontoname())),
-                Case(is(Kontoart.Ertrag), x -> builder.addErtragskonten(ereignis.kontoname())),
-                Case(is(Kontoart.Aufwand), x -> builder.addAufwandskonten(ereignis.kontoname())),
+                Case(is(Kontoart.Aktiv), x -> builder.addAktivkonten(ereignis.kontobezeichnung())),
+                Case(is(Kontoart.Passiv), x -> builder.addPassivkonten(ereignis.kontobezeichnung())),
+                Case(is(Kontoart.Ertrag), x -> builder.addErtragskonten(ereignis.kontobezeichnung())),
+                Case(is(Kontoart.Aufwand), x -> builder.addAufwandskonten(ereignis.kontobezeichnung())),
                 Case($(), () ->
                 {
                     throw new NoClassDefFoundError();

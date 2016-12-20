@@ -137,7 +137,7 @@
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
                         <useIncrementalCompilation>false</useIncrementalCompilation>
-                        <verbose>true</verbose>
+                        <verbose>false</verbose>
                     </configuration>
                 </plugin>
 

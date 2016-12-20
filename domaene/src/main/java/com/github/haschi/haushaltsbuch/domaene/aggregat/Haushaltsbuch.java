@@ -59,7 +59,7 @@ public final class Haushaltsbuch
 
         this.apply(ImmutableKontoWurdeAngelegt.builder()
                            .kontoart(Kontoart.Aktiv)
-                           .kontoname(Konto.ANFANGSBESTAND.getName().toString())
+                           .kontobezeichnung(Konto.ANFANGSBESTAND.getName().toString())
                            .build());
     }
 
@@ -87,7 +87,7 @@ public final class Haushaltsbuch
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                               .kontoname(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontoname())
                                .kontoart(befehl.kontoart())
                                .build());
 
@@ -111,7 +111,7 @@ public final class Haushaltsbuch
         else
         {
             this.apply(ImmutableKontoWurdeAngelegt.builder()
-                               .kontoname(befehl.kontoname())
+                               .kontobezeichnung(befehl.kontoname())
                                .kontoart(befehl.kontoart())
                                .build());
 
@@ -133,9 +133,9 @@ public final class Haushaltsbuch
     public void falls(final ImmutableKontoWurdeAngelegt ereignis)
     {
         final BuchungsregelFabrik fabrik = new BuchungsregelFabrik(ereignis.kontoart());
-        final Buchungsregel regel = fabrik.erzeugen(Kontobezeichnung.of(ereignis.kontoname()));
+        final Buchungsregel regel = fabrik.erzeugen(Kontobezeichnung.of(ereignis.kontobezeichnung()));
 
-        final Konto konto = new Konto(Kontobezeichnung.of(ereignis.kontoname()), regel);
+        final Konto konto = new Konto(Kontobezeichnung.of(ereignis.kontobezeichnung()), regel);
 
         this.hauptbuch.hinzufügen(konto);
     }

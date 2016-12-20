@@ -12,7 +12,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of("")
 
         then:
-        thrown KontonameWarUngültig
+        thrown KontobezeichnungWarUngültig
     }
 
     def "Kontoname darf nicht länger als 128 Zeichen sein"() {
@@ -20,7 +20,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of(kontoname)
 
         then:
-        thrown KontonameWarUngültig
+        thrown KontobezeichnungWarUngültig
 
         where:
         kontoname | _
@@ -34,7 +34,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of(kontoname)
 
         then:
-        notThrown KontonameWarUngültig
+        notThrown KontobezeichnungWarUngültig
 
         where:
         kontoname | _
@@ -47,7 +47,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of(kontoname)
 
         then:
-        thrown KontonameWarUngültig
+        thrown KontobezeichnungWarUngültig
 
         where:
         kontoname             | _
@@ -61,7 +61,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of(kontoname)
 
         then:
-        notThrown KontonameWarUngültig
+        notThrown KontobezeichnungWarUngültig
 
         where:
         kontoname                           | _
@@ -74,7 +74,7 @@ class KontonameSpec extends Specification {
         Kontobezeichnung.of(kontoname)
 
         then:
-        notThrown KontonameWarUngültig
+        notThrown KontobezeichnungWarUngültig
 
         where:
         kontoname | _

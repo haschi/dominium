@@ -38,19 +38,19 @@ public final class KontoErstellenSteps
     {
         final UUID haushaltsbuchId = this.welt.getAktuelleHaushaltsbuchId();
         this.commandGateway.sendAndWait(ImmutableLegeKontoAn.builder()
-                .haushaltsbuchId(haushaltsbuchId)
-                .kontoname(kontoname)
-                .kontoart(Kontoart.Aktiv)
-                .build());
+                                                .haushaltsbuchId(haushaltsbuchId)
+                                                .kontoname(kontoname)
+                                                .kontoart(Kontoart.Aktiv)
+                                                .build());
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" für das Haushaltsbuch angelegt worden sein$")
     public void dann_wird_das_Konto_für_das_Haushaltsbuch_angelegt_worden_sein(final String kontoname)
     {
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableKontoWurdeAngelegt.builder()
-                .kontoname(kontoname)
-                .kontoart(Kontoart.Aktiv)
-                .build());
+                                                                        .kontobezeichnung(kontoname)
+                                                                        .kontoart(Kontoart.Aktiv)
+                                                                        .build());
     }
 
     @Und("^das Konto \"([^\"]*)\" wird ein Saldo von (-?\\d+,\\d{2} [A-Z]{3}) besitzen$")
@@ -58,18 +58,18 @@ public final class KontoErstellenSteps
             final String kontoname, @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
     {
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
-                .kontoname(kontoname)
-                .neuerSaldo(erwarteterSaldo)
-                .build());
+                                                                        .kontoname(kontoname)
+                                                                        .neuerSaldo(erwarteterSaldo)
+                                                                        .build());
     }
 
     @Dann("^wird das Konto \"([^\"]*)\" nicht angelegt worden sein$")
     public void dann_wird_das_Konto_nicht_angelegt_worden_sein(final String kontoname)
     {
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableKontoWurdeNichtAngelegt.builder()
-                .kontoname(kontoname)
-                .kontoart(Kontoart.Aktiv)
-                .build());
+                                                                        .kontoname(kontoname)
+                                                                        .kontoart(Kontoart.Aktiv)
+                                                                        .build());
     }
 
     @Und("^das Haushaltsbuch wird ein Konto \"([^\"]*)\" besitzen$")
@@ -77,8 +77,8 @@ public final class KontoErstellenSteps
     {
 
         assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableKontoWurdeAngelegt.builder()
-                .kontoname(konto)
-                .kontoart(Kontoart.Aktiv)
-                .build());
+                                                                        .kontobezeichnung(konto)
+                                                                        .kontoart(Kontoart.Aktiv)
+                                                                        .build());
     }
 }

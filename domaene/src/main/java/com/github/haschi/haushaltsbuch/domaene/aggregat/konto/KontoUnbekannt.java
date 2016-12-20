@@ -5,16 +5,16 @@ import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 public final class KontoUnbekannt
         extends RuntimeException
 {
-    private final Kontobezeichnung kontoname;
+    private final Kontobezeichnung kontobezeichnung;
 
-    public KontoUnbekannt(final Kontobezeichnung kontoname)
+    public KontoUnbekannt(final Kontobezeichnung kontobezeichnung)
     {
-        this.kontoname = kontoname;
+        this.kontobezeichnung = kontobezeichnung;
     }
 
     @Override
     public String toString()
     {
-        return "KontoUnbekannt{" + "kontoname=" + this.kontoname + '}';
+        return "KontoUnbekannt{" + "kontobezeichnung=" + this.kontobezeichnung + '}';
     }
 }
