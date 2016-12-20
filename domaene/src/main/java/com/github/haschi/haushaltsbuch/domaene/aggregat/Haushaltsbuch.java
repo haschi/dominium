@@ -2,8 +2,26 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
-import com.github.haschi.haushaltsbuch.api.ereignis.*;
-import com.github.haschi.haushaltsbuch.api.kommando.*;
+import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.api.ereignis.HauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableBuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableBuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHaushaltsbuchAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableJournalWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeNichtAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.JournalWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchfuehrung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
+import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -15,7 +33,6 @@ import java.util.UUID;
 public final class Haushaltsbuch
         extends AbstractAnnotatedAggregateRoot<UUID>
 {
-
     private static final String FEHLERMELDUNG = "Der Anfangsbestand kann nur einmal für jedes Konto gebucht werden";
     private static final long serialVersionUID = -4864886584911078356L;
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AjcSettings">
+    <option name="ajcPath" value="$MAVEN_REPOSITORY$/org/aspectj/aspectjtools/1.8.9/aspectjtools-1.8.9.jar" />
+    <option name="delegateToJavac" value="true" />
+  </component>
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="anwendung" />
+        <module name="domaene" />
+        <module name="modeling" />
+        <module name="modelldokumentation" />
+        <module name="richtlinien" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="anwendung" target="1.8" />
+      <module name="aspekte" target="1.8" />
+      <module name="building" target="1.8" />
+      <module name="coding" target="1.8" />
+      <module name="coding-bom" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="domaene" target="1.8" />
+      <module name="haushaltsbuch" target="1.8" />
+      <module name="infrastructure-bom" target="1.8" />
+      <module name="modeling" target="1.8" />
+      <module name="modelldokumentation" target="1.8" />
+      <module name="parent" target="1.8" />
+      <module name="richtlinien" target="1.8" />
+      <module name="testing-bom" target="1.8" />
+      <module name="web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
