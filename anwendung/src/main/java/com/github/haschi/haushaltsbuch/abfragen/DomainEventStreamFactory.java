@@ -3,6 +3,7 @@ package com.github.haschi.haushaltsbuch.abfragen;
 import javaslang.collection.Stream;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.domain.DomainEventStream;
+import org.axonframework.eventstore.EventStore;
 
 public class DomainEventStreamFactory
 {
@@ -19,5 +20,11 @@ public class DomainEventStreamFactory
         {
             return Stream.Empty.instance();
         }
+    }
+
+    public static <T> Stream<DomainEventMessage> create(
+            final EventStore eventStore, final Class<T> aggregateType, final Object haushaltsbuchId)
+    {
+        return create(eventStore.readEvents(aggregateType.getSimpleName(), haushaltsbuchId));
     }
 }
