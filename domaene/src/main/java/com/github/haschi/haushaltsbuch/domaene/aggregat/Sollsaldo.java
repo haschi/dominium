@@ -20,25 +20,25 @@ public final class Sollsaldo
     }
 
     @Override
-    public Saldo soll(final MonetaryAmount buchungssatz)
+    public Saldo soll(final MonetaryAmount geldbetrag)
     {
-        return new Sollsaldo(this.betrag.add(buchungssatz));
+        return new Sollsaldo(this.betrag.add(geldbetrag));
     }
 
     @Override
-    public Saldo haben(final MonetaryAmount währungsbetrag)
+    public Saldo haben(final MonetaryAmount geldbetrag)
     {
-        if (this.betrag.isEqualTo(währungsbetrag))
+        if (this.betrag.isEqualTo(geldbetrag))
         {
             return new SollHabenSaldo();
         }
 
-        if (this.betrag.isLessThan(währungsbetrag))
+        if (this.betrag.isLessThan(geldbetrag))
         {
-            return new Habensaldo(währungsbetrag.subtract(this.betrag));
+            return new Habensaldo(geldbetrag.subtract(this.betrag));
         }
 
-        return new Sollsaldo(this.betrag.subtract(währungsbetrag));
+        return new Sollsaldo(this.betrag.subtract(geldbetrag));
     }
 
     @Override

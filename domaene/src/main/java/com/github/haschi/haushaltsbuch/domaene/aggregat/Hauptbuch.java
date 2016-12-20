@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
-import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontoUnbekannt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontobezeichnungSpezifikation;
 import javaslang.collection.HashSet;
@@ -11,7 +11,7 @@ final class Hauptbuch
 {
     private Set<Konto> konten = HashSet.empty();
 
-    void saldoÄndern(final SaldoWurdeGeaendert saldoGeaendert)
+    void saldoÄndern(final SaldoWurdeGeändert saldoGeaendert)
     {
         final Konto konto = this.suchen(Kontobezeichnung.of(saldoGeaendert.kontobezeichnung()));
         konto.setSaldo(saldoGeaendert.neuerSaldo());

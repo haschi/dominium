@@ -43,7 +43,7 @@ public abstract class Saldo
         return new HashCodeBuilder(17, 37).append(this.betrag).toHashCode();
     }
 
-    public abstract Saldo soll(final MonetaryAmount buchungssatz);
+    public abstract Saldo soll(final MonetaryAmount geldbetrag);
 
-    public abstract Saldo haben(final MonetaryAmount währungsbetrag);
+    public abstract Saldo haben(final MonetaryAmount geldbetrag);
 }

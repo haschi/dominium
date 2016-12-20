@@ -1,6 +1,6 @@
 package domaene;
 
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
@@ -53,7 +53,7 @@ public final class AnfangsbestandBuchenSteps
             final String konto, @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
     {
 
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeändert.builder()
                                                                         .kontobezeichnung(konto)
                                                                         .neuerSaldo(erwarteterSaldo)
                                                                         .build());
@@ -64,7 +64,7 @@ public final class AnfangsbestandBuchenSteps
             final String konto, @Transform(HabensaldoConverter.class) final Habensaldo erwarteterSaldo)
     {
 
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeändert.builder()
                                                                         .kontobezeichnung(konto)
                                                                         .neuerSaldo(erwarteterSaldo)
                                                                         .build());

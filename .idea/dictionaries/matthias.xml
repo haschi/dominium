@@ -3,12 +3,17 @@
     <words>
       <w>buchungsregel</w>
       <w>buchungssatz</w>
+      <w>buchungssatzes</w>
+      <w>buchungssätze</w>
+      <w>doclet</w>
       <w>entität</w>
       <w>github</w>
       <w>habenkonto</w>
+      <w>habensaldo</w>
       <w>haschi</w>
       <w>kontobezeichnung</w>
       <w>sollkonto</w>
+      <w>sollsaldo</w>
     </words>
   </dictionary>
 </component>

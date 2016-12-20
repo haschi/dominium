@@ -30,15 +30,15 @@ public final class SollHabenSaldo
     }
 
     @Override
-    public final Saldo soll(final MonetaryAmount buchungssatz)
+    public final Saldo soll(final MonetaryAmount geldbetrag)
     {
-        return new Sollsaldo(buchungssatz);
+        return new Sollsaldo(geldbetrag);
     }
 
     @Override
-    public final Saldo haben(final MonetaryAmount währungsbetrag)
+    public final Saldo haben(final MonetaryAmount geldbetrag)
     {
-        return new Habensaldo(währungsbetrag);
+        return new Habensaldo(geldbetrag);
     }
 
     @Override

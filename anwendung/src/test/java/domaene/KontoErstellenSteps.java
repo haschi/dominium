@@ -3,7 +3,7 @@ package domaene;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeNichtAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import cucumber.api.Transform;
@@ -57,7 +57,7 @@ public final class KontoErstellenSteps
     public void und_das_Konto_wird_einen_Saldo_besitzen(
             final String kontoname, @Transform(SollsaldoConverter.class) final Sollsaldo erwarteterSaldo)
     {
-        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
+        assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeändert.builder()
                                                                         .kontobezeichnung(kontoname)
                                                                         .neuerSaldo(erwarteterSaldo)
                                                                         .build());

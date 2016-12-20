@@ -4,7 +4,7 @@ import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
 import com.github.haschi.modeling.de.Ereignis;
 
 @Ereignis
-public interface SaldoWurdeGeaendert
+public interface SaldoWurdeGeändert
         extends HaushaltsbuchEreignis
 {
 

@@ -1,6 +1,6 @@
 package domaene;
 
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
@@ -91,7 +91,7 @@ public final class AusgabeBuchenSteps
     {
         for (final Kontostand kontostand : kontostände)
         {
-            assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeaendert.builder()
+            assertThat(this.welt.aktuellerEreignisstrom()).contains(ImmutableSaldoWurdeGeändert.builder()
                                                                             .kontobezeichnung(kontostand.kontoname)
                                                                             .neuerSaldo(saldoFürKonto(kontostand))
                                                                             .build());

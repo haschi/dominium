@@ -12,9 +12,9 @@ import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHaushaltsbuchAngele
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeNichtAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.ereignis.JournalWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
+import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAnfangsbestand;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
@@ -91,7 +91,7 @@ public final class Haushaltsbuch
                                .kontoart(befehl.kontoart())
                                .build());
 
-            this.apply(ImmutableSaldoWurdeGeaendert.builder()
+            this.apply(ImmutableSaldoWurdeGeändert.builder()
                                .kontobezeichnung(befehl.kontobezeichnung())
                                .neuerSaldo(new SollHabenSaldo())
                                .build());
@@ -141,7 +141,7 @@ public final class Haushaltsbuch
     }
 
     @EventSourcingHandler
-    public void falls(final SaldoWurdeGeaendert saldoGeaendert)
+    public void falls(final SaldoWurdeGeändert saldoGeaendert)
     {
         this.hauptbuch.saldoÄndern(saldoGeaendert);
     }
@@ -190,7 +190,7 @@ public final class Haushaltsbuch
             final Konto sollkonto = this.hauptbuch.suchen(buchungssatz.getSollkonto());
             final Saldo saldo = sollkonto.buchen(buchungssatz);
 
-            final SaldoWurdeGeaendert ereignis = ImmutableSaldoWurdeGeaendert.builder()
+            final SaldoWurdeGeändert ereignis = ImmutableSaldoWurdeGeändert.builder()
                     .kontobezeichnung(buchungssatz.getSollkonto().toString())
                     .neuerSaldo(saldo)
                     .build();
@@ -199,7 +199,7 @@ public final class Haushaltsbuch
 
             final Kontobezeichnung habenkonto = buchungssatz.getHabenkonto();
             final Saldo habenkontosaldo = this.hauptbuch.suchen(habenkonto).buchen(buchungssatz);
-            final SaldoWurdeGeaendert habenkontoereignis = ImmutableSaldoWurdeGeaendert.builder()
+            final SaldoWurdeGeändert habenkontoereignis = ImmutableSaldoWurdeGeändert.builder()
                     .kontobezeichnung(buchungssatz.getHabenkonto().toString())
                     .neuerSaldo(habenkontosaldo)
                     .build();
