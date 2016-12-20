@@ -2,11 +2,12 @@ package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
 import com.github.haschi.haushaltsbuch.api.Kontoname;
 import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeaendert;
-import com.github.haschi.haushaltsbuch.domaene.KontonameSpezifikation;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontoUnbekannt;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontonameSpezifikation;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;
 
-public final class Hauptbuch
+final class Hauptbuch
 {
     private Set<Konto> konten = HashSet.empty();
 

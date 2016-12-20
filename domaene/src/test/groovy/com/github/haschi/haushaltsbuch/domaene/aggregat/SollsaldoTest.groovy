@@ -22,8 +22,8 @@ class SollsaldoTest extends Specification {
     def "vergleich zweier Sollsalden"() {
 
         given:
-        def saldo1 = new Sollsaldo(betrag1);
-        def saldo2 = new Sollsaldo(betrag2);
+        def saldo1 = new Sollsaldo(betrag1)
+        def saldo2 = new Sollsaldo(betrag2)
 
         expect:
         saldo1.equals(saldo2)
@@ -31,8 +31,8 @@ class SollsaldoTest extends Specification {
 
     def "kann nicht mit Habensaldo verglichen werden"() {
         given:
-        def saldo1 = new Sollsaldo(betrag1);
-        def saldo2 = new Habensaldo(betrag2);
+        def saldo1 = new Sollsaldo(betrag1)
+        def saldo2 = new Habensaldo(betrag2)
 
         expect:
         saldo1.equals(saldo2)

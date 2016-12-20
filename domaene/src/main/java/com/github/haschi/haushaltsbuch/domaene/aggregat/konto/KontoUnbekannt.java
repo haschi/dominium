@@ -1,8 +1,8 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat;
+package com.github.haschi.haushaltsbuch.domaene.aggregat.konto;
 
 import com.github.haschi.haushaltsbuch.api.Kontoname;
 
-final class KontoUnbekannt
+public final class KontoUnbekannt
         extends RuntimeException
 {
     private final Kontoname kontoname;

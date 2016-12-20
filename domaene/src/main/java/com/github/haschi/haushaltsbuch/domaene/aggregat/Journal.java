@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.dominium.aggregat.Spezifikation;
+import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.Spezifikation;
 import org.javamoney.moneta.Money;
 import org.javamoney.moneta.function.MonetaryFunctions;
 
@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public final class Journal
+final class Journal
 {
     private final Set<Buchungssatz> buchungssätze = new HashSet<>();
 

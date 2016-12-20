@@ -4,7 +4,7 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 
-public class BuchungWurdeAusgeführtTest extends Specification {
+class BuchungWurdeAusgeführtTest extends Specification {
 
     def "erfüllt die equals und hashCode Spezifikation"() {
         expect:

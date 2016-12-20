@@ -1,6 +1,5 @@
-package com.github.haschi.haushaltsbuch.domaene;
+package com.github.haschi.haushaltsbuch.domaene.aggregat.konto;
 
-import com.github.haschi.dominium.aggregat.Spezifikation;
 import com.github.haschi.haushaltsbuch.api.Kontoname;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Konto;
 
