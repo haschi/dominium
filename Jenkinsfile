@@ -1,25 +1,33 @@
 node {
-    def nodeHome = tool name: 'node-6.9.2', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-    env.PATH = "${nodeHome}/bin:${env.PATH}"
+    node {
+        def nodeHome = tool name: 'node-v6.9.2'
+        env.PATH = "${nodeHome}/bin:${env.PATH}"
 
-    stage 'check environment'
-    sh "node -v"
-    sh "npm -v"
-
-    stage 'checkout'
-    checkout scm
-
-    stage('build') {
-        withMaven(maven: 'M3') {
-            sh 'mvn clean install'
+        stage('check environment') {
+            env.PATH = "${nodeHome}/bin:${env.PATH}"
+            sh """
+            which node
+            node -v
+            npm -v
+        """
         }
-    }
 
-    stage('test') {
+        stage('checkout') {
+            checkout scm
+        }
 
-    }
+        stage('build') {
+            withMaven(maven: 'M3') {
+                sh 'mvn clean install'
+            }
+        }
 
-    stage('deploy') {
+        stage('test') {
 
+        }
+
+        stage('deploy') {
+
+        }
     }
 }
