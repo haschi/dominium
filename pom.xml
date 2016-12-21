@@ -387,7 +387,7 @@
         <module>coding</module>
         <module>anwendung</module>
         <module>domaene</module>
-        <module>web</module>
+        <!--<module>web</module>-->
     </modules>
 
     <repositories>
