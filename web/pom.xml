@@ -80,12 +80,26 @@
                         </goals>
 
                         <phase>initialize</phase>
+
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
                     </execution>
 
+                    <execution>
+                        <id>npm install to clean</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+
+                        <phase>pre-clean</phase>
+
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
 
                     <execution>
                         <id>clean dist</id>
