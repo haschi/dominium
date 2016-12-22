@@ -12,8 +12,11 @@ node {
 
         }
 
-        stage('deploy') {
+        stage('abnahme') {
+            input message: 'PO Abnahme durchführen', parameters: [booleanParam(defaultValue: false, description: 'Durch die Abnahme bestätigt der PO, dass das gebaute Artefakt ausgeliefert werden kann.', name: 'Abgenommen')]
+        }
 
+        stage('deploy') {
         }
     }
 }
