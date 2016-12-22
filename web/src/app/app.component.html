@@ -1,0 +1,74 @@
+<nav class="main-nav l-layer-5 l-pinned-top">
+    <h1><a href="/" md-button>Angular <sup>by Google</sup></a></h1>
+    <button aria-label="View Menu"
+            ng-click="appCtrl.toggleMainMenu($event)"
+            md-button="md-button"
+            class="main-nav-button main-nav-mobile-trigger l-right">
+        Site Menu <span class="icon icon-arrow-drop-down"></span>
+    </button>
+    <ul ng-class="appCtrl.showMainNav ? 'is-visible' : ''">
+        <li class="l-left"><a class="main-nav-button" href="/features.html" md-button>Features</a></li>
+        <li class="l-left"><a class="main-nav-button" href="/docs/ts/latest/" md-button>Docs</a></li>
+        <li class="l-left"><a class="main-nav-button" href="/events.html" md-button>Events</a></li>
+        <li class="l-left"><a class="main-nav-button" href="/news.html" md-button>News</a></li>
+        <li class="l-right"><a class="main-nav-button" href="/docs/ts/latest/quickstart.html" md-button>Get Started</a>
+        </li>
+    </ul>
+</nav>
+
+<header class="background-sky l-relative">
+    <div class="hero background-superhero-paper is-large">
+        <img src="../assets/icon/16599-illustration-of-stacks-of-gold-coins-ve.svg" class="hero-logo"/>
+        <h1 class="text-headline">Mehr Geld<br>Zuhause &amp; Unterwegs.</h1>
+        <a href="/docs/ts/latest/quickstart.html"
+           md-button="md-button"
+           class="hero-cta md-raised button button-large button-plain">
+            Get Started
+        </a>
+    </div>
+</header>
+
+<article class="l-content">
+    <div class="home-rows">
+        <!-- Group 1-->
+        <div layout="row" layout-xs="column" class="home-row">
+            <div class="promo-img-container promo-1">
+                <div>
+                    <img src="resources/images/home/responsive-framework.svg">
+                </div>
+            </div>
+            <div class="text-container">
+                <div class="text-block promo-1-desc l-pad-top-2">
+                    <h3 class="text-headline">Immer den Überblick behalten</h3>
+                    <p class="text-body">Behalten Sie den Überblick ihrer persönlichen Finanzen. Wieviel Geld geben
+                        Sie für Lebensunterhalt und Urlaub aus?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Group 2-->
+        <div layout="row" layout-xs="column" class="home-row">
+            <div class="text-container">
+                <div class="text-block">
+                    <h3 class="text-headline">Planen Sie im Voraus</h3>
+                    <p class="text-body">Legen Sie Budgets fest und lassen Sie sich informieren, wenn Sie zuviel
+                        ausgegeben haben.</p>
+                </div>
+            </div>
+            <div class="promo-img-container promo-2">
+                <div>
+                    <img src="resources/images/home/speed-performance.svg">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="cta-bar">
+            <a href="/docs/ts/latest/quickstart.html"
+               md-button="md-button"
+               class="button button-large button-shield md-raised md-primary">
+                Get Started
+            </a>
+        </div>
+    </div>
+</article>
