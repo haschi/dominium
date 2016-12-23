@@ -1,0 +1,95 @@
+{
+  "service": {
+    "name": "haushaltsbuch",
+    "build": "809761",
+    "_links": {
+      "_self": {
+        "href": "/api"
+      },
+      "curies": [
+        {
+          "name": "app",
+          "href": "/{rel}",
+          "templated": true
+        }
+      ],
+      "app:hb": {
+        "href": "/hb"
+      },
+      "app:haushaltsbuecher": {
+        "href": "/haushaltsbuecher"
+      },
+      "app:anwender": {
+        "href": "/anwender"
+      }
+    }
+  },
+  "hb": [
+    {
+      "id": "123",
+      "farbe": "rot",
+      "titel": "Mein Haushaltsbuch"
+    },
+    {
+      "id": "124",
+      "farbe": "lila",
+      "titel": "Zwei Haushaltsbuch"
+    }
+  ],
+  "haushaltsbuecher": {
+    "_links": {
+      "self": {
+        "href": "/haushaltsbuecher"
+      },
+      "create": {
+        "href": "/haushaltsbucherzeugung",
+        "name": "Neues Haushaltsbuch anlegen"
+      }
+    },
+    "_embedded": {
+      "haushaltsbuecher": [
+        {
+          "_links": {
+            "self": {
+              "href": "/haushaltsbuecher/123"
+            },
+            "owner": {
+              "href": "/user/1"
+            }
+          },
+          "id": "123",
+          "farbe": "rot",
+          "titel": "Mein Haushaltsbuch"
+        },
+        {
+          "_links": {
+            "self": {
+              "href": "/haushaltsbuecher/124"
+            },
+            "owner": {
+              "href": "/user/2"
+            }
+          },
+          "id": "124",
+          "farbe": "lila",
+          "titel": "Zwei Haushaltsbuch"
+        }
+      ]
+    },
+    "anzahl": 2
+  },
+  "alle-antraege": {
+    "antraege": [
+      {
+        "id": "1",
+        "antragsdatum": "2016-01-01T00:00:00+01:00",
+        "leistungsberechtigter": "uri:leistungsberechtiger/xyz"
+      },
+      {
+        "id": "2",
+        "antragsdatum": "2016-02-01T00:00:00+01:00",
+        "leistungsberechtigter": "uri:leistungsberechtiger/123"
+      }
+    ]
+  }
+}

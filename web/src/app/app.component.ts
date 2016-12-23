@@ -1,6 +1,3 @@
-/*
- * Angular 2 decorators and services
- */
 import {Component, ViewEncapsulation} from "@angular/core";
 
 /*
@@ -18,7 +15,7 @@ import {Component, ViewEncapsulation} from "@angular/core";
 export class AppComponent {
     // angularclassLogo = 'assets/img/angularclass-avatar.png';
     // name = 'Angular 2 Webpack Starter';
-    // url = 'https://twitter.com/AngularClass';
+    url = 'https://twitter.com/AngularClass';
     //
     // constructor(public appState: AppState) {
     //

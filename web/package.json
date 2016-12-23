@@ -57,7 +57,8 @@
     "webdriver:start": "npm run webdriver-manager start",
     "webdriver:update": "npm run webdriver-manager update",
     "webpack-dev-server": "webpack-dev-server",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "fake": "json-server db.json"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -65,6 +66,7 @@
     "@angular/core": "2.2.1",
     "@angular/forms": "2.2.1",
     "@angular/http": "2.2.1",
+    "@angular/material": "^2.0.0-alpha.11-3",
     "@angular/platform-browser": "2.2.1",
     "@angular/platform-browser-dynamic": "2.2.1",
     "@angular/platform-server": "2.2.1",
@@ -101,6 +103,7 @@
     "imports-loader": "^0.6.5",
     "istanbul-instrumenter-loader": "0.2.0",
     "json-loader": "^0.5.4",
+    "json-server": "^0.9.4",
     "karma": "^1.2.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",

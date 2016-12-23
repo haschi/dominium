@@ -1,0 +1,8 @@
+{
+  // see: https://github.com/typicode/json-server#cli-usage
+  "port": 8080,
+  "routes": "routes.json",
+  "watch": true,
+  "read-only": true,
+  "static": "fake/hal-browser",
+}
