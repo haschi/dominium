@@ -1,78 +1,55 @@
-<nav class="main-nav l-layer-5 l-pinned-top">
-    <h1><a href="/" md-button>Angular <sup>by Google</sup></a></h1>
-    <button aria-label="View Menu"
-            ng-click="appCtrl.toggleMainMenu($event)"
-            md-button="md-button"
-            class="main-nav-button main-nav-mobile-trigger l-right">
-        Site Menu <span class="icon icon-arrow-drop-down"></span>
-    </button>
-    <ul ng-class="appCtrl.showMainNav ? 'is-visible' : ''">
-        <li class="l-left"><a class="main-nav-button" href="/features.html" md-button>Features</a></li>
-        <li class="l-left"><a class="main-nav-button" href="/docs/ts/latest/" md-button>Docs</a></li>
-        <li class="l-left"><a class="main-nav-button" href="/events.html" md-button>Events</a></li>
-        <li class="l-left"><a class="main-nav-button" href="/news.html" md-button>News</a></li>
-        <li class="l-right"><a class="main-nav-button" href="/docs/ts/latest/quickstart.html" md-button>Get Started</a>
-        </li>
-    </ul>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav" style="transform: translateX(-100%);">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
 </nav>
+<div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large green">
+        <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+</div>
 
-<header class="background-sky l-relative">
-    <div class="hero background-superhero-paper is-large">
-        <img src="../assets/icon/16599-illustration-of-stacks-of-gold-coins-ve.svg" class="hero-logo"/>
-        <h1 class="text-headline">Mehr Geld<br>Zuhause &amp; Unterwegs.</h1>
-        <button md-raised-button color="primary">Drück Mich</button>
-        <button md-fab>
-            <md-icon class="md-24">add</md-icon>
-        </button>
-        <a href="/docs/ts/latest/quickstart.html"
-           md-button="md-button"
-           class="hero-cta md-raised button button-large button-plain">
-            Get Started
-        </a>
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">Starter Template</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button"
+               class="btn-large waves-effect waves-light orange">Get Started</a>
+        </div>
+        <br><br>
+
     </div>
-</header>
+</div>
 
-<article class="l-content">
-    <div class="home-rows">
-        <!-- Group 1-->
-        <div layout="row" layout-xs="column" class="home-row">
-            <div class="promo-img-container promo-1">
-                <div>
-                    <img src="resources/images/home/responsive-framework.svg">
-                </div>
-            </div>
-            <div class="text-container">
-                <div class="text-block promo-1-desc l-pad-top-2">
-                    <h3 class="text-headline">Immer den Überblick behalten</h3>
-                    <p class="text-body">Behalten Sie den Überblick ihrer persönlichen Finanzen. Wieviel Geld geben
-                        Sie für Lebensunterhalt und Urlaub aus?</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Group 2-->
-        <div layout="row" layout-xs="column" class="home-row">
-            <div class="text-container">
-                <div class="text-block">
-                    <h3 class="text-headline">Planen Sie im Voraus</h3>
-                    <p class="text-body">Legen Sie Budgets fest und lassen Sie sich informieren, wenn Sie zuviel
-                        ausgegeben haben.</p>
-                </div>
-            </div>
-            <div class="promo-img-container promo-2">
-                <div>
-                    <img src="resources/images/home/speed-performance.svg">
-                </div>
-            </div>
-        </div>
-
-
-        <div class="cta-bar">
-            <a href="/docs/ts/latest/quickstart.html"
-               md-button="md-button"
-               class="button button-large button-shield md-raised md-primary">
-                Get Started
-            </a>
-        </div>
+<div class="container">
+    <div class="meineklasse">
+        <p>Hello World</p>
+        <p><a class="waves-effect waves-light btn-large" href="#">Wave</a></p>
     </div>
-</article>
+
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+
+    <pre class="meineklasse">{{index}}</pre>
+</div>
+
+<div class="drag-target" data-sidenav="nav-mobile"
+     style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>

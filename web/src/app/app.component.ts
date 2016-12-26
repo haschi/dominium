@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-
+import {Http, Response} from "@angular/http";
 /*
  * App Component
  * Top Level Component
@@ -16,15 +16,24 @@ export class AppComponent {
     // angularclassLogo = 'assets/img/angularclass-avatar.png';
     // name = 'Angular 2 Webpack Starter';
     url = 'https://twitter.com/AngularClass';
-    //
-    // constructor(public appState: AppState) {
-    //
-    // }
-    //
-    // ngOnInit() {
-    //     console.log('Initial App State', this.appState.state);
-    // }
-    //
+    index = 'Kein Serveranwort erhalten';
+
+    constructor(private http: Http) {
+
+    }
+
+    ngOnInit() {
+        // Das ist nur ein Versuch: GET Request zum Backend, um die
+        // Einstiefspunkte zu finden.
+        console.log('app.component:ngOnInit()')
+        this.http.get("http://localhost:8080/api").subscribe((r: Response) => {
+                console.log(r.json());
+                this.index = r.text();
+            },
+            (error: any) => {
+                console.log(error)
+            })
+    }
 }
 
 /*

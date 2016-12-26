@@ -1,21 +1,9 @@
 <!DOCTYPE html>
-<html class="loading">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Buchführung"/>
-    <meta name="robots" content="all"/>
-    <meta name="referrer" content="origin"/>
-    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"/>
-
-    <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico"/>
-    <!--<link rel="stylesheet"-->
-    <!--href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css"/>-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700" rel="stylesheet"
-          type="text/css"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="/assets/css/main.css"/>
 
     <title><%= htmlWebpackPlugin.options.title %></title>
 
@@ -26,98 +14,27 @@
     <%= webpackConfig.htmlElements.headTags %>
     <% } %>
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
     <!-- base url -->
     <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
-
-
-    <style>
-        /* Center the loader */
-        #loader {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            z-index: 1;
-            width: 150px;
-            height: 150px;
-            margin: -75px 0 0 -75px;
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Add animation to "page content" */
-        .animate-bottom {
-            position: relative;
-            -webkit-animation-name: animatebottom;
-            -webkit-animation-duration: 1s;
-            animation-name: animatebottom;
-            animation-duration: 1s
-        }
-
-        @-webkit-keyframes animatebottom {
-            from {
-                bottom: -100px;
-                opacity: 0
-            }
-            to {
-                bottom: 0px;
-                opacity: 1
-            }
-        }
-
-        @keyframes animatebottom {
-            from {
-                bottom: -100px;
-                opacity: 0
-            }
-            to {
-                bottom: 0;
-                opacity: 1
-            }
-        }
-
-        #myDiv {
-            display: none;
-            text-align: center;
-        }
-    </style>
-
 </head>
 
-<body class="l-offset-nav">
+<body>
 
 <app>
-    <div id="loader"></div>
     Loading...
 </app>
+
 
 <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
 <!-- Webpack Dev Server reload -->
 <script src="/webpack-dev-server.js"></script>
 <% } %>
 
+<script>
 
+</script>
 </body>
 </html>

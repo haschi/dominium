@@ -58,7 +58,7 @@
     "webdriver:update": "npm run webdriver-manager update",
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack",
-    "fake": "json-server db.json"
+    "fake": "json-server --config 'json-server.json' db.json "
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -66,7 +66,6 @@
     "@angular/core": "2.2.1",
     "@angular/forms": "2.2.1",
     "@angular/http": "2.2.1",
-    "@angular/material": "^2.0.0-alpha.11-3",
     "@angular/platform-browser": "2.2.1",
     "@angular/platform-browser-dynamic": "2.2.1",
     "@angular/platform-server": "2.2.1",
@@ -78,6 +77,8 @@
     "core-js": "^2.4.1",
     "http-server": "^0.9.0",
     "ie-shim": "^0.1.0",
+    "materialize-css": "^0.97.8",
+    "roboto-fontface": "^0.6.0",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "~0.6.26"
   },
@@ -132,7 +133,7 @@
     "v8-lazy-parse-webpack-plugin": "^0.3.0",
     "webpack": "2.1.0-beta.27",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "2.1.0-beta.11",
+    "webpack-dev-server": "^2.1.0-beta.11",
     "webpack-md5-hash": "^0.0.5",
     "webpack-merge": "~1.0.1"
   },
