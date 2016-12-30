@@ -1,4 +1,27 @@
 .meineklasse {
     font-size: x-large;
     color: #002a80;
+    background-color: pink;
+}
+
+.meineklasse .collapsible-body {
+    padding: 1em;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    background-color: deeppink;
+}
+
+body {
+    background-color: #3a87ad;
 }

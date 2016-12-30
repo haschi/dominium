@@ -19,7 +19,7 @@ const HtmlElementsPlugin = require('./html-elements-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 /*
  * Webpack Constants
  */
@@ -59,7 +59,6 @@ module.exports = function (options) {
             'polyfills': './src/polyfills.browser.ts',
             'vendor': './src/vendor.browser.ts',
             'main': './src/main.browser.ts'
-
         },
 
         /*
@@ -132,8 +131,31 @@ module.exports = function (options) {
                 // },
 
                 {test: /materialize\.css$/, loader: 'style-loader!css-loader'},
-                // {test: /^((?!materialize).)*\.css$/, loader: 'raw-loader'},
-                {test: /^((?!materialize).)*\.css$/, loader: 'to-string-loader!css-loader'},
+                {
+                    test: /^((?!materialize).)*\.css$/,
+                    include: [
+                        helpers.root("src/app"),
+                        helpers.root("node_modules/roboto-fontface")],
+                    loader: 'to-string-loader!css-loader'
+                },
+
+                // {
+                //     test: /^((?!materialize).)*\.css$/,
+                //     loader: ExtractTextPlugin.extract({
+                //         fallbackLoader: "style-loader",
+                //         loader: "css-loader"
+                //     })
+                // },
+
+                {
+                    test: helpers.root("src/assets/css"),
+                    loader: ExtractTextPlugin.extract({
+                        fallbackLoader: "style-loader",
+                        loader: "raw-loader"
+                    })
+                },
+
+                // {test: /^((?!materialize).)*\.css$/, loader: 'style-loader!css-loader'},
                 // {test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000'},
                 {
                     test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/, loader: "file-loader"
@@ -171,6 +193,11 @@ module.exports = function (options) {
          * See: http://webpack.github.io/docs/configuration.html#plugins
          */
         plugins: [
+            new ExtractTextPlugin({
+                filename: "styles.css",
+                allChunks: true
+            }),
+
             new webpack.ProvidePlugin({
                 $: "jquery",
                 $: 'jquery',

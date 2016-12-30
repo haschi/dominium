@@ -1,5 +1,6 @@
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+<nav class="blue darken-4" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">Haushaltsbuch</a>
         <ul class="right hide-on-med-and-down">
             <li><a [routerLink]="['home']">Home</a></li>
             <li><a [routerLink]="['detail']">Detail</a></li>
@@ -24,34 +25,48 @@
     </ul>
 </div>
 
-<div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-        <br><br>
-        <h1 class="header center orange-text">Starter Template</h1>
-        <div class="row center">
-            <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-        </div>
-        <div class="row center">
-            <a [routerLink]="['home']" id="download-button"
-               class="btn-large waves-effect waves-light btn-primary">Get Started</a>
-        </div>
-        <br><br>
+<main>
+    <router-outlet></router-outlet>
+</main>
 
-    </div>
-</div>
-
-<div class="container">
-    <div class="meineklasse">
-        <p>Hello World</p>
-        <p><a class="waves-effect waves-light btn-large" href="#">Wave</a></p>
-    </div>
-
-    <main>
-        <router-outlet></router-outlet>
-    </main>
-
-    <pre class="meineklasse">{{index}}</pre>
+<div class="container meineklasse">
+    <ul class="collapsible" data-collapsible="expandable">
+        <li>
+            <div class="collapsible-header"><i class="material-icons">notifications</i>
+                Webservice Response
+            </div>
+            <div class="collapsible-body">
+                <pre class="meineklasse">{{index}}</pre>
+            </div>
+        </li>
+    </ul>
 </div>
 
 <div class="drag-target" data-sidenav="nav-mobile"
      style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
+
+<footer class=" blue darken-2">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">Build {{build}}</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright blue darken-3">
+        <div class="container darken-3">
+            © 2016 Matthias Haschka
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+    </div>
+</footer>

@@ -4,12 +4,12 @@
 import {platformBrowserDynamic} from "@angular/platform-browser-dynamic";
 import {decorateModuleRef} from "./app/environment";
 import {bootloader} from "@angularclass/hmr";
+import "./assets/css/main.css";
 /*
  * App Module
  * our top level module that holds all of our components
  */
 import {AppModule} from "./app";
-import "assets/css/main.css";
 /*
  * Bootstrap our Angular app with a top level NgModule
  */
