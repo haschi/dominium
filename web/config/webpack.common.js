@@ -130,22 +130,23 @@ module.exports = function (options) {
                 //   use: ['to-string-loader', 'css-loader']
                 // },
 
-                {test: /materialize\.css$/, loader: 'style-loader!css-loader'},
+                // {
+                //     test: /materialize\.css$/,
+                //     include: helpers.root("node_modules"),
+                //     loader: 'style-loader!css-loader'
+                // },
+
                 {
-                    test: /^((?!materialize).)*\.css$/,
-                    include: [
-                        helpers.root("src/app"),
-                        helpers.root("node_modules/roboto-fontface")],
-                    loader: 'to-string-loader!css-loader'
+                    test: /\.css$/,
+                    include: helpers.root("node_modules"),
+                    loader: 'style-loader!css-loader'
                 },
 
-                // {
-                //     test: /^((?!materialize).)*\.css$/,
-                //     loader: ExtractTextPlugin.extract({
-                //         fallbackLoader: "style-loader",
-                //         loader: "css-loader"
-                //     })
-                // },
+                {
+                    test: /^((?!materialize).)*\.css$/,
+                    include: helpers.root("src/app"),
+                    loader: 'to-string-loader!css-loader'
+                },
 
                 {
                     test: helpers.root("src/assets/css"),
@@ -155,11 +156,18 @@ module.exports = function (options) {
                     })
                 },
 
+                // {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'},
                 // {test: /^((?!materialize).)*\.css$/, loader: 'style-loader!css-loader'},
-                // {test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000'},
                 {
-                    test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/, loader: "file-loader"
+                    test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+                    include: helpers.root("node_modules"),
+                    loader: 'file-loader'
                 },
+
+                // {
+                //     test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/, loader: "file-loader"
+                // },
+
                 // {
                 //     test: /materialize\.js$/,
                 //     loader: "imports-loader?this=>window"

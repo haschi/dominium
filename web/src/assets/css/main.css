@@ -1,5 +1,7 @@
 .meineklasse {
     font-size: x-large;
+    font-weight: bold;
+    font-family: Roboto;
     color: #002a80;
     background-color: pink;
 }
@@ -20,8 +22,4 @@ main {
 
 footer {
     background-color: deeppink;
-}
-
-body {
-    background-color: #3a87ad;
 }
