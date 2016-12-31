@@ -10,8 +10,8 @@ import "materialize-css/dist/js/materialize.js";
 import "@angularclass/hmr";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/mergeMap";
-import "jquery";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
+import "jquery";
 
 if ('production' === ENV) {
     // Production

@@ -1,7 +1,7 @@
-/*styles for home content only*/
 #index-banner {
     background: linear-gradient(145deg, #0D47A1, #42A5F5);
     padding-bottom: 2em;
     color: white;
+    margin-bottom: 1em;
 }
 

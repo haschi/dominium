@@ -1,72 +1,47 @@
-<nav class="blue darken-4" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Haushaltsbuch</a>
-        <ul class="right hide-on-med-and-down">
+<nav class="navbar-fixed blue darken-3">
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i class="material-icons">credit_card</i> Haushaltsbuch</a>
+        <ul class="right hide-on-med-and-down" id="nav-mobile">
             <li><a [routerLink]="['home']">Home</a></li>
             <li><a [routerLink]="['detail']">Detail</a></li>
             <li><a [routerLink]="['about']">About</a></li>
+            <li><a href="http://localhost:8080/browser.html#/api">API Browser</a></li>
         </ul>
 
-        <ul id="nav-mobile" class="side-nav" style="transform: translateX(-100%);">
-            <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
     </div>
 </nav>
-<div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large green">
-        <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-        <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
-</div>
 
 <main>
     <router-outlet></router-outlet>
 </main>
 
-<div class="container meineklasse">
-    <ul class="collapsible" data-collapsible="expandable">
-        <li>
-            <div class="collapsible-header"><i class="material-icons">notifications</i>
-                Webservice Response
-            </div>
-            <div class="collapsible-body">
-                <pre class="meineklasse">{{index}}</pre>
-            </div>
-        </li>
-    </ul>
+<div class="container">
+    <div class="row">
+        <div class="col l12">
+            <ul class="collapsible" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">notifications</i>
+                        Webservice Response
+                    </div>
+                    <div class="collapsible-body">
+                        <pre>{{index}}</pre>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div class="drag-target" data-sidenav="nav-mobile"
      style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
 
-<footer class=" blue darken-2">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">Build {{build}}</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright blue darken-3">
-        <div class="container darken-3">
-            © 2016 Matthias Haschka
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
+<footer class="blue darken-4">
+    <div class="footer-copyrightcontainer">
+        <span>&copy; 2016 Matthias Haschka</span>
+        | <span><a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Lizenz 2.0</a></span>
+        | <span>Build {{build}}</span>
     </div>
 </footer>

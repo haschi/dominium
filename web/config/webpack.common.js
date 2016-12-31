@@ -25,7 +25,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
  */
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = {
-    title: 'Angular2 Webpack Starter by @gdi2290 from @AngularClass',
+    title: 'Haushaltsbuch',
     baseUrl: '/',
     isDevServer: helpers.isWebpackDevServer()
 };
@@ -78,9 +78,9 @@ module.exports = function (options) {
             // An array of directory names to be resolved to the current directory
             modules: [helpers.root('src'), helpers.root('node_modules')],
 
-            alias: {
-                'jquery': helpers.root('node_modules') + '/jquery/dist/jquery.js',
-            }
+            // alias: {
+            //     'jquery': helpers.root('node_modules') + '/jquery/dist/jquery.js',
+            // }
         },
 
         /*
@@ -125,17 +125,6 @@ module.exports = function (options) {
                  * Returns file content as string
                  *
                  */
-                // {
-                //   test: /\.css$/,
-                //   use: ['to-string-loader', 'css-loader']
-                // },
-
-                // {
-                //     test: /materialize\.css$/,
-                //     include: helpers.root("node_modules"),
-                //     loader: 'style-loader!css-loader'
-                // },
-
                 {
                     test: /\.css$/,
                     include: helpers.root("node_modules"),
@@ -143,7 +132,7 @@ module.exports = function (options) {
                 },
 
                 {
-                    test: /^((?!materialize).)*\.css$/,
+                    test: /\.css$/,
                     include: helpers.root("src/app"),
                     loader: 'to-string-loader!css-loader'
                 },
@@ -156,17 +145,11 @@ module.exports = function (options) {
                     })
                 },
 
-                // {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'},
-                // {test: /^((?!materialize).)*\.css$/, loader: 'style-loader!css-loader'},
                 {
                     test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
                     include: helpers.root("node_modules"),
                     loader: 'file-loader'
                 },
-
-                // {
-                //     test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/, loader: "file-loader"
-                // },
 
                 // {
                 //     test: /materialize\.js$/,
@@ -206,14 +189,14 @@ module.exports = function (options) {
                 allChunks: true
             }),
 
-            new webpack.ProvidePlugin({
-                $: "jquery",
-                $: 'jquery',
-                jQuery: 'jquery',
-                'window.$': 'jquery', // damit materialize.js functioniert.
-                'window.jQuery': 'jquery',
-                // "Hammer": "hammerjs/hammer"
-            }),
+            // new webpack.ProvidePlugin({
+            //     $: "jquery",
+            //     $: 'jquery',
+            //     jQuery: 'jquery',
+            //     'window.$': 'jquery', // damit materialize.js functioniert.
+            //     'window.jQuery': 'jquery',
+            //     // "Hammer": "hammerjs/hammer"
+            // }),
 
             new AssetsPlugin({
                 path: helpers.root('dist'),

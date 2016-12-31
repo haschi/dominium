@@ -25,6 +25,7 @@ export class AppComponent {
     }
 
     ngOnInit() {
+        // jQuery(".button-collapse").sideNav();
         // Das ist nur ein Versuch: GET Request zum Backend, um die
         // Einstiefspunkte zu finden.
         console.log('app.component:ngOnInit()');

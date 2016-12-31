@@ -1,0 +1,12 @@
+nav {
+    /*padding-left: 0;*/
+}
+
+nav, footer {
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+}
+
+footer {
+    color: #ffffff;
+}
