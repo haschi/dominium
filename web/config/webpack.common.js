@@ -189,14 +189,13 @@ module.exports = function (options) {
                 allChunks: true
             }),
 
-            // new webpack.ProvidePlugin({
-            //     $: "jquery",
-            //     $: 'jquery',
-            //     jQuery: 'jquery',
-            //     'window.$': 'jquery', // damit materialize.js functioniert.
-            //     'window.jQuery': 'jquery',
-            //     // "Hammer": "hammerjs/hammer"
-            // }),
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: 'jquery',
+                'window.$': 'jquery', // damit materialize.js functioniert.
+                'window.jQuery': 'jquery',
+                // "Hammer": "hammerjs/hammer"
+            }),
 
             new AssetsPlugin({
                 path: helpers.root('dist'),

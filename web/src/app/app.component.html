@@ -1,16 +1,24 @@
 <nav class="navbar-fixed blue darken-3">
     <div class="nav-wrapper">
         <a href="#" class="brand-logo"><i class="material-icons">credit_card</i> Haushaltsbuch</a>
-        <ul class="right hide-on-med-and-down" id="nav-mobile">
+        <ul class="right hide-on-med-and-down">
             <li><a [routerLink]="['home']">Home</a></li>
             <li><a [routerLink]="['detail']">Detail</a></li>
             <li><a [routerLink]="['about']">About</a></li>
             <li><a href="http://localhost:8080/browser.html#/api">API Browser</a></li>
         </ul>
 
-        <a href="#" data-activates="nav-mobile" class="button-collapse">
+        <a href="#" data-activates="mobile-demo" class="button-collapse">
             <i class="material-icons">menu</i>
         </a>
+
+        <ul class="side-nav" id="mobile-demo">
+            <li><a [routerLink]="['home']">Home</a></li>
+            <li><a [routerLink]="['detail']">Detail</a></li>
+            <li><a [routerLink]="['about']">About</a></li>
+            <li><a href="http://localhost:8080/browser.html#/api">API Browser</a></li>
+        </ul>
+
     </div>
 </nav>
 
@@ -20,7 +28,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col l12">
+        <div class="col m12 l12">
             <ul class="collapsible" data-collapsible="expandable">
                 <li>
                     <div class="collapsible-header"><i class="material-icons">notifications</i>
