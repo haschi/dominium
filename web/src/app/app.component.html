@@ -8,17 +8,21 @@
             <li><a href="http://localhost:8080/browser.html#/api">API Browser</a></li>
         </ul>
 
-        <a href="#" data-activates="mobile-demo" class="button-collapse">
+        <a href="#" data-activates="side-menu" class="button-collapse">
             <i class="material-icons">menu</i>
         </a>
 
-        <ul class="side-nav" id="mobile-demo">
-            <li><a [routerLink]="['home']">Home</a></li>
-            <li><a [routerLink]="['detail']">Detail</a></li>
-            <li><a [routerLink]="['about']">About</a></li>
-            <li><a href="http://localhost:8080/browser.html#/api">API Browser</a></li>
-        </ul>
 
+        <ul class="side-nav" id="side-menu">
+            <li>
+                <img src="assets/icon/16599-illustration-of-stacks-of-gold-coins-ve.svg" width="100%"/>
+            </li>
+            <li><a [routerLink]="['home']"><i class="material-icons">home</i>Home</a></li>
+            <li><a [routerLink]="['detail']"><i class="material-icons">details</i>Detail</a></li>
+            <li><a [routerLink]="['about']"><i class="material-icons">info</i>About</a></li>
+            <li><a href="http://localhost:8080/browser.html#/api"><i class="material-icons">open_in_browser</i>API
+                Browser</a></li>
+        </ul>
     </div>
 </nav>
 
@@ -42,9 +46,6 @@
         </div>
     </div>
 </div>
-
-<div class="drag-target" data-sidenav="nav-mobile"
-     style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
 
 <footer class="blue darken-4">
     <div class="footer-copyrightcontainer">

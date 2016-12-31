@@ -10,3 +10,11 @@ nav, footer {
 footer {
     color: #ffffff;
 }
+
+#sidenav-overlay {
+    z-index: 0 !important;
+}
+
+#side-menu li {
+    border-bottom: grey solid 1px;
+}
