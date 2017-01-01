@@ -1,6 +1,5 @@
-import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/core";
+import {Component, ViewEncapsulation, AfterViewInit} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import * as jQuery from "jquery";
 /*
  * App Component
  * Top Level Component
@@ -11,17 +10,15 @@ import * as jQuery from "jquery";
     styleUrls: [
         './app.component.css'
     ],
-    templateUrl: './app.component.html'
+    templateUrl: 'app.component.html'
 })
 export class AppComponent implements AfterViewInit {
 
-    // angularclassLogo = 'assets/img/angularclass-avatar.png';
-    // name = 'Angular 2 Webpack Starter';
     url = 'https://twitter.com/AngularClass';
     index = 'Kein Serveranwort erhalten';
     build = '';
 
-    constructor(private elementRef: ElementRef, private http: Http) {
+    constructor(/*private elementRef: ElementRef,*/ private http: Http) {
     }
 
     ngOnInit() {
@@ -38,9 +35,6 @@ export class AppComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         console.log("ngAfterViewInit()");
-        jQuery(this.elementRef.nativeElement).find(".button-collapse").sideNav();
-        // jQuery(this.elementRef.nativeElement).find(".button-collapse").click(() => {
-        //     alert("geklickt!");
-        // })
+        // jQuery(this.elementRef.nativeElement).find(".button-collapse").sideNav();
     }
 }
