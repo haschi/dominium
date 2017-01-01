@@ -19,14 +19,7 @@ describe('App', () => {
                     provide: Http,
                     useFactory: (backend, options) => new Http(backend, options),
                     deps: [MockBackend, BaseRequestOptions]
-                }
-                //     {
-                //         provide: ElementRef,
-                //         useFactory: () => {
-                //
-                //             return jasmine.createSpyObj("ElementRef", ["find"])
-                //         }
-                //     }
+                },
             ]
         });
     });
@@ -39,6 +32,7 @@ describe('App', () => {
         });
 
         let fixture = TestBed.createComponent(AppComponent);
+
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css("#build")).nativeElement.textContent).toBe("Build 123456");

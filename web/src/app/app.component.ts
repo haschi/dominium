@@ -1,5 +1,11 @@
-import {Component, ViewEncapsulation, AfterViewInit} from "@angular/core";
+import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/core";
 import {Http, Response} from "@angular/http";
+// TODO: weder jquery noch materialize sollten explizit eingebunden werden
+// Beide Bibliotheken sollen global eingebunden werden, um zu verhindern,
+// dass sie in jeder Komponente dupliziert werden. Das muss in webpack
+// entsprechend konfiguriert werden, so dass es auch im Test funktioniert.
+import * as jQuery from "jquery";
+import "materialize-css/dist/js/materialize.js";
 /*
  * App Component
  * Top Level Component
@@ -18,7 +24,7 @@ export class AppComponent implements AfterViewInit {
     index = 'Kein Serveranwort erhalten';
     build = '';
 
-    constructor(/*private elementRef: ElementRef,*/ private http: Http) {
+    constructor(private elementRef: ElementRef, private http: Http) {
     }
 
     ngOnInit() {
@@ -35,6 +41,8 @@ export class AppComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         console.log("ngAfterViewInit()");
-        // jQuery(this.elementRef.nativeElement).find(".button-collapse").sideNav();
+        let native = jQuery(this.elementRef.nativeElement);
+        let button = native.find(".button-collapse");
+        button.sideNav();
     }
 }
