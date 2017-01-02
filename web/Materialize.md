@@ -16,10 +16,61 @@ npm install url-loader --save-dev
 
 In webpack.common.js:
 ```javascript
-    { test: /materialize\.css$/,   loader: 'style-loader!css-loader' },
-    // Support for CSS as raw text (do not match 'materialize')
-    { test: /^((?!materialize).)*\.css$/,   loader: 'raw-loader' },
-    { test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=100000' },
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+module.exports = function (options) {
+    isProd = options.env === 'production';
+    return {
+        // ...
+        module: {
+            rules: [
+                // ...
+                // Materialize CSS aus dem node_modules Verzeichnis laden
+                // mit style-loader und css-loader.
+                {
+                    test: /\.css$/,
+                    include: helpers.root("node_modules"),
+                    loader: 'style-loader!css-loader'
+                },
+                
+                // Alle Stylesheets aus dem Verzeichnis src/assets/css 
+                // Verzeichnis mit dem ExtractTextPlugin und raw-loader
+                // laden.
+                {
+                    test: helpers.root("src/assets/css"),
+                    loader: ExtractTextPlugin.extract({
+                        fallbackLoader: "style-loader",
+                        loader: "raw-loader"
+                    })
+                },
+                
+                // Die Materialize CSS Fonts (Roboto etc) im Verzeichnis
+                // node_modules mit dem file-loader laden. Benötigt 
+                // roboto-fontface
+                {
+                    test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+                    include: helpers.root("node_modules"),
+                    loader: 'file-loader'
+                }
+            ]
+        },
+
+        plugins: [
+            new ExtractTextPlugin({
+                filename: "styles.css",
+                allChunks: true
+            }),
+
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: 'jquery',
+                'window.$': 'jquery', // damit materialize.js functioniert.
+                'window.jQuery': 'jquery',
+                // "Hammer": "hammerjs/hammer"
+            })
+        ]
+    }
+};
 ```
 
 ## Materialize JS

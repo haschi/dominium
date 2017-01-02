@@ -233,4 +233,4 @@ module.exports = function (options) {
         }
 
     };
-}
+};

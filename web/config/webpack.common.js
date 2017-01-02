@@ -151,11 +151,6 @@ module.exports = function (options) {
                     loader: 'file-loader'
                 },
 
-                // {
-                //     test: /materialize\.js$/,
-                //     loader: "imports-loader?this=>window"
-                // },
-
                 /* Raw loader support for *.html
                  * Returns file content as string
                  *
