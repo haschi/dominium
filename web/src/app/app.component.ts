@@ -6,6 +6,7 @@ import {Http, Response} from "@angular/http";
 // entsprechend konfiguriert werden, so dass es auch im Test funktioniert.
 import * as jQuery from "jquery";
 import "materialize-css/dist/js/materialize.js";
+import {Aktionen} from "./Aktionen";
 /*
  * App Component
  * Top Level Component
@@ -24,11 +25,13 @@ export class AppComponent implements AfterViewInit {
     index = 'Kein Serveranwort erhalten';
     build = '';
 
-    constructor(private elementRef: ElementRef, private http: Http) {
+    constructor(private aktionen: Aktionen, private elementRef: ElementRef, private http: Http) {
     }
 
     ngOnInit() {
         console.log('app.component:ngOnInit()');
+        this.aktionen.konfigurationLaden();
+
         this.http.get("http://localhost:8080/api").subscribe((r: Response) => {
                 console.log(r.json());
                 this.index = r.text();
