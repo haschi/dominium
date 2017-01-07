@@ -65,7 +65,15 @@ module.exports = function (config) {
              * available reporters: https://npmjs.org/browse/keyword/karma-reporter
              */
             // reporters: [ 'mocha', 'coverage', 'remap-coverage' ],
-            reporters: ['junit', 'progress', 'remap-coverage'],
+            reporters: ['mocha', 'junit', 'progress', 'summary', 'remap-coverage'],
+            mochaReporter: {output: 'minimal'},
+            summaryReporter: {
+                // 'failed', 'skipped' or 'all'
+                show: 'all',
+                // Limit the spec label to this length
+                specLength: 50,
+                overviewColumn: true
+            },
             // web server port
             port: 9876,
 
@@ -87,15 +95,8 @@ module.exports = function (config) {
              */
             browsers: [
                 'Chrome'
+                // 'PhantomJS'
             ],
-
-            customLaunchers: {
-                ChromeTravisCi: {
-                    base: 'Chrome',
-                    flags: ['--no-sandbox']
-                }
-            }
-            ,
 
             /*
              * Continuous Integration mode
@@ -104,12 +105,6 @@ module.exports = function (config) {
             singleRun: true
         }
         ;
-
-    if (process.env.TRAVIS) {
-        configuration.browsers = [
-            'ChromeTravisCi'
-        ];
-    }
 
     config.set(configuration);
 };

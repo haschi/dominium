@@ -10,7 +10,7 @@ import {rootReducer, INIT_STATE} from "./reducer";
 import {createStore} from "redux";
 import {NgRedux} from "ng2-redux";
 
-xdescribe('App', () => {
+describe('App', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({

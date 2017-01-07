@@ -32,7 +32,7 @@ export const AKTION = {
 export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE, action): KonfigurationState {
     switch (action.type) {
 
-        case AKTION.LADEN:
+        case "LADEN":
             return Object.assign({}, state, action.payload);
 
         default:
