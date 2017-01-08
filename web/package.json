@@ -59,7 +59,7 @@
     "webdriver:update": "npm run webdriver-manager update",
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack",
-    "fake": "json-server --config 'json-server.json' db.json "
+    "fake": "json-server --config 'fake/json-server.json' fake/db.json"
   },
   "dependencies": {
     "@angular/common": "2.4.2",

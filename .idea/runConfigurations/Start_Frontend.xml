@@ -3,8 +3,9 @@
     <package-json value="$PROJECT_DIR$/web/package.json" />
     <command value="run" />
     <scripts>
-      <script value="start:hmr" />
+      <script value="server:dev:hmr" />
     </scripts>
+    <arguments value=" -- --open " />
     <node-interpreter value="project" />
     <envs />
     <method />
