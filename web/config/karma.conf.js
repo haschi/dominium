@@ -40,10 +40,7 @@ module.exports = function (config) {
             // Webpack Config at ./webpack.test.js
             webpack: testWebpackConfig,
 
-            coverageReporter: {
-                type: 'in-memory'
-            }
-            ,
+            coverageReporter: { type: 'in-memory'},
 
             remapCoverageReporter: {
                 'text-summary': null,
@@ -55,8 +52,7 @@ module.exports = function (config) {
             // Webpack please don't spam the console when running in karma!
             webpackMiddleware: {
                 stats: 'errors-only'
-            }
-            ,
+            },
 
             /*
              * test results reporter to use
@@ -71,7 +67,7 @@ module.exports = function (config) {
                 // 'failed', 'skipped' or 'all'
                 show: 'all',
                 // Limit the spec label to this length
-                specLength: 50,
+                specLength: 100,
                 overviewColumn: true
             },
             // web server port
@@ -93,10 +89,7 @@ module.exports = function (config) {
              * start these browsers
              * available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
              */
-            browsers: [
-                'Chrome'
-                // 'PhantomJS'
-            ],
+            browsers: ['Chrome' /*, 'PhantomJS'*/],
 
             /*
              * Continuous Integration mode

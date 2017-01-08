@@ -22,7 +22,7 @@ export class HomeComponent {
   // Set our default values
   localState = { value: '' };
   // TypeScript public modifiers
-  constructor(public appState: AppState, public title: Title) {
+  constructor(public title: Title) {
 
   }
 
@@ -33,7 +33,7 @@ export class HomeComponent {
 
   submitState(value: string) {
     console.log('submitState', value);
-    this.appState.set('value', value);
+
     this.localState.value = '';
   }
 }

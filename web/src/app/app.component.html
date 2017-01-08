@@ -51,6 +51,7 @@
     <div class="footer-copyrightcontainer">
         <span>&copy; 2016 Matthias Haschka</span>
         | <span><a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Lizenz 2.0</a></span>
-        | <span id="build">Build {{build}}</span>
+
+        | <span id="build">Build {{(konfiguration$ | async)?.build }}</span>
     </div>
 </footer>

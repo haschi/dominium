@@ -112,11 +112,11 @@ module.exports = function (options) {
                  *
                  * See: https://github.com/webpack/json-loader
                  */
-                {
-                    test: /\.json$/,
-                    loader: 'json-loader',
-                    exclude: [helpers.root('src/index.html')]
-                },
+                // {
+                //     test: /\.json$/,
+                //     loader: 'json-loader',
+                //     exclude: [helpers.root('src/index.html')]
+                // },
 
                 /**
                  * Raw loader support for *.css files
@@ -148,16 +148,16 @@ module.exports = function (options) {
                  *
                  * See: https://github.com/deepsweet/istanbul-instrumenter-loader
                  */
-                {
-                    enforce: 'post',
-                    test: /\.(js|ts)$/,
-                    loader: 'istanbul-instrumenter-loader',
-                    include: helpers.root('src'),
-                    exclude: [
-                        /\.(e2e|spec)\.ts$/,
-                        /node_modules/
-                    ]
-                }
+                // {
+                //     enforce: 'post',
+                //     test: /\.(js|ts)$/,
+                //     loader: 'istanbul-instrumenter-loader',
+                //     include: helpers.root('src'),
+                //     exclude: [
+                //         /\.(e2e|spec)\.ts$/,
+                //         /node_modules/
+                //     ]
+                // }
 
             ]
         },

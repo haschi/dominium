@@ -1,7 +1,7 @@
-import {combineReducers, Reducer} from "redux";
+import {combineReducers, Reducer, Action} from "redux";
 
-export interface AppState {
-    konfiguration: KonfigurationState
+export class AppState {
+    konfiguration: KonfigurationState;
 }
 
 export const KONFIGURATION_INIT_STATE: KonfigurationState = {
@@ -29,10 +29,18 @@ export const AKTION = {
     LADEN: "LADEN"
 };
 
-export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE, action): KonfigurationState {
+export class MyAction implements Action {
+    type: any;
+    payload: any;
+}
+
+export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE, action: MyAction): KonfigurationState {
+    console.info("konfigurationReducer: " + action.type);
+
     switch (action.type) {
 
         case "LADEN":
+            console.log("Konfiguration Laden: " + JSON.stringify(action.payload));
             return Object.assign({}, state, action.payload);
 
         default:

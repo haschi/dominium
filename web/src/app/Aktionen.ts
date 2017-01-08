@@ -10,8 +10,10 @@ export class Aktionen {
     };
 
     konfigurationLaden() {
-        this.http.get('/').subscribe(
+        console.info("Kommando konfigurationLaden");
+        this.http.get('http://localhost:8080/api').subscribe(
             (r: Response) => {
+                console.info("Response: " + r.text());
                 this.store.dispatch({type: AKTION.LADEN, payload: r.json()})
             },
             (error) => {

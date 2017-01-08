@@ -6,21 +6,26 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {BaseRequestOptions, Http, ResponseOptions, Response} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {Aktionen} from "./Aktionen";
-import {rootReducer, INIT_STATE} from "./reducer";
-import {createStore} from "redux";
-import {NgRedux} from "ng2-redux";
+import {rootReducer, INIT_STATE, AppState} from "./reducer";
+import {NgRedux, NgReduxModule} from "ng2-redux";
+import {NgZone} from "@angular/core";
 
 describe('App', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [AppComponent],
-            imports: [RouterTestingModule],
+            imports: [RouterTestingModule, NgReduxModule],
             providers: [
                 Aktionen,
                 {
                     provide: NgRedux,
-                    useFactory: () => createStore(rootReducer, INIT_STATE)
+                    useFactory: (zone: NgZone) => {
+                        let n = new NgRedux(zone);
+                        n.configureStore(rootReducer, INIT_STATE);
+                        return n;
+                    },
+                    deps: [NgZone]
                 },
 
                 MockBackend,
@@ -34,18 +39,18 @@ describe('App', () => {
         });
     });
 
-    it('sollte die Buildnummer des Backend ermitteln', inject([MockBackend], (backend: MockBackend) => {
-        backend.connections.subscribe((connection: MockConnection) => {
-            connection.mockRespond(new Response(new ResponseOptions({
-                body: JSON.stringify({build: 123456})
-            })))
-        });
+    it('sollte die Buildnummer des Backend ermitteln',
+        inject([MockBackend], (backend: MockBackend) => {
+            backend.connections.subscribe((connection: MockConnection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    body: JSON.stringify({build: 123456})
+                })))
+            });
 
-        let fixture = TestBed.createComponent(AppComponent);
+            let fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
 
-        fixture.detectChanges();
-
-        expect(fixture.debugElement.query(By.css("#build")).nativeElement.textContent).toBe("Build 123456");
+            expect(fixture.debugElement.query(By.css("#build")).nativeElement.textContent).toBe("Build 123456");
     }));
 
     xit('sollte das Seitenmenü initialisieren', () => {
