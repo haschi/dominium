@@ -1,5 +1,4 @@
 import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/core";
-import * as jQuery from "jquery";
 import "materialize-css/dist/js/materialize.js";
 import {Aktionen} from "./Aktionen";
 import {AppState, KonfigurationState} from "./reducer";
@@ -12,7 +11,7 @@ import {Observable} from "rxjs";
     styleUrls: ['./app.component.css'],
     templateUrl: 'app.component.html'
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
 
     url = 'https://twitter.com/AngularClass';
     index = 'Kein Serveranwort erhalten';
@@ -26,11 +25,5 @@ export class AppComponent implements AfterViewInit {
 
     ngOnInit() {
         this.aktionen.konfigurationLaden();
-    }
-
-    ngAfterViewInit(): void {
-        // let native = jQuery(this.elementRef.nativeElement);
-        // let button = native.find(".button-collapse");
-        // button.sideNav();
     }
 }

@@ -19,6 +19,7 @@ import {XLarge} from "./home/x-large";
 import {Aktionen} from "./Aktionen";
 import {NgRedux, NgReduxModule} from "ng2-redux";
 import {INIT_STATE, rootReducer, AppState} from "./reducer";
+import {MaterializeModule} from "angular2-materialize";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -38,6 +39,7 @@ const APP_PROVIDERS = [
         XLarge
     ],
     imports: [ // import Angular's modules
+        MaterializeModule,
         NgReduxModule,
         BrowserModule,
         FormsModule,
