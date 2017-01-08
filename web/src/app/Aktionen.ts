@@ -10,10 +10,9 @@ export class Aktionen {
     };
 
     konfigurationLaden() {
-        console.info("Kommando konfigurationLaden");
+        // TODO: URI sollte / sein. Proxy muss konfiguriert werden.
         this.http.get('http://localhost:8080/api').subscribe(
             (r: Response) => {
-                console.info("Response: " + r.text());
                 this.store.dispatch({type: AKTION.LADEN, payload: r.json()})
             },
             (error) => {

@@ -9,33 +9,15 @@ import {Aktionen} from "./Aktionen";
 import {rootReducer, INIT_STATE, AppState} from "./reducer";
 import {NgRedux, NgReduxModule} from "ng2-redux";
 import {NgZone} from "@angular/core";
+import {HttpTestModule} from "./httptest.module";
+import {ReduxTestModule} from "./reduxtest.module";
 
 describe('App', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [AppComponent],
-            imports: [RouterTestingModule, NgReduxModule],
-            providers: [
-                Aktionen,
-                {
-                    provide: NgRedux,
-                    useFactory: (zone: NgZone) => {
-                        let n = new NgRedux(zone);
-                        n.configureStore(rootReducer, INIT_STATE);
-                        return n;
-                    },
-                    deps: [NgZone]
-                },
-
-                MockBackend,
-                BaseRequestOptions,
-                {
-                    provide: Http,
-                    useFactory: (backend, options) => new Http(backend, options),
-                    deps: [MockBackend, BaseRequestOptions]
-                },
-            ]
+            imports: [RouterTestingModule, ReduxTestModule, HttpTestModule],
         });
     });
 

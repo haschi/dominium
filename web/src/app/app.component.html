@@ -12,7 +12,6 @@
             <i class="material-icons">menu</i>
         </a>
 
-
         <ul class="side-nav" id="side-menu">
             <li>
                 <img src="assets/icon/16599-illustration-of-stacks-of-gold-coins-ve.svg" width="100%"/>
@@ -51,7 +50,6 @@
     <div class="footer-copyrightcontainer">
         <span>&copy; 2016 Matthias Haschka</span>
         | <span><a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Lizenz 2.0</a></span>
-
-        | <span id="build">Build {{(konfiguration$ | async)?.build }}</span>
+        | <span id="build">Build {{(build$ | async) }}</span>
     </div>
 </footer>

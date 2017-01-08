@@ -35,12 +35,10 @@ export class MyAction implements Action {
 }
 
 export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE, action: MyAction): KonfigurationState {
-    console.info("konfigurationReducer: " + action.type);
 
     switch (action.type) {
 
         case "LADEN":
-            console.log("Konfiguration Laden: " + JSON.stringify(action.payload));
             return Object.assign({}, state, action.payload);
 
         default:

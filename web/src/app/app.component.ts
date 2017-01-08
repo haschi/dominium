@@ -8,7 +8,7 @@ import * as jQuery from "jquery";
 import "materialize-css/dist/js/materialize.js";
 import {Aktionen} from "./Aktionen";
 import {AppState, KonfigurationState} from "./reducer";
-import {select, NgRedux} from "ng2-redux";
+import {select} from "ng2-redux";
 import {Observable} from "rxjs";
 /*
  * App Component
@@ -26,32 +26,16 @@ export class AppComponent implements AfterViewInit {
 
     url = 'https://twitter.com/AngularClass';
     index = 'Kein Serveranwort erhalten';
-    // build = '';
 
-    @select((s: AppState) => s.konfiguration)
-    konfiguration$: Observable<KonfigurationState>;
+    @select((s: AppState) => s.konfiguration.build)
+    build$: Observable<KonfigurationState>;
 
     constructor(
-        private store: NgRedux<AppState>,
         private aktionen: Aktionen,
-        private elementRef: ElementRef,
-        private http: Http)   {}
+        private elementRef: ElementRef)   {}
 
     ngOnInit() {
-        console.info('app.component:ngOnInit()');
-        // let a: any = this.store.select((state: AppState) => state.konfiguration);
-        // this.konfiguration$ = a;
-        console.info('app.component:ngOnInit() -- 2');
         this.aktionen.konfigurationLaden();
-
-        // this.http.get("http://localhost:8080/api").subscribe((r: Response) => {
-        //         console.log(r.json());
-        //         this.index = r.text();
-        //         this.build = r.json().build;
-        //     },
-        //     (error: any) => {
-        //         console.log(error)
-        //     })
     }
 
     ngAfterViewInit(): void {
