@@ -11,9 +11,21 @@
 
     <name>${project.artifactId}-${project.version}</name>
 
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>etc</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -34,20 +46,6 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <!--<filesets>-->
-                    <!--<fileset>-->
-                    <!--<directory>some/relative/path</directory>-->
-                    <!--<includes>-->
-                    <!--<include>**/*.tmp</include>-->
-                    <!--<include>**/*.log</include>-->
-                    <!--</includes>-->
-                    <!--<excludes>-->
-                    <!--<exclude>**/important.log</exclude>-->
-                    <!--<exclude>**/another-important.log</exclude>-->
-                    <!--</excludes>-->
-                    <!--<followSymlinks>false</followSymlinks>-->
-                    <!--</fileset>-->
-                    <!--</filesets>-->
                 </configuration>
             </plugin>
 
@@ -113,6 +111,32 @@
                 <configuration>
                     <nodeVersion>v7.2.1</nodeVersion>
                     <npmVersion>4.0.2</npmVersion>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>
+                    <outputDirectory>docker</outputDirectory>
+                    <!--<webXml>src/WEB-INF/web.xml</webXml>-->
+                    <webResources>
+                        <resource>
+                            <directory>target/dist</directory>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/docker</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
