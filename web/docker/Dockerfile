@@ -4,7 +4,7 @@
 
 FROM jboss/wildfly
 # ADD ${project.build.finalName}.${project.packaging} /opt/jboss/wildfly/standalone/deployments/
-ADD web-0.0.1-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/
+ADD *.war /opt/jboss/wildfly/standalone/deployments/
 RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
 
 EXPOSE 9990
