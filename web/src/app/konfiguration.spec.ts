@@ -31,7 +31,7 @@ describe('Konfiguration', () => {
             connection.mockRespond(new Response(new BaseResponseOptions().merge({
                 body: JSON.stringify({
                     name: "service",
-                    build: 123456,
+                    version: 123456,
                     _links: []
                 })
             })));
@@ -45,7 +45,7 @@ describe('Konfiguration', () => {
     }));
 
     it("sollte eine Buildnummer haben", inject([KonfigurationState], (store: KonfigurationState) => {
-        expect(store.build).toBe(123456)
+        expect(store.version).toBe(123456)
     }));
 
     xit("sollte Links als Einsteigspunkte des Backends haben", inject([NgRedux], (store: NgRedux<KonfigurationState>) => {

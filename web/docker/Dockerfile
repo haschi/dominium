@@ -1,13 +1,13 @@
 # Builds a Docker to deliver dist/
-# FROM nginx:latest
-# COPY dist/ /usr/share/nginx/html
+FROM nginx:latest
+COPY dist/ /usr/share/nginx/html
 
-FROM jboss/wildfly
+# FROM jboss/wildfly
 # ADD ${project.build.finalName}.${project.packaging} /opt/jboss/wildfly/standalone/deployments/
-ADD *.war /opt/jboss/wildfly/standalone/deployments/
-RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
+# ADD *.war /opt/jboss/wildfly/standalone/deployments/
+# RUN /opt/jboss/wildfly/bin/add-user.sh admin admin --silent
 
-EXPOSE 9990
-EXPOSE 8787
+# EXPOSE 9990
+# EXPOSE 8787
 
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug"]
+# CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug"]

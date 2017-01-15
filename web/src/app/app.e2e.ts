@@ -1,4 +1,5 @@
 import { browser, by, element } from 'protractor';
+import ElementNotVisibleError = webdriver.error.ElementNotVisibleError;
 
 describe('App', () => {
 
@@ -9,7 +10,7 @@ describe('App', () => {
 
   it('should have a title', () => {
     let subject = browser.getTitle();
-    let result  = 'Angular2 Webpack Starter by @gdi2290 from @AngularClass';
+    let result  = 'Haushaltsbuch';
     expect(subject).toEqual(result);
   });
 
@@ -27,8 +28,65 @@ describe('App', () => {
 
   it('should have buttons', () => {
     let subject = element(by.css('button')).getText();
-    let result  = 'Submit Value';
+    let result  = "LOS GEHT'S";
     expect(subject).toEqual(result);
   });
 
+  it('sollte verstecktes Seitenmenü besitzen', () => {
+    let subject = element(by.css('ul#side-menu')).getCssValue("transform");
+    let result = "matrix(1, 0, 0, 1, -300, 0)";
+    expect(subject).toEqual(result);
+  })
+
+  describe('wenn das Browserfenster auf unter 993 Pixel verkleinert wird', () => {
+    beforeEach(() => {
+      browser.manage().window().setSize(1001, 800);
+    })
+
+    it('sollte das Hamburgersymbol sichtbar sein', () => {
+      let subject = element(by.css("a[materialize='sideNav']")).isDisplayed();
+      expect(subject).toEqual(true);
+    });
+
+    describe("und ich das Hamburgersymbol anklicke", () => {
+      beforeEach(() => {
+        element(by.css("a[materialize='sideNav']")).click();
+        browser.waitForAngular();
+      });
+
+      // Wegen der Animation ist das Seitenmenü noch nicht vollständig ausgeklappt,
+      xit('sollte das Seitenmenü sichtbar sein', () => {
+        let subject = element(by.css('ul#side-menu')).getCssValue("transform");
+        let result = "matrix(1, 0, 0, 1, 0, 0)";
+        expect(subject).toEqual(result);
+      })
+    })
+  });
+
+  describe('mit einem Browserfenster größer als 992 Pixel', () => {
+    beforeEach(() => {
+      // Hier scheint ein Fehler von 10 Pixeln vorzuliegen. Vielleicht
+      // wird der Rahmen dazugezählt.
+      browser.manage().window().setSize(1003, 800);
+    });
+
+    it('sollte das Hamburgersymbol nicht sichtbar sein', () => {
+      let subject = element(by.css("a[materialize='sideNav']")).isDisplayed();
+      expect(subject).toEqual(false);
+    });
+
+    it('ist das Hamburgersymbol nicht anklickbar', () => {
+      element(by.css("a[materialize='sideNav']")).click()
+          .then(() => fail("Hamburgersymbol ist sichtbar"),
+              (err: ElementNotVisibleError) => {
+                expect(err.message).toContain("element not visible");
+            });
+    });
+
+    it("sollte das Seitenmenu nicht sichbar sein", () => {
+      let subject = element(by.css('ul#side-menu')).getCssValue("transform");
+      let result = "matrix(1, 0, 0, 1, -300, 0)";
+      expect(subject).toEqual(result);
+    });
+  })
 });

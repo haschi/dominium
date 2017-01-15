@@ -1,4 +1,4 @@
-import {TestBed, inject, async} from "@angular/core/testing";
+import {TestBed, inject} from "@angular/core/testing";
 // Load the implementations that should be tested
 import {AppComponent} from "./app.component";
 import {By} from "@angular/platform-browser";
@@ -25,14 +25,14 @@ describe('App', () => {
         inject([MockBackend], (backend: MockBackend) => {
             backend.connections.subscribe((connection: MockConnection) => {
                 connection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify({build: 123456})
+                    body: JSON.stringify({version: 123456})
                 })))
             });
 
             let fixture = TestBed.createComponent(AppComponent);
             fixture.detectChanges();
 
-            expect(fixture.debugElement.query(By.css("#build")).nativeElement.textContent).toBe("Build 123456");
+            expect(fixture.debugElement.query(By.css("#api")).nativeElement.textContent).toBe("API 123456");
     }));
 
     /** Button events to pass to `DebugElement.triggerEventHandler` for RouterLink event handler */

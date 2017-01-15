@@ -16,8 +16,8 @@ export class AppComponent {
     url = 'https://twitter.com/AngularClass';
     index = 'Kein Serveranwort erhalten';
 
-    @select((s: AppState) => s.konfiguration.build)
-    build$: Observable<KonfigurationState>;
+    @select((s: AppState) => s.konfiguration.version)
+    api$: Observable<KonfigurationState>;
 
     constructor(
         private aktionen: Aktionen,

@@ -6,7 +6,7 @@ export class AppState {
 
 export const KONFIGURATION_INIT_STATE: KonfigurationState = {
     name: "Nicht Benannt",
-    build: null,
+    version: null,
     _links: []
 };
 
@@ -16,7 +16,7 @@ export const INIT_STATE: AppState = {
 
 export class KonfigurationState {
     name: String;
-    build: number;
+    version: number;
     _links: any[]
 }
 
