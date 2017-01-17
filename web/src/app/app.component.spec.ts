@@ -1,23 +1,38 @@
-import {TestBed, inject} from "@angular/core/testing";
+import {TestBed, inject, async} from "@angular/core/testing";
 // Load the implementations that should be tested
 import {AppComponent} from "./app.component";
 import {By} from "@angular/platform-browser";
 import {RouterTestingModule} from "@angular/router/testing";
-import {BaseRequestOptions, Http, ResponseOptions, Response} from "@angular/http";
+import {ResponseOptions, Response} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
-import {Aktionen} from "./Aktionen";
-import {rootReducer, INIT_STATE, AppState} from "./reducer";
-import {NgRedux, NgReduxModule} from "ng2-redux";
-import {NgZone, DebugElement} from "@angular/core";
+import {AppState, KonfigurationState} from "./reducer";
+import {NgRedux} from "ng2-redux";
+import {DebugElement} from "@angular/core";
 import {HttpTestModule} from "./httptest.module";
 import {ReduxTestModule} from "./reduxtest.module";
+import {Router} from "@angular/router";
+import {NoContentComponent} from "./no-content/no-content.component";
+import {Location} from '@angular/common';
+import {ROUTES} from "./app.routes";
+import {HomeComponent} from "./home/home.component";
+import {AboutComponent} from "./about/about.component";
 
 describe('App', () => {
 
+    let router, location;
+
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [AppComponent],
-            imports: [RouterTestingModule, ReduxTestModule, HttpTestModule],
+            declarations: [
+                AppComponent,
+                NoContentComponent,
+                HomeComponent,
+                AboutComponent
+
+            ],
+            imports: [RouterTestingModule.withRoutes( ROUTES
+                // [{path: 'offline', component: NoContentComponent}]
+            ), ReduxTestModule, HttpTestModule],
         });
     });
 
@@ -35,6 +50,61 @@ describe('App', () => {
             expect(fixture.debugElement.query(By.css("#api")).nativeElement.textContent).toBe("API 123456");
     }));
 
+    it('sollte die Konfiguration bereitstellen',
+        inject([NgRedux, MockBackend], (redux: NgRedux<AppState>, backend: MockBackend) => {
+
+        let testkonfiguration: KonfigurationState = {
+            name: "service",
+            version: 123456,
+            _links: []
+        };
+
+        backend.connections.subscribe((connection: MockConnection) => {
+            connection.mockRespond(new Response(new ResponseOptions({
+                body: JSON.stringify(testkonfiguration)
+            })))
+        });
+
+            let fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
+
+            expect(redux.getState().konfiguration).toEqual(testkonfiguration)
+    }));
+
+    describe('falls offline', () => {
+       beforeEach(inject([MockBackend], (backend: MockBackend) => {
+           backend.connections.subscribe((connection: MockConnection) => {
+               connection.mockError(new Error("Service unavailable"))
+           })
+       }));
+
+        beforeEach(inject([Router, Location], (_router: Router, _location: Location) => {
+            location = _location;
+            router = _router;
+        }));
+
+        it('sollte zur Offline Komponente weiterleiten', async(() => {
+            let fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                // Route wird nach ** gemappt.
+                // Besserer Test: Prüfen, ob Offline Komponente angezeigt wird.
+                expect(location.path()).toBe('/offline');
+                console.info("Application is offline");
+            });
+        }))
+
+        it('sollte die Offline Komponente anzeigen', async(() => {
+            let fixture = TestBed.createComponent(AppComponent);
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let errorMessage: HTMLElement = fixture.debugElement.query(By.css('.card .card-content p')).nativeElement;
+                expect(errorMessage.innerText).toEqual("Die Anwendung kann nicht geladen werden.");
+                expect(errorMessage.hidden).toBeFalsy();
+            });
+        }))
+    });
     /** Button events to pass to `DebugElement.triggerEventHandler` for RouterLink event handler */
     const ButtonClickEvents = {
         left:  { button: 0 },

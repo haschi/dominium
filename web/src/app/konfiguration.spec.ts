@@ -6,6 +6,10 @@ import {NgRedux} from "ng2-redux";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {Response, BaseResponseOptions} from "@angular/http";
 import {createStore} from "redux";
+import {RouterTestingModule} from "@angular/router/testing";
+import {ROUTES} from "./app.routes";
+import {HomeComponent} from "./home/home.component";
+import {NoContentComponent} from "./no-content/no-content.component";
 
 describe('Konfiguration', () => {
 

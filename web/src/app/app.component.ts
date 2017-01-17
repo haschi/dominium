@@ -1,15 +1,16 @@
 import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/core";
 import "materialize-css/dist/js/materialize.js";
 import {Aktionen} from "./Aktionen";
-import {AppState, KonfigurationState} from "./reducer";
-import {select} from "ng2-redux";
+import {AppState, KonfigurationState, VerbindungState} from "./reducer";
+import {select, NgRedux} from "ng2-redux";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./app.component.css'],
-    templateUrl: 'app.component.html'
+    templateUrl: 'app.component.html',
 })
 export class AppComponent {
 
@@ -19,11 +20,19 @@ export class AppComponent {
     @select((s: AppState) => s.konfiguration.version)
     api$: Observable<KonfigurationState>;
 
-    constructor(
-        private aktionen: Aktionen,
-        private elementRef: ElementRef)   {}
+    @select((s: AppState) => s.verbindung.verbunden)
+    verbunden$: Observable<VerbindungState>;
+
+    constructor(private aktionen: Aktionen, private redux: NgRedux<AppState>, private router: Router)   {}
 
     ngOnInit() {
+        console.info("Abboniere Verbindungsstatus");
+
+        this.verbunden$.subscribe(v => {
+            console.info("Navigation!")
+            this.router.navigate(['offline'])
+        });
+
         this.aktionen.konfigurationLaden();
     }
 }

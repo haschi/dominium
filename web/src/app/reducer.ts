@@ -2,6 +2,7 @@ import {combineReducers, Reducer, Action} from "redux";
 
 export class AppState {
     konfiguration: KonfigurationState;
+    verbindung: VerbindungState;
 }
 
 export const KONFIGURATION_INIT_STATE: KonfigurationState = {
@@ -10,8 +11,13 @@ export const KONFIGURATION_INIT_STATE: KonfigurationState = {
     _links: []
 };
 
+export const VERBINDUNG_INIT_STATE: VerbindungState = {
+    verbunden: null
+};
+
 export const INIT_STATE: AppState = {
-    konfiguration: KONFIGURATION_INIT_STATE
+    konfiguration: KONFIGURATION_INIT_STATE,
+    verbindung: VERBINDUNG_INIT_STATE
 };
 
 export class KonfigurationState {
@@ -20,13 +26,18 @@ export class KonfigurationState {
     _links: any[]
 }
 
+export class VerbindungState {
+    verbunden: boolean
+}
 
 export const rootReducer: Reducer<AppState> = combineReducers<AppState>({
-    konfiguration: konfigurationReducer
+    konfiguration: konfigurationReducer,
+    verbindung: verbindungReducer
 });
 
 export const AKTION = {
-    LADEN: "LADEN"
+    LADEN: "LADEN",
+    OFFLINE_GEHEN: "OFFLINE_GEHEN"
 };
 
 export class MyAction implements Action {
@@ -41,6 +52,15 @@ export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_I
         case "LADEN":
             return Object.assign({}, state, action.payload);
 
+        default:
+            return state;
+    }
+}
+
+export function verbindungReducer(state: VerbindungState = VERBINDUNG_INIT_STATE, action: MyAction) : VerbindungState {
+    switch (action.type) {
+        case "OFFLINE_GEHEN":
+            return Object.assign({}, state, action.payload);
         default:
             return state;
     }

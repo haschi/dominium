@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
 import {NgRedux} from "ng2-redux";
 import {AKTION} from "./reducer";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class Aktionen {
@@ -16,6 +17,7 @@ export class Aktionen {
                 this.store.dispatch({type: AKTION.LADEN, payload: r.json()})
             },
             (error) => {
+                this.store.dispatch({type: AKTION.OFFLINE_GEHEN, payload: {verbunden: false}})
                 console.info("ERROR!!!!!");
             }
         )

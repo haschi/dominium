@@ -2,7 +2,7 @@ import {NgModule, ApplicationRef, OnInit} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
-import {RouterModule, PreloadAllModules} from "@angular/router";
+import {RouterModule, PreloadAllModules, Router} from "@angular/router";
 import {removeNgStyles, createNewHosts, createInputTransfer} from "@angularclass/hmr";
 /*
  * Platform and Environment providers/directives/pipes
@@ -18,7 +18,7 @@ import {NoContentComponent} from "./no-content";
 import {XLarge} from "./home/x-large";
 import {Aktionen} from "./Aktionen";
 import {NgRedux, NgReduxModule} from "ng2-redux";
-import {INIT_STATE, rootReducer, AppState} from "./reducer";
+import {INIT_STATE, rootReducer, AppState, VerbindungState} from "./reducer";
 import {MaterializeModule} from "angular2-materialize";
 
 // Application wide providers
@@ -53,13 +53,18 @@ const APP_PROVIDERS = [
     ]
 })
 export class AppModule implements OnInit {
-    constructor(public appRef: ApplicationRef, private reduxStore: NgRedux<AppState>) {
+    constructor(public appRef: ApplicationRef, private reduxStore: NgRedux<AppState>, private router: Router) {
         console.info("App Module erzeugt.");
         this.reduxStore.configureStore(rootReducer, INIT_STATE);
     }
 
     ngOnInit(): void {
         console.info("AppModule initialisiert");
+        this.reduxStore.select(s => s.verbindung)
+            .subscribe((verbindung: VerbindungState) => {
+                if(verbindung.verbunden === true)
+                    this.router.navigate(['offline'])
+            });
     }
 }
 
