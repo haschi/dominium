@@ -20,6 +20,7 @@ import {Aktionen} from "./Aktionen";
 import {NgRedux, NgReduxModule} from "ng2-redux";
 import {INIT_STATE, rootReducer, AppState, VerbindungState} from "./reducer";
 import {MaterializeModule} from "angular2-materialize";
+import {LeererInhaltComponent} from "./leerer-inhalt/leerer-inhalt.component";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -36,6 +37,7 @@ const APP_PROVIDERS = [
         AboutComponent,
         HomeComponent,
         NoContentComponent,
+        LeererInhaltComponent,
         XLarge
     ],
     imports: [ // import Angular's modules
@@ -60,11 +62,11 @@ export class AppModule implements OnInit {
 
     ngOnInit(): void {
         console.info("AppModule initialisiert");
-        this.reduxStore.select(s => s.verbindung)
-            .subscribe((verbindung: VerbindungState) => {
-                if(verbindung.verbunden === true)
-                    this.router.navigate(['offline'])
-            });
+        // this.reduxStore.select(s => s.verbindung)
+        //     .subscribe((verbindung: VerbindungState) => {
+        //         if(verbindung.nachricht === true)
+        //             this.router.navigate(['leer'])
+        //     });
     }
 }
 

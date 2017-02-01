@@ -17,7 +17,6 @@
         <module name="modeling" />
         <module name="modelldokumentation" />
         <module name="richtlinien" />
-        <module name="web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

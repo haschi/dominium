@@ -12,7 +12,9 @@ export const KONFIGURATION_INIT_STATE: KonfigurationState = {
 };
 
 export const VERBINDUNG_INIT_STATE: VerbindungState = {
-    verbunden: null
+    nachricht: null,
+    route: null,
+    kompensation: []
 };
 
 export const INIT_STATE: AppState = {
@@ -27,7 +29,14 @@ export class KonfigurationState {
 }
 
 export class VerbindungState {
-    verbunden: boolean
+    nachricht: string;
+    route: string;
+    kompensation: Kompensation[];
+}
+
+export class Kompensation {
+    titel: string;
+    aktion: any;
 }
 
 export const rootReducer: Reducer<AppState> = combineReducers<AppState>({
@@ -37,7 +46,8 @@ export const rootReducer: Reducer<AppState> = combineReducers<AppState>({
 
 export const AKTION = {
     LADEN: "LADEN",
-    OFFLINE_GEHEN: "OFFLINE_GEHEN"
+    OFFLINE_GEHEN: "OFFLINE_GEHEN",
+    FEHLER: "FEHLER"
 };
 
 export class MyAction implements Action {
@@ -60,6 +70,8 @@ export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_I
 export function verbindungReducer(state: VerbindungState = VERBINDUNG_INIT_STATE, action: MyAction) : VerbindungState {
     switch (action.type) {
         case "OFFLINE_GEHEN":
+            return Object.assign({}, state, action.payload);
+        case "FEHLER":
             return Object.assign({}, state, action.payload);
         default:
             return state;

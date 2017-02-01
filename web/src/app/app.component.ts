@@ -20,19 +20,19 @@ export class AppComponent {
     @select((s: AppState) => s.konfiguration.version)
     api$: Observable<KonfigurationState>;
 
-    @select((s: AppState) => s.verbindung.verbunden)
-    verbunden$: Observable<VerbindungState>;
+    @select((s: AppState) => s.verbindung)
+    fehler$: Observable<VerbindungState>;
 
     constructor(private aktionen: Aktionen, private redux: NgRedux<AppState>, private router: Router)   {}
 
     ngOnInit() {
         console.info("Abboniere Verbindungsstatus");
 
-        this.verbunden$.subscribe(v => {
-            console.info("Navigation!")
-            this.router.navigate(['offline'])
-        });
-
         this.aktionen.konfigurationLaden();
+
+        this.fehler$.subscribe(v => {
+            console.info("Navigation!")
+            this.router.navigate(['leer'])
+        });
     }
 }

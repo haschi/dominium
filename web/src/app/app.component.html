@@ -25,46 +25,14 @@
     </div>
 </nav>
 
-<div class="row" *ngIf="(verbunden$ | async ) == false">
-    <div class="col s12 m6">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-                <span class="card-title">Card Title</span>
-                <p>Die Anwendung kann nicht geladen werden.</p>
-            </div>
-            <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <main>
     <router-outlet></router-outlet>
 </main>
-
-<!--<div class="container">-->
-<!--<div class="row">-->
-<!--<div class="col m12 l12">-->
-<!--<ul class="collapsible" data-collapsible="expandable">-->
-<!--<li>-->
-<!--<div class="collapsible-header"><i class="material-icons">notifications</i>-->
-<!--Webservice Response-->
-<!--</div>-->
-<!--<div class="collapsible-body">-->
-<!--<pre>{{index}}</pre>-->
-<!--</div>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
 
 <footer class="blue darken-4">
     <div class="footer-copyrightcontainer">
         <span>&copy; 2016 Matthias Haschka</span>
         | <span><a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache Lizenz 2.0</a></span>
-        | <span id="api">API {{ (api$ | async) }}</span>
+        | <span id="api" *ngIf="(api$ | async)">API {{ (api$ | async) }}</span>
     </div>
 </footer>

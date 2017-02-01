@@ -11,20 +11,13 @@
 
     <name>${project.artifactId}-${project.version}</name>
 
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
-        <resources>
-            <resource>
-                <directory>etc</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
 
         <pluginManagement>
             <plugins>
@@ -37,6 +30,12 @@
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.19.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -46,6 +45,11 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>docker</directory>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
 
@@ -114,29 +118,64 @@
                 </configuration>
             </plugin>
 
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <failOnMissingWebXml>true</failOnMissingWebXml>
-                    <outputDirectory>docker</outputDirectory>
-                    <!--<webXml>src/WEB-INF/web.xml</webXml>-->
-                    <webResources>
-                        <resource>
-                            <directory>target/dist</directory>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>process resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>etc</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>remove</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <outputDirectory>${project.build.directory}/docker</outputDirectory>
+                    <showLogs>true</showLogs>
+                    <images>
+                        <image>
+                            <name>%g/%a:%l</name>
+                            <build>
+                                <dockerFileDir>${basedir}/target</dockerFileDir>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>80:80</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
                 </configuration>
             </plugin>
         </plugins>
