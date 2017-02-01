@@ -2,7 +2,7 @@ version: '2'
 
 services:
   haushaltsbuch:
-    image: haushaltsbuch/service:test
+    image: haushaltsbuch/anwendung:latest
     expose:
       - "8080"
       - "9990"
@@ -14,7 +14,7 @@ services:
   web:
     build:
       context: .
-    image: haushaltsbuch/web:test
+    image: haushaltsbuch/web-proxy:latest
     ports:
       - "80:80"
     network_mode: "host"
