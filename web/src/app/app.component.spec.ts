@@ -17,6 +17,7 @@ import {ROUTES} from "./app.routes";
 import {HomeComponent} from "./home/home.component";
 import {AboutComponent} from "./about/about.component";
 import {LeererInhaltComponent} from "./leerer-inhalt/leerer-inhalt.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 describe('App', () => {
 
@@ -34,7 +35,8 @@ describe('App', () => {
             imports: [
                 RouterTestingModule.withRoutes(ROUTES),
                 ReduxTestModule,
-                HttpTestModule
+                HttpTestModule,
+                ReactiveFormsModule
             ]
         });
     });

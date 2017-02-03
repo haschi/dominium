@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLarge } from './x-large';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   // The selector is what angular internally uses
@@ -21,19 +22,35 @@ import { XLarge } from './x-large';
 export class HomeComponent {
   // Set our default values
   localState = { value: '' };
-  // TypeScript public modifiers
-  constructor(public title: Title) {
+  name: string = '';
 
+  form: FormGroup;
+
+  // TypeScript public modifiers
+  constructor(public title: Title, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
     console.log('hello `Home` component');
     // this.title.getData().subscribe(data => this.data = data);
+    this.form = this.formBuilder.group({
+      name: ['']
+    });
+
+    this.form.valueChanges.subscribe(
+        data => {
+          console.log("Datenänderung: " + JSON.stringify(data));
+          this.name = data.name;
+        });
+
   }
 
-  submitState(value: string) {
-    console.log('submitState', value);
-
-    this.localState.value = '';
+  submitState(): void {
+    // console.log('submitState', value);
+    // console.log('submitState', value.name);
+    // this.name = value.name;
+    if (this.form.valid) {
+      console.log("submit: " + this.name);
+    }
   }
 }
