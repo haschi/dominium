@@ -1,6 +1,6 @@
 import {
   inject,
-  TestBed, async, fakeAsync, tick
+  TestBed, async, fakeAsync, tick, ComponentFixture
 } from '@angular/core/testing';
 
 // Load the implementations that should be tested
@@ -38,37 +38,39 @@ describe('Home', () => {
       ]
     }));
 
+    class Page {
+      constructor(private fixture: ComponentFixture<HomeComponent>) {}
+
+      init(): void {
+        this.fixture.componentInstance.ngOnInit();
+        this.fixture.detectChanges();
+      }
+
+      input(name: string): void {
+        let htmlName = this.fixture.debugElement.query(By.css('#name')).nativeElement;
+        htmlName.value = "Matthias Haschka";
+        htmlName.dispatchEvent(new Event('input'));
+
+        this.fixture.detectChanges();
+      }
+
+      submit(): void {
+        let form = this.fixture.debugElement.query( By.css('form'));
+        form.triggerEventHandler('submit', null);
+      }
+
+      get name() { return this.fixture.componentInstance.name }
+    }
+
     it('sollte neues Haushaltsbuch anlegen', fakeAsync(() => {
       let fixture = TestBed.createComponent(HomeComponent);
-      const spy = spyOn(fixture.componentInstance, 'submitState').and.callThrough();
-      fixture.detectChanges();
-      fixture.componentInstance.ngOnInit();
-      fixture.detectChanges();
+      let page = new Page(fixture);
+      page.init();
+      page.input("Matthias Haschka");
+      page.submit();
 
-      let name = fixture.debugElement.query(By.css('#name'));
-      let htmlName = name.nativeElement;
-      htmlName.value = "Matthias Haschka";
-
-      htmlName.dispatchEvent(new Event('input'));
-
-      fixture.detectChanges();
-      // tick();
-
-      //fixture.whenStable().then(() => {
-      let submit = fixture.debugElement.query(By.css('button[type=submit]'));
-      let htmlSubmit = submit.nativeElement;
-      submit.triggerEventHandler('click', null);
-
-      let form = fixture.debugElement.query( By.css('form'));
-      form.triggerEventHandler('submit', null);
-
-      // tick();
-      // fixture.detectChanges();
-      // tick();
       console.log("Geklickt!");
-      expect(spy).toHaveBeenCalled();
-      expect(fixture.componentInstance.name).toEqual("Matthias Haschka");
-      //});
+      expect(page.name).toEqual("Matthias Haschka");
     }));
   });
 
