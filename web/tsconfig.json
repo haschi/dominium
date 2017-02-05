@@ -31,10 +31,11 @@
     "dist"
   ],
   "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
+    "forkChecker": false,
     "useWebpackText": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": { "rewriteTsconfig": false },
+  "typingOptions": { "enableAutoDiscovery": true, "include": [], "exclude": [] }
 }

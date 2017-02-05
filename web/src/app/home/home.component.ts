@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from './title';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Aktionen} from "../Aktionen";
-import {NgRedux, select} from "ng2-redux";
+import {NgRedux, select} from "@angular-redux/store";
 import {AppState, HaushaltsbuchState} from "../reducer";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";

@@ -2,7 +2,7 @@ import {KonfigurationState, KONFIGURATION_INIT_STATE, konfigurationReducer} from
 import {TestBed, inject} from "@angular/core/testing";
 import {Aktionen} from "./Aktionen";
 import {HttpTestModule} from "./httptest.module";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {Response, BaseResponseOptions} from "@angular/http";
 import {createStore} from "redux";

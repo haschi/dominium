@@ -6,7 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {ResponseOptions, Response} from "@angular/http";
 import {MockBackend, MockConnection} from "@angular/http/testing";
 import {AppState, KonfigurationState} from "./reducer";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {DebugElement} from "@angular/core";
 import {HttpTestModule} from "./httptest.module";
 import {ReduxTestModule} from "./reduxtest.module";

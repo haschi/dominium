@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {VerbindungState, AppState} from "../reducer";
 import {Observable} from "rxjs";
-import {select} from "ng2-redux";
+import {select} from "@angular-redux/store";
 
 @Component({
     selector: 'leerer-inhalt',

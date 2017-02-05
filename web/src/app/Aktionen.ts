@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {AKTION} from "./reducer";
-import {Router} from "@angular/router";
 
 @Injectable()
 export class Aktionen {

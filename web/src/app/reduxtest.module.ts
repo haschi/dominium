@@ -1,7 +1,7 @@
 
 import {NgZone, NgModule} from "@angular/core";
 import {INIT_STATE, rootReducer} from "./reducer";
-import {NgRedux, NgReduxModule} from "ng2-redux";
+import {NgRedux, NgReduxModule} from "@angular-redux/store"
 import {Aktionen} from "./Aktionen";
 
 @NgModule({

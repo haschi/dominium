@@ -1,4 +1,5 @@
 import {NgModule, ApplicationRef, OnInit} from "@angular/core";
+import {NgRedux, NgReduxModule} from "@angular-redux/store";
 import {BrowserModule} from "@angular/platform-browser";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
@@ -17,7 +18,6 @@ import {AboutComponent} from "./about";
 import {NoContentComponent} from "./no-content";
 import {XLarge} from "./home/x-large";
 import {Aktionen} from "./Aktionen";
-import {NgRedux, NgReduxModule} from "ng2-redux";
 import {INIT_STATE, rootReducer, AppState, VerbindungState} from "./reducer";
 import {MaterializeModule} from "angular2-materialize";
 import {LeererInhaltComponent} from "./leerer-inhalt/leerer-inhalt.component";

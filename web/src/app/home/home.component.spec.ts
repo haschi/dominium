@@ -1,6 +1,7 @@
+/// <reference path="../shared/http.matcher.d.ts"/>
 import {
   inject,
-  TestBed, async, fakeAsync, tick, ComponentFixture
+  TestBed, async, ComponentFixture
 } from '@angular/core/testing';
 
 // Load the implementations that should be tested
@@ -14,17 +15,23 @@ import {ROUTES} from "../app.routes";
 import {AboutComponent} from "../about/about.component";
 import {LeererInhaltComponent} from "../leerer-inhalt/leerer-inhalt.component";
 import {NoContentComponent} from "../no-content/no-content.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgRedux} from "ng2-redux";
+import {ReactiveFormsModule} from "@angular/forms";
+import {NgRedux} from "@angular-redux/store";
 import {AppState} from "../reducer";
 import {MockBackend, MockConnection} from "@angular/http/testing";
-import {Response, ResponseOptions, ResponseType, Headers} from "@angular/http";
+import {Response, ResponseOptions, Headers, RequestMethod} from "@angular/http";
 import {Router} from "@angular/router";
 import Spy = jasmine.Spy;
+import {ContentType} from "@angular/http/src/enums";
+import {httpMatcher} from "../shared/http.matcher";
 
 describe('Home', () => {
 
   describe('Formular', () => {
+      beforeAll(()=> {
+          jasmine.addMatchers(httpMatcher)
+      });
+
     beforeEach(() => TestBed.configureTestingModule({
       declarations: [
         HomeComponent,
@@ -79,7 +86,6 @@ describe('Home', () => {
 
     describe("Haushaltsbuch anlegen", () => {
         let c: MockConnection;
-
         beforeEach(inject([MockBackend], (backend: MockBackend) => {
             backend.connections.subscribe((connection: MockConnection) => {
                 c = connection;
@@ -97,14 +103,19 @@ describe('Home', () => {
             page.submit();
         })));
 
-        it('sollte neues Haushaltsbuch anlegen',
+        fit('sollte neues Haushaltsbuch anlegen',
             async(inject([Page, NgRedux, MockBackend],
                 (page: Page, redux: NgRedux<AppState>, backend: MockBackend) => {
                     expect(redux.getState().haushaltsbuch.id).toEqual(123456);
-                    expect(c.request.url).toBe('/api/haushaltsbuchanlage');
-                    expect(JSON.parse(c.request.getBody())).toEqual({name: "Matthias Haschka"});
+                    expect(c.request).toPostJson({
+                        url: '/api/haushaltsbuchanlage',
+                        body: {name: "Matthias Haschka"}
+                    });
                 })));
 
+        describe("falls erfolgreich", () => {
+
+        });
         it('sollte zum Dashboard weiterleiten', async(inject([Page],(page: Page) => {
             expect(page.navigateSpy).toHaveBeenCalledWith(['/dashboard', 123456]);
             // TODO: klären, warum navigate zwei mal aufgerufen wird.

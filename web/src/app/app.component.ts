@@ -2,9 +2,9 @@ import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/
 import "materialize-css/dist/js/materialize.js";
 import {Aktionen} from "./Aktionen";
 import {AppState, KonfigurationState, VerbindungState} from "./reducer";
-import {select, NgRedux} from "ng2-redux";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {select, NgRedux} from "@angular-redux/store"
 
 @Component({
     selector: 'app',
