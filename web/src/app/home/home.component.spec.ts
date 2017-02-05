@@ -15,6 +15,12 @@ import {AboutComponent} from "../about/about.component";
 import {LeererInhaltComponent} from "../leerer-inhalt/leerer-inhalt.component";
 import {NoContentComponent} from "../no-content/no-content.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgRedux} from "ng2-redux";
+import {AppState} from "../reducer";
+import {MockBackend, MockConnection} from "@angular/http/testing";
+import {Response, ResponseOptions, ResponseType, Headers} from "@angular/http";
+import {Router} from "@angular/router";
+import Spy = jasmine.Spy;
 
 describe('Home', () => {
 
@@ -34,12 +40,21 @@ describe('Home', () => {
         RouterTestingModule.withRoutes(ROUTES)
       ],
       providers: [
-        Title
+        Title,
+          {
+              provide: Page,
+              useFactory: (router: Router) => new Page(TestBed.createComponent(HomeComponent), router),
+              deps: [Router]
+          }
       ]
     }));
 
     class Page {
-      constructor(private fixture: ComponentFixture<HomeComponent>) {}
+        navigateSpy: Spy;
+
+      constructor(private fixture: ComponentFixture<HomeComponent>, private router: Router) {
+          this.navigateSpy = spyOn(router, 'navigate');
+      }
 
       init(): void {
         this.fixture.componentInstance.ngOnInit();
@@ -62,16 +77,38 @@ describe('Home', () => {
       get name() { return this.fixture.componentInstance.name }
     }
 
-    it('sollte neues Haushaltsbuch anlegen', fakeAsync(() => {
-      let fixture = TestBed.createComponent(HomeComponent);
-      let page = new Page(fixture);
-      page.init();
-      page.input("Matthias Haschka");
-      page.submit();
+    describe("Haushaltsbuch anlegen", () => {
+        beforeEach(inject([MockBackend], (backend: MockBackend) => {
+            backend.connections.subscribe((connection: MockConnection) => {
+                connection.mockRespond(new Response(new ResponseOptions({
+                    status: 202,
+                    headers: new Headers({location: '/process/42'}),
+                    body: JSON.stringify({id: 123456})
+                })))
+            })
+        }));
 
-      console.log("Geklickt!");
-      expect(page.name).toEqual("Matthias Haschka");
-    }));
+        beforeEach(async(inject([Page], (page: Page)=> {
+            page.init();
+            page.input("Matthias Haschka");
+            page.submit();
+        })));
+
+        it('sollte neues Haushaltsbuch anlegen',
+            async(inject([Page, NgRedux, MockBackend],
+                (page: Page, redux: NgRedux<AppState>) => {
+                    expect(page.name).toEqual("Matthias Haschka");
+                    expect(redux.getState().haushaltsbuch.id).not.toBeNull()
+                })));
+
+        fit('sollte zum Dashboard weiterleiten', async(inject([Page],(page: Page) => {
+            expect(page.navigateSpy).toHaveBeenCalledWith(['/dashboard', 1]);
+            expect(page.navigateSpy).toHaveBeenCalledTimes(1);
+        })));
+
+        afterEach(inject([Page], (page: Page) => {
+        }))
+    });
   });
 
   describe('Alles andere ;-)', () => {

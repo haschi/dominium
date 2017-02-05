@@ -27,4 +27,14 @@ export class Aktionen {
             }
         )
     }
+
+    legeHaushaltsbuchAn(name: String) {
+        this.http.post('http://localhost:8080', {
+            name: name
+        }).subscribe((r: Response) => {
+            this.store.dispatch({type: AKTION.HAUSHALTSBUCH_ERSTELLT, payload: r.json()})
+        }, (err) => {
+            console.log("FEHLER: " + err)
+        })
+    }
 }

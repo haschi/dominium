@@ -12,6 +12,7 @@ export const ROUTES: Routes = [
   { path: 'home',  component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'leer', component: LeererInhaltComponent },
+  { path: 'dashboard/:id', component: LeererInhaltComponent},
   {
     path: 'detail', loadChildren: () => System.import('./+detail')
       .then((comp: any) => comp.default),

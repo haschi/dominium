@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-
-import { AppState } from '../app.service';
 import { Title } from './title';
-import { XLarge } from './x-large';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Aktionen} from "../Aktionen";
+import {NgRedux, select} from "ng2-redux";
+import {AppState, HaushaltsbuchState} from "../reducer";
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
+
 
 @Component({
   // The selector is what angular internally uses
@@ -26,8 +29,15 @@ export class HomeComponent {
 
   form: FormGroup;
 
+  @select((s: AppState) => s.haushaltsbuch)
+  id$: Observable<HaushaltsbuchState>;
+
   // TypeScript public modifiers
-  constructor(public title: Title, private formBuilder: FormBuilder) {
+  constructor(
+      public title: Title,
+      private formBuilder: FormBuilder,
+      private aktion: Aktionen,
+      private router: Router) {
   }
 
   ngOnInit() {
@@ -43,14 +53,18 @@ export class HomeComponent {
           this.name = data.name;
         });
 
+    this.id$.subscribe((data: HaushaltsbuchState) => {
+      console.log("Datenänderung Haushaltsbuch:" + JSON.stringify(data));
+      if(data.id != null) {
+        this.router.navigate(['/dashboard', data.id])
+      }
+    })
   }
 
   submitState(): void {
-    // console.log('submitState', value);
-    // console.log('submitState', value.name);
-    // this.name = value.name;
     if (this.form.valid) {
       console.log("submit: " + this.name);
+      this.aktion.legeHaushaltsbuchAn(this.name);
     }
   }
 }
