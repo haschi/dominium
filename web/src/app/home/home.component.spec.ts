@@ -50,7 +50,7 @@ describe('Home', () => {
         Title,
           {
               provide: Page,
-              useFactory: (router: Router) => new Page(TestBed.createComponent(HomeComponent), router),
+              useFactory: Page.create,
               deps: [Router]
           }
       ]
@@ -58,6 +58,10 @@ describe('Home', () => {
 
     class Page {
         navigateSpy: Spy;
+
+        static create(router: Router): Page {
+            return new Page(TestBed.createComponent(HomeComponent), router);
+        }
 
       constructor(private fixture: ComponentFixture<HomeComponent>, private router: Router) {
           this.navigateSpy = spyOn(router, 'navigate');
@@ -103,9 +107,8 @@ describe('Home', () => {
             page.submit();
         })));
 
-        fit('sollte neues Haushaltsbuch anlegen',
-            async(inject([Page, NgRedux, MockBackend],
-                (page: Page, redux: NgRedux<AppState>, backend: MockBackend) => {
+        it('sollte neues Haushaltsbuch anlegen',
+            async(inject([Page, NgRedux], (page: Page, redux: NgRedux<AppState>) => {
                     expect(redux.getState().haushaltsbuch.id).toEqual(123456);
                     expect(c.request).toPostJson({
                         url: '/api/haushaltsbuchanlage',
@@ -116,6 +119,7 @@ describe('Home', () => {
         describe("falls erfolgreich", () => {
 
         });
+
         it('sollte zum Dashboard weiterleiten', async(inject([Page],(page: Page) => {
             expect(page.navigateSpy).toHaveBeenCalledWith(['/dashboard', 123456]);
             // TODO: klären, warum navigate zwei mal aufgerufen wird.
