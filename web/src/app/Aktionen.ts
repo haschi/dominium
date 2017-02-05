@@ -29,7 +29,7 @@ export class Aktionen {
     }
 
     legeHaushaltsbuchAn(name: String) {
-        this.http.post('http://localhost:8080', {
+        this.http.post('/api/haushaltsbuchanlage', {
             name: name
         }).subscribe((r: Response) => {
             this.store.dispatch({type: AKTION.HAUSHALTSBUCH_ERSTELLT, payload: r.json()})
