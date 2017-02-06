@@ -33,6 +33,11 @@ export class Aktionen {
         }).subscribe((r: Response) => {
             this.store.dispatch({type: AKTION.HAUSHALTSBUCH_ERSTELLT, payload: r.json()})
         }, (err) => {
+            this.store.dispatch({type: AKTION.FEHLER, payload: {
+                nachricht: "Keine Verbindung",
+                route: '',
+                kompensation: [{titel: "Wiederholen", aktion: () => {this.legeHaushaltsbuchAn(name)}}]
+            }});
             console.log("FEHLER: " + err)
         })
     }

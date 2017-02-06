@@ -40,7 +40,7 @@ export class KonfigurationState {
 
 export class VerbindungState {
     nachricht: string;
-    route: string;
+    route: any[];
     kompensation: Kompensation[];
 }
 

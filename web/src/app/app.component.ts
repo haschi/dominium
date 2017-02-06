@@ -32,7 +32,7 @@ export class AppComponent {
 
         this.fehler$.subscribe(v => {
             console.info("Navigation!")
-            this.router.navigate(['leer'])
+            this.router.navigate([v.route])
         });
     }
 }

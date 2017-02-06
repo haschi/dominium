@@ -62,7 +62,7 @@ module.exports = function (config) {
              */
             // reporters: [ 'mocha', 'coverage', 'remap-coverage' ],
             reporters: ['mocha', 'junit', 'progress', 'summary', 'remap-coverage'],
-            mochaReporter: {output: 'minimal'},
+            mochaReporter: {output: 'dot'},
             summaryReporter: {
                 // 'failed', 'skipped' or 'all'
                 show: 'all',
