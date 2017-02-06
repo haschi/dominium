@@ -20,7 +20,7 @@ import {LeererInhaltComponent} from "./leerer-inhalt/leerer-inhalt.component";
 import {ReactiveFormsModule} from "@angular/forms";
 
 // TODO Fix this
-xdescribe('App', () => {
+describe('App', () => {
 
     let router, location;
 

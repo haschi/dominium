@@ -19,7 +19,7 @@ export class Aktionen {
                 this.store.dispatch({type: AKTION.OFFLINE_GEHEN, payload: {verbunden: false}})
                 this.store.dispatch({type: AKTION.FEHLER, payload: {
                     nachricht: "Anmeldung nicht verfügbar.",
-                    route: 'leerer-inhalt',
+                    route: ['leerer-inhalt'],
                     kompensation: [{titel: "Noch einmal versuchen", aktion: () => this.konfigurationLaden()}]
                 }});
                 console.info("ERROR!!!!!");
@@ -35,7 +35,7 @@ export class Aktionen {
         }, (err) => {
             this.store.dispatch({type: AKTION.FEHLER, payload: {
                 nachricht: "Keine Verbindung",
-                route: '',
+                route: [],
                 kompensation: [{titel: "Wiederholen", aktion: () => {this.legeHaushaltsbuchAn(name)}}]
             }});
             console.log("FEHLER: " + err)

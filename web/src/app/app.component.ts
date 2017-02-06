@@ -31,8 +31,14 @@ export class AppComponent {
         this.aktionen.konfigurationLaden();
 
         this.fehler$.subscribe(v => {
-            console.info("Navigation!")
-            this.router.navigate([v.route])
+            if (v.route != null) {
+                console.info("Navigation: " + JSON.stringify(v.route));
+                if (v.route == []) {
+
+                } else {
+                    this.router.navigate([v.route])
+                }
+            }
         });
     }
 }
