@@ -7,7 +7,7 @@ interface HttpPostExpectation {
 }
 
 const httpMatcher: jasmine.CustomMatcherFactories = {
-    toPostJson: (util: jasmine.MatchersUtil, customEqualityTesters: Array<jasmine.CustomEqualityTester>) => {
+    toPostJson: (util: jasmine.MatchersUtil) => {
         return {
             compare: function (actual: Request, expected: HttpPostExpectation): jasmine.CustomMatcherResult {
                 if (actual.method != RequestMethod.Post) {

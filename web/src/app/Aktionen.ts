@@ -15,7 +15,7 @@ export class Aktionen {
             (r: Response) => {
                 this.store.dispatch({type: AKTION.LADEN, payload: r.json()})
             },
-            (error) => {
+            () => {
                 this.store.dispatch({type: AKTION.OFFLINE_GEHEN, payload: {verbunden: false}})
                 this.store.dispatch({type: AKTION.FEHLER, payload: {
                     nachricht: "Anmeldung nicht verfügbar.",

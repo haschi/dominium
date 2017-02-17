@@ -8,7 +8,7 @@ export class DataResolver implements Resolve<any> {
   constructor() {
 
   }
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  resolve() {
     return Observable.of({ res: 'I am data'});
   }
 }

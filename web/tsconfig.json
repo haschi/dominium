@@ -10,6 +10,7 @@
     "noEmitHelpers": true,
     "strictNullChecks": false,
     "baseUrl": "./src",
+    "noUnusedParameters": true,
     "paths": {
     },
     "lib": [

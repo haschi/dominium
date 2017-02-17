@@ -13,6 +13,6 @@ export class LeererInhaltComponent {
 
     kompensieren(eintrag: number) {
         console.info("Kompensation ausgewählt: " + eintrag);
-        this.fehler$.do((f) => {console.info("Kompensation: ")});
+        this.fehler$.do(() => {console.info("Kompensation: ")});
     }
 }

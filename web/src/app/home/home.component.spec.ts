@@ -70,7 +70,7 @@ describe('Home', () => {
                 this.fixture.detectChanges();
             }
 
-            input(name: string): void {
+            input(): void {
                 let htmlName = this.fixture.debugElement.query(By.css('#name')).nativeElement;
                 htmlName.value = "Matthias Haschka";
                 htmlName.dispatchEvent(new Event('input'));
@@ -88,79 +88,29 @@ describe('Home', () => {
             }
         }
 
-        function haushaltsbuchanlage(testfall: Testfall, spec:(t: Testfall) => void) {
-            describe(testfall.beschreibung, ()=> {
+        function testfallausführung(sut: () =>void, testfall: ITestfall, spec: (t: ITestfall) => void) {
+            describe(testfall.beschreibung, () => {
                 testfall.testfall();
-
-                beforeEach(async(inject([Page], (page: Page) => {
-                    page.init();
-                    page.input("Matthias Haschka");
-                    page.submit();
-                })));
-
+                sut();
                 spec(testfall);
-            });
+            })
         }
 
-        function erfolgreicheAntwort(zweitens: (connection: MockConnection)=>void): void {
-
-            describe("Erfolgreiche Serverantwort", () => {
-                let connection: MockConnection;
-                beforeEach(inject([MockBackend], (backend: MockBackend) => {
-                    backend.connections.subscribe((c: MockConnection) => {
-                        connection = c;
-                        connection.mockRespond(new Response(new ResponseOptions({
-                            status: 202,
-                            headers: new Headers({location: '/process/42'}),
-                            body: JSON.stringify({id: 123456})
-                        })))
-                    })
-                }));
-                zweitens(connection);
-            });
-        }
-
-        interface Testfall {
-            beschreibung: string;
-            testfall: ()=>void,
+        interface ITestfall {
+            beschreibung: string
+            testfall: ()=>void
             lastConnection: MockConnection
+            ausführen(sut: ()=>void, spec: (t: ITestfall)=>void): void
         }
-
-        // function beschreibe(beschreibung: string, tesfall: Testfall, specDefinitions: ()=>void): void {
-        //     describe(beschreibung, ()=>{
-        //         vorbedingung();
-        //         specDefinitions();
-        //     })
-        // };
-
-        // beschreibe("Haushaltsbuchanlage", haushaltsbuchanlage, () => {
-        //     erfolgreicheAntwort((connection: MockConnection)=> {
-        //         haushaltsbuchanlage();
-        //         it('sollte die Haushaltsbuchanlage anweisen',
-        //             async(() => {
-        //                 expect(connection.request).toPostJson({
-        //                     url: '/api/haushaltsbuchanlage',
-        //                     body: {name: "Matthias Haschka"}
-        //                 });
-        //             }));
-        //
-        //         it('sollte neues Haushaltsbuch erzeugen', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
-        //             expect(redux.getState().haushaltsbuch.id).toEqual(123456);
-        //         })));
-        //
-        //         it('sollte zum Dashboard weiterleiten', async(inject([Page], (page: Page) => {
-        //             expect(page.navigateSpy).toHaveBeenCalledWith(['/dashboard', 123456]);
-        //             // TODO: klären, warum navigate zwei mal aufgerufen wird.
-        //             // expect(page.navigateSpy).toHaveBeenCalledTimes(1);
-        //         })));
-        //     });
-        // });
 
         describe("Haushaltsbuchanlage", () => {
 
-            let erfolgreich: Testfall = {
+            let erfolgreich: ITestfall = {
                 lastConnection: null,
                 beschreibung: "falls wirklich erfolgreich",
+                ausführen(sut: ()=>void, spec: (t: ITestfall)=>void) {
+                    testfallausführung(sut, this, spec);
+                },
                 testfall() {
                     beforeEach(inject([MockBackend], (backend: MockBackend) => {
                         backend.connections.subscribe((c: MockConnection) => {
@@ -175,13 +125,21 @@ describe('Home', () => {
                 }
             };
 
-            haushaltsbuchanlage(erfolgreich, t => {
+            let haushaltsbuchanlage = () => {
+                beforeEach(async(inject([Page], (page: Page) => {
+                    page.init();
+                    page.input();
+                    page.submit();
+                })));
+            };
+
+            testfallausführung(haushaltsbuchanlage, erfolgreich, t => {
                 it('sollte die Haushaltsbuchanlage anweisen', async(() => {
-                        expect(t.lastConnection.request).toPostJson({
-                            url: '/api/haushaltsbuchanlage',
-                            body: {name: "Matthias Haschka"}
-                        });
-                    }));
+                    expect(t.lastConnection.request).toPostJson({
+                        url: '/api/haushaltsbuchanlage',
+                        body: {name: "Matthias Haschka"}
+                    });
+                }));
                 it('sollte neues Haushaltsbuch erzeugen', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().haushaltsbuch.id).toEqual(123456);
                 })));
@@ -192,9 +150,12 @@ describe('Home', () => {
                 })));
             });
 
-            let erfolglos: Testfall = {
+            let erfolglos: ITestfall = {
                 lastConnection: null,
                 beschreibung: "falls Server nicht verfügbar",
+                ausführen(sut: ()=>void, spec: (t: ITestfall)=>void) {
+                    testfallausführung(sut, this, spec);
+                },
                 testfall() {
                     beforeEach(inject([MockBackend], (backend: MockBackend) => {
                         backend.connections.subscribe((c: MockConnection) => {
@@ -205,11 +166,10 @@ describe('Home', () => {
                 }
             };
 
-            haushaltsbuchanlage(erfolglos, t => {
+            erfolglos.ausführen(haushaltsbuchanlage, () => {
                 it('sollte Verbindungsfehler melden', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().verbindung.nachricht).toEqual("Keine Verbindung")
                 })));
-
                 it('sollte Kompensationsoption bereitstellen', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().verbindung.kompensation.length).toEqual(1);
                 })))
@@ -254,5 +214,4 @@ describe('Home', () => {
             expect(console.log).toHaveBeenCalled();
         }));
     });
-
 });
