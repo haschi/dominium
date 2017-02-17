@@ -1,33 +1,30 @@
 /// <reference path="../shared/http.matcher.d.ts"/>
-import {inject, TestBed, async, ComponentFixture} from "@angular/core/testing";
+import { inject, TestBed, async, ComponentFixture } from '@angular/core/testing';
 // Load the implementations that should be tested
-import {HomeComponent} from "./home.component";
-import {Title} from "./title";
-import {By, BrowserModule} from "@angular/platform-browser";
-import {HttpTestModule} from "../httptest.module";
-import {ReduxTestModule} from "../reduxtest.module";
-import {RouterTestingModule} from "@angular/router/testing";
-import {ROUTES} from "../app.routes";
-import {AboutComponent} from "../about/about.component";
-import {LeererInhaltComponent} from "../leerer-inhalt/leerer-inhalt.component";
-import {NoContentComponent} from "../no-content/no-content.component";
-import {ReactiveFormsModule} from "@angular/forms";
-import {NgRedux} from "@angular-redux/store";
-import {AppState} from "../reducer";
-import {MockBackend, MockConnection} from "@angular/http/testing";
-import {Response, ResponseOptions, Headers} from "@angular/http";
-import {Router} from "@angular/router";
-import {httpMatcher} from "../shared/http.matcher";
+import { HomeComponent } from './home.component';
+import { Title } from './title';
+import { By, BrowserModule } from '@angular/platform-browser';
+import { HttpTestModule } from '../httptest.module';
+import { ReduxTestModule } from '../reduxtest.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ROUTES } from '../app.routes';
+import { AboutComponent } from '../about/about.component';
+import { LeererInhaltComponent } from '../leerer-inhalt/leerer-inhalt.component';
+import { NoContentComponent } from '../no-content/no-content.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgRedux } from '@angular-redux/store';
+import { AppState } from '../reducer';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Response, ResponseOptions, Headers } from '@angular/http';
+import { Router } from '@angular/router';
+import { httpMatcher } from '../shared/http.matcher';
 import Spy = jasmine.Spy;
-
-
 
 describe('Home', () => {
 
-
     describe('Formular', () => {
         beforeAll(() => {
-            jasmine.addMatchers(httpMatcher)
+            jasmine.addMatchers(httpMatcher);
         });
 
         beforeEach(() => TestBed.configureTestingModule({
@@ -62,7 +59,7 @@ describe('Home', () => {
             }
 
             constructor(private fixture: ComponentFixture<HomeComponent>, private router: Router) {
-                this.navigateSpy = spyOn(router, 'navigate');
+                this.navigateSpy = spyOn(this.router, 'navigate');
             }
 
             init(): void {
@@ -72,7 +69,7 @@ describe('Home', () => {
 
             input(): void {
                 let htmlName = this.fixture.debugElement.query(By.css('#name')).nativeElement;
-                htmlName.value = "Matthias Haschka";
+                htmlName.value = 'Matthias Haschka';
                 htmlName.dispatchEvent(new Event('input'));
 
                 this.fixture.detectChanges();
@@ -84,31 +81,32 @@ describe('Home', () => {
             }
 
             get name() {
-                return this.fixture.componentInstance.name
+                return this.fixture.componentInstance.name;
             }
         }
 
-        function testfallausführung(sut: () =>void, testfall: ITestfall, spec: (t: ITestfall) => void) {
+        function testfallausführung(
+            sut: () => void, testfall: ITestfall, spec: (t: ITestfall) => void) {
             describe(testfall.beschreibung, () => {
                 testfall.testfall();
                 sut();
                 spec(testfall);
-            })
+            });
         }
 
         interface ITestfall {
-            beschreibung: string
-            testfall: ()=>void
-            lastConnection: MockConnection
-            ausführen(sut: ()=>void, spec: (t: ITestfall)=>void): void
+            beschreibung: string;
+            testfall: () => void;
+            lastConnection: MockConnection;
+            ausführen(sut: () => void, spec: (t: ITestfall) => void): void;
         }
 
-        describe("Haushaltsbuchanlage", () => {
+        describe('Haushaltsbuchanlage', () => {
 
             let erfolgreich: ITestfall = {
                 lastConnection: null,
-                beschreibung: "falls wirklich erfolgreich",
-                ausführen(sut: ()=>void, spec: (t: ITestfall)=>void) {
+                beschreibung: 'falls wirklich erfolgreich',
+                ausführen(sut: () => void, spec: (t: ITestfall) => void) {
                     testfallausführung(sut, this, spec);
                 },
                 testfall() {
@@ -119,8 +117,8 @@ describe('Home', () => {
                                 status: 202,
                                 headers: new Headers({location: '/process/42'}),
                                 body: JSON.stringify({id: 123456})
-                            })))
-                        })
+                            })));
+                        });
                     }));
                 }
             };
@@ -137,12 +135,15 @@ describe('Home', () => {
                 it('sollte die Haushaltsbuchanlage anweisen', async(() => {
                     expect(t.lastConnection.request).toPostJson({
                         url: '/api/haushaltsbuchanlage',
-                        body: {name: "Matthias Haschka"}
+                        body: {name: 'Matthias Haschka'}
                     });
                 }));
-                it('sollte neues Haushaltsbuch erzeugen', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
+
+                it('sollte neues Haushaltsbuch erzeugen',
+                    async(inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().haushaltsbuch.id).toEqual(123456);
                 })));
+
                 it('sollte zum Dashboard weiterleiten', async(inject([Page], (page: Page) => {
                     expect(page.navigateSpy).toHaveBeenCalledWith(['/dashboard', 123456]);
                     // TODO: klären, warum navigate zwei mal aufgerufen wird.
@@ -152,27 +153,30 @@ describe('Home', () => {
 
             let erfolglos: ITestfall = {
                 lastConnection: null,
-                beschreibung: "falls Server nicht verfügbar",
-                ausführen(sut: ()=>void, spec: (t: ITestfall)=>void) {
+                beschreibung: 'falls Server nicht verfügbar',
+                ausführen(sut: () => void, spec: (t: ITestfall) => void) {
                     testfallausführung(sut, this, spec);
                 },
                 testfall() {
                     beforeEach(inject([MockBackend], (backend: MockBackend) => {
                         backend.connections.subscribe((c: MockConnection) => {
                             this.lastConnection = c;
-                            c.mockError(new Error('error'))
-                        })
-                    }))
+                            c.mockError(new Error('error'));
+                        });
+                    }));
                 }
             };
 
             erfolglos.ausführen(haushaltsbuchanlage, () => {
-                it('sollte Verbindungsfehler melden', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
-                    expect(redux.getState().verbindung.nachricht).toEqual("Keine Verbindung")
+                it('sollte Verbindungsfehler melden',
+                    async(inject([NgRedux], (redux: NgRedux<AppState>) => {
+                    expect(redux.getState().verbindung.nachricht).toEqual('Keine Verbindung');
                 })));
-                it('sollte Kompensationsoption bereitstellen', async(inject([NgRedux], (redux: NgRedux<AppState>) => {
+
+                it('sollte Kompensationsoption bereitstellen',
+                    async(inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().verbindung.kompensation.length).toEqual(1);
-                })))
+                })));
             });
         });
     });

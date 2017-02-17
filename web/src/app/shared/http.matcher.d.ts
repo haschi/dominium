@@ -1,4 +1,4 @@
-declare module jasmine {
+declare namespace jasmine {
     interface Matchers {
         toPostJson(expected: any): boolean;
     }

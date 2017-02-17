@@ -11,6 +11,8 @@
     "strictNullChecks": false,
     "baseUrl": "./src",
     "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "allowUnreachableCode": false,
     "paths": {
     },
     "lib": [

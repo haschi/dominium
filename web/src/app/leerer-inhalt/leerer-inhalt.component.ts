@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {VerbindungState, AppState} from "../reducer";
-import {Observable} from "rxjs";
-import {select} from "@angular-redux/store";
+import { VerbindungState, AppState } from '../reducer';
+import { Observable } from 'rxjs';
+import { select } from '@angular-redux/store';
 
 @Component({
     selector: 'leerer-inhalt',
@@ -11,8 +11,10 @@ export class LeererInhaltComponent {
     @select((s: AppState) => s.verbindung)
     fehler$: Observable<VerbindungState>;
 
-    kompensieren(eintrag: number) {
-        console.info("Kompensation ausgewählt: " + eintrag);
-        this.fehler$.do(() => {console.info("Kompensation: ")});
+    kompensieren() {
+        // console.info('Kompensation ausgewählt: ' + eintrag);
+        // this.fehler$.do(() => {
+        //     console.info(`Kompensation: `);
+        // });
     }
 }

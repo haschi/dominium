@@ -12,6 +12,7 @@
             <package name="javax.swing" withSubpackages="false" static="false" />
           </value>
         </option>
+        <option name="RIGHT_MARGIN" value="100" />
         <JavaCodeStyleSettings>
           <option name="ANNOTATION_PARAMETER_WRAP" value="5" />
           <option name="CLASS_NAMES_IN_JAVADOC" value="3" />
@@ -19,6 +20,10 @@
         <MarkdownNavigatorCodeStyleSettings>
           <option name="RIGHT_MARGIN" value="72" />
         </MarkdownNavigatorCodeStyleSettings>
+        <TypeScriptCodeStyleSettings>
+          <option name="USE_DOUBLE_QUOTES" value="false" />
+          <option name="SPACES_WITHIN_IMPORTS" value="true" />
+        </TypeScriptCodeStyleSettings>
         <editorconfig>
           <option name="ENABLED" value="false" />
         </editorconfig>
@@ -53,6 +58,9 @@
           <option name="FOR_BRACE_FORCE" value="3" />
           <option name="WRAP_LONG_LINES" value="true" />
           <option name="WRAP_ON_TYPING" value="1" />
+        </codeStyleSettings>
+        <codeStyleSettings language="TypeScript">
+          <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
         </codeStyleSettings>
       </value>
     </option>

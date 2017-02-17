@@ -1,10 +1,10 @@
-import {Component, ViewEncapsulation, AfterViewInit, ElementRef} from "@angular/core";
-import "materialize-css/dist/js/materialize.js";
-import {Aktionen} from "./Aktionen";
-import {AppState, KonfigurationState, VerbindungState} from "./reducer";
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
-import {select, NgRedux} from "@angular-redux/store"
+import { Component, ViewEncapsulation } from '@angular/core';
+import 'materialize-css/dist/js/materialize.js';
+import { Aktionen } from './Aktionen';
+import { AppState, KonfigurationState, VerbindungState } from './reducer';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { select } from '@angular-redux/store';
 
 @Component({
     selector: 'app',
@@ -23,20 +23,17 @@ export class AppComponent {
     @select((s: AppState) => s.verbindung)
     fehler$: Observable<VerbindungState>;
 
-    constructor(private aktionen: Aktionen, private redux: NgRedux<AppState>, private router: Router)   {}
+    constructor(private aktionen: Aktionen, private router: Router) {
+    }
 
     ngOnInit() {
-        console.info("Abboniere Verbindungsstatus");
-
         this.aktionen.konfigurationLaden();
 
         this.fehler$.subscribe(v => {
             if (v.route != null) {
-                console.info("Navigation: " + JSON.stringify(v.route));
-                if (v.route == []) {
-
+                if (v.route === []) {
                 } else {
-                    this.router.navigate([v.route])
+                    this.router.navigate([v.route]);
                 }
             }
         });

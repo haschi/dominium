@@ -93,6 +93,11 @@
     </inspection_tool>
     <inspection_tool class="ReuseOfLocalVariable" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="SamePackageImport" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="SpellCheckingInspection" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
     <inspection_tool class="SystemOutErr" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ThreeNegationsPerMethod" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_ignoreInEquals" value="true" />
@@ -104,6 +109,10 @@
     <inspection_tool class="TooBroadScope" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="m_allowConstructorAsInitializer" value="false" />
       <option name="m_onlyLookAtBlocks" value="false" />
+    </inspection_tool>
+    <inspection_tool class="TsLint" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UnterminatedStatementJS" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="ignoreSemicolonAtEndOfBlock" value="true" />
     </inspection_tool>
     <inspection_tool class="UnusedImport" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnusedLibrary" enabled="true" level="ERROR" enabled_by_default="true" />

@@ -9,7 +9,7 @@
             <div class="row">
                 <ul class="col s12 center-align">
                     <li *ngFor="let k of (fehler$ | async)?.kompensation; let i = index">
-                        <a class="waves-effect btn-flat" (click)="kompensieren(i)">{{k.titel}}</a>
+                        <a class="waves-effect btn-flat" (click)="kompensieren()">{{k.titel}}</a>
                     </li>
                 </ul>
             </div>

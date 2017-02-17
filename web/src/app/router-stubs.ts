@@ -2,7 +2,6 @@
 export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 
 import { Component, Directive, Injectable, Input } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
 
 // #docregion router-link
 @Directive({
@@ -39,7 +38,6 @@ export class ActivatedRouteStub {
 
     // ActivatedRoute.params is Observable
     private subject = new BehaviorSubject(this.testParams);
-    params = this.subject.asObservable();
 
     // Test parameters
     private _testParams: {};

@@ -1,4 +1,4 @@
-import {combineReducers, Reducer, Action} from "redux";
+import { combineReducers, Reducer, Action } from 'redux';
 
 export class AppState {
     konfiguration: KonfigurationState;
@@ -7,7 +7,7 @@ export class AppState {
 }
 
 export const KONFIGURATION_INIT_STATE: KonfigurationState = {
-    name: "Nicht Benannt",
+    name: 'Nicht Benannt',
     version: null,
     _links: []
 };
@@ -35,7 +35,7 @@ export class HaushaltsbuchState {
 export class KonfigurationState {
     name: String;
     version: number;
-    _links: any[]
+    _links: any[];
 }
 
 export class VerbindungState {
@@ -56,10 +56,10 @@ export const rootReducer: Reducer<AppState> = combineReducers<AppState>({
 });
 
 export const AKTION = {
-    LADEN: "LADEN",
-    OFFLINE_GEHEN: "OFFLINE_GEHEN",
-    FEHLER: "FEHLER",
-    HAUSHALTSBUCH_ERSTELLT: "HAUSHALTSBUCH_ERSTELLT"
+    LADEN: 'LADEN',
+    OFFLINE_GEHEN: 'OFFLINE_GEHEN',
+    FEHLER: 'FEHLER',
+    HAUSHALTSBUCH_ERSTELLT: 'HAUSHALTSBUCH_ERSTELLT'
 };
 
 export class MyAction implements Action {
@@ -67,11 +67,13 @@ export class MyAction implements Action {
     payload: any;
 }
 
-export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE, action: MyAction): KonfigurationState {
+export function konfigurationReducer(
+    state: KonfigurationState = KONFIGURATION_INIT_STATE,
+    action: MyAction): KonfigurationState {
 
     switch (action.type) {
 
-        case "LADEN":
+        case 'LADEN':
             return Object.assign({}, state, action.payload);
 
         default:
@@ -79,20 +81,24 @@ export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_I
     }
 }
 
-export function verbindungReducer(state: VerbindungState = VERBINDUNG_INIT_STATE, action: MyAction) : VerbindungState {
+export function verbindungReducer(
+    state: VerbindungState = VERBINDUNG_INIT_STATE,
+    action: MyAction): VerbindungState {
     switch (action.type) {
-        case "OFFLINE_GEHEN":
+        case 'OFFLINE_GEHEN':
             return Object.assign({}, state, action.payload);
-        case "FEHLER":
+        case 'FEHLER':
             return Object.assign({}, state, action.payload);
         default:
             return state;
     }
 }
 
-export function hauhaltsbuchReducer(state: HaushaltsbuchState = HAUSHALTSBUCH_INIT_STATE, action: MyAction): HaushaltsbuchState {
-    switch(action.type) {
-        case "HAUSHALTSBUCH_ERSTELLT":
+export function hauhaltsbuchReducer(
+    state: HaushaltsbuchState = HAUSHALTSBUCH_INIT_STATE,
+    action: MyAction): HaushaltsbuchState {
+    switch (action.type) {
+        case 'HAUSHALTSBUCH_ERSTELLT':
             return Object.assign({}, state, action.payload);
         default:
             return state;

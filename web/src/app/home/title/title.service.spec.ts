@@ -2,7 +2,7 @@ import {
   inject,
   TestBed
 } from '@angular/core/testing';
-import { Component } from '@angular/core';
+
 import {
   BaseRequestOptions,
   ConnectionBackend,

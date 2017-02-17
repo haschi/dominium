@@ -1,15 +1,11 @@
-import {KonfigurationState, KONFIGURATION_INIT_STATE, konfigurationReducer} from "./reducer";
-import {TestBed, inject} from "@angular/core/testing";
-import {Aktionen} from "./Aktionen";
-import {HttpTestModule} from "./httptest.module";
-import {NgRedux} from "@angular-redux/store";
-import {MockBackend, MockConnection} from "@angular/http/testing";
-import {Response, BaseResponseOptions} from "@angular/http";
-import {createStore} from "redux";
-import {RouterTestingModule} from "@angular/router/testing";
-import {ROUTES} from "./app.routes";
-import {HomeComponent} from "./home/home.component";
-import {NoContentComponent} from "./no-content/no-content.component";
+import { KonfigurationState, KONFIGURATION_INIT_STATE, konfigurationReducer } from './reducer';
+import { TestBed, inject } from '@angular/core/testing';
+import { Aktionen } from './Aktionen';
+import { HttpTestModule } from './httptest.module';
+import { NgRedux } from '@angular-redux/store';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Response, BaseResponseOptions } from '@angular/http';
+import { createStore } from 'redux';
 
 describe('Konfiguration', () => {
 
@@ -27,14 +23,14 @@ describe('Konfiguration', () => {
                     deps: [NgRedux]
                 }
             ]
-        })
+        });
     });
 
     beforeEach(inject([Aktionen, MockBackend], (aktionen: Aktionen, backend: MockBackend) => {
         backend.connections.subscribe((connection: MockConnection) => {
             connection.mockRespond(new Response(new BaseResponseOptions().merge({
                 body: JSON.stringify({
-                    name: "service",
+                    name: 'service',
                     version: 123456,
                     _links: []
                 })
@@ -44,15 +40,17 @@ describe('Konfiguration', () => {
         aktionen.konfigurationLaden();
     }));
 
-    it("sollte einen Namen haben", inject([KonfigurationState], (store: KonfigurationState) => {
-        expect(store.name).toBe("service");
+    it('sollte einen Namen haben', inject([KonfigurationState], (store: KonfigurationState) => {
+        expect(store.name).toBe('service');
     }));
 
-    it("sollte eine Buildnummer haben", inject([KonfigurationState], (store: KonfigurationState) => {
-        expect(store.version).toBe(123456)
+    it('sollte eine Buildnummer haben',
+            inject([KonfigurationState], (store: KonfigurationState) => {
+        expect(store.version).toBe(123456);
     }));
 
-    xit("sollte Links als Einsteigspunkte des Backends haben", inject([NgRedux], (store: NgRedux<KonfigurationState>) => {
-        expect(store.getState()._links).toBe([])
+    xit('sollte Links als Einsteigspunkte des Backends haben',
+            inject([NgRedux], (store: NgRedux<KonfigurationState>) => {
+        expect(store.getState()._links).toBe([]);
     }));
 });
