@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +15,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Diese Eigenschaften konfigurieren maven-compiler-plaugin und maven-pmd-plugin und macht
+        <!-- Diese Eigenschaften konfigurieren maven-compiler-plugin und maven-pmd-plugin und macht
         die explizite Konfiguration der Plugins überflüssig -->
 
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -34,7 +35,8 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:http://localhost/matthias/haushaltsbuch.git</developerConnection>
+        <developerConnection>scm:git:http://localhost/matthias/haushaltsbuch.git
+        </developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -301,7 +303,8 @@
                             <!-- WICHTIG -->
                             <testSources/>
                             <weaveDirectories>
-                                <weaveDirectory>${project.build.testOutputDirectory}</weaveDirectory>
+                                <weaveDirectory>${project.build.testOutputDirectory}
+                                </weaveDirectory>
                             </weaveDirectories>
                         </configuration>
                     </execution>

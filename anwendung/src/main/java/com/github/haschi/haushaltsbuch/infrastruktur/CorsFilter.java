@@ -5,6 +5,7 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.util.Objects;
 
 @Provider
 public class CorsFilter implements ContainerResponseFilter
@@ -18,7 +19,7 @@ public class CorsFilter implements ContainerResponseFilter
         containerResponseContext.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
         containerResponseContext.getHeaders().putSingle("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         final String reqHeader = containerRequestContext.getHeaderString("Access-Control-Request-Headers");
-        if (reqHeader != null && reqHeader != "")
+        if (reqHeader != null && !Objects.equals(reqHeader, ""))
         {
             containerResponseContext.getHeaders().putSingle("Access-Control-Allow-Headers", reqHeader);
         }

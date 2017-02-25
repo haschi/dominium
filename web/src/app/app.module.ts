@@ -20,6 +20,7 @@ import { Aktionen } from './Aktionen';
 import { INIT_STATE, rootReducer, AppState } from './reducer';
 import { MaterializeModule } from 'angular2-materialize';
 import { LeererInhaltComponent } from './leerer-inhalt/leerer-inhalt.component';
+import { JobService } from './shared/job.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -48,6 +49,7 @@ const APP_PROVIDERS = [
         RouterModule.forRoot(ROUTES, {useHash: true, preloadingStrategy: PreloadAllModules})
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
+        JobService,
         Aktionen,
         ENV_PROVIDERS,
         APP_PROVIDERS

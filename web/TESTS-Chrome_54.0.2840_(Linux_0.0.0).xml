@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome 54.0.2840 (Linux 0.0.0)" package="" timestamp="2017-02-17T20:59:07" id="0" hostname="dev2" tests="20" errors="0" failures="0" time="1.548">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36"/>
+  </properties>
+  <testcase name="About should log ngOnInit" time="0.083" classname="Chrome_54_0_2840_(Linux_0_0_0).About"/>
+  <testcase name="App sollte die Buildnummer des Backend ermitteln" time="0.363" classname="Chrome_54_0_2840_(Linux_0_0_0).App"/>
+  <testcase name="App sollte die Konfiguration bereitstellen" time="0.196" classname="Chrome_54_0_2840_(Linux_0_0_0).App"/>
+  <testcase name="App falls offline sollte zur Offline Komponente weiterleiten" time="0" classname="Chrome_54_0_2840_(Linux_0_0_0).App">
+    <skipped/>
+  </testcase>
+  <testcase name="App falls offline sollte die Offline Komponente anzeigen" time="0" classname="Chrome_54_0_2840_(Linux_0_0_0).App">
+    <skipped/>
+  </testcase>
+  <testcase name="App sollte das Seitenmenü initialisieren" time="0.136" classname="Chrome_54_0_2840_(Linux_0_0_0).App"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls wirklich erfolgreich sollte die Haushaltsbuchanlage anweisen" time="0.122" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls wirklich erfolgreich sollte neues Haushaltsbuch erzeugen" time="0.1" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls wirklich erfolgreich sollte zum Dashboard weiterleiten" time="0.107" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Verbindungsfehler melden" time="0.102" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Kompensationsoption bereitstellen" time="0.083" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should have default data" time="0.059" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should have a title" time="0.082" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should log ngOnInit" time="0.056" classname="Chrome_54_0_2840_(Linux_0_0_0).Home"/>
+  <testcase name="Title should have http" time="0.013" classname="Chrome_54_0_2840_(Linux_0_0_0).Title"/>
+  <testcase name="Title should get data from the server" time="0.01" classname="Chrome_54_0_2840_(Linux_0_0_0).Title"/>
+  <testcase name="x-large directive should sent font-size to x-large" time="0.015" classname="Chrome_54_0_2840_(Linux_0_0_0).x-large directive"/>
+  <testcase name="Konfiguration sollte einen Namen haben" time="0.012" classname="Chrome_54_0_2840_(Linux_0_0_0).Konfiguration"/>
+  <testcase name="Konfiguration sollte eine Buildnummer haben" time="0.009" classname="Chrome_54_0_2840_(Linux_0_0_0).Konfiguration"/>
+  <testcase name="Konfiguration sollte Links als Einsteigspunkte des Backends haben" time="0" classname="Chrome_54_0_2840_(Linux_0_0_0).Konfiguration">
+    <skipped/>
+  </testcase>
+  <system-out>
+    <![CDATA[PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'async mockData', [Object{res: 'data'}]
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'async mockData', [Object{res: 'data'}]
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":123456}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

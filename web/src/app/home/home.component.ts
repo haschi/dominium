@@ -6,6 +6,7 @@ import { select } from '@angular-redux/store';
 import { AppState, HaushaltsbuchState } from '../reducer';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Http, Response } from '@angular/http';
 
 @Component({
     // The selector is what angular internally uses
@@ -35,6 +36,7 @@ export class HomeComponent {
     constructor(public title: Title,
                 private formBuilder: FormBuilder,
                 private aktion: Aktionen,
+                private http: Http,
                 private router: Router) {
     }
 
@@ -53,7 +55,17 @@ export class HomeComponent {
 
         this.id$.subscribe((data: HaushaltsbuchState) => {
             console.log('Datenänderung Haushaltsbuch:' + JSON.stringify(data));
-            if (data.id != null) {
+            if (data.location != null) {
+                console.log('Prozessstatus gefunden bei: ' + data.location);
+                this.http.get(data.location).subscribe(
+                    (r: Response) => {
+                        console.log(r.text());
+                    },
+                    (error) => {
+                        console.log(error);
+                    });
+            }
+            if (data.location == 'hellow rold') {
                 this.router.navigate(['/dashboard', data.id]);
             }
         });

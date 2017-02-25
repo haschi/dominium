@@ -5,6 +5,7 @@ import { AppState, KonfigurationState, VerbindungState } from './reducer';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
+import { JobService } from './shared/job.service';
 
 @Component({
     selector: 'app',
@@ -23,10 +24,11 @@ export class AppComponent {
     @select((s: AppState) => s.verbindung)
     fehler$: Observable<VerbindungState>;
 
-    constructor(private aktionen: Aktionen, private router: Router) {
+    constructor(private aktionen: Aktionen, private router: Router, private job: JobService) {
     }
 
     ngOnInit() {
+        this.job.init();
         this.aktionen.konfigurationLaden();
 
         this.fehler$.subscribe(v => {

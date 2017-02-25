@@ -108,11 +108,13 @@
             <artifactId>jackson-module-parameter-names</artifactId>
             <version>2.6.3</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
             <version>2.6.3</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
@@ -132,12 +134,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Import the JSF API, we use provided scope as the API is included in JBoss WildFly -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
         <!--  jboss-logging API -->
         <dependency>
@@ -147,13 +143,6 @@
         </dependency>
 
         <!-- Java EE 7 End -->
-
-        <dependency>
-            <groupId>de.larmic.butterfaces</groupId>
-            <artifactId>components</artifactId>
-            <version>2.1.14</version>
-        </dependency>
-
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
@@ -252,6 +241,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.spec.javax.enterprise.concurrent</groupId>
+            <artifactId>jboss-concurrency-api_1.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -319,95 +314,55 @@
             </plugin>
 
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
                 <executions>
                     <execution>
-                        <id>build</id>
-                        <phase>install</phase>
+                        <id>integration-1</id>
                         <goals>
-                            <goal>build</goal>
+                            <goal>integration-test</goal>
                         </goals>
+                        <configuration>
+                            <argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>
+                            <summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>
+                            <includes>
+                                <include>domaene.Integrationstests.java</include>
+                            </includes>
+
+                        </configuration>
                     </execution>
+
                     <execution>
-                        <id>clean</id>
-                        <phase>clean</phase>
+                        <id>backend</id>
                         <goals>
-                            <goal>remove</goal>
+                            <goal>integration-test</goal>
                         </goals>
+
+                        <configuration>
+                            <argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>
+                            <summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>
+                            <includes>
+                                <include>domaene.BackendTest.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+
+                        <!--<configuration>-->
+                        <!--<summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>-->
+                        <!--<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>-->
+                        <!--</configuration>-->
                     </execution>
                 </executions>
-                <configuration>
-                    <showLogs>true</showLogs>
-                    <images>
-                        <image>
-                            <name>%g/%a:%l</name>
-                            <build>
-                                <dockerFileDir>${basedir}/target</dockerFileDir>
-                            </build>
-                            <run>
-                                <ports>
-                                    <port>8080:8080</port>
-                                    <port>8787:8787</port>
-                                    <port>9990:9990</port>
-                                </ports>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
             </plugin>
-
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-failsafe-plugin</artifactId>-->
-            <!--<version>2.19.1</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>integration-1</id>-->
-            <!--<goals>-->
-            <!--<goal>integration-test</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>-->
-            <!--<summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>-->
-            <!--<includes>-->
-            <!--<include>domaene.Integrationstests.java</include>-->
-            <!--</includes>-->
-
-            <!--</configuration>-->
-            <!--</execution>-->
-
-            <!--<execution>-->
-            <!--<id>backend</id>-->
-            <!--<goals>-->
-            <!--<goal>integration-test</goal>-->
-            <!--</goals>-->
-
-            <!--<configuration>-->
-            <!--<argLine>-Dorg.apache.deltaspike.ProjectStage=IntegrationTest</argLine>-->
-            <!--<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>-->
-            <!--<includes>-->
-            <!--<include>domaene.BackendTest.java</include>-->
-            <!--</includes>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-
-            <!--<execution>-->
-            <!--<id>verify</id>-->
-            <!--<goals>-->
-            <!--<goal>verify</goal>-->
-            <!--</goals>-->
-
-            <!--&lt;!&ndash;<configuration>&ndash;&gt;-->
-            <!--&lt;!&ndash;<summaryFile>target/failsafe-reports/integration-1.xml</summaryFile>&ndash;&gt;-->
-            <!--&lt;!&ndash;<summaryFile>target/failsafe-reports/integration-2.xml</summaryFile>&ndash;&gt;-->
-            <!--&lt;!&ndash;</configuration>&ndash;&gt;-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
-
 
     <reporting>
 
@@ -445,9 +400,4 @@
             <!--</plugin>-->
         </plugins>
     </reporting>
-
-    <profiles>
-    </profiles>
-
-
 </project>

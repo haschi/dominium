@@ -11,7 +11,7 @@ export class Aktionen {
 
     konfigurationLaden() {
         // TODO: URI sollte / sein. Proxy muss konfiguriert werden.
-        this.http.get('http://localhost:8080/').subscribe(
+        this.http.get('http://localhost:8080/api').subscribe(
             (r: Response) => {
                 this.store.dispatch({type: AKTION.LADEN, payload: r.json()});
             },
@@ -31,10 +31,26 @@ export class Aktionen {
     }
 
     legeHaushaltsbuchAn(name: String) {
-        this.http.post('/api/haushaltsbuchanlage', {
-            name: name
-        }).subscribe((r: Response) => {
-            this.store.dispatch({type: AKTION.HAUSHALTSBUCH_ERSTELLT, payload: r.json()});
+        this.http.post('http://localhost:8080/api/hauptbuch/haushaltsbuchanlage', null)
+            .subscribe((r: Response) => {
+            console.info('Location: ' + r.headers.get('Location'));
+            console.info('Status Code: ' + r.status + ' (' + r.statusText + ')');
+
+            if (r.status === 202) {
+            this.store.dispatch({
+                type: AKTION.JOB_ERSTELLT,
+                payload: {
+                    location: r.headers.get('Location'),
+                }});
+            }
+
+            if (r.status === 200) {
+                this.store.dispatch({
+                    type: AKTION.HAUSHALTSBUCH_ERSTELLT,
+                    payload: r.json()
+                });
+            }
+
         }, (err) => {
             this.store.dispatch({
                 type: AKTION.FEHLER, payload: {

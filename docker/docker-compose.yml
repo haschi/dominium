@@ -2,6 +2,8 @@ version: '2'
 
 services:
   haushaltsbuch:
+    build:
+      context: ../anwendung/target
     image: haushaltsbuch/anwendung:latest
     expose:
       - "8080"
@@ -13,7 +15,7 @@ services:
 
   web:
     build:
-      context: .
+      context: ../web/target
     image: haushaltsbuch/web-proxy:latest
     ports:
       - "80:80"

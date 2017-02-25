@@ -22,6 +22,8 @@
     <bytecodeTargetLevel target="1.8">
       <module name="anwendung" target="1.8" />
       <module name="aspekte" target="1.8" />
+      <module name="asyncspike" target="1.8" />
+      <module name="asyncspike (1)" target="1.8" />
       <module name="building" target="1.8" />
       <module name="coding" target="1.8" />
       <module name="coding-bom" target="1.5" />
