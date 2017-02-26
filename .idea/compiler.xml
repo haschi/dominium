@@ -7,7 +7,6 @@
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="ajc" />
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -22,8 +21,6 @@
     <bytecodeTargetLevel target="1.8">
       <module name="anwendung" target="1.8" />
       <module name="aspekte" target="1.8" />
-      <module name="asyncspike" target="1.8" />
-      <module name="asyncspike (1)" target="1.8" />
       <module name="building" target="1.8" />
       <module name="coding" target="1.8" />
       <module name="coding-bom" target="1.5" />
