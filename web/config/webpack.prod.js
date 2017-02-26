@@ -283,4 +283,4 @@ module.exports = function (env) {
     }
 
   });
-}
+};

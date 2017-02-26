@@ -79,7 +79,7 @@ Die zweite Hürde besteht darin, materialize.js funktionstüchtig zu bekommen.
 Siehe [Shimming](https://webpack.js.org/guides/shimming/) in 
 [Webpack Guides](https://webpack.js.org/guides/)
 in webpack.commin.js:
-```javascript
+```typescript
        plugins: [
             new webpack.ProvidePlugin({
                 $: "jquery",

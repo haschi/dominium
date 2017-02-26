@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { NgRedux } from '@angular-redux/store';
 import { AKTION } from './reducer';
+import { Ereignis } from './ereignis';
 
 @Injectable()
 export class Aktionen {
 
-    constructor(private http: Http, private store: NgRedux<any>) {
+    constructor(private http: Http, private store: NgRedux<any>, private ereignis: Ereignis) {
     };
 
     konfigurationLaden() {
@@ -37,11 +38,7 @@ export class Aktionen {
             console.info('Status Code: ' + r.status + ' (' + r.statusText + ')');
 
             if (r.status === 202) {
-            this.store.dispatch({
-                type: AKTION.JOB_ERSTELLT,
-                payload: {
-                    location: r.headers.get('Location'),
-                }});
+                this.ereignis.jobGestartet(r.headers.get('Location'));
             }
 
             if (r.status === 200) {

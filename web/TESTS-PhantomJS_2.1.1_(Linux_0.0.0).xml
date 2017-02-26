@@ -1,27 +1,18 @@
 <?xml version="1.0"?>
-<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2017-02-25T23:59:33" id="0" hostname="dev2" tests="20" errors="0" failures="3" time="1.187">
+<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2017-02-26T09:07:16" id="0" hostname="dev2" tests="24" errors="0" failures="0" time="1.418">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
   </properties>
-  <testcase name="About should log ngOnInit" time="0.056" classname="PhantomJS_2_1_1_(Linux_0_0_0).About"/>
-  <testcase name="App sollte die Buildnummer des Backend ermitteln" time="0.216" classname="PhantomJS_2_1_1_(Linux_0_0_0).App">
-    <failure type="">Failed: No provider for JobService!
-</failure>
-  </testcase>
-  <testcase name="App sollte die Konfiguration bereitstellen" time="0.164" classname="PhantomJS_2_1_1_(Linux_0_0_0).App">
-    <failure type="">Failed: No provider for JobService!
-</failure>
-  </testcase>
+  <testcase name="About should log ngOnInit" time="0.067" classname="PhantomJS_2_1_1_(Linux_0_0_0).About"/>
+  <testcase name="App sollte die Buildnummer des Backend ermitteln" time="0.298" classname="PhantomJS_2_1_1_(Linux_0_0_0).App"/>
+  <testcase name="App sollte die Konfiguration bereitstellen" time="0.188" classname="PhantomJS_2_1_1_(Linux_0_0_0).App"/>
   <testcase name="App falls offline sollte zur Offline Komponente weiterleiten" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).App">
     <skipped/>
   </testcase>
   <testcase name="App falls offline sollte die Offline Komponente anzeigen" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).App">
     <skipped/>
   </testcase>
-  <testcase name="App sollte das Seitenmenü initialisieren" time="0.145" classname="PhantomJS_2_1_1_(Linux_0_0_0).App">
-    <failure type="">Failed: No provider for JobService!
-</failure>
-  </testcase>
+  <testcase name="App sollte das Seitenmenü initialisieren" time="0.15" classname="PhantomJS_2_1_1_(Linux_0_0_0).App"/>
   <testcase name="Home Formular Haushaltsbuchanlage falls wirklich erfolgreich sollte die Haushaltsbuchanlage anweisen" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home">
     <skipped/>
   </testcase>
@@ -31,47 +22,87 @@
   <testcase name="Home Formular Haushaltsbuchanlage falls wirklich erfolgreich sollte zum Dashboard weiterleiten" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home">
     <skipped/>
   </testcase>
-  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Verbindungsfehler melden" time="0.13" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
-  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Kompensationsoption bereitstellen" time="0.113" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
-  <testcase name="Home Alles andere ;-) should have default data" time="0.089" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
-  <testcase name="Home Alles andere ;-) should have a title" time="0.093" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
-  <testcase name="Home Alles andere ;-) should log ngOnInit" time="0.072" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
-  <testcase name="Title should have http" time="0.013" classname="PhantomJS_2_1_1_(Linux_0_0_0).Title"/>
-  <testcase name="Title should get data from the server" time="0.016" classname="PhantomJS_2_1_1_(Linux_0_0_0).Title"/>
-  <testcase name="x-large directive should sent font-size to x-large" time="0.034" classname="PhantomJS_2_1_1_(Linux_0_0_0).x-large directive"/>
-  <testcase name="Konfiguration sollte einen Namen haben" time="0.032" classname="PhantomJS_2_1_1_(Linux_0_0_0).Konfiguration"/>
-  <testcase name="Konfiguration sollte eine Buildnummer haben" time="0.014" classname="PhantomJS_2_1_1_(Linux_0_0_0).Konfiguration"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Verbindungsfehler melden" time="0.156" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
+  <testcase name="Home Formular Haushaltsbuchanlage falls Server nicht verfügbar sollte Kompensationsoption bereitstellen" time="0.119" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should have default data" time="0.117" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should have a title" time="0.091" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
+  <testcase name="Home Alles andere ;-) should log ngOnInit" time="0.082" classname="PhantomJS_2_1_1_(Linux_0_0_0).Home"/>
+  <testcase name="Title should have http" time="0.036" classname="PhantomJS_2_1_1_(Linux_0_0_0).Title"/>
+  <testcase name="Title should get data from the server" time="0.02" classname="PhantomJS_2_1_1_(Linux_0_0_0).Title"/>
+  <testcase name="x-large directive should sent font-size to x-large" time="0.031" classname="PhantomJS_2_1_1_(Linux_0_0_0).x-large directive"/>
+  <testcase name="Konfiguration sollte einen Namen haben" time="0.018" classname="PhantomJS_2_1_1_(Linux_0_0_0).Konfiguration"/>
+  <testcase name="Konfiguration sollte eine Buildnummer haben" time="0.016" classname="PhantomJS_2_1_1_(Linux_0_0_0).Konfiguration"/>
   <testcase name="Konfiguration sollte Links als Einsteigspunkte des Backends haben" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).Konfiguration">
     <skipped/>
   </testcase>
+  <testcase name="Job Ein neuer Job sollte gestartet werden" time="0.023" classname="PhantomJS_2_1_1_(Linux_0_0_0).Job"/>
+  <testcase name="Job Ein gestarteter Job sollte abgebrochen werden können" time="0.006" classname="PhantomJS_2_1_1_(Linux_0_0_0).Job"/>
+  <testcase name="Job Ein gestarteter Job sollte bis zum Erfolg die Job Resource pollen" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).Job"/>
+  <testcase name="Job Ein gestarteter Job sollte Timeout Fehler erzeugen" time="0" classname="PhantomJS_2_1_1_(Linux_0_0_0).Job"/>
   <system-out>
-    <![CDATA[PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
-,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/PROBE_UNKNOWN_ACTION_u.5.8.5.i.8'
+    <![CDATA[Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/PROBE_UNKNOWN_ACTION_z.v.k.z.y'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'Job geändert: null'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: LADEN'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'Job geändert: null'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: LADEN'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/PROBE_UNKNOWN_ACTION_n.8.w.y.u.8.9.h.v.j.i.e.p.j.3.m.o.b.t.9'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'Job geändert: null'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: LADEN'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
-,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
-,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
-,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
-,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'Job geändert: null'
 ,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'async mockData', [Object{res: 'data'}]
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'Job geändert: null'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: LADEN'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'hello `Home` component'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
+,PhantomJS 2.1.1 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'Job geändert: null'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'async mockData', [Object{res: 'data'}]
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'hello `Home` component'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung Haushaltsbuch:{"location":null,"id":null}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'Datenänderung: {"name":"Matthias Haschka"}'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'submit: Matthias Haschka'
+,Chrome 54.0.2840 (Linux 0.0.0) INFO: 'jobReducer: FEHLER'
+,Chrome 54.0.2840 (Linux 0.0.0) LOG: 'FEHLER: Error: error'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
 ,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: @@redux/INIT'
+,PhantomJS 2.1.1 (Linux 0.0.0) INFO: 'jobReducer: JOB_ERSTELLT'
 
 ]]>
   </system-out>

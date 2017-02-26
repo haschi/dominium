@@ -16,6 +16,7 @@ export class JobService {
 
         this.job$
             .filter((job: JobState) => job.location != null)
+            .map((job: JobState) => job)
             .flatMap((job: JobState, index: number) => {
                 console.info('job index: ' + index);
                 return Observable.interval(1000)

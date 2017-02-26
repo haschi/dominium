@@ -18,6 +18,8 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { LeererInhaltComponent } from './leerer-inhalt/leerer-inhalt.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { JobService } from './shared/job.service';
+import { Ereignis } from './ereignis';
 
 // TODO Fix this
 describe('App', () => {
@@ -38,6 +40,10 @@ describe('App', () => {
                 ReduxTestModule,
                 HttpTestModule,
                 ReactiveFormsModule
+            ],
+            providers: [
+                JobService,
+                Ereignis
             ]
         });
     });
