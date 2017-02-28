@@ -3,12 +3,21 @@ import { select } from '@angular-redux/store';
 import { AppState, JobState } from '../reducer';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
+import { NgRedux } from '@angular-redux/store';
+
 @Injectable()
 export class JobService {
     @select((s: AppState) => s.job)
     job$: Observable<JobState>;
 
-    constructor(private http: Http) {}
+
+    get laufend(): Observable<string> {
+        return this.job$
+            .filter(j => j.location != null)
+            .map(j => j.location);
+    }
+
+    constructor(private http: Http, private store: NgRedux<AppState>) {}
     init() {
         this.job$.subscribe((j: JobState) => {
             console.info('Job geändert: ' + j.location);
