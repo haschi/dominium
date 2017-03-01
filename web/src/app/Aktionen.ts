@@ -34,9 +34,6 @@ export class Aktionen {
     legeHaushaltsbuchAn(name: String) {
         this.http.post('http://localhost:8080/api/hauptbuch/haushaltsbuchanlage', null)
             .subscribe((r: Response) => {
-            console.info('Location: ' + r.headers.get('Location'));
-            console.info('Status Code: ' + r.status + ' (' + r.statusText + ')');
-
             if (r.status === 202) {
                 this.ereignis.jobGestartet(r.headers.get('Location'));
             }
@@ -47,7 +44,6 @@ export class Aktionen {
                     payload: r.json()
                 });
             }
-
         }, (err) => {
             this.store.dispatch({
                 type: AKTION.FEHLER, payload: {

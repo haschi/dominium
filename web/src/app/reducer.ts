@@ -23,9 +23,28 @@ export const HAUSHALTSBUCH_INIT_STATE: HaushaltsbuchState = {
     location: null,
     id: null
 };
-export const JOB_INIT_STATE: JobState = {location: null};
-export class JobState {
+export const JOB_INIT_STATE: JobState = {
+    neu: null,
+    laufend: null,
+    beendet: null,
+    fehler: null
+};
+
+export interface FehlgeschlagenerJob {
+    job: string;
+    grund: any;
+}
+
+export interface BeendeterJob {
+    job: string;
     location: string;
+}
+
+export class JobState {
+    neu: string;
+    laufend: string;
+    beendet: BeendeterJob;
+    fehler: FehlgeschlagenerJob;
 }
 
 export const INIT_STATE: AppState = {
@@ -39,7 +58,6 @@ export class HaushaltsbuchState {
     location: string;
     id: any;
 }
-
 
 export class KonfigurationState {
     name: String;
@@ -70,7 +88,9 @@ export const AKTION = {
     OFFLINE_GEHEN: 'OFFLINE_GEHEN',
     FEHLER: 'FEHLER',
     HAUSHALTSBUCH_ERSTELLT: 'HAUSHALTSBUCH_ERSTELLT',
-    JOB_ERSTELLT: 'JOB_ERSTELLT'
+    JOB_ERSTELLT: 'JOB_ERSTELLT',
+    JOB_FEHLGESCHLAGEN: 'JOB_FEHLGESCHLAGEN',
+    JOB_BEENDET: 'JOB_BEENDET'
 };
 
 export class MyAction implements Action {
@@ -78,9 +98,8 @@ export class MyAction implements Action {
     payload: any;
 }
 
-export function konfigurationReducer(
-    state: KonfigurationState = KONFIGURATION_INIT_STATE,
-    action: MyAction): KonfigurationState {
+export function konfigurationReducer(state: KonfigurationState = KONFIGURATION_INIT_STATE,
+                                     action: MyAction): KonfigurationState {
 
     switch (action.type) {
 
@@ -92,9 +111,8 @@ export function konfigurationReducer(
     }
 }
 
-export function verbindungReducer(
-    state: VerbindungState = VERBINDUNG_INIT_STATE,
-    action: MyAction): VerbindungState {
+export function verbindungReducer(state: VerbindungState = VERBINDUNG_INIT_STATE,
+                                  action: MyAction): VerbindungState {
     switch (action.type) {
         case 'OFFLINE_GEHEN':
             return Object.assign({}, state, action.payload);
@@ -105,9 +123,8 @@ export function verbindungReducer(
     }
 }
 
-export function hauhaltsbuchReducer(
-    state: HaushaltsbuchState = HAUSHALTSBUCH_INIT_STATE,
-    action: MyAction): HaushaltsbuchState {
+export function hauhaltsbuchReducer(state: HaushaltsbuchState = HAUSHALTSBUCH_INIT_STATE,
+                                    action: MyAction): HaushaltsbuchState {
     switch (action.type) {
         case 'HAUSHALTSBUCH_ERSTELLT':
             return Object.assign({}, state, {location: action.payload});
@@ -116,13 +133,16 @@ export function hauhaltsbuchReducer(
     }
 }
 
-export function jobReducer(
-    state: JobState = JOB_INIT_STATE,
-    action: MyAction): JobState {
-        console.info("jobReducer: " + action.type);
+export function jobReducer(state: JobState = JOB_INIT_STATE,
+                           action: MyAction): JobState {
     switch (action.type) {
         case 'JOB_ERSTELLT':
-            return Object.assign({}, state, action.payload);
+            return Object.assign({}, state, {neu: action.payload.location});
+        case 'JOB_FEHLGESCHLAGEN':
+            return Object.assign({}, state, {fehler: action.payload});
+        case 'JOB_BEENDET':
+            return Object.assign({}, state, {beendet: action.payload});
+
         default:
             return state;
     }

@@ -1,41 +1,69 @@
 import { Injectable } from '@angular/core';
 import { select } from '@angular-redux/store';
-import { AppState, JobState } from '../reducer';
+import { AppState, FehlgeschlagenerJob, BeendeterJob } from '../reducer';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
-import { NgRedux } from '@angular-redux/store';
+import { Ereignis } from '../ereignis';
 
 @Injectable()
 export class JobService {
-    @select((s: AppState) => s.job)
-    job$: Observable<JobState>;
-
+    @select((s: AppState) => s.job.neu)
+    job$: Observable<string>;
 
     get laufend(): Observable<string> {
         return this.job$
-            .filter(j => j.location != null)
-            .map(j => j.location);
+            .filter(j => j != null)
+            .map(j => j);
     }
 
-    constructor(private http: Http, private store: NgRedux<AppState>) {}
+    @select((s: AppState) => s.job.fehler)
+    abgebrochen$: Observable<FehlgeschlagenerJob>;
+
+    get abgebrochen(): Observable<FehlgeschlagenerJob> {
+        return this.abgebrochen$
+            .filter(x => x != null);
+    }
+
+    @select((s: AppState) => s.job.beendet)
+    beendet$: Observable<BeendeterJob>;
+
+    get beendet(): Observable<BeendeterJob> {
+        return this.beendet$
+            .filter(x => x != null);
+    }
+
+    constructor(private http: Http, private ereignis: Ereignis) {
+    }
+
     init() {
-        this.job$.subscribe((j: JobState) => {
-            console.info('Job geändert: ' + j.location);
-        });
-
         this.job$
-            .filter((job: JobState) => job.location != null)
-            .map((job: JobState) => job)
-            .flatMap((job: JobState, index: number) => {
-                console.info('job index: ' + index);
+            .filter((job: string) => job != null)
+            .map((job: string) => job)
+            .flatMap((job: string) => {
+
                 return Observable.interval(1000)
-                    .switchMap(() => this.http.get(job.location))
-                    .filter((response: Response) => response.status === 200)
-                    .first();
+                    .switchMap(() => this.http.get(job))
+                    .filter((response: Response) => {
+                        return response.status === 200;
+                    })
+                    .first()
+                    .timeout(5000)
+                    .map(r => {
+                        return <RunningJob>{job: job, response: r};
+                    });
             })
-            .subscribe( (response: Response) => {
-                console.log('Datenänderung im JobSerivce');
-                console.info('Response for ' + response.url + ' = ' + response.status);
-            });
+            .subscribe(
+                (job: RunningJob) => {
+                    this.ereignis.jobBeendet(job.job, job.response.headers.get('Location'));
+                },
+                (err) => {
+                    this.ereignis.jobFehlgeschlagen(null, err);
+                }
+            );
     }
+}
+
+interface RunningJob {
+    job: string;
+    response: Response;
 }

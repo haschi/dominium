@@ -14,4 +14,20 @@ export class Ereignis
                 location: location,
             }});
     }
+
+    jobBeendet(job: string, location: string) {
+        this.store.dispatch({
+            type: AKTION.JOB_BEENDET,
+            payload: {
+                job: job,
+                location: location,
+            }});
+    }
+
+    jobFehlgeschlagen(job: string, err: any) {
+        this.store.dispatch({
+            type: AKTION.JOB_FEHLGESCHLAGEN,
+            payload: {job: job, grund: err}
+        });
+    }
 }

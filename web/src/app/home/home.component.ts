@@ -65,7 +65,7 @@ export class HomeComponent {
                         console.log(error);
                     });
             }
-            if (data.location == 'hellow rold') {
+            if (data.location === 'hellow rold') {
                 this.router.navigate(['/dashboard', data.id]);
             }
         });
