@@ -1,5 +1,5 @@
 import { combineReducers, Reducer, Action } from 'redux';
-import { JOB_INIT_STATE, JobState, jobReducer } from './shared/jobs.redux';
+import { JOB_INIT_STATE, JobState, jobs } from './shared/jobs.redux';
 
 export class AppState {
     konfiguration: KonfigurationState;
@@ -58,7 +58,7 @@ export const rootReducer: Reducer<AppState> = combineReducers<AppState>({
     konfiguration: konfigurationReducer,
     verbindung: verbindungReducer,
     haushaltsbuch: hauhaltsbuchReducer,
-    job: jobReducer
+    job: jobs
 });
 
 export const AKTION = {
