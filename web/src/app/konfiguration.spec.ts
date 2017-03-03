@@ -6,7 +6,6 @@ import { NgRedux } from '@angular-redux/store';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Response, BaseResponseOptions } from '@angular/http';
 import { createStore } from 'redux';
-import { Ereignis } from './ereignis';
 
 describe('Konfiguration', () => {
 
@@ -14,7 +13,6 @@ describe('Konfiguration', () => {
         TestBed.configureTestingModule({
             imports: [HttpTestModule],
             providers: [
-                Ereignis,
                 Aktionen,
                 {
                     provide: NgRedux,

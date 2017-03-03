@@ -1,4 +1,3 @@
-
 import {
     TestBed,
     inject,
@@ -9,27 +8,29 @@ import {
 } from '@angular/core/testing';
 import { HttpTestModule } from '../httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
-import { Ereignis } from '../ereignis';
 import { JobService } from './job.service';
 import { Observable } from 'rxjs/Observable';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { ResponseOptions, Response, Headers } from '@angular/http';
 import { BeendeterJob, FehlgeschlagenerJob } from './jobs.redux';
+import { AppState } from '../reducer';
+import { NgRedux } from '@angular-redux/store';
+import { jobGestartet } from './jobs.actions';
 
 describe('Job', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule(
             {
                 imports: [HttpTestModule, ReduxTestModule],
-                providers: [Ereignis, JobService]
+                providers: [JobService]
             });
     }));
 
     xit('sollte keine gestarteten Jobs haben', async(
-        (inject([JobService, Ereignis], (jobs: JobService, e: Ereignis) => {
+        (inject([JobService, NgRedux], (jobs: JobService, store: NgRedux<AppState>) => {
             // fail('Das war nix');
 
-            e.jobGestartet('hallo');
+            store.dispatch(jobGestartet('hallo'));
 
             let hotjobs = jobs.laufend.isEmpty().publish();
 
@@ -46,8 +47,8 @@ describe('Job', () => {
 
     describe('Ein neuer Job', () => {
 
-        beforeEach(async(inject([Ereignis], (ereignis: Ereignis) => {
-            ereignis.jobGestartet('location-url');
+        beforeEach(async(inject([NgRedux], (store: NgRedux<AppState>) => {
+            store.dispatch(jobGestartet('location-url'));
         })));
 
         xit('sollte gestartet werden',
@@ -81,8 +82,9 @@ describe('Job', () => {
         });
 
         it('sollte bis zum Erfolg die Job Resource pollen',
-            fakeAsync(inject([JobService, Ereignis], (jobs: JobService, ereignis: Ereignis) => {
-                ereignis.jobGestartet('location-url');
+            fakeAsync(inject([JobService, NgRedux],
+                (jobs: JobService, store: NgRedux<AppState>) => {
+                store.dispatch(jobGestartet('location-url'));
                     let completed = false;
 
                     jobs.beendet.subscribe(

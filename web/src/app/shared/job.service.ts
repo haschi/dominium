@@ -3,8 +3,9 @@ import { select } from '@angular-redux/store';
 import { AppState } from '../reducer';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
-import { Ereignis } from '../ereignis';
 import { FehlgeschlagenerJob, BeendeterJob } from './jobs.redux';
+import { NgRedux } from '@angular-redux/store';
+import { jobBeendet, jobFehlgeschlagen } from './jobs.actions';
 
 @Injectable()
 export class JobService {
@@ -33,7 +34,7 @@ export class JobService {
             .filter(x => x != null);
     }
 
-    constructor(private http: Http, private ereignis: Ereignis) {
+    constructor(private http: Http, private store: NgRedux<AppState>) {
     }
 
     init() {
@@ -55,10 +56,12 @@ export class JobService {
             })
             .subscribe(
                 (job: RunningJob) => {
-                    this.ereignis.jobBeendet(job.job, job.response.headers.get('Location'));
+                    this.store.dispatch(
+                        jobBeendet(job.job, job.response.headers.get('Location')));
                 },
                 (err) => {
-                    this.ereignis.jobFehlgeschlagen(null, err);
+                    this.store.dispatch(
+                        jobFehlgeschlagen(null, err));
                 }
             );
     }

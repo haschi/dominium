@@ -19,7 +19,6 @@ import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { httpMatcher } from '../shared/http.matcher';
 import Spy = jasmine.Spy;
-import { Ereignis } from '../ereignis';
 
 describe('Home', () => {
 
@@ -43,7 +42,6 @@ describe('Home', () => {
                 RouterTestingModule.withRoutes(ROUTES)
             ],
             providers: [
-                Ereignis,
                 Title,
                 {
                     provide: Page,
@@ -191,7 +189,6 @@ describe('Home', () => {
                 NoContentComponent
             ],
             providers: [
-                Ereignis,
                 Title,
                 HomeComponent
             ],
