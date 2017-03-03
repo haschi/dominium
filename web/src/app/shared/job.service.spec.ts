@@ -1,4 +1,4 @@
-import { FehlgeschlagenerJob, BeendeterJob } from '../reducer';
+
 import {
     TestBed,
     inject,
@@ -14,6 +14,7 @@ import { JobService } from './job.service';
 import { Observable } from 'rxjs/Observable';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { ResponseOptions, Response, Headers } from '@angular/http';
+import { BeendeterJob, FehlgeschlagenerJob } from './jobs.redux';
 
 describe('Job', () => {
     beforeEach(async(() => {
@@ -76,13 +77,12 @@ describe('Job', () => {
         );
 
         xit('sollte abgebrochen werden können', () => {
+
         });
 
         it('sollte bis zum Erfolg die Job Resource pollen',
             fakeAsync(inject([JobService, Ereignis], (jobs: JobService, ereignis: Ereignis) => {
-
-                    ereignis.jobGestartet('location-url');
-
+                ereignis.jobGestartet('location-url');
                     let completed = false;
 
                     jobs.beendet.subscribe(

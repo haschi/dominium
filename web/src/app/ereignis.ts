@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppState, AKTION } from './reducer';
+import { AppState } from './reducer';
 import { NgRedux } from '@angular-redux/store';
+import { JOB_ERSTELLT, JOB_BEENDET, JOB_FEHLGESCHLAGEN } from './shared/jobs.redux';
 
 @Injectable()
 export class Ereignis
@@ -9,7 +10,7 @@ export class Ereignis
 
     jobGestartet(location: string) {
         this.store.dispatch({
-            type: AKTION.JOB_ERSTELLT,
+            type: JOB_ERSTELLT,
             payload: {
                 location: location,
             }});
@@ -17,7 +18,7 @@ export class Ereignis
 
     jobBeendet(job: string, location: string) {
         this.store.dispatch({
-            type: AKTION.JOB_BEENDET,
+            type: JOB_BEENDET,
             payload: {
                 job: job,
                 location: location,
@@ -26,7 +27,7 @@ export class Ereignis
 
     jobFehlgeschlagen(job: string, err: any) {
         this.store.dispatch({
-            type: AKTION.JOB_FEHLGESCHLAGEN,
+            type: JOB_FEHLGESCHLAGEN,
             payload: {job: job, grund: err}
         });
     }

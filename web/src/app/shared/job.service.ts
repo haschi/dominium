@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { select } from '@angular-redux/store';
-import { AppState, FehlgeschlagenerJob, BeendeterJob } from '../reducer';
+import { AppState } from '../reducer';
 import { Observable } from 'rxjs';
 import { Http, Response } from '@angular/http';
 import { Ereignis } from '../ereignis';
+import { FehlgeschlagenerJob, BeendeterJob } from './jobs.redux';
 
 @Injectable()
 export class JobService {
