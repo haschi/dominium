@@ -13,10 +13,11 @@ export class JobEpics {
     epics: Epic<Action, Store<any>>[];
 
     constructor(private service: JobService) {
-        this.epics = [ this.loadElephants ];
+        this.epics = [ this.fallsJobErstellt ];
     }
 
-    loadElephants = action$ => action$
+    // So weiter machen: https://redux-observable.js.org/docs/basics/Epics.html
+    fallsJobErstellt = action$ => action$
         .ofType(JobActions.JOB_ERSTELLT)
         .switchMap(a => {
             return this.service.poll(a.payload.location)
