@@ -1,24 +1,16 @@
-import {
-    TestBed,
-    inject,
-    async,
-    tick,
-    fakeAsync,
-    discardPeriodicTasks
-} from '@angular/core/testing';
+import { TestBed, inject, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpTestModule } from '../httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
 import { JobService } from './job.service';
-import { Observable } from 'rxjs/Observable';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { ResponseOptions, Response, Headers } from '@angular/http';
-import { BeendeterJob, FehlgeschlagenerJob } from './jobs.redux';
 import { AppState } from '../reducer';
 import { NgRedux } from '@angular-redux/store';
-import { jobGestartet } from './jobs.actions';
+import { JobActions } from './jobs.actions';
 
 describe('Job', () => {
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
+
         TestBed.configureTestingModule(
             {
                 imports: [HttpTestModule, ReduxTestModule],
@@ -26,85 +18,63 @@ describe('Job', () => {
             });
     }));
 
-    xit('sollte keine gestarteten Jobs haben', async(
-        (inject([JobService, NgRedux], (jobs: JobService, store: NgRedux<AppState>) => {
-            // fail('Das war nix');
-
-            store.dispatch(jobGestartet('hallo'));
-
-            let hotjobs = jobs.laufend.isEmpty().publish();
-
-            jobs.laufend.isEmpty();
-            Observable.empty().subscribe(
-                (empty: boolean) => {
-                    expect(empty).toBeTruthy();
-                },
-                (error: any) => fail('ERROR: ' + error)
-            );
-
-            hotjobs.connect();
-        }))));
-
     describe('Ein neuer Job', () => {
 
-        beforeEach(async(inject([NgRedux], (store: NgRedux<AppState>) => {
-            store.dispatch(jobGestartet('location-url'));
+        it('sollte erstellt werden', fakeAsync(inject([NgRedux], (store: NgRedux<AppState>) => {
+            store.dispatch(JobActions.jobErstellt('location-url'));
+            tick(4999);
+            expect(store.getState().job).toEqual({
+                location: 'location-url',
+                loading: true,
+                error: null,
+                redirect: null
+            });
+            discardPeriodicTasks();
         })));
 
-        xit('sollte gestartet werden',
-            async(inject([JobService], (jobs: JobService) => {
-                jobs.laufend.subscribe(l => expect(l).toEqual('location-url'));
-            })));
-    });
+        describe('ohne Antwort vom Server', () => {
+            it('wartet 5000 ms auf ein Timeout',
+                fakeAsync(inject([NgRedux], (store: NgRedux<AppState>) => {
+                    store.dispatch(JobActions.jobErstellt('location-url'));
+                    tick(5000);
+                    expect(store.getState().job).toEqual({
+                        location: 'location-url',
+                        loading: false,
+                        error: 'Timeout has occurred',
+                        redirect: null
+                    });
 
-    describe('Ein gestarteter Job', () => {
-        beforeEach(
-            inject([JobService], (jobs: JobService) => {
-                jobs.init();
-            })
-        );
-
-        beforeEach(
-            inject([MockBackend], (backend: MockBackend) => {
-                backend.connections.subscribe((connection: MockConnection) => {
-                    connection.mockRespond(new Response(new ResponseOptions({
-                        status: 200,
-                        body: JSON.stringify({version: 123456}),
-                        headers: new Headers({location: '/resource/4711'})
-                    })));
-
-                });
-            })
-        );
-
-        xit('sollte abgebrochen werden können', () => {
-
+                    discardPeriodicTasks();
+                })));
         });
 
-        it('sollte bis zum Erfolg die Job Resource pollen',
-            fakeAsync(inject([JobService, NgRedux],
-                (jobs: JobService, store: NgRedux<AppState>) => {
-                store.dispatch(jobGestartet('location-url'));
-                    let completed = false;
+        describe('mit Antwort vom Server', () => {
+            beforeEach(
+                inject([MockBackend], (backend: MockBackend) => {
+                    backend.connections.subscribe((connection: MockConnection) => {
+                        connection.mockRespond(new Response(new ResponseOptions({
+                            status: 200,
+                            body: JSON.stringify({version: 123456}),
+                            headers: new Headers({location: '/resource/4711'})
+                        })));
 
-                    jobs.beendet.subscribe(
-                        (job: BeendeterJob) => {
-                            expect(job.location).toEqual('/resource/4711');
-                            completed = true;
-                        });
-
-                    tick(1000);
-                    // Important
-                    // https://github.com/angular/angular/issues/10127
-                    discardPeriodicTasks();
-                    expect(completed).toBeTruthy();
+                    });
                 })
-            ));
+            );
 
-        xit('sollte Timeout Fehler erzeugen', async(inject([JobService], (jobs: JobService) => {
-            jobs.abgebrochen.subscribe(
-                (job: FehlgeschlagenerJob) => expect(job.grund).toEqual('Timeout'),
-                () => fail('Unerwarteter Fehler'));
-        })));
+            it('liefert eben diese',
+                fakeAsync(inject([NgRedux], (store: NgRedux<AppState>) => {
+                    store.dispatch(JobActions.jobErstellt('location-url'));
+                    tick(1000);
+                    expect(store.getState().job).toEqual({
+                        location: 'location-url',
+                        loading: false,
+                        error: null,
+                        redirect: '/resource/4711'
+                    });
+
+                    discardPeriodicTasks();
+            })));
+        });
     });
 });

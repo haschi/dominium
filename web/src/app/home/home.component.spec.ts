@@ -19,6 +19,7 @@ import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { httpMatcher } from '../shared/http.matcher';
 import Spy = jasmine.Spy;
+import { JobService } from '../shared/job.service';
 
 describe('Home', () => {
 
@@ -42,6 +43,7 @@ describe('Home', () => {
                 RouterTestingModule.withRoutes(ROUTES)
             ],
             providers: [
+                JobService,
                 Title,
                 {
                     provide: Page,
@@ -190,7 +192,8 @@ describe('Home', () => {
             ],
             providers: [
                 Title,
-                HomeComponent
+                HomeComponent,
+                JobService
             ],
             imports: [
                 HttpTestModule,
