@@ -14,7 +14,7 @@ import { JobEpics } from './shared/jobs.epics';
         {
             provide: NgRedux,
             useFactory: (zone: NgZone, jobEpics: JobEpics) => {
-                let ngRedux = new NgRedux(zone);
+                const ngRedux = new NgRedux(zone);
                 ngRedux.configureStore(rootReducer, INIT_STATE, [
                     createLogger(),
                     createEpicMiddleware(combineEpics(...jobEpics.epics))

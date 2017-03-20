@@ -13,12 +13,13 @@ import { ReduxTestModule } from './reduxtest.module';
 import { Router } from '@angular/router';
 import { NoContentComponent } from './no-content/no-content.component';
 import { Location } from '@angular/common';
-import { ROUTES } from './app.routes';
+
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { LeererInhaltComponent } from './leerer-inhalt/leerer-inhalt.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JobService } from './shared/job.service';
+import { AppRouterTestingModule } from './app-routing.module';
 
 // TODO Fix this
 describe('App', () => {
@@ -35,7 +36,7 @@ describe('App', () => {
                 LeererInhaltComponent
             ],
             imports: [
-                RouterTestingModule.withRoutes(ROUTES),
+                AppRouterTestingModule,
                 ReduxTestModule,
                 HttpTestModule,
                 ReactiveFormsModule
@@ -54,7 +55,7 @@ describe('App', () => {
                 })));
             });
 
-            let fixture = TestBed.createComponent(AppComponent);
+            const fixture = TestBed.createComponent(AppComponent);
             fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css('#api')).nativeElement.textContent)
@@ -64,7 +65,7 @@ describe('App', () => {
     it('sollte die Konfiguration bereitstellen',
         async(inject([NgRedux, MockBackend], (store: NgRedux<AppState>, backend: MockBackend) => {
 
-            let testkonfiguration: KonfigurationState = {
+            const testkonfiguration: KonfigurationState = {
                 name: 'service',
                 version: 123456,
                 _links: []
@@ -76,7 +77,7 @@ describe('App', () => {
                 })));
             });
 
-            let fixture = TestBed.createComponent(AppComponent);
+            const fixture = TestBed.createComponent(AppComponent);
             fixture.detectChanges();
 
             expect(store.getState().konfiguration).toEqual(testkonfiguration);
@@ -95,7 +96,7 @@ describe('App', () => {
         }));
 
         xit('sollte zur Offline Komponente weiterleiten', async(() => {
-            let fixture = TestBed.createComponent(AppComponent);
+            const fixture = TestBed.createComponent(AppComponent);
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
@@ -106,13 +107,13 @@ describe('App', () => {
         }));
 
         xit('sollte die Offline Komponente anzeigen', async(() => {
-            let fixture = TestBed.createComponent(AppComponent);
+            const fixture = TestBed.createComponent(AppComponent);
             fixture.detectChanges();
             fixture.whenStable().then(() => {
-                let errorMessage: HTMLElement = fixture.debugElement
+                const errorMessage: HTMLElement = fixture.debugElement
                     .query(By.css('.card .card-content p')).nativeElement;
 
-                let leererInhalt = fixture.debugElement.query(function (c) {
+                const leererInhalt = fixture.debugElement.query(function (c) {
                     return c.name === 'leerer-inhalt';
                 });
                 expect(leererInhalt).not.toBeNull();
@@ -137,10 +138,10 @@ describe('App', () => {
     }
 
     it('sollte das Seitenmenü initialisieren', async(() => {
-        let fixture = TestBed.createComponent(AppComponent);
+        const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
 
-        let sideMenuButton = fixture.debugElement.query(By.css('[materialize="sideNav"]'));
+        const sideMenuButton = fixture.debugElement.query(By.css('[materialize="sideNav"]'));
         click(sideMenuButton.nativeElement);
     }));
 });

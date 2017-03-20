@@ -8,32 +8,32 @@ describe('App', () => {
     });
 
     it('should have a title', () => {
-        let subject = browser.getTitle();
-        let result = 'Haushaltsbuch';
+        const subject = browser.getTitle();
+        const result = 'Haushaltsbuch';
         expect(subject).toEqual(result);
     });
 
     it('should have header', () => {
-        let subject = element(by.css('h1')).isPresent();
-        let result = true;
+        const subject = element(by.css('h1')).isPresent();
+        const result = true;
         expect(subject).toEqual(result);
     });
 
     it('should have <home>', () => {
-        let subject = element(by.css('app home')).isPresent();
-        let result = true;
+        const subject = element(by.css('app home')).isPresent();
+        const result = true;
         expect(subject).toEqual(result);
     });
 
     it('should have buttons', () => {
-        let subject = element(by.css('button')).getText();
-        let result = "LOS GEHT'S";
+        const subject = element(by.css('button')).getText();
+        const result = 'LOS GEHT\'S';
         expect(subject).toEqual(result);
     });
 
     it('sollte verstecktes Seitenmenü besitzen', () => {
-        let subject = element(by.css('ul#side-menu')).getCssValue('transform');
-        let result = 'matrix(1, 0, 0, 1, -300, 0)';
+        const subject = element(by.css('ul#side-menu')).getCssValue('transform');
+        const result = 'matrix(1, 0, 0, 1, -300, 0)';
         expect(subject).toEqual(result);
     });
 
@@ -43,20 +43,20 @@ describe('App', () => {
         });
 
         it('sollte das Hamburgersymbol sichtbar sein', () => {
-            let subject = element(by.css("a[materialize='sideNav']")).isDisplayed();
+            const subject = element(by.css('a[materialize="sideNav"]')).isDisplayed();
             expect(subject).toEqual(true);
         });
 
         describe('und ich das Hamburgersymbol anklicke', () => {
             beforeEach(() => {
-                element(by.css("a[materialize='sideNav']")).click();
+                element(by.css('a[materialize="sideNav"]')).click();
                 browser.waitForAngular();
             });
 
             // Wegen der Animation ist das Seitenmenü noch nicht vollständig ausgeklappt,
             xit('sollte das Seitenmenü sichtbar sein', () => {
-                let subject = element(by.css('ul#side-menu')).getCssValue('transform');
-                let result = 'matrix(1, 0, 0, 1, 0, 0)';
+                const subject = element(by.css('ul#side-menu')).getCssValue('transform');
+                const result = 'matrix(1, 0, 0, 1, 0, 0)';
                 expect(subject).toEqual(result);
             });
         });
@@ -70,12 +70,12 @@ describe('App', () => {
         });
 
         it('sollte das Hamburgersymbol nicht sichtbar sein', () => {
-            let subject = element(by.css("a[materialize='sideNav']")).isDisplayed();
+            const subject = element(by.css('a[materialize="sideNav"]')).isDisplayed();
             expect(subject).toEqual(false);
         });
 
         it('ist das Hamburgersymbol nicht anklickbar', () => {
-            element(by.css("a[materialize='sideNav']")).click()
+            element(by.css('a[materialize="sideNav"]')).click()
                 .then(() => fail('Hamburgersymbol ist sichtbar'),
                     (err: ElementNotVisibleError) => {
                         expect(err.message).toContain('element not visible');
@@ -83,8 +83,8 @@ describe('App', () => {
         });
 
         it('sollte das Seitenmenu nicht sichtbar sein', () => {
-            let subject = element(by.css('ul#side-menu')).getCssValue('transform');
-            let result = 'matrix(1, 0, 0, 1, -300, 0)';
+            const subject = element(by.css('ul#side-menu')).getCssValue('transform');
+            const result = 'matrix(1, 0, 0, 1, -300, 0)';
             expect(subject).toEqual(result);
         });
     });

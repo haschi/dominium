@@ -7,7 +7,6 @@ import { By, BrowserModule } from '@angular/platform-browser';
 import { HttpTestModule } from '../httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ROUTES } from '../app.routes';
 import { AboutComponent } from '../about/about.component';
 import { LeererInhaltComponent } from '../leerer-inhalt/leerer-inhalt.component';
 import { NoContentComponent } from '../no-content/no-content.component';
@@ -20,6 +19,7 @@ import { Router } from '@angular/router';
 import { httpMatcher } from '../shared/http.matcher';
 import Spy = jasmine.Spy;
 import { JobService } from '../shared/job.service';
+import { routes, AppRouterTestingModule } from '../app-routing.module';
 
 describe('Home', () => {
 
@@ -40,7 +40,7 @@ describe('Home', () => {
                 ReduxTestModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                RouterTestingModule.withRoutes(ROUTES)
+                AppRouterTestingModule
             ],
             providers: [
                 JobService,
@@ -70,7 +70,7 @@ describe('Home', () => {
             }
 
             input(): void {
-                let htmlName = this.fixture.debugElement.query(By.css('#name')).nativeElement;
+                const htmlName = this.fixture.debugElement.query(By.css('#name')).nativeElement;
                 htmlName.value = 'Matthias Haschka';
                 htmlName.dispatchEvent(new Event('input'));
 
@@ -78,7 +78,7 @@ describe('Home', () => {
             }
 
             submit(): void {
-                let form = this.fixture.debugElement.query(By.css('form'));
+                const form = this.fixture.debugElement.query(By.css('form'));
                 form.triggerEventHandler('submit', null);
             }
 
@@ -105,7 +105,7 @@ describe('Home', () => {
 
         describe('Haushaltsbuchanlage', () => {
 
-            let erfolgreich: ITestfall = {
+            const erfolgreich: ITestfall = {
                 lastConnection: null,
                 beschreibung: 'falls wirklich erfolgreich',
                 ausführen(sut: () => void, spec: (t: ITestfall) => void) {
@@ -124,7 +124,7 @@ describe('Home', () => {
                 }
             };
 
-            let haushaltsbuchanlage = () => {
+            const haushaltsbuchanlage = () => {
                 beforeEach(async(inject([Page], (page: Page) => {
                     page.init();
                     page.input();
@@ -152,7 +152,7 @@ describe('Home', () => {
                 })));
             });
 
-            let erfolglos: ITestfall = {
+            const erfolglos: ITestfall = {
                 lastConnection: null,
                 beschreibung: 'falls Server nicht verfügbar',
                 ausführen(sut: () => void, spec: (t: ITestfall) => void) {

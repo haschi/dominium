@@ -1,19 +1,17 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import 'materialize-css/dist/js/materialize.js';
 import { Aktionen } from './Aktionen';
 import { AppState, KonfigurationState, VerbindungState } from './reducer';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { select } from '@angular-redux/store';
 import { JobService } from './shared/job.service';
-
+import { Observable } from 'rxjs/Observable';
 @Component({
-    selector: 'app',
+    selector: 'app-dominium',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./app.component.css'],
     templateUrl: 'app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     url = 'https://twitter.com/AngularClass';
     index = 'Kein Serveranwort erhalten';

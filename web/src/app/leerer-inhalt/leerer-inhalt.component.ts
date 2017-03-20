@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VerbindungState, AppState } from '../reducer';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
 @Component({

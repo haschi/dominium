@@ -16,7 +16,7 @@ console.log('`Detail` component loaded asynchronously');
     </div>
   `
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
     constructor() {
 
     }
