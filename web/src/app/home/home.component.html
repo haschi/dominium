@@ -1,40 +1,25 @@
-<div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-        <br>
-        <h1 class="header center">Haushaltsbuch</h1>
-        <div class="row center">
-            <h5 class="header col s12 light">Nie den Überblick verlieren</h5>
+
+<div style="padding: 20px; width: 400px; margin-left: auto; margin-right: auto">
+    <h2>Anmeldung</h2>
+    <p>Geben Sie ihren Namen ein, um ein neues
+        Haushaltsbuch zu beginnen.</p>
+<form [formGroup]="form" (ngSubmit)="submitState({name: 'asdasd'})">
+    <div>
+        <div class="form-group">
+            <md-input-container hintLabel="Hinweis">
+            <md-placeholder for="name">Gebe Deinen Namen ein</md-placeholder>
+
+            <input mdInput type="text"
+                   id="name"
+                   formControlName="name"
+                   required autofocus>
+                <md-icon mdPrefix>person</md-icon>
+
+            </md-input-container>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col l6">
-            <h2>Anmeldung</h2>
-            <p>Geben Sie ihren Namen ein, um ein neues
-                Haushaltsbuch zu beginnen.</p>
-        </div>
-        <div class="col l6">
-            <div class="card">
+    <button md-button color="primary" type="submit">Los Geht's</button>
+</form>
 
-                <form [formGroup]="form" (ngSubmit)="submitState({name: 'asdasd'})">
-                    <div class="card-content">
-                        <div class="form-group input-field">
-                            <i class="material-icons prefix">account_circle</i>
-                            <label for="name">Gebe Deinen Namen ein</label>
-                            <input type="text" class="form-control"
-                                   id="name"
-                                   formControlName="name"
-                                   required autofocus>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <button type="submit" class="btn btn-default waves-effect waves-light">Los Geht's</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
 </div>

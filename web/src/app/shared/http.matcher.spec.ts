@@ -16,7 +16,7 @@ export const expect: (actual: any) => NgMatchers = <any> _global.expect;
  * Jasmine matchers that support checking custom CSS conditions.
  * !! important to add your custom matcher to the interface
  */
-export interface NgMatchers extends jasmine.Matchers {
+export interface NgMatchers extends jasmine.Matchers<Request> {
     not: NgMatchers;
     toPostJson(expected: HttpPostExpectation): boolean;
 }

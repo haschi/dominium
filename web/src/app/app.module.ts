@@ -3,7 +3,8 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { CovalentLayoutModule, CovalentCoreModule } from '@covalent/core';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -34,7 +35,9 @@ import { AppRoutingModule } from './app-routing.module';
         BrowserModule,
         ReactiveFormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        CovalentLayoutModule.forRoot(),
+        CovalentCoreModule.forRoot()
     ],
     providers: [
         JobService,

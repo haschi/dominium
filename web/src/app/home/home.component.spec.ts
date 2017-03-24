@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 
 import { JobService } from '../shared/job.service';
 import { AppRouterTestingModule } from '../app-routing.module';
-import { httpMatcher } from '../shared/http.matcher.specX';
-import { Spy } from 'jasmine';
+import { httpMatcher } from '../shared/http.matcher.spec';
+import { Spy } from 'jasmine/spy';
 
 describe('Home', () => {
 
