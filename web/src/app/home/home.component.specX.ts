@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 import { httpMatcher } from '../shared/http.matcher';
 import Spy = jasmine.Spy;
 import { JobService } from '../shared/job.service';
-import { routes, AppRouterTestingModule } from '../app-routing.module';
+import { AppRouterTestingModule } from '../app-routing.module';
 
 describe('Home', () => {
 
