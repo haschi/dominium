@@ -1,6 +1,26 @@
 import { Request, RequestMethod } from '@angular/http';
 import { ContentType } from '@angular/http/src/enums';
 
+
+// see https://blog.thoughtram.io/angular/2016/12/27/angular-2-advance-testing-with-custom-matchers.html
+
+declare var global: any;
+const _global = <any>(typeof window === 'undefined' ? global : window);
+
+/**
+ * Extend the API to support chaining with custom matchers
+ */
+export const expect: (actual: any) => NgMatchers = <any> _global.expect;
+
+/**
+ * Jasmine matchers that support checking custom CSS conditions.
+ * !! important to add your custom matcher to the interface
+ */
+export interface NgMatchers extends jasmine.Matchers {
+    not: NgMatchers;
+    toPostJson(expected: HttpPostExpectation): boolean;
+}
+
 interface HttpPostExpectation {
     url: string;
     body: any;

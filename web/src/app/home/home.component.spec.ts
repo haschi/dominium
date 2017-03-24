@@ -1,4 +1,3 @@
-/// <reference path="../shared/http.matcher.d.ts"/>
 import { inject, TestBed, async, ComponentFixture } from '@angular/core/testing';
 // Load the implementations that should be tested
 import { HomeComponent } from './home.component';
@@ -6,7 +5,6 @@ import { Title } from './title';
 import { By, BrowserModule } from '@angular/platform-browser';
 import { HttpTestModule } from '../httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AboutComponent } from '../about/about.component';
 import { LeererInhaltComponent } from '../leerer-inhalt/leerer-inhalt.component';
 import { NoContentComponent } from '../no-content/no-content.component';
@@ -16,10 +14,11 @@ import { AppState } from '../reducer';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Response, ResponseOptions, Headers } from '@angular/http';
 import { Router } from '@angular/router';
-import { httpMatcher } from '../shared/http.matcher';
-import Spy = jasmine.Spy;
+
 import { JobService } from '../shared/job.service';
 import { AppRouterTestingModule } from '../app-routing.module';
+import { httpMatcher } from '../shared/http.matcher.specX';
+import { Spy } from 'jasmine';
 
 describe('Home', () => {
 
@@ -200,7 +199,7 @@ describe('Home', () => {
                 ReduxTestModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                RouterTestingModule.withRoutes(ROUTES)
+                AppRouterTestingModule
             ]
         }));
 
