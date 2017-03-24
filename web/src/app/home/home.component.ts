@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from './title';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Aktionen } from '../Aktionen';

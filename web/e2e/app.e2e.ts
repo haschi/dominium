@@ -1,4 +1,5 @@
 import { browser, by, element } from 'protractor';
+import {} from 'jasmine';
 import ElementNotVisibleError = webdriver.error.ElementNotVisibleError;
 
 describe('App', () => {

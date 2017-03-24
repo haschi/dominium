@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Aktionen } from './Aktionen';
 import { AppState, KonfigurationState, VerbindungState } from './reducer';
 import { Router } from '@angular/router';
