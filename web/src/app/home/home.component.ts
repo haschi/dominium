@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from './title';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Aktionen } from '../Aktionen';
 import { select } from '@angular-redux/store';
 import { AppState, HaushaltsbuchState } from '../reducer';
@@ -12,7 +12,7 @@ import { Http, Response } from '@angular/http';
     // The selector is what angular internally uses
     // for `document.querySelectorAll(selector)` in our index.html
     // where, in this case, selector is the string 'home'
-    selector: 'domimium-home',  // <home></home>
+    selector: 'app-home',  // <home></home>
     // We need to tell Angular's Dependency Injection which providers are in our app.
     providers: [
         Title
@@ -44,14 +44,23 @@ export class HomeComponent implements OnInit {
         console.log('hello `Home` component');
         // this.title.getData().subscribe(data => this.data = data);
         this.form = this.formBuilder.group({
-            name: ['']
+            name: ['', Validators.required]
         });
 
         this.form.valueChanges.subscribe(
             data => {
                 console.log('Datenänderung: ' + JSON.stringify(data));
                 this.name = data.name;
+            },
+            error => {
+                console.log("Datenänderungsfehler: " + JSON.stringify(error));
             });
+
+        this.form.statusChanges.subscribe(
+            status => {
+                console.info('Statusüberdung: '  + JSON.stringify(status));
+            });
+
 
         this.id$.subscribe((data: HaushaltsbuchState) => {
             console.log('Datenänderung Haushaltsbuch:' + JSON.stringify(data));
@@ -72,6 +81,8 @@ export class HomeComponent implements OnInit {
     }
 
     submitState(): void {
+
+
         if (this.form.valid) {
             console.log('submit: ' + this.name);
             this.aktion.legeHaushaltsbuchAn(this.name);

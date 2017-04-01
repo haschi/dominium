@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CovalentLayoutModule, CovalentCoreModule } from '@covalent/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -36,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
         ReactiveFormsModule,
         HttpModule,
         AppRoutingModule,
+        FlexLayoutModule,
         CovalentLayoutModule.forRoot(),
         CovalentCoreModule.forRoot()
     ],

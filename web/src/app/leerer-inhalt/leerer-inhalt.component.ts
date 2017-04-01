@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { select } from '@angular-redux/store';
 
 @Component({
-    selector: 'leerer-inhalt',
+    selector: 'app-leerer-inhalt',
     templateUrl: 'leerer-inhalt.component.html'
 })
 export class LeererInhaltComponent {

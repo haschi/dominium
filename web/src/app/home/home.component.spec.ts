@@ -3,7 +3,7 @@ import { inject, TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { HomeComponent } from './home.component';
 import { Title } from './title';
 import { By, BrowserModule } from '@angular/platform-browser';
-import { HttpTestModule } from '../httptest.module';
+import { HttpTestModule } from '../shared/httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
 import { AboutComponent } from '../about/about.component';
 import { LeererInhaltComponent } from '../leerer-inhalt/leerer-inhalt.component';
@@ -19,6 +19,10 @@ import { JobService } from '../shared/job.service';
 import { AppRouterTestingModule } from '../app-routing.module';
 import { httpMatcher } from '../shared/http.matcher.spec';
 import { Spy } from 'jasmine/spy';
+import { MaterialModule } from '@angular/material';
+import { IntegrationTestingModule } from '../shared/it.module';
+import { CovalentCoreModule } from '@covalent/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('Home', () => {
 
@@ -35,11 +39,12 @@ describe('Home', () => {
                 NoContentComponent
             ],
             imports: [
-                HttpTestModule,
-                ReduxTestModule,
+                IntegrationTestingModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                AppRouterTestingModule
+                AppRouterTestingModule,
+                MaterialModule,
+                CovalentCoreModule.forRoot()
             ],
             providers: [
                 JobService,
@@ -49,7 +54,8 @@ describe('Home', () => {
                     useFactory: Page.create,
                     deps: [Router]
                 }
-            ]
+            ],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA]
         }));
 
         class Page {
@@ -124,11 +130,11 @@ describe('Home', () => {
             };
 
             const haushaltsbuchanlage = () => {
-                beforeEach(async(inject([Page], (page: Page) => {
+                beforeEach(inject([Page], (page: Page) => {
                     page.init();
                     page.input();
                     page.submit();
-                })));
+                }));
             };
 
             testfallausführung(haushaltsbuchanlage, erfolgreich, t => {
@@ -169,14 +175,14 @@ describe('Home', () => {
 
             erfolglos.ausführen(haushaltsbuchanlage, () => {
                 it('sollte Verbindungsfehler melden',
-                    async(inject([NgRedux], (redux: NgRedux<AppState>) => {
+                    inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().verbindung.nachricht).toEqual('Keine Verbindung');
-                })));
+                }));
 
                 it('sollte Kompensationsoption bereitstellen',
-                    async(inject([NgRedux], (redux: NgRedux<AppState>) => {
+                    inject([NgRedux], (redux: NgRedux<AppState>) => {
                     expect(redux.getState().verbindung.kompensation.length).toEqual(1);
-                })));
+                }));
             });
         });
     });

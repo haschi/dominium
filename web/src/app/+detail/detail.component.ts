@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 console.log('`Detail` component loaded asynchronously');
 
 @Component({
-    selector: 'detail',
+    selector: 'app-detail',
     template: `
 <div class="container">
     <h1>Hello from Detail</h1>

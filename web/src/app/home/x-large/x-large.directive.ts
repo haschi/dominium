@@ -4,7 +4,7 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
  * XLargeDirective is a simple directive to show how one is made
  */
 @Directive({
-  selector: '[x-large]' // using [ ] means selecting attributes
+  selector: '[appLarge]' // using [ ] means selecting attributes
 })
 export class XLargeDirective {
   constructor(element: ElementRef, renderer: Renderer) {

@@ -1,25 +1,37 @@
+<td-layout-card-over cardTitle="Willkommen" cardSubtitle="Meine privaten Finanzen" cardWidth="75">
+    <md-card-content fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
 
-<div style="padding: 20px; width: 400px; margin-left: auto; margin-right: auto">
-    <h2>Anmeldung</h2>
-    <p>Geben Sie ihren Namen ein, um ein neues
-        Haushaltsbuch zu beginnen.</p>
-<form [formGroup]="form" (ngSubmit)="submitState({name: 'asdasd'})">
-    <div>
-        <div class="form-group">
-            <md-input-container hintLabel="Hinweis">
-            <md-placeholder for="name">Gebe Deinen Namen ein</md-placeholder>
-
-            <input mdInput type="text"
-                   id="name"
-                   formControlName="name"
-                   required autofocus>
-                <md-icon mdPrefix>person</md-icon>
-
-            </md-input-container>
+        <div>
+            <h2>Anmeldung</h2>
+            <p>Geben Sie ihren Namen ein, um ein neues
+                Haushaltsbuch zu beginnen.
+            </p>
         </div>
-    </div>
 
-    <button md-button color="primary" type="submit">Los Geht's</button>
-</form>
 
-</div>
+        <div>
+
+            <form [formGroup]="form" (ngSubmit)="submitState({name: 'asdasd'})">
+                <md-input-container>
+                    <span mdPrefix><md-icon>person</md-icon></span>
+                    <md-hint *ngIf="form.hasError('required', 'name')"
+                             color="accent">Name ist erforderlich</md-hint>
+                    <input mdInput type="text"
+                           id="name"
+                           placeholder="Vor- und Nachname"
+                           formControlName="name"
+                           required autofocus>
+                </md-input-container>
+
+                <md-divider></md-divider>
+                <button md-button color="accent" type="submit" class="text-upper" [disabled]="!form.valid">Los Geht's
+                </button>
+
+            </form>
+        </div>
+
+
+    </md-card-content>
+</td-layout-card-over>
+
+

@@ -1,5 +1,5 @@
 import { TestBed, inject, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
-import { HttpTestModule } from '../httptest.module';
+import { HttpTestModule } from './httptest.module';
 import { ReduxTestModule } from '../reduxtest.module';
 import { JobService } from './job.service';
 import { MockBackend, MockConnection } from '@angular/http/testing';

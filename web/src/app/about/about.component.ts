@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'about',
+    selector: 'app-about',
     styles: [`
   `],
     template: `
@@ -21,7 +21,7 @@ import { ActivatedRoute } from '@angular/router';
     </div>
   `
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
     localState: any;
 
     constructor(public route: ActivatedRoute) {
