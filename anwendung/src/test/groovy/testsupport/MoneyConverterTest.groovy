@@ -1,6 +1,5 @@
 package testsupport
 
-import com.github.haschi.coding.aspekte.DarfNullSein
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -28,7 +27,7 @@ class MoneyConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung von #zeichenfolge führt zu #ausnahme"(
-            @DarfNullSein final String zeichenfolge,
+            final String zeichenfolge,
             final Class ausnahme) {
 
         given: "Angenommen ich habe einen MoneyConverter"

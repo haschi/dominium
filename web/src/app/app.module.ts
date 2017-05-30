@@ -3,8 +3,8 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { CovalentLayoutModule, CovalentCoreModule } from '@covalent/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -19,6 +19,7 @@ import { INIT_STATE, rootReducer, AppState } from './reducer';
 import { LeererInhaltComponent } from './leerer-inhalt/leerer-inhalt.component';
 import { JobService } from './shared/job.service';
 import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule, MdButtonModule } from '@angular/material/material';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -37,8 +38,12 @@ import { AppRoutingModule } from './app-routing.module';
         HttpModule,
         AppRoutingModule,
         FlexLayoutModule,
-        CovalentLayoutModule.forRoot(),
-        CovalentCoreModule.forRoot()
+        BrowserAnimationsModule,
+        MdButtonModule,
+        MaterialModule
+    ],
+    exports: [
+        MdButtonModule
     ],
     providers: [
         JobService,

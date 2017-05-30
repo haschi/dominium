@@ -53,12 +53,12 @@ export class HomeComponent implements OnInit {
                 this.name = data.name;
             },
             error => {
-                console.log("Datenänderungsfehler: " + JSON.stringify(error));
+                console.log('Datenänderungsfehler: ' + JSON.stringify(error));
             });
 
         this.form.statusChanges.subscribe(
             status => {
-                console.info('Statusüberdung: '  + JSON.stringify(status));
+                console.log('Statusüberdung: '  + JSON.stringify(status));
             });
 
 

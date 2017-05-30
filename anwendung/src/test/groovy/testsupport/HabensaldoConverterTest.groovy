@@ -1,6 +1,5 @@
 package testsupport
 
-import com.github.haschi.coding.aspekte.DarfNullSein
 import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -29,7 +28,7 @@ class HabensaldoConverterTest extends Specification {
 
     @Unroll
     def "Ungültige Eingabe #zeichenfolge transformieren"(
-            @DarfNullSein final String zeichenfolge,
+            final String zeichenfolge,
             final Class ausnahme) {
 
         given: "Angenommen ich habe einen HabensaldoConverter"

@@ -30,11 +30,6 @@
 
         <dependency>
             <groupId>com.github.haschi</groupId>
-            <artifactId>aspekte</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.haschi</groupId>
             <artifactId>modeling</artifactId>
             <scope>provided</scope>
         </dependency>
@@ -121,11 +116,6 @@
                     <useStandardDocletOptions>false</useStandardDocletOptions>
                     <debug>true</debug>
                     <additionalDependencies>
-                        <additionalDependency>
-                            <groupId>com.github.haschi</groupId>
-                            <artifactId>aspekte</artifactId>
-                            <version>0.0.26-SNAPSHOT</version>
-                        </additionalDependency>
                     </additionalDependencies>
                 </configuration>
             </plugin>

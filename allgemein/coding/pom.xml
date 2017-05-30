@@ -17,17 +17,10 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
-        <aspekte.version>0.0.26-SNAPSHOT</aspekte.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>aspekte</artifactId>
-                <version>${aspekte.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 </project>

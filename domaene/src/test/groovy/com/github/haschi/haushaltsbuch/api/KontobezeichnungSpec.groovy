@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.api
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import org.apache.commons.lang3.StringUtils
 import spock.lang.Specification
 
 

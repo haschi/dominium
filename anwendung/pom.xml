@@ -50,11 +50,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.haschi</groupId>
-            <artifactId>aspekte</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>it.kamaladafrica</groupId>
             <artifactId>axon-cdi</artifactId>
         </dependency>

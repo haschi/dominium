@@ -1,6 +1,5 @@
 package testsupport
 
-import com.github.haschi.coding.aspekte.DarfNullSein
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -29,7 +28,7 @@ public class SollsaldoConverterTest extends Specification {
 
     @Unroll
     def "Umwandlung der ungültigen Eingabe #zeichenfolge in ein Sollsaldo"(
-            @DarfNullSein final String zeichenfolge,
+            final String zeichenfolge,
             final Class ausnahme) {
 
         given: "Angenommen ich habe einen SollsaldoConverter"

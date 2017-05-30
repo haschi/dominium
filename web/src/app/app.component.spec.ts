@@ -18,7 +18,6 @@ import { LeererInhaltComponent } from './leerer-inhalt/leerer-inhalt.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JobService } from './shared/job.service';
 import { AppRouterTestingModule } from './app-routing.module';
-import { CovalentCoreModule } from '@covalent/core';
 import { IntegrationTestingModule } from './shared/it.module';
 import { MaterialModule } from '@angular/material';
 import { expect } from './shared/http.matcher.spec';

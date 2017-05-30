@@ -1,6 +1,29 @@
 Dominium
 ========
 
+Eine Buchführung für private Haushalte.
+
+
+Anforderungen
+-------------
+
+Loslegen
+--------
+
+Frontend
+
+Das Frontend kann mit dem Befehl npm run start oder der Run-Konfiguration start
+ausgeführt werden, um manuelle Tests auszuführen. Das Frontend ist dann im 
+Browser unter der URL http://localhost:4300 erreichbar
+
+Unittests
+
+Zur Ausführung von Unittests mit Karma dient die Run-Konfiguration Karma Test.
+
+End to end Tests
+
+
+
 Test
 ----
 

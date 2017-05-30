@@ -1,8 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
-import com.github.haschi.coding.aspekte.DarfNullSein;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 
@@ -20,7 +19,7 @@ public abstract class Saldo
     public abstract MonetaryAmount getBetrag();
 
     @Override
-    public final boolean equals(@DarfNullSein final Object object)
+    public final boolean equals(final Object object)
     {
         if (this == object)
         {

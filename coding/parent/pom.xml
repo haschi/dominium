@@ -16,7 +16,6 @@
 
     <modules>
         <module>richtlinien</module>
-        <module>aspekte</module>
     </modules>
 
     <build>

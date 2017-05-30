@@ -21,7 +21,6 @@ import { httpMatcher } from '../shared/http.matcher.spec';
 import { Spy } from 'jasmine/spy';
 import { MaterialModule } from '@angular/material';
 import { IntegrationTestingModule } from '../shared/it.module';
-import { CovalentCoreModule } from '@covalent/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('Home', () => {
@@ -44,7 +43,6 @@ describe('Home', () => {
                 BrowserModule,
                 AppRouterTestingModule,
                 MaterialModule,
-                CovalentCoreModule.forRoot()
             ],
             providers: [
                 JobService,

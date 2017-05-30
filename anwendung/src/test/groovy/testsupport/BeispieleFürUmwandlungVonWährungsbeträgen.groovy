@@ -1,7 +1,5 @@
 package testsupport
 
-import com.github.haschi.coding.aspekte.ArgumentIstNullException
-
 import javax.money.format.MonetaryParseException
 
 public class BeispieleFürUmwandlungVonWährungsbeträgen {
@@ -19,7 +17,6 @@ public class BeispieleFürUmwandlungVonWährungsbeträgen {
                 ["Hello World", MonetaryParseException.class],    // Zeichenfolge ist ungültig
                 ["", IllegalArgumentException.class],  // Leere Zeichenfolge ist ungültig
                 ["-10,23 USD", IllegalArgumentException],
-                [null, ArgumentIstNullException.class]  // Das ist auch Mist.
         ]
     }
 }

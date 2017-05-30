@@ -65,17 +65,10 @@
         <maven.compiler.version>3.3</maven.compiler.version>
 
         <version.maven-surefire-plugin>2.18.1</version.maven-surefire-plugin>
-        <aspectj.version>1.8.9</aspectj.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>

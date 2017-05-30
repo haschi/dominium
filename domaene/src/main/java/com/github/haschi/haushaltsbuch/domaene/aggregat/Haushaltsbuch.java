@@ -22,7 +22,7 @@ import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheEinnahme;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;

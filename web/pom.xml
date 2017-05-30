@@ -103,7 +103,7 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
-                            <arguments>run build:prod</arguments>
+                            <arguments>run build</arguments>
                         </configuration>
                     </execution>
 

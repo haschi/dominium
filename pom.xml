@@ -30,7 +30,6 @@
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
 
         <!-- Das muss woanders hin -->
-        <aspectj.version>1.8.9</aspectj.version>
         <version.jboss.bom>10.0.1.Final</version.jboss.bom>
     </properties>
 
@@ -104,12 +103,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>aspekte</artifactId>
-                <version>0.0.26-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
                 <groupId>it.kamaladafrica</groupId>
                 <artifactId>axon-cdi</artifactId>
                 <version>2.0</version>
@@ -141,13 +134,6 @@
                         <useIncrementalCompilation>false</useIncrementalCompilation>
                         <verbose>false</verbose>
                     </configuration>
-                </plugin>
-
-                <!-- aspectj -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>1.8</version>
                 </plugin>
 
                 <plugin>
@@ -253,78 +239,6 @@
             </plugin>
 
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <configuration>
-                    <proc>none</proc>
-                    <forceAjcCompile>true</forceAjcCompile>
-                    <verbose>true</verbose>
-                    <!-- Bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=423795 -->
-                    <showWeaveInfo>false</showWeaveInfo>
-                    <complianceLevel>1.8</complianceLevel>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-
-                    <detail>true</detail>
-                    <aspectLibraries>
-                        <aspectLibrary>
-                            <groupId>com.github.haschi</groupId>
-                            <artifactId>aspekte</artifactId>
-                        </aspectLibrary>
-                    </aspectLibraries>
-
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <id>weave-classes</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <proc>none</proc>
-                            <!-- WICHTIG -->
-                            <sources/>
-                            <weaveDirectories>
-                                <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
-                            </weaveDirectories>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>weave-test-classes</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                        <configuration>
-                            <proc>none</proc>
-                            <!-- WICHTIG -->
-                            <testSources/>
-                            <weaveDirectories>
-                                <weaveDirectory>${project.build.testOutputDirectory}
-                                </weaveDirectory>
-                            </weaveDirectories>
-                        </configuration>
-                    </execution>
-                </executions>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjtools</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjrt</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-
-            </plugin>
-
             <!--<plugin>-->
             <!--<groupId>org.apache.maven.plugins</groupId>-->
             <!--<artifactId>maven-javadoc-plugin</artifactId>-->
@@ -390,7 +304,8 @@
         <module>coding</module>
         <module>anwendung</module>
         <module>domaene</module>
-        <module>web</module>
+        <!--<module>web</module>-->
+        <module>haushaltsbuchquery</module>
     </modules>
 
     <repositories>

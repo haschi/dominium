@@ -20,8 +20,7 @@
       "prefix": "dominium",
       "styles": [
         "styles.scss",
-        "theme.scss",
-        "../node_modules/@covalent/core/common/platform.css"
+        "theme.scss"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js",
