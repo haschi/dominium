@@ -7,9 +7,15 @@ import cucumber.api.java.de.Dann;
 
 import java.util.UUID;
 
+import static io.restassured.RestAssured.get;
+
 public class HaushaltsbuchSteps
 {
     private Steps steps = new Steps();
+
+    final AggregateProxy<HaushaltsbuchTestaggregat> aggregat = new AggregateProxy<>(
+            HaushaltsbuchTestaggregat.class,
+            UUID.randomUUID());
 
     @Before
     public void cqrsStarten()
@@ -20,9 +26,6 @@ public class HaushaltsbuchSteps
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
     public void ichHabeMitDerHaushaltsbuchführungBegonnen()
     {
-        final AggregateProxy<HaushaltsbuchTestaggregat> aggregat = new AggregateProxy<>(
-                HaushaltsbuchTestaggregat.class,
-                UUID.randomUUID());
 
         final ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt = ImmutableHaushaltsbuchAngelegt.of(aggregat.getIdentifier());
         steps.haushaltsführungBegonnen(aggregat, haushaltsbuchAngelegt);
@@ -31,7 +34,8 @@ public class HaushaltsbuchSteps
     @Dann("^werde ich ein leeres Haushaltsbuch sehen$")
     public void werdeIchEinLeeresHaushaltsbuchSehen()
     {
-        // Write code here that turns the phrase above into concrete actions
-        // throw new PendingException();
+        get("http://localhost:8080/haushaltsbuch/" + aggregat.getIdentifier().toString())
+                .then()
+                .statusCode(200);
     }
 }
