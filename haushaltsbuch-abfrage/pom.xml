@@ -71,6 +71,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
         </dependency>
@@ -162,6 +167,11 @@
             <artifactId>cucumber-junit</artifactId>
             <version>1.2.5</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

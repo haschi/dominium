@@ -15,14 +15,13 @@ public class Steps
     private long sequenceNumber;
 
     public <T> void haushaltsführungBegonnen(
-            Class<T> aggregateType,
-            String id,
-            Object payload)
+            final AggregateProxy<T> aggregat,
+            final Object payload)
     {
         System.out.println("Steps::haushaltsführungBegonnen");
         engine.appendEvents(new GenericDomainEventMessage<Object>(
-                aggregateType.getSimpleName(),
-                id,
+                aggregat.getType(),
+                aggregat.getIdentifier().toString(),
                 sequenceNumber++,
                 payload)
         );
