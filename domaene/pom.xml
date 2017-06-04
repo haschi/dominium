@@ -41,6 +41,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
             <scope>compile</scope>

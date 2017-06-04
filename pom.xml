@@ -78,6 +78,11 @@
             <!-- Eigene Module -->
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -306,6 +311,7 @@
         <module>domaene</module>
         <!--<module>web</module>-->
         <module>haushaltsbuch-abfrage</module>
+        <module>haushaltsbuch-api</module>
     </modules>
 
     <repositories>

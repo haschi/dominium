@@ -14,6 +14,7 @@
         <module name="anwendung" />
         <module name="domaene" />
         <module name="haushaltsbuch-abfrage" />
+        <module name="haushaltsbuch-api" />
         <module name="haushaltsbuchquery" />
         <module name="modeling" />
         <module name="modelldokumentation" />
@@ -30,6 +31,7 @@
       <module name="domaene" target="1.8" />
       <module name="haushaltsbuch" target="1.8" />
       <module name="haushaltsbuch-abfrage" target="1.8" />
+      <module name="haushaltsbuch-api" target="1.5" />
       <module name="haushaltsbuchquery" target="1.8" />
       <module name="infrastructure-bom" target="1.5" />
       <module name="modeling" target="1.8" />
