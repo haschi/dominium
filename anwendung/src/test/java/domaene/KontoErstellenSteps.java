@@ -1,11 +1,11 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.ImmutableKontoWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ImmutableKontoWurdeNichtAngelegt;
+import com.github.haschi.haushaltsbuch.api.ImmutableSaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableKontoWurdeNichtAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
+import com.github.haschi.haushaltsbuch.api.Sollsaldo;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;

@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat
 
+import com.github.haschi.haushaltsbuch.api.Buchungssatz
 import com.github.haschi.haushaltsbuch.api.Kontobezeichnung
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification

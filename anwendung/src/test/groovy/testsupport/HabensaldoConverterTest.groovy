@@ -1,6 +1,6 @@
 package testsupport
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo
+import com.github.haschi.haushaltsbuch.api.Habensaldo
 import spock.lang.Specification
 import spock.lang.Unroll
 

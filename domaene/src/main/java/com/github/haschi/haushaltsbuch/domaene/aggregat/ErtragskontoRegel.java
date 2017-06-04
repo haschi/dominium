@@ -1,5 +1,8 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Buchungsregel;
+import com.github.haschi.haushaltsbuch.api.Buchungssatz;
+import com.github.haschi.haushaltsbuch.api.Konto;
 import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
 
 import javax.money.MonetaryAmount;

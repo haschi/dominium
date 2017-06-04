@@ -1,6 +1,6 @@
 package testsupport;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
+import com.github.haschi.haushaltsbuch.api.Habensaldo;
 import cucumber.api.Transformer;
 
 public final class HabensaldoConverter

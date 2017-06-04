@@ -1,5 +1,8 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat
 
+import com.github.haschi.haushaltsbuch.api.Habensaldo
+import com.github.haschi.haushaltsbuch.api.SollHabenSaldo
+import com.github.haschi.haushaltsbuch.api.Sollsaldo
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 

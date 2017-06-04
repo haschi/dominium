@@ -4,9 +4,38 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.haschi.haushaltsbuch</groupId>
+    <parent>
+        <groupId>com.github.haschi.haushaltsbuch</groupId>
+        <artifactId>haushaltsbuch</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <name>${project.artifactId}-${project.version}</name>
     <artifactId>haushaltsbuch-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.haschi</groupId>
+            <artifactId>modeling</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
 </project>

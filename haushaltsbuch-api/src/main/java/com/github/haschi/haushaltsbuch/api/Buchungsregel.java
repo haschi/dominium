@@ -1,8 +1,8 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat;
+package com.github.haschi.haushaltsbuch.api;
 
 import javax.money.MonetaryAmount;
 
-interface Buchungsregel
+public interface Buchungsregel
 {
     boolean kannErtragBuchen(Buchungssatz buchungssatz);
 

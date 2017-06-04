@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat;
+package com.github.haschi.haushaltsbuch.api;
 
 import javax.money.MonetaryAmount;
 

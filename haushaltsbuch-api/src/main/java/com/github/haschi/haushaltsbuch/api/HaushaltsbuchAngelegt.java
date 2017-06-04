@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.api.ereignis;
+package com.github.haschi.haushaltsbuch.api;
 
 import com.github.haschi.modeling.de.Ereignis;
 import org.immutables.value.Value;

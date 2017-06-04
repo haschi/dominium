@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat.konto;
 
 import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Konto;
+import com.github.haschi.haushaltsbuch.api.Konto;
 
 public final class KontobezeichnungSpezifikation
         implements Spezifikation<Konto>
