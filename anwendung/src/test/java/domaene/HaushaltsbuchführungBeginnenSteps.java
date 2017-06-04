@@ -1,8 +1,8 @@
 package domaene;
 
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHauptbuchWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableHaushaltsbuchAngelegt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableJournalWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ImmutableHauptbuchWurdeAngelegt;
+import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
+import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;

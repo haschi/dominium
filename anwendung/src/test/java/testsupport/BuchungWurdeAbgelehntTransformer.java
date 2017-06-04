@@ -1,7 +1,7 @@
 package testsupport;
 
-import com.github.haschi.haushaltsbuch.api.ereignis.BuchungWurdeAbgelehnt;
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableBuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.api.BuchungWurdeAbgelehnt;
+import com.github.haschi.haushaltsbuch.api.ImmutableBuchungWurdeAbgelehnt;
 import cucumber.api.Transformer;
 
 public final class BuchungWurdeAbgelehntTransformer

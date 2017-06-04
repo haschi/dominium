@@ -1,6 +1,6 @@
 package testsupport;
 
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
+import com.github.haschi.haushaltsbuch.api.Sollsaldo;
 import cucumber.api.Transformer;
 
 public final class SollsaldoConverter

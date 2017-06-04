@@ -1,13 +1,13 @@
 package domaene;
 
-import com.github.haschi.haushaltsbuch.api.ereignis.ImmutableSaldoWurdeGeändert;
+import com.github.haschi.haushaltsbuch.api.Habensaldo;
+import com.github.haschi.haushaltsbuch.api.ImmutableSaldoWurdeGeändert;
+import com.github.haschi.haushaltsbuch.api.Saldo;
+import com.github.haschi.haushaltsbuch.api.Sollsaldo;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheTilgung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheTilgung;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Habensaldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Saldo;
-import com.github.haschi.haushaltsbuch.domaene.aggregat.Sollsaldo;
 import cucumber.api.Transform;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;

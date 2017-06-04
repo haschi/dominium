@@ -1,8 +1,7 @@
-package com.github.haschi.haushaltsbuch.domaene.aggregat;
+package com.github.haschi.haushaltsbuch.api;
 
-import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.money.MonetaryAmount;
 import javax.money.format.MonetaryAmountFormat;

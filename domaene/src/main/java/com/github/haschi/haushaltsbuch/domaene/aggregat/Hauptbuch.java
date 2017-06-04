@@ -1,7 +1,9 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Buchungssatz;
+import com.github.haschi.haushaltsbuch.api.Konto;
 import com.github.haschi.haushaltsbuch.api.Kontobezeichnung;
-import com.github.haschi.haushaltsbuch.api.ereignis.SaldoWurdeGeändert;
+import com.github.haschi.haushaltsbuch.api.SaldoWurdeGeändert;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontoUnbekannt;
 import com.github.haschi.haushaltsbuch.domaene.aggregat.konto.KontobezeichnungSpezifikation;
 import javaslang.collection.HashSet;
