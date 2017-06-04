@@ -305,7 +305,7 @@
         <module>anwendung</module>
         <module>domaene</module>
         <!--<module>web</module>-->
-        <module>haushaltsbuchquery</module>
+        <module>haushaltsbuch-abfrage</module>
     </modules>
 
     <repositories>
