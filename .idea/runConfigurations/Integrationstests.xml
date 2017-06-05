@@ -7,7 +7,7 @@
     <option name="PACKAGE_NAME" value="" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
-    <option name="TEST_OBJECT" value="package" />
+    <option name="TEST_OBJECT" value="pattern" />
     <option name="VM_PARAMETERS" value="-ea" />
     <option name="PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
@@ -17,7 +17,9 @@
       <value defaultName="singleModule" />
     </option>
     <envs />
-    <patterns />
+    <patterns>
+      <pattern testClass="com.github.haschi.haushaltsbuch.*IT" />
+    </patterns>
     <method>
       <option name="BuildArtifacts" enabled="true">
         <artifact name="haushaltsbuch-abfrage:war" />
