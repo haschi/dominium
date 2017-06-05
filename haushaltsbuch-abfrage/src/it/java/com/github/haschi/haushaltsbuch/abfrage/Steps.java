@@ -13,6 +13,7 @@ public class Steps
     private Configuration configuration;
     private EventStorageEngine engine;
     private long sequenceNumber;
+    private boolean started = false;
 
     public <T> void haushaltsführungBegonnen(
             final AggregateProxy<T> aggregat,
@@ -27,10 +28,21 @@ public class Steps
         );
     }
 
-    public void cqrsStarten()
+    public void cqrsStarten() throws Exception
     {
+        if (!started)
+        {
+            Main.main();
+            started = true;
+        }
+
         final AxonKonfiguration axon = new AxonKonfiguration();
         configuration = axon.konfigurieren(new InMemoryEventStorageEngine());
         engine = axon.eventStorageEngine();
+    }
+
+    public void stop()
+    {
+
     }
 }

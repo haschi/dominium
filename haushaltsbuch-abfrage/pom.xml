@@ -119,6 +119,15 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>logging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>topology-jgroups</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>topology-webapp</artifactId>
+            <version>${version.wildfly.swarm}</version>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -249,6 +258,7 @@
                         <configuration>
                             <sources>
                                 <source>src/it/java</source>
+                                <source>src/uat/java</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -262,6 +272,9 @@
                             <resources>
                                 <resource>
                                     <directory>src/it/resources</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/uat/resources</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -294,7 +307,12 @@
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>
-
+                <configuration>
+                    <properties>
+                        <swarm.bind.address>127.0.0.1</swarm.bind.address>
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+                    </properties>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -18,9 +19,14 @@ public class HaushaltsbuchSteps
             UUID.randomUUID());
 
     @Before
-    public void cqrsStarten()
+    public void cqrsStarten() throws Exception
     {
         steps.cqrsStarten();
+    }
+
+    @After
+    public  void cqrsStoppen() {
+        steps.stop();
     }
 
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")

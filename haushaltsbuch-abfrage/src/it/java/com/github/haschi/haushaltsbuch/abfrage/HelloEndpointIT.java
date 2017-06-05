@@ -6,6 +6,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.wildfly.swarm.Swarm;
+import org.wildfly.swarm.arquillian.CreateSwarm;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import static io.restassured.RestAssured.get;
@@ -18,6 +20,12 @@ public class HelloEndpointIT
 {
     @Drone
     WebDriver browser;
+
+    @CreateSwarm
+    public static Swarm startServer() throws Exception
+    {
+        return Main.createSwarm("-Dswarm.bind.address=127.0.0.1");
+    }
 
     @Test
     @RunAsClient

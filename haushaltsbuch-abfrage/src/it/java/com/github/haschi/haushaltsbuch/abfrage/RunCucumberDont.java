@@ -6,6 +6,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(strict = true)
-public class RunCucumberIT
+public class RunCucumberDont
 {
 }
