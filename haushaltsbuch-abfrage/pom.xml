@@ -42,6 +42,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-distributed-commandbus-jgroups</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
                 <version>1.1.12.Final</version>
@@ -79,6 +85,16 @@
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-distributed-commandbus-jgroups</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+        </dependency>
         <!-- Java EE 7 dependency -->
         <dependency>
             <groupId>javax</groupId>
@@ -101,6 +117,15 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
+            <artifactId>ejb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>resource-adapters</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs-validator</artifactId>
         </dependency>
         <dependency>
@@ -114,6 +139,12 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jgroups</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jgroups</groupId>
+            <artifactId>jgroups</artifactId>
+            <scope>compile</scope>
+            <version>4.0.3.Final</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>

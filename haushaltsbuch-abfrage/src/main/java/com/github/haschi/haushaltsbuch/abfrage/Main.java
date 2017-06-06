@@ -1,7 +1,9 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
 import org.wildfly.swarm.Swarm;
+import org.wildfly.swarm.ejb.EJBFraction;
 import org.wildfly.swarm.jgroups.JGroupsFraction;
+import org.wildfly.swarm.resource.adapters.ResourceAdapterFraction;
 import org.wildfly.swarm.spi.api.Fraction;
 
 public class Main
@@ -21,7 +23,8 @@ public class Main
     {
         Swarm swarm = new Swarm(args);
         swarm.fraction(haushaltsbuchJgroupsFraction());
-
+        swarm.fraction(EJBFraction.createDefaultFraction());
+        swarm.fraction(ResourceAdapterFraction.)
         return swarm;
     }
 
@@ -54,6 +57,10 @@ public class Main
                     s.protocol( "MFC" );
                     s.protocol( "FRAG2" );
                     s.protocol( "RSVP" );
+                    s.protocol( "COUNTER"/*, (p) -> {
+                        p.property("bypass_bundling", "true")
+                                .property("timeout", "5000");
+                    }*/);
                 })
                 .channel( "haushaltsbuch-jgroups", (c)->{
                     c.stack( "udp" );
