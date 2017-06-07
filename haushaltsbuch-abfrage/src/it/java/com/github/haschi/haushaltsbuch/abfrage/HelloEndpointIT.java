@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 public class HelloEndpointIT
 {
     @Drone
-    WebDriver browser;
+    private WebDriver browser;
 
     @CreateSwarm
     public static Swarm startServer() throws Exception

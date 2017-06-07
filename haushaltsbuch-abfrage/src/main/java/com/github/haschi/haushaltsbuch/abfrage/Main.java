@@ -3,7 +3,6 @@ package com.github.haschi.haushaltsbuch.abfrage;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.ejb.EJBFraction;
 import org.wildfly.swarm.jgroups.JGroupsFraction;
-import org.wildfly.swarm.resource.adapters.ResourceAdapterFraction;
 import org.wildfly.swarm.spi.api.Fraction;
 
 public class Main
@@ -24,7 +23,9 @@ public class Main
         Swarm swarm = new Swarm(args);
         swarm.fraction(haushaltsbuchJgroupsFraction());
         swarm.fraction(EJBFraction.createDefaultFraction());
-        swarm.fraction(ResourceAdapterFraction.)
+        // swarm.fraction(ManagementFraction.createDefaultFraction());
+
+        // swarm.fraction(new ManagementConsoleFraction().contextRoot("/admin"));
         return swarm;
     }
 

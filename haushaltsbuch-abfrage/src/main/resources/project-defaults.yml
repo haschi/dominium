@@ -1,4 +1,15 @@
+
 swarm:
   logging: INFO
   bind:
     address: 127.0.0.1
+  management:
+    security-realms:
+      ManagementRealm:
+        in-memory-authentication:
+          users:
+            matthias:
+              password: matthias
+    http-interface-management-interface:
+      security-realm: ManagementRealm
+      console-enabled: true

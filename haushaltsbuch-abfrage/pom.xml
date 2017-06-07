@@ -18,7 +18,7 @@
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
-        <version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
+        <version.wildfly.swarm>2017.6.0</version.wildfly.swarm>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -63,6 +63,14 @@
             </dependency>
 
             <dependency>
+                <groupId>org.jboss.arquillian.graphene</groupId>
+                <artifactId>graphene-webdriver</artifactId>
+                <version>2.2.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>3.5.2</version>
@@ -76,6 +84,14 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <type>pom</type>
+            <version>2.2.1</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-api</artifactId>
@@ -157,9 +173,24 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>topology-webapp</artifactId>
-            <version>${version.wildfly.swarm}</version>
+            <!--<version>${version.wildfly.swarm}</version>-->
         </dependency>
 
+
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>management</artifactId>
+        </dependency>
+
+        <dependency>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>management-console</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.wildfly.swarm</groupId>-->
+            <!--<artifactId>msc</artifactId>-->
+        <!--</dependency>-->
         <!-- Test -->
         <dependency>
             <groupId>org.axonframework</groupId>
@@ -177,13 +208,7 @@
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>2.1.0.Alpha2</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
