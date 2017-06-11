@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
-@Path("/hello")
+@Path("hello")
 public class HelloEndpoint {
 
 //    @Inject

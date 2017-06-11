@@ -7,12 +7,9 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.wildfly.swarm.Swarm;
-import org.wildfly.swarm.arquillian.CreateSwarm;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import java.net.URL;
-import java.text.MessageFormat;
 
 import static io.restassured.RestAssured.get;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,33 +17,31 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(Arquillian.class)
 @DefaultDeployment
+@RunAsClient
 public class HelloEndpointIT
 {
     @Drone
     private WebDriver browser;
 
-    @ArquillianResource
-    private URL path;
-
-    @CreateSwarm
-    public static Swarm startServer() throws Exception
-    {
-        return Main.createSwarm("-Dswarm.bind.address=127.0.0.1");
-    }
+    @ArquillianResource(HelloEndpoint.class)
+    private URL basisUrl;
 
     @Test
-    @RunAsClient
-    public void testHelloWithBrowser() {
-        System.out.print(MessageFormat.format("Arquillian Resource PATH: {0}", path.toString()));
+    public void testHelloWithBrowser()
+    {
+        browser.navigate().to(basisUrl + "hello");
 
-        browser.navigate().to("http://localhost:8080/hello");
         assertThat(browser.getPageSource()).contains("Hello from Haushaltsbuch query");
     }
 
     @Test
-    @RunAsClient
+    public void testEndpointUrl() {
+        assertThat(basisUrl.toExternalForm()).isEqualTo("http://localhost:8080/");
+    }
+
+    @Test
     public void testHelloWithRest() {
-        get("http://localhost:8080/hello")
+        get(basisUrl + "hello")
                 .then()
                 .statusCode(200)
                 .body(equalTo("Hello from Haushaltsbuch query"));
