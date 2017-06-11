@@ -24,8 +24,34 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <axon.version>3.0.5</axon.version>
+        <version.arquillian>1.1.13.Final</version.arquillian>
+        <version.org.jboss.arquillian.drone>2.2.1</version.org.jboss.arquillian.drone>
     </properties>
 
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>sonatype-nexus-snapshots</id>-->
+            <!--<name>Sonatype Nexus Snapshots</name>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>jboss-public-repository-group</id>-->
+            <!--<name>JBoss Public Repository Group</name>-->
+            <!--<url>http://repository.jboss.org/nexus/content/groups/public/</url>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -50,22 +76,15 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>1.1.12.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-drone-bom</artifactId>
-                <version>2.0.1.Final</version>
+                <version>${version.arquillian}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian.graphene</groupId>
-                <artifactId>graphene-webdriver</artifactId>
-                <version>2.2.1</version>
+                <groupId>org.jboss.arquillian.extension</groupId>
+                <artifactId>arquillian-drone-bom</artifactId>
+                <version>2.1.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -84,13 +103,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <type>pom</type>
-            <version>2.2.1</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
@@ -107,10 +119,6 @@
             <artifactId>axon-distributed-commandbus-jgroups</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.axonframework</groupId>
-            <artifactId>axon-core</artifactId>
-        </dependency>
         <!-- Java EE 7 dependency -->
         <dependency>
             <groupId>javax</groupId>
@@ -118,6 +126,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Wildfly Swarm Fractions -->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
@@ -135,7 +144,6 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>resource-adapters</artifactId>
@@ -175,22 +183,15 @@
             <artifactId>topology-webapp</artifactId>
             <!--<version>${version.wildfly.swarm}</version>-->
         </dependency>
-
-
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>management</artifactId>
         </dependency>
-
         <dependency>
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>management-console</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.wildfly.swarm</groupId>-->
-            <!--<artifactId>msc</artifactId>-->
-        <!--</dependency>-->
         <!-- Test -->
         <dependency>
             <groupId>org.axonframework</groupId>
@@ -207,6 +208,21 @@
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.arquillian.extension</groupId>-->
+            <!--<artifactId>arquillian-drone-webdriver-depchain</artifactId>-->
+            <!--<type>pom</type>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+            <version>2.2.1</version>
         </dependency>
 
         <dependency>
@@ -380,4 +396,17 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>jboss-3rd-party</id>
+            <name>JBoss 3rd-Party</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

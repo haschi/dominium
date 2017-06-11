@@ -31,7 +31,7 @@ public class Main
 
     public static Fraction haushaltsbuchJgroupsFraction() {
         return new JGroupsFraction()
-                .defaultChannel( "haushaltsbuch-jgroups")
+                .defaultChannel( "haushaltsbuch")
                 .stack( "udp", (s)->{
                     s.transport( "UDP", (t)->{
                         t.socketBinding("jgroups-udp");
@@ -63,7 +63,7 @@ public class Main
                                 .property("timeout", "5000");
                     }*/);
                 })
-                .channel( "haushaltsbuch-jgroups", (c)->{
+                .channel( "haushaltsbuch", (c)->{
                     c.stack( "udp" );
                 });
     }

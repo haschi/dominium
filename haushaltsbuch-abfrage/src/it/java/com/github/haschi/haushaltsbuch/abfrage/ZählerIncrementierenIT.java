@@ -8,13 +8,13 @@ import org.axonframework.jgroups.commandhandling.JGroupsConnector;
 import org.axonframework.serialization.JavaSerializer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jgroups.JChannel;
+import org.jgroups.blocks.atomic.Counter;
+import org.jgroups.blocks.atomic.CounterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.arquillian.CreateSwarm;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
-
-import javax.annotation.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,6 +32,8 @@ public class ZählerIncrementierenIT
     @Test
     public void testHelloWithRest(final JChannel channel) throws Exception
     {
+        assert channel != null : "channel nicht vorhanden";
+
         // JChannel channel = new JChannel();
         SimpleCommandBus localSegment = new SimpleCommandBus();
         JGroupsConnector connector = new JGroupsConnector(
@@ -47,19 +49,15 @@ public class ZählerIncrementierenIT
                 .isInstanceOf(CommandDispatchException.class);
     }
 
-    @Resource(lookup = "java:jboss/haushaltsbuch-jgroups")
-    // @Resource()
-    private JChannel channel;
+        @Test
+        public void test_counter_ist_nicht_vorhanden(final JChannel channel) throws Exception
+        {
+            assert channel != null : "channel ist nicht vorhanden";
 
-    @Test
-    public void test_counter_ist_nicht_vorhanden() throws Exception
-    {
-        assertThat(channel).isNotNull();
+            CounterService counter_service = new CounterService(channel);
+            channel.connect("haushaltsbuch-jgroups");
+            Counter counter = counter_service.getOrCreateCounter("mycounter", 1);
 
-//        JChannel channel = new JChannel();
-//        CounterService counter_service = new CounterService(channel);
-//        channel.connect("haushaltsbuch-jgroups");
-//        Counter counter = counter_service.getOrCreateCounter("mycounter", 1);
-//        assertThat(counter.get()).isEqualTo(1);
-    }
+            assertThat(counter.get()).isEqualTo(1);
+        }
 }
