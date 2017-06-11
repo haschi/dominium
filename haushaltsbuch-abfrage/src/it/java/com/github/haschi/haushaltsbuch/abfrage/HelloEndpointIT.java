@@ -15,6 +15,7 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 import static io.restassured.RestAssured.get;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(Arquillian.class)
@@ -38,8 +39,8 @@ public class HelloEndpointIT
     public void testHelloWithBrowser() {
         System.out.print(MessageFormat.format("Arquillian Resource PATH: {0}", path.toString()));
 
-//        browser.navigate().to("http://localhost:8080/hello");
-//        assertThat(browser.getPageSource()).contains("Hello from Haushaltsbuch query");
+        browser.navigate().to("http://localhost:8080/hello");
+        assertThat(browser.getPageSource()).contains("Hello from Haushaltsbuch query");
     }
 
     @Test
