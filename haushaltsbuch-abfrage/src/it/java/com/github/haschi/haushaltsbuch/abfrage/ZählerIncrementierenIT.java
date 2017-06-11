@@ -10,6 +10,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jgroups.JChannel;
 import org.jgroups.blocks.atomic.Counter;
 import org.jgroups.blocks.atomic.CounterService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.Swarm;
@@ -30,6 +31,7 @@ public class ZählerIncrementierenIT
     }
 
     @Test
+    @Ignore
     public void testHelloWithRest(final JChannel channel) throws Exception
     {
         assert channel != null : "channel nicht vorhanden";
@@ -50,9 +52,11 @@ public class ZählerIncrementierenIT
     }
 
         @Test
+        @Ignore
         public void test_counter_ist_nicht_vorhanden(final JChannel channel) throws Exception
         {
             assert channel != null : "channel ist nicht vorhanden";
+            assertThat(channel).isNotNull();
 
             CounterService counter_service = new CounterService(channel);
             channel.connect("haushaltsbuch-jgroups");

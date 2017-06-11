@@ -24,34 +24,12 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <axon.version>3.0.5</axon.version>
-        <version.arquillian>1.1.13.Final</version.arquillian>
-        <version.org.jboss.arquillian.drone>2.2.1</version.org.jboss.arquillian.drone>
+
+        <version.org.jboss.arquillian>1.1.11.Final</version.org.jboss.arquillian>
+        <version.org.jboss.arquillian.drone>2.0.1.Final</version.org.jboss.arquillian.drone>
+        <version.org.jboss.arquillian.graphene>2.1.0.Final</version.org.jboss.arquillian.graphene>
     </properties>
 
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>sonatype-nexus-snapshots</id>-->
-            <!--<name>Sonatype Nexus Snapshots</name>-->
-            <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-            <!--<releases>-->
-                <!--<enabled>false</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<id>jboss-public-repository-group</id>-->
-            <!--<name>JBoss Public Repository Group</name>-->
-            <!--<url>http://repository.jboss.org/nexus/content/groups/public/</url>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
-    <!--</repositories>-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -73,18 +51,19 @@
                 <version>${axon.version}</version>
             </dependency>
 
+            <!-- Arquillian Core dependencies -->
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>${version.arquillian}</version>
+                <version>${version.org.jboss.arquillian}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <!-- Arquillian Drone dependencies and WebDriver/Selenium dependencies -->
             <dependency>
                 <groupId>org.jboss.arquillian.extension</groupId>
                 <artifactId>arquillian-drone-bom</artifactId>
-                <version>2.1.2</version>
+                <version>${version.org.jboss.arquillian.drone}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -210,19 +189,20 @@
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.jboss.arquillian.extension</groupId>-->
-            <!--<artifactId>arquillian-drone-webdriver-depchain</artifactId>-->
-            <!--<type>pom</type>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.jboss.arquillian.graphene</groupId>
             <artifactId>graphene-webdriver</artifactId>
-            <scope>test</scope>
+            <version>${version.org.jboss.arquillian.graphene}</version>
             <type>pom</type>
-            <version>2.2.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+            <version>${version.org.jboss.arquillian.drone}</version>
+            <type>pom</type>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

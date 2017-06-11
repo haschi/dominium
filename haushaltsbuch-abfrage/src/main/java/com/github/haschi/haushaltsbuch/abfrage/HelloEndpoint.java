@@ -1,7 +1,5 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
-import org.jgroups.JChannel;
-
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.naming.Context;
@@ -9,7 +7,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import java.text.MessageFormat;
 
 @ApplicationScoped
 @Path("/hello")
@@ -19,8 +16,8 @@ public class HelloEndpoint {
 //    private Configuration konfiguration;
 
     // @Resource(mappedName = "java:jboss/jgroups/channel/haushaltsbuch-jgroups")
-    @Resource(lookup = "java:jboss/jgroups/channel/haushaltsbuch")
-    private JChannel channel;
+    // @Resource(lookup = "java:jboss/jgroups/channel/haushaltsbuch")
+    // private JChannel channel;
 
 
     private Context context;
@@ -29,19 +26,19 @@ public class HelloEndpoint {
     @Resource(mappedName = "java:module/EineJavaBean")
     private EineJavaBean bean;
 
-    //@GET
-    //@Produces("text/plain")
+    @GET
+    @Produces("text/plain")
     public Response doGet() {
         return Response.ok("Hello from Haushaltsbuch query").build();
     }
 
-    @GET
-    @Produces("text/plain")
-    //@Path("world")
-    public Response getWorld() throws Exception
-    {
-        return Response.ok(
-                MessageFormat.format("Wert: {0}", bean.getWert()))
-                .build();
-    }
+    //    @GET
+    //    @Produces("text/plain")
+    //    //@Path("world")
+    //    public Response getWorld() throws Exception
+    //    {
+    //        return Response.ok(
+    //                MessageFormat.format("Wert: {0}", bean.getWert()))
+    //                .build();
+    //    }
 }
