@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(Arquillian.class)
-@DefaultDeployment
+@DefaultDeployment(testable = false)
 @RunAsClient
 public class HelloEndpointIT
 {

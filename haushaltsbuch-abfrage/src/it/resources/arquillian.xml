@@ -10,7 +10,7 @@
 
   <container qualifier="swarm">
     <configuration>
-      <property name="javaVmArguments">-ea -Dswarm.bind.address=127.0.0.1</property>
+      <property name="javaVmArguments">-ea</property>
     </configuration>
   </container>
 </arquillian>

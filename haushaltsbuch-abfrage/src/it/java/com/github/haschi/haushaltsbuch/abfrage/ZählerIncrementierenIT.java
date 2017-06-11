@@ -13,25 +13,16 @@ import org.jgroups.blocks.atomic.CounterService;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.wildfly.swarm.Swarm;
-import org.wildfly.swarm.arquillian.CreateSwarm;
 import org.wildfly.swarm.arquillian.DefaultDeployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RunWith(Arquillian.class)
-@DefaultDeployment
+@DefaultDeployment(testable = true)
 public class ZählerIncrementierenIT
 {
-    @CreateSwarm
-    public static Swarm startServer() throws Exception
-    {
-        return Main.createSwarm();
-    }
-
     @Test
-    @Ignore
     public void testHelloWithRest(final JChannel channel) throws Exception
     {
         assert channel != null : "channel nicht vorhanden";
@@ -43,25 +34,25 @@ public class ZählerIncrementierenIT
                 channel,
                 "haushaltsbuch-jgroups",
                 new JavaSerializer()
-                );
+        );
 
         final DistributedCommandBus commandBus = new DistributedCommandBus(connector, connector);
         final DefaultCommandGateway gateway = new DefaultCommandGateway(commandBus);
-        assertThatThrownBy(() ->gateway.send("Hello"))
+        assertThatThrownBy(() -> gateway.send("Hello"))
                 .isInstanceOf(CommandDispatchException.class);
     }
 
-        @Test
-        @Ignore
-        public void test_counter_ist_nicht_vorhanden(final JChannel channel) throws Exception
-        {
-            assert channel != null : "channel ist nicht vorhanden";
-            assertThat(channel).isNotNull();
+    @Test
+    @Ignore
+    public void test_counter_ist_nicht_vorhanden(final JChannel channel) throws Exception
+    {
+        assert channel != null : "channel ist nicht vorhanden";
+        assertThat(channel).isNotNull();
 
-            CounterService counter_service = new CounterService(channel);
-            channel.connect("haushaltsbuch-jgroups");
-            Counter counter = counter_service.getOrCreateCounter("mycounter", 1);
+        CounterService counter_service = new CounterService(channel);
+        channel.connect("haushaltsbuch-jgroups");
+        Counter counter = counter_service.getOrCreateCounter("mycounter", 1);
 
-            assertThat(counter.get()).isEqualTo(1);
-        }
+        assertThat(counter.get()).isEqualTo(1);
+    }
 }
