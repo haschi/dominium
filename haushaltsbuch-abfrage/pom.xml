@@ -319,6 +319,9 @@
                     <version>2.19.1</version>
                     <configuration>
                         <systemPropertyVariables>
+                            <com.github.haschi.testebene>
+                                domäne
+                            </com.github.haschi.testebene>
                             <org.apache.maven.user-settings>
                                 ${session.request.userSettingsFile.path}
                             </org.apache.maven.user-settings>

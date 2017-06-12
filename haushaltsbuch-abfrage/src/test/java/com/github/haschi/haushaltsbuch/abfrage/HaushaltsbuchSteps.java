@@ -35,4 +35,14 @@ public class HaushaltsbuchSteps
         assertThat(api.haushaltsbuch(aggregat.getIdentifier()))
                 .isEqualTo(ImmutableHaushaltsbuch.builder().build());
     }
+
+    @Angenommen("^ich habe nicht mit der Haushaltsbuchführung begonnen$")
+    public void ichHabeNichtMitDerHaushaltsbuchführungBegonnen()
+    {
+    }
+
+    @Dann("^werde ich kein Haushaltsbuch sehen$")
+    public void werdeIchKeinHaushaltsbuchSehen()
+    {
+    }
 }
