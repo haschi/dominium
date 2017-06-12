@@ -14,7 +14,7 @@
     <artifactId>haushaltsbuch-abfrage</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>${project.artifactId}-${project.version}</name>
 
     <properties>
@@ -28,6 +28,10 @@
         <version.org.jboss.arquillian>1.1.11.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.drone>2.0.1.Final</version.org.jboss.arquillian.drone>
         <version.org.jboss.arquillian.graphene>2.1.0.Final</version.org.jboss.arquillian.graphene>
+
+        <version.cukespace>1.6.7</version.cukespace>
+        <version.cukes>1.2.4</version.cukes>
+
     </properties>
 
     <dependencyManagement>
@@ -52,22 +56,32 @@
             </dependency>
 
             <!-- Arquillian Core dependencies -->
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>${version.org.jboss.arquillian}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- Arquillian Drone dependencies and WebDriver/Selenium dependencies -->
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-drone-bom</artifactId>
-                <version>${version.org.jboss.arquillian.drone}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian</groupId>-->
+                <!--<artifactId>arquillian-bom</artifactId>-->
+                <!--<version>${version.org.jboss.arquillian}</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+            <!--&lt;!&ndash; Arquillian Drone dependencies and WebDriver/Selenium dependencies &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.jboss.arquillian.extension</groupId>-->
+                <!--<artifactId>arquillian-drone-bom</artifactId>-->
+                <!--<version>${version.org.jboss.arquillian.drone}</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
 
+            <dependency>
+                <groupId>com.github.haschi</groupId>
+                <artifactId>modeling</artifactId>
+                <version>0.0.26-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>2.3.3</version>
+            </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
@@ -82,6 +96,18 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.github.haschi</groupId>
+            <artifactId>modeling</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
@@ -178,32 +204,39 @@
             <version>3.0.5</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>arquillian</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wildfly.swarm</groupId>-->
+            <!--<artifactId>arquillian</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.arquillian.junit</groupId>-->
+            <!--<artifactId>arquillian-junit-container</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>${version.org.jboss.arquillian.graphene}</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.arquillian.graphene</groupId>-->
+            <!--<artifactId>graphene-webdriver</artifactId>-->
+            <!--<version>${version.org.jboss.arquillian.graphene}</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
-            <version>${version.org.jboss.arquillian.drone}</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.arquillian.extension</groupId>-->
+            <!--<artifactId>arquillian-drone-webdriver-depchain</artifactId>-->
+            <!--<version>${version.org.jboss.arquillian.drone}</version>-->
+            <!--<type>pom</type>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.github.cukespace</groupId>-->
+            <!--<artifactId>cukespace-core</artifactId>-->
+            <!--<version>${version.cukespace}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.assertj</groupId>
@@ -220,19 +253,31 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <version>1.2.5</version>
+            <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>${version.cukes}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.haschi</groupId>
+            <artifactId>modeling</artifactId>
+            <version>0.0.26-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

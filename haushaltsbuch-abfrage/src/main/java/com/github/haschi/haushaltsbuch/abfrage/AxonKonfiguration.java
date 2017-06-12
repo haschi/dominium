@@ -3,6 +3,7 @@ package com.github.haschi.haushaltsbuch.abfrage;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
+import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -25,6 +26,6 @@ public class AxonKonfiguration
     @ApplicationScoped
     public EventStorageEngine eventStorageEngine()
     {
-        return theEngine;
+        return new InMemoryEventStorageEngine();
     }
 }
