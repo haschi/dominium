@@ -13,6 +13,10 @@
     <name>${project.artifactId}-${project.version}</name>
     <artifactId>haushaltsbuch-api</artifactId>
 
+    <properties>
+        <axon.version>3.0.5</axon.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.github.haschi</groupId>
@@ -37,5 +41,10 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-core</artifactId>
+            <version>${axon.version}</version>
+        </dependency>
     </dependencies>
 </project>

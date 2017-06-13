@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.rest;
 
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.infrastruktur.Job;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 

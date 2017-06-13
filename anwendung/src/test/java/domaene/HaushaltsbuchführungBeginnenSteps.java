@@ -1,9 +1,9 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 import org.axonframework.commandhandling.gateway.CommandGateway;

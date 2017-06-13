@@ -6,6 +6,7 @@ import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
+import cucumber.api.Scenario;
 import org.wildfly.swarm.Swarm;
 
 import java.util.UUID;
@@ -14,6 +15,12 @@ public class RestAutomationApi implements AutomationApi
 {
 
     private Swarm swarm;
+    private Scenario scenario;
+
+//    public RestAutomationApi(Scenario scenario)
+//    {
+//        this.scenario = scenario;
+//    }
 
     @Override
     public void start()

@@ -2,7 +2,7 @@ package com.github.haschi.haushaltsbuch.rest;
 
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.infrastruktur.Job;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 

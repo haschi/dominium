@@ -21,7 +21,7 @@ public class Main
     public static Swarm createSwarm(String... args) throws Exception
     {
         Swarm swarm = new Swarm(args);
-        swarm.fraction(haushaltsbuchJgroupsFraction());
+        // swarm.fraction(haushaltsbuchJgroupsFraction());
         swarm.fraction(EJBFraction.createDefaultFraction());
         // swarm.fraction(ManagementFraction.createDefaultFraction());
 

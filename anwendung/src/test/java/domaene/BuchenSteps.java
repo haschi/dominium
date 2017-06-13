@@ -2,8 +2,8 @@ package domaene;
 
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAusgeführt;
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoMitAnfangsbestandAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoMitAnfangsbestandAn;
 import cucumber.api.Transform;

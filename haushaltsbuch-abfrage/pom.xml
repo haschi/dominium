@@ -98,6 +98,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.haschi</groupId>
             <artifactId>modeling</artifactId>
             <scope>provided</scope>
@@ -173,7 +178,7 @@
             <groupId>org.jgroups</groupId>
             <artifactId>jgroups</artifactId>
             <scope>compile</scope>
-            <version>4.0.3.Final</version>
+            <version>3.6.13.Final</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
@@ -196,6 +201,12 @@
         <groupId>org.wildfly.swarm</groupId>
         <artifactId>management-console</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.13</version>
+        </dependency>
+
 
         <!-- Test -->
         <dependency>
@@ -319,9 +330,6 @@
                     <version>2.19.1</version>
                     <configuration>
                         <systemPropertyVariables>
-                            <com.github.haschi.testebene>
-                                domäne
-                            </com.github.haschi.testebene>
                             <org.apache.maven.user-settings>
                                 ${session.request.userSettingsFile.path}
                             </org.apache.maven.user-settings>
@@ -388,6 +396,7 @@
                         <include>**/*IT.java</include>
                     </includes>
                     <systemPropertyVariables>
+                        <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
                         <phantomjs.binary.version>2.1.1</phantomjs.binary.version>
                         <org.apache.maven.user-settings>${session.request.userSettingsFile.path}
                         </org.apache.maven.user-settings>

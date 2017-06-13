@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
 import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.deltaspike.testcontrol.api.TestControl;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;

@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch;
 
-import com.github.haschi.haushaltsbuch.api.kommando.BeginneHaushaltsbuchführung;
-import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung;
+import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 
 import javax.enterprise.context.RequestScoped;

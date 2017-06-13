@@ -1,7 +1,7 @@
-package com.github.haschi.haushaltsbuch.api.kommando;
+package com.github.haschi.haushaltsbuch.api;
 
 import com.github.haschi.modeling.de.Anweisung;
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 import java.util.UUID;
 

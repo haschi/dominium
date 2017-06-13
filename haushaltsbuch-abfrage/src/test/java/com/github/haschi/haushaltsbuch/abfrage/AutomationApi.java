@@ -4,9 +4,6 @@ import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 
 import java.util.UUID;
 
-/**
- * Created by matthias on 12.06.17.
- */
 public interface AutomationApi
 {
     void start();
