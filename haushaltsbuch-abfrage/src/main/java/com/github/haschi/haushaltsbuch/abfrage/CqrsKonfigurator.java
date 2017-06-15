@@ -11,22 +11,29 @@ import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageE
 import org.axonframework.jgroups.commandhandling.JGroupsConnector;
 import org.axonframework.serialization.xml.XStreamSerializer;
 import org.jgroups.JChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Destroyed;
+import javax.enterprise.context.Initialized;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 
 @ApplicationScoped
-public class AxonKonfiguration
+public class CqrsKonfigurator
 {
+    Logger log = LoggerFactory.getLogger(CqrsKonfigurator.class);
+
     private EventStorageEngine theEngine;
+    private Configuration konfiguration;
+    private JGroupsConnector connector;
 
     public CommandBus setupDistributedCommandBus(final JGroupsConnector connector)
     {
         return new DistributedCommandBus(connector, connector);
     }
 
-    @Produces
-    @ApplicationScoped
     public JGroupsConnector createConnector()
     {
         JChannel channel = new JChannel(true);
@@ -39,10 +46,10 @@ public class AxonKonfiguration
                 new AnnotationRoutingStrategy());
     }
 
-    @Produces
-    @ApplicationScoped
-    public Configuration konfigurieren(final EventStorageEngine engine, final JGroupsConnector connector) {
-        theEngine = engine;
+    public Configuration konfigurieren(
+            final EventStorageEngine engine,
+            JGroupsConnector connector) {
+
         return DefaultConfigurer.defaultConfiguration()
                 .configureCommandBus(c -> setupDistributedCommandBus(connector))
                 .configureEmbeddedEventStore(c -> engine)
@@ -50,8 +57,36 @@ public class AxonKonfiguration
                 .buildConfiguration();
     }
 
+    public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        log.info("Axon konfigurieren");
+
+        try {
+            connector = createConnector();
+            theEngine = eventStorageEngine();
+            final Configuration konfigurieren = konfigurieren(theEngine, connector);
+            connector.connect();
+            konfigurieren.start();
+            this.konfiguration = konfigurieren;
+        } catch (Exception e) {
+            log.error("Konfiguration fehlgeschlagen", e);
+        }
+    }
+
     @Produces
     @ApplicationScoped
+    public Configuration getKonfiguration() {
+        assert this.konfiguration != null;
+        return this.konfiguration;
+    }
+
+    public void destroy(@Observes @Destroyed(ApplicationScoped.class) Object init) {
+
+        log.info("Axon Konfiguration shutdown");
+
+        connector.disconnect();
+        konfiguration.shutdown();
+    }
+
     public EventStorageEngine eventStorageEngine()
     {
         return new InMemoryEventStorageEngine();

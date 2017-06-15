@@ -3,7 +3,7 @@
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="MAIN_CLASS_NAME" value="com.github.haschi.haushaltsbuch.abfrage.Main" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="-Dswarm.bind.address=127.0.0.1" />
+    <option name="PROGRAM_PARAMETERS" value="-Dswarm.bind.address=127.0.0.1 -Djgroups.bind_addr=127.0.0.1 -Djava.net.preferIPv4Stack=true" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/haushaltsbuch-abfrage" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />

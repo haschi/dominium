@@ -24,7 +24,8 @@ public class SwarmCommandBusIntegrationTest
         swarm.start();
         swarm.deploy();
 
-        final AxonKonfiguration axon = new AxonKonfiguration();
+        Thread.sleep(2000);
+        final CqrsKonfigurator axon = new CqrsKonfigurator();
         connector = axon.createConnector();
 
         configuration = DefaultConfigurer.defaultConfiguration()
@@ -36,16 +37,18 @@ public class SwarmCommandBusIntegrationTest
                 .buildConfiguration();
 
 
-        configuration.start();
         connector.connect();
+        configuration.start();
     }
 
     @After
     public void stop() throws Exception
     {
+        assert swarm != null : "Wildfly Swarm nicht gestartet";
         swarm.stop();
-        connector.disconnect();
+
         configuration.shutdown();
+        connector.disconnect();
     }
 
     @Test

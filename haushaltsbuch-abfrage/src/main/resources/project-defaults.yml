@@ -1,6 +1,10 @@
-
+jgroups:
+  bind_addr: 127.0.0.1
+java:
+  net:
+    preferIPv4Stack: true
 swarm:
-  logging: INFO
+  logging: DEBUG
   bind:
     address: 127.0.0.1
   management:

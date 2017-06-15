@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 public class HaushaltsbuchAnlegenHandler
 {
     Logger log = LoggerFactory.getLogger(HaushaltsbuchAnlegenHandler.class);
+
     @CommandHandler
     public void beginneHaushaltsbuchführung(final ImmutableBeginneHaushaltsbuchführung anweisung) {
         log.info(MessageFormat.format("Beginne Haushaltsbuchführung für {0}", anweisung.id()));

@@ -2,7 +2,7 @@ package com.github.haschi.haushaltsbuch.abfrage.domäne;
 
 import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
-import com.github.haschi.haushaltsbuch.abfrage.AxonKonfiguration;
+import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
@@ -32,7 +32,7 @@ public class DomainAutomationApi implements AutomationApi
     @Override
     public void start()
     {
-        final AxonKonfiguration axonKonfiguration = new AxonKonfiguration();
+        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator();
         connector = axonKonfiguration.createConnector();
         engine = axonKonfiguration.eventStorageEngine();
         configuration = axonKonfiguration.konfigurieren(engine, connector);
