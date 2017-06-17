@@ -16,8 +16,8 @@ public class SwarmCommandBusIntegrationTest
 {
     private Swarm swarm;
     private Configuration configuration;
-    private JGroupsConnector connector;
     private JChannel channel;
+    private JGroupsConnector connector;
 
     @Before
     public void start() throws Exception
@@ -26,21 +26,15 @@ public class SwarmCommandBusIntegrationTest
         swarm.start();
         swarm.deploy();
 
-        Thread.sleep(2000);
-        final CqrsKonfigurator axon = new CqrsKonfigurator();
-        channel = axon.createChannel();
-        connector = axon.createConnector(channel);
+        CommandBusKonfiguration cbk = new CommandBusKonfiguration();
+        cbk.initialize();
+        final CqrsKonfigurator axon = new CqrsKonfigurator(cbk);
 
         configuration = DefaultConfigurer.defaultConfiguration()
-                .configureCommandBus(configuration ->
-                                     {
-                                         return axon.setupDistributedCommandBus(connector);
-                                     })
-                // .registerCommandHandler(c -> new TestCommandHandler())
+                .configureCommandBus(cbk::setupDistributedCommandBus)
+                .registerModule(cbk)
                 .buildConfiguration();
 
-
-        connector.connect();
         configuration.start();
     }
 
@@ -50,19 +44,16 @@ public class SwarmCommandBusIntegrationTest
         assert swarm != null : "Wildfly Swarm nicht gestartet";
         swarm.stop();
 
+
         configuration.shutdown();
-        connector.disconnect();
-        channel.close();
     }
 
     @Test
     public void commands_werden_im_swarm_ausgeführt() {
 
-        //assertThatThrownBy(() ->
         configuration.commandGateway()
                 .send(ImmutableBeginneHaushaltsbuchführung.builder()
                               .id(UUID.randomUUID())
                 .build());
-        //.isInstanceOf(CommandDispatchException.class);
     }
 }

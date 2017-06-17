@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.abfrage.domäne;
 
 import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
+import com.github.haschi.haushaltsbuch.abfrage.CommandBusKonfiguration;
 import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
@@ -11,8 +12,6 @@ import cucumber.api.Scenario;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
-import org.axonframework.jgroups.commandhandling.JGroupsConnector;
-import org.jgroups.JChannel;
 
 import java.util.UUID;
 
@@ -23,30 +22,23 @@ public class DomainAutomationApi implements AutomationApi
 
     private int sequenceNumber;
     private Scenario scenario;
-    private JGroupsConnector connector;
-    private JChannel channel;
-
-    //    public DomainAutomationApi(Scenario scenario)
-//    {
-//        this.scenario = scenario;
-//    }
 
     @Override
     public void start()
     {
-        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator();
-        channel = axonKonfiguration.createChannel();
-        connector = axonKonfiguration.createConnector(channel);
+        CommandBusKonfiguration cbk = new CommandBusKonfiguration();
+        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator(cbk);
         engine = axonKonfiguration.eventStorageEngine();
-        configuration = axonKonfiguration.konfigurieren(engine, connector);
+        configuration = axonKonfiguration.konfigurieren(engine, cbk);
         sequenceNumber = 0;
+
+        configuration.start();
     }
 
     @Override
     public void stop()
     {
         configuration.shutdown();
-        connector.disconnect();
     }
 
     @Override

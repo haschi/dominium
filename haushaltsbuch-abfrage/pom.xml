@@ -213,7 +213,7 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
-            <version>3.0.5</version>
+            <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
         <!--<dependency>-->
