@@ -28,15 +28,15 @@ public class CqrsKonfigurator
     private EventStorageEngine theEngine;
     private Configuration konfiguration;
     private JGroupsConnector connector;
+    private JChannel channel;
 
     public CommandBus setupDistributedCommandBus(final JGroupsConnector connector)
     {
         return new DistributedCommandBus(connector, connector);
     }
 
-    public JGroupsConnector createConnector()
+    public JGroupsConnector createConnector(JChannel channel)
     {
-        JChannel channel = new JChannel(true);
         CommandBus localCommandBus = new SimpleCommandBus();
         return new JGroupsConnector(
                 localCommandBus,
@@ -46,6 +46,9 @@ public class CqrsKonfigurator
                 new AnnotationRoutingStrategy());
     }
 
+    public JChannel createChannel() {
+        return new JChannel(true);
+    }
     public Configuration konfigurieren(
             final EventStorageEngine engine,
             JGroupsConnector connector) {
@@ -61,7 +64,8 @@ public class CqrsKonfigurator
         log.info("Axon konfigurieren");
 
         try {
-            connector = createConnector();
+            channel = createChannel();
+            connector = createConnector(channel);
             theEngine = eventStorageEngine();
             final Configuration konfigurieren = konfigurieren(theEngine, connector);
             connector.connect();
@@ -83,7 +87,10 @@ public class CqrsKonfigurator
 
         log.info("Axon Konfiguration shutdown");
 
-        connector.disconnect();
+
+//        connector.disconnect();
+//        channel.close();
+
         konfiguration.shutdown();
     }
 

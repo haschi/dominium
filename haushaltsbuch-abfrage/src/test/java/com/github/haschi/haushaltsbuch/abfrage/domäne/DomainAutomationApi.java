@@ -12,6 +12,7 @@ import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.jgroups.commandhandling.JGroupsConnector;
+import org.jgroups.JChannel;
 
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class DomainAutomationApi implements AutomationApi
     private int sequenceNumber;
     private Scenario scenario;
     private JGroupsConnector connector;
+    private JChannel channel;
 
     //    public DomainAutomationApi(Scenario scenario)
 //    {
@@ -33,7 +35,8 @@ public class DomainAutomationApi implements AutomationApi
     public void start()
     {
         final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator();
-        connector = axonKonfiguration.createConnector();
+        channel = axonKonfiguration.createChannel();
+        connector = axonKonfiguration.createConnector(channel);
         engine = axonKonfiguration.eventStorageEngine();
         configuration = axonKonfiguration.konfigurieren(engine, connector);
         sequenceNumber = 0;

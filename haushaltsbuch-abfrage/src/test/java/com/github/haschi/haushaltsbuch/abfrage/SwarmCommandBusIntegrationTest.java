@@ -4,6 +4,7 @@ import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.jgroups.commandhandling.JGroupsConnector;
+import org.jgroups.JChannel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class SwarmCommandBusIntegrationTest
     private Swarm swarm;
     private Configuration configuration;
     private JGroupsConnector connector;
+    private JChannel channel;
 
     @Before
     public void start() throws Exception
@@ -26,7 +28,8 @@ public class SwarmCommandBusIntegrationTest
 
         Thread.sleep(2000);
         final CqrsKonfigurator axon = new CqrsKonfigurator();
-        connector = axon.createConnector();
+        channel = axon.createChannel();
+        connector = axon.createConnector(channel);
 
         configuration = DefaultConfigurer.defaultConfiguration()
                 .configureCommandBus(configuration ->
@@ -49,6 +52,7 @@ public class SwarmCommandBusIntegrationTest
 
         configuration.shutdown();
         connector.disconnect();
+        channel.close();
     }
 
     @Test
