@@ -1,12 +1,14 @@
 package com.github.haschi.haushaltsbuch.abfrage.domäne;
 
+import com.github.haschi.cqrs.Integrationsumgebung;
 import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
-import com.github.haschi.haushaltsbuch.abfrage.CommandBusKonfiguration;
+import com.github.haschi.haushaltsbuch.abfrage.CommandBusKonfigurierer;
 import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
+import com.github.haschi.haushaltsbuch.abfrage.Systemumgebung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.Scenario;
 import org.axonframework.config.Configuration;
@@ -26,10 +28,11 @@ public class DomainAutomationApi implements AutomationApi
     @Override
     public void start()
     {
-        CommandBusKonfiguration cbk = new CommandBusKonfiguration();
-        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator(cbk);
+        CommandBusKonfigurierer cbk = new CommandBusKonfigurierer();
+        Systemumgebung integrationstestumgebung = new Integrationsumgebung();
+        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator(integrationstestumgebung);
         engine = axonKonfiguration.eventStorageEngine();
-        configuration = axonKonfiguration.konfigurieren(engine, cbk);
+        configuration = axonKonfiguration.konfigurieren(engine);
         sequenceNumber = 0;
 
         configuration.start();

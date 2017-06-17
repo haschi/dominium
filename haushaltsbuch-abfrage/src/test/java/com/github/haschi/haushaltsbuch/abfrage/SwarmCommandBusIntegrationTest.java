@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.cqrs.Integrationsumgebung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
@@ -26,12 +27,13 @@ public class SwarmCommandBusIntegrationTest
         swarm.start();
         swarm.deploy();
 
-        CommandBusKonfiguration cbk = new CommandBusKonfiguration();
+        CommandBusKonfigurierer cbk = new CommandBusKonfigurierer();
         cbk.initialize();
-        final CqrsKonfigurator axon = new CqrsKonfigurator(cbk);
+        final Systemumgebung integrationstestumgebung = new Integrationsumgebung();
+        final CqrsKonfigurator axon = new CqrsKonfigurator(integrationstestumgebung);
 
         configuration = DefaultConfigurer.defaultConfiguration()
-                .configureCommandBus(cbk::setupDistributedCommandBus)
+                .configureCommandBus(integrationstestumgebung::erzeugeCommandBus)
                 .registerModule(cbk)
                 .buildConfiguration();
 

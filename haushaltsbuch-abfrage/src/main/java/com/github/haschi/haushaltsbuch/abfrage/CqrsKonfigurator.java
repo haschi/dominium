@@ -21,13 +21,13 @@ public class CqrsKonfigurator
 
     private EventStorageEngine theEngine;
     private Configuration konfiguration;
-    private CommandBusKonfiguration cbk;
+    private Systemumgebung systemumgebung;
 
     @Inject
-    public CqrsKonfigurator(CommandBusKonfiguration cbk)
+    public CqrsKonfigurator(Systemumgebung systemumgebung)
     {
 
-        this.cbk = cbk;
+        this.systemumgebung = systemumgebung;
     }
 
     //        configuration.onShutdown(() -> {
@@ -40,23 +40,15 @@ public class CqrsKonfigurator
 
 
 
-    public Configuration konfigurieren(
-            final EventStorageEngine engine,
-            CommandBusKonfiguration cbk) {
-
-        //  TODO: nicht hier.
-        cbk.initialize();
+    public Configuration konfigurieren(final EventStorageEngine engine) {
 
         log.info("CQRS Konfiguration erstellen");
         final Configuration configuration = DefaultConfigurer.defaultConfiguration()
-                .configureCommandBus(cbk::setupDistributedCommandBus)
-                .configureEmbeddedEventStore(c -> engine)
+                .configureCommandBus(this.systemumgebung::erzeugeCommandBus)
+                .configureEmbeddedEventStore(c -> systemumgebung.erzeugeEventStorageEngine())
                 .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler())
-                .registerModule(cbk)
-                .buildConfiguration();
 
-//        configuration.onStart(cbk::start);
-//        configuration.onShutdown(cbk::stop);
+                .buildConfiguration();
 
         return configuration;
     }
@@ -65,15 +57,20 @@ public class CqrsKonfigurator
         log.info("Axon konfigurieren");
 
         try {
-            theEngine = eventStorageEngine();
-            final Configuration konfigurieren = konfigurieren(theEngine, cbk);
-            log.info("Axon Konfiguration hergestellt");
-            konfigurieren.start();
-            log.info("Axon Konfiguration gestartet");
-            this.konfiguration = konfigurieren;
+            start();
         } catch (Exception e) {
             log.error("Konfiguration fehlgeschlagen", e);
         }
+    }
+
+    private void start()
+    {
+        theEngine = eventStorageEngine();
+        final Configuration konfigurieren = konfigurieren(theEngine);
+        log.info("Axon Konfiguration hergestellt");
+        konfigurieren.start();
+        log.info("Axon Konfiguration gestartet");
+        this.konfiguration = konfigurieren;
     }
 
     @Produces
@@ -84,16 +81,20 @@ public class CqrsKonfigurator
     }
 
     public void destroy(@Observes @Destroyed(ApplicationScoped.class) Object init) {
-
-        log.info("Axon Konfiguration shutdown");
-
-        if (konfiguration != null) {
-            konfiguration.shutdown();
-        }
+        shutdown();
     }
 
     public EventStorageEngine eventStorageEngine()
     {
         return new InMemoryEventStorageEngine();
+    }
+
+    public void shutdown()
+    {
+        log.info("Axon Konfiguration shutdown");
+
+        if (konfiguration != null) {
+            konfiguration.shutdown();
+        }
     }
 }
