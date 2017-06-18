@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CqrsKonfiguratorTest
 {
-    private boolean commandHandlerAufgerufen;
     private Configuration clientconfiguration;
     private Configuration serverConfiguration;
     private TestCommandHandler commandHandler = new TestCommandHandler();
@@ -29,7 +28,9 @@ public class CqrsKonfiguratorTest
     @Test
     public void konfigurieren()
     {
-        clientconfiguration.commandGateway().sendAndWait(new TestCommand(UUID.randomUUID()));
+        clientconfiguration.commandGateway()
+                .sendAndWait(new TestCommand(UUID.randomUUID()));
+
         assertThat(commandHandler.aufgerufen()).isTrue();
     }
 
@@ -47,7 +48,6 @@ public class CqrsKonfiguratorTest
         serverConfiguration.start();
         // Aufwärmen.
         assertThat(serverConfiguration.commandBus()).isInstanceOf(DistributedCommandBus.class);
-        Thread.sleep(1000);
     }
 
     private void clientKonfigurieren() throws InterruptedException
@@ -65,10 +65,9 @@ public class CqrsKonfiguratorTest
         // 2. Komponenten (CommandBus ist auch eine Komponente) werden erzeugt
         clientconfiguration.start();
 
-        Thread.sleep(1000);
         // Aufwärmen!
         assertThat(clientconfiguration.commandBus()).isInstanceOf(DistributedCommandBus.class);
-        assertThat(clientconfiguration.commandGateway()).isNotNull();
+        // assertThat(clientconfiguration.commandGateway()).isNotNull();
     }
 
     @After
@@ -76,5 +75,4 @@ public class CqrsKonfiguratorTest
         clientconfiguration.shutdown();
         serverConfiguration.shutdown();
     }
-
 }
