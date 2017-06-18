@@ -20,7 +20,8 @@ public class JgroupsConfigurer
     private JChannel channel;
     private JGroupsConnector connector;
 
-    JgroupsConfigurer(Configurer configurer) {
+    JgroupsConfigurer(Configurer configurer)
+    {
 
         this.configurer = configurer;
     }
@@ -47,8 +48,8 @@ public class JgroupsConfigurer
 
         return configurer
                 .configureCommandBus(config -> new DistributedCommandBus(
-                    config.getComponent(JGroupsConnector.class),
-                    config.getComponent(JGroupsConnector.class)))
+                        config.getComponent(JGroupsConnector.class),
+                        config.getComponent(JGroupsConnector.class)))
                 .registerComponent(JGroupsConnector.class, config -> connector)
                 .registerComponent(JChannel.class, config -> channel)
                 .registerModule(new ModuleConfiguration()
@@ -59,7 +60,6 @@ public class JgroupsConfigurer
                     @Override
                     public void initialize(Configuration config)
                     {
-
                         this.config = config;
                     }
 
@@ -68,9 +68,11 @@ public class JgroupsConfigurer
                     {
                         assert config.commandBus() != null;
 
-                        try {
+                        try
+                        {
                             config.getComponent(JGroupsConnector.class).connect();
-                        } catch (Exception e) {
+                        } catch (Exception e)
+                        {
                             log.error("Verbindungsfehler", e);
                         }
                     }
@@ -79,14 +81,10 @@ public class JgroupsConfigurer
                     public void shutdown()
                     {
                         log.info("Verbindung beenden");
+
                         config.getComponent(JGroupsConnector.class).disconnect();
-                        // connector.disconnect();
-
                         config.getComponent(JChannel.class).disconnect();
-                        // channel.disconnect();
-
                         config.getComponent(JChannel.class).close();
-                        // channel.close();
                     }
                 });
     }
