@@ -14,13 +14,23 @@ import org.slf4j.LoggerFactory;
 
 public class JgroupsConfigurer
 {
-    public static Configurer jgroupsConfiguration(Configurer configurer)
+    Logger log = LoggerFactory.getLogger(JgroupsConfigurer.class);
+
+    private Configurer configurer;
+    private JChannel channel;
+    private JGroupsConnector connector;
+
+    JgroupsConfigurer(Configurer configurer) {
+
+        this.configurer = configurer;
+    }
+
+    public Configurer jgroupsConfiguration() throws Exception
     {
-        Logger log = LoggerFactory.getLogger(JgroupsConfigurer.class);
 
-        final JChannel channel = new JChannel(true);
+        channel = new JChannel("udp.xml");
 
-        final JGroupsConnector connector = new JGroupsConnector(
+        connector = new JGroupsConnector(
                 new SimpleCommandBus(),
                 channel,
                 "haushaltsbuch",
@@ -40,6 +50,7 @@ public class JgroupsConfigurer
                     config.getComponent(JGroupsConnector.class),
                     config.getComponent(JGroupsConnector.class)))
                 .registerComponent(JGroupsConnector.class, config -> connector)
+                .registerComponent(JChannel.class, config -> channel)
                 .registerModule(new ModuleConfiguration()
                 {
                     private Configuration config;
@@ -58,7 +69,7 @@ public class JgroupsConfigurer
                         assert config.commandBus() != null;
 
                         try {
-                            // config.getComponent(JGroupsConnector.class).connect();
+                            config.getComponent(JGroupsConnector.class).connect();
                         } catch (Exception e) {
                             log.error("Verbindungsfehler", e);
                         }
@@ -68,11 +79,14 @@ public class JgroupsConfigurer
                     public void shutdown()
                     {
                         log.info("Verbindung beenden");
-                        connector.disconnect();
-                        channel.disconnect();
-                        channel.close();
+                        config.getComponent(JGroupsConnector.class).disconnect();
+                        // connector.disconnect();
 
+                        config.getComponent(JChannel.class).disconnect();
+                        // channel.disconnect();
 
+                        config.getComponent(JChannel.class).close();
+                        // channel.close();
                     }
                 });
     }

@@ -17,17 +17,24 @@ public class JgroupsConfigurationProviderTest
     TestCommandHandler handler;
 
     @Before
-    public void umgebungStarten() {
+    public void umgebungStarten() throws Exception
+    {
         handler = new TestCommandHandler();
 
 
-        server = JgroupsConfigurer.jgroupsConfiguration(DefaultConfigurer.defaultConfiguration())
+        server = new JgroupsConfigurer(DefaultConfigurer.defaultConfiguration())
+                .jgroupsConfiguration()
                 .registerCommandHandler(config -> handler)
                 .buildConfiguration();
 
+//        server = JgroupsConfigurer.jgroupsConfiguration()
+//                .registerCommandHandler(config -> handler)
+//                .buildConfiguration();
+
         server.start();
 
-        client = JgroupsConfigurer.jgroupsConfiguration(DefaultConfigurer.defaultConfiguration())
+        client = new JgroupsConfigurer(DefaultConfigurer.defaultConfiguration())
+                .jgroupsConfiguration()
                 .buildConfiguration();
 
         client.start();
