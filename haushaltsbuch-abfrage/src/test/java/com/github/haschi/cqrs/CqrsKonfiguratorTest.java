@@ -1,6 +1,5 @@
 package com.github.haschi.cqrs;
 
-import org.axonframework.commandhandling.distributed.DistributedCommandBus;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.junit.After;
@@ -46,8 +45,6 @@ public class CqrsKonfiguratorTest
                 .buildConfiguration();
 
         serverConfiguration.start();
-        // Aufwärmen.
-        assertThat(serverConfiguration.commandBus()).isInstanceOf(DistributedCommandBus.class);
     }
 
     private void clientKonfigurieren() throws InterruptedException
@@ -60,14 +57,7 @@ public class CqrsKonfiguratorTest
                 .registerModule(clientumgebung)
                 .buildConfiguration();
 
-        // Reihenfolge:
-        // 1. Starter wird ausgeführt.
-        // 2. Komponenten (CommandBus ist auch eine Komponente) werden erzeugt
         clientconfiguration.start();
-
-        // Aufwärmen!
-        assertThat(clientconfiguration.commandBus()).isInstanceOf(DistributedCommandBus.class);
-        // assertThat(clientconfiguration.commandGateway()).isNotNull();
     }
 
     @After

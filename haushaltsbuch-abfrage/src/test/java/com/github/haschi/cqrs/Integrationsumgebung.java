@@ -41,12 +41,12 @@ public class Integrationsumgebung implements Systemumgebung, ModuleConfiguration
     @Override
     public CommandBus erzeugeCommandBus(Configuration configuration)
     {
-        final Optional<Integrationsumgebung> any = configuration.getModules().stream()
+        final Optional<Integrationsumgebung> integrationsumgebung = configuration.getModules().stream()
                 .filter(m -> this.getClass().isAssignableFrom(m.getClass()))
                 .map(m -> (Integrationsumgebung) m)
                 .findAny();
 
-        return any.map(i -> new DistributedCommandBus(i.connector, i.connector))
+        return integrationsumgebung.map(i -> new DistributedCommandBus(i.connector, i.connector))
                 .orElseThrow(IllegalStateException::new);
     }
 
@@ -87,9 +87,6 @@ public class Integrationsumgebung implements Systemumgebung, ModuleConfiguration
                 new XStreamSerializer(),
                 new AnnotationRoutingStrategy());
 
-//        configuration.onStart(this::verbinden);
-//        configuration.onShutdown(this::trennen);
-
         return connector;
     }
 
@@ -124,6 +121,9 @@ public class Integrationsumgebung implements Systemumgebung, ModuleConfiguration
     {
         erzeugeConnector(this.config);
         verbinden();
+
+        // Aufwärmen!
+        assert this.config.commandBus() != null;
     }
 
     @Override
