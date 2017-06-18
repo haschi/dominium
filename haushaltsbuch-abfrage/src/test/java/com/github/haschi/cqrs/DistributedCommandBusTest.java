@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CqrsKonfiguratorTest
+public class DistributedCommandBusTest
 {
     private Configuration clientconfiguration;
     private Configuration serverConfiguration;
@@ -25,7 +25,7 @@ public class CqrsKonfiguratorTest
     }
 
     @Test
-    public void konfigurieren()
+    public void kommando_senden_und_empfangen()
     {
         clientconfiguration.commandGateway()
                 .sendAndWait(new TestCommand(UUID.randomUUID()));
