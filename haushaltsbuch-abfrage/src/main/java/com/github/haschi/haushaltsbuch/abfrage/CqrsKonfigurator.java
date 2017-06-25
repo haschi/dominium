@@ -1,9 +1,8 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
 import org.axonframework.config.Configuration;
+import org.axonframework.config.Configurer;
 import org.axonframework.config.DefaultConfigurer;
-import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
-import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,40 +16,27 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class CqrsKonfigurator
 {
+    private final Systemumgebung systemumgebung;
     Logger log = LoggerFactory.getLogger(CqrsKonfigurator.class);
 
-    private EventStorageEngine theEngine;
     private Configuration konfiguration;
-    private Systemumgebung systemumgebung;
 
     @Inject
     public CqrsKonfigurator(Systemumgebung systemumgebung)
     {
-
         this.systemumgebung = systemumgebung;
     }
 
-    //        configuration.onShutdown(() -> {
-//            final Logger log = LoggerFactory.getLogger("DistributedCommandBus Stop");
-//            log.info("Verbindung zum verteilten Commandbus wird abgebaut");
-////            connector.disconnect();
-////            channel.disconnect();
-////            channel.close();
-//        });
-
-
-
-    public Configuration konfigurieren(final EventStorageEngine engine) {
+    public Configuration konfigurieren()
+    {
 
         log.info("CQRS Konfiguration erstellen");
-        final Configuration configuration = DefaultConfigurer.defaultConfiguration()
-                .configureCommandBus(this.systemumgebung::erzeugeCommandBus)
-                .configureEmbeddedEventStore(c -> systemumgebung.erzeugeEventStorageEngine())
-                .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler())
 
-                .buildConfiguration();
+        final Configurer configuration = systemumgebung.konfigurieren(
+                DefaultConfigurer.defaultConfiguration()
+                        .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler()));
 
-        return configuration;
+        return configuration.buildConfiguration();
     }
 
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -65,8 +51,9 @@ public class CqrsKonfigurator
 
     private void start()
     {
-        theEngine = eventStorageEngine();
-        final Configuration konfigurieren = konfigurieren(theEngine);
+        assert systemumgebung != null;
+
+        final Configuration konfigurieren = konfigurieren();
         log.info("Axon Konfiguration hergestellt");
         konfigurieren.start();
         log.info("Axon Konfiguration gestartet");
@@ -82,11 +69,6 @@ public class CqrsKonfigurator
 
     public void destroy(@Observes @Destroyed(ApplicationScoped.class) Object init) {
         shutdown();
-    }
-
-    public EventStorageEngine eventStorageEngine()
-    {
-        return new InMemoryEventStorageEngine();
     }
 
     public void shutdown()

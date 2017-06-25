@@ -17,11 +17,6 @@ public class RestAutomationApi implements AutomationApi
     private Swarm swarm;
     private Scenario scenario;
 
-//    public RestAutomationApi(Scenario scenario)
-//    {
-//        this.scenario = scenario;
-//    }
-
     @Override
     public void start()
     {
