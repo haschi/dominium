@@ -62,4 +62,10 @@ public class RestAutomationApi implements AutomationApi
                 .builder()
                 .build();
     }
+
+    @Override
+    public String requiredTag()
+    {
+        return "@api";
+    }
 }

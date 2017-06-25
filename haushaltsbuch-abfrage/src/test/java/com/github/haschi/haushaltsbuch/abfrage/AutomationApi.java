@@ -15,4 +15,6 @@ public interface AutomationApi
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt);
 
     Haushaltsbuch haushaltsbuch(UUID identifier);
+
+    String requiredTag();
 }

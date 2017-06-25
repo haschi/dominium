@@ -58,4 +58,10 @@ public class DomainAutomationApi implements AutomationApi
                 .builder()
                 .build();
     }
+
+    @Override
+    public String requiredTag()
+    {
+        return "@domäne";
+    }
 }

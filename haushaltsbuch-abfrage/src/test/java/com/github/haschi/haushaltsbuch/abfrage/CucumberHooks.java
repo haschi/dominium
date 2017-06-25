@@ -6,6 +6,7 @@ import cucumber.api.java.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.MessageFormat;
 import java.util.stream.Collectors;
 
 public class CucumberHooks
@@ -22,7 +23,14 @@ public class CucumberHooks
     @Before
     public void cqrsStarten(Scenario sceanrio) throws Exception
     {
-        log.debug(sceanrio.getSourceTagNames().stream().collect(Collectors.joining(", ")));
+        final String tags = sceanrio.getSourceTagNames().stream().collect(Collectors.joining(", "));
+
+        log.info(MessageFormat.format("Cucumber Before Tags: {0}", tags));
+
+        if (!sceanrio.getSourceTagNames().contains(api.requiredTag())) {
+            throw new IllegalStateException();
+        }
+
         api.start();
     }
 

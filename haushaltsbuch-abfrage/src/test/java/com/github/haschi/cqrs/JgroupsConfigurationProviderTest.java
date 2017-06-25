@@ -5,6 +5,7 @@ import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -55,6 +56,7 @@ public class JgroupsConfigurationProviderTest
     }
 
     @Test
+    @Ignore
     public void client_kann_kommando_ausführen() {
         client.commandGateway().sendAndWait(new TestCommand(UUID.randomUUID()));
         assertThat(handler.aufgerufen()).isTrue();
