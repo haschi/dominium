@@ -9,8 +9,7 @@ public class Testumgebung implements Systemumgebung
     @Override
     public Configurer konfigurieren(Configurer configurer)
     {
-        return configurer
-                .configureEmbeddedEventStore(config -> new InMemoryEventStorageEngine());
-
+        return configurer.configureEmbeddedEventStore(
+                config -> new InMemoryEventStorageEngine());
     }
 }

@@ -1,4 +1,4 @@
-package com.github.haschi.cqrs;
+package com.github.haschi.haushaltsbuch.abfrage;
 
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.distributed.AnnotationRoutingStrategy;
@@ -20,7 +20,7 @@ public class JgroupsConfigurer
     private JChannel channel;
     private JGroupsConnector connector;
 
-    JgroupsConfigurer(Configurer configurer)
+    public JgroupsConfigurer(Configurer configurer)
     {
 
         this.configurer = configurer;

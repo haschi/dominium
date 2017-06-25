@@ -5,10 +5,10 @@ import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageE
 
 public class Produktionsumgebung implements Systemumgebung
 {
-    @Override
-    public Configurer konfigurieren(Configurer configurer)
-    {
-        return configurer
+        @Override
+        public Configurer konfigurieren(Configurer configurer) throws Exception
+        {
+            return new JgroupsConfigurer(configurer).jgroupsConfiguration()
                 .configureEmbeddedEventStore(config -> new InMemoryEventStorageEngine());
     }
 }

@@ -22,7 +22,7 @@ public class DomainAutomationApi implements AutomationApi
 
 
     @Override
-    public void start()
+    public void start() throws Exception
     {
         final Testumgebung testumgebung = new Testumgebung();
         final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator(testumgebung);

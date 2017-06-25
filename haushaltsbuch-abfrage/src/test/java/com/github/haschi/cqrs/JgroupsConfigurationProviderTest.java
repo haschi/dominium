@@ -1,5 +1,6 @@
 package com.github.haschi.cqrs;
 
+import com.github.haschi.haushaltsbuch.abfrage.JgroupsConfigurer;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.junit.After;
@@ -26,10 +27,6 @@ public class JgroupsConfigurationProviderTest
                 .jgroupsConfiguration()
                 .registerCommandHandler(config -> handler)
                 .buildConfiguration();
-
-//        server = JgroupsConfigurer.jgroupsConfiguration()
-//                .registerCommandHandler(config -> handler)
-//                .buildConfiguration();
 
         server.start();
 

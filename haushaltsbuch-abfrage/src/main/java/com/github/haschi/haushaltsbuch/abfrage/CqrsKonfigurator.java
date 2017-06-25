@@ -27,9 +27,8 @@ public class CqrsKonfigurator
         this.systemumgebung = systemumgebung;
     }
 
-    public Configuration konfigurieren()
+    public Configuration konfigurieren() throws Exception
     {
-
         log.info("CQRS Konfiguration erstellen");
 
         final Configurer configuration = systemumgebung.konfigurieren(
@@ -49,7 +48,7 @@ public class CqrsKonfigurator
         }
     }
 
-    private void start()
+    private void start() throws Exception
     {
         assert systemumgebung != null;
 

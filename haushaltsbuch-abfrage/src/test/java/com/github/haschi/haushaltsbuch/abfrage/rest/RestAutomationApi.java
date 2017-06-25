@@ -4,6 +4,7 @@ import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
+import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.Scenario;
@@ -57,6 +58,8 @@ public class RestAutomationApi implements AutomationApi
     @Override
     public Haushaltsbuch haushaltsbuch(UUID identifier)
     {
-        return null;
+        return ImmutableHaushaltsbuch
+                .builder()
+                .build();
     }
 }

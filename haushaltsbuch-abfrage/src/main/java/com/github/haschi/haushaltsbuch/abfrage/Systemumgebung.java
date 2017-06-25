@@ -4,5 +4,5 @@ import org.axonframework.config.Configurer;
 
 public interface Systemumgebung
 {
-    Configurer konfigurieren(Configurer configurer);
+    Configurer konfigurieren(Configurer configurer) throws Exception;
 }

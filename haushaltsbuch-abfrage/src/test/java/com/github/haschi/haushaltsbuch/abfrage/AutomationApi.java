@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface AutomationApi
 {
-    void start();
+    void start() throws Exception;
 
     void stop();
 
