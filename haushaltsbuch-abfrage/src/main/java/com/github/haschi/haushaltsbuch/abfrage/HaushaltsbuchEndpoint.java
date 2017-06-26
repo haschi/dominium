@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
-import org.wildfly.swarm.topology.Advertise;
+
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import java.util.UUID;
 
 @Path("/haushaltsbuch")
-@Advertise("haushaltsbuch")
+//@Advertise("haushaltsbuch")
 public class HaushaltsbuchEndpoint
 {
     @GET

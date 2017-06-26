@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.abfrage.domäne.DomainAutomationApi;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
@@ -10,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class HaushaltsbuchSteps
 {
-    private AutomationApi api;
 
-    public HaushaltsbuchSteps(AutomationApi api)
-    {
+    private DomainAutomationApi api;
+
+    public HaushaltsbuchSteps(DomainAutomationApi api){
         this.api = api;
     }
 

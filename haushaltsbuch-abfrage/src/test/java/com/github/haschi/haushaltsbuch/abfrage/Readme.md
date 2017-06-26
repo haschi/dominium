@@ -20,3 +20,4 @@ implementiert werden.
 | 1. Systemtest             | @system                    | e2e                     | ./.          |
 | 2. API Integration        | @api                       | rest                    | RunCukesIT   |
 | 3. Integration der Domäne | @domäne                    | domaene                 | RunCukesTest |
+

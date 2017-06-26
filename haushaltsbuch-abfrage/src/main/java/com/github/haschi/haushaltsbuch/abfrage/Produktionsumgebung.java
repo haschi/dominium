@@ -8,7 +8,7 @@ public class Produktionsumgebung implements Systemumgebung
         @Override
         public Configurer konfigurieren(Configurer configurer) throws Exception
         {
-            return new JgroupsConfigurer(configurer).jgroupsConfiguration()
+            return new JgroupsConfigurer(configurer).jgroupsConfiguration("haushaltsbuch")
                 .configureEmbeddedEventStore(config -> new InMemoryEventStorageEngine());
     }
 }

@@ -32,6 +32,12 @@
         <version.cukespace>1.6.7</version.cukespace>
         <version.cukes>1.2.4</version.cukes>
 
+        <serenity.version>1.4.0</serenity.version>
+        <serenity.cucumber.version>1.1.36</serenity.cucumber.version>
+        <serenity.maven.version>1.4.0</serenity.maven.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <webdriver.driver>chrome</webdriver.driver>
+        <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
     </properties>
 
     <dependencyManagement>
@@ -92,6 +98,30 @@
                 <artifactId>rest-assured</artifactId>
                 <version>3.0.3</version>
             </dependency>
+
+            <dependency>
+                <groupId>net.serenity-bdd</groupId>
+                <artifactId>serenity-core</artifactId>
+                <version>${serenity.version}</version>
+
+            </dependency>
+            <dependency>
+                <groupId>net.serenity-bdd</groupId>
+                <artifactId>serenity-junit</artifactId>
+                <version>${serenity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.serenity-bdd</groupId>
+                <artifactId>serenity-cucumber</artifactId>
+                <version>${serenity.cucumber.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -148,27 +178,11 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>datasources</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
             <artifactId>ejb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>resource-adapters</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>transactions</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
@@ -185,27 +199,18 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>logging</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>topology-jgroups</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>topology-webapp</artifactId>
-            <!--<version>${version.wildfly.swarm}</version>-->
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>management</artifactId>
-        </dependency>
-        <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>management-console</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wildfly.swarm</groupId>-->
+            <!--<artifactId>topology-jgroups</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.wildfly.swarm</groupId>-->
+            <!--<artifactId>topology-webapp</artifactId>-->
+            <!--&lt;!&ndash;<version>${version.wildfly.swarm}</version>&ndash;&gt;-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.13</version>
         </dependency>
 
 
@@ -274,10 +279,35 @@
             <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <version>1.2.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>info.cukes</groupId>-->
+            <!--<artifactId>cucumber-guice</artifactId>-->
+            <!--<version>1.2.5</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -393,7 +423,15 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-simple</artifactId>
+                        <version>${slf4j.version}</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <systemProperties>
                         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
                     </systemProperties>
@@ -436,6 +474,28 @@
                     <execution>
                         <goals>
                             <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>net.serenity-bdd.maven.plugins</groupId>
+                <artifactId>serenity-maven-plugin</artifactId>
+                <version>${serenity.maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.serenity-bdd</groupId>
+                        <artifactId>serenity-core</artifactId>
+                        <version>${serenity.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>serenity-reports</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>aggregate</goal>
                         </goals>
                     </execution>
                 </executions>

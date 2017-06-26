@@ -1,21 +1,21 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.abfrage.domäne.DomainAutomationApi;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.thucydides.core.annotations.Steps;
 
-import java.text.MessageFormat;
 import java.util.stream.Collectors;
 
 public class CucumberHooks
 {
-    Logger log = LoggerFactory.getLogger(CucumberHooks.class);
+    // Logger log = LoggerFactory.getLogger(CucumberHooks.class);
 
-    private AutomationApi api;
+    @Steps
+    private DomainAutomationApi api;
 
-    public CucumberHooks(AutomationApi api)
+    public CucumberHooks(DomainAutomationApi api)
     {
         this.api = api;
     }
@@ -25,7 +25,7 @@ public class CucumberHooks
     {
         final String tags = sceanrio.getSourceTagNames().stream().collect(Collectors.joining(", "));
 
-        log.info(MessageFormat.format("Cucumber Before Tags: {0}", tags));
+        // log.info(MessageFormat.format("Cucumber Before Tags: {0}", tags));
 
         if (!sceanrio.getSourceTagNames().contains(api.requiredTag())) {
             throw new IllegalStateException();

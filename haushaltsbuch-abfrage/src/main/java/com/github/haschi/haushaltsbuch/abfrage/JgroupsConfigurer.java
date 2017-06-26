@@ -26,7 +26,7 @@ public class JgroupsConfigurer
         this.configurer = configurer;
     }
 
-    public Configurer jgroupsConfiguration() throws Exception
+    public Configurer jgroupsConfiguration(String clusterName) throws Exception
     {
 
         channel = new JChannel("udp.xml");
@@ -34,7 +34,7 @@ public class JgroupsConfigurer
         connector = new JGroupsConnector(
                 new SimpleCommandBus(),
                 channel,
-                "haushaltsbuch",
+                clusterName,
                 new XStreamSerializer(),
                 new AnnotationRoutingStrategy());
 
