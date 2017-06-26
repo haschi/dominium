@@ -393,7 +393,6 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
                     <systemProperties>
                         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
                     </systemProperties>

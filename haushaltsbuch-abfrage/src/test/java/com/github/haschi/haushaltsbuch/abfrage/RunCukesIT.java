@@ -5,7 +5,6 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-// @RunWith(Cucumber.class)
 @CucumberOptions(tags = {"@api", "~@ignore"}, strict = true)
 public class RunCukesIT
 {

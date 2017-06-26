@@ -8,12 +8,15 @@ import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.Scenario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wildfly.swarm.Swarm;
 
 import java.util.UUID;
 
 public class RestAutomationApi implements AutomationApi
 {
+    private static Logger log = LoggerFactory.getLogger(RestAutomationApi.class);
 
     private Swarm swarm;
     private Scenario scenario;
@@ -22,6 +25,8 @@ public class RestAutomationApi implements AutomationApi
     @Override
     public void start()
     {
+        log.info("Integrationsumgebung starten");
+
         try
         {
             // swarm = Main.createSwarm("-Djava.util.logging.manager=org.jboss.logmanager.LogManager");
@@ -40,6 +45,8 @@ public class RestAutomationApi implements AutomationApi
     @Override
     public void stop()
     {
+        log.info("Integrationsumgebung herunterfahren");
+
         try
         {
             if (started) swarm.stop();
