@@ -9,17 +9,14 @@ import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
-import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 
 import java.util.UUID;
 
 public class DomainAutomationApi implements AutomationApi
 {
-    EventStorageEngine engine;
     private Configuration configuration;
 
     private int sequenceNumber;
-
 
     @Override
     public void start() throws Exception
@@ -47,8 +44,7 @@ public class DomainAutomationApi implements AutomationApi
                         aggregat.getType(),
                         aggregat.getIdentifier().toString(),
                         sequenceNumber++,
-                        haushaltsbuchAngelegt)
-                );
+                        haushaltsbuchAngelegt));
     }
 
     @Override

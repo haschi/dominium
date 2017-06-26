@@ -4,22 +4,21 @@ import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
-import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
-import cucumber.api.Scenario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wildfly.swarm.Swarm;
 
 import java.util.UUID;
 
+import static io.restassured.RestAssured.get;
+
 public class RestAutomationApi implements AutomationApi
 {
     private static Logger log = LoggerFactory.getLogger(RestAutomationApi.class);
 
     private Swarm swarm;
-    private Scenario scenario;
     private boolean started;
 
     @Override
@@ -29,7 +28,6 @@ public class RestAutomationApi implements AutomationApi
 
         try
         {
-            // swarm = Main.createSwarm("-Djava.util.logging.manager=org.jboss.logmanager.LogManager");
             swarm = Main.createSwarm();
             swarm.start();
             started = true;
@@ -68,9 +66,8 @@ public class RestAutomationApi implements AutomationApi
     @Override
     public Haushaltsbuch haushaltsbuch(UUID identifier)
     {
-        return ImmutableHaushaltsbuch
-                .builder()
-                .build();
+        return get("/haushaltsbuch/" + identifier.toString())
+                .as(Haushaltsbuch.class);
     }
 
     @Override
