@@ -8,7 +8,6 @@ import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.Scenario;
-import net.thucydides.core.annotations.Step;
 import org.wildfly.swarm.Swarm;
 
 import java.util.UUID;
@@ -21,7 +20,6 @@ public class RestAutomationApi implements AutomationApi
     private boolean started;
 
     @Override
-    @Step
     public void start()
     {
         try
@@ -40,7 +38,6 @@ public class RestAutomationApi implements AutomationApi
     }
 
     @Override
-    @Step
     public void stop()
     {
         try
@@ -54,7 +51,6 @@ public class RestAutomationApi implements AutomationApi
     }
 
     @Override
-    @Step
     public void haushaltsführungBegonnen(
             AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)

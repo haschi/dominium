@@ -7,7 +7,6 @@ import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
-import net.thucydides.core.annotations.Step;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
@@ -23,7 +22,6 @@ public class DomainAutomationApi implements AutomationApi
 
 
     @Override
-    @Step
     public void start() throws Exception
     {
         final Testumgebung testumgebung = new Testumgebung();
@@ -34,14 +32,12 @@ public class DomainAutomationApi implements AutomationApi
     }
 
     @Override
-    @Step
     public void stop()
     {
         configuration.shutdown();
     }
 
     @Override
-    @Step
     public void haushaltsführungBegonnen(
             AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)

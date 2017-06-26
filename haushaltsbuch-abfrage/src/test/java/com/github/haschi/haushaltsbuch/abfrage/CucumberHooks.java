@@ -4,7 +4,6 @@ import com.github.haschi.haushaltsbuch.abfrage.domäne.DomainAutomationApi;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import net.thucydides.core.annotations.Steps;
 
 import java.util.stream.Collectors;
 
@@ -12,7 +11,6 @@ public class CucumberHooks
 {
     // Logger log = LoggerFactory.getLogger(CucumberHooks.class);
 
-    @Steps
     private DomainAutomationApi api;
 
     public CucumberHooks(DomainAutomationApi api)

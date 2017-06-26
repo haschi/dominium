@@ -1,7 +1,6 @@
 package com.github.haschi.cqrs;
 
 import com.github.haschi.haushaltsbuch.abfrage.JgroupsConfigurer;
-import net.thucydides.core.annotations.Step;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
@@ -14,7 +13,6 @@ public class VerteilterBefehlsbusSteps implements AutoCloseable
     private Configuration server;
     private Configuration client;
 
-    @Step("Angenommen ich habe einen Server mit verteiltem Befehlsbus der Gruperr {0} hinzugefügt")
     public void ich_habe_einen_server_mit_verteilten_befehlsbus_der_gruppe_hinzugefügt(String gruppe) throws Exception
     {
         server = new JgroupsConfigurer(DefaultConfigurer.defaultConfiguration())
@@ -25,7 +23,6 @@ public class VerteilterBefehlsbusSteps implements AutoCloseable
         server.start();
     }
 
-    @Step("Angenommen ich habe einen Client mit verteiltem Befehlsbus der Gruperr {0} hinzugefügt")
     public void ich_habe_einen_client_mit_verteilten_befehlsbus_der_gruppe_hinzugefügt(String gruppe) throws Exception
     {
         client = new JgroupsConfigurer(DefaultConfigurer.defaultConfiguration())
@@ -36,7 +33,6 @@ public class VerteilterBefehlsbusSteps implements AutoCloseable
 
     }
 
-    @Step("Wenn ich einen Befehl am Server sende")
     public void ich_versende_einen_befehl_am_server(TestCommand befehl)
     {
         server.commandGateway().sendAndWait(befehl);
@@ -47,7 +43,6 @@ public class VerteilterBefehlsbusSteps implements AutoCloseable
         client.commandGateway().sendAndWait(befehl);
     }
 
-    @Step("Dann werde ich einen Ereignishandler aufgerufen haben")
     public void werde_ich_den_ereignishandler_aufgerufen_haben()
     {
         assertThat(aufgerufen).isTrue();

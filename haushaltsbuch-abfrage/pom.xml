@@ -32,11 +32,7 @@
         <version.cukespace>1.6.7</version.cukespace>
         <version.cukes>1.2.4</version.cukes>
 
-        <serenity.version>1.4.0</serenity.version>
-        <serenity.cucumber.version>1.1.36</serenity.cucumber.version>
-        <serenity.maven.version>1.4.0</serenity.maven.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <webdriver.driver>chrome</webdriver.driver>
         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
     </properties>
 
@@ -97,23 +93,6 @@
                 <groupId>io.rest-assured</groupId>
                 <artifactId>rest-assured</artifactId>
                 <version>3.0.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>net.serenity-bdd</groupId>
-                <artifactId>serenity-core</artifactId>
-                <version>${serenity.version}</version>
-
-            </dependency>
-            <dependency>
-                <groupId>net.serenity-bdd</groupId>
-                <artifactId>serenity-junit</artifactId>
-                <version>${serenity.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.serenity-bdd</groupId>
-                <artifactId>serenity-cucumber</artifactId>
-                <version>${serenity.cucumber.version}</version>
             </dependency>
 
             <dependency>
@@ -295,23 +274,6 @@
         <!--</dependency>-->
 
         <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-cucumber</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
@@ -479,27 +441,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>net.serenity-bdd.maven.plugins</groupId>
-                <artifactId>serenity-maven-plugin</artifactId>
-                <version>${serenity.maven.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.serenity-bdd</groupId>
-                        <artifactId>serenity-core</artifactId>
-                        <version>${serenity.version}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
