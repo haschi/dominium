@@ -165,9 +165,7 @@
         <dependency>
             <groupId>org.jgroups</groupId>
             <artifactId>jgroups</artifactId>
-            <scope>provided</scope>
             <version>3.6.13.Final</version>
-
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
