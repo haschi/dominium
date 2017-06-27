@@ -56,24 +56,6 @@
                 <artifactId>axon-distributed-commandbus-jgroups</artifactId>
                 <version>${axon.version}</version>
             </dependency>
-
-            <!-- Arquillian Core dependencies -->
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian</groupId>-->
-                <!--<artifactId>arquillian-bom</artifactId>-->
-                <!--<version>${version.org.jboss.arquillian}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-            <!--&lt;!&ndash; Arquillian Drone dependencies and WebDriver/Selenium dependencies &ndash;&gt;-->
-            <!--<dependency>-->
-                <!--<groupId>org.jboss.arquillian.extension</groupId>-->
-                <!--<artifactId>arquillian-drone-bom</artifactId>-->
-                <!--<version>${version.org.jboss.arquillian.drone}</version>-->
-                <!--<type>pom</type>-->
-                <!--<scope>import</scope>-->
-            <!--</dependency>-->
-
             <dependency>
                 <groupId>com.github.haschi</groupId>
                 <artifactId>modeling</artifactId>
@@ -94,13 +76,11 @@
                 <artifactId>rest-assured</artifactId>
                 <version>3.0.3</version>
             </dependency>
-
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -171,20 +151,10 @@
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>logging</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.wildfly.swarm</groupId>-->
-            <!--<artifactId>topology-jgroups</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.wildfly.swarm</groupId>-->
-            <!--<artifactId>topology-webapp</artifactId>-->
-            <!--&lt;!&ndash;<version>${version.wildfly.swarm}</version>&ndash;&gt;-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
-
 
         <!-- Test -->
         <dependency>
@@ -193,40 +163,6 @@
             <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.wildfly.swarm</groupId>-->
-            <!--<artifactId>arquillian</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.jboss.arquillian.junit</groupId>-->
-            <!--<artifactId>arquillian-junit-container</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.jboss.arquillian.graphene</groupId>-->
-            <!--<artifactId>graphene-webdriver</artifactId>-->
-            <!--<version>${version.org.jboss.arquillian.graphene}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.jboss.arquillian.extension</groupId>-->
-            <!--<artifactId>arquillian-drone-webdriver-depchain</artifactId>-->
-            <!--<version>${version.org.jboss.arquillian.drone}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.github.cukespace</groupId>-->
-            <!--<artifactId>cukespace-core</artifactId>-->
-            <!--<version>${version.cukespace}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -238,7 +174,6 @@
             <version>3.0.3</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java8</artifactId>
@@ -251,34 +186,23 @@
             <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>3.0.3</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>info.cukes</groupId>-->
-            <!--<artifactId>cucumber-guice</artifactId>-->
-            <!--<version>1.2.5</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-api</artifactId>
