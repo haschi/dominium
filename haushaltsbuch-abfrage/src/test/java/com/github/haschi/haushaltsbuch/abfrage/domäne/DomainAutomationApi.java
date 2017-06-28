@@ -12,6 +12,8 @@ import org.axonframework.eventsourcing.GenericDomainEventMessage;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class DomainAutomationApi implements AutomationApi
 {
     private Configuration configuration;
@@ -59,5 +61,19 @@ public class DomainAutomationApi implements AutomationApi
     public String requiredTag()
     {
         return "@domäne";
+    }
+
+    @Override
+    public void werdeIchEinHaushaltsbuchSehen(
+            UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch)
+    {
+        assertThat(haushaltsbuch(identifier))
+                .isEqualTo(leeresHaushaltsbuch);
+    }
+
+    @Override
+    public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
+    {
+        assertThat(haushaltsbuch(identifier)).isNotNull();
     }
 }

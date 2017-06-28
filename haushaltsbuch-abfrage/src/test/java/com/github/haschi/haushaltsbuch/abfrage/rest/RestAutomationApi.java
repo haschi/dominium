@@ -5,12 +5,11 @@ import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
 import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
+import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
-import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
-import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wildfly.swarm.Swarm;
@@ -18,6 +17,7 @@ import org.wildfly.swarm.Swarm;
 import java.util.UUID;
 
 import static io.restassured.RestAssured.get;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestAutomationApi implements AutomationApi
 {
@@ -36,7 +36,6 @@ public class RestAutomationApi implements AutomationApi
 
         try
         {
-            EventStorageEngine engine = new InMemoryEventStorageEngine();
             swarm = Main.createSwarm();
             swarm.start();
             started = true;
@@ -96,5 +95,20 @@ public class RestAutomationApi implements AutomationApi
     public String requiredTag()
     {
         return "@api";
+    }
+
+    @Override
+    public void werdeIchEinHaushaltsbuchSehen(
+            UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch)
+    {
+        assertThat(haushaltsbuch(identifier))
+                .isEqualTo(leeresHaushaltsbuch);
+    }
+
+    @Override
+    public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
+    {
+        get("/haushaltsbuch/" + identifier.toString())
+                .then().statusCode(404);
     }
 }

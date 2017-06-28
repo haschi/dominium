@@ -17,4 +17,8 @@ public interface AutomationApi
     Haushaltsbuch haushaltsbuch(UUID identifier);
 
     String requiredTag();
+
+    void werdeIchEinHaushaltsbuchSehen(UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch);
+
+    void werdeIchKeinHaushaltsbuchSehen(UUID identifier);
 }

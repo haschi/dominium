@@ -6,8 +6,6 @@ import cucumber.api.java.de.Dann;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class HaushaltsbuchSteps
 {
 
@@ -32,8 +30,9 @@ public class HaushaltsbuchSteps
     @Dann("^werde ich ein leeres Haushaltsbuch sehen$")
     public void werdeIchEinLeeresHaushaltsbuchSehen()
     {
-        assertThat(api.haushaltsbuch(aggregat.getIdentifier()))
-                .isEqualTo(ImmutableHaushaltsbuch.builder().build());
+        final ImmutableHaushaltsbuch leeresHaushaltsbuch = ImmutableHaushaltsbuch.builder().build();
+
+        api.werdeIchEinHaushaltsbuchSehen(aggregat.getIdentifier(), leeresHaushaltsbuch);
     }
 
     @Angenommen("^ich habe nicht mit der Haushaltsbuchführung begonnen$")
@@ -44,5 +43,6 @@ public class HaushaltsbuchSteps
     @Dann("^werde ich kein Haushaltsbuch sehen$")
     public void werdeIchKeinHaushaltsbuchSehen()
     {
+        api.werdeIchKeinHaushaltsbuchSehen(aggregat.getIdentifier());
     }
 }
