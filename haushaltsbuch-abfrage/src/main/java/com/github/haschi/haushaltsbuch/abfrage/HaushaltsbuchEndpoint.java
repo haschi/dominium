@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import java.util.UUID;
 
 @Path("haushaltsbuch")
-//@Advertise("haushaltsbuch")
 public class HaushaltsbuchEndpoint
 {
     private final static Logger log = LoggerFactory.getLogger(HaushaltsbuchEndpoint.class);
@@ -30,18 +29,13 @@ public class HaushaltsbuchEndpoint
         Haushaltsbuchverzeichnis haushaltsbuchverzeichnis =
                 konfiguration.getComponent(Haushaltsbuchverzeichnis.class);
 
-        return haushaltsbuchSuchen(haushaltsbuchverzeichnis, identifier);
-     }
-
-     Response haushaltsbuchSuchen(Haushaltsbuchverzeichnis v, UUID identifier)
-     {
-         return v.suchen(identifier)
-                 .map(h -> Response.ok(h)
-                         .type(MediaType.APPLICATION_JSON)
-                         .build())
-                 .orElseGet(() -> Response.status(404)
-                         .entity("Haushaltsbuch nicht vorhanden")
-                            .type(MediaType.TEXT_PLAIN)
-                            .build());
-     }
+        return haushaltsbuchverzeichnis.suchen(identifier)
+                .map(h -> Response.ok(h)
+                        .type(MediaType.APPLICATION_JSON)
+                        .build())
+                .orElseGet(() -> Response.status(404)
+                        .entity("Haushaltsbuch nicht vorhanden")
+                           .type(MediaType.TEXT_PLAIN)
+                           .build());
+    }
 }
