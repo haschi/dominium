@@ -16,7 +16,7 @@ public class Produktionsumgebung implements Systemumgebung
 
             return new JgroupsConfigurer(configurer).jgroupsConfiguration("haushaltsbuch")
                     .registerModule(indexer)
-                    .registerComponent(Haushaltsbuchverzeichnis.class, config -> haushaltsbuchverzeichnis);
-
+                    .registerComponent(Haushaltsbuchverzeichnis.class, config -> haushaltsbuchverzeichnis)
+                    .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler());
     }
 }

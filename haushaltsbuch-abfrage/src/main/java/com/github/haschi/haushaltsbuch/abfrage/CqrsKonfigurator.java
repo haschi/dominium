@@ -45,8 +45,7 @@ public class CqrsKonfigurator
 
         final Configurer configuration = systemumgebung.konfigurieren(
                 DefaultConfigurer.defaultConfiguration()
-                        .configureEmbeddedEventStore(config -> engine)
-                        .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler()));
+                        .configureEmbeddedEventStore(config -> engine));
 
         return configuration.buildConfiguration();
     }
