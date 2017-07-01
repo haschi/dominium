@@ -42,6 +42,7 @@ public class CqrsKonfigurator
                 new DefaultMongoTemplate(client),
                 new DocumentPerEventStorageStrategy());
 
+
         final Configurer configuration = systemumgebung.konfigurieren(
                 DefaultConfigurer.defaultConfiguration()
                         .configureEmbeddedEventStore(config -> engine)

@@ -30,7 +30,9 @@ public class HaushaltsbuchSteps
     @Dann("^werde ich ein leeres Haushaltsbuch sehen$")
     public void werdeIchEinLeeresHaushaltsbuchSehen()
     {
-        final ImmutableHaushaltsbuch leeresHaushaltsbuch = ImmutableHaushaltsbuch.builder().build();
+        final ImmutableHaushaltsbuch leeresHaushaltsbuch = ImmutableHaushaltsbuch.builder()
+                .id(aggregat.getIdentifier().toString())
+                .build();
 
         api.werdeIchEinHaushaltsbuchSehen(aggregat.getIdentifier(), leeresHaushaltsbuch);
     }

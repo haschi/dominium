@@ -1,0 +1,29 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Mongo Client" type="docker-deploy" factoryName="Docker Deployment" singleton="true" server-name="Docker">
+    <deployment type="docker-image">
+      <settings>
+        <option name="JSONFilePath" value="" />
+        <option name="command" value="" />
+        <option name="containerName" value="mongo-client" />
+        <option name="entrypoint" value="" />
+        <option name="envVarsExpanded" value="true" />
+        <option name="imageTag" value="mongoclient/mongoclient" />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="3000" />
+              <option name="hostIp" value="127.0.0.1" />
+              <option name="hostPort" value="3000" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="portBindingsExpanded" value="true" />
+        <option name="publishAllPorts" value="true" />
+        <option name="startBrowserSettings">
+          <browser />
+        </option>
+      </settings>
+    </deployment>
+    <method />
+  </configuration>
+</component>

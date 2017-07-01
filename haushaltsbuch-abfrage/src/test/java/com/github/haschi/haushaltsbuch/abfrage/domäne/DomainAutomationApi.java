@@ -54,6 +54,7 @@ public class DomainAutomationApi implements AutomationApi
     {
         return ImmutableHaushaltsbuch
                 .builder()
+                .id(identifier.toString())
                 .build();
     }
 

@@ -354,7 +354,6 @@
                     </includes>
                     <systemPropertyVariables>
                         <com.github.haschi.testebene>api</com.github.haschi.testebene>
-                        <phantomjs.binary.version>2.1.1</phantomjs.binary.version>
                         <org.apache.maven.user-settings>${session.request.userSettingsFile.path}
                         </org.apache.maven.user-settings>
                     </systemPropertyVariables>
@@ -392,32 +391,32 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>start</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <configuration>
-                            <images>
-                            <image>
-                                <name>mongo</name>
-                                <run>
-                                    <ports>
-                                        <port>27017:27017</port>
-                                    </ports>
-                                </run>
-                            </image>
-                            </images>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>stop</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>start</id>-->
+                        <!--<phase>pre-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>start</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<images>-->
+                            <!--<image>-->
+                                <!--<name>mongo</name>-->
+                                <!--<run>-->
+                                    <!--<ports>-->
+                                        <!--<port>27017:27017</port>-->
+                                    <!--</ports>-->
+                                <!--</run>-->
+                            <!--</image>-->
+                            <!--</images>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>stop</id>-->
+                        <!--<phase>post-integration-test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>stop</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

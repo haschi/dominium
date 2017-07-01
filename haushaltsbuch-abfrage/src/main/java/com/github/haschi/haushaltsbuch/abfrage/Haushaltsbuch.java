@@ -9,4 +9,5 @@ import com.github.haschi.modeling.de.Information;
 @JsonDeserialize(as = ImmutableHaushaltsbuch.class)
 public interface Haushaltsbuch
 {
+    String id();
 }

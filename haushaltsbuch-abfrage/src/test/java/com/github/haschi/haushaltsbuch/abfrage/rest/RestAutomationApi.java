@@ -3,11 +3,12 @@ package com.github.haschi.haushaltsbuch.abfrage.rest;
 import com.github.haschi.haushaltsbuch.abfrage.AggregateProxy;
 import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
 import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
-import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
+import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import static io.restassured.RestAssured.get;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class RestAutomationApi implements AutomationApi
 {
@@ -76,7 +78,7 @@ public class RestAutomationApi implements AutomationApi
             AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
-        configuration.eventStore().publish(
+                configuration.eventStore().publish(
                 new GenericDomainEventMessage<Object>(
                         aggregat.getType(),
                         aggregat.getIdentifier().toString(),
@@ -85,10 +87,10 @@ public class RestAutomationApi implements AutomationApi
     }
 
     @Override
-    public Haushaltsbuch haushaltsbuch(UUID identifier)
+    public ImmutableHaushaltsbuch haushaltsbuch(UUID identifier)
     {
         return get("/haushaltsbuch/" + identifier.toString())
-                .as(Haushaltsbuch.class);
+                .as(ImmutableHaushaltsbuch.class, ObjectMapperType.JACKSON_2);
     }
 
     @Override
@@ -109,6 +111,9 @@ public class RestAutomationApi implements AutomationApi
     public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
     {
         get("/haushaltsbuch/" + identifier.toString())
-                .then().statusCode(404);
+                .then()
+                .statusCode(404)
+                .contentType(ContentType.TEXT)
+                .body(equalTo("Haushaltsbuch nicht vorhanden"));
     }
 }
