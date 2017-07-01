@@ -9,10 +9,6 @@ public class Main
 {
     public static void main(String... args) throws Exception
     {
-//        final Fraction jgroupsFraction = JGroupsFraction
-//                .defaultFraction();
-//
-
         Swarm swarm = createSwarm(args);
         swarm.start();
         swarm.deploy();
@@ -23,9 +19,7 @@ public class Main
         Swarm swarm = new Swarm(args);
         swarm.fraction(haushaltsbuchJgroupsFraction());
         swarm.fraction(EJBFraction.createDefaultFraction());
-        // swarm.fraction(ManagementFraction.createDefaultFraction());
 
-        // swarm.fraction(new ManagementConsoleFraction().contextRoot("/admin"));
         return swarm;
     }
 
