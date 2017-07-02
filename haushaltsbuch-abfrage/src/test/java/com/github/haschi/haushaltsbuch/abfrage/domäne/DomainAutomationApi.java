@@ -7,6 +7,7 @@ import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuchverzeichnis;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
+import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
@@ -22,11 +23,15 @@ public class DomainAutomationApi implements AutomationApi
 {
     private static final Logger log = LoggerFactory.getLogger(DomainAutomationApi.class);
 
-    private final Testumgebung testumgebung = new Testumgebung();
-
+    private final Testumgebung testumgebung;
+    private final Synchonisierungsmonitor monitor;
     private Configuration configuration;
-
     private int sequenceNumber;
+
+    public DomainAutomationApi() {
+        monitor = new Synchonisierungsmonitor();
+        testumgebung = new Testumgebung(monitor);
+    }
 
     @Override
     public void start() throws Exception
@@ -57,9 +62,8 @@ public class DomainAutomationApi implements AutomationApi
 
         try
         {
-            testumgebung.getMonitor().warten(message -> {
-                log.info("Message verarbeitet: " + message.getIdentifier());
-            });
+            monitor.erwarte(message ->
+                HaushaltsbuchAngelegt.class.isAssignableFrom(message.getPayloadType()));
         } catch (InterruptedException e)
         {
             throw new RuntimeException(e);
