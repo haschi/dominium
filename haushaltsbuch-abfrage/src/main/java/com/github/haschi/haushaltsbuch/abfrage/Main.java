@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
 import org.wildfly.swarm.Swarm;
-import org.wildfly.swarm.ejb.EJBFraction;
 
 public class Main
 {
@@ -14,10 +13,6 @@ public class Main
 
     public static Swarm createSwarm(String... args) throws Exception
     {
-        Swarm swarm = new Swarm(args);
-
-        swarm.fraction(EJBFraction.createDefaultFraction());
-
-        return swarm;
+        return new Swarm(args);
     }
 }

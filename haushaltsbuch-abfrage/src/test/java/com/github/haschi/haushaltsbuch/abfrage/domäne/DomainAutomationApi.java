@@ -5,17 +5,25 @@ import com.github.haschi.haushaltsbuch.abfrage.AutomationApi;
 import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
+import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuchverzeichnis;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class DomainAutomationApi implements AutomationApi
 {
+    private static final Logger log = LoggerFactory.getLogger(DomainAutomationApi.class);
+
+    private final Testumgebung testumgebung = new Testumgebung();
+
     private Configuration configuration;
 
     private int sequenceNumber;
@@ -23,10 +31,9 @@ public class DomainAutomationApi implements AutomationApi
     @Override
     public void start() throws Exception
     {
-        final Testumgebung testumgebung = new Testumgebung();
-        final CqrsKonfigurator axonKonfiguration = new CqrsKonfigurator(testumgebung);
-        configuration = axonKonfiguration.konfigurieren();
+        final CqrsKonfigurator cqrs = new CqrsKonfigurator(testumgebung);
 
+        configuration = cqrs.konfigurieren();
         configuration.start();
     }
 
@@ -47,15 +54,26 @@ public class DomainAutomationApi implements AutomationApi
                         aggregat.getIdentifier().toString(),
                         sequenceNumber++,
                         haushaltsbuchAngelegt));
+
+        try
+        {
+            testumgebung.getMonitor().warten(message -> {
+                log.info("Message verarbeitet: " + message.getIdentifier());
+            });
+        } catch (InterruptedException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Haushaltsbuch haushaltsbuch(UUID identifier)
     {
-        return ImmutableHaushaltsbuch
-                .builder()
-                .id(identifier.toString())
-                .build();
+        Haushaltsbuchverzeichnis haushaltsbuchverzeichnis = configuration.getComponent(
+                Haushaltsbuchverzeichnis.class);
+
+        return haushaltsbuchverzeichnis.suchen(identifier).orElseThrow(
+                () -> new IllegalStateException("Haushaltsbuch existiert nicht"));
     }
 
     @Override
@@ -66,7 +84,8 @@ public class DomainAutomationApi implements AutomationApi
 
     @Override
     public void werdeIchEinHaushaltsbuchSehen(
-            UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch)
+            UUID identifier,
+            ImmutableHaushaltsbuch leeresHaushaltsbuch)
     {
         assertThat(haushaltsbuch(identifier))
                 .isEqualTo(leeresHaushaltsbuch);
@@ -75,6 +94,7 @@ public class DomainAutomationApi implements AutomationApi
     @Override
     public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
     {
-        assertThat(haushaltsbuch(identifier)).isNotNull();
+        assertThatExceptionOfType(IllegalStateException.class)
+                .isThrownBy(() -> haushaltsbuch(identifier));
     }
 }

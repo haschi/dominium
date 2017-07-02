@@ -53,6 +53,12 @@
 
             <dependency>
                 <groupId>org.axonframework</groupId>
+                <artifactId>axon-metrics</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.axonframework</groupId>
                 <artifactId>axon-distributed-commandbus-jgroups</artifactId>
                 <version>${axon.version}</version>
             </dependency>
@@ -115,6 +121,10 @@
             <artifactId>axon-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-metrics</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-distributed-commandbus-jgroups</artifactId>

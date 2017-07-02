@@ -1,12 +1,8 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
-import com.mongodb.MongoClient;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.Configurer;
 import org.axonframework.config.DefaultConfigurer;
-import org.axonframework.mongo.eventsourcing.eventstore.DefaultMongoTemplate;
-import org.axonframework.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
-import org.axonframework.mongo.eventsourcing.eventstore.documentperevent.DocumentPerEventStorageStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,17 +31,10 @@ public class CqrsKonfigurator
     {
         log.info("CQRS Konfiguration erstellen");
 
-        final MongoClient client = new MongoClient("localhost");
-        final MongoEventStorageEngine engine = new MongoEventStorageEngine(
-                null,
-                null,
-                new DefaultMongoTemplate(client),
-                new DocumentPerEventStorageStrategy());
 
 
         final Configurer configuration = systemumgebung.konfigurieren(
-                DefaultConfigurer.defaultConfiguration()
-                        .configureEmbeddedEventStore(config -> engine));
+                DefaultConfigurer.defaultConfiguration());
 
         return configuration.buildConfiguration();
     }
