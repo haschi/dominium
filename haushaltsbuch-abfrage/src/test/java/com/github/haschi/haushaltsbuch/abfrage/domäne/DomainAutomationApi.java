@@ -9,6 +9,7 @@ import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuchverzeichnis;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
+import org.assertj.core.api.Assertions;
 import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.slf4j.Logger;
@@ -60,14 +61,8 @@ public class DomainAutomationApi implements AutomationApi
                         sequenceNumber++,
                         haushaltsbuchAngelegt));
 
-        try
-        {
-            monitor.erwarte(message ->
-                HaushaltsbuchAngelegt.class.isAssignableFrom(message.getPayloadType()));
-        } catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
+            monitor.erwarte(HaushaltsbuchAngelegt.class,
+                exception -> Assertions.fail("Synchronisation fehlgeschlagen", exception));
     }
 
     @Override

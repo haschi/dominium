@@ -25,14 +25,31 @@ class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
 
     private final SynchronousQueue<Message<?>> successQueue = new SynchronousQueue<>();
 
-    public void warten(Consumer<Message<?>> messageConsumer) throws InterruptedException
+    public void warten(Consumer<Message<?>> messageConsumer) throws SynchronisationFehlgeschlagen
     {
-        messageConsumer.accept(successQueue.take());
+        try
+        {
+            messageConsumer.accept(successQueue.take());
+        } catch (InterruptedException e)
+        {
+            throw new SynchronisationFehlgeschlagen(e);
+        }
     }
 
-    public void erwarte(Predicate<Message<?>> predicate) throws InterruptedException
+    public void erwarte(Predicate<Message<?>> predicate, Consumer<InterruptedException> errorHandler)
     {
-        predicate.test(successQueue.take());
+        try
+        {
+            predicate.test(successQueue.take());
+        } catch (InterruptedException e)
+        {
+            errorHandler.accept(e);
+        }
+    }
+
+    public void erwarte(Class<?> clazz, Consumer<InterruptedException> errorHandler)
+    {
+        erwarte(message -> clazz.isAssignableFrom(message.getPayloadType()), errorHandler);
     }
 
     @Override
