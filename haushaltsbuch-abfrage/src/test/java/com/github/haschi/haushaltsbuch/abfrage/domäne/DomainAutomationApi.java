@@ -11,7 +11,6 @@ import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.assertj.core.api.Assertions;
 import org.axonframework.config.Configuration;
-import org.axonframework.eventsourcing.GenericDomainEventMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,11 +54,7 @@ public class DomainAutomationApi implements AutomationApi
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
         configuration.eventStore().publish(
-                new GenericDomainEventMessage<Object>(
-                        aggregat.getType(),
-                        aggregat.getIdentifier().toString(),
-                        sequenceNumber++,
-                        haushaltsbuchAngelegt));
+                aggregat.apply(haushaltsbuchAngelegt));
 
             monitor.erwarte(HaushaltsbuchAngelegt.class,
                 exception -> Assertions.fail("Synchronisation fehlgeschlagen", exception));
