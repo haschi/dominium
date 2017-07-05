@@ -318,7 +318,9 @@
         <module>domaene</module>
         <!--<module>web</module>-->
         <module>haushaltsbuch-abfrage</module>
+        <module>haushaltsbuch-domäne</module>
         <module>haushaltsbuch-api</module>
+        <module>haushaltsbuch-test</module>
     </modules>
 
     <repositories>
