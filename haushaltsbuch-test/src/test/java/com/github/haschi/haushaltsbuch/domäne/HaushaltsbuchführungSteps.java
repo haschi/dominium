@@ -4,7 +4,7 @@ import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
 
 import java.util.UUID;
 
-public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
+public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
     @Override
     public void beginnen()

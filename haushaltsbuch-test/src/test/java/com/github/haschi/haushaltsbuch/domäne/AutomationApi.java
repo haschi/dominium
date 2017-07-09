@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
-public class AutomationApi implements AbstractAutomationApi
+public final class AutomationApi implements AbstractAutomationApi
 {
     private static final Logger log = LoggerFactory.getLogger(AutomationApi.class);
 

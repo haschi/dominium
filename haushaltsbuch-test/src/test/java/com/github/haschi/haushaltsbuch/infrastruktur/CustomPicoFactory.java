@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 
-public class CustomPicoFactory extends PicoFactory
+public final class CustomPicoFactory extends PicoFactory
 {
     private static final Logger log = LoggerFactory.getLogger(CustomPicoFactory.class);
 
