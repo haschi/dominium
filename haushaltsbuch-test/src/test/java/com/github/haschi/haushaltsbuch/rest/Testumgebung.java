@@ -1,18 +1,24 @@
-package com.github.haschi.haushaltsbuch.abfrage.rest;
+package com.github.haschi.haushaltsbuch.rest;
 
-import com.github.haschi.haushaltsbuch.abfrage.Systemumgebung;
+import com.github.haschi.haushaltsbuch.domäne.JgroupsConfigurer;
+import com.github.haschi.haushaltsbuch.domäne.Konfigurationsschritt;
+import com.github.haschi.haushaltsbuch.domäne.Systemumgebung;
 import com.mongodb.MongoClient;
 import org.axonframework.config.Configuration;
-import org.axonframework.config.DefaultConfigurer;
-import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.mongo.eventsourcing.eventstore.DefaultMongoTemplate;
 import org.axonframework.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
 import org.axonframework.mongo.eventsourcing.eventstore.documentperevent.DocumentPerEventStorageStrategy;
 
 public class Testumgebung implements Systemumgebung
 {
+    private Konfigurationsschritt konfiguration;
+
+    public Testumgebung(Anwendungskonfiguration konfiguration) {
+        this.konfiguration = konfiguration;
+    }
+
     @Override
-    public Configuration konfigurieren()
+    public Configuration konfigurieren() throws Exception
     {
         final MongoClient client = new MongoClient("localhost");
         final MongoEventStorageEngine engine = new MongoEventStorageEngine(
@@ -21,11 +27,9 @@ public class Testumgebung implements Systemumgebung
                 new DefaultMongoTemplate(client),
                 new DocumentPerEventStorageStrategy());
 
-        engine.ensureIndexes();
-
-        return DefaultConfigurer.defaultConfiguration()
+        return new JgroupsConfigurer(konfiguration.konfigurieren())
+                .jgroupsConfiguration("haushaltsbuch")
                 .configureEmbeddedEventStore(config -> engine)
-                .registerComponent(EventStorageEngine.class, config -> engine)
                 .buildConfiguration();
     }
 }

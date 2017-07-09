@@ -89,6 +89,13 @@
 
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-domaene</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>anwendung</artifactId>
                 <version>${project.version}</version>
             </dependency>

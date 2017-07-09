@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.abfrage;
+package com.github.haschi.haushaltsbuch.domäne;
 
 import org.axonframework.config.Configuration;
 

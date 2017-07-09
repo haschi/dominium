@@ -1,9 +1,8 @@
 package com.github.haschi.haushaltsbuch.abfrage.domäne;
 
-import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuchverzeichnis;
+import com.github.haschi.haushaltsbuch.abfrage.Anwendungskonfiguration;
 import com.github.haschi.haushaltsbuch.abfrage.Systemumgebung;
-import org.axonframework.config.Configurer;
-import org.axonframework.config.EventHandlingConfiguration;
+import org.axonframework.config.Configuration;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 
 public class Testumgebung implements Systemumgebung
@@ -14,25 +13,20 @@ public class Testumgebung implements Systemumgebung
         return monitor;
     }
 
+    private Anwendungskonfiguration anwendung;
     final Synchonisierungsmonitor monitor;
 
-    Testumgebung(Synchonisierungsmonitor monitor) {
+    public Testumgebung(Anwendungskonfiguration anwendung, Synchonisierungsmonitor monitor) {
+        this.anwendung = anwendung;
         this.monitor = monitor;
     }
 
     @Override
-    public Configurer konfigurieren(Configurer configurer)
+    public Configuration konfigurieren() throws Exception
     {
-        Haushaltsbuchverzeichnis haushaltsbuchverzeichnis = new Haushaltsbuchverzeichnis();
-
-        EventHandlingConfiguration indexer = new EventHandlingConfiguration()
-                .registerEventHandler(config -> haushaltsbuchverzeichnis)
-                .usingTrackingProcessors();
-
-        return configurer
+        return anwendung.konfigurieren()
                 .configureEmbeddedEventStore(config -> new InMemoryEventStorageEngine())
-                .registerComponent(Haushaltsbuchverzeichnis.class, config -> haushaltsbuchverzeichnis)
                 .configureMessageMonitor((config) -> (componentType, componentName) -> monitor)
-                .registerModule(indexer);
+                .buildConfiguration();
     }
 }

@@ -1,6 +1,9 @@
 package com.github.haschi.haushaltsbuch.infrastruktur;
 
+import com.github.haschi.haushaltsbuch.rest.Anwendungskonfiguration;
 import com.github.haschi.haushaltsbuch.rest.AutomationApi;
+import com.github.haschi.haushaltsbuch.rest.Ereignismonitor;
+import com.github.haschi.haushaltsbuch.rest.Testumgebung;
 import cucumber.runtime.java.picocontainer.PicoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +25,10 @@ public class CustomPicoFactory extends PicoFactory
         }
         else
         {
+            addClass(Ereignismonitor.class);
             addClass(AutomationApi.class);
+            addClass(Anwendungskonfiguration.class);
+            addClass(Testumgebung.class);
         }
     }
 }

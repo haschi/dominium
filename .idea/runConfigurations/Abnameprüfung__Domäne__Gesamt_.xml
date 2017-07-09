@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Abnameprüfung (Domäne)" type="JUnit" factoryName="JUnit" singleton="true">
+  <configuration default="false" name="Abnameprüfung (Domäne, Gesamt)" type="JUnit" factoryName="JUnit" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="com.github.haschi.haushaltsbuch.domäne.*" />

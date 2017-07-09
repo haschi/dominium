@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.abfrage;
+package com.github.haschi.haushaltsbuch.domäne;
 
 import com.mongodb.MongoClient;
 import org.axonframework.config.Configuration;
@@ -20,7 +20,6 @@ public class Produktionsumgebung implements Systemumgebung
         @Override
         public Configuration konfigurieren() throws Exception
         {
-
             final MongoClient client = new MongoClient("localhost");
             final MongoEventStorageEngine engine = new MongoEventStorageEngine(
                     null,
@@ -31,7 +30,6 @@ public class Produktionsumgebung implements Systemumgebung
             return new JgroupsConfigurer(konfiguration.konfigurieren())
                     .jgroupsConfiguration("haushaltsbuch")
                     .configureEmbeddedEventStore(config -> engine)
-                    .registerCommandHandler(c -> new HaushaltsbuchAnlegenHandler())
                     .buildConfiguration();
     }
 }

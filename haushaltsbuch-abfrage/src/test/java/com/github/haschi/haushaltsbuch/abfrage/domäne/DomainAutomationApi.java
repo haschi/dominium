@@ -26,11 +26,11 @@ public class DomainAutomationApi implements AutomationApi
     private final Testumgebung testumgebung;
     private final Synchonisierungsmonitor monitor;
     private Configuration configuration;
-    private int sequenceNumber;
 
-    public DomainAutomationApi() {
-        monitor = new Synchonisierungsmonitor();
-        testumgebung = new Testumgebung(monitor);
+    public DomainAutomationApi(Testumgebung testumgebung, Synchonisierungsmonitor monitor)
+    {
+        this.testumgebung = testumgebung;
+        this.monitor = monitor;
     }
 
     @Override
@@ -53,10 +53,13 @@ public class DomainAutomationApi implements AutomationApi
             AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
-        configuration.eventStore().publish(
-                aggregat.apply(haushaltsbuchAngelegt));
+        monitor.zurücksetzen();
 
-            monitor.erwarte(HaushaltsbuchAngelegt.class,
+        configuration.eventStore()
+                .publish(aggregat.apply(haushaltsbuchAngelegt));
+
+        monitor.erwarte(
+                HaushaltsbuchAngelegt.class,
                 exception -> Assertions.fail("Synchronisation fehlgeschlagen", exception));
     }
 

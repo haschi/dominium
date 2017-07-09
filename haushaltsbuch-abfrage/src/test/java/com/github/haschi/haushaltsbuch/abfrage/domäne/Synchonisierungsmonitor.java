@@ -2,8 +2,11 @@ package com.github.haschi.haushaltsbuch.abfrage.domäne;
 
 import org.axonframework.messaging.Message;
 import org.axonframework.monitoring.MessageMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -20,10 +23,15 @@ import java.util.function.Predicate;
  * sichergestellt werden, dass die Nachricht auf dem
  * Zielsystem verarbeitet worden ist.
  */
-class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
+public class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
 {
+    private static final Logger log = LoggerFactory.getLogger(Synchonisierungsmonitor.class);
 
-    private final SynchronousQueue<Message<?>> successQueue = new SynchronousQueue<>();
+    private final SynchronousQueue<Message<?>> successQueue = new SynchronousQueue<>(true);
+
+    public Synchonisierungsmonitor() {
+        log.info("Synchronisierungsmonitor erzeugt");
+    }
 
     public void warten(Consumer<Message<?>> messageConsumer) throws SynchronisationFehlgeschlagen
     {
@@ -38,6 +46,8 @@ class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
 
     public void erwarte(Predicate<Message<?>> predicate, Consumer<InterruptedException> errorHandler)
     {
+        log.info("warten");
+
         try
         {
             predicate.test(successQueue.take());
@@ -60,7 +70,19 @@ class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
             @Override
             public void reportSuccess()
             {
-                successQueue.add(message);
+                try
+                {
+                    log.info("Ereignis verarbeitet: "
+                        + message.getPayloadType().getSimpleName()
+                        + " "
+                        + message.getPayload().toString());
+
+                    successQueue.offer(message, 1L, TimeUnit.SECONDS);
+                }
+                catch (Exception exception)
+                {
+                    log.error("Synchronisierungsfehler: ", exception);
+                }
             }
 
             @Override
@@ -75,5 +97,10 @@ class Synchonisierungsmonitor implements MessageMonitor<Message<?>>
 
             }
         };
+    }
+
+    public void zurücksetzen()
+    {
+        successQueue.clear();
     }
 }
