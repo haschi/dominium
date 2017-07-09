@@ -9,7 +9,7 @@ import org.axonframework.mongo.eventsourcing.eventstore.DefaultMongoTemplate;
 import org.axonframework.mongo.eventsourcing.eventstore.MongoEventStorageEngine;
 import org.axonframework.mongo.eventsourcing.eventstore.documentperevent.DocumentPerEventStorageStrategy;
 
-public class Testumgebung implements Systemumgebung
+public final class Testumgebung implements Systemumgebung
 {
     private final Konfigurationsschritt konfiguration;
 
