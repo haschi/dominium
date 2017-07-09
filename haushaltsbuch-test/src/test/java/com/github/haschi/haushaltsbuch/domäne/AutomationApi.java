@@ -9,18 +9,18 @@ import java.util.function.Consumer;
 
 public class AutomationApi implements AbstractAutomationApi
 {
-    Logger log = LoggerFactory.getLogger(AutomationApi.class);
+    private static final Logger log = LoggerFactory.getLogger(AutomationApi.class);
 
-    private HaushaltsbuchführungSteps haushaltsbuchführungApi = new HaushaltsbuchführungSteps();
+    private final HaushaltsbuchführungSteps haushaltsbuchführungApi = new HaushaltsbuchführungSteps();
 
     public AutomationApi() {
         log.info("Construct");
     }
 
     @Override
-    public void haushaltsbuchführung(Consumer<AbstractHaushaltsbuchführungSteps> consumer)
+    public void haushaltsbuchführung(final Consumer<AbstractHaushaltsbuchführungSteps> konsument)
     {
-        consumer.accept(haushaltsbuchführungApi);
+        konsument.accept(haushaltsbuchführungApi);
     }
 
     @Override

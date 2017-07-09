@@ -12,7 +12,7 @@ import java.text.MessageFormat;
 
 public class CustomPicoFactory extends PicoFactory
 {
-    private static Logger log = LoggerFactory.getLogger(CustomPicoFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(CustomPicoFactory.class);
 
     public CustomPicoFactory()
     {

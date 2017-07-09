@@ -9,13 +9,11 @@ public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführung
     @Override
     public void beginnen()
     {
-
     }
 
     @Override
-    public void hauptbuchAngelegt(UUID haushaltsbuch, UUID hauptbuch)
+    public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
     {
-
     }
 
     @Override
