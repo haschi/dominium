@@ -28,6 +28,7 @@
       <w>haushaltsbuch</w>
       <w>haushaltsbuchanlage</w>
       <w>haushaltsbuchführung</w>
+      <w>hausmann</w>
       <w>herunterfahren</w>
       <w>infrastruktur</w>
       <w>integrationstests</w>
@@ -39,9 +40,11 @@
       <w>kontenrahmen</w>
       <w>kontobezeichnung</w>
       <w>laufzeitumgebung</w>
+      <w>mongo</w>
       <w>pico</w>
       <w>sollkonto</w>
       <w>sollsaldo</w>
+      <w>testebene</w>
       <w>testumgebung</w>
     </words>
   </dictionary>
