@@ -6,5 +6,5 @@ import java.util.function.Consumer;
 
 public interface AbstractAutomationApi extends Startable
 {
-    public void haushaltsbuchführung(Consumer<AbstractHaushaltsbuchführungSteps> consumer);
+    void haushaltsbuchführung(Consumer<AbstractHaushaltsbuchführungSteps> consumer);
 }

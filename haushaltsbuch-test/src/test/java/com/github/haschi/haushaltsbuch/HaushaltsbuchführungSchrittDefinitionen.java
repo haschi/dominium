@@ -3,13 +3,11 @@ package com.github.haschi.haushaltsbuch;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
 
-public class HaushaltsbuchführungStepdefs
+public class HaushaltsbuchführungSchrittDefinitionen
 {
-    private AbstractAutomationApi api;
+    private final AbstractAutomationApi api;
 
-    public HaushaltsbuchführungStepdefs(AbstractAutomationApi api) {
-
-
+    public HaushaltsbuchführungSchrittDefinitionen(final AbstractAutomationApi api) {
         this.api = api;
     }
 
@@ -20,7 +18,7 @@ public class HaushaltsbuchführungStepdefs
     }
 
     @Dann("^werde ich ein Hauptbuch mit Konten des Standardkontenrahmen angelegt haben$")
-    public void werdeIchEinHauptbuchMitKontenDesStandardkontenrahmenAngelegtHaben() throws Throwable
+    public void werdeIchEinHauptbuchMitKontenDesStandardKontenrahmenAngelegtHaben() throws Throwable
     {
         api.haushaltsbuchführung(h -> h.hauptbuchAngelegt(
                 h.aktuellesHaushaltsbuch(),

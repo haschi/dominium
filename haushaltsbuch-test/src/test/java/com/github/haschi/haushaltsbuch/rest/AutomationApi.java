@@ -10,25 +10,26 @@ import org.wildfly.swarm.Swarm;
 
 import java.util.function.Consumer;
 
-public class AutomationApi implements AbstractAutomationApi
+public final class AutomationApi implements AbstractAutomationApi
 {
-    private Logger log = LoggerFactory.getLogger(AutomationApi.class);
+    private final Logger log = LoggerFactory.getLogger(AutomationApi.class);
 
     private AbstractHaushaltsbuchführungSteps haushaltsbuchführung;
-    private Testumgebung testumgebung;
-    private Ereignismonitor monitor;
+    private final Testumgebung testumgebung;
+    private final Ereignismonitor monitor;
     private Configuration configuration;
     private Swarm swarm;
 
-    public AutomationApi(Testumgebung testumgebung, Ereignismonitor monitor) {
+    public AutomationApi(final Testumgebung testumgebung, final Ereignismonitor monitor)
+    {
         this.testumgebung = testumgebung;
         this.monitor = monitor;
     }
 
     @Override
-    public void haushaltsbuchführung(Consumer<AbstractHaushaltsbuchführungSteps> consumer)
+    public void haushaltsbuchführung(final Consumer<AbstractHaushaltsbuchführungSteps> konsument)
     {
-        consumer.accept(haushaltsbuchführung);
+        konsument.accept(haushaltsbuchführung);
     }
 
     @Override
@@ -45,10 +46,10 @@ public class AutomationApi implements AbstractAutomationApi
             configuration = testumgebung.konfigurieren();
             configuration.start();
             this.haushaltsbuchführung = new HaushaltsbuchführungSteps(configuration, monitor);
-
-        } catch (Exception e)
+        }
+        catch (final Exception ausnahme)
         {
-            log.info("Konfiguration fehlgeschlagen", e);
+            log.info("Konfiguration fehlgeschlagen", ausnahme);
         }
     }
 
@@ -56,12 +57,14 @@ public class AutomationApi implements AbstractAutomationApi
     public void stop()
     {
         log.info("stop");
+
         try
         {
             swarm.stop();
-        } catch (Exception e)
+        }
+        catch (final Exception ausnahme)
         {
-            log.error("Herunterfahren des Servers Fehlgeschlagen");
+            log.error("Herunterfahren des Servers fehlgeschlagen");
         }
 
         configuration.shutdown();

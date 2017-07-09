@@ -5,18 +5,20 @@ import org.axonframework.eventhandling.EventMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestEventHandler
+public final class TestEventHandler
 {
     private static final Logger log = LoggerFactory.getLogger(TestEventHandler.class);
 
-    private Ereignismonitor monitor;
+    private final Ereignismonitor monitor;
 
-    TestEventHandler(Ereignismonitor monitor) {
+    TestEventHandler(final Ereignismonitor monitor)
+    {
         this.monitor = monitor;
     }
 
     @EventHandler
-    public void falls(EventMessage<?> any) {
+    public void falls(final EventMessage<?> any)
+    {
         monitor.ereignisEingetreten(any);
     }
 }

@@ -11,23 +11,24 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
+public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
 
-    private Configuration konfiguration;
-    private Ereignismonitor monitor;
+    private final Configuration konfiguration;
+    private final Ereignismonitor monitor;
     private UUID aktuellesHaushaltsbuch;
 
-    public HaushaltsbuchführungSteps(Configuration konfiguration, Ereignismonitor monitor) {
-
+    public HaushaltsbuchführungSteps(final Configuration konfiguration, final Ereignismonitor monitor)
+    {
         this.konfiguration = konfiguration;
         this.monitor = monitor;
     }
+
     @Override
     public void beginnen()
     {
         this.aktuellesHaushaltsbuch = UUID.randomUUID();
-        BeginneHaushaltsbuchführung beginneHaushaltsbuchführung = ImmutableBeginneHaushaltsbuchführung.builder()
+        final BeginneHaushaltsbuchführung beginneHaushaltsbuchführung = ImmutableBeginneHaushaltsbuchführung.builder()
                 .id(this.aktuellesHaushaltsbuch)
                 .build();
 
@@ -35,15 +36,16 @@ public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführung
     }
 
     @Override
-    public void hauptbuchAngelegt(UUID haushaltsbuch, UUID hauptbuch)
+    public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
     {
         try
         {
             assertThat(monitor.nächstesEreignis()).isEqualTo(
                     ImmutableHaushaltsbuchführungBegonnen.builder()
-                    .id(haushaltsbuch)
-                    .build());
-        } catch (InterruptedException e)
+                            .id(haushaltsbuch)
+                            .build());
+        }
+        catch (final InterruptedException e)
         {
             fail("Unterbrochen");
         }

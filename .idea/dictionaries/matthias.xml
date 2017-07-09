@@ -1,6 +1,8 @@
 <component name="ProjectDictionaryState">
   <dictionary name="matthias">
     <words>
+      <w>anwendungskonfiguration</w>
+      <w>ausnahme</w>
       <w>befehlsbrücke</w>
       <w>buchungsregel</w>
       <w>buchungssatz</w>
@@ -12,21 +14,34 @@
       <w>domaene</w>
       <w>dorg</w>
       <w>entität</w>
+      <w>ereignis</w>
+      <w>ereignismonitor</w>
       <w>failsafe</w>
+      <w>fehlgeschlagen</w>
       <w>github</w>
       <w>habenkonto</w>
       <w>habensaldo</w>
       <w>haschi</w>
       <w>haschka</w>
       <w>hauptbuch</w>
+      <w>haushaltsbuch</w>
       <w>haushaltsbuchanlage</w>
       <w>haushaltsbuchführung</w>
+      <w>herunterfahren</w>
+      <w>infrastruktur</w>
       <w>integrationstests</w>
       <w>jboss</w>
+      <w>konfiguration</w>
+      <w>konfigurationsschritt</w>
+      <w>konfigurieren</w>
+      <w>konsument</w>
+      <w>kontenrahmen</w>
       <w>kontobezeichnung</w>
       <w>laufzeitumgebung</w>
+      <w>pico</w>
       <w>sollkonto</w>
       <w>sollsaldo</w>
+      <w>testumgebung</w>
     </words>
   </dictionary>
 </component>

@@ -11,9 +11,10 @@ import org.axonframework.mongo.eventsourcing.eventstore.documentperevent.Documen
 
 public class Testumgebung implements Systemumgebung
 {
-    private Konfigurationsschritt konfiguration;
+    private final Konfigurationsschritt konfiguration;
 
-    public Testumgebung(Anwendungskonfiguration konfiguration) {
+    public Testumgebung(final Anwendungskonfiguration konfiguration)
+    {
         this.konfiguration = konfiguration;
     }
 
