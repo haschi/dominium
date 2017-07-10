@@ -23,6 +23,10 @@ public final class CustomPicoFactory extends PicoFactory
         {
             addClass(com.github.haschi.haushaltsbuch.domäne.AutomationApi.class);
         }
+        if ("fixture".equals(testebene))
+        {
+            addClass(com.github.haschi.haushaltsbuch.fixture.AutomationApi.class);
+        }
         else
         {
             addClass(Ereignismonitor.class);

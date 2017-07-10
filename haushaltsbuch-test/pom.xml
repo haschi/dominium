@@ -327,6 +327,32 @@
                         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
                     </systemProperties>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>fixture</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <systemProperties>
+                                <com.github.haschi.testebene>fixture</com.github.haschi.testebene>
+                            </systemProperties>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>domäne</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <systemProperties>
+                                <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
+                            </systemProperties>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
