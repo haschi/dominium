@@ -26,16 +26,16 @@ public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführung
         haushaltsbuchId = UUID.randomUUID();
 
         validator = fixture.when(ImmutableBeginneHaushaltsbuchführung.builder()
-                                                          .id(haushaltsbuchId)
-                                                          .build());
+                                         .id(haushaltsbuchId)
+                                         .build());
     }
 
     @Override
     public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
     {
         validator.expectEvents(ImmutableHaushaltsbuchführungBegonnen.builder()
-            .id(haushaltsbuch)
-            .build());
+                                       .id(haushaltsbuch)
+                                       .build());
     }
 
     @Override
