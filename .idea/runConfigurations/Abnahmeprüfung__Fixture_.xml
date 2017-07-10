@@ -1,8 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Abnahmeprüfung (Fixture)" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" singleton="true">
-    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" track_test_folders="true" runner="idea">
       <pattern>
         <option name="PATTERN" value="cucumber.api.cli.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.github.haschi.haushaltsbuch.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

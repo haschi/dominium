@@ -9,7 +9,7 @@ import org.axonframework.test.aggregate.ResultValidator;
 
 import java.util.UUID;
 
-public class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
+public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
     private final AggregateTestFixture<Haushaltsbuch> fixture;
     private UUID haushaltsbuchId;

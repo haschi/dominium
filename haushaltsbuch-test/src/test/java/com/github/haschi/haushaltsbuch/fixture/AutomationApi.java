@@ -10,13 +10,12 @@ import java.util.function.Consumer;
 public final class AutomationApi implements AbstractAutomationApi
 {
 
-    private final AggregateTestFixture<Haushaltsbuch> fixture;
     private final HaushaltsbuchführungSteps haushaltsbuchführungSteps;
 
     public AutomationApi()
     {
-        fixture = new AggregateTestFixture<>(Haushaltsbuch.class);
-        haushaltsbuchführungSteps = new HaushaltsbuchführungSteps(fixture);
+        haushaltsbuchführungSteps = new HaushaltsbuchführungSteps(
+                new AggregateTestFixture<>(Haushaltsbuch.class));
     }
 
     @Override
