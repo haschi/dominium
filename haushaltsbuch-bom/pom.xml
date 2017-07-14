@@ -24,7 +24,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <jgroups.version>3.6.13.Final</jgroups.version>
         <version.cukes>1.2.5</version.cukes>
-        <assertj.version>3.5.2</assertj.version>
+        <assertj.version>3.8.0</assertj.version>
         <rest-assured.version>3.0.3</rest-assured.version>
     </properties>
 
@@ -82,7 +82,7 @@
 
             <dependency>
                 <groupId>info.cukes</groupId>
-                <artifactId>cucumber-java</artifactId>
+                <artifactId>cucumber-java8</artifactId>
                 <version>${version.cukes}</version>
             </dependency>
             <dependency>

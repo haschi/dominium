@@ -139,7 +139,7 @@
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
-            <artifactId>cucumber-java</artifactId>
+            <artifactId>cucumber-java8</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
