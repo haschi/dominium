@@ -19,9 +19,10 @@
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>infrastructure-bom</artifactId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-bom</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -33,35 +34,31 @@
         <dependency>
             <groupId>com.github.haschi</groupId>
             <artifactId>modeling</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
         </dependency>
         <dependency>
             <groupId>org.javamoney</groupId>
             <artifactId>moneta</artifactId>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
-            <version>${axon.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.8.5</version>
         </dependency>
     </dependencies>
 </project>
