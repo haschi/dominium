@@ -43,21 +43,9 @@
         <dependencies>
 
             <!-- BOM -->
-            <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>infrastructure-bom</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>testing-bom</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
+
 
             <dependency>
                 <groupId>com.github.haschi</groupId>
