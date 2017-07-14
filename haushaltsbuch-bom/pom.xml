@@ -14,15 +14,80 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>haushaltsbuch-bom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Haushaltsbuch BOM</name>
 
     <properties>
-
+        <axon.version>3.0.5</axon.version>
+        <immutables.version>2.3.3</immutables.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <version.cukes>1.2.5</version.cukes>
     </properties>
 
     <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-core</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-metrics</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-distributed-commandbus-jgroups</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-mongo</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-test</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutables.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <!-- Testing -->
+
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>${version.cukes}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>${version.cukes}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cukes</groupId>
+                <artifactId>cucumber-picocontainer</artifactId>
+                <version>${version.cukes}</version>
+            </dependency>
+
+        </dependencies>
     </dependencyManagement>
 
 </project>

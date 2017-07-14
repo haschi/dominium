@@ -23,11 +23,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <axon.version>3.0.5</axon.version>
 
-        <version.cukes>1.2.5</version.cukes>
 
-        <slf4j.version>1.7.25</slf4j.version>
         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
     </properties>
 
@@ -40,39 +37,19 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-core</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
 
             <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-metrics</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-distributed-commandbus-jgroups</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-mongo</artifactId>
-                <version>${axon.version}</version>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-bom</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
 
             <dependency>
                 <groupId>com.github.haschi</groupId>
                 <artifactId>modeling</artifactId>
                 <version>0.0.26-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.immutables</groupId>
-                <artifactId>value</artifactId>
-                <version>2.3.3</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -83,11 +60,6 @@
                 <groupId>io.rest-assured</groupId>
                 <artifactId>rest-assured</artifactId>
                 <version>3.0.3</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
@@ -171,7 +143,6 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-test</artifactId>
-            <version>${axon.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -187,19 +158,16 @@
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
-            <version>${version.cukes}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

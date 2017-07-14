@@ -307,6 +307,7 @@
     <!--</repositories>-->
 
     <modules>
+        <module>haushaltsbuch-bom</module>
         <module>allgemein</module>
         <module>coding</module>
         <module>anwendung</module>
@@ -316,7 +317,6 @@
         <module>haushaltsbuch-domäne</module>
         <module>haushaltsbuch-api</module>
         <module>haushaltsbuch-test</module>
-        <module>haushaltsbuch-bom</module>
     </modules>
 
     <repositories>
