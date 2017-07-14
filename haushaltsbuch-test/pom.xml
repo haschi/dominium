@@ -47,12 +47,6 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>modeling</artifactId>
-                <version>0.0.26-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-api</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
