@@ -165,11 +165,6 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>commons-logging</groupId>-->
-            <!--<artifactId>commons-logging</artifactId>-->
-            <!--<version>1.2</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-api</artifactId>
@@ -178,11 +173,6 @@
             <groupId>com.github.haschi</groupId>
             <artifactId>modeling</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.haschi.haushaltsbuch</groupId>-->
-            <!--<artifactId>haushaltsbuch-abfrage</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-domaene</artifactId>
@@ -214,7 +204,6 @@
         <dependency>
             <groupId>org.jgroups</groupId>
             <artifactId>jgroups</artifactId>
-            <version>3.6.13.Final</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
