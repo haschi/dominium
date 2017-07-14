@@ -316,6 +316,7 @@
         <module>haushaltsbuch-domäne</module>
         <module>haushaltsbuch-api</module>
         <module>haushaltsbuch-test</module>
+        <module>haushaltsbuch-bom</module>
     </modules>
 
     <repositories>
