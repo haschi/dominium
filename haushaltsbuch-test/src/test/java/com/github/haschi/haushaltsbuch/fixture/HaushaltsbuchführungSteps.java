@@ -3,11 +3,16 @@ package com.github.haschi.haushaltsbuch.fixture;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchf체hrungSteps;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchf체hrungBegonnen;
+import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.dom채ne.Haushaltsbuch;
+import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.ResultValidator;
 
 import java.util.UUID;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf체hrungSteps
 {
@@ -33,9 +38,18 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
     {
-        validator.expectEvents(ImmutableHaushaltsbuchf체hrungBegonnen.builder()
-                                       .id(haushaltsbuch)
-                                       .build());
+        assertThat(istEreignisEingetreten(haushaltsbuch))
+                .contains(ImmutableHaushaltsbuchf체hrungBegonnen.builder()
+                                  .id(haushaltsbuch)
+                                  .build());
+    }
+
+    private <T> Stream<Object> istEreignisEingetreten(
+            final UUID aggregatkennung)
+    {
+        return fixture.getEventStore().readEvents(aggregatkennung.toString())
+                .asStream()
+                .map(Message::getPayload);
     }
 
     @Override
@@ -47,12 +61,15 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     @Override
     public UUID aktuellesHauptbuch()
     {
-        return null;
+        return haushaltsbuchId;
     }
 
     @Override
     public void journalAngelegt(final UUID uuid)
     {
-
+        assertThat(istEreignisEingetreten(uuid))
+                .contains(ImmutableJournalWurdeAngelegt.builder()
+                                       .aktuelleHaushaltsbuchId(aktuellesHaushaltsbuch())
+                                       .build());
     }
 }

@@ -4,6 +4,7 @@ import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
+import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.infrastruktur.Ereignismonitor;
 import org.axonframework.config.Configuration;
 
@@ -15,7 +16,7 @@ import static org.junit.Assert.fail;
 public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
     private final Configuration configuration;
-    private Ereignismonitor ereignismonitor;
+    private final Ereignismonitor ereignismonitor;
     private UUID haushaltsbuchführung;
 
     public HaushaltsbuchführungSteps(final Configuration configuration, final Ereignismonitor ereignismonitor) {
@@ -67,6 +68,16 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void journalAngelegt(final UUID uuid)
     {
-
+        try
+        {
+            assertThat(ereignismonitor.nächstesEreignis())
+                    .isEqualTo(ImmutableJournalWurdeAngelegt.builder()
+                               .aktuelleHaushaltsbuchId(this.haushaltsbuchführung)
+                                .build());
+        }
+        catch (final InterruptedException ausnahme)
+        {
+            fail("Unterbrochen");
+        }
     }
 }

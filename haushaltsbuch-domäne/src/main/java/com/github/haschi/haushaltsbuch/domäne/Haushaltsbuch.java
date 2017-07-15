@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.domäne;
 
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
+import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -25,6 +26,10 @@ public class Haushaltsbuch
         ImmutableHaushaltsbuchführungBegonnen.builder()
                 .id(anweisung.id())
                 .build());
+
+        apply(ImmutableJournalWurdeAngelegt.builder()
+            .aktuelleHaushaltsbuchId(anweisung.id())
+            .build());
     }
 
     @EventSourcingHandler
