@@ -21,6 +21,7 @@ public final class CustomPicoFactory extends PicoFactory
 
         if("domäne".equals(testebene))
         {
+            addClass(com.github.haschi.haushaltsbuch.domäne.Testumgebung.class);
             addClass(com.github.haschi.haushaltsbuch.domäne.AutomationApi.class);
         }
 

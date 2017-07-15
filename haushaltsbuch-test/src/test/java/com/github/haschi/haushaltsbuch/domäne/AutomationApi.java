@@ -12,8 +12,10 @@ public final class AutomationApi implements AbstractAutomationApi
     private static final Logger log = LoggerFactory.getLogger(AutomationApi.class);
 
     private final HaushaltsbuchführungSteps haushaltsbuchführungApi = new HaushaltsbuchführungSteps();
+    private final Systemumgebung testumgebung;
 
-    public AutomationApi() {
+    public AutomationApi(final Systemumgebung testumgebung) {
+        this.testumgebung = testumgebung;
         log.info("Construct");
     }
 
