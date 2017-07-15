@@ -11,4 +11,6 @@ public interface AbstractHaushaltsbuchführungSteps
     UUID aktuellesHaushaltsbuch();
 
     UUID aktuellesHauptbuch();
+
+    void journalAngelegt(UUID uuid);
 }

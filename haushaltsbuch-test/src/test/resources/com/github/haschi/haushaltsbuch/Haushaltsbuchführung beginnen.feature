@@ -8,4 +8,4 @@ Funktionalität: Haushaltsbuchführung beginnen
   Szenario: Haushaltsbuchführung beginnen
     Wenn ich mit der Haushaltsbuchführung beginne
     Dann werde ich ein Hauptbuch mit Konten des Standard-Kontenrahmen angelegt haben
-    # Und ich werde ein Journal zum Hauptbuch angelegt haben
+    Und ich werde ein Journal zum Hauptbuch angelegt haben

@@ -49,4 +49,10 @@ public final class Haushaltsbuchf√ºhrungSteps implements AbstractHaushaltsbuchf√
     {
         return null;
     }
+
+    @Override
+    public void journalAngelegt(final UUID uuid)
+    {
+
+    }
 }

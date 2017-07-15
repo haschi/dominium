@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch;
 
 import cucumber.api.java.de.Dann;
+import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
 
 public class HaushaltsbuchführungSchrittDefinitionen
@@ -23,5 +24,11 @@ public class HaushaltsbuchführungSchrittDefinitionen
         api.haushaltsbuchführung(h -> h.hauptbuchAngelegt(
                 h.aktuellesHaushaltsbuch(),
                 h.aktuellesHauptbuch()));
+    }
+
+    @Und("^ich werde ein Journal zum Hauptbuch angelegt haben$")
+    public void ichWerdeEinJournalZumHauptbuchAngelegtHaben() throws Throwable
+    {
+        api.haushaltsbuchführung(h -> h.journalAngelegt(h.aktuellesHauptbuch()));
     }
 }
