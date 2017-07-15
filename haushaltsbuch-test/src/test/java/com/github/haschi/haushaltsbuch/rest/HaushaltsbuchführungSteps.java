@@ -65,6 +65,16 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-
+//        try
+//        {
+//            assertThat(monitor.nächstesEreignis()).isEqualTo(
+//                    ImmutableJournalWurdeAngelegt.builder()
+//                    .aktuelleHaushaltsbuchId(uuid)
+//                    .build());
+//        }
+//        catch (final InterruptedException e)
+//        {
+//            fail("Unterbrochen");
+//        }
     }
 }
