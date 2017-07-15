@@ -1,8 +1,9 @@
 package com.github.haschi.haushaltsbuch.infrastruktur;
 
+import com.github.haschi.haushaltsbuch.domäne.Warteschlangenmonitor;
 import com.github.haschi.haushaltsbuch.rest.Anwendungskonfiguration;
 import com.github.haschi.haushaltsbuch.rest.AutomationApi;
-import com.github.haschi.haushaltsbuch.rest.Ereignismonitor;
+import com.github.haschi.haushaltsbuch.rest.Synchronisierungsmonitor;
 import com.github.haschi.haushaltsbuch.rest.Testumgebung;
 import cucumber.runtime.java.picocontainer.PicoFactory;
 import org.slf4j.Logger;
@@ -19,8 +20,12 @@ public final class CustomPicoFactory extends PicoFactory
         final String testebene = System.getProperty("com.github.haschi.testebene");
         log.info(MessageFormat.format("Testebene {0}", testebene));
 
+        addClass(TestEventHandler.class);
+
         if("domäne".equals(testebene))
         {
+            addClass(Warteschlangenmonitor.class);
+            addClass(com.github.haschi.haushaltsbuch.domäne.Anwendungskonfiguration.class);
             addClass(com.github.haschi.haushaltsbuch.domäne.Testumgebung.class);
             addClass(com.github.haschi.haushaltsbuch.domäne.AutomationApi.class);
         }
@@ -32,7 +37,7 @@ public final class CustomPicoFactory extends PicoFactory
 
         if ("api".equals(testebene))
         {
-            addClass(Ereignismonitor.class);
+            addClass(Synchronisierungsmonitor.class);
             addClass(AutomationApi.class);
             addClass(Anwendungskonfiguration.class);
             addClass(Testumgebung.class);

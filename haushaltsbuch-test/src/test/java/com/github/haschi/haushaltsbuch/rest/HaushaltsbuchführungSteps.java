@@ -15,10 +15,10 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
 {
 
     private final Configuration konfiguration;
-    private final Ereignismonitor monitor;
+    private final Synchronisierungsmonitor monitor;
     private UUID aktuellesHaushaltsbuch;
 
-    public HaushaltsbuchführungSteps(final Configuration konfiguration, final Ereignismonitor monitor)
+    public HaushaltsbuchführungSteps(final Configuration konfiguration, final Synchronisierungsmonitor monitor)
     {
         this.konfiguration = konfiguration;
         this.monitor = monitor;

@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.rest;
+package com.github.haschi.haushaltsbuch.infrastruktur;
 
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.eventhandling.EventMessage;
@@ -7,7 +7,7 @@ public final class TestEventHandler
 {
     private final Ereignismonitor monitor;
 
-    TestEventHandler(final Ereignismonitor monitor)
+    public TestEventHandler(final Ereignismonitor monitor)
     {
         this.monitor = monitor;
     }

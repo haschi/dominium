@@ -16,11 +16,11 @@ public final class AutomationApi implements AbstractAutomationApi
 
     private AbstractHaushaltsbuchführungSteps haushaltsbuchführung;
     private final Testumgebung testumgebung;
-    private final Ereignismonitor monitor;
+    private final Synchronisierungsmonitor monitor;
     private Configuration configuration;
     private Swarm swarm;
 
-    public AutomationApi(final Testumgebung testumgebung, final Ereignismonitor monitor)
+    public AutomationApi(final Testumgebung testumgebung, final Synchronisierungsmonitor monitor)
     {
         this.testumgebung = testumgebung;
         this.monitor = monitor;
