@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
 import com.github.haschi.haushaltsbuch.api.kommando.LegeKontoAn;
@@ -60,7 +61,7 @@ public class KontoAnlegen
     public String ausführen()
     {
         final LegeKontoAn befehl = ImmutableLegeKontoAn.builder()
-                .haushaltsbuchId(UUID.fromString(this.id))
+                .haushaltsbuchId(Aggregatkennung.of(this.id))
                 .kontobezeichnung(this.kontoname)
                 .kontoart(this.kontoart)
                 .build();

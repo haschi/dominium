@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.domaene.aggregat;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.api.Buchungsregel;
@@ -45,7 +46,7 @@ public final class Haushaltsbuch
     private Hauptbuch hauptbuch;
 
     @AggregateIdentifier
-    private UUID id;
+    private Aggregatkennung id;
 
     @SuppressWarnings("unused")
     protected Haushaltsbuch()

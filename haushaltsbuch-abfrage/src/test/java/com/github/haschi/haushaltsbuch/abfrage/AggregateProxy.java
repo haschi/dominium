@@ -1,33 +1,32 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.axonframework.eventsourcing.GenericDomainEventMessage;
 
-import java.util.UUID;
-
 public class AggregateProxy<T>
 {
-    private UUID identifier;
-    private String type;
+    private final Aggregatkennung identifier;
+    private final String type;
     private long sequenznummer;
 
-    public AggregateProxy(final Class<T> clazz, final UUID uuid)
+    public AggregateProxy(final Class<T> clazz, final Aggregatkennung uuid)
     {
         type = clazz.getSimpleName();
         identifier = uuid;
     }
 
     public GenericDomainEventMessage<Object> apply(
-            ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
+            final ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
         return new GenericDomainEventMessage<>(
                 getType(),
-                getIdentifier().toString(),
+                getIdentifier().wert().toString(),
                 nächsteSequenznummer(),
                 haushaltsbuchAngelegt);
     }
 
-    public UUID getIdentifier()
+    public Aggregatkennung getIdentifier()
     {
         return identifier;
     }

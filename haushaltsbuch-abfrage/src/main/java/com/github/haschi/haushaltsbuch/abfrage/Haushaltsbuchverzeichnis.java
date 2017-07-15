@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ public class Haushaltsbuchverzeichnis
 {
     static private Logger log = LoggerFactory.getLogger(Haushaltsbuchverzeichnis.class);
 
-    private Map<UUID, Haushaltsbuch> haushaltsbücher = new ConcurrentHashMap<>();
+    private final Map<Aggregatkennung, Haushaltsbuch> haushaltsbücher = new ConcurrentHashMap<>();
 
     public Haushaltsbuchverzeichnis()
     {
@@ -25,11 +26,11 @@ public class Haushaltsbuchverzeichnis
         log.info("Ereignis HaushaltsbuchAngelegt");
         haushaltsbücher.put(ereignis.id(),
                             ImmutableHaushaltsbuch.builder()
-                                    .id(ereignis.id().toString())
+                                    .id(ereignis.id())
                                     .build());
     }
 
-    public Optional<Haushaltsbuch> suchen(final UUID haushaltsbuchId) {
+    public Optional<Haushaltsbuch> suchen(final Aggregatkennung haushaltsbuchId) {
         log.info("Haushaltsbuch suchen");
 
         if(haushaltsbücher.containsKey(haushaltsbuchId))

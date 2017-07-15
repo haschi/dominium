@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.fixture;
 
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
 import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
@@ -9,7 +10,6 @@ import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.ResultValidator;
 
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
     private final AggregateTestFixture<Haushaltsbuch> fixture;
-    private UUID haushaltsbuchId;
+    private Aggregatkennung haushaltsbuchId;
     private ResultValidator validator;
 
     public HaushaltsbuchführungSteps(final AggregateTestFixture<Haushaltsbuch> fixture)
@@ -28,7 +28,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void beginnen()
     {
-        haushaltsbuchId = UUID.randomUUID();
+        haushaltsbuchId = Aggregatkennung.neu();
 
         validator = fixture.when(ImmutableBeginneHaushaltsbuchführung.builder()
                                          .id(haushaltsbuchId)
@@ -36,7 +36,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
+    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
     {
         assertThat(istEreignisEingetreten(haushaltsbuch))
                 .contains(ImmutableHaushaltsbuchführungBegonnen.builder()
@@ -45,7 +45,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     private <T> Stream<Object> istEreignisEingetreten(
-            final UUID aggregatkennung)
+            final Aggregatkennung aggregatkennung)
     {
         return fixture.getEventStore().readEvents(aggregatkennung.toString())
                 .asStream()
@@ -53,23 +53,23 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public UUID aktuellesHaushaltsbuch()
+    public Aggregatkennung aktuellesHaushaltsbuch()
     {
         return haushaltsbuchId;
     }
 
     @Override
-    public UUID aktuellesHauptbuch()
+    public Aggregatkennung aktuellesHauptbuch()
     {
         return haushaltsbuchId;
     }
 
     @Override
-    public void journalAngelegt(final UUID uuid)
+    public void journalAngelegt(final Aggregatkennung uuid)
     {
         assertThat(istEreignisEingetreten(uuid))
                 .contains(ImmutableJournalWurdeAngelegt.builder()
-                                       .aktuelleHaushaltsbuchId(aktuellesHaushaltsbuch())
-                                       .build());
+                                  .aktuelleHaushaltsbuchId(aktuellesHaushaltsbuch())
+                                  .build());
     }
 }

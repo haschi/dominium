@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
@@ -36,7 +37,7 @@ public class HauptbuchAbfrageTest
     public void hauptbuchAbfragen()
     {
         final UnitOfWork uof = DefaultUnitOfWork.startAndGet();
-        final UUID haushaltsbuchId = UUID.randomUUID();
+        final Aggregatkennung haushaltsbuchId = Aggregatkennung.neu();
         this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(haushaltsbuchId).build());
         uof.commit();
 

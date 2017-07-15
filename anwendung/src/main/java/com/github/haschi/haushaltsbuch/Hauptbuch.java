@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch;
 
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
@@ -9,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 @Named
 @RequestScoped
@@ -77,6 +77,6 @@ public class Hauptbuch
             log.infov("init() (id={0})", this.id);
         }
 
-        this.ansicht = this.abfrage.abfragen(UUID.fromString(this.id));
+        this.ansicht = this.abfrage.abfragen(Aggregatkennung.of(this.id));
     }
 }

@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfragen;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.HauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.KontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
@@ -24,7 +25,7 @@ public class HauptbuchAbfrage
         return (T obj) -> type.isAssignableFrom(obj.getClass());
     }
 
-    public HauptbuchAnsicht abfragen(final UUID haushaltsbuchId)
+    public HauptbuchAnsicht abfragen(final Aggregatkennung haushaltsbuchId)
     {
         return DomainEventStreamFactory
                 .create(this.eventStore, Haushaltsbuch.class, haushaltsbuchId)

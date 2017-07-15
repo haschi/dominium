@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.abfrage;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.modeling.de.Information;
 
 @Information
@@ -9,5 +10,5 @@ import com.github.haschi.modeling.de.Information;
 @JsonDeserialize(as = ImmutableHaushaltsbuch.class)
 public interface Haushaltsbuch
 {
-    String id();
+    Aggregatkennung id();
 }

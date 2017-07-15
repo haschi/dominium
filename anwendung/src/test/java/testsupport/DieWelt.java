@@ -1,5 +1,6 @@
 package testsupport;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import javaslang.collection.Stream;
 import org.axonframework.domain.DomainEventMessage;
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -9,14 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Singleton
 public final class DieWelt
 {
 
     private final Map<String, List<? super Object>> ereignisse = new HashMap<>();
-    private UUID aktuelleHaushaltsbuchId;
+    private Aggregatkennung aktuelleHaushaltsbuchId;
 
     public Stream<? super Object> ereignisstrom()
     {
@@ -28,17 +28,17 @@ public final class DieWelt
         return this.getStream(this.getAktuelleHaushaltsbuchId());
     }
 
-    private <T> List<? super T> getStream(final UUID haushaltsbuchId)
+    private <T> List<? super T> getStream(final Aggregatkennung haushaltsbuchId)
     {
         return this.ereignisse.get(haushaltsbuchId.toString());
     }
 
-    public UUID getAktuelleHaushaltsbuchId()
+    public Aggregatkennung getAktuelleHaushaltsbuchId()
     {
         return this.aktuelleHaushaltsbuchId;
     }
 
-    public void setAktuelleHaushaltsbuchId(final UUID aktuelleHaushaltsbuchId)
+    public void setAktuelleHaushaltsbuchId(final Aggregatkennung aktuelleHaushaltsbuchId)
     {
         this.aktuelleHaushaltsbuchId = aktuelleHaushaltsbuchId;
     }

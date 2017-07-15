@@ -6,6 +6,7 @@ import com.github.haschi.haushaltsbuch.abfrage.CqrsKonfigurator;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.Main;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
@@ -43,13 +44,13 @@ public class RestAutomationApi implements AutomationApi
             started = true;
             swarm.deploy();
 
-            Testumgebung testumgebung = new Testumgebung();
+            final Testumgebung testumgebung = new Testumgebung();
             final CqrsKonfigurator testClientConfiguration = new CqrsKonfigurator(testumgebung);
             configuration = testClientConfiguration.konfigurieren();
 
             configuration.start();
-
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -63,10 +64,13 @@ public class RestAutomationApi implements AutomationApi
 
         try
         {
-            if (started) swarm.stop();
+            if (started)
+            {
+                swarm.stop();
+            }
             configuration.shutdown();
-
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -75,10 +79,10 @@ public class RestAutomationApi implements AutomationApi
 
     @Override
     public void haushaltsführungBegonnen(
-            AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
-            ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
+            final AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
+            final ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
-                configuration.eventStore().publish(
+        configuration.eventStore().publish(
                 new GenericDomainEventMessage<Object>(
                         aggregat.getType(),
                         aggregat.getIdentifier().toString(),
@@ -87,9 +91,9 @@ public class RestAutomationApi implements AutomationApi
     }
 
     @Override
-    public ImmutableHaushaltsbuch haushaltsbuch(UUID identifier)
+    public ImmutableHaushaltsbuch haushaltsbuch(final Aggregatkennung identifier)
     {
-        return get("/haushaltsbuch/" + identifier.toString())
+        return get("/haushaltsbuch/" + identifier.wert().toString())
                 .as(ImmutableHaushaltsbuch.class, ObjectMapperType.JACKSON_2);
     }
 
@@ -101,16 +105,17 @@ public class RestAutomationApi implements AutomationApi
 
     @Override
     public void werdeIchEinHaushaltsbuchSehen(
-            UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch)
+            final Aggregatkennung identifier,
+            final ImmutableHaushaltsbuch leeresHaushaltsbuch)
     {
         assertThat(haushaltsbuch(identifier))
                 .isEqualTo(leeresHaushaltsbuch);
     }
 
     @Override
-    public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
+    public void werdeIchKeinHaushaltsbuchSehen(final Aggregatkennung identifier)
     {
-        get("/haushaltsbuch/" + identifier.toString())
+        get("/haushaltsbuch/" + identifier.wert().toString())
                 .then()
                 .statusCode(404)
                 .contentType(ContentType.TEXT)

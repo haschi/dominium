@@ -1,23 +1,22 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 
-import java.util.UUID;
-
 public class HaushaltsbuchSteps
 {
 
-    private AutomationApi api;
+    private final AutomationApi api;
 
-    public HaushaltsbuchSteps(AutomationApi api){
+    public HaushaltsbuchSteps(final AutomationApi api){
         this.api = api;
     }
 
     final AggregateProxy<HaushaltsbuchTestaggregat> aggregat = new AggregateProxy<>(
             HaushaltsbuchTestaggregat.class,
-            UUID.randomUUID());
+            Aggregatkennung.neu());
 
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
     public void ichHabeMitDerHaushaltsbuchführungBegonnen()
@@ -31,7 +30,7 @@ public class HaushaltsbuchSteps
     public void werdeIchEinLeeresHaushaltsbuchSehen()
     {
         final ImmutableHaushaltsbuch leeresHaushaltsbuch = ImmutableHaushaltsbuch.builder()
-                .id(aggregat.getIdentifier().toString())
+                .id(aggregat.getIdentifier())
                 .build();
 
         api.werdeIchEinHaushaltsbuchSehen(aggregat.getIdentifier(), leeresHaushaltsbuch);

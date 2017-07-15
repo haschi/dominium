@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.rest;
 
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.infrastruktur.Job;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -37,7 +38,8 @@ public class Haushaltsbuchführung
     public void haushaltsbuchführungBeginnen(@PathParam("id") final UUID id)
     {
         this.befehlsbrücke.send(
-                ImmutableBeginneHaushaltsbuchführung.builder().id(id).build());
+                ImmutableBeginneHaushaltsbuchführung.builder()
+                        .id(Aggregatkennung.of(id)).build());
     }
 
     @Resource
@@ -70,7 +72,7 @@ public class Haushaltsbuchführung
     @Produces(MediaType.APPLICATION_JSON)
     public Response haushaltsbuchLesen(@PathParam("id") final UUID id)
     {
-        final HauptbuchAnsicht ansicht = this.abfrage.abfragen(id);
+        final HauptbuchAnsicht ansicht = this.abfrage.abfragen(Aggregatkennung.of(id));
 
         return Response.ok(ansicht).build();
     }

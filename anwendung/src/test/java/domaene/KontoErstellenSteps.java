@@ -1,5 +1,6 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableKontoWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableKontoWurdeNichtAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableSaldoWurdeGeändert;
@@ -36,7 +37,7 @@ public final class KontoErstellenSteps
     @Wenn("^wenn ich das Konto \"([^\"]*)\" anlege$")
     public void wenn_ich_das_Konto_anlege(final String kontoname)
     {
-        final UUID haushaltsbuchId = this.welt.getAktuelleHaushaltsbuchId();
+        final Aggregatkennung haushaltsbuchId = this.welt.getAktuelleHaushaltsbuchId();
         this.commandGateway.sendAndWait(ImmutableLegeKontoAn.builder()
                                                 .haushaltsbuchId(haushaltsbuchId)
                                                 .kontobezeichnung(kontoname)

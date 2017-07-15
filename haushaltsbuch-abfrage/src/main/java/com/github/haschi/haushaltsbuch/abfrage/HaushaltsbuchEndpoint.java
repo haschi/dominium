@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import org.axonframework.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +25,12 @@ public class HaushaltsbuchEndpoint
     @GET
     @Path("{identifier}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("identifier")UUID identifier)
+    public Response get(@PathParam("identifier") final UUID identifier)
     {
-        Haushaltsbuchverzeichnis haushaltsbuchverzeichnis =
+        final Haushaltsbuchverzeichnis haushaltsbuchverzeichnis =
                 konfiguration.getComponent(Haushaltsbuchverzeichnis.class);
 
-        return haushaltsbuchverzeichnis.suchen(identifier)
+        return haushaltsbuchverzeichnis.suchen(Aggregatkennung.of(identifier))
                 .map(h -> Response.ok(h)
                         .type(MediaType.APPLICATION_JSON)
                         .build())

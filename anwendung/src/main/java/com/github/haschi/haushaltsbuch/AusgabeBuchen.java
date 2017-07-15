@@ -4,6 +4,7 @@ package com.github.haschi.haushaltsbuch;
 
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.kommando.BucheAusgabe;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableBucheAusgabe;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -15,7 +16,6 @@ import javax.money.format.MonetaryFormats;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 //@ViewScoped
 //@ManagedBean
@@ -53,7 +53,7 @@ public class AusgabeBuchen
 
     public void init()
     {
-        this.hauptbuch = this.abfrage.abfragen(UUID.fromString(this.id));
+        this.hauptbuch = this.abfrage.abfragen(Aggregatkennung.of(this.id));
     }
 
     public List<String> getAktivkonten()
@@ -102,7 +102,7 @@ public class AusgabeBuchen
         final MonetaryAmount währungsbetrag = format.parse(this.betrag + " EUR");
 
         final BucheAusgabe befehl = ImmutableBucheAusgabe.builder()
-                .haushaltsbuchId(UUID.fromString(this.id))
+                .haushaltsbuchId(Aggregatkennung.of(this.id))
                 .sollkonto(this.sollkonto)
                 .habenkonto(this.habenkonto)
                 .geldbetrag(währungsbetrag)

@@ -7,6 +7,7 @@ import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfrage.HaushaltsbuchTestaggregat;
 import com.github.haschi.haushaltsbuch.abfrage.Haushaltsbuchverzeichnis;
 import com.github.haschi.haushaltsbuch.abfrage.ImmutableHaushaltsbuch;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.HaushaltsbuchAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
 import org.assertj.core.api.Assertions;
@@ -27,7 +28,7 @@ public class DomainAutomationApi implements AutomationApi
     private final Synchonisierungsmonitor monitor;
     private Configuration configuration;
 
-    public DomainAutomationApi(Testumgebung testumgebung, Synchonisierungsmonitor monitor)
+    public DomainAutomationApi(final Testumgebung testumgebung, final Synchonisierungsmonitor monitor)
     {
         this.testumgebung = testumgebung;
         this.monitor = monitor;
@@ -50,8 +51,8 @@ public class DomainAutomationApi implements AutomationApi
 
     @Override
     public void haushaltsführungBegonnen(
-            AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
-            ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
+            final AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
+            final ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt)
     {
         monitor.zurücksetzen();
 
@@ -64,9 +65,9 @@ public class DomainAutomationApi implements AutomationApi
     }
 
     @Override
-    public Haushaltsbuch haushaltsbuch(UUID identifier)
+    public Haushaltsbuch haushaltsbuch(final Aggregatkennung identifier)
     {
-        Haushaltsbuchverzeichnis haushaltsbuchverzeichnis = configuration.getComponent(
+        final Haushaltsbuchverzeichnis haushaltsbuchverzeichnis = configuration.getComponent(
                 Haushaltsbuchverzeichnis.class);
 
         return haushaltsbuchverzeichnis.suchen(identifier).orElseThrow(
@@ -81,15 +82,15 @@ public class DomainAutomationApi implements AutomationApi
 
     @Override
     public void werdeIchEinHaushaltsbuchSehen(
-            UUID identifier,
-            ImmutableHaushaltsbuch leeresHaushaltsbuch)
+            final Aggregatkennung identifier,
+            final ImmutableHaushaltsbuch leeresHaushaltsbuch)
     {
         assertThat(haushaltsbuch(identifier))
                 .isEqualTo(leeresHaushaltsbuch);
     }
 
     @Override
-    public void werdeIchKeinHaushaltsbuchSehen(UUID identifier)
+    public void werdeIchKeinHaushaltsbuchSehen(final Aggregatkennung identifier)
     {
         assertThatExceptionOfType(IllegalStateException.class)
                 .isThrownBy(() -> haushaltsbuch(identifier));

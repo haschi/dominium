@@ -1,16 +1,16 @@
 package com.github.haschi.haushaltsbuch;
 
-import java.util.UUID;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 
 public interface AbstractHaushaltsbuchführungSteps
 {
     void beginnen();
 
-    void hauptbuchAngelegt(UUID haushaltsbuch, UUID hauptbuch);
+    void hauptbuchAngelegt(Aggregatkennung haushaltsbuch, Aggregatkennung hauptbuch);
 
-    UUID aktuellesHaushaltsbuch();
+    Aggregatkennung aktuellesHaushaltsbuch();
 
-    UUID aktuellesHauptbuch();
+    Aggregatkennung aktuellesHauptbuch();
 
-    void journalAngelegt(UUID uuid);
+    void journalAngelegt(Aggregatkennung uuid);
 }

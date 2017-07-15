@@ -32,16 +32,4 @@ public class Haushaltsbuchführung
     {
         return this.identitätsmerkmal;
     }
-
-    public String beginnen()
-    {
-        this.identitätsmerkmal = UUID.randomUUID().toString();
-
-        final BeginneHaushaltsbuchführung befehl = ImmutableBeginneHaushaltsbuchführung.builder()
-                .id(UUID.fromString(this.identitätsmerkmal))
-                .build();
-
-        this.commandGateway.sendAndWait(befehl);
-        return String.format("hauptbuch.jsf?faces-redirect=true&id=%s", this.identitätsmerkmal);
-    }
 }

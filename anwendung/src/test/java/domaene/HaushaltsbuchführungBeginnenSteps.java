@@ -1,5 +1,6 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHauptbuchWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
@@ -32,8 +33,9 @@ public final class HaushaltsbuchführungBeginnenSteps
     @Wenn("^ich mit der Haushaltsbuchführung beginne$")
     public void ich_mit_der_Haushaltsbuchführung_beginne()
     {
-        final UUID haushaltsbuchId = UUID.randomUUID();
-        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(haushaltsbuchId).build());
+        final Aggregatkennung haushaltsbuchId = Aggregatkennung.neu();
+        this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder()
+                                                .id(haushaltsbuchId).build());
         this.welt.setAktuelleHaushaltsbuchId(haushaltsbuchId);
     }
 

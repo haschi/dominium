@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.rest;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.infrastruktur.Job;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -26,7 +27,7 @@ public class Haushaltsbuchanlage implements Runnable
         {
             Thread.sleep(3000);
 
-            final UUID id = UUID.randomUUID();
+            final Aggregatkennung id = Aggregatkennung.neu();
             this.gw.send(
                     ImmutableBeginneHaushaltsbuchführung.builder()
                             .id(id)

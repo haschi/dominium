@@ -1,5 +1,6 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAbgelehnt;
 import com.github.haschi.haushaltsbuch.api.BuchungWurdeAusgeführt;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
@@ -41,7 +42,7 @@ public final class BuchenSteps
     public void mein_Haushaltsbuch_besitzt_folgende_Konten(final List<Kontostand> kontostände)
     {
 
-        final UUID identitätsmerkmal = UUID.randomUUID();
+        final Aggregatkennung identitätsmerkmal = Aggregatkennung.neu();
         this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(identitätsmerkmal).build());
 
         this.welt.setAktuelleHaushaltsbuchId(identitätsmerkmal);

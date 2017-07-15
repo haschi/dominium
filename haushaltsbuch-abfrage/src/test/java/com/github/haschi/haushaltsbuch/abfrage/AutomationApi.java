@@ -1,8 +1,7 @@
 package com.github.haschi.haushaltsbuch.abfrage;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchAngelegt;
-
-import java.util.UUID;
 
 public interface AutomationApi
 {
@@ -14,11 +13,11 @@ public interface AutomationApi
             AggregateProxy<HaushaltsbuchTestaggregat> aggregat,
             ImmutableHaushaltsbuchAngelegt haushaltsbuchAngelegt);
 
-    Haushaltsbuch haushaltsbuch(UUID identifier);
+    Haushaltsbuch haushaltsbuch(Aggregatkennung identifier);
 
     String requiredTag();
 
-    void werdeIchEinHaushaltsbuchSehen(UUID identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch);
+    void werdeIchEinHaushaltsbuchSehen(Aggregatkennung identifier, ImmutableHaushaltsbuch leeresHaushaltsbuch);
 
-    void werdeIchKeinHaushaltsbuchSehen(UUID identifier);
+    void werdeIchKeinHaushaltsbuchSehen(Aggregatkennung identifier);
 }

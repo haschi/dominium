@@ -1,14 +1,13 @@
 package com.github.haschi.haushaltsbuch.domäne;
 
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
 import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.infrastruktur.Ereignismonitor;
 import org.axonframework.config.Configuration;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -17,7 +16,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
 {
     private final Configuration configuration;
     private final Ereignismonitor ereignismonitor;
-    private UUID haushaltsbuchführung;
+    private Aggregatkennung haushaltsbuchführung;
 
     public HaushaltsbuchführungSteps(final Configuration configuration, final Ereignismonitor ereignismonitor) {
 
@@ -28,7 +27,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void beginnen()
     {
-        this.haushaltsbuchführung = UUID.randomUUID();
+        this.haushaltsbuchführung = Aggregatkennung.neu();
 
         final BeginneHaushaltsbuchführung beginneHaushaltsbuchführung = ImmutableBeginneHaushaltsbuchführung.builder()
                 .id(this.haushaltsbuchführung)
@@ -38,7 +37,7 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public void hauptbuchAngelegt(final UUID haushaltsbuch, final UUID hauptbuch)
+    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
     {
         try
         {
@@ -54,19 +53,19 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public UUID aktuellesHaushaltsbuch()
+    public Aggregatkennung aktuellesHaushaltsbuch()
     {
         return null;
     }
 
     @Override
-    public UUID aktuellesHauptbuch()
+    public Aggregatkennung aktuellesHauptbuch()
     {
         return null;
     }
 
     @Override
-    public void journalAngelegt(final UUID uuid)
+    public void journalAngelegt(final Aggregatkennung uuid)
     {
         try
         {

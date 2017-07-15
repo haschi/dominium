@@ -1,5 +1,6 @@
 package domaene;
 
+import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.Kontoart;
 import com.github.haschi.haushaltsbuch.api.kommando.ImmutableLegeKontoAn;
@@ -9,7 +10,6 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import testsupport.DieWelt;
 
 import javax.inject.Inject;
-import java.util.UUID;
 
 public final class GemeinsameSteps
 {
@@ -27,7 +27,7 @@ public final class GemeinsameSteps
     @Angenommen("^ich habe mit der Haushaltsbuchführung begonnen$")
     public void ich_habe_mit_der_Haushaltsbuchführung_begonnen()
     {
-        final UUID identitätsmerkmal = UUID.randomUUID();
+        final Aggregatkennung identitätsmerkmal = Aggregatkennung.neu();
 
         this.commandGateway.sendAndWait(ImmutableBeginneHaushaltsbuchführung.builder().id(identitätsmerkmal).build());
 
