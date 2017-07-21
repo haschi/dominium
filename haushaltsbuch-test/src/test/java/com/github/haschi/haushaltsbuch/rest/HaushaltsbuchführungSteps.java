@@ -5,6 +5,7 @@ import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchf체hrungBegonnen;
+import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import org.axonframework.config.Configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,16 +66,16 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-//        try
-//        {
-//            assertThat(monitor.n채chstesEreignis()).isEqualTo(
-//                    ImmutableJournalWurdeAngelegt.builder()
-//                    .aktuelleHaushaltsbuchId(uuid)
-//                    .build());
-//        }
-//        catch (final InterruptedException e)
-//        {
-//            fail("Unterbrochen");
-//        }
+        try
+        {
+            assertThat(monitor.n채chstesEreignis()).isEqualTo(
+                    ImmutableJournalWurdeAngelegt.builder()
+                    .aktuelleHaushaltsbuchId(uuid)
+                    .build());
+        }
+        catch (final InterruptedException e)
+        {
+            fail("Unterbrochen");
+        }
     }
 }

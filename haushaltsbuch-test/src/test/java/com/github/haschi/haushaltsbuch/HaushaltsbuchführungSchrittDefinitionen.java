@@ -29,6 +29,6 @@ public class HaushaltsbuchführungSchrittDefinitionen
     @Und("^ich werde ein Journal zum Hauptbuch angelegt haben$")
     public void ichWerdeEinJournalZumHauptbuchAngelegtHaben() throws Throwable
     {
-        api.haushaltsbuchführung(h -> h.journalAngelegt(h.aktuellesHauptbuch()));
+        api.haushaltsbuchführung(h -> h.journalAngelegt(h.aktuellesHaushaltsbuch()));
     }
 }

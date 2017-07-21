@@ -5,13 +5,14 @@ import org.axonframework.eventhandling.EventMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.TransferQueue;
 
 public final class Synchronisierungsmonitor implements Ereignismonitor
 {
     private static final Logger log = LoggerFactory.getLogger(Synchronisierungsmonitor.class);
 
-    private final SynchronousQueue<EventMessage<?>> queue = new SynchronousQueue<>(true);
+    private final TransferQueue<EventMessage<?>> queue = new LinkedTransferQueue<>();
 
     @Override
     public void ereignisEingetreten(final EventMessage<?> any)
