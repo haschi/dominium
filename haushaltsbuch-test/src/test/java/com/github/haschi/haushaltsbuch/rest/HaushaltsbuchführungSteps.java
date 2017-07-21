@@ -49,28 +49,6 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
                         .build());
     }
 
-//    @Override
-//    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
-//    {
-//        try
-//        {
-//            assertThat(monitor.nächstesEreignis()).isEqualTo(
-//                    ImmutableHaushaltsbuchführungBegonnen.builder()
-//                            .id(haushaltsbuch)
-//                            .build());
-//        }
-//        catch (final InterruptedException e)
-//        {
-//            fail("Unterbrochen");
-//        }
-//    }
-
-//    @Override
-//    public Aggregatkennung aktuellesHaushaltsbuch()
-//    {
-//        return this.aktuellesHaushaltsbuch;
-//    }
-
     @Override
     public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
     {
@@ -80,10 +58,10 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-            assertThat(monitor.erwarteteEreignisse().get(1)).isEqualTo(
-                    ImmutableJournalWurdeAngelegt.builder()
-                    .aktuelleHaushaltsbuchId(uuid)
-                    .build());
+        assertThat(monitor.erwarteteEreignisse().get(1)).isEqualTo(
+                ImmutableJournalWurdeAngelegt.builder()
+                        .aktuelleHaushaltsbuchId(uuid)
+                        .build());
     }
 
     @Override

@@ -18,6 +18,7 @@ public class JournalSteps implements AbstractJournalSteps
         this.monitor = monitor;
         this.haushaltsbuchführungId = haushaltsbuchführungId;
     }
+
     @Override
     public void journalAngelegt()
     {

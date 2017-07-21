@@ -22,7 +22,7 @@ public class JournalSteps implements AbstractJournalSteps
     {
         assertThat(ereignisquelle.ereignisseLesen(haushaltsbuchId))
                 .contains(ImmutableJournalWurdeAngelegt.builder()
-                    .aktuelleHaushaltsbuchId(haushaltsbuchId)
-                    .build());
+                                  .aktuelleHaushaltsbuchId(haushaltsbuchId)
+                                  .build());
     }
 }

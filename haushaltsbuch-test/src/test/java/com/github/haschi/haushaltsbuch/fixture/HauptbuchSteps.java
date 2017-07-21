@@ -24,17 +24,18 @@ public class HauptbuchSteps extends AbstractHauptbuchSteps
         this.ereignisquelle = ereignisquelle;
         this.haushaltsbuchkennung = haushaltsbuchkennung;
     }
+
     @Override
     public void kontenrahmenAngelegt(final List<Kontendefinition> konten)
     {
         assertThat(ereignisquelle.ereignisseLesen(haushaltsbuchkennung))
                 .contains(ImmutableKontenrahmenAngelegt.builder()
-                    .addAllKonten(konten.stream().map(k -> ImmutableKonto.builder()
-                        .nummer(k.nummer)
-                        .bezeichnung(k.bezeichnung)
-                        .art(k.art)
-                        .build())
-                        .collect(Collectors.toList()))
-                    .build());
+                                  .addAllKonten(konten.stream().map(k -> ImmutableKonto.builder()
+                                          .nummer(k.nummer)
+                                          .bezeichnung(k.bezeichnung)
+                                          .art(k.art)
+                                          .build())
+                                                        .collect(Collectors.toList()))
+                                  .build());
     }
 }

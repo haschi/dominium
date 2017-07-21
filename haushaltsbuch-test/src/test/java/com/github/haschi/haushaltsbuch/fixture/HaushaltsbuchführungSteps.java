@@ -32,8 +32,8 @@ public final class Haushaltsbuchf√ºhrungSteps implements AbstractHaushaltsbuchf√
         haushaltsbuchId = Aggregatkennung.neu();
 
         fixture.when(ImmutableBeginneHaushaltsbuchf√ºhrung.builder()
-                 .id(haushaltsbuchId)
-                 .build());
+                             .id(haushaltsbuchId)
+                             .build());
     }
 
     @Override
@@ -46,7 +46,7 @@ public final class Haushaltsbuchf√ºhrungSteps implements AbstractHaushaltsbuchf√
     }
 
     @Override
-    public <T> Stream<Object> ereignisseLesen(final Aggregatkennung aggregatkennung)
+    public Stream<Object> ereignisseLesen(final Aggregatkennung aggregatkennung)
     {
         return fixture.getEventStore().readEvents(aggregatkennung.toString())
                 .asStream()
