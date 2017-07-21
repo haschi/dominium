@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.rest;
 
 import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
+import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
@@ -13,7 +14,6 @@ import org.axonframework.config.Configuration;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
@@ -37,55 +37,58 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
                 .build();
 
         konfiguration.commandGateway().sendAndWait(beginneHaushaltsbuchführung);
+        monitor.erwarte(3);
     }
 
     @Override
-    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
+    public void hauptbuchAngelegt()
     {
-        try
-        {
-            assertThat(monitor.nächstesEreignis()).isEqualTo(
-                    ImmutableHaushaltsbuchführungBegonnen.builder()
-                            .id(haushaltsbuch)
-                            .build());
-        }
-        catch (final InterruptedException e)
-        {
-            fail("Unterbrochen");
-        }
+        assertThat(monitor.erwarteteEreignisse().get(0)).isEqualTo(
+                ImmutableHaushaltsbuchführungBegonnen.builder()
+                        .id(this.aktuellesHaushaltsbuch)
+                        .build());
     }
 
-    @Override
-    public Aggregatkennung aktuellesHaushaltsbuch()
-    {
-        return this.aktuellesHaushaltsbuch;
-    }
+//    @Override
+//    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
+//    {
+//        try
+//        {
+//            assertThat(monitor.nächstesEreignis()).isEqualTo(
+//                    ImmutableHaushaltsbuchführungBegonnen.builder()
+//                            .id(haushaltsbuch)
+//                            .build());
+//        }
+//        catch (final InterruptedException e)
+//        {
+//            fail("Unterbrochen");
+//        }
+//    }
+
+//    @Override
+//    public Aggregatkennung aktuellesHaushaltsbuch()
+//    {
+//        return this.aktuellesHaushaltsbuch;
+//    }
 
     @Override
-    public Aggregatkennung aktuellesHauptbuch()
+    public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
     {
-        return null;
+        throw new NotImplementedException("Nicht implementiert");
     }
 
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-        try
-        {
-            assertThat(monitor.nächstesEreignis()).isEqualTo(
+            assertThat(monitor.erwarteteEreignisse().get(1)).isEqualTo(
                     ImmutableJournalWurdeAngelegt.builder()
                     .aktuelleHaushaltsbuchId(uuid)
                     .build());
-        }
-        catch (final InterruptedException e)
-        {
-            fail("Unterbrochen");
-        }
     }
 
     @Override
-    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    public void journal(final Consumer<AbstractJournalSteps> consumer)
     {
-        throw new NotImplementedException("Implementierung fehlt");
+        consumer.accept(new JournalSteps(monitor, aktuellesHaushaltsbuch));
     }
 }

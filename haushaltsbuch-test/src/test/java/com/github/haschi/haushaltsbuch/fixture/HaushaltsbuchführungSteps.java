@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.fixture;
 
 import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchf체hrungSteps;
+import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchf체hrungBegonnen;
@@ -9,18 +10,16 @@ import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.dom채ne.Haushaltsbuch;
 import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
-import org.axonframework.test.aggregate.ResultValidator;
 
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf체hrungSteps
+public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf체hrungSteps, Ereignisquelle
 {
     private final AggregateTestFixture<Haushaltsbuch> fixture;
     private Aggregatkennung haushaltsbuchId;
-    private ResultValidator validator;
 
     public Haushaltsbuchf체hrungSteps(final AggregateTestFixture<Haushaltsbuch> fixture)
     {
@@ -32,22 +31,22 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     {
         haushaltsbuchId = Aggregatkennung.neu();
 
-        validator = fixture.when(ImmutableBeginneHaushaltsbuchf체hrung.builder()
-                                         .id(haushaltsbuchId)
-                                         .build());
+        fixture.when(ImmutableBeginneHaushaltsbuchf체hrung.builder()
+                 .id(haushaltsbuchId)
+                 .build());
     }
 
     @Override
-    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
+    public void hauptbuchAngelegt()
     {
-        assertThat(istEreignisEingetreten(haushaltsbuch))
+        assertThat(ereignisseLesen(haushaltsbuchId))
                 .contains(ImmutableHaushaltsbuchf체hrungBegonnen.builder()
-                                  .id(haushaltsbuch)
+                                  .id(haushaltsbuchId)
                                   .build());
     }
 
-    private <T> Stream<Object> istEreignisEingetreten(
-            final Aggregatkennung aggregatkennung)
+    @Override
+    public <T> Stream<Object> ereignisseLesen(final Aggregatkennung aggregatkennung)
     {
         return fixture.getEventStore().readEvents(aggregatkennung.toString())
                 .asStream()
@@ -55,29 +54,23 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public Aggregatkennung aktuellesHaushaltsbuch()
+    public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
     {
-        return haushaltsbuchId;
-    }
-
-    @Override
-    public Aggregatkennung aktuellesHauptbuch()
-    {
-        return haushaltsbuchId;
+        consumer.accept(new HauptbuchSteps(this, haushaltsbuchId));
     }
 
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-        assertThat(istEreignisEingetreten(uuid))
+        assertThat(ereignisseLesen(uuid))
                 .contains(ImmutableJournalWurdeAngelegt.builder()
-                                  .aktuelleHaushaltsbuchId(aktuellesHaushaltsbuch())
+                                  .aktuelleHaushaltsbuchId(haushaltsbuchId)
                                   .build());
     }
 
     @Override
-    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    public void journal(final Consumer<AbstractJournalSteps> consumer)
     {
-        // throw new NotImplementedException("Implementierung fehlt");
+        consumer.accept(new JournalSteps(this, haushaltsbuchId));
     }
 }

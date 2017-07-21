@@ -8,13 +8,12 @@ public interface AbstractHaushaltsbuchführungSteps
 {
     void beginnen();
 
-    void hauptbuchAngelegt(Aggregatkennung haushaltsbuch, Aggregatkennung hauptbuch);
+    void hauptbuchAngelegt();
 
-    Aggregatkennung aktuellesHaushaltsbuch();
-
-    Aggregatkennung aktuellesHauptbuch();
+    void aktuellesHauptbuch(Consumer<AbstractHauptbuchSteps> consumer);
 
     void journalAngelegt(Aggregatkennung uuid);
 
-    void hauptbuch(Consumer<AbstractHauptbuchSteps> consumer);
+    void journal(Consumer<AbstractJournalSteps> consumer);
+    // void hauptbuch(Consumer<AbstractHauptbuchSteps> consumer);
 }

@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.dom채ne;
 
 import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchf체hrungSteps;
+import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchf체hrung;
@@ -41,24 +42,18 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
+    public void hauptbuchAngelegt()
     {
         assertThat(ereignismonitor.erwarteteEreignisse().get(0)).isEqualTo(
                 ImmutableHaushaltsbuchf체hrungBegonnen.builder()
-                .id(this.haushaltsbuchf체hrung)
-                .build());
+                        .id(this.haushaltsbuchf체hrung)
+                        .build());
     }
 
     @Override
-    public Aggregatkennung aktuellesHaushaltsbuch()
+    public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
     {
-        return null;
-    }
-
-    @Override
-    public Aggregatkennung aktuellesHauptbuch()
-    {
-        return null;
+        consumer.accept(new HauptbuchSteps(ereignismonitor));
     }
 
     @Override
@@ -71,9 +66,8 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    public void journal(final Consumer<AbstractJournalSteps> consumer)
     {
-        final AbstractHauptbuchSteps hauptbuchSteps = new HauptbuchSteps(ereignismonitor);
-        consumer.accept(hauptbuchSteps);
+        consumer.accept(new JournalSteps(ereignismonitor, this.haushaltsbuchf체hrung));
     }
 }

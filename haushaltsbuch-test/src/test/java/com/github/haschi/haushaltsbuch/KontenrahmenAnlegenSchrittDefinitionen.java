@@ -17,6 +17,8 @@ public class KontenrahmenAnlegenSchrittDefinitionen
     public void werdeIchEinenKontenrahmenMitFolgendenKontenFürMeinHauptbuchAngelegtHaben(
             final List<Kontendefinition> konten)
     {
-        api.haushaltsbuchführung(h -> h.hauptbuch(hauptbuch -> hauptbuch.kontenrahmenAngelegt(konten)));
+        api.haushaltsbuchführung(haushaltsbuch ->
+            haushaltsbuch.aktuellesHauptbuch(hauptbuch ->
+                hauptbuch.kontenrahmenAngelegt(konten)));
     }
 }

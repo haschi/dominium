@@ -21,14 +21,12 @@ public class HaushaltsbuchführungSchrittDefinitionen
     @Dann("^werde ich ein Hauptbuch angelegt haben$")
     public void werdeIchEinHauptbuchMitKontenDesStandardKontenrahmenAngelegtHaben() throws Throwable
     {
-        api.haushaltsbuchführung(h -> h.hauptbuchAngelegt(
-                h.aktuellesHaushaltsbuch(),
-                h.aktuellesHauptbuch()));
+        api.haushaltsbuchführung(AbstractHaushaltsbuchführungSteps::hauptbuchAngelegt);
     }
 
     @Und("^ich werde ein Journal zum Hauptbuch angelegt haben$")
     public void ichWerdeEinJournalZumHauptbuchAngelegtHaben() throws Throwable
     {
-        api.haushaltsbuchführung(h -> h.journalAngelegt(h.aktuellesHaushaltsbuch()));
+        api.haushaltsbuchführung(h -> h.journal(j -> j.journalAngelegt()));
     }
 }
