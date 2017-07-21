@@ -18,7 +18,7 @@ public class HaushaltsbuchführungSchrittDefinitionen
         api.haushaltsbuchführung(AbstractHaushaltsbuchführungSteps::beginnen);
     }
 
-    @Dann("^werde ich ein Hauptbuch mit Konten des Standard-Kontenrahmen angelegt haben$")
+    @Dann("^werde ich ein Hauptbuch angelegt haben$")
     public void werdeIchEinHauptbuchMitKontenDesStandardKontenrahmenAngelegtHaben() throws Throwable
     {
         api.haushaltsbuchführung(h -> h.hauptbuchAngelegt(
