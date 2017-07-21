@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.fixture;
 
+import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
@@ -10,6 +11,7 @@ import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.ResultValidator;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,5 +73,11 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
                 .contains(ImmutableJournalWurdeAngelegt.builder()
                                   .aktuelleHaushaltsbuchId(aktuellesHaushaltsbuch())
                                   .build());
+    }
+
+    @Override
+    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    {
+        // throw new NotImplementedException("Implementierung fehlt");
     }
 }

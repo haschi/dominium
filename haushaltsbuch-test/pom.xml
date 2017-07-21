@@ -255,13 +255,11 @@
                 </dependencies>
                 <configuration>
                     <systemProperties>
-                        <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
+                        <com.github.haschi.testebene>fixture</com.github.haschi.testebene>
                     </systemProperties>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>fixture</id>
-                        <phase>test</phase>
                         <goals>
                             <goal>test</goal>
                         </goals>
@@ -269,11 +267,13 @@
                             <systemProperties>
                                 <com.github.haschi.testebene>fixture</com.github.haschi.testebene>
                             </systemProperties>
+                            <excludes>
+                                <exclude>**/*DomainTest.java</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>
                         <id>domäne</id>
-                        <phase>test</phase>
                         <goals>
                             <goal>test</goal>
                         </goals>
@@ -281,6 +281,9 @@
                             <systemProperties>
                                 <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
                             </systemProperties>
+                            <includes>
+                                <include>**/*DomainTest.java</include>
+                            </includes>
                         </configuration>
                     </execution>
                 </executions>

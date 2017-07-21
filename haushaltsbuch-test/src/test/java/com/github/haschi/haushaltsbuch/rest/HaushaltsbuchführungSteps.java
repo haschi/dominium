@@ -1,12 +1,16 @@
 package com.github.haschi.haushaltsbuch.rest;
 
+import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchf체hrungSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchf체hrung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchf체hrungBegonnen;
 import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
+import org.apache.commons.lang3.NotImplementedException;
 import org.axonframework.config.Configuration;
+
+import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -77,5 +81,11 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
         {
             fail("Unterbrochen");
         }
+    }
+
+    @Override
+    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    {
+        throw new NotImplementedException("Implementierung fehlt");
     }
 }

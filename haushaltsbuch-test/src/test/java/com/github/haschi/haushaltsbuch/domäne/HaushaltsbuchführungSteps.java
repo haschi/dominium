@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.dom채ne;
 
+import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchf체hrungSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchf체hrung;
@@ -9,14 +10,16 @@ import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.infrastruktur.Ereignismonitor;
 import org.axonframework.config.Configuration;
 
+import java.util.function.Consumer;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf체hrungSteps
 {
     private final Configuration configuration;
     private final Ereignismonitor ereignismonitor;
     private Aggregatkennung haushaltsbuchf체hrung;
+
 
     public Haushaltsbuchf체hrungSteps(final Configuration configuration, final Ereignismonitor ereignismonitor) {
 
@@ -34,22 +37,16 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
                 .build();
 
         configuration.commandGateway().sendAndWait(beginneHaushaltsbuchf체hrung);
+        ereignismonitor.erwarte(3);
     }
 
     @Override
     public void hauptbuchAngelegt(final Aggregatkennung haushaltsbuch, final Aggregatkennung hauptbuch)
     {
-        try
-        {
-            assertThat(ereignismonitor.n채chstesEreignis()).isEqualTo(
-                    ImmutableHaushaltsbuchf체hrungBegonnen.builder()
-                    .id(this.haushaltsbuchf체hrung)
-                    .build());
-        }
-        catch (final InterruptedException ausnahme)
-        {
-            fail("Unterbrochen");
-        }
+        assertThat(ereignismonitor.erwarteteEreignisse().get(0)).isEqualTo(
+                ImmutableHaushaltsbuchf체hrungBegonnen.builder()
+                .id(this.haushaltsbuchf체hrung)
+                .build());
     }
 
     @Override
@@ -67,16 +64,16 @@ public final class Haushaltsbuchf체hrungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void journalAngelegt(final Aggregatkennung uuid)
     {
-        try
-        {
-            assertThat(ereignismonitor.n채chstesEreignis())
-                    .isEqualTo(ImmutableJournalWurdeAngelegt.builder()
-                               .aktuelleHaushaltsbuchId(this.haushaltsbuchf체hrung)
-                                .build());
-        }
-        catch (final InterruptedException ausnahme)
-        {
-            fail("Unterbrochen");
-        }
+        assertThat(ereignismonitor.erwarteteEreignisse().get(1))
+                .isEqualTo(ImmutableJournalWurdeAngelegt.builder()
+                           .aktuelleHaushaltsbuchId(this.haushaltsbuchf체hrung)
+                            .build());
+    }
+
+    @Override
+    public void hauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
+    {
+        final AbstractHauptbuchSteps hauptbuchSteps = new HauptbuchSteps(ereignismonitor);
+        consumer.accept(hauptbuchSteps);
     }
 }

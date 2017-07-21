@@ -20,6 +20,11 @@ public final class CustomPicoFactory extends PicoFactory
         final String testebene = System.getProperty("com.github.haschi.testebene");
         log.info(MessageFormat.format("Testebene {0}", testebene));
 
+        if (testebene == null)
+        {
+            throw new IllegalStateException("Undefinierte Testebene");
+        }
+
         addClass(TestEventHandler.class);
 
         if("domäne".equals(testebene))

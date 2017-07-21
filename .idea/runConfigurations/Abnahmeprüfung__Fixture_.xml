@@ -6,7 +6,7 @@
         <option name="ENABLED" value="true" />
       </pattern>
       <pattern>
-        <option name="PATTERN" value="com.github.haschi.haushaltsbuch.*" />
+        <option name="PATTERN" value="com.github.haschi.haushaltsbuch.api.refaktorisiert.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

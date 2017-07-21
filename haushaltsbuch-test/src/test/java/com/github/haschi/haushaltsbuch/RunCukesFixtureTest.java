@@ -5,7 +5,7 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(tags = {"@api", "~@ignore"}, strict = true, plugin = {"pretty", "default_summary"})
-public class RunCukesIT
+@CucumberOptions(tags = {"@fixture", "~@ignore"}, strict = true, plugin = {"pretty", "default_summary"})
+public class RunCukesFixtureTest
 {
 }

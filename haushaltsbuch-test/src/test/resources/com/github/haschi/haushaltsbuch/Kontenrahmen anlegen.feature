@@ -1,5 +1,5 @@
 # language: de
-Funktionalität: Konten anlegen
+Funktionalität: Kontenrahmen anlegen
   Als Hausmann
   möchte einen Standardkontenplan verwenden
   um Buchungssätze zu kontieren
@@ -7,7 +7,7 @@ Funktionalität: Konten anlegen
   @domäne
   Szenario: Standardkontenrahmen anlegen
     Wenn ich mit der Haushaltsbuchführung beginne
-    Dann werden für das Hauptbuch meines Haushaltsbuches folgende Konten angelegt worden sein:
+    Dann werde ich einen Kontenrahmen mit folgenden Konten für mein Hauptbuch angelegt haben:
       | Nummer | Bezeichnung | Art     |
       | 01     | Bankkonto   | Aktiv   |
       | 02     | Geldbörse   | Aktiv   |
