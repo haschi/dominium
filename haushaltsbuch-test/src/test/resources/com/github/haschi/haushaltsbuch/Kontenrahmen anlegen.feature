@@ -9,9 +9,9 @@ Funktionalität: Kontenrahmen anlegen
     Wenn ich mit der Haushaltsbuchführung beginne
     Dann werde ich einen Kontenrahmen mit folgenden Konten für mein Hauptbuch angelegt haben:
       | Nummer | Bezeichnung | Art     |
-      | 01     | Bankkonto   | Aktiv   |
-      | 02     | Geldbörse   | Aktiv   |
-      | 03     | Sparbuch    | Aktiv   |
-      | 30     | Bankkredit  | Passiv  |
-      | 10     | Gehalt      | Ertrag  |
-      | 40     | Miete       | Aufwand |
+      | 01     | Sparbuch    | Aktiv   |
+      | 21     | Geldbörse   | Aktiv   |
+      | 22     | Bankkonto   | Aktiv   |
+      | 41     | Bankkredit  | Passiv  |
+      | 51     | Gehalt      | Ertrag  |
+      | 61     | Miete       | Aufwand |

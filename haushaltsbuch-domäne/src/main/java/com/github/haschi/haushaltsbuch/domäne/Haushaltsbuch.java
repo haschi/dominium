@@ -39,32 +39,32 @@ public class Haushaltsbuch
                       .addKonten(
                               ImmutableKonto.builder()
                                       .nummer("01")
-                                      .bezeichnung("Bankkonto")
+                                      .bezeichnung("Sparbuch")
                                       .art(Kontoart.Aktiv)
                                       .build(),
                               ImmutableKonto.builder()
-                                      .nummer("02")
+                                      .nummer("21")
                                       .bezeichnung("Geldbörse")
                                       .art(Kontoart.Aktiv)
                                       .build(),
 
                               ImmutableKonto.builder()
-                                      .nummer("03")
-                                      .bezeichnung("Sparbuch")
+                                      .nummer("22")
+                                      .bezeichnung("Bankkonto")
                                       .art(Kontoart.Aktiv)
                                       .build(),
                               ImmutableKonto.builder()
-                                      .nummer("30")
+                                      .nummer("41")
                                       .bezeichnung("Bankkredit")
                                       .art(Kontoart.Passiv)
                                       .build(),
                               ImmutableKonto.builder()
-                                      .nummer("10")
+                                      .nummer("51")
                                       .bezeichnung("Gehalt")
                                       .art(Kontoart.Ertrag)
                                       .build(),
                               ImmutableKonto.builder()
-                                      .nummer("40")
+                                      .nummer("61")
                                       .bezeichnung("Miete")
                                       .art(Kontoart.Aufwand)
                                       .build())
