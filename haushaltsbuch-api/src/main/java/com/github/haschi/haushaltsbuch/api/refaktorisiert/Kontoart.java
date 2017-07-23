@@ -5,5 +5,6 @@ public enum Kontoart
     Aktiv,
     Passiv,
     Ertrag,
-    Aufwand
+    Aufwand,
+    Bilanz
 }

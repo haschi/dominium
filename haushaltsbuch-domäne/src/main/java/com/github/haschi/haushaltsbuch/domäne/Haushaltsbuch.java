@@ -67,6 +67,11 @@ public class Haushaltsbuch
                                       .nummer("61")
                                       .bezeichnung("Miete")
                                       .art(Kontoart.Aufwand)
+                                      .build(),
+                              ImmutableKonto.builder()
+                                      .nummer("80")
+                                      .bezeichnung("Eröffnungsbilanzkonto")
+                                      .art(Kontoart.Bilanz)
                                       .build())
                       .build());
     }
