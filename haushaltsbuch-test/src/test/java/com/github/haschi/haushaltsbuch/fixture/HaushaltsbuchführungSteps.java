@@ -1,12 +1,15 @@
 package com.github.haschi.haushaltsbuch.fixture;
 
+import com.github.haschi.haushaltsbuch.AbstractEröffnungsbilanzSteps;
 import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
+import com.github.haschi.haushaltsbuch.AbstractInventarSteps;
 import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
+import com.github.haschi.haushaltsbuch.InventarSteps;
+import com.github.haschi.haushaltsbuch.InventarZustand;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
-import com.github.haschi.haushaltsbuch.api.ImmutableJournalWurdeAngelegt;
 import com.github.haschi.haushaltsbuch.domäne.Haushaltsbuch;
 import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
@@ -60,17 +63,26 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     }
 
     @Override
-    public void journalAngelegt(final Aggregatkennung uuid)
-    {
-        assertThat(ereignisseLesen(uuid))
-                .contains(ImmutableJournalWurdeAngelegt.builder()
-                                  .aktuelleHaushaltsbuchId(haushaltsbuchId)
-                                  .build());
-    }
-
-    @Override
     public void journal(final Consumer<AbstractJournalSteps> consumer)
     {
         consumer.accept(new JournalSteps(this, haushaltsbuchId));
+    }
+
+    @Override
+    public void inventar(final Consumer<AbstractInventarSteps> consumer)
+    {
+        consumer.accept(new InventarSteps());
+    }
+
+    @Override
+    public InventarZustand inventar()
+    {
+        return null;
+    }
+
+    @Override
+    public void eröffnungsbilanz(final Consumer<AbstractEröffnungsbilanzSteps> consumer)
+    {
+
     }
 }
