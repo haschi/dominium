@@ -1,20 +1,13 @@
 package com.github.haschi.haushaltsbuch;
 
+import com.github.haschi.haushaltsbuch.api.refaktorisiert.Buchung;
+import com.github.haschi.haushaltsbuch.api.refaktorisiert.ImmutableBuchung;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Wenn;
-import jdk.nashorn.internal.runtime.regexp.JdkRegExp;
-import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
-import jdk.nashorn.internal.runtime.regexp.RegExp;
-import jdk.nashorn.internal.runtime.regexp.RegExpFactory;
-import jdk.nashorn.internal.runtime.regexp.RegExpMatcher;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EröffnungsbilanzSchrittDefinitionen
 {
@@ -42,25 +35,19 @@ public class EröffnungsbilanzSchrittDefinitionen
     }
 
     @Dann("^werde ich ein Eröffnungsbilanzkonto mit folgendem Inhalt erstellt haben:$")
-    public void werdeIchEinEröffnungsbilanzkontoMitFolgendemInhaltErstelltHaben(final List<TKontenZeile> zeilen)
+    public void werdeIchEinEröffnungsbilanzkontoMitFolgendemInhaltErstelltHaben(final List<Buchung2> zeilen)
     {
-        final List<Buchung> buchungen = zeilen.stream().flatMap(z -> Stream.of(buchung(z.haben), buchung(z.soll)))
+        final List<Buchung> buchungen = zeilen.stream()
+                .map(b -> ImmutableBuchung.builder()
+                    .text(b.buchungstext)
+                    .betrag(b.währungsbetrag)
+                        .spalte(b.spalte)
+
+                        .build())
                 .collect(Collectors.toList());
 
         api.haushaltsbuchführung(haushaltsbuch ->
             haushaltsbuch.eröffnungsbilanz(eröffnungsbilanz ->
                 eröffnungsbilanz.erstellt(buchungen)));
-    }
-
-    private Buchung buchung(final String haben)
-    {
-        final Matcher matcher = Pattern.compile("^(\\w*) (\\d*,\\d\\d EUR)$").matcher(haben);
-
-        if (matcher.find())
-        {
-            return new Buchung();
-        }
-
-        return new Buchung();
     }
 }

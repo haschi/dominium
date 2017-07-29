@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Warteschlangenmonitor implements Ereignismonitor
@@ -38,6 +39,12 @@ public class Warteschlangenmonitor implements Ereignismonitor
         return erwartet.stream()
                 .map(Message::getPayload)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void erwartetesEreignis(final int position, final Consumer<Object> assertion)
+    {
+        assertion.accept(erwarteteEreignisse().get(position));
     }
 
     @Override

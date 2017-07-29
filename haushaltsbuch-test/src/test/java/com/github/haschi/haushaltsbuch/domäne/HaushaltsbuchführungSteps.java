@@ -80,6 +80,6 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void eröffnungsbilanz(final Consumer<AbstractEröffnungsbilanzSteps> consumer)
     {
-        consumer.accept(new EröffnungsbilanzSteps());
+        consumer.accept(new EröffnungsbilanzSteps(this.ereignismonitor));
     }
 }

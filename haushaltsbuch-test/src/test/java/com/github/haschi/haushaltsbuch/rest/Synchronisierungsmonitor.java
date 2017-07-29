@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TransferQueue;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.fail;
@@ -50,6 +51,12 @@ public final class Synchronisierungsmonitor implements Ereignismonitor
     public List<Object> erwarteteEreignisse()
     {
         return ereignisse.stream().map(Message::getPayload).collect(Collectors.toList());
+    }
+
+    @Override
+    public void erwartetesEreignis(final int position, final Consumer<Object> assertion)
+    {
+            assertion.accept(erwarteteEreignisse().get(position));
     }
 
     @Override
