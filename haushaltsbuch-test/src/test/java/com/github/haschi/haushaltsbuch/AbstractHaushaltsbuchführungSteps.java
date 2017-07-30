@@ -6,15 +6,5 @@ public interface AbstractHaushaltsbuchführungSteps
 {
     void beginnen();
 
-    void hauptbuchAngelegt();
-
-    void aktuellesHauptbuch(Consumer<AbstractHauptbuchSteps> consumer);
-
-    void journal(Consumer<AbstractJournalSteps> consumer);
-
-    void inventar(Consumer<AbstractInventarSteps> consumer);
-
-    InventarZustand inventar();
-
-    void eröffnungsbilanz(Consumer<AbstractEröffnungsbilanzSteps> consumer);
+    void aktuellesHaushaltsbuch(Consumer<AbstractAktuellesHaushaltsbuchSteps> consumer);
 }

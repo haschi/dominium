@@ -10,9 +10,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch-domaene</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>war</packaging>
     <name>${project.artifactId}-${project.version}</name>
@@ -29,6 +28,8 @@
         <version.org.jboss.arquillian.graphene>2.1.0.Final</version.org.jboss.arquillian.graphene>
 
         <com.github.haschi.testebene>domäne</com.github.haschi.testebene>
+        <skipTests>false</skipTests>
+        <skipDocker>${skipTests}</skipDocker>
     </properties>
 
     <dependencyManagement>
@@ -47,12 +48,6 @@
                 <version>0.0.1-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
         </dependencies>
@@ -169,6 +164,12 @@
             <artifactId>cucumber-picocontainer</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -236,6 +237,7 @@
 
         </pluginManagement>
 
+        <finalName>haushaltsbuch-domaene</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -341,6 +343,7 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <images>
                             <image>
                                 <name>mongo</name>
@@ -359,10 +362,12 @@
                         <goals>
                             <goal>stop</goal>
                         </goals>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
@@ -371,7 +376,6 @@
                     <attachClasses>true</attachClasses>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

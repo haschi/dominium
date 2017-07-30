@@ -1,28 +1,23 @@
 package com.github.haschi.haushaltsbuch.fixture;
 
-import com.github.haschi.haushaltsbuch.AbstractEröffnungsbilanzSteps;
-import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
+import com.github.haschi.haushaltsbuch.AbstractAktuellesHaushaltsbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
-import com.github.haschi.haushaltsbuch.AbstractInventarSteps;
-import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
-import com.github.haschi.haushaltsbuch.InventarSteps;
-import com.github.haschi.haushaltsbuch.InventarZustand;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
-import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
 import com.github.haschi.haushaltsbuch.domäne.Haushaltsbuch;
 import org.axonframework.messaging.Message;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps, Ereignisquelle
 {
     private final AggregateTestFixture<Haushaltsbuch> fixture;
     private Aggregatkennung haushaltsbuchId;
+
+    private Optional<AbstractAktuellesHaushaltsbuchSteps> aktuellesHaushaltsbuchSteps = Optional.empty();
 
     public HaushaltsbuchführungSteps(final AggregateTestFixture<Haushaltsbuch> fixture)
     {
@@ -37,15 +32,14 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
         fixture.when(ImmutableBeginneHaushaltsbuchführung.builder()
                              .id(haushaltsbuchId)
                              .build());
+
+        this.aktuellesHaushaltsbuchSteps = Optional.of(new AktuellesHaushaltsbuchSteps(fixture, this, haushaltsbuchId));
     }
 
     @Override
-    public void hauptbuchAngelegt()
+    public void aktuellesHaushaltsbuch(final Consumer<AbstractAktuellesHaushaltsbuchSteps> consumer)
     {
-        assertThat(ereignisseLesen(haushaltsbuchId))
-                .contains(ImmutableHaushaltsbuchführungBegonnen.builder()
-                                  .id(haushaltsbuchId)
-                                  .build());
+        consumer.accept(aktuellesHaushaltsbuchSteps.orElseThrow(IllegalStateException::new));
     }
 
     @Override
@@ -54,35 +48,5 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
         return fixture.getEventStore().readEvents(aggregatkennung.toString())
                 .asStream()
                 .map(Message::getPayload);
-    }
-
-    @Override
-    public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
-    {
-        consumer.accept(new HauptbuchSteps(this, haushaltsbuchId));
-    }
-
-    @Override
-    public void journal(final Consumer<AbstractJournalSteps> consumer)
-    {
-        consumer.accept(new JournalSteps(this, haushaltsbuchId));
-    }
-
-    @Override
-    public void inventar(final Consumer<AbstractInventarSteps> consumer)
-    {
-        consumer.accept(new InventarSteps());
-    }
-
-    @Override
-    public InventarZustand inventar()
-    {
-        return null;
-    }
-
-    @Override
-    public void eröffnungsbilanz(final Consumer<AbstractEröffnungsbilanzSteps> consumer)
-    {
-
     }
 }

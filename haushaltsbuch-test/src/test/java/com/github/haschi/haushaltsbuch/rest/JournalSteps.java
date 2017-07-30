@@ -20,7 +20,7 @@ public class JournalSteps implements AbstractJournalSteps
     }
 
     @Override
-    public void journalAngelegt()
+    public void angelegt()
     {
         assertThat(monitor.erwarteteEreignisse().get(1)).isEqualTo(
                 ImmutableJournalWurdeAngelegt.builder()

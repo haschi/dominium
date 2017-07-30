@@ -28,7 +28,6 @@ public class JgroupsConfigurer
 
     public Configurer jgroupsConfiguration(String clusterName) throws Exception
     {
-
         channel = new JChannel("udp.xml");
 
         connector = new JGroupsConnector(

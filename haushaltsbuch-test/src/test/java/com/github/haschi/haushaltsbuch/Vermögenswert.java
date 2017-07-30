@@ -6,8 +6,9 @@ import javax.money.MonetaryAmount;
 
 public class Vermögenswert
 {
-    String position;
+    public String position;
 
     @XStreamConverter(MoneyConverter.class)
+    public
     MonetaryAmount betrag;
 }

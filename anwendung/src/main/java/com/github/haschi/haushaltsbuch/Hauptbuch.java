@@ -3,7 +3,6 @@ package com.github.haschi.haushaltsbuch;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAbfrage;
 import com.github.haschi.haushaltsbuch.abfragen.HauptbuchAnsicht;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
-import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -20,8 +19,6 @@ public class Hauptbuch
 
     private static final long serialVersionUID = 7723531928992579461L;
 
-    private static final Logger log = Logger.getLogger(Hauptbuch.class.getName());
-
     private HauptbuchAnsicht ansicht;
     private String id = "";
     @Inject
@@ -29,10 +26,6 @@ public class Hauptbuch
 
     public Hauptbuch()
     {
-        if (log.isInfoEnabled())
-        {
-            log.info("Hauptbuch-Instanz erzeugt.");
-        }
     }
 
     public String getId()
@@ -42,11 +35,6 @@ public class Hauptbuch
 
     public void setId(final String id)
     {
-        if (log.isInfoEnabled())
-        {
-            log.infov("setId({0})", id);
-        }
-
         this.id = id;
     }
 
@@ -72,11 +60,6 @@ public class Hauptbuch
 
     public void init()
     {
-        if (log.isInfoEnabled())
-        {
-            log.infov("init() (id={0})", this.id);
-        }
-
         this.ansicht = this.abfrage.abfragen(Aggregatkennung.of(this.id));
     }
 }

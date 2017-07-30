@@ -15,30 +15,25 @@ import javax.inject.Inject;
 public class CqrsKonfigurator
 {
     private final Systemumgebung systemumgebung;
-    Logger log = LoggerFactory.getLogger(CqrsKonfigurator.class);
 
     private Configuration konfiguration;
 
     @Inject
-    public CqrsKonfigurator(Systemumgebung systemumgebung)
+    public CqrsKonfigurator(final Systemumgebung systemumgebung)
     {
         this.systemumgebung = systemumgebung;
     }
 
     public Configuration konfigurieren() throws Exception
     {
-        log.info("CQRS Konfiguration erstellen");
-
         return systemumgebung.konfigurieren();
     }
 
-    public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        log.info("Axon konfigurieren");
-
+    public void init(@Observes @Initialized(ApplicationScoped.class) final Object init) {
         try {
             start();
         } catch (Exception e) {
-            log.error("Konfiguration fehlgeschlagen", e);
+            throw new KonfigurationFehlgeschlagen(e);
         }
     }
 
@@ -47,9 +42,9 @@ public class CqrsKonfigurator
         assert systemumgebung != null;
 
         final Configuration konfigurieren = konfigurieren();
-        log.info("Axon Konfiguration hergestellt");
+
         konfigurieren.start();
-        log.info("Axon Konfiguration gestartet");
+
         this.konfiguration = konfigurieren;
     }
 
@@ -66,8 +61,6 @@ public class CqrsKonfigurator
 
     public void shutdown()
     {
-        log.info("Axon Konfiguration shutdown");
-
         if (konfiguration != null) {
             konfiguration.shutdown();
         }

@@ -1,28 +1,22 @@
 package com.github.haschi.haushaltsbuch.rest;
 
-import com.github.haschi.haushaltsbuch.AbstractEröffnungsbilanzSteps;
-import com.github.haschi.haushaltsbuch.AbstractHauptbuchSteps;
+import com.github.haschi.haushaltsbuch.AbstractAktuellesHaushaltsbuchSteps;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
-import com.github.haschi.haushaltsbuch.AbstractInventarSteps;
-import com.github.haschi.haushaltsbuch.AbstractJournalSteps;
-import com.github.haschi.haushaltsbuch.InventarZustand;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
 import com.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung;
 import com.github.haschi.haushaltsbuch.api.ImmutableBeginneHaushaltsbuchführung;
-import com.github.haschi.haushaltsbuch.api.ImmutableHaushaltsbuchführungBegonnen;
-import org.apache.commons.lang3.NotImplementedException;
+import com.github.haschi.haushaltsbuch.api.refaktorisiert.ImmutableBefehleAnweisung;
 import org.axonframework.config.Configuration;
 
+import java.util.Optional;
 import java.util.function.Consumer;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchführungSteps
 {
 
     private final Configuration konfiguration;
     private final Synchronisierungsmonitor monitor;
-    private Aggregatkennung aktuellesHaushaltsbuch;
+    private AktuellesHaushaltsbuchStep aktuellesHaushaltsbuch;
 
     public HaushaltsbuchführungSteps(final Configuration konfiguration, final Synchronisierungsmonitor monitor)
     {
@@ -33,51 +27,35 @@ public final class HaushaltsbuchführungSteps implements AbstractHaushaltsbuchf�
     @Override
     public void beginnen()
     {
-        this.aktuellesHaushaltsbuch = Aggregatkennung.neu();
+        final Aggregatkennung kennung = Aggregatkennung.neu();
         final BeginneHaushaltsbuchführung beginneHaushaltsbuchführung = ImmutableBeginneHaushaltsbuchführung.builder()
-                .id(this.aktuellesHaushaltsbuch)
+                .id(kennung)
                 .build();
+
+        try
+        {
+            Thread.sleep(3000);
+        }
+        catch (InterruptedException e)
+        {
+                e.printStackTrace();
+        }
+
+        // konfiguration.commandGateway().sendAndWait(ImmutableBefehleAnweisung.builder().zahl(42).build());
 
         konfiguration.commandGateway().sendAndWait(beginneHaushaltsbuchführung);
         monitor.erwarte(3);
+
+        this.aktuellesHaushaltsbuch = new AktuellesHaushaltsbuchStep(monitor, kennung);
+    }
+
+    private Optional<AbstractAktuellesHaushaltsbuchSteps> getAktuell() {
+        return Optional.ofNullable(this.aktuellesHaushaltsbuch);
     }
 
     @Override
-    public void hauptbuchAngelegt()
+    public void aktuellesHaushaltsbuch(final Consumer<AbstractAktuellesHaushaltsbuchSteps> consumer)
     {
-        assertThat(monitor.erwarteteEreignisse().get(0)).isEqualTo(
-                ImmutableHaushaltsbuchführungBegonnen.builder()
-                        .id(this.aktuellesHaushaltsbuch)
-                        .build());
-    }
-
-    @Override
-    public void aktuellesHauptbuch(final Consumer<AbstractHauptbuchSteps> consumer)
-    {
-        throw new NotImplementedException("Nicht implementiert");
-    }
-
-    @Override
-    public void journal(final Consumer<AbstractJournalSteps> consumer)
-    {
-        consumer.accept(new JournalSteps(monitor, aktuellesHaushaltsbuch));
-    }
-
-    @Override
-    public void inventar(final Consumer<AbstractInventarSteps> consumer)
-    {
-
-    }
-
-    @Override
-    public InventarZustand inventar()
-    {
-        return null;
-    }
-
-    @Override
-    public void eröffnungsbilanz(final Consumer<AbstractEröffnungsbilanzSteps> consumer)
-    {
-
+        consumer.accept(getAktuell().orElseThrow(IllegalStateException::new));
     }
 }

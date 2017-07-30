@@ -10,9 +10,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch-test</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <name>${project.artifactId}-${project.version}</name>
@@ -41,22 +40,9 @@
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-bom</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-api</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-domaene</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <classifier>classes</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -81,7 +67,7 @@
         </dependency>
 
 
-        <!-- see https://pragmaticintegrator.wordpress.com/2010/10/22/using-a-war-module-as-dependency-in-maven/ -->
+         <!-- see https://pragmaticintegrator.wordpress.com/2010/10/22/using-a-war-module-as-dependency-in-maven/-->
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-domaene</artifactId>

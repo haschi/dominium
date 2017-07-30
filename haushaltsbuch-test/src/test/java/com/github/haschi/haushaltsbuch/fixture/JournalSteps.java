@@ -18,7 +18,7 @@ public class JournalSteps implements AbstractJournalSteps
     }
 
     @Override
-    public void journalAngelegt()
+    public void angelegt()
     {
         assertThat(ereignisquelle.ereignisseLesen(haushaltsbuchId))
                 .contains(ImmutableJournalWurdeAngelegt.builder()

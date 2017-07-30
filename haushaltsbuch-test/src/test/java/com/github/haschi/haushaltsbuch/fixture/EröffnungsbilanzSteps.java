@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.domäne;
+package com.github.haschi.haushaltsbuch.fixture;
 
 import com.github.haschi.haushaltsbuch.AbstractEröffnungsbilanzSteps;
 import com.github.haschi.haushaltsbuch.api.Aggregatkennung;
@@ -6,8 +6,8 @@ import com.github.haschi.haushaltsbuch.api.refaktorisiert.Buchung;
 import com.github.haschi.haushaltsbuch.api.refaktorisiert.ImmutableErstelleEröffnungsbilanz;
 import com.github.haschi.haushaltsbuch.api.refaktorisiert.ImmutableEröffnungsbilanzkontoErstellt;
 import com.github.haschi.haushaltsbuch.api.refaktorisiert.Inventar;
-import com.github.haschi.haushaltsbuch.infrastruktur.Ereignismonitor;
-import org.axonframework.config.Configuration;
+import com.github.haschi.haushaltsbuch.domäne.Haushaltsbuch;
+import org.axonframework.test.aggregate.AggregateTestFixture;
 
 import java.util.List;
 
@@ -15,17 +15,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EröffnungsbilanzSteps implements AbstractEröffnungsbilanzSteps
 {
-
-    private final Configuration configuration;
-    private final Ereignismonitor monitor;
+    private final AggregateTestFixture<Haushaltsbuch> fixture;
+    private final Ereignisquelle ereignisquelle;
     private final Aggregatkennung haushaltsbuchId;
     private final Inventar inventar;
 
-    public EröffnungsbilanzSteps(final Configuration configuration, final Ereignismonitor monitor, final Aggregatkennung
-            haushaltsbuchId, final Inventar inventar) {
-        this.configuration = configuration;
-
-        this.monitor = monitor;
+    public EröffnungsbilanzSteps(
+            final AggregateTestFixture<Haushaltsbuch> fixture,
+            final Ereignisquelle ereignisquelle,
+            final Aggregatkennung haushaltsbuchId,
+            final Inventar inventar) {
+        this.fixture = fixture;
+        this.ereignisquelle = ereignisquelle;
         this.haushaltsbuchId = haushaltsbuchId;
         this.inventar = inventar;
     }
@@ -33,21 +34,19 @@ public class EröffnungsbilanzSteps implements AbstractEröffnungsbilanzSteps
     @Override
     public void erstellen()
     {
-        configuration.commandGateway().sendAndWait(
+        fixture.when(
                 ImmutableErstelleEröffnungsbilanz.builder()
                         .id(haushaltsbuchId)
                         .inventar(inventar)
                         .build());
-
-        monitor.erwarte(1);
     }
 
     @Override
     public void erstellt(final List<Buchung> buchungen)
     {
-        monitor.erwartetesEreignis(0, ist -> assertThat(ist).isEqualTo(
-                ImmutableEröffnungsbilanzkontoErstellt.builder()
-                .addAllBuchungen(buchungen)
-                .build()));
+        assertThat(ereignisquelle.ereignisseLesen(haushaltsbuchId))
+                .contains(ImmutableEröffnungsbilanzkontoErstellt.builder()
+                          .addAllBuchungen(buchungen)
+                          .build());
     }
 }

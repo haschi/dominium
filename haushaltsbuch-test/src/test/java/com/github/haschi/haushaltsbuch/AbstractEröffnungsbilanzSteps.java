@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AbstractEröffnungsbilanzSteps
 {
-    public void erstellen(final InventarZustand inventar);
+    public void erstellen();
 
     public void erstellt(final List<Buchung> buchungen);
 }

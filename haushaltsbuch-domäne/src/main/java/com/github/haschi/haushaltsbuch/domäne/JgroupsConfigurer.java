@@ -9,26 +9,21 @@ import org.axonframework.config.ModuleConfiguration;
 import org.axonframework.jgroups.commandhandling.JGroupsConnector;
 import org.axonframework.serialization.xml.XStreamSerializer;
 import org.jgroups.JChannel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JgroupsConfigurer
 {
-    Logger log = LoggerFactory.getLogger(JgroupsConfigurer.class);
-
-    private Configurer configurer;
+    private final Configurer configurer;
     private JChannel channel;
     private JGroupsConnector connector;
 
-    public JgroupsConfigurer(Configurer configurer)
+    public JgroupsConfigurer(final Configurer configurer)
     {
 
         this.configurer = configurer;
     }
 
-    public Configurer jgroupsConfiguration(String clusterName) throws Exception
+    public Configurer jgroupsConfiguration(final String clusterName) throws Exception, KonfigurationFehlgeschlagen
     {
-
         channel = new JChannel("udp.xml");
 
         connector = new JGroupsConnector(
@@ -41,9 +36,9 @@ public class JgroupsConfigurer
         try
         {
             connector.connect();
-        } catch (Exception e)
+        } catch (final Exception e)
         {
-            log.error("Verbindungsfehler", e);
+            throw new KonfigurationFehlgeschlagen(e);
         }
 
         return configurer
@@ -55,10 +50,9 @@ public class JgroupsConfigurer
                 .registerModule(new ModuleConfiguration()
                 {
                     private Configuration config;
-                    Logger log = LoggerFactory.getLogger(ModuleConfiguration.class);
 
                     @Override
-                    public void initialize(Configuration config)
+                    public void initialize(final Configuration config)
                     {
                         this.config = config;
                     }
@@ -71,17 +65,15 @@ public class JgroupsConfigurer
                         try
                         {
                             config.getComponent(JGroupsConnector.class).connect();
-                        } catch (Exception e)
+                        } catch (final Exception e)
                         {
-                            log.error("Verbindungsfehler", e);
+                            throw new KonfigurationFehlgeschlagen(e);
                         }
                     }
 
                     @Override
                     public void shutdown()
                     {
-                        log.info("Verbindung beenden");
-
                         config.getComponent(JGroupsConnector.class).disconnect();
                         config.getComponent(JChannel.class).disconnect();
                         config.getComponent(JChannel.class).close();

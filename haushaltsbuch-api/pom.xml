@@ -12,6 +12,7 @@
 
     <name>${project.artifactId}-${project.version}</name>
     <artifactId>haushaltsbuch-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
 

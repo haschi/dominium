@@ -21,17 +21,21 @@ public class EröffnungsbilanzSchrittDefinitionen
     @Angenommen("^ich habe folgende Vermögenswerte in meinem Inventar erfasst:$")
     public void ichHabeFolgendeVermögenswerteInMeinemInventarErfasst(final List<Vermögenswert> vermögenswerte)
     {
-        api.haushaltsbuchführung(haushaltsbuch ->
-            haushaltsbuch.inventar(inventar ->
-                inventar.anlegen(vermögenswerte)));
+        api.haushaltsbuchführung(
+                haushaltsbuch -> haushaltsbuch.aktuellesHaushaltsbuch(
+                        aktuell -> aktuell.inventar(
+                                inventar -> (inventar.anlegen(vermögenswerte)))));
     }
 
     @Wenn("^ich die Eröffnungsbilanz aus dem Inventar erstelle$")
     public void ichDieEröffnungsbilanzAusDemInventarErstelle()
     {
-        api.haushaltsbuchführung(haushaltsbuch ->
-            haushaltsbuch.eröffnungsbilanz(eröffnungsbilanz ->
-                eröffnungsbilanz.erstellen(haushaltsbuch.inventar())));
+        api.haushaltsbuchführung(
+            haushaltsbuch -> haushaltsbuch.aktuellesHaushaltsbuch(
+                aktuell -> aktuell.inventar((StepConsumer)
+                    inventar -> inventar.eröffnungsbilanz(
+                            eröffnungsbilanz -> eröffnungsbilanz.erstellen()))));
+
     }
 
     @Dann("^werde ich ein Eröffnungsbilanzkonto mit folgendem Inhalt erstellt haben:$")
@@ -46,8 +50,10 @@ public class EröffnungsbilanzSchrittDefinitionen
                         .build())
                 .collect(Collectors.toList());
 
-        api.haushaltsbuchführung(haushaltsbuch ->
-            haushaltsbuch.eröffnungsbilanz(eröffnungsbilanz ->
-                eröffnungsbilanz.erstellt(buchungen)));
+        api.haushaltsbuchführung(
+                haushaltsbuch -> haushaltsbuch.aktuellesHaushaltsbuch(
+                        aktuell -> aktuell.inventar((StepConsumer)
+                            inventar -> inventar.eröffnungsbilanz(
+                                    eröffnungsbilanz -> eröffnungsbilanz.erstellt(buchungen)))));
     }
 }
