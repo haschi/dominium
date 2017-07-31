@@ -44,7 +44,7 @@ public class AktuellesHaushaltsbuchStep implements AbstractAktuellesHaushaltsbuc
     @Override
     public void journal(final Consumer<AbstractJournalSteps> consumer)
     {
-        throw new PendingException();
+        consumer.accept(new JournalSteps(monitor, haushaltsbuchId));
     }
 
     @Override

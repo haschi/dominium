@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wildfly.swarm.Swarm;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public final class AutomationApi implements AbstractAutomationApi
@@ -19,7 +20,9 @@ public final class AutomationApi implements AbstractAutomationApi
     private Configuration configuration;
     private Swarm swarm;
 
-    public AutomationApi(final Testumgebung testumgebung, final Synchronisierungsmonitor monitor)
+    public AutomationApi(
+            final Testumgebung testumgebung,
+            final Synchronisierungsmonitor monitor)
     {
         this.testumgebung = testumgebung;
         this.monitor = monitor;
@@ -28,7 +31,7 @@ public final class AutomationApi implements AbstractAutomationApi
     @Override
     public void haushaltsbuchführung(final Consumer<AbstractHaushaltsbuchführungSteps> konsument)
     {
-        konsument.accept(haushaltsbuchführung);
+        konsument.accept(Optional.ofNullable(haushaltsbuchführung).orElseThrow(IllegalStateException::new));
     }
 
     @Override
@@ -38,9 +41,9 @@ public final class AutomationApi implements AbstractAutomationApi
 
         try
         {
-            //swarm = Main.createSwarm();
-            //swarm.start();
-            //swarm.deploy(Main.deployment());
+//            swarm = Main.createSwarm();
+//            swarm.start();
+//            swarm.deploy(Main.deployment());
 
             configuration = testumgebung.konfigurieren();
             configuration.start();
