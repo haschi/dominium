@@ -1,16 +1,17 @@
 package com.github.haschi.haushaltsbuch.domäne;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
-public class Main
+import java.io.File;
+
+public final class Main
 {
     public static void main(final String... args) throws Exception
     {
-        Swarm swarm = createSwarm(args);
+        final Swarm swarm = createSwarm(args);
         swarm.start();
         // swarm.deploy(deployment());
         swarm.deploy();
@@ -23,10 +24,14 @@ public class Main
 
     public static JAXRSArchive deployment() throws Exception
     {
-        JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class );
+        final String packageName = Main.class.getPackage().getName();
+        final JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class );
 
-        deployment.addClass(CqrsKonfigurator.class)
-        .addAllDependencies();
+        deployment.addPackages(true, packageName)
+        .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+        .addAsResource(new File("project-defaults.yml"), "project-defaults.yml");
+        // OK DAs geht nicht. Konzept ist blödsinn. Kann niemals laufen.
+        System.out.println(deployment.toString(true));
 
         return deployment;
     }

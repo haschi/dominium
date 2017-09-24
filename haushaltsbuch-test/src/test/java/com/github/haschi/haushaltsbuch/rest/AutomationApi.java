@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.rest;
 
 import com.github.haschi.haushaltsbuch.AbstractAutomationApi;
 import com.github.haschi.haushaltsbuch.AbstractHaushaltsbuchführungSteps;
+import com.github.haschi.haushaltsbuch.domäne.Main;
 import org.axonframework.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +42,9 @@ public final class AutomationApi implements AbstractAutomationApi
 
         try
         {
-//            swarm = Main.createSwarm();
-//            swarm.start();
-//            swarm.deploy(Main.deployment());
+            swarm = Main.createSwarm();
+            swarm.start();
+            swarm.deploy(Main.deployment());
 
             configuration = testumgebung.konfigurieren();
             configuration.start();
