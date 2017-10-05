@@ -19,6 +19,7 @@
         <module name="haushaltsbuch-domaene" />
         <module name="haushaltsbuch-test" />
         <module name="haushaltsbuchquery" />
+        <module name="infrastruktur" />
         <module name="modeling" />
         <module name="modelldokumentation" />
         <module name="richtlinien" />
@@ -39,6 +40,7 @@
       <module name="haushaltsbuch-domaene" target="1.8" />
       <module name="haushaltsbuch-test" target="1.8" />
       <module name="infrastructure-bom" target="1.5" />
+      <module name="infrastruktur" target="1.8" />
       <module name="modeling" target="1.8" />
       <module name="modelldokumentation" target="1.8" />
       <module name="parent" target="1.8" />

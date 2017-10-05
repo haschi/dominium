@@ -322,6 +322,7 @@
         <module>haushaltsbuch-domäne</module>
         <module>haushaltsbuch-api</module>
         <module>haushaltsbuch-test</module>
+        <module>infrastruktur</module>
         <module>haushaltsbuch</module>
     </modules>
 
