@@ -4,7 +4,7 @@ Funktionalität: Haushaltsbuchführung beginnen
   möchte ich mit der Haushaltsbuchführung beginnen
   um ein Hauptbuch mit Konten und ein Journal anzulegen
 
-  @api @fixture @domäne
+  @api @fixture @domäne @ignore
   Szenario: Haushaltsbuchführung beginnen
     Wenn ich mit der Haushaltsbuchführung beginne
     Dann werde ich ein Hauptbuch angelegt haben

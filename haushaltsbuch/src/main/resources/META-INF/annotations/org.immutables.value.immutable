@@ -1,0 +1,8 @@
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Ereignis
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Anweisung
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Abfrage
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.en.Command
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.en.Event
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.en.Projection
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.en.Query
