@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="clean" />
-              <option value="verify" />
+              <option value="install" />
             </list>
           </option>
           <option name="profilesMap">

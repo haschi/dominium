@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 @RunWith(VertxUnitRunner.class)
 public class RestApiTest
 {
-
     private Vertx vertx;
 
     @Before
@@ -37,5 +36,4 @@ public class RestApiTest
             });
         });
     }
-
 }
