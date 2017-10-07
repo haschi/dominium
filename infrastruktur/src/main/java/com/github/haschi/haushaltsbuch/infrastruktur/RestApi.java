@@ -3,11 +3,16 @@ package com.github.haschi.haushaltsbuch.infrastruktur;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import org.axonframework.config.Configuration;
+import org.axonframework.config.DefaultConfigurer;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
+
+import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
+import org.github.haschi.haushaltsbuch.modell.Inventur;
 
 public class RestApi extends AbstractVerticle
 {
@@ -15,6 +20,14 @@ public class RestApi extends AbstractVerticle
 
     @Override
     public void start() {
+
+//        final Configuration axon = DefaultConfigurer.defaultConfiguration()
+//                .configureEmbeddedEventStore(konfiguration -> new InMemoryEventStorageEngine())
+//                .configureAggregate(Inventur.class)
+//                .buildConfiguration();
+//
+//        axon.start();
+
         vertx.createHttpServer()
                 .requestHandler(req -> {
                     try
