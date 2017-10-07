@@ -1,5 +1,6 @@
-package com.github.haschi.haushaltsbuch.infrastruktur;
+package com.github.haschi.haushaltsbuch;
 
+import com.github.haschi.haushaltsbuch.infrastruktur.RestApi;
 import io.restassured.response.Response;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -42,7 +43,7 @@ public class RestApiSynchTest
         }, result -> {
             result.result().then()
                     .statusCode(200)
-                    .body(equalTo("Hello Vert.x!"));
+                    .body(equalTo("infrastruktur 0.0.1-SNAPSHOT"));
             async.complete();
         });
     }
@@ -50,6 +51,6 @@ public class RestApiSynchTest
     @Test
     public void testThatDefaultsAreOk() {
         when().get("/")
-        .then().body(equalTo("Hello Vert.x!"));
+        .then().body(equalTo("infrastruktur 0.0.1-SNAPSHOT"));
     }
 }

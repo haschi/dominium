@@ -1,5 +1,6 @@
-package com.github.haschi.haushaltsbuch.infrastruktur;
+package com.github.haschi.haushaltsbuch;
 
+import com.github.haschi.haushaltsbuch.infrastruktur.RestApi;
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
