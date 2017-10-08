@@ -11,18 +11,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="anwendung" />
         <module name="axon-blueprint" />
-        <module name="domaene" />
-        <module name="haushaltsbuch-abfrage" />
-        <module name="haushaltsbuch-api" />
-        <module name="haushaltsbuch-domaene" />
-        <module name="haushaltsbuch-test" />
         <module name="haushaltsbuchquery" />
         <module name="infrastruktur" />
-        <module name="modeling" />
-        <module name="modelldokumentation" />
-        <module name="richtlinien" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

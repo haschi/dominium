@@ -1,11 +1,15 @@
 package org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 import java.util.UUID;
 
 @Value.Immutable
 @Eingehüllt
+@JsonSerialize(as = Aggregatkennung.class)
+@JsonDeserialize(as = Aggregatkennung.class)
 public abstract class _Aggregatkennung extends Umhüller<UUID>
 {
     public static Aggregatkennung neu()

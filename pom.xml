@@ -312,16 +312,16 @@
     <!--</repositories>-->
 
     <modules>
-        <module>haushaltsbuch-bom</module>
-        <module>allgemein</module>
-        <module>coding</module>
-        <module>anwendung</module>
-        <module>domaene</module>
+        <!--<module>haushaltsbuch-bom</module>-->
+        <!--<module>allgemein</module>-->
+        <!--<module>coding</module>-->
+        <!--<module>anwendung</module>-->
+        <!--<module>domaene</module>-->
         <!--<module>web</module>-->
-        <module>haushaltsbuch-abfrage</module>
-        <module>haushaltsbuch-domäne</module>
-        <module>haushaltsbuch-api</module>
-        <module>haushaltsbuch-test</module>
+        <!--<module>haushaltsbuch-abfrage</module>-->
+        <!--<module>haushaltsbuch-domäne</module>-->
+        <!--<module>haushaltsbuch-api</module>-->
+        <!--<module>haushaltsbuch-test</module>-->
         <module>infrastruktur</module>
         <module>haushaltsbuch</module>
     </modules>
