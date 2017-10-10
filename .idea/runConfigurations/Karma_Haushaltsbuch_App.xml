@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Karma Haushaltsbuch App" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+    <config-file value="$PROJECT_DIR$/haushaltsbuch-app/karma.conf.js" />
+    <browsers value="Chrome" />
+    <karma-package-dir value="" />
+    <node-interpreter value="project" />
+    <envs />
+    <method />
+  </configuration>
+</component>

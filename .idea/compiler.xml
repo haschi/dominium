@@ -5,6 +5,18 @@
     <option name="delegateToJavac" value="true" />
   </component>
   <component name="CompilerConfiguration">
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+      <entry name="!?*.ceylon" />
+    </wildcardResourcePatterns>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -27,6 +39,7 @@
       <module name="haushaltsbuch" target="1.8" />
       <module name="haushaltsbuch-abfrage" target="1.8" />
       <module name="haushaltsbuch-api" target="1.8" />
+      <module name="haushaltsbuch-app" target="1.5" />
       <module name="haushaltsbuch-bom" target="1.8" />
       <module name="haushaltsbuch-domaene" target="1.8" />
       <module name="haushaltsbuch-test" target="1.8" />
@@ -37,6 +50,7 @@
       <module name="parent" target="1.8" />
       <module name="richtlinien" target="1.8" />
       <module name="testing-bom" target="1.5" />
+      <module name="web" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
