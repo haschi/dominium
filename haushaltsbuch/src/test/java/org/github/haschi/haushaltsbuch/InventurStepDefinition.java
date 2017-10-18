@@ -1,11 +1,11 @@
 package org.github.haschi.haushaltsbuch;
 
 import cucumber.api.DataTable;
-import cucumber.api.Transform;
 import cucumber.api.java.de.Angenommen;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Und;
 import cucumber.api.java.de.Wenn;
+import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.github.haschi.haushaltsbuch.api.BeendeInventur;
 import org.github.haschi.haushaltsbuch.api.BeginneInventur;
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar;
@@ -21,10 +21,10 @@ import org.github.haschi.haushaltsbuch.api.Vermoegenswert;
 import org.github.haschi.haushaltsbuch.api.Vermögenswerte;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
 import org.github.haschi.haushaltsbuch.api._Inventar;
-import org.github.haschi.haushaltsbuch.infrastruktur.MoneyConverter;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung;
 import org.github.haschi.infrastruktur.Abfragekonfiguration;
 import org.github.haschi.infrastruktur.Anweisungskonfiguration;
+import org.github.haschi.infrastruktur.MoneyConverter;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+@XStreamConverter(MoneyConverter.class)
 public class InventurStepDefinition
 {
 
@@ -77,7 +78,7 @@ public class InventurStepDefinition
     @Wenn("^ich mein Umlaufvermögen \"([^\"]*)\" in Höhe von \"([^\"]*)\" erfasse$")
     public void ichMeinUmlaufvermögenInHöheVonErfasse(
             final String position,
-            final @Transform(MoneyConverter.class) Währungsbetrag währungsbetrag)
+            final Währungsbetrag währungsbetrag)
     {
 
         anweisung.commandGateway().sendAndWait(
@@ -111,7 +112,7 @@ public class InventurStepDefinition
     @Wenn("^ich meine Schulden \"([^\"]*)\" in Höhe von \"([^\"]*)\" erfasse$")
     public void ichMeineSchuldenInHöheVonErfasse(
             final String position,
-            final @Transform(MoneyConverter.class) Währungsbetrag währungsbetrag)
+            final Währungsbetrag währungsbetrag)
     {
 
         anweisung.commandGateway().sendAndWait(

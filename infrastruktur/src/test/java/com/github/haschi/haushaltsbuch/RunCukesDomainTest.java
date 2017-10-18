@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         strict = true,
-        tags = {"@domain"},
-        plugin = {"pretty"}
+        tags = {"@domain"}
 )
 public class RunCukesDomainTest
 {

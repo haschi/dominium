@@ -1,8 +1,6 @@
 package org.github.haschi.haushaltsbuch.api;
 
-import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.apache.commons.lang3.StringUtils;
-import org.github.haschi.haushaltsbuch.infrastruktur.MoneyConverter;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Eingehüllt;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Umhüller;
 import org.immutables.value.Value;
@@ -15,7 +13,7 @@ import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
 @Value.Immutable
-@XStreamConverter(MoneyConverter.class)
+// @XStreamConverter(MoneyConverter.class)
 @Eingehüllt
 public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
 {
@@ -41,7 +39,12 @@ public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
     @Override
     public String toString()
     {
-        final MonetaryAmountFormat deutschesFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY);
-        return deutschesFormat.format(wert());
+        if (wert() != null )
+        {
+            final MonetaryAmountFormat deutschesFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY);
+            return deutschesFormat.format(wert());
+        } else {
+            return StringUtils.EMPTY;
+        }
     }
 }

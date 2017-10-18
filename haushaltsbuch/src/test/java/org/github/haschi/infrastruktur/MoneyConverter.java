@@ -1,12 +1,13 @@
-package org.github.haschi.haushaltsbuch.infrastruktur;
+package org.github.haschi.infrastruktur;
 
 import cucumber.api.Transformer;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
+import org.github.haschi.haushaltsbuch.api._Währungsbetrag;
 
 public class MoneyConverter extends Transformer<Währungsbetrag>
 {
-    @Override
-    public final Währungsbetrag transform(final String währungsbetrag)
+
+    public Währungsbetrag transform(final String währungsbetrag)
     {
         return Währungsbetrag.parse(währungsbetrag);
     }

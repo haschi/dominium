@@ -35,11 +35,13 @@
       <module name="coding" target="1.8" />
       <module name="coding-bom" target="1.5" />
       <module name="common" target="1.5" />
+      <module name="cucumber-plugin" target="1.8" />
       <module name="domaene" target="1.8" />
       <module name="haushaltsbuch" target="1.8" />
       <module name="haushaltsbuch-abfrage" target="1.8" />
       <module name="haushaltsbuch-api" target="1.8" />
       <module name="haushaltsbuch-app" target="1.5" />
+      <module name="haushaltsbuch-application" target="1.8" />
       <module name="haushaltsbuch-bom" target="1.8" />
       <module name="haushaltsbuch-domaene" target="1.8" />
       <module name="haushaltsbuch-test" target="1.8" />

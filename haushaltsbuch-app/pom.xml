@@ -83,17 +83,6 @@
                     </execution>
 
                     <execution>
-                        <id>clean dist</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>clean</phase>
-                        <configuration>
-                            <arguments>run clean:dist</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
                         <id>npm install to compile</id>
                         <goals>
                             <goal>install-node-and-npm</goal>

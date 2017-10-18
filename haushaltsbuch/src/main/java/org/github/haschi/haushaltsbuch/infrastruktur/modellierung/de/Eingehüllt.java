@@ -1,6 +1,6 @@
 package org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de;
 
-import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.immutables.value.Value;
 
 @Value.Style(
