@@ -1,0 +1,26 @@
+@import '../node_modules/@angular/material/theming';
+@import '../node_modules/@covalent/core/theming/all-theme';
+
+// (optional) Additional themes
+@import '../node_modules/@covalent/markdown/markdown-theme';
+@import '../node_modules/@covalent/highlight/highlight-theme';
+
+@include mat-core();
+
+$primary: mat-palette($mat-orange, 800);
+$accent:  mat-palette($mat-light-blue, 600, A100, A400);
+
+$warn:    mat-palette($mat-red, 600);
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include covalent-theme($theme);
+
+// (optional) Additional themes
+@include covalent-markdown-theme($theme);
+@include covalent-highlight-theme();
+
+body {
+  background-color: #990000;
+}

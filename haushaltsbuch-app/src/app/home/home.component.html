@@ -1,3 +1,20 @@
-<p>
-  home works!
-</p>
+<section class="bgc-blue-grey-50" style="background: url('http://lorempixel.com/1200/800/city') no-repeat; background-size: cover; background-blend-mode: screen">
+  <div layout-gt-xs="row">
+    <div flex class="pad" tdMediaToggle="gt-xs" [mediaClasses]="['pad-xl']">
+      <div class="push-top-xl" hide-xs></div>
+      <div tdMediaToggle="gt-sm" [mediaClasses]="['push-lg']">
+        <h1 class="mat-display-1 tc-blue-A400 push-top-xs push-bottom-sm">Haushaltsbuch</h1>
+        <h2 class="mat-headline tc-grey-800 push-top-xs push-bottom-sm">Private Finanzen verwalten</h2>
+        <p class="mat-subhead tc-grey-600">Behalten Sie mit dem Haushaltsbuch immer den Überblick
+          ihrer privaten Finanzen. Erhalten Sie ein Vorhersage zu Ihrer Vermögensentwicklung anhand
+          ihrer Ein- und Ausgaben.</p>
+        <button mat-raised-button color="accent" [routerLink]="['inventur']"
+                class="push-bottom mat-button-lg text-upper">Jetzt ausprobieren</button>
+      </div>
+      <div class="push-bottom-xl" hide-xs></div>
+    </div>
+    <div flex="40" layout="row" layout-align="center center">
+      <mat-icon class="push" style="height:auto;width:auto;" svgIcon="assets:covalent-mark"></mat-icon>
+    </div>
+  </div>
+</section>

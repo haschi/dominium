@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Frontend Test" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+    <config-file value="$PROJECT_DIR$/haushaltsbuch-app/karma.conf.js" />
+    <karma-package-dir value="" />
+    <node-interpreter value="project" />
+    <envs />
+    <method />
+  </configuration>
+</component>
