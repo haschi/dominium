@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
-public class BuchungConverter extends Transformer<Buchung>
+public final class BuchungConverter extends Transformer<Buchung>
 {
     public Buchung transform(final String s)
     {

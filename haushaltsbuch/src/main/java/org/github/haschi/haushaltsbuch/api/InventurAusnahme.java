@@ -1,6 +1,6 @@
 package org.github.haschi.haushaltsbuch.api;
 
-public class InventurAusnahme extends Exception
+public final class InventurAusnahme extends Exception
 {
     public InventurAusnahme(final String message)
     {

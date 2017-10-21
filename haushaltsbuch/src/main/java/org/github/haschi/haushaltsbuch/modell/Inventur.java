@@ -17,7 +17,7 @@ import org.github.haschi.haushaltsbuch.api.SchuldErfasst;
 import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung;
 
-public class Inventur
+public final class Inventur
 {
 
     @AggregateIdentifier

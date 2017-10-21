@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static javaslang.API.*;
 
-public class InventarProjektion
+public final class InventarProjektion
 {
 
     private final Configuration konfiguration;

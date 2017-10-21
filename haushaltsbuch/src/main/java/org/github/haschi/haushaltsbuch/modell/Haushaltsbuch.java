@@ -13,7 +13,7 @@ import org.github.haschi.haushaltsbuch.api.Inventar;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung;
 
-public class Haushaltsbuch
+public final class Haushaltsbuch
 {
 
     @AggregateIdentifier

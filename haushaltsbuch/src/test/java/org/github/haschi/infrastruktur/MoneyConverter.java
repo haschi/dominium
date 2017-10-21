@@ -4,7 +4,7 @@ import cucumber.api.Transformer;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
 import org.github.haschi.haushaltsbuch.api._Währungsbetrag;
 
-public class MoneyConverter extends Transformer<Währungsbetrag>
+public final class MoneyConverter extends Transformer<Währungsbetrag>
 {
 
     public Währungsbetrag transform(final String währungsbetrag)

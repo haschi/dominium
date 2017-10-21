@@ -5,7 +5,7 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
 import org.github.haschi.infrastruktur.MoneyConverter;
 
-class Inventarposition
+final class Inventarposition
 {
     String gruppe;
     String untergruppe;
