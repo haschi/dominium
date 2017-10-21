@@ -37,7 +37,7 @@ public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
     }
 
     @Override
-    public String toString()
+    public final String toString()
     {
         if (wert() != null )
         {

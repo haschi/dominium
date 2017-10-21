@@ -12,7 +12,7 @@ import java.util.List;
 @Eingehüllt
 public abstract class _Vermögenswerte extends Umhüller<List<Vermoegenswert>>
 {
-    public Währungsbetrag summe()
+    public final Währungsbetrag summe()
     {
         return Währungsbetrag.of(
                 wert().stream()

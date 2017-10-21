@@ -1,6 +1,5 @@
 package org.github.haschi.infrastruktur;
 
-import com.thoughtworks.xstream.converters.SingleValueConverter;
 import cucumber.api.Transformer;
 import org.github.haschi.haushaltsbuch.api.Buchung;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
