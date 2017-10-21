@@ -7,7 +7,7 @@ import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
 
 @SuppressWarnings("WeakerAccess")
-public class EventStoreLieferant
+public final class EventStoreLieferant
 {
 
     private final EventStorageEngine engine = new InMemoryEventStorageEngine();

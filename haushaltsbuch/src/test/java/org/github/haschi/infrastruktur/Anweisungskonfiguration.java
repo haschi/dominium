@@ -7,7 +7,7 @@ import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch;
 import org.github.haschi.haushaltsbuch.modell.Inventur;
 import org.picocontainer.Startable;
 
-public class Anweisungskonfiguration implements Startable
+public final class Anweisungskonfiguration implements Startable
 {
 
     public CommandGateway commandGateway()

@@ -6,7 +6,7 @@ import org.axonframework.config.DefaultConfigurer;
 import org.github.haschi.haushaltsbuch.projektion.InventarProjektion;
 import org.picocontainer.Startable;
 
-public class Abfragekonfiguration implements Startable
+public final class Abfragekonfiguration implements Startable
 {
 
     public CommandGateway commandGateway()
