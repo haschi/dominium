@@ -7,16 +7,16 @@ import { HomeComponent } from './home/home.component';
 import { ALL_ROUTES, DEMO_APP_ROUTES } from './routes';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppMaterialModule } from './app-material-module';
+import { AppMaterialModule } from './shared/app-material-module';
 import { HttpModule } from '@angular/http';
 import { InventurComponent } from './inventur/inventur.component';
-import { AppCovalentModuleModule } from './app-covalent-module.module';
+import { AppCovalentModuleModule } from './shared/app-covalent-module.module';
+import { InventurModule } from './inventur/inventur.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        InventurComponent
     ],
     imports: [
         BrowserModule,
@@ -25,6 +25,7 @@ import { AppCovalentModuleModule } from './app-covalent-module.module';
         AppMaterialModule,
         AppCovalentModuleModule,
         RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: true}),
+        InventurModule
     ],
     providers: [EventBusService],
     bootstrap: [AppComponent]

@@ -1,56 +1,11 @@
-<section class="bgc-blue-grey-50">
-  <div layout-gt-xs="row">
-    <div flex class="pad" tdMediaToggle="gt-xs" [mediaClasses]="['pad-xl']">
-      <div class="push-top-xl" hide-xs></div>
-      <div tdMediaToggle="gt-sm" [mediaClasses]="['push-lg']">
-        <h1 class="mat-display-1 tc-blue-A400 push-top-xs push-bottom-sm">Haushaltsbuch</h1>
-        <h2 class="mat-headline tc-grey-800 push-top-xs push-bottom-sm">Private Finanzen verwalten</h2>
-        <p class="mat-subhead tc-grey-600">Behalten Sie mit dem Haushaltsbuch immer den Überblick
-          ihrer privaten Finanzen. Erhalten Sie ein Vorhersage zu Ihrer Vermögensentwicklung anhand
-          ihrer Ein- und Ausgaben.</p>
-        <button mat-raised-button color="accent" [routerLink]="['inventur']"
-                class="push-bottom mat-button-lg text-upper">Jetzt ausprobieren</button>
-      </div>
-      <div class="push-bottom-xl" hide-xs></div>
-    </div>
-    <div flex="40" layout="row" layout-align="center center">
-      <mat-icon class="push" style="height:auto;width:auto;" svgIcon="assets:covalent-mark"></mat-icon>
-    </div>
-  </div>
-</section>
-
 <mat-card>
-  <mat-card-title>Inventur</mat-card-title>
-  <mat-card-subtitle>Alle Vermögenswerte und Darlehen erfassen</mat-card-subtitle>
-  <mat-divider></mat-divider>
+  <mat-card-title>Inventar</mat-card-title>
   <mat-card-content>
-    <form>
-      <div layout="row">
-        <mat-form-field flex>
-          <input matInput #userElement #userControl="ngModel" placeholder="Position" type="text" maxlength="30" name="position" [(ngModel)]="position" required>
-        </mat-form-field>
-      </div>
-      <div layout="row">
-        <mat-form-field flex>
-          <input matInput #userElement #userControl="ngModel" placeholder="Betrag" type="text" maxlength="30" name="betrag" [(ngModel)]="betrag" required>
-          <mat-icon matSuffix>account_balance</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div layout="row">
-      <mat-form-field flex>
-        <mat-select placeholder="Kategorie">
-          <mat-option value="Anlagevermögen">Anlagevermögen</mat-option>
-          <mat-option value="Umlaufvermögen">Umlaufvermögen</mat-option>
-          <mat-option value="Darlehen">Darlehen</mat-option>
-        </mat-select>
-      </mat-form-field>
-      </div>
-    </form>
+    <p>leer</p>
+    <div class="card-action">
+    <button mat-fab color="primary">
+      <mat-icon aria-label="Neue Inventarposition erfassen" (click)="dialogOeffnen()">add</mat-icon>
+    </button>
+    </div>
   </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-actions>
-    <button mat-button class="mat-primary">Weiter</button>
-    <button mat-button>Abbrechen</button>
-  </mat-card-actions>
 </mat-card>

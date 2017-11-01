@@ -2,11 +2,11 @@ import { async, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ALL_ROUTES } from './routes';
-import { AppMaterialModule } from './app-material-module';
+import { AppMaterialModule } from './shared/app-material-module';
 import { HomeComponent } from './home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InventurComponent } from './inventur/inventur.component';
-import { AppCovalentModuleModule } from './app-covalent-module.module';
+import { AppCovalentModuleModule } from './shared/app-covalent-module.module';
 import { By } from '@angular/platform-browser';
 import { TdLayoutCardOverComponent, TdLayoutComponent, TdLayoutNavComponent } from '@covalent/core';
 
