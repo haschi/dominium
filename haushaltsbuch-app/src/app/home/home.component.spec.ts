@@ -6,6 +6,7 @@ import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { DEMO_APP_ROUTES } from '../routes';
 import { RouterTestingModule } from '@angular/router/testing';
 import { InventurComponent } from '../inventur/inventur.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -13,11 +14,13 @@ describe('HomeComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [HomeComponent, InventurComponent],
+            declarations: [HomeComponent],
             imports: [
                 AppMaterialModule,
                 AppCovalentModuleModule,
-                RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
+                RouterTestingModule.withRoutes([
+                    {path: 'inventur', redirectTo: 'http://www.google.de'},
+                ])
             ]
         })
             .compileComponents();

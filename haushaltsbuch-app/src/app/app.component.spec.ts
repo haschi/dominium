@@ -9,18 +9,16 @@ import { InventurComponent } from './inventur/inventur.component';
 import { AppCovalentModuleModule } from './shared/app-covalent-module.module';
 import { By } from '@angular/platform-browser';
 import { TdLayoutCardOverComponent, TdLayoutComponent, TdLayoutNavComponent } from '@covalent/core';
+import { AppModule } from './app.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                AppComponent, HomeComponent, InventurComponent
-            ],
-            imports: [
-                AppMaterialModule,
-                AppCovalentModuleModule,
-                NoopAnimationsModule,
-                RouterTestingModule.withRoutes(ALL_ROUTES)]
+
+            imports: [AppModule],
+            providers: [
+                {provide: APP_BASE_HREF, useValue: '/'}]
         }).compileComponents();
     }));
     it('should create the app', async(() => {

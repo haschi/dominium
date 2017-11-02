@@ -1,0 +1,26 @@
+<div [formGroup]="parent">
+    <div [formArrayName]="arrayName">
+        <div *ngFor="let position of controls.controls; let i = index" [formGroupName]="i"
+             layout="row" layout-padding>
+            <mat-form-field flex>
+                <input matInput placeholder="Position"
+                       type="text" maxlength="30" name="position" formControlName="position"
+                       required>
+            </mat-form-field>
+            <mat-form-field flex="30">
+                <input matInput placeholder="Betrag" type="text" name="betrag" currencyMask
+                       maxlength="30" formControlName="betrag" required
+                       [options]="{ prefix: '', suffix: ' EUR', thousands: '.', decimal: ',' }">
+            </mat-form-field>
+            <div flex="10">
+                <button mat-icon-button (click)="loeschen(i)" type="button">
+                    <mat-icon aria-label="Inventarposition entfernen">delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button mat-mini-fab type="button" (click)="hinzufuegen()">
+        <mat-icon aria-label="Inventarposition für Anlagevermögen hinzufügen">add</mat-icon>
+    </button>
+</div>

@@ -1,11 +1,17 @@
 <mat-card>
-  <mat-card-title>Inventar</mat-card-title>
-  <mat-card-content>
-    <p>leer</p>
-    <div class="card-action">
-    <button mat-fab color="primary">
-      <mat-icon aria-label="Neue Inventarposition erfassen" (click)="dialogOeffnen()">add</mat-icon>
-    </button>
-    </div>
-  </mat-card-content>
+    <mat-card-title>Inventar</mat-card-title>
+    <mat-card-content>
+        <form layout="column" [formGroup]="formGroup">
+            <h3>I. Anlagevermögen</h3>
+            <app-position [parent]="formGroup" [arrayName]="'anlagevermoegen'"></app-position>
+            <h3>II. Umlaufvermögen</h3>
+            <app-position [parent]="formGroup" [arrayName]="'umlaufvermoegen'"></app-position>
+            <h3>III. Schulden</h3>
+            <app-position [parent]="formGroup" [arrayName]="'schulden'"></app-position>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    {{model | json}}
 </mat-card>

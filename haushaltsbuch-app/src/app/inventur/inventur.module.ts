@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventurComponent } from './inventur.component';
-import { ErfassungComponent } from './erfassung/erfassung.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { AppMaterialModule } from '../shared/app-material-module';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PositionComponent } from './position/position.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
     imports: [
@@ -16,17 +18,16 @@ import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
         HttpModule,
         AppMaterialModule,
         AppCovalentModuleModule,
+        ReactiveFormsModule,
+        CurrencyMaskModule
     ],
     declarations: [
         InventurComponent,
-        ErfassungComponent
+        PositionComponent
     ],
     exports: [
         InventurComponent
     ],
-    entryComponents: [
-        ErfassungComponent
-    ]
 })
 export class InventurModule {
 }

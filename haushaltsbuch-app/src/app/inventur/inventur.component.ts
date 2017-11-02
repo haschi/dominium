@@ -1,26 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { ErfassungComponent } from './erfassung/erfassung.component';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Inventar } from './inventar';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-inventur',
-  templateUrl: './inventur.component.html',
-  styleUrls: ['./inventur.component.scss']
+    selector: 'app-inventur',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './inventur.component.html',
+    styleUrls: ['./inventur.component.scss']
 })
 export class InventurComponent implements OnInit {
+    private ergebnis: any;
+    private formGroup: FormGroup;
+    private model: Inventar = {
+        anlagevermoegen: [],
+        umlaufvermoegen: [],
+        schulden: []
+    };
 
-  constructor(public dialog: MatDialog) { }
+    constructor(private builder: FormBuilder) {
+    }
 
-  ngOnInit() {
-  }
-
-  dialogOeffnen() {
-    const dialogReferenz = this.dialog.open(ErfassungComponent, {
-      width: '80wv'
-    });
-
-    dialogReferenz.afterClosed().subscribe(result => {
-      console.info('Dialog geschlossen');
-    });
-  }
+    ngOnInit() {
+        this.formGroup = this.builder.group({
+            anlagevermoegen: this.builder.array([]),
+            umlaufvermoegen: this.builder.array([]),
+            schulden: this.builder.array([])
+        });
+    }
 }
