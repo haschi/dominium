@@ -1,11 +1,11 @@
-import { AfterViewInit, Component} from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
 
@@ -43,6 +43,7 @@ export class AppComponent implements AfterViewInit {
             this._domSanitizer.bypassSecurityTrustResourceUrl('https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons/covalent-mark.svg'));
 
     }
+
     ngAfterViewInit(): void {
 
     }

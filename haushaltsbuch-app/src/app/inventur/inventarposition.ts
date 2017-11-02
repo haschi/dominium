@@ -1,3 +1,4 @@
 export class Inventarposition {
-    constructor(public position: string, public betrag: number){}
+    constructor(public position: string, public betrag: number) {
+    }
 }
