@@ -12,7 +12,7 @@ export class AppComponent implements AfterViewInit {
     routes: Object[] = [
         {
             title: 'Home',
-            route: '/',
+            route: '',
             icon: 'home',
         }, {
             title: 'Technology',

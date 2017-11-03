@@ -10,7 +10,7 @@
             <mat-form-field flex="30">
                 <input matInput placeholder="Betrag" type="text" name="betrag" currencyMask
                        maxlength="30" formControlName="betrag" required
-                       [options]="{ prefix: '', suffix: ' EUR', thousands: '.', decimal: ',' }">
+                       [options]="options">
             </mat-form-field>
             <div flex="10">
                 <button mat-icon-button (click)="loeschen(i)" type="button">
@@ -21,6 +21,6 @@
     </div>
 
     <button mat-mini-fab type="button" (click)="hinzufuegen()">
-        <mat-icon aria-label="Inventarposition für Anlagevermögen hinzufügen">add</mat-icon>
+        <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
     </button>
 </div>

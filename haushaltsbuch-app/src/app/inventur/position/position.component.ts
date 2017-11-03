@@ -9,6 +9,14 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PositionComponent {
 
+    options = {
+        prefix: '',
+        suffix: ' EUR',
+        thousands: '.',
+        decimal: ',',
+        allowNegative: false
+    };
+
     @Input()
     public parent: FormGroup;
 

@@ -3,7 +3,7 @@
                           name="Matthias Haschka" email="matthias.haschka@me.com">
         <mat-nav-list>
             <ng-template let-item let-last="last" ngFor [ngForOf]="routes">
-                <a mat-list-item (click)="layout.close()">
+                <a mat-list-item [routerLink]="['']">
                     <mat-icon>{{item.icon}}</mat-icon>
                     {{item.title}}</a>
             </ng-template>
@@ -16,7 +16,7 @@
     </td-navigation-drawer>
     <td-layout-nav navigationRoute="/">
         <div td-toolbar-content layout="row" layout-align="start center" flex>
-            <button mat-icon-button td-menu-button tdLayoutToggle>
+            <button mat-icon-button td-menu-button tdLayoutToggle td-layout-toggle>
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-icon class="mat-icon-logo cursor-pointer">account_balance</mat-icon>

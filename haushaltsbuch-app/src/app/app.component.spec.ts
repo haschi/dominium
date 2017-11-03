@@ -30,7 +30,7 @@ describe('AppComponent', () => {
     it(`sollte eine route für home haben`, async(() => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.debugElement.componentInstance;
-        expect(app.routes).toContain({title: 'Home', route: '/', icon: 'home'});
+        expect(app.routes).toContain({title: 'Home', route: '', icon: 'home'});
     }));
 
     it('should render title in a h1 tag', async(() => {

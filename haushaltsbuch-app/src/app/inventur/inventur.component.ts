@@ -11,12 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class InventurComponent implements OnInit {
 
     private formGroup: FormGroup;
-    private model: Inventar = {
-        anlagevermoegen: [],
-        umlaufvermoegen: [],
-        schulden: []
-    };
-
+    private model: any;
     constructor(private builder: FormBuilder) {
     }
 
@@ -26,5 +21,10 @@ export class InventurComponent implements OnInit {
             umlaufvermoegen: this.builder.array([]),
             schulden: this.builder.array([])
         });
+    }
+
+    speichern(): void {
+        this.model = this.formGroup.value;
+        console.info('Daten werden gespeichert');
     }
 }
