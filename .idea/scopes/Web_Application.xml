@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Web Application" pattern="file[haushaltsbuch-app]:*/&amp;&amp;!file[haushaltsbuch-app]:node/*&amp;&amp;!file[haushaltsbuch-app]:node//*" />
+</component>

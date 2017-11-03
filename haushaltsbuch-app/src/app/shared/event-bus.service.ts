@@ -5,7 +5,7 @@
 
 // from https://github.com/benorama/ngrx-realtime-app/blob/master/client/src/app/shared/event-bus.service.ts
 
-import {EventEmitter, Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from '@angular/core';
 import * as SockJS from 'sockjs-client';
 
 @Injectable()

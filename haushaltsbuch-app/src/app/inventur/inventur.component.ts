@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     styleUrls: ['./inventur.component.scss']
 })
 export class InventurComponent implements OnInit {
-    private ergebnis: any;
+
     private formGroup: FormGroup;
     private model: Inventar = {
         anlagevermoegen: [],

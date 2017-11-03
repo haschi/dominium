@@ -35,12 +35,17 @@ export class AppComponent implements AfterViewInit {
 
     constructor(private _iconRegistry: MatIconRegistry,
                 private _domSanitizer: DomSanitizer) {
+
+        const s = 'https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons';
+
         this._iconRegistry.addSvgIconInNamespace('assets', 'teradata-ux',
-            this._domSanitizer.bypassSecurityTrustResourceUrl('https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons/teradata-ux.svg'));
+            this._domSanitizer.bypassSecurityTrustResourceUrl(s + '/teradata-ux.svg'));
+
         this._iconRegistry.addSvgIconInNamespace('assets', 'covalent',
-            this._domSanitizer.bypassSecurityTrustResourceUrl('https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons/covalent.svg'));
+            this._domSanitizer.bypassSecurityTrustResourceUrl(s + '/covalent.svg'));
+
         this._iconRegistry.addSvgIconInNamespace('assets', 'covalent-mark',
-            this._domSanitizer.bypassSecurityTrustResourceUrl('https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons/covalent-mark.svg'));
+            this._domSanitizer.bypassSecurityTrustResourceUrl(s + '/covalent-mark.svg'));
 
     }
 

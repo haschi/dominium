@@ -5,5 +5,3 @@ export interface Inventar {
     umlaufvermoegen: Inventarposition[];
     schulden: Inventarposition[];
 }
-
-export const kategorien = ['Anlagevermögen', 'Umlaufvermögen', 'Darlehen'];

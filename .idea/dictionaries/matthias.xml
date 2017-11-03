@@ -32,6 +32,8 @@
       <w>herunterfahren</w>
       <w>infrastruktur</w>
       <w>integrationstests</w>
+      <w>inventar</w>
+      <w>inventur</w>
       <w>jboss</w>
       <w>konfiguration</w>
       <w>konfigurationsschritt</w>
@@ -42,8 +44,11 @@
       <w>laufzeitumgebung</w>
       <w>mongo</w>
       <w>pico</w>
+      <w>schulden</w>
+      <w>scss</w>
       <w>sollkonto</w>
       <w>sollsaldo</w>
+      <w>teradata</w>
       <w>testebene</w>
       <w>testumgebung</w>
     </words>
