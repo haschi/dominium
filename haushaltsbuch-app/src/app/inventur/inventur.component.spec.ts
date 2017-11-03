@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PositionComponent } from './position/position.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -25,6 +26,7 @@ describe('InventurComponent', () => {
                 AppCovalentModuleModule,
                 ReactiveFormsModule,
                 CurrencyMaskModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
             ],
             schemas: [NO_ERRORS_SCHEMA]

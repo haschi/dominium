@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Inventar } from './inventar';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-inventur',
@@ -12,7 +12,7 @@ export class InventurComponent implements OnInit {
 
     private formGroup: FormGroup;
     private model: any;
-    constructor(private builder: FormBuilder) {
+    constructor(private builder: FormBuilder, private http: HttpClient) {
     }
 
     ngOnInit() {
@@ -26,5 +26,9 @@ export class InventurComponent implements OnInit {
     speichern(): void {
         this.model = this.formGroup.value;
         console.info('Daten werden gespeichert');
+
+        this.http
+            .post('/api/inventur', this.formGroup.value)
+            .subscribe();
     }
 }
