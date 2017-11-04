@@ -118,6 +118,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-app</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <classifier>distribution</classifier>
+        </dependency>
+
+        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
         </dependency>
@@ -310,6 +317,36 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<version>3.0.2</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<artifactItems>-->
+                        <!--<artifactItem>-->
+                            <!--<groupId>com.github.haschi.haushaltsbuch</groupId>-->
+                            <!--<artifactId>haushaltsbuch-app</artifactId>-->
+                            <!--<version>0.0.1-SNAPSHOT</version>-->
+                            <!--<type>jar</type>-->
+                            <!--<overWrite>true</overWrite>-->
+                            <!--<outputDirectory>${project.build.directory}/webroot</outputDirectory>-->
+                        <!--</artifactItem>-->
+                    <!--</artifactItems>-->
+                    <!--<outputDirectory>${project.build.directory}/wars</outputDirectory>-->
+                    <!--<overWriteReleases>false</overWriteReleases>-->
+                    <!--<overWriteSnapshots>true</overWriteSnapshots>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

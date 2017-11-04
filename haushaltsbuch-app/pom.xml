@@ -149,6 +149,9 @@
                     </descriptors>
 
                     <finalName>haushaltsbuch-app-${pom.version}</finalName>
+                    <archive>
+
+                    </archive>
                 </configuration>
                 <executions>
                     <execution>

@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PositionComponent } from './position/position.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HttpClientModule } from '@angular/common/http';
+import { LoggerService } from '../shared/logger.service';
+import { CommandBusService } from '../shared/command-bus.service';
 
 @NgModule({
     imports: [
@@ -28,6 +30,10 @@ import { HttpClientModule } from '@angular/common/http';
     exports: [
         InventurComponent
     ],
+    providers: [
+        LoggerService,
+        CommandBusService
+    ]
 })
 export class InventurModule {
 }

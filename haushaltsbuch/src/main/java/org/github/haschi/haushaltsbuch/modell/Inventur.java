@@ -34,6 +34,7 @@ public final class Inventur
     @CommandHandler
     public Inventur(final BeginneInventur anweisung)
     {
+        System.out.println("Beginne Inventur: " + anweisung.id().toString());
         AggregateLifecycle.apply(InventurBegonnen.of(anweisung.id()));
     }
 

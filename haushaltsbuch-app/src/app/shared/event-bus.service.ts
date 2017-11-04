@@ -343,7 +343,7 @@ function mergeHeaders(defaultHeaders, headers) {
             return defaultHeaders;
         }
 
-        for (let headerName in defaultHeaders) {
+        for (const headerName in defaultHeaders) {
             if (defaultHeaders.hasOwnProperty(headerName)) {
                 // user can overwrite the default headers
                 if (typeof headers[headerName] === 'undefined') {
