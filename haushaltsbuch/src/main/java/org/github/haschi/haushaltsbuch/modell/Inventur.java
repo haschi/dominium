@@ -4,6 +4,7 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.commandhandling.model.AggregateLifecycle;
 import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.messaging.annotation.MetaDataValue;
 import org.github.haschi.haushaltsbuch.api.BeendeInventur;
 import org.github.haschi.haushaltsbuch.api.BeginneInventur;
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar;
@@ -19,7 +20,6 @@ import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatken
 
 public final class Inventur
 {
-
     @AggregateIdentifier
     private Aggregatkennung id;
 
@@ -32,9 +32,12 @@ public final class Inventur
     }
 
     @CommandHandler
-    public Inventur(final BeginneInventur anweisung)
+    public Inventur(final BeginneInventur anweisung, final @MetaDataValue("threadId") long threadId)
     {
-        System.out.println("Beginne Inventur: " + anweisung.id().toString());
+        if(Thread.currentThread().getId() != threadId) {
+            throw new IllegalThreadStateException();
+        }
+
         AggregateLifecycle.apply(InventurBegonnen.of(anweisung.id()));
     }
 

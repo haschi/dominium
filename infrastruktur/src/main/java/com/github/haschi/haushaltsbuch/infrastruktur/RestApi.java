@@ -9,9 +9,18 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
 import io.vertx.ext.web.handler.sockjs.PermittedOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.CommandMessage;
+import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
+import org.axonframework.messaging.Message;
+import org.axonframework.messaging.MessageDispatchInterceptor;
+import org.axonframework.messaging.MessageHandlerInterceptor;
+import org.axonframework.messaging.interceptors.LoggingInterceptor;
+import org.axonframework.monitoring.MessageMonitor;
+import org.axonframework.monitoring.NoOpMessageMonitor;
 import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch;
 import org.github.haschi.haushaltsbuch.modell.Inventur;
 
@@ -19,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class RestApi extends AbstractVerticle
 {
@@ -26,11 +37,11 @@ public class RestApi extends AbstractVerticle
 
     private final Logger log = LoggerFactory.getLogger(RestApi.class);
     private Configuration axon;
+    private Function<Configuration, BiFunction<Class<?>, String, MessageMonitor<Message<?>>>> monitorFactory;
 
     @Override
     public void start()
     {
-
         axon = DefaultConfigurer.defaultConfiguration()
                 .configureEmbeddedEventStore(konfiguration -> new InMemoryEventStorageEngine())
                 .configureAggregate(Inventur.class)
