@@ -12,7 +12,11 @@ import { PositionComponent } from './position/position.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LoggerService } from '../shared/logger.service';
+import { CommandBusService } from '../shared/command-bus.service';
+import { Observable } from 'rxjs/Observable';
 
+class MockCommandBusService {send() {}}
 describe('InventurComponent', () => {
     let component: InventurComponent;
     let fixture: ComponentFixture<InventurComponent>;
@@ -29,6 +33,9 @@ describe('InventurComponent', () => {
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
             ],
+            providers: [LoggerService,
+                {provide: CommandBusService, useClass: MockCommandBusService}
+            ],
             schemas: [NO_ERRORS_SCHEMA]
 
         })
@@ -43,5 +50,11 @@ describe('InventurComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it ('sollte die Inventur beginnen', () => {
+        const gateway = TestBed.get(CommandBusService);
+        spyOn(gateway, 'send').and.returnValue(Observable.empty());
+        component.speichern();
     });
 });

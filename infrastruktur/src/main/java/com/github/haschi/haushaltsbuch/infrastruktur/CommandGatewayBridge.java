@@ -58,7 +58,7 @@ public class CommandGatewayBridge
             final long threadId = Thread.currentThread().getId();
             final CompletableFuture<Object> future = send(
                     anweisung,
-                    ereignisVerarbeiten(nachricht, threadId));
+                    ergebnisVerarbeiten(nachricht, threadId));
 
             future.get();
         }
@@ -72,7 +72,7 @@ public class CommandGatewayBridge
         }
     }
 
-    private BiConsumer<Object, Throwable> ereignisVerarbeiten(final Message<JsonObject> nachricht, final long threadId)
+    private BiConsumer<Object, Throwable> ergebnisVerarbeiten(final Message<JsonObject> nachricht, final long threadId)
     {
         return (ergebnis, ausnahme) -> {
             if (threadId != Thread.currentThread().getId())
