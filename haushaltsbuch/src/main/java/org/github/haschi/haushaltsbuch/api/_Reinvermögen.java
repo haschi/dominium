@@ -1,7 +1,6 @@
 package org.github.haschi.haushaltsbuch.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information;

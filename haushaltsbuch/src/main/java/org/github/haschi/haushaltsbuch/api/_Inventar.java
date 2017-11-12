@@ -23,19 +23,14 @@ public abstract class _Inventar
 
     public abstract Vermögenswerte umlaufvermoegen();
 
-    // public abstract List<Schuld> schulden();
+    public abstract Schulden schulden();
 
     @Value.Derived
     public Reinvermögen reinvermoegen()
     {
         final Währungsbetrag anlagevermögen = anlagevermoegen().summe();
         final Währungsbetrag umlaufvermögen = umlaufvermoegen().summe();
-
-        final Währungsbetrag schulden = Währungsbetrag.NullEuro();
-//                Währungsbetrag.of(schulden().stream()
-//            .map(m -> m.währungsbetrag().wert())
-//            .reduce(MonetaryFunctions.sum())
-//            .orElse(Währungsbetrag.NullEuro().wert()));
+        final Währungsbetrag schulden = schulden().summe();
 
         return Reinvermögen.builder()
                 .summeDesVermögens(Währungsbetrag.of(anlagevermögen.wert().add(umlaufvermögen.wert())))

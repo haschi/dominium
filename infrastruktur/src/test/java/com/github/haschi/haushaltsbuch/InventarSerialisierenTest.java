@@ -1,22 +1,19 @@
 package com.github.haschi.haushaltsbuch;
 
 import io.vertx.core.json.JsonObject;
-import javaslang.Tuple;
+import org.github.haschi.haushaltsbuch.api.BeginneInventur;
 import org.github.haschi.haushaltsbuch.api.Inventar;
 import org.github.haschi.haushaltsbuch.api.Reinvermögen;
+import org.github.haschi.haushaltsbuch.api.Schulden;
 import org.github.haschi.haushaltsbuch.api.Vermögenswerte;
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag;
+import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 
-import java.text.MessageFormat;
-import java.util.stream.Stream;
+import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @DisplayName("Inventar serialisieren")
 public class InventarSerialisierenTest
@@ -28,7 +25,7 @@ public class InventarSerialisierenTest
         final Inventar inventar = Inventar.builder()
                 .anlagevermoegen(Vermögenswerte.leer())
                 .umlaufvermoegen(Vermögenswerte.leer())
-                // .schulden(Schulden.leer())
+                .schulden(Schulden.leer())
                 .build();
 
         final JsonObject jsonObject = JsonObject.mapFrom(inventar);
@@ -55,9 +52,8 @@ public class InventarSerialisierenTest
     public void reinvermögen_deserialisieren()
     {
         final JsonObject json = new JsonObject()
-                .put("summeDesVermoegens", new JsonObject().put("betrag", "120,00 EUR"))
-                .put("summeDerSchulden", new JsonObject().put("betrag", "80,00 EUR"));
-
+                .put("summeDesVermoegens", "120,00 EUR")
+                .put("summeDerSchulden", "80,00 EUR");
 
         System.out.println(json.encodePrettily());
 
@@ -66,37 +62,28 @@ public class InventarSerialisierenTest
     }
 
     @Test
-    @DisplayName("Währungsbetrag serialisieren")
-    public void währungsbetragSerialisieren()
+    @DisplayName("Beginne Inventur serialisieren")
+    public void beginne_inventur_serialisieren()
     {
-        final Währungsbetrag währungsbetrag = Währungsbetrag.NullEuro();
+        final Aggregatkennung id = Aggregatkennung.neu();
+        final BeginneInventur beginneInventur = BeginneInventur.of(id);
 
-        System.out.println(MessageFormat.format("Währungsbetrag {0}", JsonObject.mapFrom(währungsbetrag).encodePrettily
-                ()));
+        System.out.println(JsonObject.mapFrom(beginneInventur).encodePrettily());
 
-        assertThatCode(() -> JsonObject.mapFrom(währungsbetrag))
+        assertThatCode(() -> JsonObject.mapFrom(beginneInventur))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("Währungsbetrag deserialisieren")
-    @TestFactory
-    public Stream<DynamicTest> währungsbetrag_deserialisieren()
+    @Test
+    @DisplayName("Beginne Inventur deserialisieren")
+    public void beginne_inventur_deserialisieren()
     {
+        final JsonObject json = new JsonObject()
+                .put("id", UUID.randomUUID().toString());
 
-        return Stream.of("0,00 EUR", "123,56 EUR")
-                .map(s -> Tuple.of(s, Währungsbetrag.währungsbetrag(s)))
-                .map(input -> dynamicTest(
-                        MessageFormat.format("Währungsbetrag {0} deserialisieren", input._1()),
-                        () -> {
+        System.out.println(json.encodePrettily());
 
-                            final JsonObject entries = new JsonObject();
-                            entries.put("betrag", input._1());
-
-                            assertThatCode(() -> entries.mapTo(Währungsbetrag.class))
-                                    .doesNotThrowAnyException();
-
-                            assertThat(entries.mapTo(Währungsbetrag.class))
-                                    .isEqualTo(input._2());
-                        }));
+        assertThatCode(() -> json.mapTo(BeginneInventur.class))
+                .doesNotThrowAnyException();
     }
 }

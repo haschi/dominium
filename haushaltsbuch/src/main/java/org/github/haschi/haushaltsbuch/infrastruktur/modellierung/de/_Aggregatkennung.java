@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Value.Immutable
 @Eingehüllt
-@JsonSerialize(as = Aggregatkennung.class)
+@JsonSerialize(using = AggregatkennungSerialisierer.class, as = Aggregatkennung.class)
 @JsonDeserialize(using = AggregatkennungDeserialisierer.class, as = Aggregatkennung.class)
 public abstract class _Aggregatkennung extends Umhüller<UUID>
 {

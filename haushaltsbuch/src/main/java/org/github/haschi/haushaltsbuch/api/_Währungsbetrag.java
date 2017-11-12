@@ -1,13 +1,10 @@
 package org.github.haschi.haushaltsbuch.api;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.StringUtils;
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information;
-import org.immutables.builder.Builder;
+import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Eingehüllt;
+import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Umhüller;
 import org.immutables.value.Value;
 import org.javamoney.moneta.Money;
 
@@ -17,18 +14,13 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-@JsonDeserialize(builder = WährungsbetragBuilder.class)
-@JsonIgnoreProperties({"wert"})
-@Information
-public abstract class _Währungsbetrag
+@JsonDeserialize(using = WährungsbetragDeserialisierer.class, as = Währungsbetrag.class)
+@JsonSerialize(using = WährungsbetragSerialisierer.class)
+@Eingehüllt
+@Value.Immutable
+public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
 {
-    @JsonIgnore
-    @Value.Parameter
-    public abstract MonetaryAmount wert();
-
-
-    @Builder.Factory
-    public static Währungsbetrag währungsbetrag(final @JsonProperty(value = "betrag") String betrag)
+    public static Währungsbetrag währungsbetrag(final String betrag)
     {
         if (StringUtils.isEmpty(betrag))
         {
@@ -48,8 +40,7 @@ public abstract class _Währungsbetrag
     }
 
     @Override
-    @JsonProperty(value = "betrag")
-    @JsonUnwrapped
+    // @JsonProperty("betrag")
     public final String toString()
     {
         if (wert() != null )
