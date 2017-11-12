@@ -8,6 +8,6 @@ public final class MoneyConverter extends Transformer<Währungsbetrag>
 
     public Währungsbetrag transform(final String währungsbetrag)
     {
-        return Währungsbetrag.parse(währungsbetrag);
+        return Währungsbetrag.währungsbetrag(währungsbetrag);
     }
 }

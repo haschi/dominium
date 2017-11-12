@@ -13,7 +13,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoggerService } from '../shared/logger.service';
-import { CommandBusService } from '../shared/command-bus.service';
 import { Observable } from 'rxjs/Observable';
 
 class MockCommandBusService {send() {}}
@@ -34,7 +33,6 @@ describe('InventurComponent', () => {
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
             ],
             providers: [LoggerService,
-                {provide: CommandBusService, useClass: MockCommandBusService}
             ],
             schemas: [NO_ERRORS_SCHEMA]
 

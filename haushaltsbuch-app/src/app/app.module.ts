@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { EventBusService } from './shared/event-bus.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { DEMO_APP_ROUTES } from './routes';
@@ -26,7 +25,6 @@ import { InventurModule } from './inventur/inventur.module';
         RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: true}),
         InventurModule
     ],
-    providers: [EventBusService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

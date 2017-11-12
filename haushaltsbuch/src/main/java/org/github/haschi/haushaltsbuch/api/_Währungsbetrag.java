@@ -1,8 +1,13 @@
 package org.github.haschi.haushaltsbuch.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang3.StringUtils;
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Eingehüllt;
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Umhüller;
+import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information;
+import org.immutables.builder.Builder;
 import org.immutables.value.Value;
 import org.javamoney.moneta.Money;
 
@@ -12,22 +17,28 @@ import javax.money.format.MonetaryAmountFormat;
 import javax.money.format.MonetaryFormats;
 import java.util.Locale;
 
-@Value.Immutable
-// @XStreamConverter(MoneyConverter.class)
-@Eingehüllt
-public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
+@JsonDeserialize(builder = WährungsbetragBuilder.class)
+@JsonIgnoreProperties({"wert"})
+@Information
+public abstract class _Währungsbetrag
 {
-    public static Währungsbetrag parse(final String s)
+    @JsonIgnore
+    @Value.Parameter
+    public abstract MonetaryAmount wert();
+
+
+    @Builder.Factory
+    public static Währungsbetrag währungsbetrag(final @JsonProperty(value = "betrag") String betrag)
     {
-        if (StringUtils.isEmpty(s))
+        if (StringUtils.isEmpty(betrag))
         {
             throw new IllegalArgumentException("Währungsbetrag ist leer");
         }
 
         final DeutschenWährungsbetragAnalysieren analysieren = new DeutschenWährungsbetragAnalysieren();
-        final MonetaryAmount betrag = analysieren.aus(s);
+        final MonetaryAmount s = analysieren.aus(betrag);
 
-        return Währungsbetrag.of(betrag);
+        return Währungsbetrag.of(s);
     }
 
     public static Währungsbetrag NullEuro()
@@ -37,6 +48,8 @@ public abstract class _Währungsbetrag extends Umhüller<MonetaryAmount>
     }
 
     @Override
+    @JsonProperty(value = "betrag")
+    @JsonUnwrapped
     public final String toString()
     {
         if (wert() != null )

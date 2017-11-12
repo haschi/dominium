@@ -34,27 +34,28 @@ public final class Haushaltsbuch
         final Inventar inventar = anweisung.inventar();
 
         final Währungsbetrag eigenkapital = Währungsbetrag.of(
-                inventar.anlagevermögen().summe().wert()
-                        .add(inventar.umlaufvermögen().summe().wert())
-                        .subtract(inventar.schulden().summe().wert()));
+                inventar.anlagevermoegen().summe().wert()
+                        .add(inventar.umlaufvermoegen().summe().wert())
+                        // .subtract(inventar.schulden().summe().wert())
+        );
 
         final Eröffnungsbilanzkonto eröffnungsbilanz = Eröffnungsbilanzkonto.builder()
                 .addHaben(Buchung.builder()
                                   .buchungstext("Anlagevermögen (AV)")
-                                  .betrag(inventar.anlagevermögen().summe())
+                                  .betrag(inventar.anlagevermoegen().summe())
                                   .build())
                 .addHaben(Buchung.builder()
                                   .buchungstext("Umlaufvermögen (UV)")
-                                  .betrag(inventar.umlaufvermögen().summe())
+                                  .betrag(inventar.umlaufvermoegen().summe())
                                   .build())
                 .addSoll(Buchung.builder()
                                  .buchungstext("Eigenkapital (EK)")
                                  .betrag(eigenkapital)
                                  .build())
-                .addSoll(Buchung.builder()
-                                 .buchungstext("Fremdkapital (FK)")
-                                 .betrag(inventar.schulden().summe())
-                                 .build())
+//                .addSoll(Buchung.builder()
+//                                 .buchungstext("Fremdkapital (FK)")
+//                                 .betrag(inventar.schulden().summe())
+//                                 .build())
                 .build();
 
         AggregateLifecycle.apply(

@@ -2,25 +2,19 @@ package com.github.haschi.haushaltsbuch.infrastruktur;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.sockjs.BridgeOptions;
-import io.vertx.ext.web.handler.sockjs.PermittedOptions;
-import io.vertx.ext.web.handler.sockjs.SockJSHandler;
-import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.CommandMessage;
-import org.axonframework.commandhandling.SimpleCommandBus;
+import io.vertx.ext.web.handler.BodyHandler;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.DefaultConfigurer;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
-import org.axonframework.messaging.Message;
-import org.axonframework.messaging.MessageDispatchInterceptor;
-import org.axonframework.messaging.MessageHandlerInterceptor;
-import org.axonframework.messaging.interceptors.LoggingInterceptor;
-import org.axonframework.monitoring.MessageMonitor;
-import org.axonframework.monitoring.NoOpMessageMonitor;
+import org.github.haschi.haushaltsbuch.api.BeendeInventur;
+import org.github.haschi.haushaltsbuch.api.BeginneInventur;
+import org.github.haschi.haushaltsbuch.api.ErfasseInventar;
+import org.github.haschi.haushaltsbuch.api.Inventar;
+import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung;
 import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch;
 import org.github.haschi.haushaltsbuch.modell.Inventur;
 
@@ -28,8 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class RestApi extends AbstractVerticle
 {
@@ -37,7 +31,6 @@ public class RestApi extends AbstractVerticle
 
     private final Logger log = LoggerFactory.getLogger(RestApi.class);
     private Configuration axon;
-    private Function<Configuration, BiFunction<Class<?>, String, MessageMonitor<Message<?>>>> monitorFactory;
 
     @Override
     public void start()
@@ -51,24 +44,70 @@ public class RestApi extends AbstractVerticle
 
         axon.start();
 
-        final SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
-        sockJSHandler.bridge(
-                new BridgeOptions()
-                        .addInboundPermitted(new PermittedOptions().setAddress("command.queue"))
-                        .addOutboundPermitted(new PermittedOptions().setAddress("command.queue")));
+        final CommandGatewayBridge bridge = new CommandGatewayBridge(axon, vertx);
+        bridge.getRouter().route().handler(this::log);
+        bridge.getRouter().get("/").handler(RestApi::getIndex);
 
         final int port = config().getInteger("http.port", 8080);
-        final Router router = Router.router(vertx);
-        router.route().handler(this::log);
 
-        router.get("/").handler(RestApi::getIndex);
-        router.route("/eventbus/*").handler(sockJSHandler);
+        bridge.getRouter().route().handler(BodyHandler.create());
+
+        bridge.getRouter().post("/api/inventar").handler(context -> {
+            final BeginneInventur anweisung = BeginneInventur.of(Aggregatkennung.neu());
+
+            final CompletableFuture<Aggregatkennung> future = bridge.getGateway()
+                    .send(anweisung, Thread.currentThread().getId());
+
+            future.whenComplete((Aggregatkennung ergebnis, Throwable ausnahme) -> {
+                if (ausnahme == null) {
+                    context.response().putHeader("Location", "/api/inventar/" + ergebnis.wert().toString())
+                            .setStatusCode(200)
+                            .end();
+                } else {
+                    context.fail(ausnahme);
+                }
+            });
+
+            try
+            {
+                future.get();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            catch (ExecutionException e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+
+        bridge.getRouter().post("/api/inventar/:id")
+                .handler(context -> {
+
+                    log.info(MessageFormat.format(
+                            "erfasse Inventar: {0}",
+                            context.getBodyAsString()));
+
+                    final ErfasseInventar anweisung = ErfasseInventar.builder()
+                            .für(Aggregatkennung.of(context.pathParam("id")))
+                            .inventar(context.getBodyAsJson().mapTo(Inventar.class))
+                            .build();
+                    bridge.getGateway().send(anweisung, Thread.currentThread().getId())
+                            .whenComplete((ergebnis, ausnahme) -> {
+                                if (ausnahme == null) {
+                                    context.response().setStatusCode(201).end();
+                                } else {
+                                    context.fail(ausnahme);
+                                }
+                            });
+                });
 
         vertx.createHttpServer()
-                .requestHandler(router::accept)
+                .requestHandler(bridge.getRouter()::accept)
                 .listen(port);
 
-        final CommandGatewayBridge bridge = new CommandGatewayBridge(axon);
         final String commandQueue = config().getString(CONFIG_COMMAND_QUEUE, "command.queue");
         vertx.eventBus().consumer(commandQueue, bridge::anweisungVerarbeiten);
 

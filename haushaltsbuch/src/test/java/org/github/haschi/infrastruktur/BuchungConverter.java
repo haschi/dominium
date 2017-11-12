@@ -22,7 +22,7 @@ public final class BuchungConverter extends Transformer<Buchung>
         {
             return Buchung.builder()
                     .buchungstext(matcher.group(1))
-                    .betrag(Währungsbetrag.parse(matcher.group(2)))
+                    .betrag(Währungsbetrag.währungsbetrag(matcher.group(2)))
                     .build();
         }
         else

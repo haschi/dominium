@@ -10,7 +10,6 @@ import { PositionComponent } from './position/position.component';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HttpClientModule } from '@angular/common/http';
 import { LoggerService } from '../shared/logger.service';
-import { CommandBusService } from '../shared/command-bus.service';
 
 @NgModule({
     imports: [
@@ -32,7 +31,6 @@ import { CommandBusService } from '../shared/command-bus.service';
     ],
     providers: [
         LoggerService,
-        CommandBusService
     ]
 })
 export class InventurModule {

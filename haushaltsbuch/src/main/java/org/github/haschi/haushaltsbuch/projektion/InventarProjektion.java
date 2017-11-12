@@ -34,9 +34,10 @@ public final class InventarProjektion
         final DomainEventStream eventStream = eventStore.readEvents(abfrage.ausInventur().toString());
 
         final Inventar.Builder builder = Inventar.builder()
-                .anlagevermögen(Vermögenswerte.leer())
-                .umlaufvermögen(Vermögenswerte.leer())
-                .schulden(Schulden.leer());
+                .anlagevermoegen(Vermögenswerte.leer())
+                .umlaufvermoegen(Vermögenswerte.leer())
+                //.schulden(Schulden.leer())
+        ;
 
         Stream.ofAll(eventStream.asStream().collect(Collectors.toList()))
                 .foldLeft(builder, InventarProjektion::ie)

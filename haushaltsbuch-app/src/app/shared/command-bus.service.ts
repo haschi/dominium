@@ -15,6 +15,7 @@ import * as EventBus from 'vertx3-eventbus-client';
 import { Observable } from 'rxjs/Observable';
 import { State } from './state';
 import { Message } from './message';
+import { LoggerService } from './logger.service';
 
 @Injectable()
 export class CommandBusService {
@@ -25,7 +26,8 @@ export class CommandBusService {
 
     private _closeEvent: CloseEvent | null = null;
 
-  constructor() {
+  constructor(private log: LoggerService) {
+
       // Alternatively, pass in an options object
       const options = {
           vertxbus_reconnect_attempts_max: Infinity, // Max reconnect attempts
@@ -39,6 +41,7 @@ export class CommandBusService {
       this.delegate.enableReconnect(true);
 
       // this.delegate.pingEnabled(false);
+      this.delegate.enablePing(false);
 
       // capture close event
       this._stateClosedEvent$.subscribe(
@@ -54,11 +57,11 @@ export class CommandBusService {
               .startWith(this.delegate.state);
       });
 
-      console.log('Command Bus erzeugt');
+      this.log.log('Command Bus erzeugt');
   }
 
     send(address: string, message: any, headers?: any): Observable<Message<any>> {
-      console.info('Sending Command');
+      this.log.log('Sending Command');
 
         const generatorFn =
             Observable.bindNodeCallback<string, any, (any | undefined), Message<any>>(

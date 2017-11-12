@@ -6,7 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface VertxCommandGateway
 {
-    <T> CompletableFuture<Object> send(
+    <T> CompletableFuture<T> send(
             Object anweisung,
             @MetaDataValue("threadId") final long threadId);
 }
