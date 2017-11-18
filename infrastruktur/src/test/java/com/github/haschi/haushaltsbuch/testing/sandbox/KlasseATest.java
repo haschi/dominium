@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.testing;
+package com.github.haschi.haushaltsbuch.testing.sandbox;
 
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.DisplayName;
@@ -55,20 +55,4 @@ public class KlasseATest
                         .d(KlasseD.of(12.34))
                                    .build());
     }
-
-    @Test
-    @DisplayName("Klasse A deserialisieren 2")
-    public void klasse_a_deserialisieren2()
-    {
-        final JsonObject json = new JsonObject()
-                .put("a", new JsonObject().put("wert", "Hello World"))
-                .put("b", new JsonObject().put("wert", 42));
-
-        assertThatCode(() -> json.mapTo(AussereKlasse.class))
-                .doesNotThrowAnyException();
-
-        assertThat(json.mapTo(AussereKlasse.class))
-                .isEqualTo(AussereKlasse.builder().a(KlasseA.of("Hello World")).build());
-    }
-
 }

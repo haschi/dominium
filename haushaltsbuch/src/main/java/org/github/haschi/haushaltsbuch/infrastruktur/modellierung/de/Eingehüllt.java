@@ -3,6 +3,7 @@ package org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import org.immutables.value.Value;
 
+@Deprecated
 @Value.Style(
         // Detect names starting with underscore
         typeAbstract = "_*",

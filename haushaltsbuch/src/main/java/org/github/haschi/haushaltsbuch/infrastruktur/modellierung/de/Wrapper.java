@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.testing;
+package org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

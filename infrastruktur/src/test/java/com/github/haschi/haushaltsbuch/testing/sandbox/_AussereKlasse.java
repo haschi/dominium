@@ -1,6 +1,5 @@
-package com.github.haschi.haushaltsbuch.testing;
+package com.github.haschi.haushaltsbuch.testing.sandbox;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Ereignis;
 

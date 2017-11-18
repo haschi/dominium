@@ -1,4 +1,5 @@
 org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Ereignis
+org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.EinfacherWert
 org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Anweisung
 org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Abfrage
 org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information
