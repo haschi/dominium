@@ -1,36 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { InventurComponent } from './inventur.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from '../shared/app-material-module';
-import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { PositionComponent } from './position/position.component';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { GruppeComponent } from './gruppe/gruppe.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoggerService } from '../shared/logger.service';
+import { SharedModule } from '../shared/shared.module';
+import { PostenComponent } from './gruppe/posten/posten.component';
+import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 
 @NgModule({
     imports: [
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         HttpClientModule,
-        AppMaterialModule,
         AppCovalentModuleModule,
-        ReactiveFormsModule,
-        CurrencyMaskModule
+        SharedModule,
     ],
     declarations: [
         InventurComponent,
-        PositionComponent
+        GruppeComponent,
+        PostenComponent,
     ],
     exports: [
         InventurComponent
-    ],
-    providers: [
-        LoggerService,
     ]
 })
 export class InventurModule {

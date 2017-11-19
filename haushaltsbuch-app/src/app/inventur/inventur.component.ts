@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { LoggerService } from '../shared/logger.service';
-import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
-import { mergeMap } from 'rxjs/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-inventur',
@@ -15,41 +14,55 @@ import { mergeMap } from 'rxjs/operator/mergeMap';
 })
 export class InventurComponent implements OnInit {
 
-    private formGroup: FormGroup;
+    private inventur: FormGroup;
 
     private model: any;
 
-    constructor(
-        private builder: FormBuilder,
-        private log: LoggerService,
-        private http: Http) {
+    private model$: Observable<any>;
+
+    constructor(private builder: FormBuilder,
+                private log: LoggerService,
+                private http: HttpClient) {
     }
 
     ngOnInit() {
-        this.formGroup = this.builder.group({
+        this.inventur = this.builder.group({
             anlagevermoegen: this.builder.array([]),
             umlaufvermoegen: this.builder.array([]),
             schulden: this.builder.array([])
         });
+
+        this.model$ = this.inventur.valueChanges;
+
+        this.inventur.valueChanges.subscribe(
+            value => this.log.log('Wertänderung: ' + JSON.stringify(value)));
     }
 
     speichern(): void {
-        this.model = this.formGroup.value;
+        this.model = this.inventur.value;
         this.log.log('Inventur beginnen');
-        this.log.log(JSON.stringify(this.formGroup.value));
+        this.log.log(JSON.stringify(this.inventur.value));
 
-        const that = this;
-
-        this.http.post('/api/inventar', {})
-            .flatMap(response => this.http.post(response.headers.get('location'), this.formGroup.value))
+        this.http.post('/api/inventar', this.inventur.value)
+            .flatMap((response: Response) => this.http.post(response.headers.get('location'), this.inventur.value))
             .subscribe(
-                reply => {this.log.log('REPLY: ' + JSON.stringify(reply)); },
-                error => {this.log.log('ERROR: ' + JSON.stringify(error)); });
+                reply => {
+                    this.log.log('REPLY: ' + JSON.stringify(reply));
+                },
+                error => {
+                    this.log.log('ERROR: ' + JSON.stringify(error));
+                });
     }
 
-    inventarSpeichern(response: Response) {
-        this.log.log('Inventar speichern');
-        const location = response.headers.get('location');
-        return this.http.post(location, this.formGroup.value);
+    get anlagevermoegen(): AbstractControl {
+        return this.inventur.get('anlagevermoegen');
+    }
+
+    get umlaufvermoegen(): AbstractControl {
+        return this.inventur.get('umlaufvermoegen');
+    }
+
+    get schulden(): AbstractControl {
+        return this.inventur.get('schulden');
     }
 }

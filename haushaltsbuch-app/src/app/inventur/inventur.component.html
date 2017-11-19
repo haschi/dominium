@@ -4,22 +4,31 @@
     <mat-card-content>
         <p>Erfassen Sie alle Vermögenswerte und Schulden. Das Inventar wird benötigt, um
         mit der Haushaltsbuchführung zu beginnen.</p>
-        <form [formGroup]="formGroup" (ngSubmit)="speichern()">
+        <form [formGroup]="inventur" (ngSubmit)="speichern()">
             <div layout="column" class="pad">
-                <h3>I. Anlagevermögen</h3>
-                <app-position [parent]="formGroup" [arrayName]="'anlagevermoegen'"></app-position>
-                <h3>II. Umlaufvermögen</h3>
-                <app-position [parent]="formGroup" [arrayName]="'umlaufvermoegen'"></app-position>
-                <h3>III. Schulden</h3>
-                <app-position [parent]="formGroup" [arrayName]="'schulden'"></app-position>
+                <app-inventur-gruppe [positionen]="anlagevermoegen">
+                    <h3 titel>I. Anlagevermögen</h3>
+                </app-inventur-gruppe>
+
+                <app-inventur-gruppe [positionen]="umlaufvermoegen">
+                    <h3>II. Umlaufvermögen</h3>
+                </app-inventur-gruppe>
+
+                <app-inventur-gruppe [positionen]="schulden">
+                    <h3>III. Schulden</h3>
+                </app-inventur-gruppe>
             </div>
             <div>
-                <button color="primary" mat-raised-button>Inventur beenden</button>
+                <button color="primary" mat-raised-button [disabled]="inventur?.invalid">
+                    Inventur beenden
+                </button>
             </div>
+
         </form>
     </mat-card-content>
 </mat-card>
 
 <mat-card>
+    <td-json-formatter [data]="(model$ | async)"></td-json-formatter>
     {{model | json}}
 </mat-card>

@@ -82,7 +82,6 @@ public class RestApi extends AbstractVerticle
             }
         });
 
-
         bridge.getRouter().post("/api/inventar/:id")
                 .handler(context -> {
 

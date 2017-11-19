@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
     CovalentCommonModule,
+    CovalentJsonFormatterModule,
     CovalentLayoutModule,
     CovalentMediaModule,
     CovalentMenuModule,
@@ -13,7 +14,8 @@ import {
         CovalentLayoutModule,
         CovalentNotificationsModule,
         CovalentMenuModule,
-        CovalentMediaModule
+        CovalentMediaModule,
+        CovalentJsonFormatterModule
     ],
     declarations: []
 })

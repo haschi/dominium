@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { InventurComponent } from './inventur.component';
 import { AppMaterialModule } from '../shared/app-material-module';
@@ -8,27 +8,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from '../home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PositionComponent } from './position/position.component';
+import { GruppeComponent } from './gruppe/gruppe.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { LoggerService } from '../shared/logger.service';
-import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
 
-class MockCommandBusService {send() {}}
 describe('InventurComponent', () => {
     let component: InventurComponent;
     let fixture: ComponentFixture<InventurComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [InventurComponent, HomeComponent, PositionComponent],
+            declarations: [InventurComponent, HomeComponent, GruppeComponent],
             imports: [
                 NoopAnimationsModule,
                 AppMaterialModule,
                 AppCovalentModuleModule,
                 ReactiveFormsModule,
                 CurrencyMaskModule,
+                HttpClientModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
             ],
@@ -50,9 +50,16 @@ describe('InventurComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it ('sollte die Inventur beginnen', () => {
-        const gateway = TestBed.get(CommandBusService);
-        spyOn(gateway, 'send').and.returnValue(Observable.empty());
+    it ('sollte ohne Eingabe mit leerem Invantar beginnen',
+        inject([HttpTestingController], (http: HttpTestingController) => {
         component.speichern();
-    });
+        const request = http.expectOne('/api/inventar');
+        expect(request.request.method).toEqual('POST');
+        expect(request.request.body).toEqual({
+            anlagevermoegen: [],
+            umlaufvermoegen: [],
+            schulden: []
+        });
+        http.verify();
+    }));
 });
