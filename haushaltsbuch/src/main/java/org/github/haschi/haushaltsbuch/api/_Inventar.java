@@ -1,5 +1,6 @@
 package org.github.haschi.haushaltsbuch.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Information;
@@ -26,6 +27,7 @@ public abstract class _Inventar
     public abstract Schulden schulden();
 
     @Value.Derived
+    @JsonIgnore
     public Reinvermögen reinvermoegen()
     {
         final Währungsbetrag anlagevermögen = anlagevermoegen().summe();

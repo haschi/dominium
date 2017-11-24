@@ -60,10 +60,16 @@ public class RestApi extends AbstractVerticle
 
             future.whenComplete((Aggregatkennung ergebnis, Throwable ausnahme) -> {
                 if (ausnahme == null) {
-                    context.response().putHeader("Location", "/api/inventar/" + ergebnis.wert().toString())
+                    context.response()
+                            .putHeader("Location", "/api/inventar/" + ergebnis.wert().toString())
+                            // .putHeader("content-type", "application/json")
+                            // .putHeader("content-type", "text/plain")
                             .setStatusCode(200)
+                            // .end("Hello World");
                             .end();
+                    log.info("Result for /api/inventar = 200");
                 } else {
+                    log.error(ausnahme);
                     context.fail(ausnahme);
                 }
             });
@@ -74,11 +80,11 @@ public class RestApi extends AbstractVerticle
             }
             catch (InterruptedException e)
             {
-                e.printStackTrace();
+                log.error(e);
             }
             catch (ExecutionException e)
             {
-                e.printStackTrace();
+                log.error(e);
             }
         });
 

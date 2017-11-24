@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch;
 
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import org.github.haschi.haushaltsbuch.api.BeginneInventur;
 import org.github.haschi.haushaltsbuch.api.Inventar;
@@ -13,11 +14,22 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("Inventar serialisieren")
 public class InventarSerialisierenTest
 {
+    @Test
+    @DisplayName("Deserialisieren eines vom Frontend gebauten Json Objekts")
+    public void echtes_objekt_deserialisieren()
+    {
+        final String sampe = "{\"anlagevermoegen\": {\"wert\": []},\"umlaufvermoegen\":[],\"schulden\":[]}";
+        final JsonObject json = new JsonObject(sampe);
+
+        assertThat(json.mapTo(Inventar.class))
+                .isEqualTo(Inventar.builder().build());
+    }
     @Test
     @DisplayName("Vollständiges Inventar deserialisieren")
     public void deserialisieren()
@@ -30,6 +42,8 @@ public class InventarSerialisierenTest
 
         final JsonObject jsonObject = JsonObject.mapFrom(inventar);
         System.out.println(jsonObject.encodePrettily());
+
+        assertThat(jsonObject.mapTo(Inventar.class)).isEqualTo(inventar);
     }
 
     @Test
