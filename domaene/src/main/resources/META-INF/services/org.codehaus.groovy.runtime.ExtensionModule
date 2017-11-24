@@ -1,4 +1,0 @@
-moduleName=Test module for specifications
-moduleVersion=${project.version}
-extensionClasses=com.github.haschi.MoneyExtensions
-staticExtensionClasses=
