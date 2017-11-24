@@ -1,7 +1,0 @@
-{
-  "port": 8080,
-  "routes": "fake/routes.json",
-  "watch": true,
-  "read-only": true,
-  "static": "fake/hal-browser"
-}
