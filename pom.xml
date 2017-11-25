@@ -31,6 +31,7 @@
 
         <!-- Das muss woanders hin -->
         <version.jboss.bom>10.0.1.Final</version.jboss.bom>
+        <kotlin.version>1.1.61</kotlin.version>
     </properties>
 
     <scm>
@@ -131,9 +132,21 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jre8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
+        <testSourceDirectory>haushaltsbuch/src/test/java</testSourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -224,6 +237,42 @@
 
             </plugin>
 
+            <!-- gmavenplus (für Tests mit Spock-Framework) -->
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <source>haushaltsbuch/src/main/java</source>
+                                <source>haushaltsbuch/target/generated-sources/annotations</source>
+                                <source>haushaltsbuch-app/src</source>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
             <plugin>
                 <!-- Die Reihenfolge der Plugins ist wichtig und darf nicht geändert werden:
                      1. Compiler und Annotation Processing
@@ -241,13 +290,21 @@
                         <id>default-testCompile</id>
                         <phase>test-compile</phase>
                     </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
                 </executions>
-            </plugin>
-
-            <!-- gmavenplus (für Tests mit Spock-Framework) -->
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
             </plugin>
 
 
