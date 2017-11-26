@@ -1,7 +1,5 @@
 package org.github.haschi.haushaltsbuch.api
 
-import org.apache.commons.lang3.StringUtils
-
 data class Buchung(val buchungstext: String, val betrag: Währungsbetrag) {
 
     companion object {

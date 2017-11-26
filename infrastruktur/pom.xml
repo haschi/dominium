@@ -42,12 +42,6 @@
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>application</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
             <!-- TODO axon-dependencies.pom -->
             <dependency>
                 <groupId>org.axonframework</groupId>
@@ -79,23 +73,19 @@
                 <version>${axon.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-metrics</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-
             <!-- todo cucumber-dependencies.pom -->
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-java8</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-picocontainer</artifactId>
@@ -119,13 +109,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>haushaltsbuch-app</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <classifier>distribution</classifier>
-        </dependency>
-
-        <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
         </dependency>
@@ -138,19 +121,6 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.immutables</groupId>
-            <artifactId>builder</artifactId>
-            <scope>provided</scope>
-            <version>2.5.5</version>
         </dependency>
 
         <dependency>
@@ -210,7 +180,6 @@
             <artifactId>junit-platform-runner</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
-
         </dependency>
 
         <dependency>
@@ -218,7 +187,6 @@
             <artifactId>junit-platform-engine</artifactId>
             <version>${junit.platform.version}</version>
             <scope>test</scope>
-
         </dependency>
 
         <dependency>
@@ -226,7 +194,6 @@
             <artifactId>junit-vintage-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-
         </dependency>
 
         <dependency>
@@ -248,7 +215,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
             <scope>test</scope>
-
         </dependency>
 
         <dependency>
@@ -268,34 +234,25 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jre8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
+            <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-simple</artifactId>-->
-            <!--<version>1.7.25</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-api</artifactId>-->
-            <!--<version>1.7.25</version>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -350,6 +307,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -368,6 +326,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -392,6 +351,7 @@
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -412,36 +372,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<version>3.0.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>copy</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<artifactItems>-->
-                        <!--<artifactItem>-->
-                            <!--<groupId>com.github.haschi.haushaltsbuch</groupId>-->
-                            <!--<artifactId>haushaltsbuch-app</artifactId>-->
-                            <!--<version>0.0.1-SNAPSHOT</version>-->
-                            <!--<type>jar</type>-->
-                            <!--<overWrite>true</overWrite>-->
-                            <!--<outputDirectory>${project.build.directory}/webroot</outputDirectory>-->
-                        <!--</artifactItem>-->
-                    <!--</artifactItems>-->
-                    <!--<outputDirectory>${project.build.directory}/wars</outputDirectory>-->
-                    <!--<overWriteReleases>false</overWriteReleases>-->
-                    <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

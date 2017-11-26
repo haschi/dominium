@@ -1,23 +1,12 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.AsyncResult
 import io.vertx.core.Vertx
-import io.vertx.core.eventbus.DeliveryOptions
-import io.vertx.core.eventbus.Message
-import io.vertx.core.http.HttpServerResponse
-import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.ext.web.Route
 import io.vertx.ext.web.Router
-import io.vertx.ext.web.RoutingContext
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
-import org.reflections.Reflections
 import java.util.concurrent.CompletableFuture
 import java.util.function.BiConsumer
-import java.util.function.Consumer
-import java.util.function.Function
 
 /**
  * Bridge zwischen Vert.x Eventbus und Axon Command Gateway

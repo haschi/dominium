@@ -146,7 +146,6 @@
     </dependencies>
 
     <build>
-        <testSourceDirectory>haushaltsbuch/src/test/java</testSourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -166,31 +165,12 @@
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven.enforcer.version}</version>
                 </plugin>
-                <!-- gmavenplus (für Tests mit Spock-Framework -->
 
                 <plugin>
-                    <groupId>org.codehaus.gmavenplus</groupId>
-                    <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.5</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>testCompile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <targetBytecode>1.8</targetBytecode>
-                        <warningLevel>2</warningLevel>
-                        <invokeDynamic>true</invokeDynamic>
-                        <detail>true</detail>
-                        <testOutputDirectory>${unwoven-classes.directory}</testOutputDirectory>
-                        <outputDirectory>${unwoven-test-classes.directory}</outputDirectory>
-                        <debug>true</debug>
-                    </configuration>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
                 </plugin>
-
                 <plugin>
                     <artifactId>jdepend-maven-plugin</artifactId>
                     <groupId>org.codehaus.mojo</groupId>
@@ -231,119 +211,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <artifactId>jdepend-maven-plugin</artifactId>
-                <groupId>org.codehaus.mojo</groupId>
-
-            </plugin>
-
-            <!-- gmavenplus (für Tests mit Spock-Framework) -->
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <source>haushaltsbuch/src/main/java</source>
-                                <source>haushaltsbuch/target/generated-sources/annotations</source>
-                                <source>haushaltsbuch-app/src</source>
-                            </sourceDirs>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <jvmTarget>1.8</jvmTarget>
-                </configuration>
-            </plugin>
-            <plugin>
-                <!-- Die Reihenfolge der Plugins ist wichtig und darf nicht geändert werden:
-                     1. Compiler und Annotation Processing
-                     2. Groovy
-                     3. AspectJ
-                -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>compile</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>test-compile</phase>
-                    </execution>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-javadoc-plugin</artifactId>-->
-            <!--<version>2.10.4</version>-->
-
-            <!--<configuration>-->
-            <!--<doclet>com.github.haschi.modelldokumentation.EventStormingModellDoclet</doclet>-->
-            <!--<docletArtifact>-->
-            <!--<artifactId>modelldokumentation</artifactId>-->
-            <!--<groupId>com.github.haschi</groupId>-->
-            <!--<version>0.0.26-SNAPSHOT</version>-->
-            <!--</docletArtifact>-->
-            <!--<useStandardDocletOptions>false</useStandardDocletOptions>-->
-            <!--<debug>true</debug>-->
-            <!--<additionalDependencies>-->
-            <!--<additionalDependency>-->
-            <!--<groupId>com.github.haschi</groupId>-->
-            <!--<artifactId>modeling</artifactId>-->
-            <!--<version>0.0.26-SNAPSHOT</version>-->
-            <!--</additionalDependency>-->
-            <!--</additionalDependencies>-->
-            <!--</configuration>-->
-
-
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>aggregate</id>-->
-            <!--<goals>-->
-            <!--<goal>aggregate</goal>-->
-            <!--</goals>-->
-            <!--<phase>site</phase>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-
-
         </plugins>
     </build>
 
@@ -357,30 +224,8 @@
         </plugins>
     </reporting>
 
-    <!--<repositories>-->
-    <!--<repository>-->
-    <!--<snapshots>-->
-    <!--<enabled>false</enabled>-->
-    <!--</snapshots>-->
-    <!--<id>central</id>-->
-    <!--<name>bintray</name>-->
-    <!--<url>http://jcenter.bintray.com</url>-->
-    <!--</repository>-->
-    <!--</repositories>-->
-
     <modules>
-        <!--<module>haushaltsbuch-bom</module>-->
-        <!--<module>allgemein</module>-->
-        <!--<module>coding</module>-->
-        <!--<module>anwendung</module>-->
-        <!--<module>domaene</module>-->
-        <!--<module>web</module>-->
-        <!--<module>haushaltsbuch-abfrage</module>-->
-        <!--<module>haushaltsbuch-domäne</module>-->
-        <!--<module>haushaltsbuch-api</module>-->
-        <!--<module>haushaltsbuch-test</module>-->
-        
-        <module>haushaltsbuch-app</module>
+        <!--<module>haushaltsbuch-app</module>-->
         <module>haushaltsbuch</module>
         <module>infrastruktur</module>
     </modules>

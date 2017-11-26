@@ -2,27 +2,21 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx
-import io.vertx.core.http.HttpServerResponse
-import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
-import org.github.haschi.haushaltsbuch.api.BeendeInventur
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch
 import org.github.haschi.haushaltsbuch.modell.Inventur
-
 import java.io.IOException
-import java.io.InputStream
 import java.text.MessageFormat
-import java.util.Properties
-import java.util.concurrent.CompletableFuture
+import java.util.*
 import java.util.concurrent.ExecutionException
 
 class RestApi : AbstractVerticle()
@@ -34,17 +28,17 @@ class RestApi : AbstractVerticle()
     override fun start()
     {
         axon = DefaultConfigurer.defaultConfiguration()
-                .configureEmbeddedEventStore { konfiguration -> InMemoryEventStorageEngine() }
+                .configureEmbeddedEventStore { _ -> InMemoryEventStorageEngine() }
                 .configureAggregate(Inventur::class.java)
                 .configureAggregate(Haushaltsbuch::class.java)
-                .registerComponent(Vertx::class.java) { konfiguration -> vertx }
+                .registerComponent(Vertx::class.java) { _ -> vertx }
                 .buildConfiguration()
 
         axon!!.start()
 
         val bridge = CommandGatewayBridge(axon!!, vertx)
-        bridge.router.route().handler( { this.log(it) })
-        bridge.router.get("/").handler( { getIndex(it) })
+        bridge.router.route().handler({ this.log(it) })
+        bridge.router.get("/").handler({ getIndex(it) })
 
         val port = config().getInteger("http.port", 8080)!!
 
@@ -56,7 +50,7 @@ class RestApi : AbstractVerticle()
             val future = bridge.gateway
                     .send<Aggregatkennung>(anweisung, Thread.currentThread().id)
 
-            future.whenComplete { ergebnis: Aggregatkennung, ausnahme: Throwable ->
+            future.whenComplete { ergebnis: Aggregatkennung, ausnahme: Throwable? ->
                 if (ausnahme == null)
                 {
                     context.response()
@@ -113,9 +107,6 @@ class RestApi : AbstractVerticle()
                 .requestHandler({ bridge.router.accept(it) })
                 .listen(port)
 
-        val commandQueue = config().getString(CONFIG_COMMAND_QUEUE, "command.queue")
-
-        //vertx.eventBus().consumer(commandQueue, bridge.anweisungVerarbeiten )
         log.info("HTTP Server verfügbar auf Port 8080")
     }
 

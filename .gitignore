@@ -2,7 +2,6 @@
 # https://github.com/github/gitignore/blob/master/Jboss.gitignore
 # =============================================================================
 # JBOSS
-jboss/server/all/deploy/project.ext
 jboss/server/default/deploy/project.ext
 jboss/server/minimal/deploy/project.ext
 jboss/server/all/log/*.log
@@ -98,7 +97,6 @@ buildNumber.properties
 .idea/dataSources.xml
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
-.idea/uiDesigner.xml
 
 # Gradle:
 # .idea/gradle.xml
@@ -132,5 +130,3 @@ node_modules
 quickstart/
 *~
 src/main/webapp/js
-
-Würde etc/ löschen
