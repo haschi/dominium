@@ -40,5 +40,15 @@ data class Währungsbetrag(val wert: MonetaryAmount)
                         Money.of(
                                 0,
                                 Monetary.getCurrency(Locale.GERMANY)))
+
+        fun euro(betrag: Double): Währungsbetrag
+        {
+            return Währungsbetrag(Money.of(betrag, Monetary.getCurrency(Locale.GERMANY)));
+        }
+    }
+
+    operator fun plus(y: Währungsbetrag): Währungsbetrag
+    {
+        return Währungsbetrag(this.wert.add(y.wert))
     }
 }
