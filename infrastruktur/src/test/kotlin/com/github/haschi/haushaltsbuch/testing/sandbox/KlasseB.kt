@@ -7,5 +7,5 @@ import com.fasterxml.jackson.annotation.JsonValue
 data class KlasseB @JsonCreator constructor(@JsonIgnore private val i: Int)
 {
     @JsonValue
-    fun value() = i;
+    fun value() = i
 }
