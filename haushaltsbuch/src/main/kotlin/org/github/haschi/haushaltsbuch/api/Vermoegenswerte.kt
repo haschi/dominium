@@ -1,11 +1,16 @@
 package org.github.haschi.haushaltsbuch.api
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonValue
 import org.javamoney.moneta.function.MonetaryFunctions
 import javax.money.MonetaryAmount
 
-data class Vermoegenswerte(private val l: List<Vermoegenswert>) : List<Vermoegenswert> by l {
+data class Vermoegenswerte @JsonCreator constructor (@get:JsonIgnore private val l: List<Vermoegenswert>) : List<Vermoegenswert> by l {
 
     constructor(vararg ls: Vermoegenswert): this(ls.asList())
+
+    @JsonValue fun wert(): List<Vermoegenswert> = l;
 
     val summe: Währungsbetrag
         get() = Währungsbetrag(

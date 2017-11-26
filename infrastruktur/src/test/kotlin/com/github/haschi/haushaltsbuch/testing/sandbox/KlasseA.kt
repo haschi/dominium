@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonValue
 
-data class KlasseC @JsonCreator constructor(@get:JsonIgnore private val b: Boolean)
+data class KlasseA @JsonCreator constructor(@get:JsonIgnore val s: String)
 {
-    @JsonValue fun value() = b;
+    @JsonValue
+    fun value() = s;
 }

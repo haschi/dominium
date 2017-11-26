@@ -43,7 +43,7 @@ data class Währungsbetrag(val wert: MonetaryAmount)
 
         fun euro(betrag: Double): Währungsbetrag
         {
-            return Währungsbetrag(Money.of(betrag, Monetary.getCurrency(Locale.GERMANY)));
+            return Währungsbetrag(Money.of(betrag, Monetary.getCurrency(Locale.GERMANY)))
         }
     }
 
@@ -52,3 +52,5 @@ data class Währungsbetrag(val wert: MonetaryAmount)
         return Währungsbetrag(this.wert.add(y.wert))
     }
 }
+
+fun Double.euro(): Währungsbetrag = Währungsbetrag.euro(this)

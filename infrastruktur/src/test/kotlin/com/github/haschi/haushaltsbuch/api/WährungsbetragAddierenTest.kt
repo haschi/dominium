@@ -2,10 +2,10 @@ package com.github.haschi.haushaltsbuch.api
 
 import org.assertj.core.api.Assertions.assertThat
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
+import org.github.haschi.haushaltsbuch.api.euro
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicNode
 import org.junit.jupiter.api.DynamicTest.dynamicTest
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
 
 @DisplayName("Währungsbetrag addieren")
@@ -22,7 +22,7 @@ class WährungsbetragAddierenTest
 
         return listOf(
                 Testfall(
-                        Währungsbetrag.NullEuro,
+                        0.0.euro(),
                         Währungsbetrag.NullEuro,
                         Währungsbetrag.NullEuro),
                 Testfall(
