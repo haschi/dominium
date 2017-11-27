@@ -3,6 +3,11 @@ package com.github.haschi.haushaltsbuch
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
+import io.vertx.kotlin.core.json.array
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.obj
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.api.Reinvermögen
@@ -10,14 +15,10 @@ import org.github.haschi.haushaltsbuch.api.Schulden
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-
-import java.util.UUID
-
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatCode
-import org.junit.jupiter.api.BeforeAll
+import java.util.*
 
 @DisplayName("Inventar serialisieren")
 class InventarSerialisierenTest
@@ -26,10 +27,13 @@ class InventarSerialisierenTest
     @DisplayName("Deserialisieren eines vom Frontend gebauten Json Objekts")
     fun echtes_objekt_deserialisieren()
     {
-        val sampe = """{"anlagevermoegen": {"wert": []},"umlaufvermoegen":[],"schulden":[]}"""
-        val json = JsonObject(sampe)
+        val sample = json { obj(
+                "anlagevermoegen" to array(),
+                "umlaufvermoegen" to array(),
+                "schulden" to array()
+        ) }
 
-        assertThat(json.mapTo(Inventar::class.java))
+        assertThat(sample.mapTo(Inventar::class.java))
                 .isEqualTo(Inventar.leer)
     }
 
@@ -111,7 +115,8 @@ class InventarSerialisierenTest
     {
         @JvmStatic
         @BeforeAll
-        fun setup() {
+        fun setup()
+        {
             Json.mapper.registerKotlinModule();
         }
     }
