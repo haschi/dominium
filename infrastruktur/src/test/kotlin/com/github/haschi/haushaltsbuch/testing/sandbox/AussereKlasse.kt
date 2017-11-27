@@ -1,8 +1,5 @@
 package com.github.haschi.haushaltsbuch.testing.sandbox
 
-import kotlinx.serialization.Serializable
-
-// @Serializable
 data class AussereKlasse(
         val a: KlasseA,
         val b: KlasseB,
