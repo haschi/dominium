@@ -20,7 +20,12 @@
         <junit.jupiter.version>5.0.1</junit.jupiter.version>
         <junit.platform.version>1.0.1</junit.platform.version>
         <junit.version>4.12.1</junit.version>
-        <cukes.version>2.0.1</cukes.version>
+        <!--<cukes.version>2.1.0</cukes.version>-->
+        <!--<cukes.artefactId>io.cucumber</cukes.artefactId>-->
+
+        <cukes.version>1.2.5</cukes.version>
+        <cukes.artefactId>info.cukes</cukes.artefactId>
+
         <assertj.version>3.8.0</assertj.version>
         <vertx.verticle>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.verticle>
         <kotlin.version>1.1.61</kotlin.version>
@@ -77,19 +82,19 @@
 
             <!-- todo cucumber-dependencies.pom -->
             <dependency>
-                <groupId>io.cucumber</groupId>
+                <groupId>${cukes.artefactId}</groupId>
                 <artifactId>cucumber-java8</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.cucumber</groupId>
+                <groupId>${cukes.artefactId}</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.cucumber</groupId>
+                <groupId>${cukes.artefactId}</groupId>
                 <artifactId>cucumber-picocontainer</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
@@ -135,6 +140,16 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-lang-kotlin</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-rx-java2</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>io.vertx</groupId>-->
+            <!--<artifactId>vertx-rx</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -224,19 +239,19 @@
         </dependency>
 
         <dependency>
-            <groupId>io.cucumber</groupId>
+            <groupId>${cukes.artefactId}</groupId>
             <artifactId>cucumber-java8</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>io.cucumber</groupId>
+            <groupId>${cukes.artefactId}</groupId>
             <artifactId>cucumber-junit</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>io.cucumber</groupId>
+            <groupId>${cukes.artefactId}</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <scope>test</scope>
         </dependency>

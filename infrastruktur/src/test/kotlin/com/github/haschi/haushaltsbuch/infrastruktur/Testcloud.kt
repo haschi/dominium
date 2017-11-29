@@ -1,12 +1,15 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.Vertx
+import io.reactivex.Single
+import io.vertx.reactivex.core.RxHelper
+import io.vertx.reactivex.core.Vertx
 import org.picocontainer.Startable
 
 class Testcloud : Startable
 {
 
-    private var vertx: Vertx? = null
+    var vertx: Vertx? = null
+    var deployed: Single<String>? = null;
 
     override fun start()
     {
@@ -18,8 +21,13 @@ class Testcloud : Startable
         vertx!!.close()
     }
 
-    fun deployVerticle(clazz: Class<RestApi>)
+    fun verticleSynchronBereitstellen(api: RestApi)
     {
-        vertx!!.deployVerticle(clazz.name)
+        println(RxHelper.deployVerticle(vertx!!, api)
+            .flatMap {
+                Single.just("Hello, $it")
+            }
+
+            .blockingGet())
     }
 }

@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.Vertx
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.ext.web.Router
+import io.vertx.reactivex.ext.web.Router
+
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
 import java.util.concurrent.CompletableFuture
@@ -11,7 +11,7 @@ import java.util.function.BiConsumer
 /**
  * Bridge zwischen Vert.x Eventbus und Axon Command Gateway
  */
-class CommandGatewayBridge(configuration: Configuration, private val vertx: Vertx)
+class CommandGatewayBridge(configuration: Configuration, private val vertx: io.vertx.reactivex.core.Vertx)
 {
     val gateway: VertxCommandGateway
 

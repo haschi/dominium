@@ -1,10 +1,8 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.AbstractVerticle
-import io.vertx.core.Vertx
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
+import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
@@ -31,7 +29,7 @@ class RestApi : AbstractVerticle()
                 .configureEmbeddedEventStore { _ -> InMemoryEventStorageEngine() }
                 .configureAggregate(Inventur::class.java)
                 .configureAggregate(Haushaltsbuch::class.java)
-                .registerComponent(Vertx::class.java) { _ -> vertx }
+                .registerComponent(vertx.javaClass) { _ -> vertx }
                 .buildConfiguration()
 
         axon!!.start()
@@ -42,7 +40,7 @@ class RestApi : AbstractVerticle()
 
         val port = config().getInteger("http.port", 8080)!!
 
-        bridge.router.route().handler(BodyHandler.create())
+        // bridge.router.route().handler(BodyHandler.create())
 
         bridge.router.post("/api/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
@@ -110,7 +108,7 @@ class RestApi : AbstractVerticle()
         log.info("HTTP Server verfügbar auf Port 8080")
     }
 
-    private fun log(context: RoutingContext)
+    private fun log(context: io.vertx.reactivex.ext.web.RoutingContext)
     {
         log.debug(MessageFormat.format(
                 "Verarbeite Request: URI = {0}, METHOD = {1}, BODY = {2}",
@@ -133,7 +131,7 @@ class RestApi : AbstractVerticle()
     {
         private val CONFIG_COMMAND_QUEUE = "command.queue"
 
-        private fun getIndex(context: RoutingContext)
+        private fun getIndex(context: io.vertx.reactivex.ext.web.RoutingContext)
         {
             try
             {
