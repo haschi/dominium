@@ -9,7 +9,6 @@ class Testcloud : Startable
 {
 
     var vertx: Vertx? = null
-    var deployed: Single<String>? = null;
 
     override fun start()
     {
