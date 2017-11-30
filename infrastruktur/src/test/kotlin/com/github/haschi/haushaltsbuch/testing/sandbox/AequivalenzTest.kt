@@ -7,15 +7,15 @@ import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.api.ErfasseUmlaufvermögen
+import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
+import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
+import org.github.haschi.haushaltsbuch.api.InventarErfasst
+import org.github.haschi.haushaltsbuch.api.InventurBegonnen
+import org.github.haschi.haushaltsbuch.api.SchuldErfasst
+import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.jupiter.api.extension.Extension
-import org.junit.jupiter.api.extension.ExtensionContext
-import org.junit.jupiter.api.extension.ParameterContext
-import org.junit.jupiter.api.extension.ParameterResolver
-import org.junit.jupiter.api.extension.TestTemplateInvocationContext
-import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
@@ -23,102 +23,43 @@ import kotlin.reflect.KClass
 class AequivalenzTest
 {
     @TestTemplate
-    @ExtendWith(DatenklassenProvider::class, AnweisungenProvider::class)
+    @ExtendWith(DatenklassenProvider::class, AnweisungenAnbieter::class, EreignisAnbieter::class)
+    @DisplayName("prüfe, ob Äquivalenzregeln für die Klasse eingehalten sind")
     fun aequivalenz(testklasse: KClass<*>)
     {
         EqualsVerifier.forClass(testklasse.java).verify()
     }
 
-    class DatenklassenProvider : TestTemplateInvocationContextProvider
+    class DatenklassenProvider : TestfallAnbieter<KClass<*>>()
     {
-        override fun supportsTestTemplate(context: ExtensionContext?): Boolean = true
-
-        override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext>
-        {
-            return Stream.of(
-                    KlasseA::class,
-                    KlasseB::class,
-                    KlasseC::class,
-                    KlasseD::class,
-                    KlasseE::class)
-                    .map { testfall(it) }
-        }
-
-        private fun testfall(klasse: KClass<*>): TestTemplateInvocationContext
-        {
-            return object : TestTemplateInvocationContext
-            {
-                override fun getDisplayName(invocationIndex: Int): String
-                {
-                    return klasse.qualifiedName.orEmpty()
-                }
-
-                override fun getAdditionalExtensions(): MutableList<Extension>
-                {
-                    return mutableListOf(object : ParameterResolver
-                    {
-                        override fun supportsParameter(p0: ParameterContext, p1: ExtensionContext?): Boolean
-                        {
-                            return p0.parameter.type.isAssignableFrom(KClass::class.java)
-                        }
-
-                        override fun resolveParameter(
-                                parameter: ParameterContext?,
-                                extension: ExtensionContext?): Any
-                        {
-                            return klasse
-                        }
-                    })
-                }
-            }
-        }
+        override fun testfälle(): Stream<KClass<*>> = Stream.of(
+                KlasseA::class,
+                KlasseB::class,
+                KlasseC::class,
+                KlasseD::class,
+                KlasseE::class)
     }
 
-    class AnweisungenProvider : TestTemplateInvocationContextProvider
+    class AnweisungenAnbieter : TestfallAnbieter<KClass<*>>()
     {
-        override fun supportsTestTemplate(context: ExtensionContext?): Boolean = true
-
-        override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext>
-        {
-            return Stream.of(
-                    BeendeInventur::class,
-                    BeginneHaushaltsbuchführung::class,
-                    BeginneInventur::class,
-                    ErfasseInventar::class,
-                    ErfasseSchulden::class,
-                    ErfasseUmlaufvermögen::class)
-
-                    .map { testfall(it) }
-        }
-
-        private fun testfall(klasse: KClass<*>): TestTemplateInvocationContext
-        {
-            return object : TestTemplateInvocationContext
-            {
-                override fun getDisplayName(invocationIndex: Int): String
-                {
-                    return klasse.qualifiedName.orEmpty()
-                }
-
-                override fun getAdditionalExtensions(): MutableList<Extension>
-                {
-                    return mutableListOf(object : ParameterResolver
-                    {
-                        override fun supportsParameter(p0: ParameterContext, p1: ExtensionContext?): Boolean
-                        {
-                            return p0.parameter.type.isAssignableFrom(KClass::class.java)
-                        }
-
-                        override fun resolveParameter(
-                                parameter: ParameterContext?,
-                                extension: ExtensionContext?): Any
-                        {
-                            return klasse
-                        }
-                    })
-                }
-            }
-        }
+        override fun testfälle(): Stream<KClass<*>> = Stream.of(
+                BeendeInventur::class,
+                BeginneHaushaltsbuchführung::class,
+                BeginneInventur::class,
+                ErfasseInventar::class,
+                ErfasseSchulden::class,
+                ErfasseUmlaufvermögen::class)
     }
 
+    class EreignisAnbieter: TestfallAnbieter<KClass<*>>()
+    {
+        override  fun testfälle(): Stream<KClass<*>> = Stream.of(
+                EröffnungsbilanzkontoErstellt::class,
+                HaushaltsbuchführungBegonnen::class,
+                InventarErfasst::class,
+                // InventurBeendet::class,
+                InventurBegonnen::class,
+                SchuldErfasst::class,
+                UmlaufvermögenErfasst::class)
+    }
 }
