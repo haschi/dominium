@@ -14,15 +14,10 @@ class Abfragekonfiguration(storagelieferant: EventStoreLieferant) : Startable
         return konfiguration.commandGateway()
     }
 
-    private val konfiguration: Configuration
-
-    init
-    {
-        this.konfiguration = DefaultConfigurer.defaultConfiguration()
-                .registerCommandHandler({ InventarProjektion(it) })
-                .configureEventStore({ storagelieferant.eventBus(it) })
-                .buildConfiguration()
-    }
+    private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
+            .registerCommandHandler({ InventarProjektion(it) })
+            .configureEventStore({ storagelieferant.eventBus(it) })
+            .buildConfiguration()
 
     override fun start()
     {

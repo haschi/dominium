@@ -7,7 +7,7 @@ import org.github.haschi.infrastruktur.MoneyConverter
 import org.junit.runner.RunWith
 
 @XStreamConverter(MoneyConverter::class)
-@CucumberOptions(tags = arrayOf("not @ignore"))//        strict = true,
+@CucumberOptions(tags = ["not @ignore"])//        strict = true,
 //
 //        plugin = {
 //                "pretty",

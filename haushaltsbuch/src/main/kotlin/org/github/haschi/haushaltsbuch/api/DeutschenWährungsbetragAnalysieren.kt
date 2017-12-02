@@ -7,11 +7,7 @@ import java.util.Locale
 
 internal class DeutschenWährungsbetragAnalysieren {
 
-    private val format: MonetaryAmountFormat
-
-    init {
-        this.format = MonetaryFormats.getAmountFormat(Locale.GERMANY)
-    }
+    private val format: MonetaryAmountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY)
 
     fun aus(währungsbetrag: String): MonetaryAmount {
         return this.format.parse(währungsbetrag)

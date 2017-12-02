@@ -20,16 +20,11 @@ class Anweisungskonfiguration(storagelieferant: EventStoreLieferant) : Startable
         return konfiguration
     }
 
-    private val konfiguration: Configuration
-
-    init
-    {
-        this.konfiguration = DefaultConfigurer.defaultConfiguration()
-                .configureAggregate(Inventur::class.java)
-                .configureAggregate(Haushaltsbuch::class.java)
-                .configureEventStore({ storagelieferant.eventBus(it) })
-                .buildConfiguration()
-    }
+    private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
+            .configureAggregate(Inventur::class.java)
+            .configureAggregate(Haushaltsbuch::class.java)
+            .configureEventStore({ storagelieferant.eventBus(it) })
+            .buildConfiguration()
 
     override fun start()
     {
