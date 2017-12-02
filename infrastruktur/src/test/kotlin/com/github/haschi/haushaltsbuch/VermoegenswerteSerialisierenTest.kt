@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
 import org.github.haschi.haushaltsbuch.core.Vermoegenswert
-import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
+import org.github.haschi.haushaltsbuch.core.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
