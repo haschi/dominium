@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.testing.sandbox
 
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
+import org.github.haschi.haushaltsbuch.api.BeendeInventur
 import org.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.api.Inventar
@@ -35,6 +36,10 @@ class SerialisierungTest
 
         override fun testfälle(): Stream<Testfall> =
             Stream.of(
+                    Testfall(BeendeInventur(Aggregatkennung.of(id)),
+                            """{
+                                |  "von" : "$id"
+                                |}""".trimMargin()),
                     Testfall(
                             BeginneInventur(Aggregatkennung.of(id)),
                             """{
@@ -54,7 +59,12 @@ class SerialisierungTest
                                     |      "reinvermögen" : "0,00 EUR"
                                     |    }
                                     |  }
-                                    |}""".trimMargin())
+                                    |}""".trimMargin()),
+                    Testfall(
+                            BeginneInventur(Aggregatkennung.of(id)),
+                            """{
+                               |  "id" : "$id"
+                               |}""".trimMargin())
                     )
     }
 }
