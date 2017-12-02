@@ -13,7 +13,7 @@ import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.core.Reinvermögen
 import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.core.Vermoegenswerte
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
+import org.github.haschi.haushaltsbuch.core.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled

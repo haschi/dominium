@@ -21,8 +21,8 @@ import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
 import org.github.haschi.haushaltsbuch.core.Vermoegenswert
 import org.github.haschi.haushaltsbuch.core.Vermoegenswerte
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
-import org.github.haschi.haushaltsbuch.api.euro
+import org.github.haschi.haushaltsbuch.core.Währungsbetrag
+import org.github.haschi.haushaltsbuch.core.euro
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate

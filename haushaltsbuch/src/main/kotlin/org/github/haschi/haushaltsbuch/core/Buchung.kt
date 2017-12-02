@@ -1,7 +1,5 @@
 package org.github.haschi.haushaltsbuch.core
 
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
-
 data class Buchung(val buchungstext: String, val betrag: Währungsbetrag) {
 
     companion object {

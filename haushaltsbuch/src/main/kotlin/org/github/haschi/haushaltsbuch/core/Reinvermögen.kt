@@ -1,7 +1,5 @@
 package org.github.haschi.haushaltsbuch.core
 
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
-
 data class Reinvermögen(
         val summeDesVermögens: Währungsbetrag,
         val summeDerSchulden: Währungsbetrag)

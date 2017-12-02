@@ -15,6 +15,7 @@ import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.core.Vermoegenswert
 import org.github.haschi.haushaltsbuch.core.Vermoegenswerte
+import org.github.haschi.haushaltsbuch.core.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration
