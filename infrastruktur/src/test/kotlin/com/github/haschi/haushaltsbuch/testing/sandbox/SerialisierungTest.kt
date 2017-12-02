@@ -19,7 +19,7 @@ import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.api.SchuldErfasst
 import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
-import org.github.haschi.haushaltsbuch.api.Vermoegenswert
+import org.github.haschi.haushaltsbuch.core.Vermoegenswert
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.api.euro
@@ -105,8 +105,8 @@ class SerialisierungTest
                                     |      "währungsbetrag" : "10.100,00 EUR"
                                     |    } ],
                                     |    "reinvermoegen" : {
-                                    |      "summeDerSchulden" : "10.100,00 EUR",
                                     |      "summeDesVermögens" : "139,12 EUR",
+                                    |      "summeDerSchulden" : "10.100,00 EUR",
                                     |      "reinvermögen" : "-9.960,88 EUR"
                                     |    }
                                     |  }
@@ -151,8 +151,8 @@ class SerialisierungTest
                                     |    "umlaufvermoegen" : [ ],
                                     |    "schulden" : [ ],
                                     |    "reinvermoegen" : {
-                                    |      "summeDerSchulden" : "0,00 EUR",
                                     |      "summeDesVermögens" : "0,00 EUR",
+                                    |      "summeDerSchulden" : "0,00 EUR",
                                     |      "reinvermögen" : "0,00 EUR"
                                     |    }
                                     |  }
@@ -171,8 +171,8 @@ class SerialisierungTest
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ],
                                 |    "reinvermoegen" : {
-                                |      "summeDerSchulden" : "0,00 EUR",
                                 |      "summeDesVermögens" : "0,00 EUR",
+                                |      "summeDerSchulden" : "0,00 EUR",
                                 |      "reinvermögen" : "0,00 EUR"
                                 |    }
                                 |  }

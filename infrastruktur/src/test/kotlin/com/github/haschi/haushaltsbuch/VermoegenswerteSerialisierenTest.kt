@@ -1,14 +1,12 @@
 package com.github.haschi.haushaltsbuch
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.github.haschi.haushaltsbuch.api.Vermoegenswert
+import org.github.haschi.haushaltsbuch.core.Vermoegenswert
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.junit.jupiter.api.Disabled
