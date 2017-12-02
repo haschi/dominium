@@ -37,7 +37,7 @@ class Inventur {
     fun erfasseUmlaufvermögen(anweisung: ErfasseUmlaufvermögen) {
         AggregateLifecycle.apply(UmlaufvermögenErfasst(
                 position = anweisung.position,
-                währungsbetrag = anweisung.währungsbetrag))
+                betrag = anweisung.währungsbetrag))
     }
 
     @CommandHandler

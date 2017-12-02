@@ -18,6 +18,7 @@ import org.github.haschi.haushaltsbuch.api.LeseInventar
 import org.github.haschi.haushaltsbuch.api.Schuld
 import org.github.haschi.haushaltsbuch.api.SchuldErfasst
 import org.github.haschi.haushaltsbuch.api.Schulden
+import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
 import org.github.haschi.haushaltsbuch.api.Vermoegenswert
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
@@ -116,6 +117,12 @@ class SerialisierungTest
                                 """{
                                     |  "position" : "Autokredit",
                                     |  "betrag" : "12.345,67 EUR"
+                                    |}""".trimMargin()),
+                        Testfall(
+                                UmlaufvermögenErfasst("Girokonto", 12.34.euro()),
+                                """{
+                                    |  "position" : "Girokonto",
+                                    |  "betrag" : "12,34 EUR"
                                     |}""".trimMargin()))
 
     }
