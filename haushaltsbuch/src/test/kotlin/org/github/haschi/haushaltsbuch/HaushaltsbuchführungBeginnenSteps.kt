@@ -3,13 +3,13 @@ package org.github.haschi.haushaltsbuch
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
-import org.github.haschi.haushaltsbuch.core.commands.BeginneHaushaltsbuchführung
-import org.github.haschi.haushaltsbuch.core.events.EröffnungsbilanzkontoErstellt
-import org.github.haschi.haushaltsbuch.core.queries.LeseInventar
-import org.github.haschi.haushaltsbuch.core.values.Buchung
-import org.github.haschi.haushaltsbuch.core.values.Eröffnungsbilanzkonto
-import org.github.haschi.haushaltsbuch.core.values.Inventar
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.github.haschi.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
+import org.github.haschi.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
+import org.github.haschi.haushaltsbuch.modell.core.queries.LeseInventar
+import org.github.haschi.haushaltsbuch.modell.core.values.Buchung
+import org.github.haschi.haushaltsbuch.modell.core.values.Eröffnungsbilanzkonto
+import org.github.haschi.haushaltsbuch.modell.core.values.Inventar
+import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration
 

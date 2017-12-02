@@ -5,10 +5,10 @@ import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
-import org.github.haschi.haushaltsbuch.core.commands.BeginneInventur
-import org.github.haschi.haushaltsbuch.core.commands.ErfasseInventar
-import org.github.haschi.haushaltsbuch.core.values.Inventar
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.github.haschi.haushaltsbuch.modell.core.commands.BeginneInventur
+import org.github.haschi.haushaltsbuch.modell.core.commands.ErfasseInventar
+import org.github.haschi.haushaltsbuch.modell.core.values.Inventar
+import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
 import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch
 import org.github.haschi.haushaltsbuch.modell.Inventur
 import java.io.IOException

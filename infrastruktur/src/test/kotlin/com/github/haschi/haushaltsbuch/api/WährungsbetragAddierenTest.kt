@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch.api
 
 import org.assertj.core.api.Assertions.assertThat
-import org.github.haschi.haushaltsbuch.core.values.Währungsbetrag
-import org.github.haschi.haushaltsbuch.core.values.euro
+import org.github.haschi.haushaltsbuch.modell.core.values.Währungsbetrag
+import org.github.haschi.haushaltsbuch.modell.core.values.euro
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicNode
 import org.junit.jupiter.api.DynamicTest.dynamicTest

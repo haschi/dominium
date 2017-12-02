@@ -1,6 +1,6 @@
 package org.github.haschi.haushaltsbuch
 
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
 
 class DieWelt {
     var aktuelleInventur: Aggregatkennung? = null

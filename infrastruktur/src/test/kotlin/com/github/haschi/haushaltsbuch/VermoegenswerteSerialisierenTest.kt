@@ -6,9 +6,9 @@ import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.github.haschi.haushaltsbuch.core.values.Vermoegenswert
-import org.github.haschi.haushaltsbuch.core.values.Vermoegenswerte
-import org.github.haschi.haushaltsbuch.core.values.Währungsbetrag
+import org.github.haschi.haushaltsbuch.modell.core.values.Vermoegenswert
+import org.github.haschi.haushaltsbuch.modell.core.values.Vermoegenswerte
+import org.github.haschi.haushaltsbuch.modell.core.values.Währungsbetrag
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicContainer.dynamicContainer
