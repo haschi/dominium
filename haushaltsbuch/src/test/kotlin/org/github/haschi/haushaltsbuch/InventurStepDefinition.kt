@@ -9,6 +9,7 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration

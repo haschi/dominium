@@ -15,7 +15,7 @@ import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.api.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.InventurBeendet
 import org.github.haschi.haushaltsbuch.api.LeseInventar
-import org.github.haschi.haushaltsbuch.api.Schuld
+import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.api.SchuldErfasst
 import org.github.haschi.haushaltsbuch.api.Schulden
 import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
