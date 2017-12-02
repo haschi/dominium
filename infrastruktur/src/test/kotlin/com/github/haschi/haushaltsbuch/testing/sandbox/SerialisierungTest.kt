@@ -2,7 +2,9 @@ package com.github.haschi.haushaltsbuch.testing.sandbox
 
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
+import org.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
+import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
@@ -23,8 +25,8 @@ class SerialisierungTest
     @ExtendWith(SerialisierteAnweisungenAnbieter::class)
     fun serialisierung(testfall: Testfall) {
 
-        assertThat(JsonObject.mapFrom(testfall.poko).encode())
-            .isEqualTo(testfall.json)
+        assertThat(JsonObject.mapFrom(testfall.poko).encodePrettily())
+                .isEqualTo(testfall.json)
     }
 
     class SerialisierteAnweisungenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
@@ -35,7 +37,24 @@ class SerialisierungTest
             Stream.of(
                     Testfall(
                             BeginneInventur(Aggregatkennung.of(id)),
-                            """{"id":"$id"}"""))
-
+                            """{
+                                |  "id" : "$id"
+                                |}""".trimMargin()),
+                    Testfall(
+                            BeginneHaushaltsbuchführung(Aggregatkennung.of(id), Inventar.leer),
+                            """{
+                                    |  "id" : "$id",
+                                    |  "inventar" : {
+                                    |    "anlagevermoegen" : [ ],
+                                    |    "umlaufvermoegen" : [ ],
+                                    |    "schulden" : [ ],
+                                    |    "reinvermoegen" : {
+                                    |      "summeDerSchulden" : "0,00 EUR",
+                                    |      "summeDesVermögens" : "0,00 EUR",
+                                    |      "reinvermögen" : "0,00 EUR"
+                                    |    }
+                                    |  }
+                                    |}""".trimMargin())
+                    )
     }
 }
