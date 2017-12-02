@@ -8,7 +8,7 @@ import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
-import org.github.haschi.haushaltsbuch.api.Eröffnungsbilanzkonto
+import org.github.haschi.haushaltsbuch.core.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
 import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.api.Inventar
@@ -62,8 +62,8 @@ class SerialisierungTest
                         Testfall(
                                 EröffnungsbilanzkontoErstellt(
                                         Eröffnungsbilanzkonto(
-                                            soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
-                                            haben = listOf(Buchung("Habenbuchung", 14.00.euro())))),
+                                                soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
+                                                haben = listOf(Buchung("Habenbuchung", 14.00.euro())))),
                                 """{
                                     |  "eröffnungsbilanzkonto" : {
                                     |    "soll" : [ {
