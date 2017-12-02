@@ -4,6 +4,7 @@ import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
 import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration

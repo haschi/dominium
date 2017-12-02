@@ -33,6 +33,7 @@
     <inspection_tool class="LocalVariableName" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="namePattern" value="[a-zöäü][\wöäüÖÄÜ]{2,40}" />
     </inspection_tool>
+    <inspection_tool class="MemberVisibilityCanPrivate" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="MethodMayBeStatic" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="m_onlyPrivateOrFinal" value="false" />
       <option name="m_ignoreEmptyMethods" value="true" />

@@ -5,6 +5,7 @@ import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle
 import org.axonframework.eventsourcing.EventSourcingHandler
 import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 
 class Haushaltsbuch {

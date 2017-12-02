@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.github.haschi.haushaltsbuch.api.BeendeInventur
 import org.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.Buchung
+import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.api.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.api.Eröffnungsbilanzkonto
@@ -55,7 +55,7 @@ class SerialisierungTest
 
     class SerialisierteEreignisseAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        val haushaltsbuchId = UUID.randomUUID().toString()
+        private val haushaltsbuchId = UUID.randomUUID().toString()
 
         override fun testfälle(): Stream<Testfall> =
                 Stream.of(
@@ -192,7 +192,7 @@ class SerialisierungTest
 
     class SerialisierteAbfragenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        val inventurId = UUID.randomUUID().toString()
+        private val inventurId = UUID.randomUUID().toString()
 
         override fun testfälle(): Stream<Testfall> =
                 Stream.of(
