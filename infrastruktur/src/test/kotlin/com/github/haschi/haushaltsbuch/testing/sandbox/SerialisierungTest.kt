@@ -14,7 +14,7 @@ import org.github.haschi.haushaltsbuch.api.events.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.api.events.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.events.InventurBeendet
-import org.github.haschi.haushaltsbuch.api.query.LeseInventar
+import org.github.haschi.haushaltsbuch.api.queries.LeseInventar
 import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.api.events.SchuldErfasst
 import org.github.haschi.haushaltsbuch.core.Schulden

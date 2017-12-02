@@ -13,7 +13,7 @@ import org.github.haschi.haushaltsbuch.api.commands.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.commands.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.api.commands.ErfasseUmlaufvermögen
 import org.github.haschi.haushaltsbuch.api.events.BeendeInventur
-import org.github.haschi.haushaltsbuch.api.query.LeseInventar
+import org.github.haschi.haushaltsbuch.api.queries.LeseInventar
 import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.core.InventurAusnahme
 import org.github.haschi.haushaltsbuch.core.Reinvermögen
