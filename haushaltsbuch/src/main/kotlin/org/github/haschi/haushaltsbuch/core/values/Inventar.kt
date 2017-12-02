@@ -1,4 +1,4 @@
-package org.github.haschi.haushaltsbuch.core
+package org.github.haschi.haushaltsbuch.core.values
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize

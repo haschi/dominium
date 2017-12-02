@@ -1,4 +1,4 @@
-package org.github.haschi.haushaltsbuch.core
+package org.github.haschi.haushaltsbuch.core.values
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.JsonParser

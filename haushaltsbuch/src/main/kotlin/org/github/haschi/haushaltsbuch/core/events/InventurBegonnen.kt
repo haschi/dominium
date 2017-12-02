@@ -1,4 +1,4 @@
-package org.github.haschi.haushaltsbuch.api.events
+package org.github.haschi.haushaltsbuch.core.events
 
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 

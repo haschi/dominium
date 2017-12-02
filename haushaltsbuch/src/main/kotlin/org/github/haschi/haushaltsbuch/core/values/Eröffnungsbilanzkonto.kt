@@ -1,6 +1,4 @@
-package org.github.haschi.haushaltsbuch.core
-
-import org.github.haschi.haushaltsbuch.core.Buchung
+package org.github.haschi.haushaltsbuch.core.values
 
 data class Eröffnungsbilanzkonto(
         val soll: List<Buchung>,

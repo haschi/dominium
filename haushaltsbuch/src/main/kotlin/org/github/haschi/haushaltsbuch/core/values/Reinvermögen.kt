@@ -1,4 +1,4 @@
-package org.github.haschi.haushaltsbuch.core
+package org.github.haschi.haushaltsbuch.core.values
 
 data class Reinvermögen(
         val summeDesVermögens: Währungsbetrag,

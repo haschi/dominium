@@ -1,7 +1,7 @@
-package org.github.haschi.haushaltsbuch.api.commands
+package org.github.haschi.haushaltsbuch.core.commands
 
 import org.axonframework.commandhandling.TargetAggregateIdentifier
-import org.github.haschi.haushaltsbuch.core.Währungsbetrag
+import org.github.haschi.haushaltsbuch.core.values.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 
 data class ErfasseUmlaufvermögen(

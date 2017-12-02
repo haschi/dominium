@@ -1,4 +1,4 @@
-package org.github.haschi.haushaltsbuch.api.queries
+package org.github.haschi.haushaltsbuch.core.queries
 
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 
