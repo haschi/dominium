@@ -5,7 +5,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.github.haschi.haushaltsbuch.api.BeendeInventur
 import org.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
+import org.github.haschi.haushaltsbuch.api.ErfasseInventar
+import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.api.Inventar
+import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
@@ -64,7 +67,32 @@ class SerialisierungTest
                             BeginneInventur(Aggregatkennung.of(id)),
                             """{
                                |  "id" : "$id"
-                               |}""".trimMargin())
+                               |}""".trimMargin()),
+                    Testfall(
+                            ErfasseInventar(Aggregatkennung.of(id), Inventar.leer),
+                            """{
+                                |  "für" : "$id",
+                                |  "inventar" : {
+                                |    "anlagevermoegen" : [ ],
+                                |    "umlaufvermoegen" : [ ],
+                                |    "schulden" : [ ],
+                                |    "reinvermoegen" : {
+                                |      "summeDerSchulden" : "0,00 EUR",
+                                |      "summeDesVermögens" : "0,00 EUR",
+                                |      "reinvermögen" : "0,00 EUR"
+                                |    }
+                                |  }
+                                |}""".trimMargin()),
+                    Testfall(
+                            ErfasseSchulden(
+                                    inventurkennung = Aggregatkennung.of(id),
+                                    position = "Autokredit",
+                                    währungsbetrag = Währungsbetrag.NullEuro),
+                            """{
+                                |  "inventurkennung" : "$id",
+                                |  "position" : "Autokredit",
+                                |  "währungsbetrag" : "0,00 EUR"
+                                |}""".trimMargin())
                     )
     }
 }
