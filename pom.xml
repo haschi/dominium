@@ -209,7 +209,7 @@
 
     <modules>
         <!--<module>haushaltsbuch-app</module>-->
-        <module>haushaltsbuch</module>
+        <module>haushaltsbuch-domain</module>
         <module>infrastruktur</module>
     </modules>
 
