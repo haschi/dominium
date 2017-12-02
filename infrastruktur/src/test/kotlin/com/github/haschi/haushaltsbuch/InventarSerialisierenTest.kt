@@ -16,11 +16,13 @@ import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.util.*
 
 @DisplayName("Inventar serialisieren")
+@Disabled
 class InventarSerialisierenTest
 {
     @Test

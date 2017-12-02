@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThatCode
 import org.github.haschi.haushaltsbuch.api.Vermoegenswert
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicContainer.dynamicContainer
 import org.junit.jupiter.api.DynamicNode
@@ -21,9 +22,8 @@ import java.util.stream.Stream
 data class Wrapper @JsonCreator constructor(val anlagevermoegen: Vermoegenswerte) {
 }
 
-//data class Wrapper(val anlagevermoegen: Vermoegenswerte)
-
 @DisplayName("Vermoegenswerte serialisieren")
+@Disabled
 class VermoegenswerteSerialisierenTest
 {
     @TestFactory
