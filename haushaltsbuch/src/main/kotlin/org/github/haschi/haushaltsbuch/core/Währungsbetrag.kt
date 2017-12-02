@@ -8,12 +8,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
-import org.github.haschi.haushaltsbuch.api.DeutschenWährungsbetragAnalysieren
 import org.javamoney.moneta.Money
 import java.io.IOException
 import java.util.*
 import javax.money.Monetary
 import javax.money.MonetaryAmount
+import javax.money.format.MonetaryAmountFormat
 import javax.money.format.MonetaryFormats
 
 @JsonDeserialize(using = Währungsbetrag.WährungsbetragDeserialisierer::class)
@@ -47,6 +47,16 @@ data class Währungsbetrag(val wert: MonetaryAmount)
                 jgen: JsonGenerator,
                 provider: SerializerProvider) {
             jgen.writeString(value.toString())
+        }
+    }
+
+    internal class DeutschenWährungsbetragAnalysieren {
+
+        private val format: MonetaryAmountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY)
+
+        fun aus(währungsbetrag: String): MonetaryAmount
+        {
+            return this.format.parse(währungsbetrag)
         }
     }
 
