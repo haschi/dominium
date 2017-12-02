@@ -57,8 +57,8 @@ class SerialisierungTest
                                     |    "umlaufvermoegen" : [ ],
                                     |    "schulden" : [ ],
                                     |    "reinvermoegen" : {
+                                    |      "summeDesVermoegens" : "0,00 EUR",
                                     |      "summeDerSchulden" : "0,00 EUR",
-                                    |      "summeDesVermögens" : "0,00 EUR",
                                     |      "reinvermögen" : "0,00 EUR"
                                     |    }
                                     |  }
@@ -77,8 +77,8 @@ class SerialisierungTest
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ],
                                 |    "reinvermoegen" : {
+                                |      "summeDesVermoegens" : "0,00 EUR",
                                 |      "summeDerSchulden" : "0,00 EUR",
-                                |      "summeDesVermögens" : "0,00 EUR",
                                 |      "reinvermögen" : "0,00 EUR"
                                 |    }
                                 |  }
