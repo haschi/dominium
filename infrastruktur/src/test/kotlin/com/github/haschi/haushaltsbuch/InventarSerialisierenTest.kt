@@ -9,7 +9,7 @@ import io.vertx.kotlin.core.json.obj
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.Inventar
+import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.api.Reinvermögen
 import org.github.haschi.haushaltsbuch.api.Schulden
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte

@@ -2,9 +2,9 @@ package org.github.haschi.haushaltsbuch.projektion
 
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.config.Configuration
-import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.api.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.LeseInventar
+import org.github.haschi.haushaltsbuch.core.Inventar
 
 class InventarProjektion(private val konfiguration: Configuration)
 {

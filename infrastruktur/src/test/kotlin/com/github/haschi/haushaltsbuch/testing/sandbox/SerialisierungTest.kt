@@ -11,7 +11,7 @@ import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.core.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
 import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
-import org.github.haschi.haushaltsbuch.api.Inventar
+import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.api.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.InventurBeendet
 import org.github.haschi.haushaltsbuch.api.LeseInventar

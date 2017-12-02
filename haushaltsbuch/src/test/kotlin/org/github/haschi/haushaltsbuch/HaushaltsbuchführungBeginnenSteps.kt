@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.github.haschi.haushaltsbuch.api.*
 import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.core.Eröffnungsbilanzkonto
+import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration
