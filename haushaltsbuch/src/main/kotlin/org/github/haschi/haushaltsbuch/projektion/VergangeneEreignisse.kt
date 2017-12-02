@@ -6,5 +6,5 @@ import java.util.stream.Stream
 
 interface VergangeneEreignisse
 {
-    fun ereignisseVon(inventur: Aggregatkennung): Stream<out DomainEventMessage<*>>
+    fun bezüglich(aggregat: Aggregatkennung): Sequence<out DomainEventMessage<*>>
 }
