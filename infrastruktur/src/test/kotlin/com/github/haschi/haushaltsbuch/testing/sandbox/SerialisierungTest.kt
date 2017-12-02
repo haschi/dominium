@@ -39,17 +39,17 @@ class SerialisierungTest
 
         override fun testfälle(): Stream<Testfall> =
             Stream.of(
-                    Testfall(BeendeInventur(Aggregatkennung.of(id)),
+                    Testfall(BeendeInventur(Aggregatkennung.aus(id)),
                             """{
                                 |  "von" : "$id"
                                 |}""".trimMargin()),
                     Testfall(
-                            BeginneInventur(Aggregatkennung.of(id)),
+                            BeginneInventur(Aggregatkennung.aus(id)),
                             """{
                                 |  "id" : "$id"
                                 |}""".trimMargin()),
                     Testfall(
-                            BeginneHaushaltsbuchführung(Aggregatkennung.of(id), Inventar.leer),
+                            BeginneHaushaltsbuchführung(Aggregatkennung.aus(id), Inventar.leer),
                             """{
                                     |  "id" : "$id",
                                     |  "inventar" : {
@@ -64,12 +64,12 @@ class SerialisierungTest
                                     |  }
                                     |}""".trimMargin()),
                     Testfall(
-                            BeginneInventur(Aggregatkennung.of(id)),
+                            BeginneInventur(Aggregatkennung.aus(id)),
                             """{
                                |  "id" : "$id"
                                |}""".trimMargin()),
                     Testfall(
-                            ErfasseInventar(Aggregatkennung.of(id), Inventar.leer),
+                            ErfasseInventar(Aggregatkennung.aus(id), Inventar.leer),
                             """{
                                 |  "für" : "$id",
                                 |  "inventar" : {
@@ -85,7 +85,7 @@ class SerialisierungTest
                                 |}""".trimMargin()),
                     Testfall(
                             ErfasseSchulden(
-                                    inventurkennung = Aggregatkennung.of(id),
+                                    inventurkennung = Aggregatkennung.aus(id),
                                     position = "Autokredit",
                                     währungsbetrag = Währungsbetrag.NullEuro),
                             """{

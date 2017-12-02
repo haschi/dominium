@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 import java.io.IOException
 
 class WährungsbetragDeserialisierer : StdScalarDeserializer<Währungsbetrag> {
-    constructor() : super(Währungsbetrag::class.java) {
+    constructor() : super(Währungsbetrag::class.java)
 
-    }
-
-    constructor(vc: Class<*>) : super(vc) {}
+    constructor(vc: Class<*>) : super(vc)
 
     @Throws(IOException::class)
     override fun deserialize(

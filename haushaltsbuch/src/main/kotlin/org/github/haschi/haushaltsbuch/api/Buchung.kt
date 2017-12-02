@@ -10,4 +10,4 @@ data class Buchung(val buchungstext: String, val betrag: Währungsbetrag) {
 }
 
 val String.Companion.empty: String
-    get() = "";
+    get() = ""

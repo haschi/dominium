@@ -16,7 +16,7 @@ class Inventur {
 
     private var beendet = false
 
-    constructor() {}
+    constructor()
 
     @CommandHandler
     constructor(anweisung: BeginneInventur, @MetaDataValue("threadId") threadId: Long) {
@@ -56,8 +56,7 @@ class Inventur {
             throw InventurAusnahme("Inventur bereits beendet")
         }
 
-        AggregateLifecycle.apply(
-                InventarErfasst(anweisung.inventar));
+        AggregateLifecycle.apply(InventarErfasst(anweisung.inventar))
     }
 
     @EventSourcingHandler

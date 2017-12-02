@@ -8,11 +8,9 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 
 class AggregatkennungDeserialisierer : StdScalarDeserializer<Aggregatkennung> {
-    constructor() : super(Aggregatkennung::class.java) {
+    constructor() : super(Aggregatkennung::class.java)
 
-    }
-
-    constructor(vc: Class<*>) : super(vc) {}
+    constructor(vc: Class<*>) : super(vc)
 
     @Throws(IOException::class)
     override fun deserialize(

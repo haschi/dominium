@@ -12,7 +12,7 @@ class Haushaltsbuch {
     @AggregateIdentifier
     private var id: Aggregatkennung? = null
 
-    constructor() {}
+    constructor()
 
     @CommandHandler
     constructor(anweisung: BeginneHaushaltsbuchführung) {
@@ -38,7 +38,7 @@ class Haushaltsbuch {
                 soll = listOf(
                         Buchung(
                                 buchungstext = "Eigenkapital (EK)",
-                                betrag = eigenkapital)));
+                                betrag = eigenkapital)))
 
         //                .addSoll(Buchung.builder()
         //                                 .buchungstext("Fremdkapital (FK)")

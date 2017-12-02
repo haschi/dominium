@@ -11,7 +11,8 @@ data class Reinvermögen(
         val summeDesVermögens: Währungsbetrag,
 
         @JsonProperty(value = "summeDerSchulden")
-        val summeDerSchulden: Währungsbetrag) {
+        val summeDerSchulden: Währungsbetrag)
+{
     val reinvermögen: Währungsbetrag
         get() = Währungsbetrag(summeDesVermögens.wert.subtract(summeDerSchulden.wert))
 

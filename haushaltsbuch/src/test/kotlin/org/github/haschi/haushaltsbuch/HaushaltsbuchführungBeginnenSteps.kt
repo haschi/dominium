@@ -49,6 +49,6 @@ class HaushaltsbuchführungBeginnenSteps(
                         soll = eröffnungsbilanzkonto
                                 .map { it.soll ?: Buchung.leer }
                                 .filter { it != Buchung.leer }
-                                .toList()));
+                                .toList()))
     }
 }

@@ -29,10 +29,7 @@ data class Währungsbetrag(val wert: MonetaryAmount)
                 throw IllegalArgumentException("Währungsbetrag ist leer")
             }
 
-            val analysieren = DeutschenWährungsbetragAnalysieren()
-            val s = analysieren.aus(betrag)
-
-            return Währungsbetrag(s)
+            return Währungsbetrag(DeutschenWährungsbetragAnalysieren().aus(betrag))
         }
 
         val NullEuro: Währungsbetrag =

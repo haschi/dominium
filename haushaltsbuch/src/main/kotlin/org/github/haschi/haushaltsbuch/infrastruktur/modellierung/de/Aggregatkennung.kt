@@ -14,7 +14,7 @@ data class Aggregatkennung(val id: UUID) {
             return Aggregatkennung(UUID.randomUUID())
         }
 
-        fun of(id: String): Aggregatkennung {
+        fun aus(id: String): Aggregatkennung {
             return Aggregatkennung(UUID.fromString(id))
         }
     }

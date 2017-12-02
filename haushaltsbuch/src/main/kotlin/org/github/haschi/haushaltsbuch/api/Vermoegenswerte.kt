@@ -10,7 +10,7 @@ data class Vermoegenswerte @JsonCreator constructor (@get:JsonIgnore private val
 
     constructor(vararg ls: Vermoegenswert): this(ls.asList())
 
-    @JsonValue fun wert(): List<Vermoegenswert> = l;
+    @JsonValue fun wert(): List<Vermoegenswert> = l
 
     val summe: Währungsbetrag
         get() = Währungsbetrag(

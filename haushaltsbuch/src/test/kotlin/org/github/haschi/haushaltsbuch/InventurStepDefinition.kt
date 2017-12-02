@@ -56,7 +56,7 @@ class InventurStepDefinition(
                 ErfasseUmlaufvermögen(
                         inventurkennung = welt.aktuelleInventur!!,
                         position = position,
-                        währungsbetrag = währungsbetrag));
+                        währungsbetrag = währungsbetrag))
     }
 
     @Dann("^werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:$")
@@ -159,12 +159,10 @@ class InventurStepDefinition(
     @Wenn("^ich die Inventur beenden will$")
     fun ichDieInventurBeendenWill()
     {
-        val x: () -> Unit = {
-            anweisung.commandGateway().sendAndWait(
+        welt.intention = {
+            anweisung.commandGateway().sendAndWait<Unit?>(
                     BeendeInventur(von = welt.aktuelleInventur!!))
         }
-
-        welt.intention = x;
     }
 
     @Dann("^werde ich die Fehlermeldung \"([^\"]*)\" erhalten$")

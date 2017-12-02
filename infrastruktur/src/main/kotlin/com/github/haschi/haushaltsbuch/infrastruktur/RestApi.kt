@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
@@ -86,7 +85,7 @@ class RestApi : AbstractVerticle()
                             context.bodyAsString))
 
                     val anweisung = ErfasseInventar(
-                            für = Aggregatkennung.of(context.pathParam("id")),
+                            für = Aggregatkennung.aus(context.pathParam("id")),
                             inventar = context.bodyAsJson.mapTo(Inventar::class.java))
 
                     bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
