@@ -10,6 +10,7 @@ import org.github.haschi.haushaltsbuch.api.ErfasseInventar
 import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
 import org.github.haschi.haushaltsbuch.api.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
+import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.api.LeseInventar
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
@@ -38,28 +39,41 @@ class SerialisierungTest
             SerialisierteEreignisseAnbieter::class)
     fun serialisierung(testfall: Testfall) {
 
-        assertThat(JsonObject.mapFrom(testfall.poko).encodePrettily())
-                .isEqualTo(testfall.json)
+        with(testfall) {
+            assertThat(JsonObject.mapFrom(poko).encodePrettily())
+                    .isEqualTo(json)
+        }
     }
 
     class SerialisierteEreignisseAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
+        val haushaltsbuchId = UUID.randomUUID().toString();
+
         override fun testfälle(): Stream<Testfall> =
-                Stream.of(Testfall(EröffnungsbilanzkontoErstellt(Eröffnungsbilanzkonto(
-                        soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
-                        haben = listOf(Buchung("Habenbuchung", 14.00.euro())))),
-                        """{
-                            |  "eröffnungsbilanzkonto" : {
-                            |    "soll" : [ {
-                            |      "buchungstext" : "Sollbuchung",
-                            |      "betrag" : "12,00 EUR"
-                            |    } ],
-                            |    "haben" : [ {
-                            |      "buchungstext" : "Habenbuchung",
-                            |      "betrag" : "14,00 EUR"
-                            |    } ]
-                            |  }
-                            |}""".trimMargin()))
+                Stream.of(
+                        Testfall(
+                                EröffnungsbilanzkontoErstellt(
+                                        Eröffnungsbilanzkonto(
+                                            soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
+                                            haben = listOf(Buchung("Habenbuchung", 14.00.euro())))),
+                                """{
+                                    |  "eröffnungsbilanzkonto" : {
+                                    |    "soll" : [ {
+                                    |      "buchungstext" : "Sollbuchung",
+                                    |      "betrag" : "12,00 EUR"
+                                    |    } ],
+                                    |    "haben" : [ {
+                                    |      "buchungstext" : "Habenbuchung",
+                                    |      "betrag" : "14,00 EUR"
+                                    |    } ]
+                                    |  }
+                                    |}""".trimMargin()),
+                        Testfall(
+                                HaushaltsbuchführungBegonnen(Aggregatkennung.aus(haushaltsbuchId)),
+                                """{
+                                    |  "id" : "$haushaltsbuchId"
+                                    |}""".trimMargin()
+                        ))
 
     }
 
