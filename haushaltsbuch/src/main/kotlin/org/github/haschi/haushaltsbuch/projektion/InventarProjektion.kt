@@ -6,7 +6,7 @@ import org.github.haschi.haushaltsbuch.modell.core.events.InventarErfasst
 import org.github.haschi.haushaltsbuch.modell.core.queries.LeseInventar
 import org.github.haschi.haushaltsbuch.modell.core.values.Inventar
 
-class InventarProjektion(private val konfiguration: Configuration, private val lieferant: IEreignisLieferant)
+class InventarProjektion(private val konfiguration: Configuration, private val lieferant: VergangeneEreignisse)
 {
     @CommandHandler
     fun leseInventar(abfrage: LeseInventar): Inventar

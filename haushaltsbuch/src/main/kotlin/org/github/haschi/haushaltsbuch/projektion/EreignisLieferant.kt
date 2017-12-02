@@ -5,7 +5,7 @@ import org.axonframework.eventsourcing.eventstore.EventStore
 import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
 import java.util.stream.Stream
 
-class EreignisLieferant(private val eventStore: EventStore) : IEreignisLieferant
+class EreignisLieferant(private val eventStore: EventStore) : VergangeneEreignisse
 {
 
     override fun ereignisseVon(inventur: Aggregatkennung): Stream<out DomainEventMessage<*>>
