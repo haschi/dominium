@@ -3,8 +3,8 @@ package org.github.haschi.infrastruktur
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
-import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch
-import org.github.haschi.haushaltsbuch.modell.Inventur
+import org.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
+import org.github.haschi.domain.haushaltsbuch.modell.Inventur
 import org.picocontainer.Startable
 
 class Anweisungskonfiguration(storagelieferant: EventStoreLieferant) : Startable

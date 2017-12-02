@@ -1,7 +1,7 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.ext.web.RoutingContext
-import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 
 
 class ResultBuilder
