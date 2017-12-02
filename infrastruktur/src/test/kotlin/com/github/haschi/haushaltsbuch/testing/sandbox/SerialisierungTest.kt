@@ -16,6 +16,7 @@ import org.github.haschi.haushaltsbuch.api.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.InventurBeendet
 import org.github.haschi.haushaltsbuch.api.LeseInventar
 import org.github.haschi.haushaltsbuch.api.Schuld
+import org.github.haschi.haushaltsbuch.api.SchuldErfasst
 import org.github.haschi.haushaltsbuch.api.Schulden
 import org.github.haschi.haushaltsbuch.api.Vermoegenswert
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
@@ -53,7 +54,7 @@ class SerialisierungTest
 
     class SerialisierteEreignisseAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        val haushaltsbuchId = UUID.randomUUID().toString();
+        val haushaltsbuchId = UUID.randomUUID().toString()
 
         override fun testfälle(): Stream<Testfall> =
                 Stream.of(
@@ -109,7 +110,13 @@ class SerialisierungTest
                                     |    }
                                     |  }
                                     |}""".trimMargin()),
-                        Testfall(InventurBeendet(),"{ }"))
+                        Testfall(InventurBeendet(),"{ }"),
+                        Testfall(
+                                SchuldErfasst("Autokredit", 12345.67.euro()),
+                                """{
+                                    |  "position" : "Autokredit",
+                                    |  "betrag" : "12.345,67 EUR"
+                                    |}""".trimMargin()))
 
     }
 
@@ -178,7 +185,7 @@ class SerialisierungTest
 
     class SerialisierteAbfragenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        val inventurId = UUID.randomUUID().toString();
+        val inventurId = UUID.randomUUID().toString()
 
         override fun testfälle(): Stream<Testfall> =
                 Stream.of(
