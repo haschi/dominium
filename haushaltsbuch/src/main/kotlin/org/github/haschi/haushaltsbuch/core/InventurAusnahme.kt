@@ -1,3 +1,3 @@
-package org.github.haschi.haushaltsbuch.api
+package org.github.haschi.haushaltsbuch.core
 
 class InventurAusnahme(message: String) : Exception(message)

@@ -3,7 +3,9 @@ package org.github.haschi.haushaltsbuch
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
-import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.api.commands.BeginneHaushaltsbuchführung
+import org.github.haschi.haushaltsbuch.api.events.EröffnungsbilanzkontoErstellt
+import org.github.haschi.haushaltsbuch.api.query.LeseInventar
 import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.core.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.core.Inventar

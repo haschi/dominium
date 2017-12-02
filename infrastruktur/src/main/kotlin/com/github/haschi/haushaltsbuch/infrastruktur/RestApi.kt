@@ -5,8 +5,8 @@ import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
-import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.ErfasseInventar
+import org.github.haschi.haushaltsbuch.api.commands.BeginneInventur
+import org.github.haschi.haushaltsbuch.api.commands.ErfasseInventar
 import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch

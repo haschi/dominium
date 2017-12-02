@@ -8,8 +8,14 @@ import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
-import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.api.commands.BeginneInventur
+import org.github.haschi.haushaltsbuch.api.commands.ErfasseInventar
+import org.github.haschi.haushaltsbuch.api.commands.ErfasseSchulden
+import org.github.haschi.haushaltsbuch.api.commands.ErfasseUmlaufvermögen
+import org.github.haschi.haushaltsbuch.api.events.BeendeInventur
+import org.github.haschi.haushaltsbuch.api.query.LeseInventar
 import org.github.haschi.haushaltsbuch.core.Inventar
+import org.github.haschi.haushaltsbuch.core.InventurAusnahme
 import org.github.haschi.haushaltsbuch.core.Reinvermögen
 import org.github.haschi.haushaltsbuch.core.Schuld
 import org.github.haschi.haushaltsbuch.core.Schulden

@@ -4,7 +4,9 @@ import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle
 import org.axonframework.eventsourcing.EventSourcingHandler
-import org.github.haschi.haushaltsbuch.api.*
+import org.github.haschi.haushaltsbuch.api.commands.BeginneHaushaltsbuchführung
+import org.github.haschi.haushaltsbuch.api.events.EröffnungsbilanzkontoErstellt
+import org.github.haschi.haushaltsbuch.api.events.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.core.Buchung
 import org.github.haschi.haushaltsbuch.core.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.core.Währungsbetrag

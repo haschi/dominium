@@ -1,7 +1,8 @@
-package org.github.haschi.haushaltsbuch.api
+package org.github.haschi.haushaltsbuch.api.events
 
 import org.github.haschi.haushaltsbuch.core.Währungsbetrag
 
-data class SchuldErfasst(
+data class UmlaufvermögenErfasst(
         val position: String,
         val betrag: Währungsbetrag)
+
