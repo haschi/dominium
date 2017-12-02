@@ -13,6 +13,7 @@ import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
 import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.api.Inventar
 import org.github.haschi.haushaltsbuch.api.InventarErfasst
+import org.github.haschi.haushaltsbuch.api.InventurBeendet
 import org.github.haschi.haushaltsbuch.api.LeseInventar
 import org.github.haschi.haushaltsbuch.api.Schuld
 import org.github.haschi.haushaltsbuch.api.Schulden
@@ -107,7 +108,8 @@ class SerialisierungTest
                                     |      "reinvermögen" : "-9.960,88 EUR"
                                     |    }
                                     |  }
-                                    |}""".trimMargin()))
+                                    |}""".trimMargin()),
+                        Testfall(InventurBeendet(),"{ }"))
 
     }
 
