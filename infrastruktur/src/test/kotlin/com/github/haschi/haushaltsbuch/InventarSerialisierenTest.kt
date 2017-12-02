@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThatCode
 import org.github.haschi.haushaltsbuch.api.BeginneInventur
 import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.core.Reinvermögen
-import org.github.haschi.haushaltsbuch.api.Schulden
+import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung

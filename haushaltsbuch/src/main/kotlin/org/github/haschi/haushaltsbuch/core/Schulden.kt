@@ -1,9 +1,9 @@
-package org.github.haschi.haushaltsbuch.api
+package org.github.haschi.haushaltsbuch.core
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonValue
-import org.github.haschi.haushaltsbuch.core.Schuld
+import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.javamoney.moneta.function.MonetaryFunctions
 import javax.money.MonetaryAmount
 

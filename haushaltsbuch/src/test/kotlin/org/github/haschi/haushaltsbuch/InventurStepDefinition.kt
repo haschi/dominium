@@ -12,6 +12,7 @@ import org.github.haschi.haushaltsbuch.api.*
 import org.github.haschi.haushaltsbuch.core.Inventar
 import org.github.haschi.haushaltsbuch.core.Reinvermögen
 import org.github.haschi.haushaltsbuch.core.Schuld
+import org.github.haschi.haushaltsbuch.core.Schulden
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.github.haschi.infrastruktur.Abfragekonfiguration
 import org.github.haschi.infrastruktur.Anweisungskonfiguration
