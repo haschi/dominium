@@ -32,7 +32,6 @@ class VermoegenswerteSerialisierenTest
         Json.mapper.registerKotlinModule()
         Json.mapper
 
-
         data class Testfall(val bezeichnung: String, val testwert: Wrapper, val json: String)
 
         return listOf(

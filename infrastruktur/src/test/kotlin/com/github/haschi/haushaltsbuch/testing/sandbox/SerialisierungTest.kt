@@ -12,7 +12,12 @@ import org.github.haschi.haushaltsbuch.api.Eröffnungsbilanzkonto
 import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
 import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
 import org.github.haschi.haushaltsbuch.api.Inventar
+import org.github.haschi.haushaltsbuch.api.InventarErfasst
 import org.github.haschi.haushaltsbuch.api.LeseInventar
+import org.github.haschi.haushaltsbuch.api.Schuld
+import org.github.haschi.haushaltsbuch.api.Schulden
+import org.github.haschi.haushaltsbuch.api.Vermoegenswert
+import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
 import org.github.haschi.haushaltsbuch.api.Währungsbetrag
 import org.github.haschi.haushaltsbuch.api.euro
 import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
@@ -72,8 +77,37 @@ class SerialisierungTest
                                 HaushaltsbuchführungBegonnen(Aggregatkennung.aus(haushaltsbuchId)),
                                 """{
                                     |  "id" : "$haushaltsbuchId"
-                                    |}""".trimMargin()
-                        ))
+                                    |}""".trimMargin()),
+                        Testfall(
+                                InventarErfasst(
+                                        Inventar(
+                                                anlagevermoegen = Vermoegenswerte(
+                                                        Vermoegenswert("Aktiendepot", 123.45.euro())),
+                                                umlaufvermoegen = Vermoegenswerte(
+                                                        Vermoegenswert("Geldbörse", 15.67.euro())),
+                                                schulden = Schulden(
+                                                        Schuld("Autokredit", 10100.00.euro())))),
+                                """{
+                                    |  "inventar" : {
+                                    |    "anlagevermoegen" : [ {
+                                    |      "position" : "Aktiendepot",
+                                    |      "währungsbetrag" : "123,45 EUR"
+                                    |    } ],
+                                    |    "umlaufvermoegen" : [ {
+                                    |      "position" : "Geldbörse",
+                                    |      "währungsbetrag" : "15,67 EUR"
+                                    |    } ],
+                                    |    "schulden" : [ {
+                                    |      "position" : "Autokredit",
+                                    |      "währungsbetrag" : "10.100,00 EUR"
+                                    |    } ],
+                                    |    "reinvermoegen" : {
+                                    |      "summeDerSchulden" : "10.100,00 EUR",
+                                    |      "summeDesVermögens" : "139,12 EUR",
+                                    |      "reinvermögen" : "-9.960,88 EUR"
+                                    |    }
+                                    |  }
+                                    |}""".trimMargin()))
 
     }
 
