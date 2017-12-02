@@ -2,21 +2,16 @@ package org.github.haschi.haushaltsbuch.projektion
 
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.config.Configuration
-import org.axonframework.eventsourcing.DomainEventMessage
-import org.axonframework.eventsourcing.eventstore.EventStore
 import org.github.haschi.haushaltsbuch.modell.core.events.InventarErfasst
 import org.github.haschi.haushaltsbuch.modell.core.queries.LeseInventar
-import org.github.haschi.haushaltsbuch.modell.core.values.Aggregatkennung
 import org.github.haschi.haushaltsbuch.modell.core.values.Inventar
-import java.util.stream.Stream
 
-class InventarProjektion(private val konfiguration: Configuration)
+class InventarProjektion(private val konfiguration: Configuration, private val lieferant: IEreignisLieferant)
 {
-
     @CommandHandler
     fun leseInventar(abfrage: LeseInventar): Inventar
     {
-        val stream = EreignisLieferant(konfiguration.eventStore())
+        val stream = lieferant
                 .ereignisseVon(abfrage.ausInventur)
 
         return stream
@@ -24,16 +19,6 @@ class InventarProjektion(private val konfiguration: Configuration)
                 .reduce({ l, r -> if (r == Inventar.leer) l else r })
                 .orElse(Inventar.leer)
 
-    }
-
-    class EreignisLieferant(val eventStore: EventStore){
-
-        fun ereignisseVon(inventur: Aggregatkennung): Stream<out DomainEventMessage<*>>
-        {
-            return eventStore
-                    .readEvents(inventur.toString())
-                    .asStream()
-        }
     }
 
     private fun alsInventar(message: Any): Inventar =
