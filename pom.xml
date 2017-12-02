@@ -67,30 +67,13 @@
             <!-- Eigene Module -->
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>domaene</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-domaene</artifactId>
-                <version>${project.version}</version>
-                <classifier>classes</classifier>
-            </dependency>
-            <dependency>
-                <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
-
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>anwendung</artifactId>
+                <artifactId>haushaltsbuch-domaene</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

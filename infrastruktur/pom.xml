@@ -44,7 +44,7 @@
 
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-xxx</artifactId>
+                <artifactId>haushaltsbuch-domaene</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
@@ -111,7 +111,7 @@
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>haushaltsbuch-xxx</artifactId>
+            <artifactId>haushaltsbuch-domaene</artifactId>
         </dependency>
 
         <dependency>
