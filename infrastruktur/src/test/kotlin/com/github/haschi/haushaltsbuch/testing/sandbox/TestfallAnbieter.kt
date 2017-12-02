@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-abstract class TestfallAnbieter<T : Any> : TestTemplateInvocationContextProvider
+abstract class TestfallAnbieter<T: Any>(val testfallklasse: KClass<T>) : TestTemplateInvocationContextProvider
 {
     override fun supportsTestTemplate(context: ExtensionContext?): Boolean = true
 
@@ -35,7 +35,7 @@ abstract class TestfallAnbieter<T : Any> : TestTemplateInvocationContextProvider
                 {
                     override fun supportsParameter(p0: ParameterContext, p1: ExtensionContext?): Boolean
                     {
-                        return p0.parameter.type.isAssignableFrom(KClass::class.java)
+                        return p0.parameter.type.isAssignableFrom(testfallklasse.java)
                     }
 
                     override fun resolveParameter(

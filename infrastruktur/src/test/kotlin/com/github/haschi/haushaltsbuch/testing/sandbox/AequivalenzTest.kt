@@ -25,41 +25,44 @@ class AequivalenzTest
     @TestTemplate
     @ExtendWith(DatenklassenProvider::class, AnweisungenAnbieter::class, EreignisAnbieter::class)
     @DisplayName("prüfe, ob Äquivalenzregeln für die Klasse eingehalten sind")
-    fun aequivalenz(testklasse: KClass<*>)
+    fun aequivalenz(testfall: Testfall)
     {
-        EqualsVerifier.forClass(testklasse.java).verify()
+        EqualsVerifier.forClass(testfall.testklasse.java).verify()
     }
 
-    class DatenklassenProvider : TestfallAnbieter<KClass<*>>()
+    data class Testfall(val testklasse: KClass<*>)
+
+    class DatenklassenProvider : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override fun testfälle(): Stream<KClass<*>> = Stream.of(
-                KlasseA::class,
-                KlasseB::class,
-                KlasseC::class,
-                KlasseD::class,
-                KlasseE::class)
+
+        override fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(KlasseA::class),
+                Testfall(KlasseB::class),
+                Testfall(KlasseC::class),
+                Testfall(KlasseD::class),
+                Testfall(KlasseE::class))
     }
 
-    class AnweisungenAnbieter : TestfallAnbieter<KClass<*>>()
+    class AnweisungenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override fun testfälle(): Stream<KClass<*>> = Stream.of(
-                BeendeInventur::class,
-                BeginneHaushaltsbuchführung::class,
-                BeginneInventur::class,
-                ErfasseInventar::class,
-                ErfasseSchulden::class,
-                ErfasseUmlaufvermögen::class)
+        override fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(BeendeInventur::class),
+                Testfall(BeginneHaushaltsbuchführung::class),
+                Testfall(BeginneInventur::class),
+                Testfall(ErfasseInventar::class),
+                Testfall(ErfasseSchulden::class),
+                Testfall(ErfasseUmlaufvermögen::class))
     }
 
-    class EreignisAnbieter: TestfallAnbieter<KClass<*>>()
+    class EreignisAnbieter: TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override  fun testfälle(): Stream<KClass<*>> = Stream.of(
-                EröffnungsbilanzkontoErstellt::class,
-                HaushaltsbuchführungBegonnen::class,
-                InventarErfasst::class,
-                // InventurBeendet::class,
-                InventurBegonnen::class,
-                SchuldErfasst::class,
-                UmlaufvermögenErfasst::class)
+        override  fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(EröffnungsbilanzkontoErstellt::class),
+                Testfall(HaushaltsbuchführungBegonnen::class),
+                Testfall(InventarErfasst::class),
+
+                Testfall(InventurBegonnen::class),
+                Testfall(SchuldErfasst::class),
+                Testfall(UmlaufvermögenErfasst::class))
     }
 }
