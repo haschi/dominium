@@ -1,17 +1,16 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.core.logging.LoggerFactory
-import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
-import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.ErfasseInventar
-import org.github.haschi.haushaltsbuch.api.Inventar
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
-import org.github.haschi.haushaltsbuch.modell.Haushaltsbuch
-import org.github.haschi.haushaltsbuch.modell.Inventur
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import org.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
+import org.github.haschi.domain.haushaltsbuch.modell.Inventur
 import java.io.IOException
 import java.text.MessageFormat
 import java.util.*
@@ -86,7 +85,7 @@ class RestApi : AbstractVerticle()
                             context.bodyAsString))
 
                     val anweisung = ErfasseInventar(
-                            für = Aggregatkennung.of(context.pathParam("id")),
+                            für = Aggregatkennung.aus(context.pathParam("id")),
                             inventar = context.bodyAsJson.mapTo(Inventar::class.java))
 
                     bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)

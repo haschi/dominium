@@ -6,6 +6,9 @@
       <option name="REPORT_METHODS" value="true" />
       <option name="REPORT_FIELDS" value="true" />
     </inspection_tool>
+    <inspection_tool class="ClassName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[A-ZÄÖÜ][\wöäüÖÄÜ]{2,40}" />
+    </inspection_tool>
     <inspection_tool class="ClassWithOnlyPrivateConstructors" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="CompareToUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="DifferentKotlinMavenVersion" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -15,6 +18,9 @@
     <inspection_tool class="FieldMayBeFinal" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="FieldMayBeStatic" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="FinalMethodInFinalClass" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="FunctionName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zöäü][\wöäüÖÄÜ]{2,40}" />
+    </inspection_tool>
     <inspection_tool class="GroovyAssignabilityCheck" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="HashCodeUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="KotlinMavenPluginPhase" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -24,6 +30,10 @@
       <option name="REPORT_VARIABLES" value="true" />
       <option name="REPORT_PARAMETERS" value="true" />
     </inspection_tool>
+    <inspection_tool class="LocalVariableName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zöäü][\wöäüÖÄÜ]{2,40}" />
+    </inspection_tool>
+    <inspection_tool class="MemberVisibilityCanPrivate" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="MethodMayBeStatic" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="m_onlyPrivateOrFinal" value="false" />
       <option name="m_ignoreEmptyMethods" value="true" />
@@ -39,6 +49,9 @@
     </inspection_tool>
     <inspection_tool class="OverridableMethodCallDuringObjectConstruction" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PackageVisibleField" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zöäü][\wöäüÖÄÜ]{2,40}" />
+    </inspection_tool>
     <inspection_tool class="ProtectedField" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ProtectedMemberInFinalClass" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PublicField" enabled="true" level="WARNING" enabled_by_default="true">

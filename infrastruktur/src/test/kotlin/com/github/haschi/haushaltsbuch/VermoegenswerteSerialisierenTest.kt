@@ -1,16 +1,15 @@
 package com.github.haschi.haushaltsbuch
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.github.haschi.haushaltsbuch.api.Vermoegenswert
-import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswert
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicContainer.dynamicContainer
 import org.junit.jupiter.api.DynamicNode
@@ -21,9 +20,8 @@ import java.util.stream.Stream
 data class Wrapper @JsonCreator constructor(val anlagevermoegen: Vermoegenswerte) {
 }
 
-//data class Wrapper(val anlagevermoegen: Vermoegenswerte)
-
 @DisplayName("Vermoegenswerte serialisieren")
+@Disabled
 class VermoegenswerteSerialisierenTest
 {
     @TestFactory
@@ -31,7 +29,6 @@ class VermoegenswerteSerialisierenTest
     {
         Json.mapper.registerKotlinModule()
         Json.mapper
-
 
         data class Testfall(val bezeichnung: String, val testwert: Wrapper, val json: String)
 

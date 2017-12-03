@@ -44,17 +44,11 @@
 
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-xxx</artifactId>
+                <artifactId>haushaltsbuch-domain</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <!-- TODO axon-dependencies.pom -->
-            <dependency>
-                <groupId>org.axonframework</groupId>
-                <artifactId>axon-core</artifactId>
-                <version>${axon.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.axonframework</groupId>
                 <artifactId>axon-core</artifactId>
@@ -117,7 +111,7 @@
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>haushaltsbuch-xxx</artifactId>
+            <artifactId>haushaltsbuch-domain</artifactId>
         </dependency>
 
         <dependency>

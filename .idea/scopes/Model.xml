@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Model" pattern="src[haushaltsbuch-domain]:org.github.haschi.domain.*.modell..*&amp;&amp;!src[haushaltsbuch-domain]:org.github.haschi.domain.haushaltsbuch.modell.core...*" />
+</component>

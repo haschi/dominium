@@ -1,9 +1,8 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.ext.web.RoutingContext
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 
-import java.util.function.Consumer
 
 class ResultBuilder
 {

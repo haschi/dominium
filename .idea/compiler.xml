@@ -18,6 +18,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="haushaltsbuch-domaene" />
+        <module name="haushaltsbuch-domain" />
         <module name="haushaltsbuch-xxx" />
         <module name="infrastruktur" />
       </profile>
@@ -25,6 +27,8 @@
     <bytecodeTargetLevel>
       <module name="haushaltsbuch" target="1.8" />
       <module name="haushaltsbuch-app" target="1.5" />
+      <module name="haushaltsbuch-domaene" target="1.8" />
+      <module name="haushaltsbuch-domain" target="1.8" />
       <module name="haushaltsbuch-xxx" target="1.8" />
       <module name="infrastruktur" target="1.8" />
     </bytecodeTargetLevel>

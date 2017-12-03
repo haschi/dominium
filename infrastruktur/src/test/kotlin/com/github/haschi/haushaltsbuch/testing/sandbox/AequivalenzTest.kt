@@ -1,18 +1,18 @@
 package com.github.haschi.haushaltsbuch.testing.sandbox
 
 import nl.jqno.equalsverifier.EqualsVerifier
-import org.github.haschi.haushaltsbuch.api.BeendeInventur
-import org.github.haschi.haushaltsbuch.api.BeginneHaushaltsbuchführung
-import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.ErfasseInventar
-import org.github.haschi.haushaltsbuch.api.ErfasseSchulden
-import org.github.haschi.haushaltsbuch.api.ErfasseUmlaufvermögen
-import org.github.haschi.haushaltsbuch.api.EröffnungsbilanzkontoErstellt
-import org.github.haschi.haushaltsbuch.api.HaushaltsbuchführungBegonnen
-import org.github.haschi.haushaltsbuch.api.InventarErfasst
-import org.github.haschi.haushaltsbuch.api.InventurBegonnen
-import org.github.haschi.haushaltsbuch.api.SchuldErfasst
-import org.github.haschi.haushaltsbuch.api.UmlaufvermögenErfasst
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.HaushaltsbuchführungBegonnen
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.InventurBegonnen
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.SchuldErfasst
+import org.github.haschi.domain.haushaltsbuch.modell.core.events.UmlaufvermögenErfasst
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
@@ -25,41 +25,44 @@ class AequivalenzTest
     @TestTemplate
     @ExtendWith(DatenklassenProvider::class, AnweisungenAnbieter::class, EreignisAnbieter::class)
     @DisplayName("prüfe, ob Äquivalenzregeln für die Klasse eingehalten sind")
-    fun aequivalenz(testklasse: KClass<*>)
+    fun aequivalenz(testfall: Testfall)
     {
-        EqualsVerifier.forClass(testklasse.java).verify()
+        EqualsVerifier.forClass(testfall.testklasse.java).verify()
     }
 
-    class DatenklassenProvider : TestfallAnbieter<KClass<*>>()
+    data class Testfall(val testklasse: KClass<*>)
+
+    class DatenklassenProvider : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override fun testfälle(): Stream<KClass<*>> = Stream.of(
-                KlasseA::class,
-                KlasseB::class,
-                KlasseC::class,
-                KlasseD::class,
-                KlasseE::class)
+
+        override fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(KlasseA::class),
+                Testfall(KlasseB::class),
+                Testfall(KlasseC::class),
+                Testfall(KlasseD::class),
+                Testfall(KlasseE::class))
     }
 
-    class AnweisungenAnbieter : TestfallAnbieter<KClass<*>>()
+    class AnweisungenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override fun testfälle(): Stream<KClass<*>> = Stream.of(
-                BeendeInventur::class,
-                BeginneHaushaltsbuchführung::class,
-                BeginneInventur::class,
-                ErfasseInventar::class,
-                ErfasseSchulden::class,
-                ErfasseUmlaufvermögen::class)
+        override fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(BeendeInventur::class),
+                Testfall(BeginneHaushaltsbuchführung::class),
+                Testfall(BeginneInventur::class),
+                Testfall(ErfasseInventar::class),
+                Testfall(ErfasseSchulden::class),
+                Testfall(ErfasseUmlaufvermögen::class))
     }
 
-    class EreignisAnbieter: TestfallAnbieter<KClass<*>>()
+    class EreignisAnbieter: TestfallAnbieter<Testfall>(Testfall::class)
     {
-        override  fun testfälle(): Stream<KClass<*>> = Stream.of(
-                EröffnungsbilanzkontoErstellt::class,
-                HaushaltsbuchführungBegonnen::class,
-                InventarErfasst::class,
-                // InventurBeendet::class,
-                InventurBegonnen::class,
-                SchuldErfasst::class,
-                UmlaufvermögenErfasst::class)
+        override  fun testfälle(): Stream<Testfall> = Stream.of(
+                Testfall(EröffnungsbilanzkontoErstellt::class),
+                Testfall(HaushaltsbuchführungBegonnen::class),
+                Testfall(InventarErfasst::class),
+
+                Testfall(InventurBegonnen::class),
+                Testfall(SchuldErfasst::class),
+                Testfall(UmlaufvermögenErfasst::class))
     }
 }

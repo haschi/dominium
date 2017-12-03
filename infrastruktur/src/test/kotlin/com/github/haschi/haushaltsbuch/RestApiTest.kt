@@ -2,14 +2,8 @@ package com.github.haschi.haushaltsbuch
 
 import com.github.haschi.haushaltsbuch.infrastruktur.RestApi
 import io.vertx.core.Vertx
-import io.vertx.core.eventbus.DeliveryOptions
-import io.vertx.core.json.Json
-import io.vertx.core.json.JsonObject
-import io.vertx.ext.unit.Async
 import io.vertx.ext.unit.TestContext
 import io.vertx.ext.unit.junit.VertxUnitRunner
-import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

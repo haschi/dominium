@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Commands" pattern="src[haushaltsbuch-domain]:org.github.haschi.domain.*.modell.core.commands..*" />
+</component>

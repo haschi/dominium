@@ -8,19 +8,21 @@ import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.github.haschi.haushaltsbuch.api.BeginneInventur
-import org.github.haschi.haushaltsbuch.api.Inventar
-import org.github.haschi.haushaltsbuch.api.Reinvermögen
-import org.github.haschi.haushaltsbuch.api.Schulden
-import org.github.haschi.haushaltsbuch.api.Vermoegenswerte
-import org.github.haschi.haushaltsbuch.api.Währungsbetrag
-import org.github.haschi.haushaltsbuch.infrastruktur.modellierung.de.Aggregatkennung
+import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Reinvermögen
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Schulden
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.util.*
 
 @DisplayName("Inventar serialisieren")
+@Disabled
 class InventarSerialisierenTest
 {
     @Test
