@@ -34,24 +34,23 @@ Funktionalität: Inventur
       | Summe des Vermögens         | 5.800,00 EUR  |
       | Summe der Schulden          | 10.569 EUR    |
       | Reinvermögen (Eigenkapital) | -4.769,00 EUR |
-#
-#    @ignore
-#  Szenario: Inventur ohne Inventarzählung beenden
-#    Angenommen ich habe mit der Inventur begonnen
-#    Wenn ich die Inventur beenden will
-#    Dann werde ich die Fehlermeldung "Kein Inventar erfasst" erhalten
-#  @ignore
-#  Szenario: Inventar erfassen nach Beenden der Inventur
-#    Angenommen ich habe mit der Inventur begonnen
-#    Und ich habe folgendes Inventar erfasst:
-#      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
-#      | Vermögen | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
-#
-#    Wenn ich die Inventur beende
-#
-#    Und ich folgendes Inventar erfassen will:
-#      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
-#      | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
-#
-#    Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
+
+  Szenario: Inventur ohne Inventarzählung beenden
+    Angenommen ich habe mit der Inventur begonnen
+    Wenn ich die Inventur beenden will
+    Dann werde ich die Fehlermeldung "Kein Inventar erfasst" erhalten
+
+  Szenario: Inventar erfassen nach Beenden der Inventur
+    Angenommen ich habe mit der Inventur begonnen
+    Und ich habe folgendes Inventar erfasst:
+      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
+      | Vermögen | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
+
+    Wenn ich die Inventur beende
+
+    Und ich folgendes Inventar erfassen will:
+      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
+      | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
+
+    Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
 
