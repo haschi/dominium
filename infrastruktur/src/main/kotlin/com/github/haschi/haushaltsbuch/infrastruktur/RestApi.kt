@@ -93,8 +93,11 @@ class RestApi : AbstractVerticle()
 
                     val params = context.pathParams()
                     val body = context.bodyAsJson.map
-                    body.putAll(params)
-                    val entries = body.asSequence()
+                    // body.putAll(params)
+
+                    val real = mapOf("id" to params["id"], "inventar" to body)
+
+                    val entries = real.asSequence()
                     val pairs = entries.map { Pair(it.key, it.value) }
                     val list = pairs.toList()
                     val toTypedArray = list.toTypedArray()
@@ -103,13 +106,10 @@ class RestApi : AbstractVerticle()
 
                     println(jsonObject.encodePrettily())
 
-//                    val anweisung = ErfasseInventar(
-//                            für = Aggregatkennung.aus(context.pathParam("id")),
-//                            inventar = context.bodyAsJson.mapTo(Inventar::class.java))
-
-                    val anweisung = context.bodyAsJson.mapTo(ErfasseInventar::class.java)
+                    val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
                     bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
+
                             .whenComplete { ergebnis, ausnahme ->
                                 if (ausnahme == null)
                                 {

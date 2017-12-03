@@ -27,7 +27,6 @@ import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
-import kotlin.streams.toList
 
 
 class InventurStepDefinition(
@@ -145,7 +144,7 @@ class InventurStepDefinition(
 
         anweisung.commandGateway().sendAndWait<Any>(
                 ErfasseInventar(
-                        für = welt.aktuelleInventur!!,
+                        id = welt.aktuelleInventur!!,
                         inventar = inventar))
     }
 

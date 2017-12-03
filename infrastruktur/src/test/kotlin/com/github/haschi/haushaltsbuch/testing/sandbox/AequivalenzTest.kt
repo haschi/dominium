@@ -24,7 +24,7 @@ class AequivalenzTest
 {
     @TestTemplate
     @ExtendWith(DatenklassenProvider::class, AnweisungenAnbieter::class, EreignisAnbieter::class)
-    @DisplayName("prüfe, ob Äquivalenzregeln für die Klasse eingehalten sind")
+    @DisplayName("prüfe, ob Äquivalenzregeln id die Klasse eingehalten sind")
     fun aequivalenz(testfall: Testfall)
     {
         EqualsVerifier.forClass(testfall.testklasse.java).verify()

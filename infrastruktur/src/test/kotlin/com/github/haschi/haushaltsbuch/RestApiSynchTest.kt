@@ -73,11 +73,15 @@ class RestApiSynchTest
                 .rxSendJson(BeginneInventur(aggregatkennung))
                 .flatMap {
                     val location = it.getHeader("Location")
-                    val inventurId = Aggregatkennung.aus(it.getHeader("AggregatId"))
+
+                    // Anstelle der erwarteten Anweisung ErfasseInventar schickt der
+                    // Client das Inventar an die Resource. Der Server setzt die
+                    // Anweisung aus den Pfadparametern und dem JSON Body selbst
+                    // zusammen.
                     client.post(8080, "localhost", location)
-                            .rxSendJson(ErfasseInventar(inventurId, Inventar.leer))
+                            .rxSendJson(Inventar.leer)
                 }
-                .subscribe({ async.complete() },
+                .subscribe({ /* tc.assertEquals(it.statusCode(), 200);*/ async.complete() },
                         { tc.fail(it.message) })
     }
 }

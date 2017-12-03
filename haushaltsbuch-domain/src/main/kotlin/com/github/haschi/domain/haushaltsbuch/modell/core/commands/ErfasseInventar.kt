@@ -5,5 +5,5 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 
 data class ErfasseInventar(
-        @TargetAggregateIdentifier val für: Aggregatkennung,
+        @TargetAggregateIdentifier val id: Aggregatkennung,
         val inventar: Inventar)

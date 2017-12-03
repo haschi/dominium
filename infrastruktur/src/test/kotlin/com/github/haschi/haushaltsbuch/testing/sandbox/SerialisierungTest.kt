@@ -165,7 +165,7 @@ class SerialisierungTest
                     Testfall(
                             ErfasseInventar(Aggregatkennung.aus(id), Inventar.leer),
                             """{
-                                |  "für" : "$id",
+                                |  "id" : "$id",
                                 |  "inventar" : {
                                 |    "anlagevermoegen" : [ ],
                                 |    "umlaufvermoegen" : [ ],
