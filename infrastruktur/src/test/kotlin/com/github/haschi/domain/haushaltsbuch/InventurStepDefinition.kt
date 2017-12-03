@@ -78,14 +78,16 @@ class InventurStepDefinition(
 
     @Dann("^werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:$")
     fun werdeIchFolgendeVermögenswerteInMeinemInventarGelistetHaben(
-            vermögenswerte: List<Vermoegenswert>)
+            vermögenswerte: List<VermögenswertParameter>)
     {
 
         val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.umlaufvermoegen)
-                .isEqualTo(Vermoegenswerte(vermögenswerte))
+                .isEqualTo(Vermoegenswerte(vermögenswerte.map{
+                    Vermoegenswert(it.position, it.währungsbetrag)
+                }))
     }
 
     @Dann("^werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:$")

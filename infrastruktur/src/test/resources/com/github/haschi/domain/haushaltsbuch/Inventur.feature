@@ -21,10 +21,10 @@ Funktionalität: Inventur
     Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
       | Position         | Währungsbetrag |
       | Sparbuchguthaben | 5.300,00 EUR   |
-#
-#    Dann werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:
-#      | Position     | Währungsbetrag |
-#      | Bankguthaben | 500,00 EUR     |
+
+    Dann werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:
+      | Position     | Währungsbetrag |
+      | Bankguthaben | 500,00 EUR     |
 #
 #    Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
 #      | Position   | Währungsbetrag |
