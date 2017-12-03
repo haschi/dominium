@@ -29,11 +29,7 @@ class Inventur {
     constructor()
 
     @CommandHandler
-    constructor(anweisung: BeginneInventur, @MetaDataValue("threadId") threadId: Long) {
-        if (Thread.currentThread().id != threadId) {
-            throw IllegalThreadStateException()
-        }
-
+    public constructor(anweisung: BeginneInventur) {
         AggregateLifecycle.apply(InventurBegonnen(anweisung.id))
     }
 

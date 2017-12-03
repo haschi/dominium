@@ -6,10 +6,9 @@ Funktionalität: Inventur
 
 # http://www.it-infothek.de/wirtschaftsinformatik/semester-2/externes-rechnungswesen-03.html
 
-#  @ignore
-#  Szenario: Inventur beginnen
-#    Wenn ich die Inventur beginne
-#    Dann wird mein Inventar leer sein
+  Szenario: Inventur beginnen
+    Wenn ich die Inventur beginne
+    Dann wird mein Inventar leer sein
 #
 #  Szenario: Inventar erfassen
 #    Angenommen ich habe mit der Inventur begonnen
