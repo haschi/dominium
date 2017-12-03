@@ -3,13 +3,13 @@ package com.github.haschi.domain.haushaltsbuch
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
-import org.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Eröffnungsbilanzkonto
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
+import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Eröffnungsbilanzkonto
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.testing.Abfragekonfiguration
 import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
 

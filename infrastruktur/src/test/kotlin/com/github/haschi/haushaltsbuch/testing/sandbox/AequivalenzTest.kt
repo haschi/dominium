@@ -1,18 +1,18 @@
 package com.github.haschi.haushaltsbuch.testing.sandbox
 
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.HaushaltsbuchführungBegonnen
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventurBegonnen
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.SchuldErfasst
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.UmlaufvermögenErfasst
 import nl.jqno.equalsverifier.EqualsVerifier
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.HaushaltsbuchführungBegonnen
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.InventurBegonnen
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.SchuldErfasst
-import org.github.haschi.domain.haushaltsbuch.modell.core.events.UmlaufvermögenErfasst
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
@@ -60,7 +60,6 @@ class AequivalenzTest
                 Testfall(EröffnungsbilanzkontoErstellt::class),
                 Testfall(HaushaltsbuchführungBegonnen::class),
                 Testfall(InventarErfasst::class),
-
                 Testfall(InventurBegonnen::class),
                 Testfall(SchuldErfasst::class),
                 Testfall(UmlaufvermögenErfasst::class))

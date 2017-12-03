@@ -1,16 +1,16 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
+import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
+import com.github.haschi.domain.haushaltsbuch.modell.Inventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.reactivex.core.AbstractVerticle
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import org.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import org.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
-import org.github.haschi.domain.haushaltsbuch.modell.Inventur
 import java.io.IOException
 import java.text.MessageFormat
 import java.util.*

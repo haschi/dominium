@@ -9,15 +9,15 @@ Funktionalität: Inventur
   Szenario: Inventur beginnen
     Wenn ich die Inventur beginne
     Dann wird mein Inventar leer sein
-#
-#  Szenario: Inventar erfassen
-#    Angenommen ich habe mit der Inventur begonnen
-#    Wenn ich folgendes Inventar erfasse:
-#      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
-#      | Vermögen | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
-#      | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
-#      | Schulden | Langfristige Schulden | Autokredit       | 10.569,00 EUR  |
-#
+
+  Szenario: Inventar erfassen
+    Angenommen ich habe mit der Inventur begonnen
+    Wenn ich folgendes Inventar erfasse:
+      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
+      | Vermögen | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
+      | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
+      | Schulden | Langfristige Schulden | Autokredit       | 10.569,00 EUR  |
+
 #    Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
 #      | Position         | Währungsbetrag |
 #      | Sparbuchguthaben | 5.300,00 EUR   |

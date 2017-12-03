@@ -1,12 +1,12 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.vertx.ext.web.RoutingContext
-import org.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 
 
 class ResultBuilder
 {
-    internal fun location(url: String, id: Aggregatkennung): (RoutingContext) -> Unit
+    internal fun location(url: String, id:Aggregatkennung): (RoutingContext) -> Unit
     {
         return { context: RoutingContext ->
             context.response()

@@ -20,13 +20,8 @@
         <junit.jupiter.version>5.0.1</junit.jupiter.version>
         <junit.platform.version>1.0.1</junit.platform.version>
         <junit.version>4.12.1</junit.version>
-
-        <!--<cukes.version>2.1.0</cukes.version>-->
-        <!--<cukes.artefactId>io.cucumber</cukes.artefactId>-->
-
         <cukes.version>1.2.5</cukes.version>
         <cukes.artefactId>info.cukes</cukes.artefactId>
-
         <assertj.version>3.8.0</assertj.version>
         <vertx.verticle>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.verticle>
         <kotlin.version>1.2.0</kotlin.version>
@@ -92,6 +87,12 @@
                 <artifactId>cucumber-picocontainer</artifactId>
                 <version>${cukes.version}</version>
             </dependency>
+
+            <!--<dependency>-->
+                <!--<groupId>io.cucumber</groupId>-->
+                <!--<artifactId>gherkin</artifactId>-->
+                <!--<version>5.0.0</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -249,6 +250,12 @@
             <artifactId>cucumber-picocontainer</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>io.cucumber</groupId>-->
+            <!--<artifactId>gherkin</artifactId>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.assertj</groupId>
