@@ -159,12 +159,11 @@ class InventurStepDefinition(
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
     fun werdeIchFolgendesEigenkapitalErmitteltHaben(reinvermögen: DataTable)
     {
-
-        val map = reinvermögen.asMap(String::class.java, Währungsbetrag::class.java)
+        val map = reinvermögen.asMap(String::class.java, String::class.java)
 
         val erwartungswert = Reinvermögen(
-                summeDerSchulden = map["Summe der Schulden"]!!,
-                summeDesVermögens = map["Summe des Vermögens"]!!)
+                summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
+                summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
         val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))

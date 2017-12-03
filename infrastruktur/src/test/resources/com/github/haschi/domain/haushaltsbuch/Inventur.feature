@@ -30,10 +30,10 @@ Funktionalität: Inventur
       | Position   | Währungsbetrag |
       | Autokredit | 10.569,00 EUR  |
 
-#    Dann werde ich folgendes Reinvermögen ermittelt haben:
-#      | Summe des Vermögens         | 5.800,00 EUR  |
-#      | Summe der Schulden          | 10.569 EUR    |
-#      | Reinvermögen (Eigenkapital) | -4.769,00 EUR |
+    Dann werde ich folgendes Reinvermögen ermittelt haben:
+      | Summe des Vermögens         | 5.800,00 EUR  |
+      | Summe der Schulden          | 10.569 EUR    |
+      | Reinvermögen (Eigenkapital) | -4.769,00 EUR |
 #
 #    @ignore
 #  Szenario: Inventur ohne Inventarzählung beenden
