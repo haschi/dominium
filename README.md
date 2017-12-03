@@ -43,10 +43,20 @@ domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Anleitung.
 3. [Coding-Style - nicht aktuell](Codestyle.md)
 4. [Build-Prozess](buildprozess.md)
 
+
+Architektur
+===========
+
+Ziel ist die von [Jeffrey Palermo](http://jeffreypalermo.com/about/) in seinem Artikel 
+[The Onion Architekture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
+beschriebene Architektur zu verwendet.
+
+![Onion Architektur](http://jeffreypalermo.com/files/media/image/WindowsLiveWriter/TheOnionArchitecturepart1_70A9/image%7B0%7D%5B59%5D.png)
+
 Getestet unter
 --------------
 * Wildfly 10.0.0.Final
 * Maven 3.3.9
-* Java 8 (OpenJDK 1.8.0_66)
+* Kotlin 1.2
 * MariaDB Server Version 10.0.23, Client Version 1.3.7
 
