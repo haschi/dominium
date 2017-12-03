@@ -1,5 +1,7 @@
 <component name="DependencyValidationManager">
   <state>
     <deny_rule from_scope="Projections" to_scope="Queries" is_deny="false" />
+    <deny_rule from_scope="Event Consumer" to_scope="Events" is_deny="false" />
+    <deny_rule from_scope="Model" to_scope="Commands" is_deny="false" />
   </state>
 </component>
