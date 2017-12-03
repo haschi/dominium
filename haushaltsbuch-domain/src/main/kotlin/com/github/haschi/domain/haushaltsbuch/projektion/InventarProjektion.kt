@@ -1,5 +1,6 @@
 package com.github.haschi.domain.haushaltsbuch.projektion
 
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
 import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import org.axonframework.commandhandling.CommandHandler
@@ -21,7 +22,7 @@ class InventarProjektion(private val vergangenheit: VergangeneEreignisse)
     private fun alsInventar(message: Any): Inventar =
             when (message)
             {
-                is com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst -> message.inventar
+                is InventarErfasst -> message.inventar
                 else -> Inventar.leer
             }
 }

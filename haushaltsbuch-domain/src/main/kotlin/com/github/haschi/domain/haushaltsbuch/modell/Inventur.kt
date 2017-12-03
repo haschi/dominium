@@ -8,6 +8,8 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventurBeendet
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventurBegonnen
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.SchuldErfasst
+import com.github.haschi.domain.haushaltsbuch.modell.core.events.UmlaufvermögenErfasst
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.InventurAusnahme
 import org.axonframework.commandhandling.CommandHandler
@@ -42,7 +44,7 @@ class Inventur
             // TODO: löschen
     fun erfasseUmlaufvermögen(anweisung: ErfasseUmlaufvermögen)
     {
-        AggregateLifecycle.apply(com.github.haschi.domain.haushaltsbuch.modell.core.events.UmlaufvermögenErfasst(
+        AggregateLifecycle.apply(UmlaufvermögenErfasst(
                 position = anweisung.position,
                 betrag = anweisung.währungsbetrag))
     }
@@ -51,7 +53,7 @@ class Inventur
     fun erfasseSchulden(anweisung: ErfasseSchulden)
     {
         AggregateLifecycle.apply(
-                com.github.haschi.domain.haushaltsbuch.modell.core.events.SchuldErfasst(
+                SchuldErfasst(
                         position = anweisung.position,
                         betrag = anweisung.währungsbetrag))
     }

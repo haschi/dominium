@@ -18,9 +18,9 @@ Funktionalität: Inventur
       | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
       | Schulden | Langfristige Schulden | Autokredit       | 10.569,00 EUR  |
 
-#    Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
-#      | Position         | Währungsbetrag |
-#      | Sparbuchguthaben | 5.300,00 EUR   |
+    Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
+      | Position         | Währungsbetrag |
+      | Sparbuchguthaben | 5.300,00 EUR   |
 #
 #    Dann werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:
 #      | Position     | Währungsbetrag |

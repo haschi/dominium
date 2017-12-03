@@ -89,9 +89,9 @@
             </dependency>
 
             <!--<dependency>-->
-                <!--<groupId>io.cucumber</groupId>-->
-                <!--<artifactId>gherkin</artifactId>-->
-                <!--<version>5.0.0</version>-->
+            <!--<groupId>io.cucumber</groupId>-->
+            <!--<artifactId>gherkin</artifactId>-->
+            <!--<version>5.0.0</version>-->
             <!--</dependency>-->
 
             <dependency>
@@ -123,7 +123,7 @@
 
         <dependency>
             <groupId>io.vertx</groupId>
-        <artifactId>vertx-core</artifactId>
+            <artifactId>vertx-core</artifactId>
         </dependency>
 
         <dependency>
@@ -142,8 +142,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>io.vertx</groupId>-->
-            <!--<artifactId>vertx-rx</artifactId>-->
+        <!--<groupId>io.vertx</groupId>-->
+        <!--<artifactId>vertx-rx</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -252,9 +252,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>io.cucumber</groupId>-->
-            <!--<artifactId>gherkin</artifactId>-->
-            <!--<scope>test</scope>-->
+        <!--<groupId>io.cucumber</groupId>-->
+        <!--<artifactId>gherkin</artifactId>-->
+        <!--<scope>test</scope>-->
         <!--</dependency>-->
 
         <dependency>
@@ -277,9 +277,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-serialization-runtime</artifactId>
         </dependency>
+
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
@@ -334,7 +341,9 @@
                 <version>2.19.1</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <cucumber.api.java.ObjectFactory>com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory</cucumber.api.java.ObjectFactory>
+                        <cucumber.api.java.ObjectFactory>
+                            com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory
+                        </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>
                 <dependencies>
@@ -352,7 +361,9 @@
                 <version>2.20.1</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <cucumber.api.java.ObjectFactory>com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory</cucumber.api.java.ObjectFactory>
+                        <cucumber.api.java.ObjectFactory>
+                            com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
+                        </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
@@ -388,9 +399,9 @@
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
 
-                        <compilerPlugins>
-                            <plugin>kotlinx-serialization</plugin>
-                        </compilerPlugins>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
 
                 </configuration>
                 <dependencies>

@@ -1,17 +1,5 @@
 package com.github.haschi.domain.haushaltsbuch
 
-import com.github.haschi.domain.haushaltsbuch.testing.Abfragekonfiguration
-import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
-import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
-import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertConverter
-import cucumber.api.DataTable
-import cucumber.api.Transform
-import cucumber.api.java.de.Angenommen
-import cucumber.api.java.de.Dann
-import cucumber.api.java.de.Und
-import cucumber.api.java.de.Wenn
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.catchThrowable
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
@@ -27,10 +15,19 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schulden
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswert
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import com.github.haschi.domain.haushaltsbuch.testing.Abfragekonfiguration
+import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
+import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
+import cucumber.api.DataTable
+import cucumber.api.java.de.Angenommen
+import cucumber.api.java.de.Dann
+import cucumber.api.java.de.Und
+import cucumber.api.java.de.Wenn
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import kotlin.streams.toList
 
 
-@cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter(MoneyConverter::class)
 class InventurStepDefinition(
         private val welt: DieWelt,
         private val anweisung: Anweisungskonfiguration,
@@ -73,7 +70,7 @@ class InventurStepDefinition(
             währungsbetrag: Währungsbetrag)
     {
         anweisung.commandGateway().sendAndWait<Any>(
-                com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen(
+                ErfasseUmlaufvermögen(
                         inventurkennung = welt.aktuelleInventur!!,
                         position = position,
                         währungsbetrag = währungsbetrag))
@@ -93,13 +90,15 @@ class InventurStepDefinition(
 
     @Dann("^werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:$")
     fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
-            @Transform(MoneyConverter::class) vermögenswerte: List<Vermoegenswert>)
+            vermögenswerte: List<VermögenswertParameter>)
     {
         val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
-                com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar(welt.aktuelleInventur!!))
+                LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.anlagevermoegen)
-                .isEqualTo(Vermoegenswerte(vermögenswerte))
+                .isEqualTo(Vermoegenswerte(vermögenswerte.map {
+                    Vermoegenswert(it.position, it.währungsbetrag)
+                }))
     }
 
     @Wenn("^ich meine Schulden \"([^\"]*)\" in Höhe von \"([^\"]*)\" erfasse$")
