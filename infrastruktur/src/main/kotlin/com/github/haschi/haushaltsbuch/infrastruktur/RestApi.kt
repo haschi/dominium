@@ -1,13 +1,17 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.modell.Inventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
+import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory
+import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.reactivex.core.AbstractVerticle
+import io.vertx.reactivex.ext.web.handler.BodyHandler
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
@@ -24,6 +28,8 @@ class RestApi : AbstractVerticle()
 
     override fun start()
     {
+        Json.mapper.registerKotlinModule()
+
         axon = DefaultConfigurer.defaultConfiguration()
                 .configureEmbeddedEventStore { _ -> InMemoryEventStorageEngine() }
                 .configureAggregate(Inventur::class.java)
@@ -39,7 +45,7 @@ class RestApi : AbstractVerticle()
 
         val port = config().getInteger("http.port", 8080)!!
 
-        // bridge.router.route().handler(BodyHandler.create())
+        bridge.router.route().handler(BodyHandler.create())
 
         bridge.router.post("/api/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
@@ -52,6 +58,7 @@ class RestApi : AbstractVerticle()
                 {
                     context.response()
                             .putHeader("Location", "/api/inventar/" + ergebnis.id.toString())
+                            .putHeader("AggregatId", ergebnis.id.toString())
                             // .putHeader("content-type", "application/json")
                             // .putHeader("content-type", "text/plain")
                             .setStatusCode(200)
@@ -84,9 +91,23 @@ class RestApi : AbstractVerticle()
                             "erfasse Inventar: {0}",
                             context.bodyAsString))
 
-                    val anweisung = ErfasseInventar(
-                            für = Aggregatkennung.aus(context.pathParam("id")),
-                            inventar = context.bodyAsJson.mapTo(Inventar::class.java))
+                    val params = context.pathParams()
+                    val body = context.bodyAsJson.map
+                    body.putAll(params)
+                    val entries = body.asSequence()
+                    val pairs = entries.map { Pair(it.key, it.value) }
+                    val list = pairs.toList()
+                    val toTypedArray = list.toTypedArray()
+
+                    val jsonObject = JsonObject(*toTypedArray)
+
+                    println(jsonObject.encodePrettily())
+
+//                    val anweisung = ErfasseInventar(
+//                            für = Aggregatkennung.aus(context.pathParam("id")),
+//                            inventar = context.bodyAsJson.mapTo(Inventar::class.java))
+
+                    val anweisung = context.bodyAsJson.mapTo(ErfasseInventar::class.java)
 
                     bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
                             .whenComplete { ergebnis, ausnahme ->
