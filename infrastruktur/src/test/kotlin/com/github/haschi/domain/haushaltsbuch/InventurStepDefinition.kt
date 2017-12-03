@@ -17,12 +17,14 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.testing.Abfragekonfiguration
 import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
+import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
+import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import kotlin.streams.toList
@@ -85,7 +87,7 @@ class InventurStepDefinition(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.umlaufvermoegen)
-                .isEqualTo(Vermoegenswerte(vermögenswerte.map{
+                .isEqualTo(Vermoegenswerte(vermögenswerte.map {
                     Vermoegenswert(it.position, it.währungsbetrag)
                 }))
     }
@@ -117,45 +119,36 @@ class InventurStepDefinition(
     }
 
     @Dann("^werde ich folgende Schulden in meinem Inventar gelistet haben:$")
-    fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(schulden: List<Schuld>)
+    fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
+            schulden: List<SchuldParameter>)
     {
         val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
-        //        assertThat(inventar.schulden())
-        //                .isEqualTo(Schulden.of(schulden));
+        assertThat(inventar.schulden)
+                .isEqualTo(Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) }));
     }
+
+    class SchuldParameter(
+            val position: String,
+
+            @XStreamConverter(MoneyConverter::class)
+            val währungsbetrag: Währungsbetrag)
 
     @Wenn("^ich folgendes Inventar erfasse:$")
     fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
     {
-
         val inventar = Inventar(
-                umlaufvermoegen = Vermoegenswerte(
-                        zeilen.stream()
-                                .filter { z -> z.untergruppe == "Umlaufvermögen" }
-                                .map { z ->
-                                    Vermoegenswert(
-                                            position = z.position!!,
-                                            währungsbetrag = z.währungsbetrag!!)
-                                }
-                                .toList()),
-                anlagevermoegen = Vermoegenswerte(
-                        zeilen.stream()
-                                .filter { z -> z.untergruppe == "Anlagevermögen" }
-                                .map { z ->
-                                    Vermoegenswert(
-                                            position = z.position!!,
-                                            währungsbetrag = z.währungsbetrag!!)
-                                }
-                                .toList()),
-                schulden = Schulden(emptyList()))
+                umlaufvermoegen = zeilen.vermögenswerte("Umlaufvermögen"),
+                anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
+                schulden = zeilen.schulden("Langfristige Schulden"))
 
         anweisung.commandGateway().sendAndWait<Any>(
                 ErfasseInventar(
                         für = welt.aktuelleInventur!!,
                         inventar = inventar))
     }
+
 
     @Und("^ich folgendes Inventar erfassen will:$")
     fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)

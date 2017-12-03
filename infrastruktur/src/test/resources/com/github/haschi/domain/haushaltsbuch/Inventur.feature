@@ -25,11 +25,11 @@ Funktionalität: Inventur
     Dann werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:
       | Position     | Währungsbetrag |
       | Bankguthaben | 500,00 EUR     |
-#
-#    Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
-#      | Position   | Währungsbetrag |
-#      | Autokredit | 10.569,00 EUR  |
-#
+
+    Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
+      | Position   | Währungsbetrag |
+      | Autokredit | 10.569,00 EUR  |
+
 #    Dann werde ich folgendes Reinvermögen ermittelt haben:
 #      | Summe des Vermögens         | 5.800,00 EUR  |
 #      | Summe der Schulden          | 10.569 EUR    |
