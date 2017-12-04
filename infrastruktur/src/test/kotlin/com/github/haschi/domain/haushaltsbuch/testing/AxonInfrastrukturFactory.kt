@@ -5,13 +5,13 @@ import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
 import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
 
-class EventStoreLieferant
+class AxonInfrastrukturFactory
 {
-    private val engine = InMemoryEventStorageEngine()
-    private val eventStore = EmbeddedEventStore(engine)
+    fun eventstore(konfiguration: Configuration): EventStore =
+            eventStore
 
-    fun eventBus(konfiguration: Configuration): EventStore
+    companion object
     {
-        return eventStore
+        private val eventStore = EmbeddedEventStore(InMemoryEventStorageEngine())
     }
 }

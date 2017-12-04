@@ -3,14 +3,15 @@ package com.github.haschi.domain.haushaltsbuch.projektion
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst
 import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import org.axonframework.commandhandling.CommandHandler
+import org.axonframework.queryhandling.QueryHandler
 
 class InventarProjektion(private val vergangenheit: VergangeneEreignisse)
 {
-    @CommandHandler
+    @QueryHandler
     fun leseInventar(abfrage: LeseInventar): Inventar
     {
 
+        // TODO("Empty sequence can't be reduced")
         return vergangenheit.bezüglich(abfrage.ausInventur)
                 .map { m -> alsInventar(m.payload) }
                 .reduce( { l, r -> if (r == Inventar.leer) l else r } )

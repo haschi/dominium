@@ -15,7 +15,6 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schulden
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswert
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
-import com.github.haschi.domain.haushaltsbuch.testing.Abfragekonfiguration
 import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
@@ -25,29 +24,33 @@ import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
+import io.reactivex.Single
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 
-
 class InventurStepDefinition(
         private val welt: DieWelt,
-        private val anweisung: Anweisungskonfiguration,
-        private val abfrage: Abfragekonfiguration)
+        private val anweisung: Anweisungskonfiguration)
 {
 
     @Wenn("^ich die Inventur beginne$")
     fun wenn_ich_die_inventur_beginne()
     {
         welt.aktuelleInventur = Aggregatkennung.neu()
-            anweisung.commandGateway().sendAndWait<Any>(
+            anweisung.commandGateway.sendAndWait<Any>(
                     BeginneInventur(welt.aktuelleInventur!!))
     }
 
     @Dann("^wird mein Inventar leer sein$")
     fun wirdMeinInventarLeerSein()
     {
-        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-                LeseInventar(welt.aktuelleInventur!!))
+        val future = anweisung.queryGateway.send(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java)
+        val single = Single.fromFuture(future)
+        val inventar = single.blockingGet()
+
+
+//        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
+//                LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar).isEqualTo(Inventar.leer)
     }
@@ -63,7 +66,7 @@ class InventurStepDefinition(
             position: String,
             währungsbetrag: Währungsbetrag)
     {
-        anweisung.commandGateway().sendAndWait<Any>(
+        anweisung.commandGateway.sendAndWait<Any>(
                 ErfasseUmlaufvermögen(
                         inventurkennung = welt.aktuelleInventur!!,
                         position = position,
@@ -75,8 +78,9 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-                LeseInventar(welt.aktuelleInventur!!))
+        val inventar = anweisung.queryGateway.send(
+                LeseInventar(welt.aktuelleInventur!!),
+                Inventar::class.java).get()
 
         assertThat(inventar.umlaufvermoegen)
                 .isEqualTo(Vermoegenswerte(vermögenswerte.map {
@@ -88,8 +92,9 @@ class InventurStepDefinition(
     fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-                LeseInventar(welt.aktuelleInventur!!))
+        val inventar = anweisung.queryGateway.send(
+                LeseInventar(welt.aktuelleInventur!!),
+                Inventar::class.java).get()
 
         assertThat(inventar.anlagevermoegen)
                 .isEqualTo(Vermoegenswerte(vermögenswerte.map {
@@ -103,7 +108,7 @@ class InventurStepDefinition(
             währungsbetrag: Währungsbetrag)
     {
 
-        anweisung.commandGateway().sendAndWait<Any>(
+        anweisung.commandGateway.sendAndWait<Any>(
                 ErfasseSchulden(
                         inventurkennung = welt.aktuelleInventur!!,
                         position = position,
@@ -114,8 +119,9 @@ class InventurStepDefinition(
     fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
             schulden: List<SchuldParameter>)
     {
-        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-                LeseInventar(welt.aktuelleInventur!!))
+        val inventar = anweisung.queryGateway.send(
+                LeseInventar(welt.aktuelleInventur!!),
+                Inventar::class.java).get()
 
         assertThat(inventar.schulden)
                 .isEqualTo(Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) }));
@@ -135,7 +141,7 @@ class InventurStepDefinition(
                 anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
                 schulden = zeilen.schulden("Langfristige Schulden"))
 
-        anweisung.commandGateway().sendAndWait<Any>(
+        anweisung.commandGateway.sendAndWait<Any>(
                 ErfasseInventar(
                         id = welt.aktuelleInventur!!,
                         inventar = inventar))
@@ -157,8 +163,9 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-                LeseInventar(welt.aktuelleInventur!!))
+        val inventar = anweisung.queryGateway.send(
+                LeseInventar(welt.aktuelleInventur!!),
+                Inventar::class.java).get()
 
         assertThat(inventar.reinvermoegen).isEqualTo(erwartungswert)
     }
@@ -167,7 +174,7 @@ class InventurStepDefinition(
     fun ichDieInventurBeendenWill()
     {
         welt.intention = {
-            anweisung.commandGateway().sendAndWait<Unit?>(
+            anweisung.commandGateway.sendAndWait<Unit?>(
                     BeendeInventur(von = welt.aktuelleInventur!!))
         }
     }
@@ -192,7 +199,7 @@ class InventurStepDefinition(
     @Wenn("^ich die Inventur beende$")
     fun ichDieInventurBeende()
     {
-        anweisung.commandGateway().sendAndWait<Any>(
+        anweisung.commandGateway.sendAndWait<Any>(
                 BeendeInventur(welt.aktuelleInventur!!))
     }
 }
