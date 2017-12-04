@@ -6,7 +6,6 @@ import com.github.haschi.domain.haushaltsbuch.modell.Inventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.json.JsonObject
