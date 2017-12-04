@@ -8,16 +8,13 @@ import org.picocontainer.Startable
 
 class Abfragekonfiguration(storagelieferant: EventStoreLieferant) : Startable
 {
-
-    fun commandGateway(): CommandGateway
-    {
-        return konfiguration.commandGateway()
-    }
-
     private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
             .registerCommandHandler({ InventarProjektion(EreignisLieferant(it.eventStore())) })
             .configureEventStore({ storagelieferant.eventBus(it) })
             .buildConfiguration()
+
+    val commandGateway: CommandGateway
+            get() = konfiguration.commandGateway()
 
     override fun start()
     {

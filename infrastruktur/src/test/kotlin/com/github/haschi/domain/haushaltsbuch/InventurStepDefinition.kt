@@ -46,7 +46,7 @@ class InventurStepDefinition(
     @Dann("^wird mein Inventar leer sein$")
     fun wirdMeinInventarLeerSein()
     {
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar).isEqualTo(Inventar.leer)
@@ -75,7 +75,7 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.umlaufvermoegen)
@@ -88,7 +88,7 @@ class InventurStepDefinition(
     fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.anlagevermoegen)
@@ -114,7 +114,7 @@ class InventurStepDefinition(
     fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
             schulden: List<SchuldParameter>)
     {
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.schulden)
@@ -157,7 +157,7 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         assertThat(inventar.reinvermoegen).isEqualTo(erwartungswert)

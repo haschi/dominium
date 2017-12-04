@@ -25,7 +25,7 @@ class HaushaltsbuchführungBeginnenSteps(
 
         welt.aktuellesHaushaltsbuch = Aggregatkennung.neu()
 
-        val inventar = abfrage.commandGateway().sendAndWait<Inventar>(
+        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
                 LeseInventar(welt.aktuelleInventur!!))
 
         anweisung.konfiguration().commandGateway().sendAndWait<Any>(
