@@ -5,7 +5,7 @@
 
     <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch-domain</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>CD-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
@@ -20,7 +20,7 @@
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
         <!-- Das muss woanders hin -->
         <version.jboss.bom>10.0.1.Final</version.jboss.bom>
-        <axon.version>3.0.5</axon.version>
+        <axon.version>3.0.7</axon.version>
         <jackson.version>2.7.4</jackson.version>
         <version.maven-surefire-plugin>2.18.1</version.maven-surefire-plugin>
         <sonar.language>java</sonar.language>

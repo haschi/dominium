@@ -58,7 +58,7 @@ class RestApiSynchTest
     fun testThatDefaultsAreOk()
     {
         `when`().get("/")
-                .then().body(equalTo("infrastruktur 0.0.1-SNAPSHOT"))
+                .then().body(equalTo("infrastruktur CD-SNAPSHOT"))
     }
 
     @Test

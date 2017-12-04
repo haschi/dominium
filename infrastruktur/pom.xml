@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>com.github.haschi.haushaltsbuch</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>CD-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
@@ -16,7 +16,7 @@
         <vertx.version>3.5.0</vertx.version>
         <jackson.version>2.9.2</jackson.version>
         <vmp.version>1.0.9</vmp.version>
-        <axon.version>3.0.6</axon.version>
+        <axon.version>3.0.7</axon.version>
         <junit.jupiter.version>5.0.1</junit.jupiter.version>
         <junit.platform.version>1.0.1</junit.platform.version>
         <junit.version>4.12.1</junit.version>
@@ -41,7 +41,7 @@
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-domain</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>CD-SNAPSHOT</version>
             </dependency>
 
             <!-- TODO axon-dependencies.pom -->

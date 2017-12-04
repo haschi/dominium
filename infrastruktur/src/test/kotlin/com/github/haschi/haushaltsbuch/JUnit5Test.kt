@@ -16,6 +16,6 @@ class JUnit5Test
     @Throws(IOException::class)
     fun testJunit5()
     {
-        assertThat(RestApi.getServiceProperty("service.version")).isEqualTo("0.0.1-SNAPSHOT")
+        assertThat(RestApi.getServiceProperty("service.version")).isEqualTo("CD-SNAPSHOT")
     }
 }

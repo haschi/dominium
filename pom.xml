@@ -45,25 +45,6 @@
 
             <!-- BOM -->
 
-
-
-
-            <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>building</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.haschi</groupId>
-                <artifactId>coding-bom</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <!-- Eigene Module -->
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
