@@ -49,7 +49,6 @@ class InventarSerialisierenTest
                 schulden = Schulden.keine)
 
         val jsonObject = JsonObject.mapFrom(inventar)
-        println(jsonObject.encodePrettily())
 
         assertThat(jsonObject.mapTo(Inventar::class.java)).isEqualTo(inventar)
     }
@@ -63,7 +62,7 @@ class InventarSerialisierenTest
                 summeDerSchulden = Währungsbetrag.NullEuro)
 
         val json = JsonObject.mapFrom(reinvermögen)
-        println(json.encodePrettily())
+
         assertThatCode { JsonObject.mapFrom(reinvermögen) }
                 .doesNotThrowAnyException()
     }
@@ -76,8 +75,6 @@ class InventarSerialisierenTest
                 .put("summeDesVermoegens", "120,00 EUR")
                 .put("summeDerSchulden", "80,00 EUR")
 
-        println(json.encodePrettily())
-
         assertThatCode { json.mapTo(Reinvermögen::class.java) }
                 .doesNotThrowAnyException()
     }
@@ -88,8 +85,6 @@ class InventarSerialisierenTest
     {
         val id = Aggregatkennung.neu()
         val beginneInventur = BeginneInventur(id)
-
-        println(JsonObject.mapFrom(beginneInventur).encodePrettily())
 
         assertThatCode { JsonObject.mapFrom(beginneInventur) }
                 .doesNotThrowAnyException()
@@ -103,8 +98,6 @@ class InventarSerialisierenTest
 
         val json = JsonObject()
                 .put("id", id.toString())
-
-        println(json.encodePrettily())
 
         assertThatCode { json.mapTo(BeginneInventur::class.java) }
                 .doesNotThrowAnyException()

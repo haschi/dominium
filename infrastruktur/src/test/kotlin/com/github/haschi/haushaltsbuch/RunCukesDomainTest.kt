@@ -5,5 +5,5 @@ import cucumber.api.junit.Cucumber
 import org.junit.runner.RunWith
 
 @RunWith(Cucumber::class)
-@CucumberOptions(strict = true, tags = arrayOf("@domain"))
+@CucumberOptions(strict = true, tags = ["@domain"], plugin = ["pretty"])
 class RunCukesDomainTest

@@ -5,5 +5,5 @@ import cucumber.api.junit.Cucumber
 import org.junit.runner.RunWith
 
 @RunWith(Cucumber::class)
-@CucumberOptions(strict = true, tags = arrayOf("@system"))
+@CucumberOptions(strict = true, tags = ["@system"], plugin = ["pretty"])
 class RunCukesSystemIT

@@ -105,8 +105,6 @@ class RestApi : AbstractVerticle()
 
             val jsonObject = JsonObject(*toTypedArray)
 
-            println(jsonObject.encodePrettily())
-
             val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
             gateway.send<Any>(anweisung, Thread.currentThread().id)

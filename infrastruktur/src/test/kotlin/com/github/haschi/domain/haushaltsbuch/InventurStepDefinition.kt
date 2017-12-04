@@ -39,15 +39,8 @@ class InventurStepDefinition(
     fun wenn_ich_die_inventur_beginne()
     {
         welt.aktuelleInventur = Aggregatkennung.neu()
-        try
-        {
             anweisung.commandGateway().sendAndWait<Any>(
                     BeginneInventur(welt.aktuelleInventur!!))
-        } catch (ausnahme: IllegalArgumentException)
-        {
-            println(ausnahme)
-            throw  ausnahme
-        }
     }
 
     @Dann("^wird mein Inventar leer sein$")

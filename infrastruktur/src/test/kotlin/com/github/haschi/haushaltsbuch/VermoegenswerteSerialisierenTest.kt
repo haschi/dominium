@@ -81,8 +81,6 @@ class VermoegenswerteSerialisierenTest
                             assertThatCode { JsonObject.mapFrom(testfall.testwert) }
                                     .doesNotThrowAnyException()
 
-                            println(JsonObject.mapFrom(testfall.testwert).encodePrettily())
-
                             assertThat(JsonObject.mapFrom(testfall.testwert).encodePrettily())
                                     .isEqualTo(testfall.json)
                         }),

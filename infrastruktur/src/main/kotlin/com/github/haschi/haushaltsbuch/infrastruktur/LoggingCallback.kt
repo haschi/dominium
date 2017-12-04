@@ -3,7 +3,6 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 import io.vertx.core.logging.LoggerFactory
 import org.axonframework.commandhandling.CommandCallback
 import org.axonframework.commandhandling.CommandMessage
-import java.text.MessageFormat
 
 class LoggingCallback private constructor() : CommandCallback<Any, Any>
 {
@@ -11,22 +10,12 @@ class LoggingCallback private constructor() : CommandCallback<Any, Any>
 
     override fun onSuccess(message: CommandMessage<*>, result: Any)
     {
-        logger.info(
-                MessageFormat.format(
-                        "[{0}] {1} => OK {2}",
-                        message.commandName,
-                        message.identifier,
-                        result))
+        logger.info("[${message.commandName}] ${message.identifier} => OK $result")
     }
 
     override fun onFailure(message: CommandMessage<*>, cause: Throwable)
     {
-        logger.warn(
-                MessageFormat.format(
-                        "[{0}] {1} => OK {2}",
-                        message.commandName,
-                        message.identifier,
-                        cause.localizedMessage))
+        logger.warn("[${message.commandName}] ${message.identifier} => ERR ${cause.localizedMessage}")
     }
 
     companion object

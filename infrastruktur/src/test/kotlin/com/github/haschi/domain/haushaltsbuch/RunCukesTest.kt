@@ -7,13 +7,9 @@ import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import org.junit.runner.RunWith
 
 @XStreamConverter(MoneyConverter::class)
-@CucumberOptions(tags = ["~@ignore"])//        strict = true,
-//
-//        plugin = {
-//                "pretty",
-//                "html:target/site/cucumber-integration-pretty",
-//                "json:target/cucumber/integration.json",
-//                "junit:target/cucumber/integration.xml"},
+@CucumberOptions(
+        tags = ["~@ignore"],
+        plugin = ["pretty"])
 @RunWith(Cucumber::class)
 class RunCukesTest
 
