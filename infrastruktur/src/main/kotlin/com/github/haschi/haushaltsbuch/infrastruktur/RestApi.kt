@@ -11,6 +11,7 @@ import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.ext.web.Router
+import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
@@ -88,37 +89,37 @@ class RestApi : AbstractVerticle()
 
         router.post("/api/inventar/:id").handler { context ->
 
-                    logger.info("erfasse Inventar: ${context.bodyAsString}")
+            logger.info("erfasse Inventar: ${context.bodyAsString}")
 
-                    val params = context.pathParams()
-                    val body = context.bodyAsJson.map
-                    // body.putAll(params)
+            val params = context.pathParams()
+            val body = context.bodyAsJson.map
+            // body.putAll(params)
 
-                    val real = mapOf("id" to params["id"], "inventar" to body)
+            val real = mapOf("id" to params["id"], "inventar" to body)
 
-                    val entries = real.asSequence()
-                    val pairs = entries.map { Pair(it.key, it.value) }
-                    val list = pairs.toList()
-                    val toTypedArray = list.toTypedArray()
+            val entries = real.asSequence()
+            val pairs = entries.map { Pair(it.key, it.value) }
+            val list = pairs.toList()
+            val toTypedArray = list.toTypedArray()
 
-                    val jsonObject = JsonObject(*toTypedArray)
+            val jsonObject = JsonObject(*toTypedArray)
 
-                    println(jsonObject.encodePrettily())
+            println(jsonObject.encodePrettily())
 
-                    val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
+            val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
-                    bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
+            bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
 
-                            .whenComplete { ergebnis, ausnahme ->
-                                if (ausnahme == null)
-                                {
-                                    context.response().setStatusCode(201).end()
-                                } else
-                                {
-                                    context.fail(ausnahme)
-                                }
-                            }
-                }
+                    .whenComplete { ergebnis, ausnahme ->
+                        if (ausnahme == null)
+                        {
+                            context.response().setStatusCode(201).end()
+                        } else
+                        {
+                            context.fail(ausnahme)
+                        }
+                    }
+        }
 
         vertx.createHttpServer()
                 .requestHandler({ router.accept(it) })
@@ -126,7 +127,6 @@ class RestApi : AbstractVerticle()
 
         logger.info("HTTP Server verfügbar auf Port 8080")
     }
-
 
 
     @Throws(Exception::class)
@@ -141,15 +141,13 @@ class RestApi : AbstractVerticle()
     {
         private val logger = LoggerFactory.getLogger(RestApi::class.java)
 
-        private val CONFIG_COMMAND_QUEUE = "command.queue"
-
-        private fun log(context: io.vertx.reactivex.ext.web.RoutingContext)
+        private fun log(context: RoutingContext)
         {
             logger.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method().toString()}, BODY = ${context.bodyAsString}")
             context.next()
         }
 
-        private fun getIndex(context: io.vertx.reactivex.ext.web.RoutingContext)
+        private fun getIndex(context: RoutingContext)
         {
             try
             {

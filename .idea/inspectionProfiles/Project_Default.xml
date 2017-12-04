@@ -1,6 +1,7 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="ArrayInDataClass" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="CanBeFinal" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="REPORT_CLASSES" value="true" />
       <option name="REPORT_METHODS" value="true" />
@@ -11,9 +12,12 @@
     </inspection_tool>
     <inspection_tool class="ClassWithOnlyPrivateConstructors" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="CompareToUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="ConvertToStringTemplate" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="DataClassPrivateConstructor" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="DifferentKotlinMavenVersion" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="DifferentMavenStdlibVersion" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="DoubleBraceInitialization" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EqualsOrHashCode" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="EqualsUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="FieldMayBeFinal" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="FieldMayBeStatic" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -26,6 +30,7 @@
     <inspection_tool class="KotlinMavenPluginPhase" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="KotlinTestJUnit" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="KotlinUnusedImport" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="LeakingThis" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="LocalCanBeFinal" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="REPORT_VARIABLES" value="true" />
       <option name="REPORT_PARAMETERS" value="true" />
@@ -69,6 +74,7 @@
     </inspection_tool>
     <inspection_tool class="UnnecessaryModuleDependencyInspection" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnnecessaryVariable" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UnsafeCastFromDynamic" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="ZeroLengthArrayInitialization" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="unused" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="LOCAL_VARIABLE" value="true" />
