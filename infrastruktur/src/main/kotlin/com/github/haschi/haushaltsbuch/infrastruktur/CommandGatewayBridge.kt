@@ -19,7 +19,6 @@ class CommandGatewayBridge(configuration: Configuration, private val vertx: io.v
 
     init
     {
-
         val factory = CommandGatewayFactory(configuration.commandBus())
         factory.registerCommandCallback(LoggingCallback.INSTANCE)
         gateway = factory.createGateway(VertxCommandGateway::class.java)

@@ -13,6 +13,7 @@ import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
+import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
@@ -22,29 +23,29 @@ import java.util.concurrent.ExecutionException
 
 class RestApi : AbstractVerticle()
 {
-
-
-    private var axon: Configuration? = null
-
-    override fun start()
-    {
-        Json.mapper.registerKotlinModule()
-
-        axon = DefaultConfigurer.defaultConfiguration()
+    private val axon: Configuration by lazy {
+        DefaultConfigurer.defaultConfiguration()
                 .configureEmbeddedEventStore { _ -> InMemoryEventStorageEngine() }
                 .configureAggregate(Inventur::class.java)
                 .configureAggregate(Haushaltsbuch::class.java)
                 .registerComponent(vertx.javaClass) { _ -> vertx }
                 .buildConfiguration()
+    }
 
-        axon!!.start()
+    override fun start()
+    {
+        Json.mapper.registerKotlinModule()
 
-        val bridge = CommandGatewayBridge(axon!!, vertx)
+        axon.start()
+
+        val factory = CommandGatewayFactory(axon.commandBus())
+        factory.registerCommandCallback(LoggingCallback.INSTANCE)
+        val gateway = factory.createGateway(VertxCommandGateway::class.java)
+
         val router = Router.router(vertx)
 
-        router.route().handler({ log(it) })
-
-        router.get("/").handler({ getIndex(it) })
+        router.route().handler(::log)
+        router.get("/").handler(::index)
 
         val port = config().getInteger("http.port", 8080)!!
 
@@ -53,7 +54,7 @@ class RestApi : AbstractVerticle()
         router.post("/api/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
-            val future = bridge.gateway
+            val future = gateway
                     .send<Aggregatkennung>(anweisung, Thread.currentThread().id)
 
             future.whenComplete { ergebnis: Aggregatkennung, ausnahme: Throwable? ->
@@ -108,7 +109,7 @@ class RestApi : AbstractVerticle()
 
             val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
-            bridge.gateway.send<Any>(anweisung, Thread.currentThread().id)
+            gateway.send<Any>(anweisung, Thread.currentThread().id)
 
                     .whenComplete { ergebnis, ausnahme ->
                         if (ausnahme == null)
@@ -133,8 +134,12 @@ class RestApi : AbstractVerticle()
     override fun stop()
     {
         super.stop()
-        axon!!.shutdown()
+        axon.shutdown()
         logger.info("CQRS System heruntergefahren")
+    }
+
+    init {
+
     }
 
     companion object
@@ -147,7 +152,7 @@ class RestApi : AbstractVerticle()
             context.next()
         }
 
-        private fun getIndex(context: RoutingContext)
+        private fun index(context: RoutingContext)
         {
             try
             {
