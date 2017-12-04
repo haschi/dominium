@@ -15,7 +15,6 @@ import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
 import java.io.IOException
-import java.text.MessageFormat
 import java.util.*
 import java.util.concurrent.ExecutionException
 
@@ -86,9 +85,7 @@ class RestApi : AbstractVerticle()
         bridge.router.post("/api/inventar/:id")
                 .handler { context ->
 
-                    log.info(MessageFormat.format(
-                            "erfasse Inventar: {0}",
-                            context.bodyAsString))
+                    log.info("erfasse Inventar: ${context.bodyAsString}")
 
                     val params = context.pathParams()
                     val body = context.bodyAsJson.map
@@ -129,12 +126,7 @@ class RestApi : AbstractVerticle()
 
     private fun log(context: io.vertx.reactivex.ext.web.RoutingContext)
     {
-        log.debug(MessageFormat.format(
-                "Verarbeite Request: URI = {0}, METHOD = {1}, BODY = {2}",
-                context.request().uri(),
-                context.request().method().toString(),
-                context.bodyAsString))
-
+        log.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method().toString()}, BODY = ${context.bodyAsString}")
         context.next()
     }
 
@@ -154,12 +146,11 @@ class RestApi : AbstractVerticle()
         {
             try
             {
+                val name = getServiceProperty("service.name");
+                val version = getServiceProperty("service.version")
                 context.request().response()
                         .putHeader("Content-Type", "text/plain")
-                        .end(MessageFormat.format(
-                                "{0} {1}",
-                                getServiceProperty("service.name"),
-                                getServiceProperty("service.version")))
+                        .end("$name $version")
             } catch (ausnahme: IOException)
             {
                 context.fail(ausnahme)
