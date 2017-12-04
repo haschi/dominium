@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException
 class RestApi : AbstractVerticle()
 {
 
-    private val log = LoggerFactory.getLogger(RestApi::class.java)
+
     private var axon: Configuration? = null
 
     override fun start()
@@ -41,7 +41,7 @@ class RestApi : AbstractVerticle()
         val bridge = CommandGatewayBridge(axon!!, vertx)
         val router = Router.router(vertx)
 
-        router.route().handler({ this.log(it) })
+        router.route().handler({ log(it) })
 
         router.get("/").handler({ getIndex(it) })
 
@@ -66,10 +66,10 @@ class RestApi : AbstractVerticle()
                             .setStatusCode(200)
                             // .end("Hello World");
                             .end()
-                    log.info("Result for /api/inventar = 200")
+                    logger.info("Result for /api/inventar = 200")
                 } else
                 {
-                    log.error(ausnahme)
+                    logger.error(ausnahme)
                     context.fail(ausnahme)
                 }
             }
@@ -79,17 +79,16 @@ class RestApi : AbstractVerticle()
                 future.get()
             } catch (e: InterruptedException)
             {
-                log.error(e)
+                logger.error(e)
             } catch (e: ExecutionException)
             {
-                log.error(e)
+                logger.error(e)
             }
         }
 
-        router.post("/api/inventar/:id")
-                .handler { context ->
+        router.post("/api/inventar/:id").handler { context ->
 
-                    log.info("erfasse Inventar: ${context.bodyAsString}")
+                    logger.info("erfasse Inventar: ${context.bodyAsString}")
 
                     val params = context.pathParams()
                     val body = context.bodyAsJson.map
@@ -125,26 +124,30 @@ class RestApi : AbstractVerticle()
                 .requestHandler({ router.accept(it) })
                 .listen(port)
 
-        log.info("HTTP Server verfügbar auf Port 8080")
+        logger.info("HTTP Server verfügbar auf Port 8080")
     }
 
-    private fun log(context: io.vertx.reactivex.ext.web.RoutingContext)
-    {
-        log.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method().toString()}, BODY = ${context.bodyAsString}")
-        context.next()
-    }
+
 
     @Throws(Exception::class)
     override fun stop()
     {
         super.stop()
         axon!!.shutdown()
-        log.info("CQRS System heruntergefahren")
+        logger.info("CQRS System heruntergefahren")
     }
 
     companion object
     {
+        private val logger = LoggerFactory.getLogger(RestApi::class.java)
+
         private val CONFIG_COMMAND_QUEUE = "command.queue"
+
+        private fun log(context: io.vertx.reactivex.ext.web.RoutingContext)
+        {
+            logger.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method().toString()}, BODY = ${context.bodyAsString}")
+            context.next()
+        }
 
         private fun getIndex(context: io.vertx.reactivex.ext.web.RoutingContext)
         {
