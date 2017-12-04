@@ -6,7 +6,7 @@
 
     <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>CD-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 

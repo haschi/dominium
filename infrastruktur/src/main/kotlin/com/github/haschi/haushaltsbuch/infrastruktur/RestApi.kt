@@ -40,7 +40,7 @@ class RestApi : AbstractVerticle()
 
         val factory = CommandGatewayFactory(axon.commandBus())
         factory.registerCommandCallback(LoggingCallback.INSTANCE)
-        val gateway = factory.createGateway(VertxCommandGateway::class.java)
+        val gateway = factory.createGateway(InventurCommandGateway::class.java)
 
         val router = Router.router(vertx)
 
@@ -54,8 +54,7 @@ class RestApi : AbstractVerticle()
         router.post("/api/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
-            val future = gateway
-                    .send<Aggregatkennung>(anweisung, Thread.currentThread().id)
+            val future = gateway.send(anweisung)
 
             future.whenComplete { ergebnis: Aggregatkennung, ausnahme: Throwable? ->
                 if (ausnahme == null)
@@ -107,7 +106,7 @@ class RestApi : AbstractVerticle()
 
             val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
-            gateway.send<Any>(anweisung, Thread.currentThread().id)
+            gateway.send(anweisung)
 
                     .whenComplete { ergebnis, ausnahme ->
                         if (ausnahme == null)
