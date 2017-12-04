@@ -10,6 +10,7 @@ import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.reactivex.core.AbstractVerticle
+import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.handler.BodyHandler
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
@@ -38,14 +39,17 @@ class RestApi : AbstractVerticle()
         axon!!.start()
 
         val bridge = CommandGatewayBridge(axon!!, vertx)
-        bridge.router.route().handler({ this.log(it) })
-        bridge.router.get("/").handler({ getIndex(it) })
+        val router = Router.router(vertx)
+
+        router.route().handler({ this.log(it) })
+
+        router.get("/").handler({ getIndex(it) })
 
         val port = config().getInteger("http.port", 8080)!!
 
-        bridge.router.route().handler(BodyHandler.create())
+        router.route().handler(BodyHandler.create())
 
-        bridge.router.post("/api/inventar").handler { context ->
+        router.post("/api/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
             val future = bridge.gateway
@@ -82,7 +86,7 @@ class RestApi : AbstractVerticle()
             }
         }
 
-        bridge.router.post("/api/inventar/:id")
+        router.post("/api/inventar/:id")
                 .handler { context ->
 
                     log.info("erfasse Inventar: ${context.bodyAsString}")
@@ -118,7 +122,7 @@ class RestApi : AbstractVerticle()
                 }
 
         vertx.createHttpServer()
-                .requestHandler({ bridge.router.accept(it) })
+                .requestHandler({ router.accept(it) })
                 .listen(port)
 
         log.info("HTTP Server verfügbar auf Port 8080")
