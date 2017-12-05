@@ -1,4 +1,4 @@
-package com.github.haschi.domain.haushaltsbuch.testing
+package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.projektion.VergangeneEreignisse

@@ -2,22 +2,20 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.InventurAusnahme
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Reinvermögen
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schuld
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schulden
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswert
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
-import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
+import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
+import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
@@ -25,34 +23,37 @@ import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import io.reactivex.Single
+import io.reactivex.subscribers.TestSubscriber
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.catchThrowable
+import java.util.concurrent.CompletableFuture
 
 class InventurStepDefinition(
         private val welt: DieWelt,
-        private val anweisung: Anweisungskonfiguration)
+        private val domäne: Domänenkonfiguration)
 {
+
+    inline fun <T, R> sync(receiver: T, block: T.() -> CompletableFuture<R>): R
+    {
+        return receiver.block().get()
+    }
 
     @Wenn("^ich die Inventur beginne$")
     fun wenn_ich_die_inventur_beginne()
     {
-        welt.aktuelleInventur = Aggregatkennung.neu()
-            anweisung.commandGateway.sendAndWait<Any>(
-                    BeginneInventur(welt.aktuelleInventur!!))
+        welt.aktuelleInventur = sync(welt.inventur) {
+            send(BeginneInventur(Aggregatkennung.neu()))
+        }
     }
 
     @Dann("^wird mein Inventar leer sein$")
     fun wirdMeinInventarLeerSein()
     {
-        val future = anweisung.queryGateway.send(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java)
-        val single = Single.fromFuture(future)
-        val inventar = single.blockingGet()
 
-
-//        val inventar = abfrage.commandGateway.sendAndWait<Inventar>(
-//                LeseInventar(welt.aktuelleInventur!!))
-
-        assertThat(inventar).isEqualTo(Inventar.leer)
+        val inventar = welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java)
+        assertThat(inventar).isCompletedWithValueMatching{
+            it == Inventar.leer
+        }
+        .isDone()
     }
 
     @Angenommen("^ich habe mit der Inventur begonnen$")
@@ -61,70 +62,40 @@ class InventurStepDefinition(
         wenn_ich_die_inventur_beginne()
     }
 
-    @Wenn("^ich mein Umlaufvermögen \"([^\"]*)\" in Höhe von \"([^\"]*)\" erfasse$")
-    fun ichMeinUmlaufvermögenInHöheVonErfasse(
-            position: String,
-            währungsbetrag: Währungsbetrag)
-    {
-        anweisung.commandGateway.sendAndWait<Any>(
-                ErfasseUmlaufvermögen(
-                        inventurkennung = welt.aktuelleInventur!!,
-                        position = position,
-                        währungsbetrag = währungsbetrag))
-    }
-
     @Dann("^werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:$")
     fun werdeIchFolgendeVermögenswerteInMeinemInventarGelistetHaben(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        val inventar = anweisung.queryGateway.send(
-                LeseInventar(welt.aktuelleInventur!!),
-                Inventar::class.java).get()
-
-        assertThat(inventar.umlaufvermoegen)
-                .isEqualTo(Vermoegenswerte(vermögenswerte.map {
-                    Vermoegenswert(it.position, it.währungsbetrag)
-                }))
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+                .isCompletedWithValueMatching {
+                    it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
+                        Vermoegenswert(it.position, it.währungsbetrag)
+                    })
+                }
+                .isDone
     }
 
     @Dann("^werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:$")
     fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        val inventar = anweisung.queryGateway.send(
-                LeseInventar(welt.aktuelleInventur!!),
-                Inventar::class.java).get()
-
-        assertThat(inventar.anlagevermoegen)
-                .isEqualTo(Vermoegenswerte(vermögenswerte.map {
-                    Vermoegenswert(it.position, it.währungsbetrag)
-                }))
-    }
-
-    @Wenn("^ich meine Schulden \"([^\"]*)\" in Höhe von \"([^\"]*)\" erfasse$")
-    fun ichMeineSchuldenInHöheVonErfasse(
-            position: String,
-            währungsbetrag: Währungsbetrag)
-    {
-
-        anweisung.commandGateway.sendAndWait<Any>(
-                ErfasseSchulden(
-                        inventurkennung = welt.aktuelleInventur!!,
-                        position = position,
-                        währungsbetrag = währungsbetrag))
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+                .isCompletedWithValueMatching {
+                    it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
+                        Vermoegenswert(it.position, it.währungsbetrag)
+                    })
+                }
     }
 
     @Dann("^werde ich folgende Schulden in meinem Inventar gelistet haben:$")
     fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
             schulden: List<SchuldParameter>)
     {
-        val inventar = anweisung.queryGateway.send(
-                LeseInventar(welt.aktuelleInventur!!),
-                Inventar::class.java).get()
-
-        assertThat(inventar.schulden)
-                .isEqualTo(Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) }));
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+                .isCompletedWithValueMatching {
+                    it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
+                }
     }
 
     class SchuldParameter(
@@ -141,17 +112,25 @@ class InventurStepDefinition(
                 anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
                 schulden = zeilen.schulden("Langfristige Schulden"))
 
-        anweisung.commandGateway.sendAndWait<Any>(
-                ErfasseInventar(
-                        id = welt.aktuelleInventur!!,
-                        inventar = inventar))
+        sync(welt.inventur) {
+            send(ErfasseInventar(
+                    id = welt.aktuelleInventur!!,
+                    inventar = inventar))
+        }
     }
 
 
     @Und("^ich folgendes Inventar erfassen will:$")
     fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)
     {
-        welt.intention = { ichFolgendesInventarErfasse(zeilen) }
+        val inventar = Inventar(
+                umlaufvermoegen = zeilen.vermögenswerte("Umlaufvermögen"),
+                anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
+                schulden = zeilen.schulden("Langfristige Schulden"))
+
+        welt.intention = welt.inventur.send(ErfasseInventar(
+                    id = welt.aktuelleInventur!!,
+                    inventar = inventar))
     }
 
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
@@ -163,7 +142,7 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = anweisung.queryGateway.send(
+        val inventar = domäne.queryGateway.send(
                 LeseInventar(welt.aktuelleInventur!!),
                 Inventar::class.java).get()
 
@@ -173,10 +152,8 @@ class InventurStepDefinition(
     @Wenn("^ich die Inventur beenden will$")
     fun ichDieInventurBeendenWill()
     {
-        welt.intention = {
-            anweisung.commandGateway.sendAndWait<Unit?>(
-                    BeendeInventur(von = welt.aktuelleInventur!!))
-        }
+        welt.intention =
+                welt.inventur.send(BeendeInventur(von = welt.aktuelleInventur!!))
     }
 
     @Dann("^werde ich die Fehlermeldung \"([^\"]*)\" erhalten$")
@@ -186,8 +163,9 @@ class InventurStepDefinition(
             "Es wurde kein Schritt ausgeführt, der eine Intention ausdrückt."
         }
 
-        assertThat(catchThrowable(welt.intention))
-                .hasCause(InventurAusnahme(fehlermeldung))
+        welt.intention?.let { itention ->
+            assertThat(itention).isCompletedExceptionally.withFailMessage("X")
+        }
     }
 
     @Und("^ich habe folgendes Inventar erfasst:$")
@@ -199,7 +177,8 @@ class InventurStepDefinition(
     @Wenn("^ich die Inventur beende$")
     fun ichDieInventurBeende()
     {
-        anweisung.commandGateway.sendAndWait<Any>(
-                BeendeInventur(welt.aktuelleInventur!!))
+        sync(welt.inventur) {
+            send(BeendeInventur(welt.aktuelleInventur!!))
+        }
     }
 }

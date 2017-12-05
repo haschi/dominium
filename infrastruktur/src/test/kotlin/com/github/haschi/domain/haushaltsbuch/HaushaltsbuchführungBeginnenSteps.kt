@@ -10,27 +10,27 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Eröffnungsbilanzkonto
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.testing.Anweisungskonfiguration
+import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
+import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 
 class HaushaltsbuchführungBeginnenSteps(
         private val welt: DieWelt,
-        private val anweisung: Anweisungskonfiguration)
+        private val anweisung: Domänenkonfiguration)
 {
 
     @Wenn("^ich die Haushaltsbuchführung beginne$")
     fun ichDieHaushaltsbuchführungBeginne()
     {
-
         welt.aktuellesHaushaltsbuch = Aggregatkennung.neu()
 
         val inventar = anweisung.queryGateway.send(
                 LeseInventar(welt.aktuelleInventur!!),
                 Inventar::class.java).get()
 
-        anweisung.konfiguration().commandGateway().sendAndWait<Any>(
+        welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
                         id = welt.aktuellesHaushaltsbuch!!,
-                        inventar = inventar))
+                        inventar = inventar)).get()
     }
 
     @Dann("^werde ich folgendes Eröffnungsbilanzkonto im Hauptbuch erstellt haben:$")
@@ -38,8 +38,8 @@ class HaushaltsbuchführungBeginnenSteps(
     fun werdeIchFolgendesEröffnungsbilanzkontoImHauptbuchErstelltHaben(
             eröffnungsbilanzkonto: List<Kontozeile>)
     {
-        val eröffnungsbilanzkontoErstellt = anweisung.konfiguration().eventStore()
-                .readEvents(welt.aktuellesHaushaltsbuch!!.toString()).asSequence()
+        val eröffnungsbilanzkontoErstellt =
+                welt.vergangenheit.bezüglich(welt.aktuellesHaushaltsbuch!!)
                 .filter { it.payload is EröffnungsbilanzkontoErstellt }
                 .map { m -> m.payload as EröffnungsbilanzkontoErstellt }
                 .first()
