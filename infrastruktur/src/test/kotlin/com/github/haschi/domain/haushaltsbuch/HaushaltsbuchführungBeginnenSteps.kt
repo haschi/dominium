@@ -11,11 +11,8 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Eröffnungsbila
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
-import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 
-class HaushaltsbuchführungBeginnenSteps(
-        private val welt: DieWelt,
-        private val anweisung: Domänenkonfiguration)
+class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
 {
 
     @Wenn("^ich die Haushaltsbuchführung beginne$")
@@ -23,9 +20,7 @@ class HaushaltsbuchführungBeginnenSteps(
     {
         welt.aktuellesHaushaltsbuch = Aggregatkennung.neu()
 
-        val inventar = anweisung.queryGateway.send(
-                LeseInventar(welt.aktuelleInventur!!),
-                Inventar::class.java).get()
+        val inventar = welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java).get()
 
         welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
