@@ -18,13 +18,11 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
     @Wenn("^ich die Haushaltsbuchführung beginne$")
     fun ichDieHaushaltsbuchführungBeginne()
     {
-        welt.aktuellesHaushaltsbuch = Aggregatkennung.neu()
-
         val inventar = welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java).get()
 
-        welt.haushaltsbuchführung.send(
+        welt.aktuellesHaushaltsbuch = welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
-                        id = welt.aktuellesHaushaltsbuch!!,
+                        id = Aggregatkennung.neu(),
                         inventar = inventar)).get()
     }
 
