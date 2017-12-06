@@ -52,7 +52,7 @@ class RestApi : AbstractVerticle()
 
         router.route().handler(BodyHandler.create())
 
-        router.post("/api/inventar").handler { context ->
+        router.post("/gateway/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
             val future = gateway.send(anweisung)
@@ -61,14 +61,14 @@ class RestApi : AbstractVerticle()
                 if (ausnahme == null)
                 {
                     context.response()
-                            .putHeader("Location", "/api/inventar/" + ergebnis.id.toString())
+                            .putHeader("Location", "/gateway/inventar/" + ergebnis.id.toString())
                             .putHeader("AggregatId", ergebnis.id.toString())
                             // .putHeader("content-type", "application/json")
                             // .putHeader("content-type", "text/plain")
                             .setStatusCode(200)
                             // .end("Hello World");
                             .end()
-                    logger.info("Result for /api/inventar = 200")
+                    logger.info("Result for /gateway/inventar = 200")
                 } else
                 {
                     logger.error(ausnahme)
@@ -88,7 +88,7 @@ class RestApi : AbstractVerticle()
             }
         }
 
-        router.post("/api/inventar/:id").handler { context ->
+        router.post("/gateway/inventar/:id").handler { context ->
 
             logger.info("erfasse Inventar: ${context.bodyAsString}")
 

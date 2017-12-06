@@ -20,13 +20,9 @@ class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
         domäne.start()
     }
 
-    val inventur: InventurApi =
-        domäne.commandGatewayFactory
-                .createGateway(InventurApi::class.java)
+    val inventur: InventurApi = domäne.gateway(InventurApi::class)
 
-    val haushaltsbuchführung: HaushaltsbuchführungApi =
-            domäne.commandGatewayFactory
-                    .createGateway(HaushaltsbuchführungApi::class.java)
+    val haushaltsbuchführung: HaushaltsbuchführungApi = domäne.gateway(HaushaltsbuchführungApi::class)
 
     val vergangenheit: EreignisLieferant =
             domäne.historie;

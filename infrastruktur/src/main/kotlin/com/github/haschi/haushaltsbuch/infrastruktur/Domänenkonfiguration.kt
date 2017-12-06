@@ -8,6 +8,7 @@ import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.queryhandling.QueryGateway
+import kotlin.reflect.KClass
 
 class Domänenkonfiguration(builder: AxonInfrastrukturFactory)
 {
@@ -40,5 +41,10 @@ class Domänenkonfiguration(builder: AxonInfrastrukturFactory)
     val commandGatewayFactory
         get() = CommandGatewayFactory(commandbus)
                 .registerCommandCallback(LoggingCallback.INSTANCE)
+
+    fun <T : Any> gateway(kClass: KClass<T>): T
+    {
+        return commandGatewayFactory.createGateway(kClass.java);
+    }
 }
 

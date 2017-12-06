@@ -69,7 +69,7 @@ class RestApiSynchTest
         val aggregatkennung = Aggregatkennung.neu()
 
 
-        client.post(8080, "localhost", "/api/inventar")
+        client.post(8080, "localhost", "/gateway/inventar")
                 .rxSendJson(BeginneInventur(aggregatkennung))
                 .flatMap {
                     val location = it.getHeader("Location")
