@@ -1,8 +1,5 @@
 package com.github.haschi.domain.haushaltsbuch.modell.core.values
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonValue
 import org.javamoney.moneta.function.MonetaryFunctions
 import javax.money.MonetaryAmount
 

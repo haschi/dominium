@@ -7,11 +7,8 @@ import javax.money.MonetaryAmount
 import javax.money.format.MonetaryAmountFormat
 import javax.money.format.MonetaryFormats
 
-//@JsonDeserialize(using = Währungsbetrag.WährungsbetragDeserialisierer::class)
-//@JsonSerialize(using = Währungsbetrag.WährungsbetragSerialisierer::class)
 data class Währungsbetrag(val wert: MonetaryAmount)
 {
-
     internal class DeutschenWährungsbetragAnalysieren {
 
         private val format: MonetaryAmountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY)
