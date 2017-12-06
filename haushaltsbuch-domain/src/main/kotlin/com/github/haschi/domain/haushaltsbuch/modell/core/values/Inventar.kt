@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
-@JsonSerialize(`as` = Inventar::class)
-@JsonDeserialize(`as` = Inventar::class)
-@JsonIgnoreProperties(value= "reinvermoegen", allowGetters=true)
 data class Inventar(
         val anlagevermoegen: Vermoegenswerte,
         val umlaufvermoegen: Vermoegenswerte,

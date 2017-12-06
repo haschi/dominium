@@ -36,6 +36,7 @@ class RestApi : AbstractVerticle()
     override fun start()
     {
         Json.mapper.registerKotlinModule()
+        Json.mapper.registerModule(HaushaltsbuchModule())
 
         axon.start()
 

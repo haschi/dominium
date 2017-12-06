@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.testing.sandbox
 
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
@@ -24,6 +25,8 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.euro
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.haushaltsbuch.infrastruktur.HaushaltsbuchModule
+import io.vertx.core.json.Json
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
 import org.junit.jupiter.api.extension.ExtendWith
@@ -46,6 +49,10 @@ class SerialisierungTest
             SerialisierteAbfragenAnbieter::class,
             SerialisierteEreignisseAnbieter::class)
     fun serialisierung(testfall: Testfall) {
+
+        Json.mapper.registerKotlinModule()
+        Json.mapper.registerModule(HaushaltsbuchModule())
+
 
         with(testfall) {
             assertThat(JsonObject.mapFrom(poko).encodePrettily())
