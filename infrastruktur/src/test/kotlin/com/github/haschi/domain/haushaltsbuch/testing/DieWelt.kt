@@ -3,8 +3,8 @@ package com.github.haschi.domain.haushaltsbuch.testing
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 import com.github.haschi.haushaltsbuch.infrastruktur.EreignisLieferant
-import com.github.haschi.haushaltsbuch.infrastruktur.HaushaltsbuchführungCommandGateway
-import com.github.haschi.haushaltsbuch.infrastruktur.InventurCommandGateway
+import com.github.haschi.domain.haushaltsbuch.HaushaltsbuchführungApi
+import com.github.haschi.domain.haushaltsbuch.InventurApi
 import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
 
@@ -20,21 +20,16 @@ class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
         domäne.start()
     }
 
-    val inventur: InventurCommandGateway =
+    val inventur: InventurApi =
         domäne.commandGatewayFactory
-                .createGateway(InventurCommandGateway::class.java)
+                .createGateway(InventurApi::class.java)
 
-    val haushaltsbuchführung: HaushaltsbuchführungCommandGateway =
+    val haushaltsbuchführung: HaushaltsbuchführungApi =
             domäne.commandGatewayFactory
-                    .createGateway(HaushaltsbuchführungCommandGateway::class.java)
+                    .createGateway(HaushaltsbuchführungApi::class.java)
 
     val vergangenheit: EreignisLieferant =
             domäne.historie;
-
-    fun <T> commands(body: (InventurCommandGateway)-> CompletableFuture<T>): T
-    {
-        return body(inventur).get()
-    }
 
     fun <T, R> query(abfrage: T, klasse: Class<R>): CompletableFuture<R>{
         return domäne.queryGateway.send(abfrage, klasse)

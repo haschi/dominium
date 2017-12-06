@@ -5,7 +5,7 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import org.axonframework.queryhandling.QueryHandler
 
-class InventarProjektion(private val vergangenheit: VergangeneEreignisse)
+class InventarProjektion(private val vergangenheit: Historie)
 {
     @QueryHandler
     fun leseInventar(abfrage: LeseInventar): Inventar

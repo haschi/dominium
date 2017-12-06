@@ -1,10 +1,10 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import java.util.concurrent.CompletableFuture
 
-interface HaushaltsbuchführungCommandGateway
+interface HaushaltsbuchführungApi
 {
     fun send(anweisung: BeginneHaushaltsbuchführung): CompletableFuture<Aggregatkennung>
 }

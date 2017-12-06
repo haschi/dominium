@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.haschi.domain.haushaltsbuch.InventurApi
 import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.modell.Inventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
@@ -40,7 +41,7 @@ class RestApi : AbstractVerticle()
 
         val factory = CommandGatewayFactory(axon.commandBus())
         factory.registerCommandCallback(LoggingCallback.INSTANCE)
-        val gateway = factory.createGateway(InventurCommandGateway::class.java)
+        val gateway = factory.createGateway(InventurApi::class.java)
 
         val router = Router.router(vertx)
 

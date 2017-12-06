@@ -20,7 +20,6 @@ class LoggingCallback private constructor() : CommandCallback<Any, Any>
 
     companion object
     {
-
         val INSTANCE = LoggingCallback()
     }
 }
