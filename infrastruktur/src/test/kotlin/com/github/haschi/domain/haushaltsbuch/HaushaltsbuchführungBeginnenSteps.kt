@@ -14,7 +14,6 @@ import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 
 class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
 {
-
     @Wenn("^ich die Haushaltsbuchführung beginne$")
     fun ichDieHaushaltsbuchführungBeginne()
     {

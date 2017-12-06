@@ -3,6 +3,7 @@ package com.github.haschi.domain.haushaltsbuch.testing
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 import com.github.haschi.haushaltsbuch.infrastruktur.EreignisLieferant
+import com.github.haschi.haushaltsbuch.infrastruktur.HaushaltsbuchführungCommandGateway
 import com.github.haschi.haushaltsbuch.infrastruktur.InventurCommandGateway
 import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
@@ -28,7 +29,7 @@ class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
                     .createGateway(HaushaltsbuchführungCommandGateway::class.java)
 
     val vergangenheit: EreignisLieferant =
-            domäne.vergangenheit;
+            domäne.historie;
 
     fun <T> commands(body: (InventurCommandGateway)-> CompletableFuture<T>): T
     {
