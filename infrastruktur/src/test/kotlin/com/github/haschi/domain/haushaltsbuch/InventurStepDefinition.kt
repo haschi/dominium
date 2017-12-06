@@ -49,7 +49,7 @@ class InventurStepDefinition(
     fun wirdMeinInventarLeerSein()
     {
 
-        val inventar = welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java)
+        val inventar = welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java)
         assertThat(inventar).isCompletedWithValueMatching{
             it == Inventar.leer
         }
@@ -67,7 +67,7 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -80,7 +80,7 @@ class InventurStepDefinition(
     fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -92,7 +92,7 @@ class InventurStepDefinition(
     fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
             schulden: List<SchuldParameter>)
     {
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java))
+        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
                 }
@@ -114,7 +114,7 @@ class InventurStepDefinition(
 
         sync(welt.inventur) {
             send(ErfasseInventar(
-                    id = welt.aktuelleInventur!!,
+                    id = welt.aktuelleInventur,
                     inventar = inventar))
         }
     }
@@ -129,7 +129,7 @@ class InventurStepDefinition(
                 schulden = zeilen.schulden("Langfristige Schulden"))
 
         welt.intention = welt.inventur.send(ErfasseInventar(
-                    id = welt.aktuelleInventur!!,
+                    id = welt.aktuelleInventur,
                     inventar = inventar))
     }
 
@@ -143,7 +143,7 @@ class InventurStepDefinition(
                 summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
         val inventar = domäne.queryGateway.send(
-                LeseInventar(welt.aktuelleInventur!!),
+                LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java).get()
 
         assertThat(inventar.reinvermoegen).isEqualTo(erwartungswert)
@@ -153,7 +153,7 @@ class InventurStepDefinition(
     fun ichDieInventurBeendenWill()
     {
         welt.intention =
-                welt.inventur.send(BeendeInventur(von = welt.aktuelleInventur!!))
+                welt.inventur.send(BeendeInventur(von = welt.aktuelleInventur))
     }
 
     @Dann("^werde ich die Fehlermeldung \"([^\"]*)\" erhalten$")
@@ -178,7 +178,7 @@ class InventurStepDefinition(
     fun ichDieInventurBeende()
     {
         sync(welt.inventur) {
-            send(BeendeInventur(welt.aktuelleInventur!!))
+            send(BeendeInventur(welt.aktuelleInventur))
         }
     }
 }

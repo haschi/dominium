@@ -38,13 +38,13 @@ class Domänenkonfiguration(builder: AxonInfrastrukturFactory)
         konfiguration.shutdown()
     }
 
-    val commandGatewayFactory
+    private val commandGatewayFactory
         get() = CommandGatewayFactory(commandbus)
                 .registerCommandCallback(LoggingCallback.INSTANCE)
 
     fun <T : Any> gateway(kClass: KClass<T>): T
     {
-        return commandGatewayFactory.createGateway(kClass.java);
+        return commandGatewayFactory.createGateway(kClass.java)
     }
 }
 

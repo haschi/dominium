@@ -17,7 +17,7 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
     @Wenn("^ich die Haushaltsbuchführung beginne$")
     fun ichDieHaushaltsbuchführungBeginne()
     {
-        val inventar = welt.query(LeseInventar(welt.aktuelleInventur!!), Inventar::class.java).get()
+        val inventar = welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java).get()
 
         welt.aktuellesHaushaltsbuch = welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
@@ -31,7 +31,7 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
             eröffnungsbilanzkonto: List<Kontozeile>)
     {
         val eröffnungsbilanzkontoErstellt =
-                welt.vergangenheit.bezüglich(welt.aktuellesHaushaltsbuch!!)
+                welt.vergangenheit.bezüglich(welt.aktuellesHaushaltsbuch)
                 .filter { it.payload is EröffnungsbilanzkontoErstellt }
                 .map { m -> m.payload as EröffnungsbilanzkontoErstellt }
                 .first()

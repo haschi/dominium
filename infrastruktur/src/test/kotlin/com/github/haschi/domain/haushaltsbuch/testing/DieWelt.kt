@@ -21,17 +21,14 @@ class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
     }
 
     val inventur: InventurApi = domäne.gateway(InventurApi::class)
-
     val haushaltsbuchführung: HaushaltsbuchführungApi = domäne.gateway(HaushaltsbuchführungApi::class)
-
-    val vergangenheit: EreignisLieferant =
-            domäne.historie;
+    val vergangenheit: EreignisLieferant = domäne.historie
 
     fun <T, R> query(abfrage: T, klasse: Class<R>): CompletableFuture<R>{
         return domäne.queryGateway.send(abfrage, klasse)
     }
 
-    var aktuelleInventur: Aggregatkennung? = null
+    var aktuelleInventur: Aggregatkennung = Aggregatkennung.nil
     var intention: CompletableFuture<Any>? = null
-    var aktuellesHaushaltsbuch: Aggregatkennung? = null
+    var aktuellesHaushaltsbuch: Aggregatkennung = Aggregatkennung.nil
 }
