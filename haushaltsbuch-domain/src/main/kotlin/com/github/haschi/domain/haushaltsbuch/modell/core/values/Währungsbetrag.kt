@@ -1,54 +1,16 @@
 package com.github.haschi.domain.haushaltsbuch.modell.core.values
 
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
-import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import org.javamoney.moneta.Money
-import java.io.IOException
 import java.util.*
 import javax.money.Monetary
 import javax.money.MonetaryAmount
 import javax.money.format.MonetaryAmountFormat
 import javax.money.format.MonetaryFormats
 
-@JsonDeserialize(using = Währungsbetrag.WährungsbetragDeserialisierer::class)
-@JsonSerialize(using = Währungsbetrag.WährungsbetragSerialisierer::class)
+//@JsonDeserialize(using = Währungsbetrag.WährungsbetragDeserialisierer::class)
+//@JsonSerialize(using = Währungsbetrag.WährungsbetragSerialisierer::class)
 data class Währungsbetrag(val wert: MonetaryAmount)
 {
-
-    class WährungsbetragDeserialisierer : StdScalarDeserializer<Währungsbetrag>
-    {
-        constructor() : super(Währungsbetrag::class.java)
-
-        constructor(vc: Class<*>) : super(vc)
-
-        @Throws(IOException::class)
-        override fun deserialize(
-                jsonParser: JsonParser,
-                deserializationContext: DeserializationContext): Währungsbetrag
-        {
-
-            val betrag = jsonParser.text
-
-            return währungsbetrag(betrag)
-        }
-    }
-
-    class WährungsbetragSerialisierer @JvmOverloads constructor(t: Class<Währungsbetrag>? = null) : StdSerializer<Währungsbetrag>(t) {
-
-        @Throws(IOException::class)
-        override fun serialize(
-                value: Währungsbetrag,
-                jgen: JsonGenerator,
-                provider: SerializerProvider) {
-            jgen.writeString(value.toString())
-        }
-    }
 
     internal class DeutschenWährungsbetragAnalysieren {
 

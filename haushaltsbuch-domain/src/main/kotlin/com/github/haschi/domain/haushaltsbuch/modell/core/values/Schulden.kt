@@ -6,12 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue
 import org.javamoney.moneta.function.MonetaryFunctions
 import javax.money.MonetaryAmount
 
-data class Schulden @JsonCreator constructor (@get:JsonIgnore private val l: List<Schuld>) : List<Schuld> by l {
+data class Schulden(private val l: List<Schuld>) : List<Schuld> by l {
 
     constructor(vararg ls: Schuld): this(ls.asList())
-
-    @JsonValue
-    fun wert(): List<Schuld> = l
 
     val summe: Währungsbetrag
     get() = Währungsbetrag(
