@@ -19,12 +19,15 @@ import org.axonframework.eventsourcing.EventSourcingHandler
 
 class Inventur
 {
+    private enum class Lebenszyklus
+    {
+        BEGONNEN, ERFASST, BEENDET
+    }
+
     @AggregateIdentifier
     private var id: Aggregatkennung? = null
 
-    private var inventarErfasst = false
-
-    private var beendet = false
+    private var lebenszyklus = Lebenszyklus.BEGONNEN
 
     constructor()
 
@@ -38,6 +41,7 @@ class Inventur
     fun falls(ereignis: InventurBegonnen)
     {
         id = ereignis.id
+        lebenszyklus = Lebenszyklus.BEGONNEN
     }
 
     @CommandHandler
@@ -62,7 +66,7 @@ class Inventur
     @Throws(InventurAusnahme::class)
     fun erfasseInventar(anweisung: ErfasseInventar)
     {
-        if (beendet)
+        if (lebenszyklus == Lebenszyklus.BEENDET)
         {
             throw InventurAusnahme("Inventur bereits beendet")
         }
@@ -73,14 +77,14 @@ class Inventur
     @EventSourcingHandler
     fun falls(ereignis: InventarErfasst)
     {
-        inventarErfasst = true
+        lebenszyklus = Lebenszyklus.ERFASST
     }
 
     @CommandHandler
     @Throws(InventurAusnahme::class)
     fun beendeInventur(anweisung: BeendeInventur)
     {
-        if (!inventarErfasst)
+        if (lebenszyklus != Lebenszyklus.ERFASST)
         {
             throw InventurAusnahme("Kein Inventar erfasst")
         }
@@ -91,6 +95,6 @@ class Inventur
     @EventSourcingHandler
     fun falls(ereignis: InventurBeendet)
     {
-        beendet = true
+        lebenszyklus = Lebenszyklus.BEENDET
     }
 }
