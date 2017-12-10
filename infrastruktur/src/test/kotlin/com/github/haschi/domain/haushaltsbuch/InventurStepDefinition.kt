@@ -15,21 +15,19 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
-import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
+import com.github.haschi.haushaltsbuch.infrastruktur.Anwendungskonfiguration
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
-import io.reactivex.Single
-import io.reactivex.subscribers.TestSubscriber
 import org.assertj.core.api.Assertions.assertThat
 import java.util.concurrent.CompletableFuture
 
 class InventurStepDefinition(
         private val welt: DieWelt,
-        private val domäne: Domänenkonfiguration)
+        private val domäne: Anwendungskonfiguration)
 {
 
     inline fun <T, R> sync(receiver: T, block: T.() -> CompletableFuture<R>): R

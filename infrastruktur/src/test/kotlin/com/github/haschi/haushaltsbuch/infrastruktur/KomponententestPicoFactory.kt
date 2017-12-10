@@ -11,7 +11,7 @@ class KomponententestPicoFactory : PicoFactory()
         addClass(Testcloud::class.java)
         addClass(Welt::class.java)
         addClass(AxonInfrastrukturFactory::class.java)
-        addClass(Domänenkonfiguration::class.java)
+        addClass(Anwendungskonfiguration::class.java)
     }
 
     companion object

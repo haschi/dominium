@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.github.haschi.domain.haushaltsbuch.projektion.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
+import org.axonframework.commandhandling.CommandCallback
 import org.axonframework.config.Configuration
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
 import org.axonframework.eventsourcing.eventstore.EventStore
@@ -9,6 +10,11 @@ import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageE
 
 class AxonInfrastrukturFactory : Infrastrukturfabrik
 {
+    override fun logger(): CommandCallback<Any, Any>
+    {
+        return LoggingCallback.INSTANCE
+    }
+
     override fun historie(konfiguration: Configuration): Historie
     {
          return EreignisLieferant(konfiguration.eventStore())

@@ -2,14 +2,13 @@ package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.projektion.Historie
-import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
-import com.github.haschi.haushaltsbuch.infrastruktur.EreignisLieferant
+import com.github.haschi.haushaltsbuch.infrastruktur.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.application.HaushaltsbuchführungApi
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
 
-class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
+class DieWelt(private val domäne: Anwendungskonfiguration) : Startable {
 
     override fun stop()
     {
