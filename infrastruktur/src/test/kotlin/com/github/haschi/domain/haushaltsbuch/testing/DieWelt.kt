@@ -1,6 +1,7 @@
 package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.domain.haushaltsbuch.projektion.Historie
 import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 import com.github.haschi.haushaltsbuch.infrastruktur.EreignisLieferant
 import com.github.haschi.dominium.haushaltsbuch.core.application.HaushaltsbuchführungApi
@@ -22,7 +23,7 @@ class DieWelt(private val domäne: Domänenkonfiguration) : Startable {
 
     val inventur: InventurApi = domäne.gateway(InventurApi::class)
     val haushaltsbuchführung: HaushaltsbuchführungApi = domäne.gateway(HaushaltsbuchführungApi::class)
-    val vergangenheit: EreignisLieferant = domäne.historie
+    val vergangenheit: Historie = domäne.historie
 
     fun <T, R> query(abfrage: T, klasse: Class<R>): CompletableFuture<R>{
         return domäne.queryGateway.send(abfrage, klasse)

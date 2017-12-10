@@ -12,22 +12,22 @@ import org.axonframework.config.DefaultConfigurer
 import org.axonframework.queryhandling.QueryGateway
 import kotlin.reflect.KClass
 
-class Domänenkonfiguration(builder: Infrastrukturfabrik)
+class Domänenkonfiguration(infrastruktur: Infrastrukturfabrik)
 {
     private val commandbus: CommandBus get() = konfiguration.commandBus()
 
     val queryGateway: QueryGateway get() = konfiguration.queryGateway()
 
-    val historie: EreignisLieferant by lazy {
-        konfiguration.getComponent(EreignisLieferant::class.java)
+    val historie: Historie by lazy {
+        konfiguration.getComponent(Historie::class.java)
     }
 
     private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
             .configureAggregate(Inventur::class.java)
             .configureAggregate(Haushaltsbuch::class.java)
-            .registerComponent(Historie::class.java) { EreignisLieferant(it.eventStore()) }
-            .registerQueryHandler { InventarProjektion(EreignisLieferant(it.eventStore())) }
-            .configureEventStore(builder::eventstore)
+            .registerComponent(Historie::class.java, infrastruktur::historie)
+            .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java))}
+            .configureEventStore(infrastruktur::eventstore)
             .buildConfiguration()
 
     fun start()
