@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.haushaltsbuch.infrastruktur.rest
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext

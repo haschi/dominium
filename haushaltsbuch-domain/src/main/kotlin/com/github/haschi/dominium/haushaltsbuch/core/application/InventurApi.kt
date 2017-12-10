@@ -1,4 +1,4 @@
-package com.github.haschi.domain.haushaltsbuch
+package com.github.haschi.dominium.haushaltsbuch.core.application
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar

@@ -3,8 +3,8 @@ package com.github.haschi.domain.haushaltsbuch.testing
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.haushaltsbuch.infrastruktur.Domänenkonfiguration
 import com.github.haschi.haushaltsbuch.infrastruktur.EreignisLieferant
-import com.github.haschi.domain.haushaltsbuch.HaushaltsbuchführungApi
-import com.github.haschi.domain.haushaltsbuch.InventurApi
+import com.github.haschi.dominium.haushaltsbuch.core.application.HaushaltsbuchführungApi
+import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
 

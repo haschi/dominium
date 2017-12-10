@@ -25,7 +25,7 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.euro
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.haushaltsbuch.infrastruktur.HaushaltsbuchModule
+import com.github.haschi.haushaltsbuch.infrastruktur.rest.HaushaltsbuchModule
 import io.vertx.core.json.Json
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate

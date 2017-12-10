@@ -1,10 +1,10 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.haushaltsbuch.infrastruktur.rest
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonDeserializer
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import java.util.*
+import java.util.UUID
 
 class AggregatkennungDeserializer : JsonDeserializer<Aggregatkennung>()
 {

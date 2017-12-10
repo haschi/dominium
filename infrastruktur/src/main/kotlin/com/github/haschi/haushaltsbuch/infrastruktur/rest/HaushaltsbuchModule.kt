@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.haushaltsbuch.infrastruktur.rest
 
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
