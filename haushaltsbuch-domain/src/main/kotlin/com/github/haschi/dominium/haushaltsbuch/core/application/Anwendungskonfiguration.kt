@@ -1,10 +1,9 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.dominium.haushaltsbuch.core.application
 
 import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.modell.Inventur
 import com.github.haschi.domain.haushaltsbuch.projektion.Historie
 import com.github.haschi.domain.haushaltsbuch.projektion.InventarProjektion
-import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration

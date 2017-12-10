@@ -15,7 +15,7 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
-import com.github.haschi.haushaltsbuch.infrastruktur.Anwendungskonfiguration
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann

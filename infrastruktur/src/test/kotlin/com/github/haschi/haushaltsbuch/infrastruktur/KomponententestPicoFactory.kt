@@ -1,5 +1,6 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.runtime.java.picocontainer.PicoFactory
 import io.vertx.core.logging.LoggerFactory
 
