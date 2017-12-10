@@ -47,5 +47,12 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
     {
         return commandGatewayFactory.createGateway(kClass.java)
     }
+
+    fun api(): Dominium
+    {
+        return Dominium(
+                gateway(HaushaltsbuchführungApi::class),
+                gateway(InventurApi::class))
+    }
 }
 

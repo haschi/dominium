@@ -10,21 +10,12 @@ import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageE
 
 class AxonInfrastrukturFactory : Infrastrukturfabrik
 {
-    override fun logger(): CommandCallback<Any, Any>
-    {
-        return LoggingCallback.INSTANCE
-    }
+    override fun logger(): CommandCallback<Any, Any> =
+        LoggingCallback.INSTANCE
 
-    override fun historie(konfiguration: Configuration): Historie
-    {
-         return EreignisLieferant(konfiguration.eventStore())
-    }
+    override fun historie(konfiguration: Configuration): Historie =
+         EreignisLieferant(konfiguration.eventStore())
 
     override fun eventstore(konfiguration: Configuration): EventStore =
-            eventStore
-
-    companion object
-    {
-        private val eventStore = EmbeddedEventStore(InMemoryEventStorageEngine())
-    }
+            EmbeddedEventStore(InMemoryEventStorageEngine())
 }
