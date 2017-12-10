@@ -2,7 +2,9 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.modell.Inventur
+import com.github.haschi.domain.haushaltsbuch.projektion.Historie
 import com.github.haschi.domain.haushaltsbuch.projektion.InventarProjektion
+import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
@@ -10,7 +12,7 @@ import org.axonframework.config.DefaultConfigurer
 import org.axonframework.queryhandling.QueryGateway
 import kotlin.reflect.KClass
 
-class Domänenkonfiguration(builder: AxonInfrastrukturFactory)
+class Domänenkonfiguration(builder: Infrastrukturfabrik)
 {
     private val commandbus: CommandBus get() = konfiguration.commandBus()
 
@@ -23,7 +25,7 @@ class Domänenkonfiguration(builder: AxonInfrastrukturFactory)
     private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
             .configureAggregate(Inventur::class.java)
             .configureAggregate(Haushaltsbuch::class.java)
-            .registerComponent(EreignisLieferant::class.java) { EreignisLieferant(it.eventStore()) }
+            .registerComponent(Historie::class.java) { EreignisLieferant(it.eventStore()) }
             .registerQueryHandler { InventarProjektion(EreignisLieferant(it.eventStore())) }
             .configureEventStore(builder::eventstore)
             .buildConfiguration()
