@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
 
 class HaushaltsbuchModule : SimpleModule()
@@ -13,5 +14,7 @@ class HaushaltsbuchModule : SimpleModule()
 
         addSerializer(Währungsbetrag::class.java, WährungsbetragSerialisierer())
         addDeserializer(Währungsbetrag::class.java, WährungsbetragDeserialisierer())
+
+        setMixInAnnotation(Inventar::class.java, InventarMixin::class.java)
     }
 }

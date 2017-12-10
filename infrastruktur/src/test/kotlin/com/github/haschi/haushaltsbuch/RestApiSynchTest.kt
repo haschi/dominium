@@ -1,9 +1,6 @@
 package com.github.haschi.haushaltsbuch
 
-
-// import io.vertx.ext.web.client.WebClient
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
 import com.github.haschi.haushaltsbuch.infrastruktur.RestApi
@@ -12,7 +9,7 @@ import io.vertx.ext.unit.TestContext
 import io.vertx.ext.unit.junit.VertxUnitRunner
 import io.vertx.reactivex.core.Vertx
 import io.vertx.reactivex.ext.web.client.WebClient
-import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -81,7 +78,13 @@ class RestApiSynchTest
                     client.post(8080, "localhost", location)
                             .rxSendJson(Inventar.leer)
                 }
-                .subscribe({ /* tc.assertEquals(it.statusCode(), 200);*/ async.complete() },
-                        { tc.fail(it.message) })
+                .subscribe(
+                        {
+                            tc.assertEquals(it.statusCode(), 201);
+                            async.complete()
+                        },
+                        {
+                            tc.fail(it.message)
+                        })
     }
 }
