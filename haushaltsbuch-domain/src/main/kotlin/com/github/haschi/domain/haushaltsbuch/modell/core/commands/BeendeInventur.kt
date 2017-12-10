@@ -1,4 +1,4 @@
-package com.github.haschi.domain.haushaltsbuch.modell.core.events
+package com.github.haschi.domain.haushaltsbuch.modell.core.commands
 
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
 import org.axonframework.commandhandling.TargetAggregateIdentifier

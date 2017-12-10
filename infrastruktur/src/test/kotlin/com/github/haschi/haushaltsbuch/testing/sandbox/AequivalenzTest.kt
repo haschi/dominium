@@ -5,7 +5,7 @@ import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInvent
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseSchulden
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseUmlaufvermögen
-import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeendeInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.HaushaltsbuchführungBegonnen
 import com.github.haschi.domain.haushaltsbuch.modell.core.events.InventarErfasst

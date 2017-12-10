@@ -3,7 +3,7 @@ package com.github.haschi.haushaltsbuch.testing.sandbox
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.vertx.core.json.JsonObject
 import org.assertj.core.api.Assertions.assertThat
-import com.github.haschi.domain.haushaltsbuch.modell.core.events.BeendeInventur
+import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeendeInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
 import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
 import com.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
