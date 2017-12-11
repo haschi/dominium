@@ -128,5 +128,4 @@ crashlytics-build.properties
 .npmcache/
 node_modules
 quickstart/
-*~
-src/main/webapp/js
+
