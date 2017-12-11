@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
 import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
@@ -25,25 +26,15 @@ import java.util.concurrent.ExecutionException
 
 class RestApi : AbstractVerticle()
 {
-    private val axon: Configuration by lazy {
-        DefaultConfigurer.defaultConfiguration()
-                .configureEmbeddedEventStore { _ -> InMemoryEventStorageEngine() }
-                .configureAggregate(Inventur::class.java)
-                .configureAggregate(Haushaltsbuch::class.java)
-                .registerComponent(vertx.javaClass) { _ -> vertx }
-                .buildConfiguration()
-    }
+    private val anwendung = Anwendungskonfiguration(AxonInfrastrukturFactory())
 
     override fun start()
     {
         Json.mapper.registerKotlinModule()
         Json.mapper.registerModule(HaushaltsbuchModule())
 
-        axon.start()
-
-        val factory = CommandGatewayFactory(axon.commandBus())
-        factory.registerCommandCallback(LoggingCallback.INSTANCE)
-        val gateway = factory.createGateway(InventurApi::class.java)
+        anwendung.start()
+        val dominium = anwendung.api();
 
         val router = Router.router(vertx)
 
@@ -57,7 +48,7 @@ class RestApi : AbstractVerticle()
         router.post("/gateway/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
-            val future = gateway.send(anweisung)
+            val future = dominium.inventur.send(anweisung)
 
             future.whenComplete { ergebnis: Aggregatkennung, ausnahme: Throwable? ->
                 if (ausnahme == null)
@@ -109,7 +100,7 @@ class RestApi : AbstractVerticle()
 
             val anweisung = jsonObject.mapTo(ErfasseInventar::class.java)
 
-            gateway.send(anweisung)
+            dominium.inventur.send(anweisung)
 
                     .whenComplete { ergebnis, ausnahme ->
                         if (ausnahme == null)
@@ -134,7 +125,7 @@ class RestApi : AbstractVerticle()
     override fun stop()
     {
         super.stop()
-        axon.shutdown()
+        anwendung.stop()
         logger.info("CQRS System heruntergefahren")
     }
 

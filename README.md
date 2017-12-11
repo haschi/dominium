@@ -51,6 +51,14 @@ Ziel ist die von [Jeffrey Palermo](http://jeffreypalermo.com/about/) in seinem A
 [The Onion Architekture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
 beschriebene Architektur zu verwendet.
 
+Gründe:
+* DDD und Onion Architecture verfolgen beide das Ziel den fachlichen Kern frei von technischen 
+Belangen zu halten.
+* Die Onion Architecture verfolgt ein durchgängiges, konsequentes und einfach zu verstehendes 
+Konzept der Abhängigkeitsumkehrung (Dependency Inversion).
+* Mit der traditionellen Tier-Architecture kann eine technische Durchdringung der Domäne nicht 
+verhindert werden.
+
 ![Onion Architektur](http://jeffreypalermo.com/files/media/image/WindowsLiveWriter/TheOnionArchitecturepart1_70A9/image%7B0%7D%5B59%5D.png)
 
 * Die Anwendung ist um ein unabhängiges Objektmodell herum entwickelt
