@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.haschi.haushaltsbuch</groupId>
-    <artifactId>haushaltsbuch-domain</artifactId>
+    <artifactId>haushaltsbuch-core</artifactId>
     <version>CD-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
-    <name>${project.artifactId}-${project.version}</name>
+    <name>Application Core</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

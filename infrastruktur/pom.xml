@@ -40,7 +40,7 @@
 
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
-                <artifactId>haushaltsbuch-domain</artifactId>
+                <artifactId>haushaltsbuch-core</artifactId>
                 <version>CD-SNAPSHOT</version>
             </dependency>
 
@@ -113,7 +113,7 @@
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
-            <artifactId>haushaltsbuch-domain</artifactId>
+            <artifactId>haushaltsbuch-core</artifactId>
         </dependency>
 
         <dependency>

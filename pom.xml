@@ -190,7 +190,7 @@
 
     <modules>
         <!--<module>haushaltsbuch-app</module>-->
-        <module>haushaltsbuch-domain</module>
+        <module>core</module>
         <module>infrastruktur</module>
     </modules>
 
