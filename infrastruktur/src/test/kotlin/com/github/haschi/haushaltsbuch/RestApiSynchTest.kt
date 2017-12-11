@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch
 
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 import com.github.haschi.haushaltsbuch.infrastruktur.RestApi
 import io.restassured.RestAssured.`when`
 import io.vertx.ext.unit.TestContext

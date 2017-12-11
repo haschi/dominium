@@ -1,8 +1,8 @@
 package com.github.haschi.domain.haushaltsbuch.testing
 
 import cucumber.api.Transformer
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
 import java.util.regex.Pattern
 
 class BuchungConverter : Transformer<Buchung>()

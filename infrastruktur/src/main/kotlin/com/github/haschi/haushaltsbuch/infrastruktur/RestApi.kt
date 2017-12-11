@@ -2,11 +2,11 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
-import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
-import com.github.haschi.domain.haushaltsbuch.modell.Inventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
+import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.haushaltsbuch.infrastruktur.rest.HaushaltsbuchModule
 import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory

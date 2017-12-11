@@ -1,9 +1,9 @@
 package com.github.haschi.haushaltsbuch.infrastruktur.rest
 
 import com.fasterxml.jackson.databind.module.SimpleModule
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 
 class HaushaltsbuchModule : SimpleModule()
 {

@@ -1,9 +1,9 @@
 package com.github.haschi.dominium.haushaltsbuch.core.application
 
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneInventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.ErfasseInventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeendeInventur
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import java.util.concurrent.CompletableFuture
 
 interface InventurApi

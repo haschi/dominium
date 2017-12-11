@@ -1,7 +1,7 @@
 package com.github.haschi.domain.haushaltsbuch.testing
 
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.projektion.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.application.HaushaltsbuchführungApi
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi

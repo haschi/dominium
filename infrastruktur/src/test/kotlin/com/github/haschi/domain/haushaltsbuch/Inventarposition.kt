@@ -1,12 +1,12 @@
 package com.github.haschi.domain.haushaltsbuch
 
 
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schuld
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Schulden
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswert
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Vermoegenswerte
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schuld
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import kotlin.streams.toList
 

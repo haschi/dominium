@@ -1,9 +1,9 @@
 package com.github.haschi.dominium.haushaltsbuch.core.application
 
-import com.github.haschi.domain.haushaltsbuch.modell.Haushaltsbuch
-import com.github.haschi.domain.haushaltsbuch.modell.Inventur
-import com.github.haschi.domain.haushaltsbuch.projektion.Historie
-import com.github.haschi.domain.haushaltsbuch.projektion.InventarProjektion
+import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
+import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
+import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.domain.InventarProjektion
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
@@ -25,7 +25,7 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
             .configureAggregate(Inventur::class.java)
             .configureAggregate(Haushaltsbuch::class.java)
             .registerComponent(Historie::class.java, infrastruktur::historie)
-            .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java))}
+            .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java)) }
             .configureEventStore(infrastruktur::eventstore)
             .buildConfiguration()
 

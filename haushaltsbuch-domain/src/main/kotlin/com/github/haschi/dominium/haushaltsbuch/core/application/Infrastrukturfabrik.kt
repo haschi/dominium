@@ -1,8 +1,7 @@
 package com.github.haschi.dominium.haushaltsbuch.core.application
 
-import com.github.haschi.domain.haushaltsbuch.projektion.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import org.axonframework.commandhandling.CommandCallback
-import org.axonframework.commandhandling.CommandMessage
 import org.axonframework.config.Configuration
 import org.axonframework.eventsourcing.eventstore.EventStore
 

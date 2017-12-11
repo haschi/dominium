@@ -1,7 +1,7 @@
 package com.github.haschi.domain.haushaltsbuch.testing
 
 import cucumber.api.Transformer
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Währungsbetrag
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 
 class MoneyConverter : Transformer<Währungsbetrag>()
 {

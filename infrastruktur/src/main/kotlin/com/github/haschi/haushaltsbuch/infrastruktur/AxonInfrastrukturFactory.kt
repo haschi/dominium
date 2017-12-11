@@ -1,6 +1,6 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import com.github.haschi.domain.haushaltsbuch.projektion.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import org.axonframework.commandhandling.CommandCallback
 import org.axonframework.config.Configuration

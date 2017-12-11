@@ -3,13 +3,13 @@ package com.github.haschi.domain.haushaltsbuch
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
-import com.github.haschi.domain.haushaltsbuch.modell.core.commands.BeginneHaushaltsbuchführung
-import com.github.haschi.domain.haushaltsbuch.modell.core.events.EröffnungsbilanzkontoErstellt
-import com.github.haschi.domain.haushaltsbuch.modell.core.queries.LeseInventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Buchung
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Eröffnungsbilanzkonto
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Inventar
-import com.github.haschi.domain.haushaltsbuch.modell.core.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneHaushaltsbuchführung
+import com.github.haschi.dominium.haushaltsbuch.core.model.events.EröffnungsbilanzkontoErstellt
+import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanzkonto
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 
 class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
