@@ -6,9 +6,9 @@
     <groupId>com.github.haschi.haushaltsbuch</groupId>
     <version>CD-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
-    <name>${project.artifactId}</name>
+    <name>Backend</name>
     <packaging>jar</packaging>
-    <artifactId>infrastruktur</artifactId>
+    <artifactId>haushaltsbuch-backend</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,6 +41,12 @@
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-core</artifactId>
+                <version>CD-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-frontend</artifactId>
                 <version>CD-SNAPSHOT</version>
             </dependency>
 
@@ -114,6 +120,12 @@
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-frontend</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

@@ -18,16 +18,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Backend" />
+        <module name="haushaltsbuch-app" />
         <module name="haushaltsbuch-core" />
         <module name="haushaltsbuch-domain" />
+        <module name="haushaltsbuch-frontend" />
         <module name="infrastruktur" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Backend" target="1.8" />
       <module name="haushaltsbuch" target="1.8" />
       <module name="haushaltsbuch-app" target="1.5" />
       <module name="haushaltsbuch-core" target="1.8" />
       <module name="haushaltsbuch-domain" target="1.8" />
+      <module name="haushaltsbuch-frontend" target="1.5" />
       <module name="infrastruktur" target="1.8" />
     </bytecodeTargetLevel>
   </component>

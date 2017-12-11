@@ -16,6 +16,7 @@ import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
+import io.vertx.reactivex.ext.web.handler.StaticHandler
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
@@ -39,9 +40,13 @@ class RestApi : AbstractVerticle()
         val router = Router.router(vertx)
 
         router.route().handler(::log)
-        router.get("/").handler(::index)
+        // router.get("/").handler(::index)
 
         val port = config().getInteger("http.port", 8080)!!
+
+        router.route("/*").handler(
+                StaticHandler.create()
+                        .setWebRoot("frontend"));
 
         router.route().handler(BodyHandler.create())
 
@@ -56,10 +61,7 @@ class RestApi : AbstractVerticle()
                     context.response()
                             .putHeader("Location", "/gateway/inventar/" + ergebnis.id.toString())
                             .putHeader("AggregatId", ergebnis.id.toString())
-                            // .putHeader("content-type", "application/json")
-                            // .putHeader("content-type", "text/plain")
                             .setStatusCode(200)
-                            // .end("Hello World");
                             .end()
                     logger.info("Result for /gateway/inventar = 200")
                 } else

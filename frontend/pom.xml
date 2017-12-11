@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.haschi.haushaltsbuch</groupId>
+    <artifactId>haushaltsbuch-frontend</artifactId>
+    <version>CD-SNAPSHOT</version>
+
+    <name>Frontend</name>
+    <description>Anwender-Frontend für Haushaltsbuch</description>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <skipFrontend>false</skipFrontend>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>1.6</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${skipFrontend}</skip>
+                    <nodeVersion>v6.11.4</nodeVersion>
+                    <npmVersion>5.4.2</npmVersion>
+                    <workingDirectory>src/main</workingDirectory>
+                </configuration>
+                <executions>
+
+                    <execution>
+                        <id>npm install to clean</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>pre-clean</phase>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm install to compile</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm run test</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>run test -- --browsers=Chrome --singleRun=true</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>target/frontend</directory>
+                <targetPath>frontend</targetPath>
+            </resource>
+        </resources>
+    </build>
+</project>

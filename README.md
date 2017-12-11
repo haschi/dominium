@@ -56,7 +56,7 @@ Gründe:
 Belangen zu halten.
 * Die Onion Architecture verfolgt ein durchgängiges, konsequentes und einfach zu verstehendes 
 Konzept der Abhängigkeitsumkehrung (Dependency Inversion).
-* Mit der traditionellen Tier-Architecture kann eine technische Durchdringung der Domäne nicht 
+* Mit der traditionellen Layered-Architecture kann eine technische Durchdringung der Domäne nicht 
 verhindert werden.
 
 ![Onion Architektur](http://jeffreypalermo.com/files/media/image/WindowsLiveWriter/TheOnionArchitecturepart1_70A9/image%7B0%7D%5B59%5D.png)

@@ -189,8 +189,8 @@
     </reporting>
 
     <modules>
-        <!--<module>haushaltsbuch-app</module>-->
         <module>core</module>
+        <module>frontend</module>
         <module>infrastruktur</module>
     </modules>
 
