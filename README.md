@@ -100,6 +100,10 @@ Als Hosting-Umgebung kann die Konfiguration durch Axon betrachtet werden. Die Ax
 stellt eben die Gateways zur Verfügung und bindet die von der Infrastruktur angebotenen konkreten
 technischen Dienste ein: Event Store, Command-, Event- und Query-Bus ...
 
+Anit Corruption Layer, die als Vermittler zwischen dem internen Model und externen Systemem stehen,
+sind Application Services. Sie sind weder Bestandteil der Domäne noch reine Infrastruktur Services.
+Die anfrastrukturellen Aspekte eines ACL müssen aber durch Infrastruktur Services realisiert werden.  
+
 Die Infrastruktur muss also folgende Schnittstellen implementieren:
 
 * Infrastrukturfabrik

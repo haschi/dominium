@@ -20,8 +20,8 @@ class DieWelt(private val domäne: Anwendungskonfiguration) : Startable {
         domäne.start()
     }
 
-    val inventur: InventurApi = domäne.gateway(InventurApi::class)
-    val haushaltsbuchführung: HaushaltsbuchführungApi = domäne.gateway(HaushaltsbuchführungApi::class)
+    val inventur: InventurApi = domäne.api().inventur
+    val haushaltsbuchführung: HaushaltsbuchführungApi = domäne.api().haushaltsbuch
     val vergangenheit: Historie = domäne.historie
 
     fun <T, R> query(abfrage: T, klasse: Class<R>): CompletableFuture<R>{

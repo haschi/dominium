@@ -11,6 +11,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbil
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
+import com.github.haschi.domain.haushaltsbuch.testing.Kontozeile
 
 class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
 {

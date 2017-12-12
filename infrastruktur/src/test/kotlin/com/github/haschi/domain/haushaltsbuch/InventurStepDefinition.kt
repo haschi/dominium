@@ -13,8 +13,11 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
+import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
+import com.github.haschi.domain.haushaltsbuch.testing.schulden
+import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen

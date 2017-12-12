@@ -1,4 +1,4 @@
-package com.github.haschi.domain.haushaltsbuch
+package com.github.haschi.domain.haushaltsbuch.testing
 
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
