@@ -40,11 +40,11 @@ class RestApi : AbstractVerticle()
         val router = Router.router(vertx)
 
         router.route().handler(::log)
-        // router.get("/").handler(::index)
+        router.get("/").handler(::index)
 
         val port = config().getInteger("http.port", 8080)!!
 
-        router.route("/*").handler(
+        router.route("/frontend/*").handler(
                 StaticHandler.create()
                         .setWebRoot("frontend"));
 
