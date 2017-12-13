@@ -24,7 +24,7 @@
         <cukes.artefactId>info.cukes</cukes.artefactId>
         <assertj.version>3.8.0</assertj.version>
         <vertx.verticle>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.verticle>
-        <kotlin.version>1.2.0</kotlin.version>
+        <kotlin.version>1.2.10</kotlin.version>
         <serialization.version>0.2</serialization.version>
     </properties>
 

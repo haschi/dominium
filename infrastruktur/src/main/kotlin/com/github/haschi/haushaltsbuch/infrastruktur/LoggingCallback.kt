@@ -8,7 +8,7 @@ class LoggingCallback private constructor() : CommandCallback<Any, Any>
 {
     private val logger = LoggerFactory.getLogger(LoggingCallback::class.java)
 
-    override fun onSuccess(message: CommandMessage<*>, result: Any)
+    override fun onSuccess(message: CommandMessage<*>, result: Any?)
     {
         logger.info("[${message.commandName}] ${message.identifier} => OK $result")
     }
