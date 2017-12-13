@@ -36,19 +36,18 @@ Haushaltsbuch
 
 Eine Buchhaltung für den Privathaushalt.
 
-1. [Anleitung für das Schreiben von Funktionalitäten und Szenarien](
-domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Anleitung.md)
-2. [Funktionalitäten](domaene/src/test/resources/README.md)
-2. [Buchführungsregeln](domaene/src/test/resources/de/therapeutenkiller/haushaltsbuch/domaene/Buchführungsregeln.md)
-3. [Coding-Style - nicht aktuell](Codestyle.md)
-4. [Build-Prozess](buildprozess.md)
+1. [Anleitung für das Schreiben von Funktionalitäten und Szenarien]()
+2. [Funktionalitäten]()
+2. [Buchführungsregeln]()
+3. [Coding-Style - nicht aktuell]()
+4. [Build-Prozess]()
 
 
 Architektur
 ===========
 
 Ziel ist die von [Jeffrey Palermo](http://jeffreypalermo.com/about/) in seinem Artikel 
-[The Onion Architekture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
+[The Onion Architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
 beschriebene Architektur zu verwendet.
 
 Gründe:

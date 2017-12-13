@@ -33,13 +33,13 @@ class InventurStepDefinition(
         private val domäne: Anwendungskonfiguration)
 {
 
-    inline fun <T, R> sync(receiver: T, block: T.() -> CompletableFuture<R>): R
+    private inline fun <T, R> sync(receiver: T, block: T.() -> CompletableFuture<R>): R
     {
         return receiver.block().get()
     }
 
     @Wenn("^ich die Inventur beginne$")
-    fun wenn_ich_die_inventur_beginne()
+    fun `wenn ich die Inventur beginne`()
     {
         welt.aktuelleInventur = sync(welt.inventur) {
             send(BeginneInventur(Aggregatkennung.neu()))
@@ -54,17 +54,17 @@ class InventurStepDefinition(
         assertThat(inventar).isCompletedWithValueMatching{
             it == Inventar.leer
         }
-        .isDone()
+        .isDone
     }
 
     @Angenommen("^ich habe mit der Inventur begonnen$")
     fun ichHabeMitDerInventurBegonnen()
     {
-        wenn_ich_die_inventur_beginne()
+        `wenn ich die Inventur beginne`()
     }
 
     @Dann("^werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:$")
-    fun werdeIchFolgendeVermögenswerteInMeinemInventarGelistetHaben(
+    fun `dann werde ich folgende Vermögenswerte in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
@@ -78,7 +78,7 @@ class InventurStepDefinition(
     }
 
     @Dann("^werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:$")
-    fun werdeIchFolgendesAnlagevermögenInMeinemInventarGelistetHaben(
+    fun `dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
         assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
@@ -90,7 +90,7 @@ class InventurStepDefinition(
     }
 
     @Dann("^werde ich folgende Schulden in meinem Inventar gelistet haben:$")
-    fun werdeIchFolgendeSchuldenInMeinemInventarGelistetHaben(
+    fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
         assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
@@ -135,7 +135,7 @@ class InventurStepDefinition(
     }
 
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
-    fun werdeIchFolgendesEigenkapitalErmitteltHaben(reinvermögen: DataTable)
+    fun `dann werde ich folgendes Eigenkapital ermittelt haben`(reinvermögen: DataTable)
     {
         val map = reinvermögen.asMap(String::class.java, String::class.java)
 

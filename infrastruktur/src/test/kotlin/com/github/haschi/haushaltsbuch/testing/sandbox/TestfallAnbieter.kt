@@ -26,7 +26,7 @@ abstract class TestfallAnbieter<T: Any>(val testfallklasse: KClass<T>) : TestTem
         {
             override fun getDisplayName(invocationIndex: Int): String
             {
-                return "Testfall $invocationIndex: ${klasse.toString()}"
+                return "Testfall $invocationIndex: $klasse"
             }
 
             override fun getAdditionalExtensions(): MutableList<Extension>

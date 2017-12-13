@@ -36,22 +36,6 @@ class RestApiSynchTest
     }
 
     @Test
-    fun testThatTheServiceResponses(tc: TestContext)
-    {
-//        val async = tc.async()
-//        vertx!!.executeBlocking({ future: Future<Response> ->
-//            val response = `when`().get("http://localhost:8080")
-//            future.complete(response)
-//
-//        }) { result ->
-//            result.result().then()
-//                    .statusCode(200)
-//                    .body(equalTo("infrastruktur 0.0.1-SNAPSHOT"))
-//            async.complete()
-//        }
-    }
-
-    @Test
     fun testThatDefaultsAreOk()
     {
         `when`().get("/")
@@ -61,7 +45,7 @@ class RestApiSynchTest
     @Test
     fun testThatJsonBodyCanBeMergedWithPathParameters(tc: TestContext)
     {
-        val async = tc.async();
+        val async = tc.async()
         val client = WebClient.create(vertx!!)
         val aggregatkennung = Aggregatkennung.neu()
 
@@ -80,7 +64,7 @@ class RestApiSynchTest
                 }
                 .subscribe(
                         {
-                            tc.assertEquals(it.statusCode(), 201);
+                            tc.assertEquals(it.statusCode(), 201)
                             async.complete()
                         },
                         {

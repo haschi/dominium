@@ -37,12 +37,12 @@ class WährungsbetragAddierenTest
                         Währungsbetrag.euro(42.0),
                         Währungsbetrag.euro(7.0),
                         Währungsbetrag.euro(49.0))
-        ).map { testfall ->
+        ).map { (x, y, summe) ->
             dynamicTest(
-                    "${testfall.x} + ${testfall.y}",
+                    "${x} + ${y}",
                     {
-                        assertThat(testfall.x + testfall.y)
-                                .isEqualTo(testfall.summe)
+                        assertThat(x + y)
+                                .isEqualTo(summe)
                     })
         }
     }

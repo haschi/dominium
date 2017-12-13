@@ -28,7 +28,7 @@ class RestApi : AbstractVerticle()
         Json.mapper.registerModule(HaushaltsbuchModule())
 
         anwendung.start()
-        val dominium = anwendung.api();
+        val dominium = anwendung.api()
 
         val router = Router.router(vertx)
 
@@ -39,7 +39,7 @@ class RestApi : AbstractVerticle()
 
         router.route("/frontend/*").handler(
                 StaticHandler.create()
-                        .setWebRoot("frontend"));
+                        .setWebRoot("frontend"))
 
         router.route().handler(BodyHandler.create())
 
@@ -48,11 +48,11 @@ class RestApi : AbstractVerticle()
 
             val single = Single.fromFuture(dominium.inventur.send(anweisung))
 
-            single.subscribe({ ergebnis ->
+            single.subscribe({ (id) ->
 
                 context.response()
-                        .putHeader("Location", "/gateway/inventar/" + ergebnis.id.toString())
-                        .putHeader("AggregatId", ergebnis.id.toString())
+                        .putHeader("Location", "/gateway/inventar/" + id.toString())
+                        .putHeader("AggregatId", id.toString())
                         .setStatusCode(200)
                         .end()
             }, {error ->
@@ -121,7 +121,7 @@ class RestApi : AbstractVerticle()
 
         private fun log(context: RoutingContext)
         {
-            logger.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method().toString()}, BODY = ${context.bodyAsString}")
+            logger.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method()}, BODY = ${context.bodyAsString}")
             context.next()
         }
 
@@ -129,7 +129,7 @@ class RestApi : AbstractVerticle()
         {
             try
             {
-                val name = getServiceProperty("service.name");
+                val name = getServiceProperty("service.name")
                 val version = getServiceProperty("service.version")
                 context.request().response()
                         .putHeader("Content-Type", "text/plain")

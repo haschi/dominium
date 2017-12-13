@@ -43,7 +43,7 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
         get() = CommandGatewayFactory(commandbus)
                 .registerCommandCallback(infrastruktur.logger())
 
-    fun <T : Any> gateway(kClass: KClass<T>): T
+    private fun <T : Any> gateway(kClass: KClass<T>): T
     {
         return commandGatewayFactory.createGateway(kClass.java)
     }

@@ -31,8 +31,7 @@ class Inventur
 
     constructor()
 
-    @CommandHandler
-    public constructor(anweisung: BeginneInventur)
+    @CommandHandler constructor(anweisung: BeginneInventur)
     {
         AggregateLifecycle.apply(InventurBegonnen(anweisung.id))
     }

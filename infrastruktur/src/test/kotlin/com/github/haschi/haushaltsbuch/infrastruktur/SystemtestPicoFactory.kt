@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.runtime.java.picocontainer.PicoFactory
+import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
 
 class SystemtestPicoFactory : PicoFactory()
@@ -17,6 +18,6 @@ class SystemtestPicoFactory : PicoFactory()
 
     companion object
     {
-        val logger = LoggerFactory.getLogger(SystemtestPicoFactory::class.java)
+        val logger: Logger = LoggerFactory.getLogger(SystemtestPicoFactory::class.java)
     }
 }

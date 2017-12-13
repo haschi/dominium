@@ -28,7 +28,7 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
 
     @Dann("^werde ich folgendes Eröffnungsbilanzkonto im Hauptbuch erstellt haben:$")
     @Throws(Exception::class)
-    fun werdeIchFolgendesEröffnungsbilanzkontoImHauptbuchErstelltHaben(
+    fun `dann werde ich folgendes Eröffnungsbilanzkonto im Hauptbuch Erstellt haben`(
             eröffnungsbilanzkonto: List<Kontozeile>)
     {
         val eröffnungsbilanzkontoErstellt =

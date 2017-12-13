@@ -17,14 +17,14 @@ class KlasseATest
     @DisplayName("Klasse A serialisieren")
     fun klasse_a_serialisieren()
     {
-        val x = AussereKlasse(
+        val klasse = AussereKlasse(
                 KlasseA("Hello World"),
                 KlasseB(42),
                 KlasseC(true),
                 KlasseD(12.34),
                 KlasseE("A", "B"))
 
-        assertThat(JsonObject.mapFrom(x).encode())
+        assertThat(JsonObject.mapFrom(klasse).encode())
                 .isEqualTo("""{"a":"Hello World","b":42,"c":true,"d":12.34,"e":["A","B"]}""")
     }
 
@@ -32,9 +32,9 @@ class KlasseATest
     @DisplayName("Klasse A deserialisieren")
     fun klasse_a_deserialisieren()
     {
-        Json.mapper.registerKotlinModule();
+        Json.mapper.registerKotlinModule()
 
-        val x = json {
+        val json = json {
             obj(
                     "a" to "Hello World",
                     "b" to 42,
@@ -43,7 +43,7 @@ class KlasseATest
                     "e" to array("A", "B"))
         }
 
-        assertThat(x.mapTo(AussereKlasse::class.java))
+        assertThat(json.mapTo(AussereKlasse::class.java))
                 .isEqualTo(AussereKlasse(
                         KlasseA("Hello World"),
                         KlasseB(42),

@@ -5,9 +5,9 @@ data class Buchung(val buchungstext: String, val betrag: Währungsbetrag) {
     companion object {
 
         val leer: Buchung
-        get() = Buchung(String.empty, Währungsbetrag.NullEuro)
+        get() = Buchung(empty, Währungsbetrag.NullEuro)
     }
 }
 
-val String.Companion.empty: String
+val empty: String
     get() = ""

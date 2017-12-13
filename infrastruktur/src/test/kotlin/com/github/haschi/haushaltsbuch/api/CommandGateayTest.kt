@@ -11,11 +11,11 @@ import java.util.concurrent.CompletableFuture
 class CommandGateayTest
 {
     @Test
-    public fun kann_dominium_gateway_erstellen() {
+    fun kann_dominium_gateway_erstellen() {
         val infrastruktur = AxonInfrastrukturFactory()
-        val anwendungskonfiguration = Anwendungskonfiguration(infrastruktur);
+        val anwendungskonfiguration = Anwendungskonfiguration(infrastruktur)
 
-        anwendungskonfiguration.start();
+        anwendungskonfiguration.start()
 
         val api = anwendungskonfiguration.api()
         api.inventur.send(BeginneInventur(Aggregatkennung.neu()))

@@ -17,8 +17,7 @@ import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.util.stream.Stream
 
-data class Wrapper @JsonCreator constructor(val anlagevermoegen: Vermoegenswerte) {
-}
+data class Wrapper @JsonCreator constructor(val anlagevermoegen: Vermoegenswerte)
 
 @DisplayName("Vermoegenswerte serialisieren")
 @Disabled
@@ -75,23 +74,23 @@ class VermoegenswerteSerialisierenTest
                             "anlagevermoegen" : [ ]
                           }
                         """.trimIndent()))
-                .map { testfall ->
-                    dynamicContainer(testfall.bezeichnung, Stream.of(
-                        dynamicTest("Serialisierung: ${testfall.bezeichnung}", {
-                            assertThatCode { JsonObject.mapFrom(testfall.testwert) }
+                .map { (bezeichnung, testwert, json) ->
+                    dynamicContainer(bezeichnung, Stream.of(
+                        dynamicTest("Serialisierung: ${bezeichnung}", {
+                            assertThatCode { JsonObject.mapFrom(testwert) }
                                     .doesNotThrowAnyException()
 
-                            assertThat(JsonObject.mapFrom(testfall.testwert).encodePrettily())
-                                    .isEqualTo(testfall.json)
+                            assertThat(JsonObject.mapFrom(testwert).encodePrettily())
+                                    .isEqualTo(json)
                         }),
-                            dynamicTest("Deserialisierung: ${testfall.bezeichnung}", {
+                            dynamicTest("Deserialisierung: ${bezeichnung}", {
 
                                 assertThat(Json.mapper.canDeserialize(Json.mapper.constructType(Vermoegenswerte::class.java)))
                                         .isTrue()
 
-                                assertThat(JsonObject(testfall.json).mapTo(Wrapper::class.java))
-                                        .isEqualTo(testfall.testwert)
-                            })));
+                                assertThat(JsonObject(json).mapTo(Wrapper::class.java))
+                                        .isEqualTo(testwert)
+                            })))
                 }
     }
 }

@@ -83,8 +83,8 @@ class InventarSerialisierenTest
     @DisplayName("Beginne Inventur serialisieren")
     fun beginne_inventur_serialisieren()
     {
-        val id = Aggregatkennung.neu()
-        val beginneInventur = BeginneInventur(id)
+        val aggregatkennung = Aggregatkennung.neu()
+        val beginneInventur = BeginneInventur(aggregatkennung)
 
         assertThatCode { JsonObject.mapFrom(beginneInventur) }
                 .doesNotThrowAnyException()
@@ -94,16 +94,16 @@ class InventarSerialisierenTest
     @DisplayName("Beginne Inventur deserialisieren")
     fun beginne_inventur_deserialisieren()
     {
-        val id = UUID.randomUUID();
+        val uuid = UUID.randomUUID()
 
         val json = JsonObject()
-                .put("id", id.toString())
+                .put("id", uuid.toString())
 
         assertThatCode { json.mapTo(BeginneInventur::class.java) }
                 .doesNotThrowAnyException()
 
         assertThat(json.mapTo(BeginneInventur::class.java))
-                .isEqualTo(BeginneInventur(Aggregatkennung(id)))
+                .isEqualTo(BeginneInventur(Aggregatkennung(uuid)))
     }
 
     companion object
@@ -112,7 +112,7 @@ class InventarSerialisierenTest
         @BeforeAll
         fun setup()
         {
-            Json.mapper.registerKotlinModule();
+            Json.mapper.registerKotlinModule()
         }
     }
 }

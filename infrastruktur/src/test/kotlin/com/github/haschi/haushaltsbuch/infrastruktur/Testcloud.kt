@@ -8,7 +8,8 @@ import org.picocontainer.Startable
 class Testcloud : Startable
 {
 
-    var vertx: Vertx? = null
+    private var vertx: Vertx? = null
+
 
     override fun start()
     {
