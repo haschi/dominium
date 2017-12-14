@@ -75,7 +75,7 @@
                         </goals>
                         <phase>compile</phase>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build -- --base-href /</arguments>
                         </configuration>
                     </execution>
 

@@ -33,15 +33,15 @@ class RestApi : AbstractVerticle()
         val router = Router.router(vertx)
 
         router.route().handler(::log)
-        router.get("/").handler(::index)
+        router.get("/version").handler(::index)
 
         val port = config().getInteger("http.port", 8080)
 
-        router.route("/frontend/*").handler(
+        router.route("/*").handler(
                 StaticHandler.create()
                         .setWebRoot("frontend"))
 
-        router.route().handler(BodyHandler.create())
+        router.route("/gateway/*").handler(BodyHandler.create())
 
         router.post("/gateway/inventar").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())

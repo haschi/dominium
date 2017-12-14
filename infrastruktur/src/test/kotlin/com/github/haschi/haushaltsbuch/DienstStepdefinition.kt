@@ -22,9 +22,8 @@ class DienstStepdefinition(private val welt: Welt)
     @Throws(Throwable::class)
     fun ichDieVersionAbfrage()
     {
-        val response = `when`().get("/")
+        val response = `when`().get("/version")
         welt.letzteAntwort = response
-
     }
 
     @Dann("^werde ich die Version \"([^\"]*)\" erhalten$")

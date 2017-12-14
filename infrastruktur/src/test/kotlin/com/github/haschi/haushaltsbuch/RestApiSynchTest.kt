@@ -12,7 +12,9 @@ import io.vertx.reactivex.ext.web.client.WebClient
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
+import org.junit.jupiter.api.Disabled
 import org.junit.runner.RunWith
 
 @RunWith(VertxUnitRunner::class)
@@ -36,6 +38,7 @@ class RestApiSynchTest
     }
 
     @Test
+    @Ignore
     fun testThatDefaultsAreOk()
     {
         `when`().get("/")
@@ -43,6 +46,7 @@ class RestApiSynchTest
     }
 
     @Test
+    @Ignore
     fun testThatJsonBodyCanBeMergedWithPathParameters(tc: TestContext)
     {
         val async = tc.async()

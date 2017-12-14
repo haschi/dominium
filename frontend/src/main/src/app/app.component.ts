@@ -1,13 +1,15 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
 
     routes: Object[] = [
         {
@@ -32,8 +34,10 @@ export class AppComponent implements AfterViewInit {
             icon: 'people',
         },
     ];
+    private version$: Observable<Object>;
 
-    constructor(private _iconRegistry: MatIconRegistry,
+    constructor(private http: HttpClient,
+                private _iconRegistry: MatIconRegistry,
                 private _domSanitizer: DomSanitizer) {
 
         const s = 'https://raw.githubusercontent.com/Teradata/covalent-quickstart/develop/src/assets/icons';
@@ -49,7 +53,13 @@ export class AppComponent implements AfterViewInit {
 
     }
 
+    ngOnInit(): void {
+        console.info("NG onInit")
+        this.version$ = this.http.get<String>("/version")
+    }
+
     ngAfterViewInit(): void {
+        console.info("After Init")
 
     }
 }
