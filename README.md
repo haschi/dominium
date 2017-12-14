@@ -42,7 +42,30 @@ Eine Buchhaltung für den Privathaushalt.
 3. [Coding-Style - nicht aktuell]()
 4. [Build-Prozess]()
 
+Architekturziele
+================
 
+Qualitätsziele (Top 3)
+----------------------
+ * Langfristige Wartbarkeit (> 20 Jahre)
+    * Anpassung an den technologischen Wandel
+    * einfache/schnelle technische und fachliche Änderbarkeit
+    * einfache/schnelle technische und fachliche Erweiterbarkeit
+ * Bedienbarkeit
+    * Hohe Benutzerfreundlichkeit
+    * Unterstützung der Arbeitsprozesse 
+    * Niedrige Lernkurve
+    * Kurze Antwortzeiten
+ * Sicherheit?
+ 
+Randbedingungen
+---------------
+
+  * Fertigstellung einer pilotierbaren Version zum 1.5.201X
+  * Material Design im Frontend
+  * ...
+  
+  
 Architektur
 ===========
 
@@ -53,8 +76,10 @@ beschriebene Architektur zu verwendet.
 Gründe:
 * DDD und Onion Architecture verfolgen beide das Ziel den fachlichen Kern frei von technischen 
 Belangen zu halten.
-* Die Onion Architecture verfolgt ein durchgängiges, konsequentes und einfach zu verstehendes 
-Konzept der Abhängigkeitsumkehrung (Dependency Inversion).
+* Die Onion Architecture verfolgt ein einfaches und konsequentes Konzept der Abhängigkeitsumkehrung 
+(Dependency Inversion) zur Entkopplung der einzelnen Schalen um die den Business Value enthaltene
+fachliche Domäne von technischen Einflüssen zu entkoppeln. Damit wird auch bei technologischem
+Wandel und 
 * Mit der traditionellen Layered-Architecture kann eine technische Durchdringung der Domäne nicht 
 verhindert werden.
 
@@ -68,14 +93,58 @@ verhindert werden.
 Die Literatur enthält bislang keine Vorlagen, wie ein CQRS System respektive Axon Projekt auf die 
 Onion Architektur konkret abgebildet werden kann. 
 
-Domain Model
-------------
 
-Aggregate, Entitäten, Wertobjekte. Aber auch Commands, Events und Queries
+Zielstruktur:
+-------------
+Mapping der Ringstruktur auf ein hierachische Modul und Package Struktur:
 
-Domain Services
----------------
-Diensten, die Domänenkonzepte einbetten und bearbeiten und Teil der allgegenwärtigen Sprache sind.
+* **Infrastructure** (<u>Maven Modul</u> *projektname*-infrastructure)
+    * **User Interface** (<u>Packagel</u> frontend)
+        * frontend (NPM Projekt mit Angular) ?
+        * rest (<u>Package</u> *rest*)
+    * **Test** (Maven Teststruktur)    
+    * services (<u>Package</u> *services*)
+        * Infrastrukurfabrik (Implementierung)
+        * Für jeden Service ein Package
+* **Application Core** (<u>Maven Modul</u> *projektname*-core)
+    * **Application Services** (<u>Package</u> *application*)
+        * Spezialisierte Command Gateways
+        * Query Gateway ?
+        * Infrastrukturfabrik (Schnittstelle)
+        * Lesemodelle für externe Systeme und Frontend
+        * pro Service ein Package
+    * **Domain Services** (<u>Package</u> *domain*)
+        * Ein Service (<u>Package</u> *servicename*)
+        * Sagas
+        * Command Handler
+        * Event Handler
+        * Projektionen (Lesemodelle für die Domäne)
+    * **Domain Model** (<u>Package</u> *model*)
+        * Anweisungen (<u>Package</u> *commands*)
+        * Ereignisse (<u>Packages</u> *events*)
+        * Abfrage (<u>Package</u> *queries*)
+        * Wertobjekte (<u>Package</u> *values*)
+        * _Aggregate_
+        * _Entitäten_
+        * _Schnittstellen_ zu Diensten äußerer Schalen
+
+Infrastructure
+--------------
+Infrastruktur Dienste konzentrieren auf die technischen Aspekte der Anwendung. Dazu gehören 
+Dateizugriffe, Datenbankzugriffe, E-Mail versandt und ähnliches.
+
+Die Schnittstellen werden in der Domänenschicht deklariert und sind wichtige Aspekte der Domäne. 
+Die Besonderheiten der technischen Umsetzung, wie zum Beispiel die Kommunikation mit dauerhaften 
+Speichermedien werden jedoch in der Infrastrukturschicht behandelt.
+
+Die Infrastuktur stellt einen Webserver bereit (z.B. durch Vert.x, Spring Boot oder Wildfly Swarm)
+um ein Frontend auszuliefern und Webservices bereitzustellen.
+
+### Frontend
+
+Das Frontend ist eine Angular Anwendung als NPM bzw Angular CLI Projekt innerhalb der Infrastruktur
+Schale. Der Buildprozess erzeugt Resourcen, die dem Infrastruktur Deployment hinzugefügt werden
+und dem in die Infrastruktur integrierten Webserver bereitgestellt werden.
 
 Application Services
 --------------------
@@ -101,76 +170,39 @@ technischen Dienste ein: Event Store, Command-, Event- und Query-Bus ...
 
 Anit Corruption Layer, die als Vermittler zwischen dem internen Model und externen Systemem stehen,
 sind Application Services. Sie sind weder Bestandteil der Domäne noch reine Infrastruktur Services.
-Die anfrastrukturellen Aspekte eines ACL müssen aber durch Infrastruktur Services realisiert werden.  
+Die infrastrukturellen Aspekte eines ACL müssen aber durch Infrastruktur Services realisiert werden.  
 
 Die Infrastruktur muss also folgende Schnittstellen implementieren:
 
 * Infrastrukturfabrik
-    * Event Store
-    * Command Bus
+    * Event Store und Event Bus
+    * Command Bus    
     * Logger
     * ...
  
 Die Aufgabe besteht in der Registrierung der Command- und Eventhandler, um die korrekte Ausführung
 der einzelnen Systembestandteile zu ermöglichen. 
 
-Infrastructure
---------------
-Infrastruktur Dienste konzentrieren um die technischen Aspekte der Anwendung. Dazu gehören 
-Dateizugriffe, Datenbankzugriffe, E-Mail versandt und ähnliches.
+Domain Services
+---------------
 
-Die Schnittstellen werden in der Domänenschicht deklariert und sind wichtige Aspekte der Domäne. 
-Die Besonderheiten der technischen Umsetzung, wie zum Beispiel die Kommunikation mit dauerhaften 
-Speichermechanismen werden jedoch in der Infrastrukturschicht behandelt.
+Diensten, die Domänenkonzepte einbetten und bearbeiten und Teil der allgegenwärtigen Sprache sind.
 
-Zielstruktur:
--------------
-Mapping der Ringstruktur auf ein hierachische Modul und Package Struktur:
-
-* **Infrastructure** (Maven Modul xxx-infrastructure)
-    * **User Interface** (Package ui)
-        * frontend (NPM Projekt mit Angular) ?
-        * rest (Package)
-    * **Test** (Package test)    
-    * services (Package)
-        * Infrastrukurfabrik (Implementierung)
-* **Application Core** (Maven Modul xxx-core)
-    * **Application Services** (Package application)
-        * Spezialisierte Command Gateways
-        * Query Gateway
-        * Infrastrukturfabrik (Schnittstelle)
-    * **Domain Services** (Package domain)
-        * Sagas
-        * Command Handler
-        * Event Handler
-        * Projektionen
-    * **Domain Model** (Package model)
-        * commands
-        * events
-        * queries
-        * values
-        * _Aggregate_
-        * _Entitäten_
-        * _Schnittstellen_
-
-Zugriffsmatrix:
-
-|................| Sagas | Command Handler | Event Handler | Projektionen| Commands | Events | Queries | Values |
-|----------------|-------|-----------------|---------------|-------------|----------|--------|---------|--------|
-| Sagas          |-      |                 |               |             | X        |X       | X       | X      |
-| Command Handler|       |                 |               |             | X        |?       | X       | X      | 
-| Event Handler  |       |                 |               |             | X        |X       | X       | X      |
-| Projektionen   |       |                 |               |             |          |X       | X       | X      |
-| Commands       |       |                 |               |             |          |        |         | X      |
-| Events         |       |                 |               |             |          |        |         | X      |
-| Queries        |       |                 |               |             |          |        |         | X      |
-| Values         |       |                 |               |             |          |        |         | X      |
+Domain Model
+------------
+  * Aggregate, 
+  * Entitäten, 
+  * Wertobjekte.
+  * Schnittstellen zu Domain- und Application Serives 
+    
+  * Commands, 
+  * Events
+  * Queries
 
 Vertikale Schnitte
 ==================
 
-Falls die Domäne in Module aufgeteilt werden muss, ergibt sich dabei immer ein Shared Kernel, in
-dem sich die gemeinsamen Teile der Modell aufhalten. 
+## Variante Shared Kernel
 
 * **Application Core**    
     * **Application Services**
@@ -184,11 +216,29 @@ dem sich die gemeinsamen Teile der Modell aufhalten.
         * **Domain Service**
         * **Domain Model**
 
+Lesemodelle
+===========
+
+Wohin gehören Abfragen und Lesemodelle eines CQRS-Systems? Muss die Leseseite eigenständig
+skalierbar sein und gehört ein ein selbstständig ausführbares und skalierbares verteilbares
+Auslieferungsgegenstand?
+
+Projektionen, die von Domänendiensten benötigt werden, um eine fachliche Aufgabe zu erfüllen
+sind offensichtlich selbst Domönendienste und gehören daher in die Domain Service Schale. 
+Allerdings können Infrastruktur Dienste beteiligt werden, sofern Persistenz oder externe
+Systeme für die Realisierung der Projektion erforderlich sind. Gemäß dem Architekturgrundsatz 
+müssen Infrastrukturdienste durch Abhängigkeitsumkehrung in die Domänen Service Schale
+gebracht werden.
+
+Andere Projektionen, die Informationen an andere Systeme oder ausschlie0lich dem Frontend 
+bereitstellen gehören nicht in die Domain Service Schale. Da Sie aber auch nicht zur Infrastruktur
+gehören, ist die Application Service Schale der richtige Ort. Sie stellen eine bedeutsame 
+Schnittstelle zur Anwendung bereit, tragen jedoch nicht zum Business bei.
 
 Getestet unter
 --------------
 * Wildfly 10.0.0.Final
 * Maven 3.3.9
-* Kotlin 1.2
+* Kotlin 1.2.10
 * MariaDB Server Version 10.0.23, Client Version 1.3.7
 

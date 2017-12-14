@@ -80,7 +80,7 @@ class InventarSerialisierenTest
     }
 
     @Test
-    @DisplayName("Beginne Inventur serialisieren")
+    @DisplayName("BeginneInventur serialisieren")
     fun beginne_inventur_serialisieren()
     {
         val aggregatkennung = Aggregatkennung.neu()
@@ -91,7 +91,7 @@ class InventarSerialisierenTest
     }
 
     @Test
-    @DisplayName("Beginne Inventur deserialisieren")
+    @DisplayName("BeginneInventur deserialisieren")
     fun beginne_inventur_deserialisieren()
     {
         val uuid = UUID.randomUUID()
