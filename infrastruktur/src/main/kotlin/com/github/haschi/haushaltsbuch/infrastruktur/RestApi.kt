@@ -48,16 +48,19 @@ class RestApi : AbstractVerticle()
 
             val single = Single.fromFuture(dominium.inventur.send(anweisung))
 
-            single.subscribe({ (id) ->
+            single.subscribe(
+                    { (id) ->
 
-                context.response()
-                        .putHeader("Location", "/gateway/inventar/" + id.toString())
-                        .putHeader("AggregatId", id.toString())
-                        .setStatusCode(200)
-                        .end()
-            }, {error ->
-                logger.error(error)
-                context.fail(error)})
+                        context.response()
+                                .putHeader("Location", "/gateway/inventar/" + id.toString())
+                                .putHeader("Aggregatkennung", id.toString())
+                                .setStatusCode(200)
+                                .end()
+                    },
+                    {error ->
+                        logger.error(error)
+                        context.fail(error)}
+            )
 
             single.blockingGet()
 

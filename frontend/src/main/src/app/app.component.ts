@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -54,12 +54,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit(): void {
-        console.info("NG onInit")
-        this.version$ = this.http.get<String>("/version")
+        console.info("NG onInit 1")
+        let headers = new HttpHeaders();
+        this.version$ = this.http.get("/version", {responseType: 'text'})
     }
 
     ngAfterViewInit(): void {
         console.info("After Init")
-
     }
 }

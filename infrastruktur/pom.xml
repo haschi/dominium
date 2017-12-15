@@ -125,7 +125,6 @@
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>
             <artifactId>haushaltsbuch-frontend</artifactId>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
