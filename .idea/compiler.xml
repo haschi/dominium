@@ -33,11 +33,6 @@
       <module name="Backend" target="1.8" />
       <module name="Frontend" target="1.5" />
       <module name="haushaltsbuch" target="1.8" />
-      <module name="haushaltsbuch-app" target="1.5" />
-      <module name="haushaltsbuch-core" target="1.8" />
-      <module name="haushaltsbuch-domain" target="1.8" />
-      <module name="haushaltsbuch-frontend" target="1.5" />
-      <module name="infrastruktur" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

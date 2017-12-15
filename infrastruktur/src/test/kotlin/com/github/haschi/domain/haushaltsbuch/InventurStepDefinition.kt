@@ -1,8 +1,15 @@
 package com.github.haschi.domain.haushaltsbuch
 
+import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
+import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
+import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
+import com.github.haschi.domain.haushaltsbuch.testing.schulden
+import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
-import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
@@ -12,13 +19,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
-import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
-import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
-import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
-import com.github.haschi.domain.haushaltsbuch.testing.schulden
-import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
-import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.api.DataTable
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
@@ -50,7 +50,8 @@ class InventurStepDefinition(
     fun wirdMeinInventarLeerSein()
     {
 
-        val inventar = welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java)
+        val inventar = welt.query.query.send(LeseInventar(welt.aktuelleInventur),
+                Inventar::class.java)
         assertThat(inventar).isCompletedWithValueMatching{
             it == Inventar.leer
         }
@@ -68,7 +69,7 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -81,7 +82,7 @@ class InventurStepDefinition(
     fun `dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -93,7 +94,7 @@ class InventurStepDefinition(
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        assertThat(welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
                 }
@@ -143,7 +144,7 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = domäne.queryGateway.send(
+        val inventar = welt.query.query.send(
                 LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java).get()
 

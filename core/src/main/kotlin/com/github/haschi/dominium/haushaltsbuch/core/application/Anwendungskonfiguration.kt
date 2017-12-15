@@ -15,9 +15,9 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
 {
     private val commandbus: CommandBus get() = konfiguration.commandBus()
 
-    val queryGateway: QueryGateway get() = konfiguration.queryGateway()
+    private val queryGateway: QueryGateway get() = konfiguration.queryGateway()
 
-    val historie: Historie by lazy {
+    private val historie: Historie by lazy {
         konfiguration.getComponent(Historie::class.java)
     }
 
@@ -52,7 +52,9 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
     {
         return Dominium(
                 gateway(HaushaltsbuchführungApi::class),
-                gateway(InventurApi::class))
+                gateway(InventurApi::class),
+                queryGateway,
+                historie)
     }
 }
 

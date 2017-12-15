@@ -1,24 +1,25 @@
 package com.github.haschi.domain.haushaltsbuch
 
-import cucumber.api.java.de.Dann
-import cucumber.api.java.de.Wenn
-import org.assertj.core.api.Assertions.assertThat
+import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
+import com.github.haschi.domain.haushaltsbuch.testing.Kontozeile
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneHaushaltsbuchführung
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.EröffnungsbilanzkontoErstellt
 import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanzkonto
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
-import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
-import com.github.haschi.domain.haushaltsbuch.testing.Kontozeile
+import cucumber.api.java.de.Dann
+import cucumber.api.java.de.Wenn
+import org.assertj.core.api.Assertions.assertThat
 
 class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
 {
     @Wenn("^ich die Haushaltsbuchführung beginne$")
     fun ichDieHaushaltsbuchführungBeginne()
     {
-        val inventar = welt.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java).get()
+        val inventar = welt.query.query.send(LeseInventar(welt.aktuelleInventur),
+                Inventar::class.java).get()
 
         welt.aktuellesHaushaltsbuch = welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
@@ -27,15 +28,14 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
     }
 
     @Dann("^werde ich folgendes Eröffnungsbilanzkonto im Hauptbuch erstellt haben:$")
-    @Throws(Exception::class)
     fun `dann werde ich folgendes Eröffnungsbilanzkonto im Hauptbuch Erstellt haben`(
             eröffnungsbilanzkonto: List<Kontozeile>)
     {
         val eröffnungsbilanzkontoErstellt =
-                welt.vergangenheit.bezüglich(welt.aktuellesHaushaltsbuch)
-                .filter { it.payload is EröffnungsbilanzkontoErstellt }
-                .map { m -> m.payload as EröffnungsbilanzkontoErstellt }
-                .first()
+                welt.query.historie.bezüglich(welt.aktuellesHaushaltsbuch)
+                        .filter { it.payload is EröffnungsbilanzkontoErstellt }
+                        .map { m -> m.payload as EröffnungsbilanzkontoErstellt }
+                        .first()
 
         assertThat(eröffnungsbilanzkontoErstellt.eröffnungsbilanzkonto)
                 .isEqualTo(Eröffnungsbilanzkonto(

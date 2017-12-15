@@ -29,6 +29,7 @@ class Inventur
 
     private var lebenszyklus = Lebenszyklus.BEGONNEN
 
+    @Suppress("unused")
     constructor()
 
     @CommandHandler constructor(anweisung: BeginneInventur)
