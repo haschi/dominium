@@ -1,7 +1,7 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
 import org.javamoney.moneta.Money
-import java.util.*
+import java.util.Locale
 import javax.money.Monetary
 import javax.money.MonetaryAmount
 import javax.money.format.MonetaryAmountFormat
@@ -9,7 +9,8 @@ import javax.money.format.MonetaryFormats
 
 data class Währungsbetrag(val wert: MonetaryAmount)
 {
-    internal class DeutschenWährungsbetragAnalysieren {
+    internal class DeutschenWährungsbetragAnalysieren
+    {
 
         private val format: MonetaryAmountFormat = MonetaryFormats.getAmountFormat(Locale.GERMANY)
 

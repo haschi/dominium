@@ -13,7 +13,6 @@ data class Inventar(
                                 umlaufvermoegen.summe.wert)),
                 schulden.summe)
 
-
     companion object
     {
         val leer: Inventar

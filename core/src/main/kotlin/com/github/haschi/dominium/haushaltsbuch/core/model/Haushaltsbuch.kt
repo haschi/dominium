@@ -1,9 +1,5 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model
 
-import org.axonframework.commandhandling.CommandHandler
-import org.axonframework.commandhandling.model.AggregateIdentifier
-import org.axonframework.commandhandling.model.AggregateLifecycle
-import org.axonframework.eventsourcing.EventSourcingHandler
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneHaushaltsbuchführung
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.EröffnungsbilanzkontoErstellt
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.HaushaltsbuchführungBegonnen
@@ -11,8 +7,13 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennun
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanzkonto
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
+import org.axonframework.commandhandling.CommandHandler
+import org.axonframework.commandhandling.model.AggregateIdentifier
+import org.axonframework.commandhandling.model.AggregateLifecycle
+import org.axonframework.eventsourcing.EventSourcingHandler
 
-class Haushaltsbuch {
+class Haushaltsbuch
+{
 
     @AggregateIdentifier
     private var id: Aggregatkennung? = null
@@ -20,7 +21,8 @@ class Haushaltsbuch {
     constructor()
 
     @CommandHandler
-    constructor(anweisung: BeginneHaushaltsbuchführung) {
+    constructor(anweisung: BeginneHaushaltsbuchführung)
+    {
         AggregateLifecycle.apply(HaushaltsbuchführungBegonnen(anweisung.id))
 
         val inventar = anweisung.inventar
@@ -49,12 +51,12 @@ class Haushaltsbuch {
         //                                 .betrag(inventar.schulden().summe())
         //                                 .build())
 
-
         AggregateLifecycle.apply(EröffnungsbilanzkontoErstellt(eröffnungsbilanz))
     }
 
     @EventSourcingHandler
-    fun falls(ereignis: HaushaltsbuchführungBegonnen) {
+    fun falls(ereignis: HaushaltsbuchführungBegonnen)
+    {
         id = ereignis.id
     }
 }

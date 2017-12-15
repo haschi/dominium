@@ -1,10 +1,11 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
-import java.util.*
+import java.util.UUID
 
-data class Aggregatkennung(val id: UUID) {
-
-    companion object {
+data class Aggregatkennung(val id: UUID)
+{
+    companion object
+    {
         fun neu(): Aggregatkennung
         {
             return Aggregatkennung(UUID.randomUUID())
@@ -15,6 +16,6 @@ data class Aggregatkennung(val id: UUID) {
             return Aggregatkennung(UUID.fromString(id))
         }
 
-        val nil: Aggregatkennung = Aggregatkennung(UUID(0,0))
+        val nil: Aggregatkennung = Aggregatkennung(UUID(0, 0))
     }
 }

@@ -1,10 +1,10 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model
 
+import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseSchulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseUmlaufvermögen
-import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventarErfasst
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventurBeendet
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventurBegonnen
@@ -43,8 +43,7 @@ class Inventur
         lebenszyklus = Lebenszyklus.BEGONNEN
     }
 
-    @CommandHandler
-            // TODO: löschen
+    @CommandHandler // TODO: löschen
     fun erfasseUmlaufvermögen(anweisung: ErfasseUmlaufvermögen)
     {
         AggregateLifecycle.apply(UmlaufvermögenErfasst(

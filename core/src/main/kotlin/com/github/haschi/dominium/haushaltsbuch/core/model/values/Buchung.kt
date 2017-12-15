@@ -1,11 +1,13 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
-data class Buchung(val buchungstext: String, val betrag: Währungsbetrag) {
+data class Buchung(val buchungstext: String, val betrag: Währungsbetrag)
+{
 
-    companion object {
+    companion object
+    {
 
         val leer: Buchung
-        get() = Buchung(empty, Währungsbetrag.NullEuro)
+            get() = Buchung(empty, Währungsbetrag.NullEuro)
     }
 }
 
