@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Event Consumer" pattern="src[haushaltsbuch-domain]:org.github.haschi.domain.haushaltsbuch.modell.*||src[haushaltsbuch-domain]:org.github.haschi.domain.haushaltsbuch.projektion..*" />
-</component>
