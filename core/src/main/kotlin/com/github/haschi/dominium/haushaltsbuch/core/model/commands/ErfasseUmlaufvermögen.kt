@@ -1,8 +1,8 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.commands
 
-import org.axonframework.commandhandling.TargetAggregateIdentifier
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
+import org.axonframework.commandhandling.TargetAggregateIdentifier
 
 data class ErfasseUmlaufvermögen(
         @TargetAggregateIdentifier val inventurkennung: Aggregatkennung,

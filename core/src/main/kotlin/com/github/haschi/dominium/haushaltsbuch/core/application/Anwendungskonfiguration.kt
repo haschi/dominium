@@ -1,9 +1,9 @@
 package com.github.haschi.dominium.haushaltsbuch.core.application
 
-import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
-import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.domain.InventarProjektion
+import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
+import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration

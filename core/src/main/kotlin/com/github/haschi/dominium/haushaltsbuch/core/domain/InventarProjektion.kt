@@ -14,7 +14,7 @@ class InventarProjektion(private val vergangenheit: Historie)
         // TODO("Empty sequence can't be reduced")
         return vergangenheit.bezüglich(abfrage.ausInventur)
                 .map { m -> alsInventar(m.payload) }
-                .reduce( { l, r -> if (r == Inventar.leer) l else r } )
+                .reduce({ l, r -> if (r == Inventar.leer) l else r })
 //                .
 //                .orElse(Inventar.leer)
 
