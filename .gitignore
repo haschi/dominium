@@ -41,6 +41,7 @@
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.vertx
 
 # User-specific stuff:
 # Sensitive or high-churn files:
