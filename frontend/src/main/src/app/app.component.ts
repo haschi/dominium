@@ -56,7 +56,10 @@ export class AppComponent implements AfterViewInit, OnInit {
     ngOnInit(): void {
         console.info("NG onInit 1")
         let headers = new HttpHeaders();
-        this.version$ = this.http.get("/version", {responseType: 'text'})
+        this.version$ = this.http.get<any>("/gateway/version")
+            .map(data => {
+                return `${data.name} ${data.version} `
+            })
     }
 
     ngAfterViewInit(): void {

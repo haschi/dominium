@@ -6,7 +6,6 @@ import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
-
 @Component({
     selector: 'app-inventur',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +43,7 @@ export class InventurComponent implements OnInit {
         this.log.log('Inventur beginnen');
         this.log.log(JSON.stringify(this.inventur.value));
 
-        this.http.post('http://localhost:4200/api/inventar', null,
+        this.http.post('http://localhost:4200/gateway/inventar', null,
             {observe: 'response', responseType: 'text'} )
             .flatMap((response: HttpResponse<string>) => this.http.post(response.headers.get('location'), this.inventur.value))
             .subscribe(

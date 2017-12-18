@@ -33,7 +33,7 @@ class RestApi : AbstractVerticle()
         val router = Router.router(vertx)
 
         router.route().handler(::log)
-        router.get("/version").handler(::version)
+        router.get("/gateway/version").handler(::version)
 
         val port = config().getInteger("http.port", 8080)
 

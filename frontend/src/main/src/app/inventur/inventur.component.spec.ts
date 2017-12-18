@@ -53,7 +53,7 @@ describe('InventurComponent', () => {
     xit ('sollte ohne Eingabe mit leerem Invantar beginnen',
         inject([HttpTestingController], (http: HttpTestingController) => {
         component.speichern();
-        const request = http.expectOne('http://localhost:4200/api/inventar');
+            const request = http.expectOne('http://localhost:4200/gateway/inventar');
         expect(request.request.method).toEqual('POST');
         expect(request.request.body).toEqual({
             anlagevermoegen: [],
