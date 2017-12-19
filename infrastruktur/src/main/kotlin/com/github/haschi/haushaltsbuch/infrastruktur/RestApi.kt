@@ -7,12 +7,12 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInven
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.haushaltsbuch.infrastruktur.rest.HaushaltsbuchModule
 import io.reactivex.Single
+import io.vertx.core.Launcher
 import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.reactivex.config.ConfigRetriever
 import io.vertx.reactivex.core.AbstractVerticle
-import io.vertx.reactivex.core.Vertx
 import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
@@ -41,6 +41,8 @@ class RestApi : AbstractVerticle()
                 }, {
                     logs.error("Failed to load configuration")
                 })
+
+        println(config().encodePrettily())
 
         anwendung.start()
         val dominium = anwendung.api()
@@ -141,12 +143,20 @@ class RestApi : AbstractVerticle()
         @JvmStatic
         fun main(args: Array<String>)
         {
-            System.setProperty(
-                    "vertx.logger-delegate-factory-class-name",
-                    "io.vertx.core.logging.SLF4JLogDelegateFactory");
+            args.iterator().forEach { println("-> $it") }
 
-            val vertx = Vertx.vertx()
-            vertx.deployVerticle(RestApi::class.java.canonicalName)
+//            System.setProperty(
+//                    "vertx.logger-delegate-factory-class-name",
+//                    "io.vertx.core.logging.SLF4JLogDelegateFactory");
+//
+//            val vertx = Vertx.vertx()
+//            vertx.deployVerticle(RestApi::class.java.canonicalName)
+            Launcher.executeCommand(
+                    "run",
+                    // "--help",
+                    RestApi::class.java.canonicalName,
+                    // "--conf haushaltsbuch-backend.json",
+                    *args)
         }
 
         // private val logger = LoggerFactory.getLogger(RestApi::class.java)
