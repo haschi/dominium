@@ -40,7 +40,7 @@ describe('AppComponent', () => {
             const fixture = TestBed.createComponent(AppComponent);
 
             fixture.detectChanges();
-                backend.expectOne({url: '/version', method: 'GET'})
+                backend.expectOne({url: '/gateway/version', method: 'GET'})
                     .flush("Version 1");
             const compiled = fixture.debugElement.nativeElement;
             expect(compiled.querySelector('span').textContent).toContain('Haushaltsbuch');

@@ -25,7 +25,7 @@ class DienstStepdefinition(private val welt: Welt, private val cloud: Testcloud)
     @Throws(Throwable::class)
     fun ichDieVersionAbfrage()
     {
-        welt.letzteAntwort = `when`().get("/version")
+        welt.letzteAntwort = `when`().get("/gateway/version")
     }
 
     @Dann("^werde ich die Version \"([^\"]*)\" \"([^\"]*)\" erhalten$")

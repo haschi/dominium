@@ -24,8 +24,10 @@
         <cukes.artefactId>info.cukes</cukes.artefactId>
         <assertj.version>3.8.0</assertj.version>
         <vertx.verticle>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.verticle>
+        <vertx.launcher>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.launcher>
         <kotlin.version>1.2.10</kotlin.version>
         <serialization.version>0.2</serialization.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -55,6 +57,12 @@
                 <groupId>org.axonframework</groupId>
                 <artifactId>axon-core</artifactId>
                 <version>${axon.version}</version>
+                <!--<exclusions>-->
+                <!--<exclusion>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>slf4j-api</artifactId>-->
+                <!--</exclusion>-->
+                <!--</exclusions>-->
             </dependency>
 
             <dependency>
@@ -73,6 +81,18 @@
                 <groupId>org.axonframework</groupId>
                 <artifactId>axon-mongo3</artifactId>
                 <version>${axon.version}</version>
+            </dependency>
+
+            <!-- logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <!-- todo cucumber-dependencies.pom -->
@@ -157,6 +177,20 @@
             <artifactId>vertx-web-client</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>io.vertx</groupId>-->
         <!--<artifactId>vertx-rx</artifactId>-->
