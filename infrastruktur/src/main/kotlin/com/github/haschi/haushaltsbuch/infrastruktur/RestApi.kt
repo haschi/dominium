@@ -46,8 +46,11 @@ class RestApi : AbstractVerticle()
 
         fun logmich(context: RoutingContext)
         {
+            val now = System.nanoTime()
             context.next()
-            logger.debug("${context.request().method()} ${context.request().uri()} => ${context.response().statusCode} ${context.response().statusMessage}")
+            val diff = System.nanoTime().minus(now) / 1000000
+
+            logger.debug("${context.request().method()} ${context.request().uri()} => ${context.response().statusCode} ${context.response().statusMessage} ($diff ms)")
         }
 
         router.route().handler(::logmich)

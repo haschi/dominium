@@ -43,7 +43,7 @@ export class InventurComponent implements OnInit {
         this.log.log('Inventur beginnen');
         this.log.log(JSON.stringify(this.inventur.value));
 
-        this.http.post('http://localhost:4200/gateway/inventar', null,
+        this.http.post('/gateway/inventar', null,
             {observe: 'response', responseType: 'text'} )
             .flatMap((response: HttpResponse<string>) => this.http.post(response.headers.get('location'), this.inventur.value))
             .subscribe(

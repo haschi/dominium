@@ -9,12 +9,9 @@ import org.axonframework.commandhandling.gateway.CommandGatewayFactory
 import org.axonframework.config.Configuration
 import org.axonframework.config.Configurer
 import org.axonframework.config.DefaultConfigurer
-import org.axonframework.messaging.Message
-import org.axonframework.monitoring.MessageMonitor
 import org.axonframework.queryhandling.QueryGateway
 import java.util.function.BiFunction
 import kotlin.reflect.KClass
-import kotlin.reflect.KFunction1
 
 class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
 {
@@ -27,7 +24,7 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
     }
 
     private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
-            .configureLogger(infrastruktur::loggingMonitor)
+            .configureLogger()
             .configureAggregate(Inventur::class.java)
             .configureAggregate(Haushaltsbuch::class.java)
             .registerComponent(Historie::class.java, infrastruktur::historie)
@@ -36,44 +33,16 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
 
             .buildConfiguration()
 
-    private fun Configurer.configureLogger(logger: KFunction1<@ParameterName(name = "konfiguration") Configuration, MessageMonitor<*>>): Configurer
+    private fun Configurer.configureLogger(): Configurer
     {
-        this.configureMessageMonitor(
+        return this.configureMessageMonitor(
                 { configuration ->
                     BiFunction { comp: Class<*>, name: String ->
                         ({ componentType: Class<*>, name: String ->
-                            infrastruktur.loggingMonitor(configuration)
-//                            when (componentType)
-//                            {
-//                                is EventProcessor -> registerEventProcessor(configuration)
-//                                is CommandBus -> registerCommandBus(configuration, name)
-//                                is EventBus -> registerEventBus(configuration, name)
-//                                else -> throw kotlin.IllegalArgumentException(componentType.canonicalName)
-//                            }
-//                            throw IllegalArgumentException(String.format("Unrecognized component: [%s]",
-//                                    componentType))
+                            infrastruktur.loggingMonitor(configuration, name)
                         })(comp, name);
                     }
                 })
-
-        return this;
-    }
-
-    private fun registerEventBus(configuration: Configuration,
-            name: String): MessageMonitor<Message<*>>
-    {
-        return infrastruktur.loggingMonitor(configuration)
-    }
-
-    private fun registerCommandBus(configuration: Configuration,
-            name: String): MessageMonitor<Message<*>>
-    {
-        return infrastruktur.loggingMonitor(configuration)
-    }
-
-    private fun registerEventProcessor(configuration: Configuration): MessageMonitor<Message<*>>
-    {
-        return infrastruktur.loggingMonitor(configuration)
     }
 
     fun start()
@@ -88,7 +57,7 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
 
     private val commandGatewayFactory
         get() = CommandGatewayFactory(commandbus)
-                .registerCommandCallback(infrastruktur.logger())
+    //.registerCommandCallback(infrastruktur.logger())
 
     private fun <T : Any> gateway(kClass: KClass<T>): T
     {

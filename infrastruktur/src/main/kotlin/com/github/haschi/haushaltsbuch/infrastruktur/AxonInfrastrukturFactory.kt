@@ -21,6 +21,7 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
     override fun eventstore(konfiguration: Configuration): EventStore =
             EmbeddedEventStore(InMemoryEventStorageEngine())
 
-    override fun loggingMonitor(konfiguration: Configuration): MessageMonitor<Message<*>> =
-            LoggingMonitor()
+    override fun loggingMonitor(konfiguration: Configuration,
+            name: String): MessageMonitor<Message<*>> =
+            LoggingMonitor(name)
 }
