@@ -6,11 +6,11 @@ import org.axonframework.commandhandling.CommandMessage
 
 class LoggingCallback private constructor() : CommandCallback<Any, Any>
 {
-    private val logger = LoggerFactory.getLogger(LoggingCallback::class.java)
+    private val logger = LoggerFactory.getLogger("COMMAND")
 
     override fun onSuccess(message: CommandMessage<*>, result: Any?)
     {
-        logger.info("[${message.commandName}] ${message.identifier} => OK $result")
+        logger.info("[${message.commandName}] ${message.identifier} => OK ${result ?: ""}")
     }
 
     override fun onFailure(message: CommandMessage<*>, cause: Throwable)

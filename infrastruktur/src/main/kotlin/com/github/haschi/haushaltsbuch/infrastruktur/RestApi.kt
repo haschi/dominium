@@ -26,30 +26,32 @@ class RestApi : AbstractVerticle()
 
     override fun start()
     {
-        val config = config();
-
-        val logs = LoggerFactory.getLogger("Special Logger")
-        logs.info("Hello World")
+        logger.info("Hello World")
         Json.mapper.registerKotlinModule()
         Json.mapper.registerModule(HaushaltsbuchModule())
 
-        var retriever = ConfigRetriever.create(vertx)
+        val retriever = ConfigRetriever.create(vertx)
         retriever.rxGetConfig()
                 .subscribe({
-                    logs.info("KONFIGURATION")
-                    println(it.encodePrettily())
+                    logger.info("KONFIGURATION")
                 }, {
-                    logs.error("Failed to load configuration")
+                    logger.error("Failed to load configuration")
                 })
 
-        println(config().encodePrettily())
 
         anwendung.start()
         val dominium = anwendung.api()
 
         val router = Router.router(vertx)
 
-        router.route().handler(::log)
+        fun logmich(context: RoutingContext)
+        {
+            context.next()
+            logger.debug("${context.request().method()} ${context.request().uri()} => ${context.response().statusCode} ${context.response().statusMessage}")
+        }
+
+        router.route().handler(::logmich)
+
         router.get("/gateway/version").handler(::version)
 
         val port = config().getInteger("http.port", 8080)
@@ -86,11 +88,8 @@ class RestApi : AbstractVerticle()
 
         router.post("/gateway/inventar/:id").handler { context ->
 
-            // logger.info("erfasse Inventar: ${context.bodyAsString}")
-
             val params = context.pathParams()
             val body = context.bodyAsJson.map
-            // body.putAll(params)
 
             val real = mapOf("id" to params["id"], "inventar" to body)
 
@@ -105,7 +104,7 @@ class RestApi : AbstractVerticle()
 
             dominium.inventur.send(anweisung)
 
-                    .whenComplete { ergebnis, ausnahme ->
+                    .whenComplete { _, ausnahme ->
                         if (ausnahme == null)
                         {
                             context.response().setStatusCode(201).end()
@@ -121,7 +120,7 @@ class RestApi : AbstractVerticle()
                 .requestHandler({ router.accept(it) })
                 .listen(port)
 
-        logs.info("HTTP Server verfügbar auf Port 8080")
+        logger.info("HTTP Server verfügbar auf Port $port")
     }
 
     @Throws(Exception::class)
@@ -143,44 +142,13 @@ class RestApi : AbstractVerticle()
         @JvmStatic
         fun main(args: Array<String>)
         {
-            args.iterator().forEach { println("-> $it") }
-
-//            System.setProperty(
-//                    "vertx.logger-delegate-factory-class-name",
-//                    "io.vertx.core.logging.SLF4JLogDelegateFactory");
-//
-//            val vertx = Vertx.vertx()
-//            vertx.deployVerticle(RestApi::class.java.canonicalName)
             Launcher.executeCommand(
                     "run",
-                    // "--help",
                     RestApi::class.java.canonicalName,
-                    // "--conf haushaltsbuch-backend.json",
                     *args)
         }
 
-        // private val logger = LoggerFactory.getLogger(RestApi::class.java)
-
-        private fun log(context: RoutingContext)
-        {
-            // logger.debug("Verarbeite Request: URI = ${context.request().uri()}, METHOD = ${context.request().method()}, BODY = ${context.bodyAsString}")
-            context.next()
-        }
-
-        private fun index(context: RoutingContext)
-        {
-            try
-            {
-                val name = getServiceProperty("service.name")
-                val version = getServiceProperty("service.version")
-                context.request().response()
-                        .end("$name $version")
-            }
-            catch (ausnahme: IOException)
-            {
-                context.fail(ausnahme)
-            }
-        }
+        private val logger = LoggerFactory.getLogger("REST")
 
         @Throws(IOException::class)
         fun getServiceProperty(property: String): String
