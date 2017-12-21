@@ -89,6 +89,10 @@ class RestApi : AbstractVerticle()
 
         }
 
+        router.get("/gateway/inventar/:id").handler { context ->
+            context.response().setStatusCode(404)
+        }
+
         router.post("/gateway/inventar/:id").handler { context ->
 
             val params = context.pathParams()
