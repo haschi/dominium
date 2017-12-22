@@ -98,14 +98,14 @@ Zielstruktur:
 -------------
 Mapping der Ringstruktur auf ein hierachische Modul und Package Struktur:
 
-* **Infrastructure** (<u>Maven Modul</u> *projektname*-infrastructure)
-    * **User Interface** (<u>Packagel</u> frontend)
-        * frontend (NPM Projekt mit Angular) ?
-        * rest (<u>Package</u> *rest*)
-    * **Test** (Maven Teststruktur)    
+* **User Interface** (<u>Modul</u> projekt-ui)
+    * frontend (NPM Projekt mit Angular) ?
+    * rest (<u>Package</u> *rest*)
+* **Infrastructure** (<u>Maven Modul</u> *projektname*-infrastructure)       
     * services (<u>Package</u> *services*)
         * Infrastrukurfabrik (Implementierung)
         * Für jeden Service ein Package
+* **Test** (Maven Teststruktur)        
 * **Application Core** (<u>Maven Modul</u> *projektname*-core)
     * **Application Services** (<u>Package</u> *application*)
         * Spezialisierte Command Gateways
