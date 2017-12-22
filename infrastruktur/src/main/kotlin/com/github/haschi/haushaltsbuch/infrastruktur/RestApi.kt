@@ -17,8 +17,6 @@ import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
 import io.vertx.reactivex.ext.web.handler.StaticHandler
-import java.io.IOException
-import java.util.Properties
 
 class RestApi : AbstractVerticle()
 {
@@ -55,7 +53,7 @@ class RestApi : AbstractVerticle()
 
         router.route().handler(::logmich)
 
-        router.get("/gateway/version").handler(::version)
+        router.get("/gateway/version").handler(version(config()))
 
         val port = config().getInteger("http.port", 8080)
 
@@ -135,7 +133,6 @@ class RestApi : AbstractVerticle()
     {
         super.stop()
         anwendung.stop()
-        // logger.info("CQRS System heruntergefahren")
     }
 
     init
@@ -156,16 +153,5 @@ class RestApi : AbstractVerticle()
         }
 
         private val logger = LoggerFactory.getLogger("REST")
-
-        @Throws(IOException::class)
-        fun getServiceProperty(property: String): String
-        {
-            val classLoader = RestApi::class.java.classLoader
-            classLoader.getResourceAsStream("config.properties").use { resourceAsStream ->
-                val prop = Properties()
-                prop.load(resourceAsStream)
-                return prop.getProperty(property)
-            }
-        }
     }
 }

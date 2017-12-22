@@ -1,5 +1,5 @@
 {
-  "NAME": "Haushaltsbuch Backend",
-  "VERSION": "CD",
+  "service.name": "Haushaltsbuch Backend",
+  "service.version": "CD-SNAPSHOT",
   "vertx.logger-delegate-factory-class-name": "io.vertx.core.logging.SLF4JLogDelegateFactory"
 }

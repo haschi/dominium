@@ -1,6 +1,8 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import io.reactivex.Single
+import io.vertx.core.DeploymentOptions
+import io.vertx.kotlin.core.json.JsonObject
 import io.vertx.reactivex.core.RxHelper
 import io.vertx.reactivex.core.Vertx
 import org.picocontainer.Startable
@@ -23,7 +25,13 @@ class Testcloud : Startable
 
     fun verticleSynchronBereitstellen(api: RestApi)
     {
-        println(RxHelper.deployVerticle(vertx!!, api)
+        val options = DeploymentOptions()
+                .setConfig(JsonObject()
+                        .put("service.name", "haushaltsbuch-backend")
+                        .put("service.version", "CD-SNAPSHOT")
+                )
+
+        println(RxHelper.deployVerticle(vertx!!, api, options)
             .flatMap {
                 Single.just("Hello, $it")
             }
