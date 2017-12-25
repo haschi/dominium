@@ -15,12 +15,8 @@ describe('InventurService', () => {
         });
     });
 
-    let store: NgRedux<AppState>
-
     beforeEach(inject([NgRedux], (store: NgRedux<AppState>) => {
-
         store.configureStore(rootReducer, APP_INITIAL_STATE)
-        this.store = store
     }));
 
     it('should be created', inject([InventurService], (service: InventurService) => {
@@ -28,11 +24,15 @@ describe('InventurService', () => {
     }));
 
     it('sollte Inventur beginnen', inject([InventurService, ActionsService, NgRedux], (service: InventurService, action: ActionsService, store: NgRedux<AppState>) => {
-        let state = store.getState();
         let testId = "12345";
-        this.store.dispatch(action.begonnen(testId));
-        expect(this.store.getState().inventur.inventurId).toEqual(testId);
+        action.begonnen(testId);
+        // store.dispatch();
+        expect(store.getState().inventur.inventurId).toEqual(testId);
         // service.beginnen();
+        service.inventurid$.subscribe(id => {
+            console.info("CHECK Id")
+            expect(id).toEqual(testId)
+        })
         // expect(service.inventurid$).toEqual(testId)
     }))
 });
