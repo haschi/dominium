@@ -1,6 +1,6 @@
 import { inject, TestBed } from '@angular/core/testing';
 
-import { ActionsService } from './actions.service';
+import { Actions, ActionsService } from './actions.service';
 
 describe('ActionsService', () => {
     beforeEach(() => {
@@ -16,7 +16,7 @@ describe('ActionsService', () => {
     it('sollte begonnen Action liefern', inject([ActionsService], (service: ActionsService) => {
         console.info("sollte begonnen Action liefern: " + JSON.stringify(service.begonnen("12345")));
         expect(service.begonnen("12345"))
-            .toEqual({type: ActionsService.InventurBegonnen, id: "12345"})
+            .toEqual({type: Actions.InventurBegonnen, id: "12345"})
     }));
 
     it('sollte erfasst Action liefern', inject([ActionsService], (service: ActionsService) => {
@@ -25,7 +25,7 @@ describe('ActionsService', () => {
             umlaufvermoegen: [],
             schulden: []
         };
-        expect(service.erfasst(inventar)).toEqual({type: ActionsService.InventarErfasst, inventar})
+        expect(service.erfasst(inventar)).toEqual({type: Actions.InventarErfasst, inventar})
     }))
 
 });
