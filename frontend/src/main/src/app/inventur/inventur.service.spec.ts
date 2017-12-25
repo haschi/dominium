@@ -26,13 +26,10 @@ describe('InventurService', () => {
     it('sollte Inventur beginnen', inject([InventurService, ActionsService, NgRedux], (service: InventurService, action: ActionsService, store: NgRedux<AppState>) => {
         let testId = "12345";
         action.begonnen(testId);
-        // store.dispatch();
-        expect(store.getState().inventur.inventurId).toEqual(testId);
-        // service.beginnen();
+
         service.inventurid$.subscribe(id => {
-            console.info("CHECK Id")
+            console.info("CHECK Id");
             expect(id).toEqual(testId)
         })
-        // expect(service.inventurid$).toEqual(testId)
     }))
 });
