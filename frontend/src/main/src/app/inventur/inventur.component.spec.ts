@@ -8,12 +8,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from '../home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GruppeComponent } from './gruppe/gruppe.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { LoggerService } from '../shared/logger.service';
 import { HttpClientModule } from '@angular/common/http';
+import { InventurModule } from './inventur.module';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -21,7 +21,7 @@ describe('InventurComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [InventurComponent, HomeComponent, GruppeComponent],
+            declarations: [HomeComponent],
             imports: [
                 NoopAnimationsModule,
                 AppMaterialModule,
@@ -30,10 +30,10 @@ describe('InventurComponent', () => {
                 CurrencyMaskModule,
                 HttpClientModule,
                 HttpClientTestingModule,
-                RouterTestingModule.withRoutes(DEMO_APP_ROUTES)
+                RouterTestingModule.withRoutes(DEMO_APP_ROUTES),
+                InventurModule
             ],
-            providers: [LoggerService,
-            ],
+            providers: [LoggerService],
             schemas: [NO_ERRORS_SCHEMA]
 
         })
@@ -53,7 +53,7 @@ describe('InventurComponent', () => {
     xit ('sollte ohne Eingabe mit leerem Invantar beginnen',
         inject([HttpTestingController], (http: HttpTestingController) => {
         component.speichern();
-            const request = http.expectOne('http://localhost:4200/gateway/inventar');
+            const request = http.expectOne('http://localhost:4200/gateway/inventur');
         expect(request.request.method).toEqual('POST');
         expect(request.request.body).toEqual({
             anlagevermoegen: [],

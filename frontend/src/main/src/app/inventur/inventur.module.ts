@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { PostenComponent } from './gruppe/posten/posten.component';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
+import { InventarComponent } from './inventar/inventar.component';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
         InventurComponent,
         GruppeComponent,
         PostenComponent,
+        InventarComponent,
     ],
     exports: [
         InventurComponent

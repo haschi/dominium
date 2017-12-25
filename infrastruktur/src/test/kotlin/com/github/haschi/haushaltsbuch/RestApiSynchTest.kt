@@ -14,7 +14,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.jupiter.api.Disabled
 import org.junit.runner.RunWith
 
 @RunWith(VertxUnitRunner::class)
@@ -54,7 +53,7 @@ class RestApiSynchTest
         val aggregatkennung = Aggregatkennung.neu()
 
 
-        client.post(8080, "localhost", "/gateway/inventar")
+        client.post(8080, "localhost", "/gateway/inventur")
                 .rxSendJson(BeginneInventur(aggregatkennung))
                 .flatMap {
                     val location = it.getHeader("Location")

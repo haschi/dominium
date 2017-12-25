@@ -4,7 +4,9 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 import com.github.haschi.haushaltsbuch.infrastruktur.rest.HaushaltsbuchModule
 import io.reactivex.Single
 import io.vertx.core.Launcher
@@ -61,9 +63,9 @@ class RestApi : AbstractVerticle()
                 StaticHandler.create()
                         .setWebRoot("frontend"))
 
-        router.route("/gateway/*").handler(BodyHandler.create())
+        router.route("/gateway/**").handler(BodyHandler.create())
 
-        router.post("/gateway/inventar").handler { context ->
+        router.post("/gateway/inventur").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 
             val single = Single.fromFuture(dominium.inventur.send(anweisung))
@@ -72,7 +74,7 @@ class RestApi : AbstractVerticle()
                     { (id) ->
 
                         context.response()
-                                .putHeader("Location", "/gateway/inventar/" + id.toString())
+                                .putHeader("Location", "/gateway/inventur/" + id.toString())
                                 .putHeader("Aggregatkennung", id.toString())
                                 .setStatusCode(200)
                                 .end()
@@ -87,16 +89,32 @@ class RestApi : AbstractVerticle()
 
         }
 
-        router.get("/gateway/inventar/:id").handler { context ->
-            context.response().setStatusCode(404)
+        router.get("/gateway/inventur/:id").handler { context ->
+            val params = context.pathParams()
+            val inventarId = params["id"] ?: throw IllegalArgumentException("id")
+
+            dominium.query.send(
+                    LeseInventar(Aggregatkennung.aus(inventarId)),
+                    Inventar::class.java)
+                    .whenComplete { ergebnis, ausnahme ->
+                        if (ausnahme == null)
+                        {
+                            context.request().response().end(io.vertx.core.json.JsonObject.mapFrom(
+                                    ergebnis).encode())
+                        }
+                        else
+                        {
+                            context.request().response().setStatusCode(404)
+                        }
+                    }
         }
 
-        router.post("/gateway/inventar/:id").handler { context ->
+        router.post("/gateway/inventur/:id").handler { context ->
 
             val params = context.pathParams()
             val body = context.bodyAsJson.map
 
-            val real = mapOf("id" to params["id"], "inventar" to body)
+            val real = mapOf("id" to params["id"], "inventur" to body)
 
             val entries = real.asSequence()
             val pairs = entries.map { Pair(it.key, it.value) }

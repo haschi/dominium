@@ -31,4 +31,5 @@
 <mat-card>
     <td-json-formatter [data]="(model$ | async)"></td-json-formatter>
     {{model | json}}
+    {{(inventar$ | async)}}
 </mat-card>
