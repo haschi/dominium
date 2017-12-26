@@ -6,13 +6,14 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { APP_INITIAL_STATE, AppState } from '../store/model';
 import { rootReducer } from '../store/reducers';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 
 describe('InventurService', () => {
     beforeEach(() => {
 
         TestBed.configureTestingModule({
             providers: [InventurService, ActionsService],
-            imports: [NgReduxModule, HttpClientTestingModule]
+            imports: [NgReduxModule, HttpClientTestingModule, CommandGatewayModule]
         });
     });
 

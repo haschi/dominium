@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CommandMessage, CommandMessageAction, CommandResponse } from './command-bus.model';
-import { select } from '@angular-redux/store';
+import { dispatch, select } from '@angular-redux/store';
+import { CommandBusActionsService } from './command-bus-actions.service';
 
 @Injectable()
-export class CommandBusService {
+export class CommandGatewayService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private aktionen: CommandBusActionsService) {
     }
 
     @select(['command', 'sendet'])
@@ -19,7 +20,12 @@ export class CommandBusService {
     @select(['command', 'response'])
     status$: Observable<CommandResponse>;
 
-    send(action: CommandMessageAction): Observable<HttpResponse<Object>> {
+    post(action: CommandMessageAction): Observable<HttpResponse<Object>> {
         return this.http.post("/gateway/command", action.message, {observe: 'response'});
+    }
+
+    @dispatch()
+    send(type: string, payload: any, meta: any): CommandMessageAction {
+        return this.aktionen.angefordert(type, payload, meta)
     }
 }

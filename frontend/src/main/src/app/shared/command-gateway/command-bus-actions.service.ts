@@ -24,11 +24,6 @@ export class CommandBusActionsService {
         }
     });
 
-    // gesendet = (message: CommandMessage): CommandMessageAction => ({
-    //     type: CommandBusActions.gesendet,
-    //     ...message
-    // });
-
     gelungen = (response: HttpResponse<any>): CommandResponseAction => ({
         type: CommandBusActions.gelungen,
         response: {

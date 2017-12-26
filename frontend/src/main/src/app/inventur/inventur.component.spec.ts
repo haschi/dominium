@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { InventurModule } from './inventur.module';
 import { InventurService } from './inventur.service';
 import { ActionsService } from '../store/actions.service';
+import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
+import { StoreModule } from '../store/store.module';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -33,7 +35,9 @@ describe('InventurComponent', () => {
                 HttpClientModule,
                 HttpClientTestingModule,
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES),
-                InventurModule
+                InventurModule,
+                CommandGatewayModule,
+                StoreModule
             ],
             providers: [LoggerService, InventurService, ActionsService],
             schemas: [NO_ERRORS_SCHEMA]
@@ -52,16 +56,24 @@ describe('InventurComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    xit ('sollte ohne Eingabe mit leerem Invantar beginnen',
-        inject([HttpTestingController], (http: HttpTestingController) => {
-        component.speichern();
-            const request = http.expectOne('http://localhost:4200/gateway/inventur');
-        expect(request.request.method).toEqual('POST');
-        expect(request.request.body).toEqual({
-            anlagevermoegen: [],
-            umlaufvermoegen: [],
-            schulden: []
-        });
+    it('sollte ohne Eingabe mit leerem Invantar beginnen',
+        inject([HttpTestingController, InventurService], (http: HttpTestingController, inventur: InventurService) => {
+
+            inventur.beginneInventur();
+            const beginne = http.expectOne('/gateway/command');
+            expect(beginne.request.method).toEqual('POST');
+
+            component.speichern();
+
+            const erfasse = http.expectOne('/gateway/command');
+            expect(erfasse.request.method).toEqual('POST');
+
+            inventur.inventar$.subscribe(inventar => expect(inventar).toEqual({
+                anlagevermoegen: [],
+                umlaufvermoegen: [],
+                schulden: []
+            }));
+
         http.verify();
     }));
 });

@@ -1,21 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { select } from '@angular-redux/store';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { ActionsService } from '../store/actions.service';
+import { NgRedux, select } from '@angular-redux/store';
+import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
+import { Inventar } from './inventar';
+import { AppState } from '../store/model';
 
 @Injectable()
 export class InventurService {
 
     @select(['inventur', 'inventurId'])
-    inventurid$: Observable<any>;
+    inventurid$: Observable<string>;
 
-    constructor(private http: HttpClient, private aktionen: ActionsService) {
+    @select(['inventur', 'inventar'])
+    inventar$: Observable<Inventar>;
+
+    constructor(private gateway: CommandGatewayService, private store: NgRedux<AppState>) {
     }
 
     beginneInventur() {
-        this.http.post('/gateway/inventur', null, {observe: 'response', responseType: 'text'})
-            .map((response: HttpResponse<string>) => response.headers.get('Aggregatkennung'))
-            .subscribe((id: string) => this.aktionen.begonnen(id));
+        this.gateway.send(
+            'com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur',
+            {id: '12345'},
+            {});
+    }
+
+    erfasseInventar(inventar: Inventar) {
+        let id = this.store.getState().inventur.inventurId;
+
+        this.gateway.send(
+            'com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar',
+            {id: id, inventar: inventar},
+            {}
+        )
     }
 }

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DevToolsExtension, NgRedux } from '@angular-redux/store';
+import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { APP_INITIAL_STATE, AppState } from './model';
 import { rootReducer } from './reducers';
 import { RootEpicsService } from './root-epics.service';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, NgReduxModule],
+    exports: [NgReduxModule],
+    providers: [RootEpicsService],
     declarations: []
 })
 export class StoreModule {
