@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
-import { AppState } from '../store/model';
+import { AppState } from '../../store/model';
 import { CommandBusService } from './command-bus.service';
 import { CommandAction, CommandMessageAction } from './command-bus.model';
 import 'rxjs/add/operator/catch';
@@ -27,17 +27,10 @@ export class CommandBusEpicsService {
             .mergeMap(action => this.service.send(action as CommandMessageAction)
                 .map(response => this.aktionen.gelungen(response)))
 
-        // .ofType(CommandBusActions.angefordert)
-        // .switchMap(() => this.service.send()
-        //     .map(() => this.actions))
-        //
-        // .filter(action => actionIsForCorrectAnimalType(animalType)(action))
-        // .filter(() => animalsNotAlreadyFetched(animalType, store.getState()))
-        // .switchMap(() => this.service.getAll(animalType)
-        //     .map(data => this.actions.loadSucceeded(animalType, data))
-        //     .catch(response => of(this.actions.loadFailed(animalType, {
-        //         status: '' + response.status,
-        //     })))
-        //     .startWith(this.actions.loadStarted(animalType)));
+        // TODO: Abhängig vom Ergebnis eines Command Aufrufs, müssen die fachlichen Epics
+        // getriggert werden. Dazu müssen diese wissen, welche Commands erfolgreich
+        // ausgeführt wurden.
+
+        // TODO: Fehlerbehandlung!
     }
 }

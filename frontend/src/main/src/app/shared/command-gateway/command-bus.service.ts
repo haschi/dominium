@@ -11,13 +11,13 @@ export class CommandBusService {
     }
 
     @select(['command', 'sendet'])
-    sendet$: Observable<boolean>
+    sendet$: Observable<boolean>;
 
     @select(['command', 'message'])
-    message$: Observable<CommandMessage>
+    message$: Observable<CommandMessage>;
 
     @select(['command', 'response'])
-    status$: Observable<CommandResponse>
+    status$: Observable<CommandResponse>;
 
     send(action: CommandMessageAction): Observable<HttpResponse<Object>> {
         return this.http.post("/gateway/command", action.message, {observe: 'response'});

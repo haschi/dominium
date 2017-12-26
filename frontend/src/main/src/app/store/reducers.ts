@@ -1,8 +1,11 @@
 import { combineReducers, Reducer } from 'redux';
 import { AppState, INVENTUR_INITIAL_STATE, InventurState } from './model';
 import { Actions } from './actions.service';
-import { COMMAND_BUS_INITIAL_STATE, CommandBusState } from '../shared/command-bus.model';
-import { CommandBusActions } from '../shared/command-bus-actions.service';
+import {
+    COMMAND_BUS_INITIAL_STATE,
+    CommandBusState
+} from '../shared/command-gateway/command-bus.model';
+import { CommandBusActions } from '../shared/command-gateway/command-bus-actions.service';
 
 export const inventurReducer: Reducer<InventurState> =
     (state = INVENTUR_INITIAL_STATE, action) => {

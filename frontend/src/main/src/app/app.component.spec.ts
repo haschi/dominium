@@ -6,16 +6,14 @@ import { AppModule } from './app.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RootEpicsService } from './store/root-epics.service';
-import { CommandBusEpicsService } from './shared/command-bus-epics.service';
-import { CommandBusActionsService } from './shared/command-bus-actions.service';
-import { CommandBusService } from './shared/command-bus.service';
+import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
 
-            imports: [AppModule, HttpClientTestingModule],
-            providers: [RootEpicsService, CommandBusEpicsService, CommandBusActionsService, CommandBusService,
+            imports: [AppModule, HttpClientTestingModule, CommandGatewayModule],
+            providers: [RootEpicsService,
                 {provide: APP_BASE_HREF, useValue: '/'}]
         }).compileComponents();
     }));

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommandBusEpicsService } from '../shared/command-bus-epics.service';
+import { CommandBusEpicsService } from '../shared/command-gateway/command-bus-epics.service';
 
 @Injectable()
 export class RootEpicsService {
