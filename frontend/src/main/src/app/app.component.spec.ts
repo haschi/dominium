@@ -5,13 +5,17 @@ import { TdLayoutComponent } from '@covalent/core';
 import { AppModule } from './app.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { RootEpicsService } from './store/root-epics.service';
+import { CommandBusEpicsService } from './shared/command-bus-epics.service';
+import { CommandBusActionsService } from './shared/command-bus-actions.service';
+import { CommandBusService } from './shared/command-bus.service';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
 
             imports: [AppModule, HttpClientTestingModule],
-            providers: [
+            providers: [RootEpicsService, CommandBusEpicsService, CommandBusActionsService, CommandBusService,
                 {provide: APP_BASE_HREF, useValue: '/'}]
         }).compileComponents();
     }));

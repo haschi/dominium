@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Inventar } from './inventar';
 import { Router } from '@angular/router';
+import { InventurService } from './inventur.service';
 
 @Component({
     selector: 'app-inventur',
@@ -28,7 +29,8 @@ export class InventurComponent implements OnInit {
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
                 private router: Router,
-                private http: HttpClient) {
+                private http: HttpClient,
+                private inventurService: InventurService) {
     }
 
     ngOnInit() {
@@ -48,7 +50,8 @@ export class InventurComponent implements OnInit {
         return this.http.get<Inventar>('/gateway/inventur/' + inventarId)
     }
 
-    postInventar(inventar: Inventar): Observable<string> {
+    postInventar(inventar: Inventar) {
+        this.inventurService.beginneInventur();
         return this.http.post('/gateway/inventur', null, {
             observe: 'response',
             responseType: 'text'

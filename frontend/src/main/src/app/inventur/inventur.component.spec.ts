@@ -14,6 +14,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { LoggerService } from '../shared/logger.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InventurModule } from './inventur.module';
+import { InventurService } from './inventur.service';
+import { ActionsService } from '../store/actions.service';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -33,7 +35,7 @@ describe('InventurComponent', () => {
                 RouterTestingModule.withRoutes(DEMO_APP_ROUTES),
                 InventurModule
             ],
-            providers: [LoggerService],
+            providers: [LoggerService, InventurService, ActionsService],
             schemas: [NO_ERRORS_SCHEMA]
 
         })
