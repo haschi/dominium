@@ -67,20 +67,16 @@ class RestApi : AbstractVerticle()
         router.route("/gateway/*").handler(BodyHandler.create())
 
         router.post("/gateway/command").handler { context ->
-            vertx.setTimer(3000L) {
-                println(context.bodyAsString)
+            vertx.setTimer(500) {
+                // TODO("Meta Daten verarbeiten")
+
                 val message = context.bodyAsJson
                 val type = message.get<String>("type");
-                println("Message $type")
-
                 val payload = message.getJsonObject("payload")
                 val clazz = Class.forName(type)
-                val mapTo = payload.mapTo(clazz)
+                val command = payload.mapTo(clazz)
 
-                println(payload)
-                println(mapTo)
-
-                dominium.sendCommand(mapTo);
+                dominium.sendCommand(command);
                 context.request().response().end()
             }
         }

@@ -98,7 +98,7 @@ class SerialisierungTest
                                                 schulden = Schulden(
                                                         Schuld("Autokredit", 10100.00.euro())))),
                                 """{
-                                    |  "inventur" : {
+                                    |  "inventar" : {
                                     |    "anlagevermoegen" : [ {
                                     |      "position" : "Aktiendepot",
                                     |      "währungsbetrag" : "123,45 EUR"
@@ -153,7 +153,7 @@ class SerialisierungTest
                             BeginneHaushaltsbuchführung(Aggregatkennung.aus(id), Inventar.leer),
                             """{
                                     |  "id" : "$id",
-                                    |  "inventur" : {
+                                    |  "inventar" : {
                                     |    "anlagevermoegen" : [ ],
                                     |    "umlaufvermoegen" : [ ],
                                     |    "schulden" : [ ],
@@ -173,7 +173,7 @@ class SerialisierungTest
                             ErfasseInventar(Aggregatkennung.aus(id), Inventar.leer),
                             """{
                                 |  "id" : "$id",
-                                |  "inventur" : {
+                                |  "inventar" : {
                                 |    "anlagevermoegen" : [ ],
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ],

@@ -17,6 +17,7 @@ import { InventurModule } from './inventur.module';
 import { InventurService } from './inventur.service';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { StoreModule } from '../store/store.module';
+import { CommandType } from './command-type';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -58,12 +59,12 @@ describe('InventurComponent', () => {
     it('sollte ohne Eingabe mit leerem Invantar beginnen',
         inject([HttpTestingController, InventurService], (http: HttpTestingController, inventur: InventurService) => {
 
-            inventur.beginneInventur();
+            inventur.beginneInventur('12345');
             const beginne = http.expectOne('/gateway/command');
             expect(beginne.request.method).toEqual('POST');
             expect(beginne.request.body).toEqual(
                 {
-                    type: 'com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur',
+                    type: CommandType.BeginneInventur,
                     payload: {id: '12345'},
                     meta: {}
                 });
@@ -77,7 +78,7 @@ describe('InventurComponent', () => {
             expect(erfasse.request.method).toEqual('POST');
             expect(erfasse.request.body).toEqual(
                 {
-                    type: 'com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar',
+                    type: CommandType.ErfasseInventar,
                     payload: {
                         id: "12345",
                         inventar: {

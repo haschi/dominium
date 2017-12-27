@@ -9,6 +9,7 @@ import { Inventar } from './inventar';
 import { Router } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { select } from '@angular-redux/store';
+import { Inventarposition } from './inventarposition';
 
 @Component({
     selector: 'app-inventur',
@@ -44,28 +45,24 @@ export class InventurComponent implements OnInit {
         });
     }
 
+    inventarpositionKonvertieren(poisition: any): Inventarposition {
+        return {
+            position: poisition.position,
+            währungsbetrag: `${poisition.währungsbetrag.betrag} ${poisition.währungsbetrag.währung}`
+        }
+    }
+
     speichern() {
         this.model = this.inventur.value;
-        this.log.log('Inventur beginnen');
+        this.log.log('Inventar erfassen');
         this.log.log(JSON.stringify(this.inventur.value));
 
         console.info("speichern");
 
-        let x = this.inventur.value.anlagevermoegen.map(e => {
-            console.info("Convert " + JSON.stringify(e));
-            return ({
-                position: e.position,
-                währungsbetrag: `${e.währungsbetrag.betrag} ${e.währungsbetrag.währung}`
-            })
-        });
-
-        console.info("Anlageverägen: " + JSON.stringify(this.inventur.value.anlagevermoegen));
-        console.info("MAP: " + JSON.stringify(x));
-
         let inventar: Inventar = {
-            anlagevermoegen: x,
-            umlaufvermoegen: [],
-            schulden: []
+            anlagevermoegen: this.inventur.value.anlagevermoegen.map(this.inventarpositionKonvertieren),
+            umlaufvermoegen: this.inventur.value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
+            schulden: this.inventur.value.schulden.map(this.inventarpositionKonvertieren)
         };
 
         this.inventurService.erfasseInventar(inventar);

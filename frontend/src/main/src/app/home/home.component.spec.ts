@@ -6,6 +6,8 @@ import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { InventurModule } from '../inventur/inventur.module';
+import { NgReduxModule } from '@angular-redux/store';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -19,6 +21,8 @@ describe('HomeComponent', () => {
                 AppCovalentModuleModule,
                 CommandGatewayModule,
                 HttpClientTestingModule,
+                InventurModule,
+                NgReduxModule,
                 RouterTestingModule.withRoutes([
                     {path: 'inventur', redirectTo: 'http://www.google.de'},
                 ])
