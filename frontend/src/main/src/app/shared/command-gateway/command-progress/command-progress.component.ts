@@ -4,7 +4,6 @@ import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../../store/model';
 
 import 'rxjs/add/operator/delay';
-import { of } from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-command-progress',
@@ -19,8 +18,9 @@ export class CommandProgressComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.sendet$ = this.store
-            .select(state => state.command.sendet)
-            .flatMap(s => s ? of(s).delay(500) : of(s))
+        this.sendet$ = this.store.select(state => state.command.sendet);
+        // this.sendet$ = this.store
+        //     .select(state => state.command.sendet)
+        //     .flatMap(s => s ? of(s).delay(500) : of(s))
     }
 }

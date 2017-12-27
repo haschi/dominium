@@ -37,6 +37,10 @@ export const commandReducer: Reducer<CommandGatewayState> =
                 console.info("REDUCE COMMAND gelungen " + JSON.stringify(action));
                 return {...state, response: action.response, sendet: false}
             }
+            case CommandGatewayActionType.fehlgeschlagen: {
+                console.info("REDUCE COMMAND fehlgeschlagen " + JSON.stringify(action));
+                return {...state, response: action.response, sendet: false,}
+            }
         }
         return state;
     };

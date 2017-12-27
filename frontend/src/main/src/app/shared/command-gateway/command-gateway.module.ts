@@ -8,19 +8,22 @@ import { CommandProgressComponent } from './command-progress/command-progress.co
 import { AppMaterialModule } from '../app-material-module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CovalentDialogsModule } from '@covalent/core';
 
 @NgModule({
     providers: [
         CommandGatewayActionsService,
         CommandGatewayEpicsService,
         CommandGatewayService,
-        IdGeneratorService
+        IdGeneratorService,
+
     ],
     imports: [
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
-        AppMaterialModule
+        AppMaterialModule,
+        CovalentDialogsModule
     ],
     declarations: [CommandProgressComponent],
     exports: [CommandProgressComponent]
