@@ -9,7 +9,7 @@ export class RootEpicsService {
 
     public createEpics() {
         return [
-            this.commandBusEpics.createEpic("Hello World")
+            ...this.commandBusEpics.createEpic("Hello World"),
         ];
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommandMessageAction, CommandResponseAction } from './command-bus.model';
+import { CommandMessage, CommandMessageAction, CommandResponseAction } from './command-bus.model';
 import { HttpResponse } from '@angular/common/http';
 
 export enum CommandBusActions {
@@ -24,15 +24,18 @@ export class CommandBusActionsService {
         }
     });
 
-    gelungen = (response: HttpResponse<any>): CommandResponseAction => ({
+    gelungen = (message: CommandMessage, response: HttpResponse<any>): CommandResponseAction => ({
         type: CommandBusActions.gelungen,
+        message: message,
         response: {
             status: response.status,
             message: response.statusText
         }
     });
 
-    fehlgeschlagen = (status: number, message: string): CommandResponseAction => ({
-        type: CommandBusActions.fehlgeschlagen, response: {status, message}
+    fehlgeschlagen = (cmd: CommandMessage, status: number, message: string): CommandResponseAction => ({
+        type: CommandBusActions.fehlgeschlagen,
+        message: cmd,
+        response: {status, message}
     })
 }

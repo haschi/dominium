@@ -18,7 +18,10 @@ export interface CommandResponse {
 }
 
 export type CommandMessageAction = Action & { message: CommandMessage }
-export type CommandResponseAction = Action & { response: CommandResponse }
+export type CommandResponseAction =
+    Action
+    & { message: CommandMessage }
+    & { response: CommandResponse }
 export type CommandAction = CommandMessageAction | CommandResponseAction
 
 export const COMMAND_BUS_INITIAL_STATE: CommandBusState = {

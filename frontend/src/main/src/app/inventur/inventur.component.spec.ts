@@ -15,7 +15,6 @@ import { LoggerService } from '../shared/logger.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InventurModule } from './inventur.module';
 import { InventurService } from './inventur.service';
-import { ActionsService } from '../store/actions.service';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { StoreModule } from '../store/store.module';
 
@@ -39,7 +38,7 @@ describe('InventurComponent', () => {
                 CommandGatewayModule,
                 StoreModule
             ],
-            providers: [LoggerService, InventurService, ActionsService],
+            providers: [LoggerService, InventurService],
             schemas: [NO_ERRORS_SCHEMA]
 
         })
@@ -62,11 +61,33 @@ describe('InventurComponent', () => {
             inventur.beginneInventur();
             const beginne = http.expectOne('/gateway/command');
             expect(beginne.request.method).toEqual('POST');
+            expect(beginne.request.body).toEqual(
+                {
+                    type: 'com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur',
+                    payload: {id: '12345'},
+                    meta: {}
+                });
+            beginne.flush(null);
+
+            inventur.inventurid$.subscribe(id => expect(id).toEqual('12345'));
 
             component.speichern();
 
             const erfasse = http.expectOne('/gateway/command');
             expect(erfasse.request.method).toEqual('POST');
+            expect(erfasse.request.body).toEqual(
+                {
+                    type: 'com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar',
+                    payload: {
+                        id: "12345",
+                        inventar: {
+                            anlagevermoegen: [],
+                            umlaufvermoegen: [],
+                            schulden: []
+                        }
+                    },
+                    meta: {}
+                });
 
             inventur.inventar$.subscribe(inventar => expect(inventar).toEqual({
                 anlagevermoegen: [],
