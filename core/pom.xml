@@ -242,10 +242,11 @@
                                     src/main/kotlin/com/github/haschi/dominium/haushaltsbuch/core/model/miapi
                                 </source>
                             </sourceDirs>
-                            <moduleKind>commonjs</moduleKind>
-                            <sourceMap>true</sourceMap>
-                            <sourceMapEmbedSources>inlining</sourceMapEmbedSources>
-                            <outputFile>/target/js</outputFile>
+                            <!--<metaInfo>false</metaInfo>-->
+                            <!--<moduleKind>amd</moduleKind>-->
+                            <!--<sourceMap>false</sourceMap>-->
+                            <!--<sourceMapEmbedSources>inlining</sourceMapEmbedSources>-->
+                            <!--<outputFile>${project.build.directory}/jjs</outputFile>-->
                         </configuration>
                     </execution>
 
