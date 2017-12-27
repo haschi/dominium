@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Inventar } from './inventar';
 import { Router } from '@angular/router';
 import { InventurService } from './inventur.service';
+import { select } from '@angular-redux/store';
 
 @Component({
     selector: 'app-inventur',
@@ -21,7 +22,8 @@ export class InventurComponent implements OnInit {
 
     private model: any;
 
-    private model$: Observable<any>;
+    @select(['inventur', 'inventar'])
+    private model$: Observable<Inventar>;
 
     private inventar$: Observable<Inventar>;
 
@@ -40,11 +42,6 @@ export class InventurComponent implements OnInit {
             umlaufvermoegen: this.builder.array([]),
             schulden: this.builder.array([])
         });
-
-        this.model$ = this.inventur.valueChanges;
-
-        this.inventur.valueChanges.subscribe(
-            value => this.log.log('Wertänderung: ' + JSON.stringify(value)));
     }
 
     speichern() {
