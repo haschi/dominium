@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export interface CommandBusState {
+export interface CommandGatewayState {
     message: CommandMessage
     response: CommandResponse
     sendet: boolean
@@ -18,13 +18,11 @@ export interface CommandResponse {
 }
 
 export type CommandMessageAction = Action & { message: CommandMessage }
-export type CommandResponseAction =
-    Action
-    & { message: CommandMessage }
-    & { response: CommandResponse }
+export type CommandResponseAction = CommandMessageAction & { response: CommandResponse }
+
 export type CommandAction = CommandMessageAction | CommandResponseAction
 
-export const COMMAND_BUS_INITIAL_STATE: CommandBusState = {
+export const COMMAND_GATEWAY_INITIAL_STATE: CommandGatewayState = {
     sendet: false,
     message: {type: '', payload: {}, meta: {}},
     response: {status: 0, message: ''}

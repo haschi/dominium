@@ -1,10 +1,10 @@
 import { combineReducers, Reducer } from 'redux';
 import { AppState, INVENTUR_INITIAL_STATE, InventurState } from './model';
 import {
-    COMMAND_BUS_INITIAL_STATE, CommandBusState,
+    COMMAND_GATEWAY_INITIAL_STATE, CommandGatewayState,
     CommandMessageAction
-} from '../shared/command-gateway/command-bus.model';
-import { CommandBusActions } from '../shared/command-gateway/command-bus-actions.service';
+} from '../shared/command-gateway/command-gateway.model';
+import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
 import { Actions } from './actions';
 
 export const inventurReducer: Reducer<InventurState> =
@@ -19,14 +19,14 @@ export const inventurReducer: Reducer<InventurState> =
         return state;
     };
 
-export const commandReducer: Reducer<CommandBusState> =
-    (state = COMMAND_BUS_INITIAL_STATE, action) => {
+export const commandReducer: Reducer<CommandGatewayState> =
+    (state = COMMAND_GATEWAY_INITIAL_STATE, action) => {
         switch (action.type) {
-            case CommandBusActions.angefordert: {
+            case CommandGatewayActionType.angefordert: {
                 console.info("REDUCE COMMAND angefordert");
                 return {...state, sendet: true, message: action.message}
             }
-            case CommandBusActions.gelungen: {
+            case CommandGatewayActionType.gelungen: {
                 console.info("REDUCE COMMAND gelungen " + JSON.stringify(action));
                 return {...state, response: action.response, sendet: false}
             }

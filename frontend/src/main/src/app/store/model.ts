@@ -1,12 +1,12 @@
 import { Inventar } from '../inventur/inventar';
 import {
-    COMMAND_BUS_INITIAL_STATE,
-    CommandBusState
-} from '../shared/command-gateway/command-bus.model';
+    COMMAND_GATEWAY_INITIAL_STATE,
+    CommandGatewayState
+} from '../shared/command-gateway/command-gateway.model';
 
 export interface AppState {
     inventur: InventurState
-    command: CommandBusState
+    command: CommandGatewayState
 }
 
 export interface InventurState {
@@ -25,5 +25,5 @@ export const INVENTUR_INITIAL_STATE: InventurState = {
 
 export const APP_INITIAL_STATE: AppState = {
     inventur: INVENTUR_INITIAL_STATE,
-    command: COMMAND_BUS_INITIAL_STATE
+    command: COMMAND_GATEWAY_INITIAL_STATE
 };

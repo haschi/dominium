@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CommandMessage, CommandMessageAction, CommandResponseAction } from './command-bus.model';
+import {
+    CommandMessage, CommandMessageAction,
+    CommandResponseAction
+} from './command-gateway.model';
 import { HttpResponse } from '@angular/common/http';
 
-export enum CommandBusActions {
+export enum CommandGatewayActionType {
     angefordert = 'cba_angefordert',
-    gesendet = 'cba_gesendet',
     gelungen = 'cba_gelungen',
     fehlgeschlagen = 'cba_fehlgeschlagen'
 }
 
 @Injectable()
-export class CommandBusActionsService {
+export class CommandGatewayActionsService {
 
     constructor() {
     }
 
     angefordert = (type: string, payload: any, meta: any): CommandMessageAction => ({
-        type: CommandBusActions.angefordert,
+        type: CommandGatewayActionType.angefordert,
         message: {
             type: type,
             payload: payload,
@@ -25,7 +27,7 @@ export class CommandBusActionsService {
     });
 
     gelungen = (message: CommandMessage, response: HttpResponse<any>): CommandResponseAction => ({
-        type: CommandBusActions.gelungen,
+        type: CommandGatewayActionType.gelungen,
         message: message,
         response: {
             status: response.status,
@@ -34,7 +36,7 @@ export class CommandBusActionsService {
     });
 
     fehlgeschlagen = (cmd: CommandMessage, status: number, message: string): CommandResponseAction => ({
-        type: CommandBusActions.fehlgeschlagen,
+        type: CommandGatewayActionType.fehlgeschlagen,
         message: cmd,
         response: {status, message}
     })

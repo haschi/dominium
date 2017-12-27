@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CommandBusActionsService } from './command-bus-actions.service';
-import { CommandBusEpicsService } from './command-bus-epics.service';
+import { CommandGatewayActionsService } from './command-gateway-actions.service';
+import { CommandGatewayEpicsService } from './command-gateway-epics.service';
 import { CommandGatewayService } from './command-gateway.service';
 
 @NgModule({
-    providers: [CommandBusActionsService, CommandBusEpicsService, CommandGatewayService],
+    providers: [CommandGatewayActionsService, CommandGatewayEpicsService, CommandGatewayService],
     imports: [
         CommonModule
     ],

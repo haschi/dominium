@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CommandBusEpicsService } from '../shared/command-gateway/command-bus-epics.service';
+import { CommandGatewayEpicsService } from '../shared/command-gateway/command-gateway-epics.service';
 
 @Injectable()
 export class RootEpicsService {
 
-    constructor(private commandBusEpics: CommandBusEpicsService) {
+    constructor(private commandBusEpics: CommandGatewayEpicsService) {
     }
 
     public createEpics() {
