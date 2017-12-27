@@ -1,4 +1,9 @@
-export class Inventarposition {
-    constructor(public position: string, public betrag: number) {
-    }
+export interface Währungsbetrag {
+    betrag: number;
+    währung: string;
+}
+
+export interface Inventarposition {
+    position: string;
+    währungsbetrag: Währungsbetrag;
 }

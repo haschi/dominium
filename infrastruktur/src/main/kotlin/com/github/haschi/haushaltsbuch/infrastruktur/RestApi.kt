@@ -13,6 +13,7 @@ import io.vertx.core.Launcher
 import io.vertx.core.json.Json
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.kotlin.core.json.JsonObject
+import io.vertx.kotlin.core.json.get
 import io.vertx.reactivex.config.ConfigRetriever
 import io.vertx.reactivex.core.AbstractVerticle
 import io.vertx.reactivex.ext.web.Router
@@ -63,10 +64,23 @@ class RestApi : AbstractVerticle()
                 StaticHandler.create()
                         .setWebRoot("frontend"))
 
-        router.route("/gateway/**").handler(BodyHandler.create())
+        router.route("/gateway/*").handler(BodyHandler.create())
 
-        router.route("/gateway/command").handler { context ->
+        router.post("/gateway/command").handler { context ->
             vertx.setTimer(3000L) {
+                println(context.bodyAsString)
+                val message = context.bodyAsJson
+                val type = message.get<String>("type");
+                println("Message $type")
+
+                val payload = message.getJsonObject("payload")
+                val clazz = Class.forName(type)
+                val mapTo = payload.mapTo(clazz)
+
+                println(payload)
+                println(mapTo)
+
+                dominium.sendCommand(mapTo);
                 context.request().response().end()
             }
         }

@@ -69,6 +69,7 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
         return Dominium(
                 gateway(HaushaltsbuchführungApi::class),
                 gateway(InventurApi::class),
+                konfiguration.commandGateway(),
                 queryGateway,
                 historie)
     }

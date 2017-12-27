@@ -51,7 +51,24 @@ export class InventurComponent implements OnInit {
 
         console.info("speichern");
 
-        this.inventurService.erfasseInventar(this.inventur.value);
+        let x = this.inventur.value.anlagevermoegen.map(e => {
+            console.info("Convert " + JSON.stringify(e));
+            return ({
+                position: e.position,
+                währungsbetrag: `${e.währungsbetrag.betrag} ${e.währungsbetrag.währung}`
+            })
+        });
+
+        console.info("Anlageverägen: " + JSON.stringify(this.inventur.value.anlagevermoegen));
+        console.info("MAP: " + JSON.stringify(x));
+
+        let inventar: Inventar = {
+            anlagevermoegen: x,
+            umlaufvermoegen: [],
+            schulden: []
+        };
+
+        this.inventurService.erfasseInventar(inventar);
     }
 
     get anlagevermoegen(): AbstractControl {
