@@ -1,63 +1,7 @@
-# =============================================================================
-# https://github.com/github/gitignore/blob/master/Jboss.gitignore
-# =============================================================================
-# JBOSS
-# deployed package files #
 
-# =============================================================================
-# https://github.com/github/gitignore/blob/master/Java.gitignore
-# =============================================================================
-# Java
-# Mobile Tools for Java (J2ME)
-# Package Files #
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-# =============================================================================
-# https://github.com/github/gitignore/blob/master/Sass.gitignore
-# =============================================================================
-# Maven
-# =============================================================================
-# https://github.com/github/gitignore/blob/master/Maven.gitignore
-# =============================================================================
-# Maven
-# =============================================================================
-# https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
-# =============================================================================
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
-
-*.iml
-
-## Directory-based project format:
-#.idea/
-#.idea/runConfigurations/Start_Frontend.xml
-#.idea/externalDependencies.xml
-# if you remove the above rule, at least ignore the following:
-
-.idea/artifacts
 .idea/libraries
-.idea/.name
-
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
 .idea/workspace.xml
 .vertx
 
-# User-specific stuff:
-# Sensitive or high-churn files:
-# Gradle:
-# .idea/gradle.xml
-# .idea/libraries
-
-# Mongo Explorer plugin:
-# .idea/mongoSettings.xml
-
-## File-based project format:
-## Plugin-specific files:
-
-# IntelliJ
-# mpeltonen/sbt-idea plugin
-# JIRA plugin
-# Crashlytics plugin (for Android Studio and IntelliJ)
 node_modules
 target
