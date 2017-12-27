@@ -4,6 +4,7 @@ import {
     CommandResponseAction
 } from './command-gateway.model';
 import { HttpResponse } from '@angular/common/http';
+import { CommandType } from '../../inventur/command-type';
 
 export enum CommandGatewayActionType {
     angefordert = 'cba_angefordert',
@@ -17,7 +18,7 @@ export class CommandGatewayActionsService {
     constructor() {
     }
 
-    angefordert = (type: string, payload: any, meta: any): CommandMessageAction => ({
+    angefordert = (type: CommandType, payload: any, meta: any): CommandMessageAction => ({
         type: CommandGatewayActionType.angefordert,
         message: {
             type: type,

@@ -5,7 +5,7 @@ import { InventarComponent } from './inventur/inventar/inventar.component';
 
 export const DEMO_APP_ROUTES: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'inventur', component: InventurComponent},
-    {path: 'inventur/:id', component: InventarComponent},
+    {path: 'inventur/:id', component: InventurComponent},
+    {path: 'inventar/:id', component: InventarComponent},
     {path: '**', component: HomeComponent}
 ];

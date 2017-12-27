@@ -25,10 +25,13 @@ export class InventurComponent implements OnInit {
 
     private inventar$: Observable<Inventar>;
 
+    inventurId$: Observable<string>;
+
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
                 private router: Router,
                 private inventurService: InventurService) {
+        this.inventurId$ = inventurService.inventurid$;
     }
 
     ngOnInit() {

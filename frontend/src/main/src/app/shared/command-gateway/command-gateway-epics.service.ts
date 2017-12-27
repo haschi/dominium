@@ -41,10 +41,6 @@ export class CommandGatewayEpicsService {
             .mergeMap(action => this.service.post(action as CommandMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response)))
 
-        // TODO: Abhängig vom Ergebnis eines Command Aufrufs, müssen die fachlichen Epics
-        // getriggert werden. Dazu müssen diese wissen, welche Commands erfolgreich
-        // ausgeführt wurden.
-
         // TODO: Fehlerbehandlung!
     }
 

@@ -11,6 +11,7 @@ import { InventurModule } from './inventur/inventur.module';
 import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './store/store.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: true}),
         InventurModule,
         NgReduxModule,
-        StoreModule
+        StoreModule,
+        CommandGatewayModule
     ],
     bootstrap: [AppComponent]
 })

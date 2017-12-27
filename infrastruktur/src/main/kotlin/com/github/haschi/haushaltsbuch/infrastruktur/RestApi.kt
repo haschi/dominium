@@ -65,6 +65,12 @@ class RestApi : AbstractVerticle()
 
         router.route("/gateway/**").handler(BodyHandler.create())
 
+        router.route("/gateway/command").handler { context ->
+            vertx.setTimer(3000L) {
+                context.request().response().end()
+            }
+        }
+
         router.post("/gateway/inventur").handler { context ->
             val anweisung = BeginneInventur(Aggregatkennung.neu())
 

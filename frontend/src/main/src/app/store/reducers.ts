@@ -5,15 +5,22 @@ import {
     CommandMessageAction
 } from '../shared/command-gateway/command-gateway.model';
 import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
-import { Actions } from './actions';
+import { CommandType } from '../inventur/command-type';
 
 export const inventurReducer: Reducer<InventurState> =
     (state = INVENTUR_INITIAL_STATE, action: CommandMessageAction) => {
-        console.info("inventur reducer: " + JSON.stringify(action));
         switch (action.type) {
-            case Actions.InventurBegonnen: {
-                console.info("REDUCE Inventur begonnen");
-                return {...state, inventurId: action.message.payload.id}
+            case CommandGatewayActionType.gelungen: {
+                switch (action.message.type) {
+                    case CommandType.BeginneInventur: {
+                        console.info("REDUCE Inventur begonnen: " + JSON.stringify(action));
+                        return {...state, inventurId: action.message.payload.id}
+                    }
+                    case CommandType.ErfasseInventar: {
+                        console.info('REDUCE Inventar erfasst');
+                        return {...state, inventar: action.message.payload.inventar}
+                    }
+                }
             }
         }
         return state;

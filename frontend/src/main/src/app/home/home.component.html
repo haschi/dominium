@@ -8,11 +8,10 @@
                 <h2 class="mat-headline tc-grey-800 push-top-xs push-bottom-sm">Private Finanzen
                     verwalten</h2>
                 <p class="mat-subhead tc-grey-600">Behalten Sie mit dem Haushaltsbuch immer den
-                    Überblick
-                    ihrer privaten Finanzen. Erhalten Sie ein Vorhersage zu Ihrer
-                    Vermögensentwicklung anhand
-                    ihrer Ein- und Ausgaben.</p>
-                <button id='ausprobieren' mat-raised-button color="accent" [routerLink]="['inventur']"
+                    Überblick ihrer privaten Finanzen. Erhalten Sie ein Vorhersage zu Ihrer
+                    Vermögensentwicklung anhand ihrer Ein- und Ausgaben.</p>
+                <button id='ausprobieren' mat-raised-button color="accent"
+                        (click)='inventurBeginnen()'
                         class="push-bottom mat-button-lg text-upper">Jetzt ausprobieren
                 </button>
             </div>

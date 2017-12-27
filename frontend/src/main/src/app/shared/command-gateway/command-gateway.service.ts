@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { CommandMessage, CommandMessageAction, CommandResponse } from './command-gateway.model';
 import { dispatch, select } from '@angular-redux/store';
 import { CommandGatewayActionsService } from './command-gateway-actions.service';
+import { CommandType } from '../../inventur/command-type';
 
 @Injectable()
 export class CommandGatewayService {
@@ -25,7 +26,7 @@ export class CommandGatewayService {
     }
 
     @dispatch()
-    send(type: string, payload: any, meta: any): CommandMessageAction {
+    send(type: CommandType, payload: any, meta: any): CommandMessageAction {
         return this.aktionen.angefordert(type, payload, meta)
     }
 }

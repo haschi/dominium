@@ -4,6 +4,8 @@ import { HomeComponent } from './home.component';
 import { AppMaterialModule } from '../shared/app-material-module';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -15,6 +17,8 @@ describe('HomeComponent', () => {
             imports: [
                 AppMaterialModule,
                 AppCovalentModuleModule,
+                CommandGatewayModule,
+                HttpClientTestingModule,
                 RouterTestingModule.withRoutes([
                     {path: 'inventur', redirectTo: 'http://www.google.de'},
                 ])

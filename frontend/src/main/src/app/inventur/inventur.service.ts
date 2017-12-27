@@ -4,6 +4,7 @@ import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
 import { Inventar } from './inventar';
 import { AppState } from '../store/model';
+import { CommandType } from './command-type';
 
 @Injectable()
 export class InventurService {
@@ -17,10 +18,10 @@ export class InventurService {
     constructor(private gateway: CommandGatewayService, private store: NgRedux<AppState>) {
     }
 
-    beginneInventur() {
+    beginneInventur(id: any) {
         this.gateway.send(
-            'com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur',
-            {id: '12345'},
+            CommandType.BeginneInventur,
+            {id: id},
             {});
     }
 
@@ -28,7 +29,7 @@ export class InventurService {
         let id = this.store.getState().inventur.inventurId;
 
         this.gateway.send(
-            'com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar',
+            CommandType.ErfasseInventar,
             {id: id, inventar: inventar},
             {}
         )
