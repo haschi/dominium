@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Karma Haushaltsbuch App" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+  <configuration default="false" name="Frontend Tests" type="JavaScriptTestRunnerKarma" factoryName="Karma">
     <config-file value="$PROJECT_DIR$/frontend/src/main/karma.conf.js" />
     <browsers value="Chrome" />
     <karma-package-dir value="" />

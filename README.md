@@ -9,7 +9,21 @@ Anforderungen
 
 Loslegen
 --------
+Nach dem Auschecken des Projekts sollten folgende Run/Debug Konfigurationen
+in IntelliJ vorhanden sein: 
 
+![Ausführungskonfiguration](doc/RunConfiguration.png)
+
+
+ * **Alles Bauen** Baut das ganze Projekt und lässt die Tests durchlaufen (mvn clean verify)
+ * **Server** Startet den Backend Server auf http://localhost:8080. Das Frontend wird durch
+ den Server mit ausgeliefert.
+ * **Frontend Entwicklungsserver** Startet den Frontend Entwicklungsserver auf 
+ http://localhost:4200 und leitet die Anfragen zum Backend über einen Proxy an Port 8080 weiter.
+ Ein Fake Backend ist damit überflüssig. (entspricht npm run start)
+ * **Frontend Tests** Führt die Karma Unittests des Frontends aus. (entspricht 
+ npm run test)
+ * **Abnahmetests** führt die Cucumber Tests aus.
 Frontend
 
 Das Frontend kann mit dem Befehl npm run start oder der Run-Konfiguration start

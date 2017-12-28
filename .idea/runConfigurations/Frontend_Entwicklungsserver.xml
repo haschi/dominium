@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Frontend" type="js.build_tools.npm" factoryName="npm">
+  <configuration default="false" name="Frontend Entwicklungsserver" type="js.build_tools.npm" factoryName="npm">
     <package-json value="$PROJECT_DIR$/frontend/src/main/package.json" />
     <command value="run" />
     <scripts>

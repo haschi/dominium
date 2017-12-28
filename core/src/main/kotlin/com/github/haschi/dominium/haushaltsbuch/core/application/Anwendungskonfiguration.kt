@@ -38,9 +38,9 @@ class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
         return this.configureMessageMonitor(
                 { configuration ->
                     BiFunction { comp: Class<*>, name: String ->
-                        ({ componentType: Class<*>, name: String ->
-                            infrastruktur.loggingMonitor(configuration, name)
-                        })(comp, name);
+                        ({ componentType: Class<*>, n: String ->
+                            infrastruktur.loggingMonitor(configuration, n)
+                        })(comp, name)
                     }
                 })
     }
