@@ -1,0 +1,29 @@
+<ng-container [formGroup]="posten">
+
+
+    <mat-form-field flex>
+        <input matInput placeholder="Position"
+               type="text" name="position" formControlName="position"
+               required>
+    </mat-form-field>
+
+    <ng-container [formGroup]="posten.get('währungsbetrag')">
+        <mat-form-field flex="20">
+            <input matInput
+                   placeholder="Betrag" type="text" name="betrag"
+                   maxlength="30" formControlName="betrag" required>
+        </mat-form-field>
+
+        <mat-form-field flex="20">
+            <input matInput
+                   placeholder="Währung" type="text" name="äehrung"
+                   maxlength="3" minlength="3" formControlName="währung" required>
+        </mat-form-field>
+    </ng-container>
+
+    <div flex="10">
+        <button mat-icon-button type="button" (click)="geloescht.emit()">
+            <mat-icon aria-label="Inventarposition entfernen">delete</mat-icon>
+        </button>
+    </div>
+</ng-container>

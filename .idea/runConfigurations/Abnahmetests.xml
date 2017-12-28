@@ -1,0 +1,26 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Abnahmetests" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <pattern>
+        <option name="PATTERN" value="cucumber.api.cli.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="myFilePath" value="$PROJECT_DIR$/infrastruktur/src/test/resources/com/github/haschi/domain/haushaltsbuch" />
+    <option name="GLUE" value="com.github.haschi.haushaltsbuch com.github.haschi.domain.haushaltsbuch" />
+    <option name="myNameFilter" value="" />
+    <option name="myGeneratedName" value="All Features in: haushaltsbuch" />
+    <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvmSMFormatter --monochrome" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ENABLE_SWING_INSPECTOR" value="false" />
+    <option name="ENV_VARIABLES" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <module name="Backend" />
+    <envs />
+    <method />
+  </configuration>
+</component>

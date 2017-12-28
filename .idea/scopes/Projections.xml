@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Projections" pattern="src[haushaltsbuch-domain]:org.github.haschi.domain.*.projektion..*" />
+</component>

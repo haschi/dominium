@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Events" pattern="src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.model.events..*" />
+</component>

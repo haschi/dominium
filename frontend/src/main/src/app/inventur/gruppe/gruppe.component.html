@@ -1,0 +1,11 @@
+<ng-content></ng-content>
+<div>
+    <app-inventur-position *ngFor="let position of positionen.controls; let i = index"
+                           [posten]="position" (geloescht)="loeschen(i)"
+                           layout="row" layout-padding>
+    </app-inventur-position>
+
+    <button mat-mini-fab type="button" (click)="hinzufuegen()">
+        <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
+    </button>
+</div>

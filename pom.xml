@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
+    <groupId>com.github.haschi.haushaltsbuch</groupId>
     <artifactId>haushaltsbuch</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>CD-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -13,96 +15,196 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Diese Eigenschaften konfigurieren maven-compiler-plaugin und maven-pmd-plugin und macht
+        <!-- Diese Eigenschaften konfigurieren maven-compiler-plugin und maven-pmd-plugin und macht
         die explizite Konfiguration der Plugins überflüssig -->
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.version>3.3</maven.compiler.version>
+        <maven.compiler.version>3.5.1</maven.compiler.version>
 
-        <!-- Benutze die selbe Checkstype Version, wie das IntelliJ Plugin ! -->
-        <checkstyle.version>6.10.1</checkstyle.version>
+        <maven.enforcer.version>1.4.1</maven.enforcer.version>
+
+        <slf4j.version>1.7.13</slf4j.version>
+
+        <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
+        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+
+        <!-- Das muss woanders hin -->
+        <version.jboss.bom>10.0.1.Final</version.jboss.bom>
+        <kotlin.version>1.2.10</kotlin.version>
     </properties>
 
     <scm>
-        <developerConnection>scm:git:http://localhost/matthias/haushaltsbuch.git</developerConnection>
+        <developerConnection>scm:git:http://localhost/matthias/haushaltsbuch.git
+        </developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- BOM -->
+
+            <!-- Eigene Module -->
             <dependency>
-                <groupId>de.therapeutenkiller.haushaltsbuch</groupId>
-                <artifactId>domaene</artifactId>
+                <groupId>com.github.haschi.haushaltsbuch</groupId>
+                <artifactId>haushaltsbuch-domaene</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <!-- auslagern nach jee-test.bom -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.haschi</groupId>
+                <artifactId>modeling</artifactId>
+                <version>0.0.26-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>it.kamaladafrica</groupId>
+                <artifactId>axon-cdi</artifactId>
+                <version>2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.javaslang</groupId>
+                <artifactId>javaslang</artifactId>
+                <version>2.0.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.javamoney</groupId>
+                <artifactId>moneta</artifactId>
+                <version>1.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jre8</artifactId>
+                <version>${kotlin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test</artifactId>
+                <version>${kotlin.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+
+
     </dependencies>
 
     <build>
-        <extensions>
-        </extensions>
-
         <pluginManagement>
             <plugins>
-                <!-- aspectj -->
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>test-compile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
                     <configuration>
-                        <complianceLevel>1.8</complianceLevel>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
+                        <useIncrementalCompilation>false</useIncrementalCompilation>
+                        <verbose>false</verbose>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven.enforcer.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                    <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>jdepend-maven-plugin</artifactId>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <version>2.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
                 </plugin>
             </plugins>
         </pluginManagement>
-
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.3,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                                <requireOS>
+                                    <family>unix</family>
+                                </requireOS>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-
 
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>release-deployment</id>
-            <name>Internal Releases</name>
-            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>snapshot-deployment</id>
-            <name>Internal Snapshots</name>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-
-    </distributionManagement>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <modules>
-        <module>domaene</module>
+        <module>core</module>
+        <module>frontend</module>
+        <module>infrastruktur</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss</id>
+            <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
+        </repository>
+    </repositories>
+
 </project>
 
