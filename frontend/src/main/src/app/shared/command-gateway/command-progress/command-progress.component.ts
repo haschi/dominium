@@ -19,8 +19,5 @@ export class CommandProgressComponent implements OnInit {
 
     ngOnInit() {
         this.sendet$ = this.store.select(state => state.command.sendet);
-        // this.sendet$ = this.store
-        //     .select(state => state.command.sendet)
-        //     .flatMap(s => s ? of(s).delay(500) : of(s))
     }
 }
