@@ -46,13 +46,11 @@ describe('CommandProgressComponent', () => {
         inject([CommandGatewayService], (gateway: CommandGatewayService) => {
             gateway.send(CommandType.BeginneInventur, {}, {});
             fixture.detectChanges();
-            let pb = fixture.debugElement.query(By.directive(MatProgressBar));
-            expect(pb).toBeTruthy()
+            expect(fixture.debugElement.query(By.directive(MatProgressBar))).toBeTruthy()
         }));
 
     it('sollte nicht angezeigt werden, wenn kein Command gesendet wird', () => {
         fixture.detectChanges();
-        let pb = fixture.debugElement.query(By.directive(MatProgressBar));
-        expect(pb).toBeFalsy()
+        expect(fixture.debugElement.query(By.directive(MatProgressBar))).toBeFalsy()
     });
 });
