@@ -1,10 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { CommandProgressComponent } from './command-progress.component';
 import { AppMaterialModule } from '../../app-material-module';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgReduxModule } from '@angular-redux/store';
+import { CommandGatewayService } from '../command-gateway.service';
+import { CommandGatewayModule } from '../command-gateway.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CommandType } from '../../../inventur/command-type';
+import { StoreModule } from '../../../store/store.module';
+import { MatProgressBar } from '@angular/material';
 
 describe('CommandProgressComponent', () => {
     let component: CommandProgressComponent;
@@ -12,10 +18,16 @@ describe('CommandProgressComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [CommandProgressComponent],
-            imports: [BrowserModule,
+
+            imports: [
+                BrowserModule,
                 BrowserAnimationsModule,
-                AppMaterialModule, NgReduxModule]
+                AppMaterialModule,
+                NgReduxModule,
+                CommandGatewayModule,
+                HttpClientTestingModule,
+                StoreModule
+            ]
         })
             .compileComponents();
     }));
@@ -28,5 +40,19 @@ describe('CommandProgressComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('sollte angezeigt werden, wenn ein Command gesendet wird',
+        inject([CommandGatewayService], (gateway: CommandGatewayService) => {
+            gateway.send(CommandType.BeginneInventur, {}, {});
+            fixture.detectChanges();
+            let pb = fixture.debugElement.query(By.directive(MatProgressBar));
+            expect(pb).toBeTruthy()
+        }));
+
+    it('sollte nicht angezeigt werden, wenn kein Command gesendet wird', () => {
+        fixture.detectChanges();
+        let pb = fixture.debugElement.query(By.directive(MatProgressBar));
+        expect(pb).toBeFalsy()
     });
 });
