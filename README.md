@@ -3,9 +3,13 @@ Dominium
 
 Eine Buchführung für private Haushalte.
 
+*... und eine Experimentierwiese für mich zum Ausprobieren verschiedener
+Techniken*
+
 
 Anforderungen
 -------------
+TODO
 
 Loslegen
 --------
@@ -13,7 +17,6 @@ Nach dem Auschecken des Projekts sollten folgende Run/Debug Konfigurationen
 in IntelliJ vorhanden sein: 
 
 ![Ausführungskonfiguration](doc/RunConfiguration.png)
-
 
  * **Alles Bauen** Baut das ganze Projekt und lässt die Tests durchlaufen (mvn clean verify)
  * **Server** Startet den Backend Server auf http://localhost:8080. Das Frontend wird durch
@@ -25,18 +28,6 @@ in IntelliJ vorhanden sein:
  npm run test)
  * **Abnahmetests** führt die Cucumber Tests aus.
 Frontend
-
-Das Frontend kann mit dem Befehl npm run start oder der Run-Konfiguration start
-ausgeführt werden, um manuelle Tests auszuführen. Das Frontend ist dann im 
-Browser unter der URL http://localhost:4300 erreichbar
-
-Unittests
-
-Zur Ausführung von Unittests mit Karma dient die Run-Konfiguration Karma Test.
-
-End to end Tests
-
-
 
 Test
 ----
