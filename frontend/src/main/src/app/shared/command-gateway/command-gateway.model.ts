@@ -20,7 +20,6 @@ export interface CommandResponse {
 
 export type CommandMessageAction = Action & { message: CommandMessage }
 export type CommandResponseAction = CommandMessageAction & { response: CommandResponse }
-
 export type CommandAction = CommandMessageAction | CommandResponseAction
 
 export const COMMAND_GATEWAY_INITIAL_STATE: CommandGatewayState = {

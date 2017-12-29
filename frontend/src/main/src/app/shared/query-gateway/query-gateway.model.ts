@@ -1,0 +1,29 @@
+import { Action } from 'redux';
+import { QueryType } from './query-type';
+
+export interface QueryGatewayState {
+    message: QueryMessage
+    response: QueryResponse
+    sendet: boolean
+}
+
+export interface QueryMessage {
+    type: QueryType,
+    payload: any,
+    meta: any,
+}
+
+export interface QueryResponse {
+    status: number,
+    message: string
+}
+
+export type QueryMessageAction = Action & { message: QueryMessage }
+export type QueryResponseAction = QueryMessageAction & { response: QueryResponse }
+export type QueryAction = QueryMessageAction | QueryResponseAction
+
+export const QUERY_GATEWAY_INITIAL_STATE: QueryGatewayState = {
+    sendet: false,
+    message: {type: QueryType.KeinQuery, payload: {}, meta: {}},
+    response: {status: 0, message: ''}
+};
