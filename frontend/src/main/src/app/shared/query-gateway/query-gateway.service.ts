@@ -22,7 +22,7 @@ export class QueryGatewayService {
     status$: Observable<QueryResponse>;
 
     get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
-        return this.http.get("/gateway/query", action.message, {observe: 'response'});
+        return this.http.post("/gateway/query", action.message, {observe: 'response'});
     }
 
     @dispatch()

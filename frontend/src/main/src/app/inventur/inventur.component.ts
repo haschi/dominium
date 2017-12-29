@@ -34,6 +34,7 @@ export class InventurComponent implements OnInit {
                 private log: LoggerService,
                 private router: Router,
                 private inventurService: InventurService) {
+
         this.inventurId$ = inventurService.inventurid$;
     }
 
@@ -43,12 +44,15 @@ export class InventurComponent implements OnInit {
             umlaufvermoegen: this.builder.array([]),
             schulden: this.builder.array([])
         });
+
+        this.inventar$ = this.inventur.valueChanges
+            .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
     }
 
     inventarpositionKonvertieren(poisition: any): Inventarposition {
         return {
             position: poisition.position,
-            währungsbetrag: `${poisition.währungsbetrag.betrag} ${poisition.währungsbetrag.währung}`
+            waehrungsbetrag: `${poisition.waehrungsbetrag.betrag} ${poisition.waehrungsbetrag.waehrung}`
         }
     }
 
@@ -58,14 +62,18 @@ export class InventurComponent implements OnInit {
         this.log.log(JSON.stringify(this.inventur.value));
 
         console.info("speichern");
-
-        let inventar: Inventar = {
-            anlagevermoegen: this.inventur.value.anlagevermoegen.map(this.inventarpositionKonvertieren),
-            umlaufvermoegen: this.inventur.value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
-            schulden: this.inventur.value.schulden.map(this.inventarpositionKonvertieren)
-        };
+        let inventar = this.formulareingabeKonvertieren(this.inventur.value);
 
         this.inventurService.erfasseInventar(inventar);
+    }
+
+    private formulareingabeKonvertieren(value) {
+        let inventar: Inventar = {
+            anlagevermoegen: value.anlagevermoegen.map(this.inventarpositionKonvertieren),
+            umlaufvermoegen: value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
+            schulden: value.schulden.map(this.inventarpositionKonvertieren)
+        };
+        return inventar;
     }
 
     get anlagevermoegen(): AbstractControl {

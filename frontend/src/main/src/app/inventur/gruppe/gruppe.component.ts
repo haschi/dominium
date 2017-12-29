@@ -16,14 +16,14 @@ export class GruppeComponent {
     public titel: TemplateRef<any>;
 
     hinzufuegen() {
-        const währungsbetrag = new FormGroup({
+        const waehrungsbetrag = new FormGroup({
             betrag: new FormControl('', Validators.required),
-            währung: new FormControl('EUR', Validators.required)
+            waehrung: new FormControl('EUR', Validators.required)
         });
 
         const group = new FormGroup({
             position: new FormControl('', Validators.required),
-            währungsbetrag: währungsbetrag,
+            waehrungsbetrag: waehrungsbetrag,
         });
 
         this.positionen.push(group);

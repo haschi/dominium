@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Inventar } from '../inventar';
 
 @Component({
     selector: 'app-inventar',
@@ -7,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InventarComponent implements OnInit {
 
+    @Input()
+    inventar: Inventar;
+
     constructor() {
     }
 
     ngOnInit() {
     }
-
 }
