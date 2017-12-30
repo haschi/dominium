@@ -7,12 +7,14 @@ import { PostenComponent } from './gruppe/posten/posten.component';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { InventarComponent } from './inventar/inventar.component';
 import { InventurService } from './inventur.service';
+import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 
 @NgModule({
     imports: [
         HttpClientModule,
         AppCovalentModuleModule,
         SharedModule,
+        QueryGatewayModule
     ],
     declarations: [
         InventurComponent,
