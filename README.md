@@ -245,6 +245,15 @@ bereitstellen gehören nicht in die Domain Service Schale. Da Sie aber auch nich
 gehören, ist die Application Service Schale der richtige Ort. Sie stellen eine bedeutsame 
 Schnittstelle zur Anwendung bereit, tragen jedoch nicht zum Business bei.
 
+Frontend Muster 
+===============
+
+Für die Formulareingabe werden ausschließlich Reactive Forms verwendet.
+Siehe Inventur Komponente.
+Die Form besitzt ein onSubmit Ereignis, welche von der Komponente behandelt wird.
+Buttons müssen entweder type=submit (default) oder type=button sein.
+Buttons mit dem Attribut type=button lösen das Submit Ereignis nicht aus.
+
 Getestet unter
 --------------
 * Wildfly 10.0.0.Final

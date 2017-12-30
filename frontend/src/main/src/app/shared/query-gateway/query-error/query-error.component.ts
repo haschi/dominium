@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { QueryGatewayState, QueryMessage } from '../query-gateway.model';
+import { NgRedux, select } from '@angular-redux/store';
+import { QueryGatewayModule } from '../query-gateway.module';
+import { QueryGatewayService } from '../query-gateway.service';
+import { AppState } from '../../../store/model';
 
 @Component({
   selector: 'app-query-error',
@@ -7,9 +13,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QueryErrorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private gateway: QueryGatewayService, private state: NgRedux<AppState>) { }
 
   ngOnInit() {
   }
 
+  @select(['query'])
+  queryState$: Observable<QueryMessage>;
+
+  @select(['query', 'response', 'status'])
+  status$: Observable<number>
+
+  wiederholen() {
+
+    this.state.select(s => s.query.message)
+        .take(1)
+        .subscribe(m =>
+      this.gateway.send(
+          m.type,
+          m.payload,
+          m.meta));
+  }
 }

@@ -23,7 +23,7 @@ export const inventurReducer: Reducer<InventurState> =
                         return {...state, inventurId: action.message.payload.id}
                     }
                     case CommandType.ErfasseInventar: {
-                        return {...state, inventar: action.message.payload.inventar}
+                        return {...state, inventar: null}
                     }
                 }
             }
@@ -32,6 +32,14 @@ export const inventurReducer: Reducer<InventurState> =
                 switch (action.message.type) {
                     case QueryType.LeseInventar: {
                         return {...state, inventar: action.message.payload.inventar}
+                    }
+                }
+            }
+            case QueryGatewayActionType.fehlgeschlagen: {
+                console.info(`REDUCE INVENTAR ${action.type}: ${action.message.type}`);
+                switch (action.message.type) {
+                    case QueryType.LeseInventar: {
+                        return {...state, inventar: null}
                     }
                 }
             }
@@ -50,7 +58,7 @@ export const commandReducer: Reducer<CommandGatewayState> =
                 return {...state, response: action.response, sendet: false}
             }
             case CommandGatewayActionType.fehlgeschlagen: {
-                return {...state, response: action.response, sendet: false,}
+                return {...state, response: action.response, sendet: false}
             }
         }
         return state;
@@ -67,7 +75,8 @@ export const queryReducer: Reducer<QueryGatewayState> =
                 return {...state, response: action.response, sendet: false}
             }
             case QueryGatewayActionType.fehlgeschlagen: {
-                return {...state, response: action.response, sendet: false,}
+                console.error(`REDUCE QUERY fehlgeschlagen: ${JSON.stringify(action)}`);
+                return {...state, response: action.response, sendet: false}
             }
         }
         return state;

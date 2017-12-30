@@ -1,10 +1,6 @@
 <div class="text-center leeres-inventar">
     <p>Das Inventarverzeichnis ist derzeit nicht verfügbar.</p>
- <div>
-    <button type="button" mat-button color="primary">Erneut Versuchen</button>
+ <div *ngIf="(status$ | async) === 504">
+    <button type="button" mat-button color="primary" (click)="wiederholen()">Erneut Versuchen</button>
  </div>
-</div>
-
-<div style="background-repeat: no-repeat;background-attachment: fixed;background-position: center; ">
-
 </div>

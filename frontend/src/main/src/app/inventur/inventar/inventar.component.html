@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="inventar$ | async; else queryError">
     <mat-card-title id="inventar">Inventar</mat-card-title>
     <mat-card-content>
         <h2>I. Anlagevermögen</h2>
@@ -22,4 +22,6 @@
         </ol>
     </mat-card-content>
 </mat-card>
-<app-query-error></app-query-error>
+<ng-template #queryError>
+    <app-query-error></app-query-error>
+</ng-template>
