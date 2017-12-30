@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CovalentDialogsModule } from '@covalent/core';
 import { AppMaterialModule } from '../app-material-module';
 import { QueryGatewayEpicsService } from './query-gateway-epics.service';
+import { QueryProgressComponent } from './query-progress/query-progress.component';
 
 @NgModule({
     providers: [
@@ -21,7 +22,8 @@ import { QueryGatewayEpicsService } from './query-gateway-epics.service';
         AppMaterialModule,
         CovalentDialogsModule
     ],
-    declarations: []
+    declarations: [QueryProgressComponent],
+    exports: [QueryProgressComponent]
 })
 export class QueryGatewayModule {
 }
