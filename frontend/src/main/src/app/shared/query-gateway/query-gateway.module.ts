@@ -6,11 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CovalentDialogsModule } from '@covalent/core';
 import { AppMaterialModule } from '../app-material-module';
+import { QueryGatewayEpicsService } from './query-gateway-epics.service';
 
 @NgModule({
     providers: [
         QueryGatewayActionsService,
-        QueryGatewayService
+        QueryGatewayService,
+        QueryGatewayEpicsService
     ],
     imports: [
         CommonModule,

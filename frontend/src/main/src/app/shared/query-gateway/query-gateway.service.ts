@@ -7,6 +7,14 @@ import { QueryType } from './query-type';
 import { QueryMessage, QueryMessageAction, QueryResponse } from './query-gateway.model';
 import { LoggerService } from '../logger.service';
 
+import 'rxjs/add/operator/retryWhen';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/throw';
+
 @Injectable()
 export class QueryGatewayService {
 
@@ -27,7 +35,12 @@ export class QueryGatewayService {
 
     get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
         this.logger.log(`QUERY get ${action.message.type}`);
-        return this.http.post("/gateway/query", action.message, {observe: 'response'});
+        return this.http.post("/gateway/query", action.message, {observe: 'response'})
+            .retryWhen(error =>
+                error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
+                    .delay(1000)
+                    .take(4)
+                    .concat(Observable.throw(new Error('Wiederholungslimit überschritten!'))));
     }
 
     @dispatch()

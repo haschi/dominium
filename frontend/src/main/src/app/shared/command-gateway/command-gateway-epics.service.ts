@@ -36,7 +36,7 @@ export class CommandGatewayEpicsService {
     private createAngefordertEpic(): Epic<CommandAction, AppState> {
         return (action$) => action$
             .ofType(CommandGatewayActionType.angefordert)
-            .do(action => console.info("EXECUTE EPIC: " + JSON.stringify(action)))
+            .do(action => console.info("COMMAND EXECUTE EPIC: " + JSON.stringify(action)))
             .mergeMap(action => this.service.post(action as CommandMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response))
                 .catch(error => this.onError(error, action)));
