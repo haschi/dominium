@@ -8,7 +8,7 @@ export interface CommandGatewayState {
 }
 
 export interface CommandMessage {
-    type: CommandType,
+    type: string,
     payload: any,
     meta: any,
 }

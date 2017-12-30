@@ -1,17 +1,17 @@
 Dominium
 ========
 
-Eine Buchführung für private Haushalte.
+Eine Buchhaltung für private Haushalte.
 
 *... und eine Experimentierwiese für mich zum Ausprobieren verschiedener
-Techniken*
+Techniken.*
 
 
 Anforderungen
 -------------
 TODO
 
-Loslegen
+Ausführungskonfigurationen
 --------
 Nach dem Auschecken des Projekts sollten folgende Run/Debug Konfigurationen
 in IntelliJ vorhanden sein: 
@@ -19,22 +19,27 @@ in IntelliJ vorhanden sein:
 ![Ausführungskonfiguration](doc/RunConfiguration.png)
 
  * **Alles Bauen** Baut das ganze Projekt und lässt die Tests durchlaufen (mvn clean verify)
+ Diese Ausführungskonfiguration beinhaltet auch den Bau und den Test des
+ Frontends. Diese Konfiguration existiert vor allem, um den CI Build auf dem
+ Entwicklungsrechner durchzuführen. Backend Entwickler sollten die Ausführungskonfiguration
+ **Server** bevorzugen bzw. das Projekt mit *Build Project* aus dem
+ *Build* Menü von IntelliJ IDEA bauen. 
  * **Server** Startet den Backend Server auf http://localhost:8080. Das Frontend wird durch
- den Server mit ausgeliefert.
+ den Backend Server mit ausgeliefert. Es ist jeweils die letzte durch **Alles Bauen**
+ (mvn clean verify) gebaute Frontend enthalten.
  * **Frontend Entwicklungsserver** Startet den Frontend Entwicklungsserver auf 
  http://localhost:4200 und leitet die Anfragen zum Backend über einen Proxy an Port 8080 weiter.
  Ein Fake Backend ist damit überflüssig. (entspricht npm run start)
  * **Frontend Tests** Führt die Karma Unittests des Frontends aus. (entspricht 
  npm run test)
  * **Abnahmetests** führt die Cucumber Tests aus.
-Frontend
 
-Test
+Integrationsumgebung
 ----
 
-Die Tests benötigen Docker. Für die Installation auf Debian siehe
- https://docs.docker.com/engine/installation/linux/debian/#debian-jessie-80-64-bit
-http://blog.arungupta.me/wildfly-admin-console-docker-image-techtip66/
+Die Tests benötigen Docker. Für die Installation auf Debian folge den Anweisungen
+auf [Get Docker CE for Debian](https://docs.docker.com/engine/installation/linux/debian/#debian-jessie-80-64-bit)
+
 
 Haushaltsbuch
 =============

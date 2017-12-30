@@ -12,6 +12,7 @@ import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './store/store.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
+import { QueryGatewayModule } from './shared/query-gateway/query-gateway.module';
 
 @NgModule({
     declarations: [
@@ -23,11 +24,12 @@ import { CommandGatewayModule } from './shared/command-gateway/command-gateway.m
         BrowserAnimationsModule,
         AppMaterialModule,
         AppCovalentModuleModule,
-        RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: true}),
+        RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: false}),
         InventurModule,
         NgReduxModule,
         StoreModule,
-        CommandGatewayModule
+        CommandGatewayModule,
+        QueryGatewayModule
     ],
     bootstrap: [AppComponent]
 })

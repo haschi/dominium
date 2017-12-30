@@ -58,13 +58,12 @@ export class InventurComponent implements OnInit {
 
     speichern() {
         this.model = this.inventur.value;
-        this.log.log('Inventar erfassen');
-        this.log.log(JSON.stringify(this.inventur.value));
-
-        console.info("speichern");
         let inventar = this.formulareingabeKonvertieren(this.inventur.value);
 
-        this.inventurService.erfasseInventar(inventar);
+        this.inventurId$.subscribe(id => {
+            this.inventurService.erfasseInventar(inventar);
+            this.router.navigate(['inventar', id])
+        });
     }
 
     private formulareingabeKonvertieren(value) {

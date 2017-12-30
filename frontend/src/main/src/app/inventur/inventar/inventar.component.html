@@ -1,21 +1,24 @@
-<h2>I. Anlagevermögen</h2>
-    <ol>
-        <li *ngFor="let position of inventar.anlagevermoegen">
-            {{position.position}} {{position.waehrungsbetrag}}
-        </li>
-    </ol>
-<h2>II. Umlaufvermögen</h2>
-<ol>
-    <li *ngFor="let position of inventar.umlaufvermoegen">
-        {{position.position}} {{position.waehrungsbetrag}}
-    </li>
-</ol>
+<mat-card>
+    <mat-card-title id="inventar">Inventar</mat-card-title>
+    <mat-card-content>
+        <h2>I. Anlagevermögen</h2>
+        <ol>
+            <li *ngFor="let position of inventar?.anlagevermoegen">
+                {{position.position}} {{position.waehrungsbetrag}}
+            </li>
+        </ol>
+        <h2>II. Umlaufvermögen</h2>
+        <ol>
+            <li *ngFor="let position of inventar?.umlaufvermoegen">
+                {{position.position}} {{position.waehrungsbetrag}}
+            </li>
+        </ol>
 
-<h2>III. Schulden</h2>
-<ol>
-    <li *ngFor="let position of inventar.schulden">
-        {{position.position}} {{position.waehrungsbetrag}}
-    </li>
-</ol>
-
-
+        <h2>III. Schulden</h2>
+        <ol>
+            <li *ngFor="let position of inventar?.schulden">
+                {{position.position}} {{position.waehrungsbetrag}}
+            </li>
+        </ol>
+    </mat-card-content>
+</mat-card>

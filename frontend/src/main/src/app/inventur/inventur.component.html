@@ -1,45 +1,41 @@
 <mat-card>
     <mat-card-title id="title123">Inventur</mat-card-title>
     <mat-card-content>
-        <p>Erfassen Sie alle Vermögenswerte und Schulden. Das Inventar wird benötigt, um
-            mit der Haushaltsbuchführung zu beginnen.</p>
+        <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
+            durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.
+            Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.
 
         <form [formGroup]="inventur" (ngSubmit)="speichern()">
             <mat-horizontal-stepper linear>
                 <mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"
                           [stepControl]="anlagevermoegen">
+        <p>Erfassen Sie ihr Anlagevermögen.</p>
                     <app-inventur-gruppe [positionen]="anlagevermoegen">
                     </app-inventur-gruppe>
                     <div>
-                        <button mat-button matStepperNext [disabled]="anlagevermoegen.invalid">
+                        <button type="button" mat-button matStepperNext [disabled]="anlagevermoegen.invalid">
                             Weiter
                         </button>
                     </div>
                 </mat-step>
                 <mat-step label="Umlaufvermögen">
+                    <p>Erfassen Sie ihr Umlaufvermögen</p>
                     <app-inventur-gruppe [positionen]="umlaufvermoegen">
                     </app-inventur-gruppe>
                     <div>
-                        <button mat-button matStepperPrevious>Zurück</button>
-                        <button mat-button matStepperNext [disabled]="umlaufvermoegen.invalid">
+                        <button type="button" mat-button matStepperPrevious>Zurück</button>
+                        <button type="button" mat-button matStepperNext [disabled]="umlaufvermoegen.invalid">
                             Weiter
                         </button>
                     </div>
                 </mat-step>
                 <mat-step label="Schulden">
+                    <p>Erfassen Sie ihre Schulden</p>
                     <app-inventur-gruppe [positionen]="schulden">
                     </app-inventur-gruppe>
                     <div>
-                        <button mat-button matStepperPrevious>Zurück</button>
-                        <button mat-button matStepperNext [disabled]="schulden.invalid">Weiter
-                        </button>
-                    </div>
-                </mat-step>
-                <mat-step label="Inventur abschließen">
-                    <app-inventar [inventar]="(inventar$ | async)"></app-inventar>
-                    <div>
-                        <button mat-button matStepperPrevious>Zurück</button>
-                        <button mat-raised-button color="primary" [disabled]="inventur?.invalid">
+                        <button type="button" mat-button matStepperPrevious>Zurück</button>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="inventur?.invalid">
                             Inventur abschließen
                         </button>
                     </div>

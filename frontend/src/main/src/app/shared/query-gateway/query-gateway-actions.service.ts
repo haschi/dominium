@@ -13,7 +13,7 @@ export class QueryGatewayActionsService {
 
   constructor() { }
 
-    angefordert = (type: QueryType, payload: any, meta: any): QueryMessageAction => ({
+    angefordert = (type: string, payload: any, meta: any): QueryMessageAction => ({
         type: QueryGatewayActionType.angefordert,
         message: {
             type: type,
