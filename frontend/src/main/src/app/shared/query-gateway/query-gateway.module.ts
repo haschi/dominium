@@ -8,6 +8,7 @@ import { CovalentDialogsModule } from '@covalent/core';
 import { AppMaterialModule } from '../app-material-module';
 import { QueryGatewayEpicsService } from './query-gateway-epics.service';
 import { QueryProgressComponent } from './query-progress/query-progress.component';
+import { QueryErrorComponent } from './query-error/query-error.component';
 
 @NgModule({
     providers: [
@@ -22,8 +23,8 @@ import { QueryProgressComponent } from './query-progress/query-progress.componen
         AppMaterialModule,
         CovalentDialogsModule
     ],
-    declarations: [QueryProgressComponent],
-    exports: [QueryProgressComponent]
+    declarations: [QueryProgressComponent, QueryErrorComponent],
+    exports: [QueryProgressComponent, QueryErrorComponent]
 })
 export class QueryGatewayModule {
 }
