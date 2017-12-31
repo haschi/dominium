@@ -142,7 +142,7 @@ class InventurStepDefinition(
 
         val erwartungswert = Reinvermögen(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
-                summeDesVermögens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
+                summeDesVermoegens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
         val inventar = welt.query.query.send(
                 LeseInventar(welt.aktuelleInventur),

@@ -112,9 +112,9 @@ class SerialisierungTest
                                     |      "waehrungsbetrag" : "10.100,00 EUR"
                                     |    } ],
                                     |    "reinvermoegen" : {
-                                    |      "summeDesVermögens" : "139,12 EUR",
+                                    |      "summeDesVermoegens" : "139,12 EUR",
                                     |      "summeDerSchulden" : "10.100,00 EUR",
-                                    |      "reinvermögen" : "-9.960,88 EUR"
+                                    |      "reinvermoegen" : "-9.960,88 EUR"
                                     |    }
                                     |  }
                                     |}""".trimMargin()),
@@ -158,9 +158,9 @@ class SerialisierungTest
                                     |    "umlaufvermoegen" : [ ],
                                     |    "schulden" : [ ],
                                     |    "reinvermoegen" : {
-                                    |      "summeDesVermögens" : "0,00 EUR",
+                                    |      "summeDesVermoegens" : "0,00 EUR",
                                     |      "summeDerSchulden" : "0,00 EUR",
-                                    |      "reinvermögen" : "0,00 EUR"
+                                    |      "reinvermoegen" : "0,00 EUR"
                                     |    }
                                     |  }
                                     |}""".trimMargin()),
@@ -178,9 +178,9 @@ class SerialisierungTest
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ],
                                 |    "reinvermoegen" : {
-                                |      "summeDesVermögens" : "0,00 EUR",
+                                |      "summeDesVermoegens" : "0,00 EUR",
                                 |      "summeDerSchulden" : "0,00 EUR",
-                                |      "reinvermögen" : "0,00 EUR"
+                                |      "reinvermoegen" : "0,00 EUR"
                                 |    }
                                 |  }
                                 |}""".trimMargin()),

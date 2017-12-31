@@ -22,7 +22,7 @@
                         </ol>
                     </li>
                 </ol>
-                <p>Summe des Vermögens</p>
+                <p>Summe des Vermögens {{(inventar$ | async)?.reinvermoegen.summeDesVermoegens}}</p>
             </li>
 
             <li>
@@ -32,14 +32,14 @@
                         {{position.position}} {{position.waehrungsbetrag}}
                     </li>
                 </ol>
-                <p>Summe der Schulden</p>
+                <p>Summe der Schulden {{(inventar$ | async)?.reinvermoegen.summeDerSchulden}}</p>
             </li>
 
             <li>
                 <h4>Ermittlung des Eigenkapitals</h4>
-                <p>Summe des Vermögens</p>
-                <p>- Summer der Schulden</p>
-                <p>Reinvermögen (Eigenkapital)</p>
+                <p>Summe des Vermögens {{(inventar$ | async)?.reinvermoegen.summeDesVermoegens}}</p>
+                <p>- Summer der Schulden {{(inventar$ | async)?.reinvermoegen.summeDerSchulden}}</p>
+                <p>Reinvermögen (Eigenkapital) {{(inventar$ | async)?.reinvermoegen.reinvermoegen}}</p>
             </li>
         </ol>
 

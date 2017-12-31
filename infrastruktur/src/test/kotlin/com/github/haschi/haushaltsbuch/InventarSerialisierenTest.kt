@@ -58,7 +58,7 @@ class InventarSerialisierenTest
     fun reinvermogenSerialisieren()
     {
         val reinvermögen = Reinvermögen(
-                summeDesVermögens = Währungsbetrag.NullEuro,
+                summeDesVermoegens = Währungsbetrag.NullEuro,
                 summeDerSchulden = Währungsbetrag.NullEuro)
 
         val json = JsonObject.mapFrom(reinvermögen)

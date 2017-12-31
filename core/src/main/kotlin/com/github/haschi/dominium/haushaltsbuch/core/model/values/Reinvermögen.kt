@@ -1,9 +1,9 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
 data class Reinvermögen(
-        val summeDesVermögens: Währungsbetrag,
+        val summeDesVermoegens: Währungsbetrag,
         val summeDerSchulden: Währungsbetrag)
 {
-    val reinvermögen: Währungsbetrag
-        get() = Währungsbetrag(summeDesVermögens.wert.subtract(summeDerSchulden.wert))
+    val reinvermoegen: Währungsbetrag
+        get() = Währungsbetrag(summeDesVermoegens.wert.subtract(summeDerSchulden.wert))
 }
