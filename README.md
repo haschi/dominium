@@ -254,6 +254,29 @@ Die Form besitzt ein onSubmit Ereignis, welche von der Komponente behandelt wird
 Buttons müssen entweder type=submit (default) oder type=button sein.
 Buttons mit dem Attribut type=button lösen das Submit Ereignis nicht aus.
 
+Command Gateway
+---------------
+
+TODO
+
+Query Gateway
+-------------
+
+TODO
+
+Fortschrittsanzeige
+-------------------
+Laufende Anfragen an den Commandbus oder den Querybus werden mit den
+Komponenten CommandProgressComponent (<app-command-progress>) und QueryProgressComponent
+(<app-query-progress) angezeigt. Beide zeigen abhängig vom Zustand des
+Redux Speichers einen Fortschrittsbalken mit dem Modus "indeterminate".
+
+Code Richtlinien
+================
+
+In Bezeichnern dürfen keine Umlaute und Sonderzeichen verwendet werden.
+
+
 Getestet unter
 --------------
 * Wildfly 10.0.0.Final

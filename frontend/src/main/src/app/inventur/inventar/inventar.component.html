@@ -1,25 +1,49 @@
 <mat-card *ngIf="inventar$ | async; else queryError">
     <mat-card-title id="inventar">Inventar</mat-card-title>
     <mat-card-content>
-        <h2>I. Anlagevermögen</h2>
-        <ol>
-            <li *ngFor="let position of inventar?.anlagevermoegen">
-                {{position.position}} {{position.waehrungsbetrag}}
+        <ol style="list-style-type: upper-alpha">
+            <li>
+                <h4>Vermögen</h4>
+                <ol style="list-style-type: upper-roman">
+                    <li>
+                        <h5>Anlagevermögen</h5>
+                        <ol>
+                            <li *ngFor="let position of (inventar$ | async)?.anlagevermoegen">
+                                {{position.position}} {{position.waehrungsbetrag}}
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        <h5>Umlaufvermögen</h5>
+                        <ol>
+                            <li *ngFor="let position of (inventar$ | async)?.umlaufvermoegen">
+                                {{position.position}} {{position.waehrungsbetrag}}
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+                <p>Summe des Vermögens</p>
             </li>
-        </ol>
-        <h2>II. Umlaufvermögen</h2>
-        <ol>
-            <li *ngFor="let position of inventar?.umlaufvermoegen">
-                {{position.position}} {{position.waehrungsbetrag}}
+
+            <li>
+                <h4>Schulden</h4>
+                <ol>
+                    <li *ngFor="let position of (inventar$ | async)?.schulden">
+                        {{position.position}} {{position.waehrungsbetrag}}
+                    </li>
+                </ol>
+                <p>Summe der Schulden</p>
+            </li>
+
+            <li>
+                <h4>Ermittlung des Eigenkapitals</h4>
+                <p>Summe des Vermögens</p>
+                <p>- Summer der Schulden</p>
+                <p>Reinvermögen (Eigenkapital)</p>
             </li>
         </ol>
 
-        <h2>III. Schulden</h2>
-        <ol>
-            <li *ngFor="let position of inventar?.schulden">
-                {{position.position}} {{position.waehrungsbetrag}}
-            </li>
-        </ol>
+        <td-json-formatter [data]="(inventar$ | async)"></td-json-formatter>
     </mat-card-content>
 </mat-card>
 <ng-template #queryError>

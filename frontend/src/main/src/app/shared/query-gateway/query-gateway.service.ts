@@ -35,12 +35,15 @@ export class QueryGatewayService {
 
     get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
         this.logger.log(`QUERY get ${action.message.type}`);
-        return this.http.post("/gateway/query", action.message, {observe: 'response'})
-            .retryWhen(error =>
-                error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
-                    .delay(1000)
-                    .take(4)
-                    .concat(Observable.throw(new Error('Wiederholungslimit überschritten!'))));
+        return Observable.timer(1000)
+            .flatMap(nix =>
+                this.http.post("/gateway/query", action.message, {observe: 'response'})
+                .do(val => console.info(`QUERY got ${JSON.stringify(val)}`))
+                .retryWhen(error =>
+                    error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
+                        .delay(1000)
+                        .take(4)
+                        .concat(Observable.throw(new Error('Wiederholungslimit überschritten!')))));
     }
 
     @dispatch()

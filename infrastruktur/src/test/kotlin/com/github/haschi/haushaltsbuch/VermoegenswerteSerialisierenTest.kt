@@ -46,10 +46,10 @@ class VermoegenswerteSerialisierenTest
                             {
                               "anlagevermoegen" : [ {
                                 "position" : "Girokonto",
-                                "währungsbetrag" : "0,00 EUR"
+                                "waehrungsbetrag" : "0,00 EUR"
                               }, {
                                 "position" : "Sparbuch",
-                                "währungsbetrag" : "0,00 EUR"
+                                "waehrungsbetrag" : "0,00 EUR"
                               } ]
                             }
                             """.trimIndent()),
@@ -63,7 +63,7 @@ class VermoegenswerteSerialisierenTest
                             {
                               "anlagevermoegen" : [ {
                                 "position" : "Girokonto",
-                                "währungsbetrag" : "0,00 EUR"
+                                "waehrungsbetrag" : "0,00 EUR"
                               } ]
                             }
                         """.trimIndent()),

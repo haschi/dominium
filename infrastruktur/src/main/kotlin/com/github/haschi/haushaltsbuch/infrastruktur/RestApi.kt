@@ -20,6 +20,7 @@ import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
 import io.vertx.reactivex.ext.web.handler.StaticHandler
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class RestApi : AbstractVerticle()
 {
@@ -69,6 +70,7 @@ class RestApi : AbstractVerticle()
         router.post("/gateway/command").handler { context ->
             vertx.setTimer(500) {
                 // TODO("Meta Daten verarbeiten")
+                logger.debug(" => ${context.bodyAsString}")
 
                 val message = context.bodyAsJson
                 val type = message.get<String>("type");
@@ -77,8 +79,25 @@ class RestApi : AbstractVerticle()
                 val command = payload.mapTo(clazz)
 
                 dominium.sendCommand(command);
+
+                logger.debug(" <= Done ");
                 context.request().response().end()
+
             }
+        }
+
+        router.post("/gateway/query").handler { context ->
+            logger.debug(" => ${context.bodyAsString}")
+
+            val message = context.bodyAsJson
+            val type = message.get<String>("type");
+            val payload = message.getJsonObject("payload")
+            val clazz = Class.forName(type)
+            val command = payload.mapTo(clazz)
+
+            val result = dominium.query.send(command, Inventar::class.java).get();
+            logger.debug(" <= ${result}")
+            context.request().response().end(io.vertx.core.json.JsonObject.mapFrom(result).encode())
         }
 
         router.post("/gateway/inventur").handler { context ->

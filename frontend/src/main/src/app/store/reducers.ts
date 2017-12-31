@@ -7,14 +7,14 @@ import {
 import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
 import { CommandType } from '../inventur/command-type';
 import {
-    QUERY_GATEWAY_INITIAL_STATE,
+    QUERY_GATEWAY_INITIAL_STATE, QueryAction,
     QueryGatewayState, QueryMessageAction
 } from '../shared/query-gateway/query-gateway.model';
 import { QueryGatewayActionType } from '../shared/query-gateway/query-gateway-actions.service';
 import { QueryType } from '../shared/query-gateway/query-type';
 
 export const inventurReducer: Reducer<InventurState> =
-    (state = INVENTUR_INITIAL_STATE, action: CommandMessageAction | QueryMessageAction) => {
+    (state = INVENTUR_INITIAL_STATE, action) => {
         switch (action.type) {
             case CommandGatewayActionType.gelungen: {
                 console.info(`REDUCE INVENTAR ${action.type}: ${action.message.type}`);
@@ -22,16 +22,17 @@ export const inventurReducer: Reducer<InventurState> =
                     case CommandType.BeginneInventur: {
                         return {...state, inventurId: action.message.payload.id}
                     }
-                    case CommandType.ErfasseInventar: {
-                        return {...state, inventar: null}
-                    }
+                    // case CommandType.ErfasseInventar: {
+                    //     return {...state, inventar: null}
+                    // }
                 }
             }
             case QueryGatewayActionType.gelungen: {
                 console.info(`REDUCE INVENTAR ${action.type}: ${action.message.type}`);
                 switch (action.message.type) {
                     case QueryType.LeseInventar: {
-                        return {...state, inventar: action.message.payload.inventar}
+                        console.info(`Ergebnis: ${JSON.stringify(action)}`);
+                        return {...state, inventar: action.response.body}
                     }
                 }
             }

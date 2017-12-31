@@ -27,14 +27,15 @@ export class QueryGatewayActionsService {
         message: message,
         response: {
             status: response.status,
-            message: response.statusText
+            message: response.statusText,
+            body: response.body
         }
     });
 
     fehlgeschlagen = (cmd: QueryMessage, status: number, message: string): QueryResponseAction => ({
         type: QueryGatewayActionType.fehlgeschlagen,
         message: cmd,
-        response: {status, message}
+        response: {status: status, message: message, body: {}}
     })
 
 }

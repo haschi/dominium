@@ -27,6 +27,7 @@ export class QueryGatewayEpicsService {
     private createAngefordertEpic(): Epic<QueryAction, AppState> {
         return (action$) => action$
             .ofType(QueryGatewayActionType.angefordert)
+            .delay(2000)
             .do(action => console.info("QUERY EXECUTE EPIC: " + JSON.stringify(action)))
             .mergeMap(action => this.service.get(action as QueryMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response))

@@ -101,15 +101,15 @@ class SerialisierungTest
                                     |  "inventar" : {
                                     |    "anlagevermoegen" : [ {
                                     |      "position" : "Aktiendepot",
-                                    |      "währungsbetrag" : "123,45 EUR"
+                                    |      "waehrungsbetrag" : "123,45 EUR"
                                     |    } ],
                                     |    "umlaufvermoegen" : [ {
                                     |      "position" : "Geldbörse",
-                                    |      "währungsbetrag" : "15,67 EUR"
+                                    |      "waehrungsbetrag" : "15,67 EUR"
                                     |    } ],
                                     |    "schulden" : [ {
                                     |      "position" : "Autokredit",
-                                    |      "währungsbetrag" : "10.100,00 EUR"
+                                    |      "waehrungsbetrag" : "10.100,00 EUR"
                                     |    } ],
                                     |    "reinvermoegen" : {
                                     |      "summeDesVermögens" : "139,12 EUR",
@@ -192,7 +192,7 @@ class SerialisierungTest
                             """{
                                 |  "inventurkennung" : "$id",
                                 |  "position" : "Autokredit",
-                                |  "währungsbetrag" : "0,00 EUR"
+                                |  "waehrungsbetrag" : "0,00 EUR"
                                 |}""".trimMargin())
                     )
     }
@@ -205,7 +205,7 @@ class SerialisierungTest
                 Stream.of(
                         Testfall(LeseInventar(Aggregatkennung.aus(inventurId)),
                                 """{
-                                    |  "ausInventur" : "$inventurId"
+                                    |  "id" : "$inventurId"
                                     |}""".trimMargin())
                 )
 

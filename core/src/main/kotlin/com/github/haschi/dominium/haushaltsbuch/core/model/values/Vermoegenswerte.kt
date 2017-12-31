@@ -11,7 +11,7 @@ data class Vermoegenswerte(private val l: List<Vermoegenswert>) : List<Vermoegen
     val summe: Währungsbetrag
         get() = Währungsbetrag(
                 this.stream()
-                        .map<MonetaryAmount> { m -> m.währungsbetrag.wert }
+                        .map<MonetaryAmount> { m -> m.waehrungsbetrag.wert }
                         .reduce(MonetaryFunctions.sum())
                         .orElse(Währungsbetrag.NullEuro.wert))
 
