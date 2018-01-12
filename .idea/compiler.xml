@@ -28,7 +28,9 @@
         <module name="haushaltsbuch-backend" />
         <module name="haushaltsbuch-core" />
         <module name="haushaltsbuch-frontend" />
+        <module name="haushaltsbuch.backend" />
         <module name="infrastruktur" />
+        <module name="Infrastruktur" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
@@ -39,6 +41,10 @@
       <module name="haushaltsbuch-backend" target="1.8" />
       <module name="haushaltsbuch-core" target="1.8" />
       <module name="haushaltsbuch-frontend" target="1.5" />
+      <module name="haushaltsbuch-ui" target="1.8" />
+      <module name="haushaltsbuch.backend" target="1.8" />
+      <module name="Infrastruktur" target="1.8" />
+      <module name="User Interface" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

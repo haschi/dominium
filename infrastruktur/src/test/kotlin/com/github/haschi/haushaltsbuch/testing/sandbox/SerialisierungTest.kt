@@ -188,7 +188,7 @@ class SerialisierungTest
                             ErfasseSchulden(
                                     inventurkennung = Aggregatkennung.aus(id),
                                     position = "Autokredit",
-                                    währungsbetrag = Währungsbetrag.NullEuro),
+                                    waehrungsbetrag = Währungsbetrag.NullEuro),
                             """{
                                 |  "inventurkennung" : "$id",
                                 |  "position" : "Autokredit",

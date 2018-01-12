@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/core/Application Core.iml" filepath="$PROJECT_DIR$/core/Application Core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/infrastruktur/Backend.iml" filepath="$PROJECT_DIR$/infrastruktur/Backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/frontend/Frontend.iml" filepath="$PROJECT_DIR$/frontend/Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui/backend/Backend.iml" filepath="$PROJECT_DIR$/ui/backend/Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui/frontend/Frontend.iml" filepath="$PROJECT_DIR$/ui/frontend/Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infrastruktur/Infrastruktur.iml" filepath="$PROJECT_DIR$/infrastruktur/Infrastruktur.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ui/User Interface.iml" filepath="$PROJECT_DIR$/ui/User Interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/haushaltsbuch.iml" filepath="$PROJECT_DIR$/haushaltsbuch.iml" />
     </modules>
   </component>

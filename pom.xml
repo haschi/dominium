@@ -184,8 +184,8 @@
 
     <modules>
         <module>core</module>
-        <module>frontend</module>
         <module>infrastruktur</module>
+        <module>ui</module>
     </modules>
 
     <repositories>
