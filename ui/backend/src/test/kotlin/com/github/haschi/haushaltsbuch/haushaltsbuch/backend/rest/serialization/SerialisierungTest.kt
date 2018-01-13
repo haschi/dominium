@@ -26,7 +26,9 @@ class SerialisierungTest
             TestfallEröffnungsbilanzkontoErstellt::class,
             HaushaltsbuchführungBegonnenTestfall::class,
             InventarErfasstTestfall::class,
+            BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
+
     fun serialisierung(testfall: Testfall<*>) {
 
         val tester:JacksonTester<Any> = JacksonTester(
@@ -46,6 +48,7 @@ class SerialisierungTest
     @ExtendWith(
             TestfallEröffnungsbilanzkontoErstellt::class,
             HaushaltsbuchführungBegonnenTestfall::class,
+            BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
     fun deserialisierung(testfall: Testfall<*>)
     {
