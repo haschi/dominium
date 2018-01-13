@@ -7,7 +7,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 
 class TestfallEröffnungsbilanzkontoErstellt : TestfallAnbieter<EröffnungsbilanzkontoErstellt>()
 {
-    override fun testfälle(): Iterable<Testfall<EröffnungsbilanzkontoErstellt>>
+    override fun testfaelle(): Iterable<Testfall<EröffnungsbilanzkontoErstellt>>
     {
         return listOf(
                 Testfall(

@@ -25,6 +25,8 @@ class SerialisierungTest
     @ExtendWith(
             TestfallEröffnungsbilanzkontoErstellt::class,
             HaushaltsbuchführungBegonnenTestfall::class,
+            ErfasseInventarTestfall::class,
+            BeginneHaushaltsbuchfuehrungTestfall::class,
             InventarErfasstTestfall::class,
             BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
@@ -67,7 +69,7 @@ class SerialisierungTest
 //    {
 //        private val haushaltsbuchId = UUID.randomUUID().toString()
 //
-//        override fun testfälle(): Stream<Testfall<*>> =
+//        override fun testfaelle(): Stream<Testfall<*>> =
 //                Stream.of(
 //                        Testfall(
 //                                clazz = EröffnungsbilanzkontoErstellt::class.java,
@@ -142,7 +144,7 @@ class SerialisierungTest
 //    {
 //        private val id ="2c618058-09b8-4cde-b3fa-edcceadbd908"
 //
-//        override fun testfälle(): Stream<Testfall> =
+//        override fun testfaelle(): Stream<Testfall> =
 //            Stream.of(
 //                    Testfall(BeendeInventur(Aggregatkennung.aus(id)),
 //                            """{
@@ -205,7 +207,7 @@ class SerialisierungTest
 //    {
 //        private val inventurId = UUID.randomUUID().toString()
 //
-//        override fun testfälle(): Stream<Testfall> =
+//        override fun testfaelle(): Stream<Testfall> =
 //                Stream.of(
 //                        Testfall(LeseInventar(Aggregatkennung.aus(inventurId)),
 //                                """{

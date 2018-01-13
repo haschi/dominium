@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ParameterResolver
 import org.junit.jupiter.api.extension.TestTemplateInvocationContext
 import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider
 import java.util.stream.Stream
-import kotlin.reflect.KClass
 
 abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
 {
@@ -15,7 +14,7 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
 
     override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext>
     {
-        return testfälle()
+        return testfaelle()
                 .map { testfall(it) }
                 .stream()
     }
@@ -50,5 +49,5 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
     }
 
 
-    abstract fun testfälle(): Iterable<Testfall<T>>
+    abstract fun testfaelle(): Iterable<Testfall<T>>
 }
