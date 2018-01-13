@@ -43,4 +43,28 @@ class EröffnungsbilanzkontoErstelltTest
                 |  }
                 |}""".trimMargin())
     }
+
+    @Test
+    fun `Deserialisierung des Ereignisses prüfen`()
+    {
+        val content = """{
+                |  "eröffnungsbilanzkonto" : {
+                |    "soll" : [ {
+                |      "buchungstext" : "Sollbuchung",
+                |      "betrag" : "12,00 EUR"
+                |    } ],
+                |    "haben" : [ {
+                |      "buchungstext" : "Habenbuchung",
+                |      "betrag" : "14,00 EUR"
+                |    } ]
+                |  }
+                |}""".trimMargin()
+
+        assertThat(json.parse(content))
+                .isEqualTo(
+                        EröffnungsbilanzkontoErstellt(
+                                Eröffnungsbilanzkonto(
+                                        soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
+                                        haben = listOf(Buchung("Habenbuchung", 14.00.euro())))))
+    }
 }

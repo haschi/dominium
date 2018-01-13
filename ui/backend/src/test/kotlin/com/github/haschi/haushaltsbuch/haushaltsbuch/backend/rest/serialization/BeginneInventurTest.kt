@@ -14,7 +14,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @DisplayName("JSON Serialisierung der Anweisung beginne Inventur")
 @JsonTest
-
 class BeginneInventurTest
 {
     @Autowired
@@ -24,9 +23,6 @@ class BeginneInventurTest
     fun `Serialisierung des Ereignisses prüfen`()
     {
         val command = BeginneInventur(Aggregatkennung.neu())
-
-
-        println(this.json.write(command).json)
 
         Assertions.assertThat(this.json.write(command))
                 .isEqualToJson("""{"id" : "${command.id.id}"}""")

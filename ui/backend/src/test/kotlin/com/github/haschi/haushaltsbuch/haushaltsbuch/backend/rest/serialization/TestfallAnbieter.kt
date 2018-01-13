@@ -9,18 +9,18 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider
 import java.util.stream.Stream
 import kotlin.reflect.KClass
 
-abstract class TestfallAnbieter<T: Any>(val testfallklasse: KClass<T>) : TestTemplateInvocationContextProvider
+abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
 {
     override fun supportsTestTemplate(context: ExtensionContext?): Boolean = true
 
     override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext>
     {
-        return testfälle().map {
-            testfall(it)
-        }
+        return testfälle()
+                .map { testfall(it) }
+                .stream()
     }
 
-    private fun testfall(klasse: T): TestTemplateInvocationContext
+    private fun testfall(klasse: Testfall<T>): TestTemplateInvocationContext
     {
         return object : TestTemplateInvocationContext
         {
@@ -35,7 +35,7 @@ abstract class TestfallAnbieter<T: Any>(val testfallklasse: KClass<T>) : TestTem
                 {
                     override fun supportsParameter(p0: ParameterContext, p1: ExtensionContext?): Boolean
                     {
-                        return p0.parameter.type.isAssignableFrom(testfallklasse.java)
+                        return p0.parameter.type.isAssignableFrom(Testfall::class.java)
                     }
 
                     override fun resolveParameter(
@@ -50,5 +50,5 @@ abstract class TestfallAnbieter<T: Any>(val testfallklasse: KClass<T>) : TestTem
     }
 
 
-    abstract fun testfälle(): Stream<T>
+    abstract fun testfälle(): Iterable<Testfall<T>>
 }

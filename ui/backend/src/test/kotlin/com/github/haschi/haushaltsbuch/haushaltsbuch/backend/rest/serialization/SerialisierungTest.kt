@@ -1,62 +1,78 @@
-//package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
-//
-//import com.fasterxml.jackson.databind.ObjectMapper
-//import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
-//import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneHaushaltsbuchführung
-//import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
-//import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
-//import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseSchulden
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.EröffnungsbilanzkontoErstellt
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.HaushaltsbuchführungBegonnen
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventarErfasst
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventurBeendet
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.SchuldErfasst
-//import com.github.haschi.dominium.haushaltsbuch.core.model.events.UmlaufvermögenErfasst
-//import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Buchung
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanzkonto
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schuld
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-//import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
-//
-//import org.assertj.core.api.Assertions.assertThat
-//import org.junit.jupiter.api.DisplayName
-//import org.junit.jupiter.api.TestTemplate
-//import org.junit.jupiter.api.extension.ExtendWith
-//import org.springframework.boot.test.autoconfigure.json.JsonTest
-//import org.springframework.boot.test.json.JacksonTester
-//import org.springframework.test.context.junit.jupiter.SpringExtension
-//import java.util.UUID
-//import java.util.stream.Stream
-//
-////@ExtendWith(SpringExtension::class)
-////@DisplayName("Serialisierbarkeit der Wertobjekte prüfen")
-////@JsonTest
-//class SerialisierungTest
-//{
-//    data class Testfall<T>
-//    (
-//        val poko: Any,
-//        val json: String
-//    )
-//
-//    class SerialisierteEreignisseAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
+package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestTemplate
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.json.JsonTest
+import org.springframework.boot.test.json.JacksonTester
+import org.springframework.core.ResolvableType
+import org.springframework.test.context.junit.jupiter.SpringExtension
+
+@ExtendWith(SpringExtension::class)
+@DisplayName("Serialisierbarkeit der Wertobjekte prüfen")
+@JsonTest
+class SerialisierungTest
+{
+
+    @Autowired
+    private lateinit var mapper: ObjectMapper;
+
+    @TestTemplate
+    @DisplayName("prüfen, ob POKO korrekt serialisiert wird")
+    @ExtendWith(
+            TestfallEröffnungsbilanzkontoErstellt::class,
+            HaushaltsbuchführungBegonnenTestfall::class,
+            InventarErfasstTestfall::class,
+            BeginneInventurTestfall::class)
+    fun serialisierung(testfall: Testfall<*>) {
+
+        val tester:JacksonTester<Any> = JacksonTester(
+                this.javaClass,
+                ResolvableType.forClass(testfall.clazz),
+                mapper)
+
+        with(testfall)
+        {
+            assertThat(tester.write(poko))
+                    .isEqualToJson(json)
+        }
+    }
+
+    @TestTemplate
+    @DisplayName("prüfe, ob JSON Objekt korrekt deserialisiert wird")
+    @ExtendWith(
+            TestfallEröffnungsbilanzkontoErstellt::class,
+            HaushaltsbuchführungBegonnenTestfall::class,
+            BeginneInventurTestfall::class)
+    fun deserialisierung(testfall: Testfall<*>)
+    {
+        val tester: JacksonTester<Any> = JacksonTester(
+                this.javaClass,
+                ResolvableType.forClass(testfall.clazz),
+                mapper)
+
+        with(testfall)
+        {
+            assertThat(tester.parse(json)).isEqualTo(poko)
+        }
+    }
+
+//    class SerialisierteEreignisseAnbieter : TestfallAnbieter<Testfall<*>>(Testfall::class)
 //    {
 //        private val haushaltsbuchId = UUID.randomUUID().toString()
 //
-//        override fun testfälle(): Stream<Testfall> =
+//        override fun testfälle(): Stream<Testfall<*>> =
 //                Stream.of(
 //                        Testfall(
-//                                EröffnungsbilanzkontoErstellt(
+//                                clazz = EröffnungsbilanzkontoErstellt::class.java,
+//                                poko = EröffnungsbilanzkontoErstellt(
 //                                        Eröffnungsbilanzkonto(
 //                                                soll = listOf(Buchung("Sollbuchung", 12.00.euro())),
 //                                                haben = listOf(Buchung("Habenbuchung", 14.00.euro())))),
-//                                """{
+//                                json = """{
 //                                    |  "eröffnungsbilanzkonto" : {
 //                                    |    "soll" : [ {
 //                                    |      "buchungstext" : "Sollbuchung",
@@ -119,7 +135,7 @@
 //
 //    }
 //
-//    class SerialisierteAnweisungenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
+//    class SerialisierteAnweisungenAnbieter : TestfallAnbieter<Testfall<*>>(Testfall::class)
 //    {
 //        private val id ="2c618058-09b8-4cde-b3fa-edcceadbd908"
 //
@@ -182,7 +198,7 @@
 //                    )
 //    }
 //
-//    class SerialisierteAbfragenAnbieter : TestfallAnbieter<Testfall>(Testfall::class)
+//    class SerialisierteAbfragenAnbieter : TestfallAnbieter<Testfall<*>>(Testfall::class)
 //    {
 //        private val inventurId = UUID.randomUUID().toString()
 //
@@ -195,4 +211,4 @@
 //                )
 //
 //    }
-//}
+}
