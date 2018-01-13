@@ -11,7 +11,6 @@ class BeendeInventurTestfall : TestfallAnbieter<BeendeInventur>()
 
         return listOf(
                 Testfall(
-                        clazz = BeendeInventur::class.java,
                         poko = BeendeInventur(id),
                         json = """{"von" : "${id.id}"}"""
                 )

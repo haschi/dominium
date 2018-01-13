@@ -25,7 +25,7 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
         {
             override fun getDisplayName(invocationIndex: Int): String
             {
-                return "Testfall $invocationIndex: $klasse"
+                return "Testfall $invocationIndex: ${klasse.poko::javaClass.get().simpleName}"
             }
 
             override fun getAdditionalExtensions(): MutableList<Extension>

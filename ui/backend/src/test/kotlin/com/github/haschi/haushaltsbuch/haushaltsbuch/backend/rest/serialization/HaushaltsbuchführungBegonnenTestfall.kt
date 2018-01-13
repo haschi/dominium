@@ -11,7 +11,6 @@ class HaushaltsbuchführungBegonnenTestfall : TestfallAnbieter<Haushaltsbuchfüh
 
         return listOf(
                 Testfall(
-                        clazz = HaushaltsbuchführungBegonnen::class.java,
                         poko = HaushaltsbuchführungBegonnen(id),
                         json = """{"id" : "${id.id}"}""")
         )

@@ -35,7 +35,7 @@ class SerialisierungTest
 
         val tester:JacksonTester<Any> = JacksonTester(
                 this.javaClass,
-                ResolvableType.forClass(testfall.clazz),
+                ResolvableType.forClass(testfall.poko.javaClass),
                 mapper)
 
         with(testfall)
@@ -56,7 +56,7 @@ class SerialisierungTest
     {
         val tester: JacksonTester<Any> = JacksonTester(
                 this.javaClass,
-                ResolvableType.forClass(testfall.clazz),
+                ResolvableType.forClass(testfall.poko.javaClass),
                 mapper)
 
         with(testfall)

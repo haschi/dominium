@@ -14,7 +14,6 @@ class InventarErfasstTestfall : TestfallAnbieter<InventarErfasst>()
     {
         return listOf(
                 Testfall(
-                        clazz = InventarErfasst::class.java,
                         poko = InventarErfasst(
                                         Inventar(
                                             anlagevermoegen = Vermoegenswerte(

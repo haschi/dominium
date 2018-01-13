@@ -12,7 +12,6 @@ class BeginneHaushaltsbuchfuehrungTestfall : TestfallAnbieter<BeginneHaushaltsbu
 
         return listOf(
                 Testfall(
-                        clazz = BeginneHaushaltsbuchführung::class.java,
                         poko = BeginneHaushaltsbuchführung(id, Inventar.leer),
                         json = """{
                         |  "id" : "${id.id}",

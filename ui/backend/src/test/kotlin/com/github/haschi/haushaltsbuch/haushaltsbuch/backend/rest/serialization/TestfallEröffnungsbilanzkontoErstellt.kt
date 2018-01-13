@@ -11,7 +11,6 @@ class TestfallEröffnungsbilanzkontoErstellt : TestfallAnbieter<Eröffnungsbilan
     {
         return listOf(
                 Testfall(
-                        clazz = EröffnungsbilanzkontoErstellt::class.java,
                         poko = EröffnungsbilanzkontoErstellt(
                                 Eröffnungsbilanzkonto(
                                         soll = listOf(Buchung("Sollbuchung", 12.00.euro())),

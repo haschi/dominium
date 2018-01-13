@@ -12,7 +12,6 @@ class ErfasseInventarTestfall : TestfallAnbieter<ErfasseInventar>()
 
         return listOf(
                 Testfall(
-                        clazz = ErfasseInventar::class.java,
                         poko = ErfasseInventar(aggregatkennung, Inventar.leer),
                         json = """{
                                 |  "id" : "${aggregatkennung.id}",
