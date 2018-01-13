@@ -56,6 +56,17 @@
 			<artifactId>kotlin-reflect</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.github.haschi.haushaltsbuch</groupId>
@@ -63,7 +74,13 @@
 			<version>CD-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
+        <dependency>
+            <groupId>com.github.haschi.haushaltsbuch</groupId>
+            <artifactId>haushaltsbuch-core</artifactId>
+            <version>CD-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>${junit-jupiter.version}</version>
