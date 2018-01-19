@@ -13,6 +13,7 @@ class BeginneInventurTestfall : TestfallAnbieter<BeginneInventur>()
         return listOf(
                 Testfall(
                         poko = BeginneInventur(id),
-                        json = """{"id" : "${id.id}"}"""))
+                        json = """{"id" : "${id.id}"}""",
+                        schema = ""))
     }
 }

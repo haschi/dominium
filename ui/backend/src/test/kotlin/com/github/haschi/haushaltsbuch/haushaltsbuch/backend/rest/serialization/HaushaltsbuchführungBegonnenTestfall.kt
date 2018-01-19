@@ -12,7 +12,8 @@ class HaushaltsbuchführungBegonnenTestfall : TestfallAnbieter<Haushaltsbuchfüh
         return listOf(
                 Testfall(
                         poko = HaushaltsbuchführungBegonnen(id),
-                        json = """{"id" : "${id.id}"}""")
+                        json = """{"id" : "${id.id}"}""",
+                        schema = "{}")
         )
     }
 }

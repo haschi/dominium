@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.fge.jackson.JsonLoader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
@@ -42,6 +43,9 @@ class SerialisierungTest
         {
             assertThat(tester.write(poko))
                     .isEqualToJson(json)
+
+            assertThat(tester.write(poko))
+
         }
     }
 
@@ -62,6 +66,33 @@ class SerialisierungTest
         with(testfall)
         {
             assertThat(tester.parse(json)).isEqualTo(poko)
+        }
+    }
+
+    @TestTemplate
+    @DisplayName("prüfe, ob serialisierte Objekte dem JSON Schema entsprechen")
+    @ExtendWith(
+            BeendeInventurTestfall::class,
+            HaushaltsbuchführungBegonnenTestfall::class)
+    fun schematest(testfall: Testfall<*>)
+    {
+        with(testfall) {
+
+                val schema = JsonLoader.fromString(schema)
+
+
+                val tester:JacksonTester<Any> = JacksonTester(
+                        this.javaClass,
+                        ResolvableType.forClass(testfall.poko.javaClass),
+                        mapper)
+
+
+//
+//            val factory = JsonSchemaFactory.byDefault()
+//            val x = factory.getJsonSchema(schema)
+//
+//            val validator = factory.validator
+//            validator.validate(schema, data)
         }
     }
 

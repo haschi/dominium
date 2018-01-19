@@ -26,6 +26,7 @@ class TestfallEröffnungsbilanzkontoErstellt : TestfallAnbieter<Eröffnungsbilan
                         |      "betrag" : "14,00 EUR"
                         |    } ]
                         |  }
-                        |}""".trimMargin()))
+                        |}""".trimMargin(),
+                        schema = ""))
     }
 }

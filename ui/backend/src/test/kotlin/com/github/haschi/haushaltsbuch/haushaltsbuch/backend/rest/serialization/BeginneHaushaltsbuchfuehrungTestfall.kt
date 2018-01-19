@@ -20,6 +20,7 @@ class BeginneHaushaltsbuchfuehrungTestfall : TestfallAnbieter<BeginneHaushaltsbu
                         |    "umlaufvermoegen" : [ ],
                         |    "schulden" : [ ]
                         |  }
-                        |}""".trimMargin()))
+                        |}""".trimMargin(),
+                        schema = "{}"))
     }
 }

@@ -42,7 +42,8 @@ class InventarErfasstTestfall : TestfallAnbieter<InventarErfasst>()
                                     |      "reinvermoegen" : "-9.960,88 EUR"
                                     |    }
                                     |  }
-                                    |}""".trimMargin()
+                                    |}""".trimMargin(),
+                        schema = ""
                 )
         )
     }

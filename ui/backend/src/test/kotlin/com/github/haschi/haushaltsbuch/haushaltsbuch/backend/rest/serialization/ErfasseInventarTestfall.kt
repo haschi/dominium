@@ -20,6 +20,7 @@ class ErfasseInventarTestfall : TestfallAnbieter<ErfasseInventar>()
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ]
                                 |  }
-                                |}""".trimMargin()))
+                                |}""".trimMargin(),
+                        schema = ""))
     }
 }

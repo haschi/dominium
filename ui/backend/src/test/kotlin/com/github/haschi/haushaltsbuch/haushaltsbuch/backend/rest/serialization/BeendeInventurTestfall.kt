@@ -12,7 +12,20 @@ class BeendeInventurTestfall : TestfallAnbieter<BeendeInventur>()
         return listOf(
                 Testfall(
                         poko = BeendeInventur(id),
-                        json = """{"von" : "${id.id}"}"""
+                        json = """{"von" : "${id.id}"}""",
+                        schema = """{
+                                    | "type": "object",
+                                    | "definitions": {},
+                                    | "additionalProperties": false,
+                                    | "properties": {
+                                    |   "von": {
+                                    |           "type": "string"
+                                    |       }
+                                    |   },
+                                    |   "required": [
+                                    |       "von"
+                                    |   ]
+                                    |}""".trimMargin()
                 )
         )
     }
