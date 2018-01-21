@@ -49,6 +49,18 @@
         </dependency>
 
         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
@@ -185,6 +197,31 @@
             </plugin>
 
             <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.2.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${basedir}/src/main/resources/swagger.yaml</inputSpec>
+                            <language>spring</language>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <modelPackage>com.github.haschi.haushaltsbuch.backend.rest.model</modelPackage>
+                            <apiPackage>com.github.haschi.haushaltsbuch.backend.rest.api</apiPackage>
+                            <configOptions>
+                                <java8>true</java8>,
+                                <delegatePattern>true</delegatePattern>
+                                <!--<interfaceOnly>true</interfaceOnly>-->
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>cz.habarta.typescript-generator</groupId>
                 <artifactId>typescript-generator-maven-plugin</artifactId>
                 <version>2.0.400</version>
@@ -198,13 +235,23 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <generateNpmPackageJson>true</generateNpmPackageJson>
+                    <npmName>@haushaltsbuch/core</npmName>
                     <jsonLibrary>jackson2</jsonLibrary>
                     <jackson2ModuleDiscovery>true</jackson2ModuleDiscovery>
-                    <classes>
-                        <class>com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur</class>
-                        <class>com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur</class>
-                    </classes>
+                    <jackson2Modules>
+                        <module>com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.HaushaltsbuchModule</module>
+                    </jackson2Modules>
+                    <classPatterns>
+                        <pattern>
+                            com.github.haschi.dominium.haushaltsbuch.core.model.commands.*
+                        </pattern>
+                        <pattern>
+                            com.github.haschi.dominium.haushaltsbuch.core.model.queries.*
+                        </pattern>
+                    </classPatterns>
                     <outputKind>module</outputKind>
+                    <outputFileType>implementationFile</outputFileType>
                 </configuration>
             </plugin>
 
