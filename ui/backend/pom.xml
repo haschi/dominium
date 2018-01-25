@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <kotlin.version>1.2.20</kotlin.version>
+        <kotlin.version>1.2.21</kotlin.version>
         <junit-jupiter.version>5.0.1</junit-jupiter.version>
         <junit-platform.version>1.0.1</junit-platform.version>
     </properties>
@@ -65,6 +65,7 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
@@ -132,8 +133,10 @@
     </dependencies>
 
     <build>
+
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -151,11 +154,11 @@
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlin.version}</version>
+                        <!--<version>${kotlin.version}</version>-->
+                        <version>1.2.20</version>
                     </dependency>
                 </dependencies>
             </plugin>
-
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
@@ -194,65 +197,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.2.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${basedir}/src/main/resources/swagger.yaml</inputSpec>
-                            <language>spring</language>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <modelPackage>com.github.haschi.haushaltsbuch.backend.rest.model</modelPackage>
-                            <apiPackage>com.github.haschi.haushaltsbuch.backend.rest.api</apiPackage>
-                            <configOptions>
-                                <java8>true</java8>,
-                                <delegatePattern>true</delegatePattern>
-                                <!--<interfaceOnly>true</interfaceOnly>-->
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>cz.habarta.typescript-generator</groupId>
-                <artifactId>typescript-generator-maven-plugin</artifactId>
-                <version>2.0.400</version>
-                <executions>
-                    <execution>
-                        <id>generate</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>process-classes</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generateNpmPackageJson>true</generateNpmPackageJson>
-                    <npmName>@haushaltsbuch/core</npmName>
-                    <jsonLibrary>jackson2</jsonLibrary>
-                    <jackson2ModuleDiscovery>true</jackson2ModuleDiscovery>
-                    <jackson2Modules>
-                        <module>com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.HaushaltsbuchModule</module>
-                    </jackson2Modules>
-                    <classPatterns>
-                        <pattern>
-                            com.github.haschi.dominium.haushaltsbuch.core.model.commands.*
-                        </pattern>
-                        <pattern>
-                            com.github.haschi.dominium.haushaltsbuch.core.model.queries.*
-                        </pattern>
-                    </classPatterns>
-                    <outputKind>module</outputKind>
-                    <outputFileType>implementationFile</outputFileType>
-                </configuration>
             </plugin>
 
         </plugins>
