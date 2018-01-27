@@ -8,9 +8,9 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 
-class InventarErfasstTestfall : TestfallAnbieter<InventarErfasst>()
+class InventarErfasstTestfall : TestfallAnbieter()
 {
-    override fun testfälle(): Iterable<Testfall<InventarErfasst>>
+    override fun testfälle(): Iterable<Testfall>
     {
         return listOf(
                 Testfall(

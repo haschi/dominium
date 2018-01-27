@@ -4,9 +4,9 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneHaush
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 
-class BeginneHaushaltsbuchführungTestfall : TestfallAnbieter<BeginneHaushaltsbuchführung>()
+class BeginneHaushaltsbuchführungTestfall : TestfallAnbieter()
 {
-    override fun testfälle(): Iterable<Testfall<BeginneHaushaltsbuchführung>>
+    override fun testfälle(): Iterable<Testfall>
     {
         val id = Aggregatkennung.neu()
 

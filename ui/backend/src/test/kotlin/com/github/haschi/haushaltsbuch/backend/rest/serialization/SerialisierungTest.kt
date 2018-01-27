@@ -17,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @JsonTest
 class SerialisierungTest
 {
-
     @Autowired
     private lateinit var mapper: ObjectMapper;
 
@@ -32,7 +31,7 @@ class SerialisierungTest
             BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
 
-    fun serialisierung(testfall: Testfall<*>) {
+    fun serialisierung(testfall: Testfall) {
 
         val tester:JacksonTester<Any> = JacksonTester(
                 this.javaClass,
@@ -56,7 +55,7 @@ class SerialisierungTest
             HaushaltsbuchführungBegonnenTestfall::class,
             BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
-    fun deserialisierung(testfall: Testfall<*>)
+    fun deserialisierung(testfall: Testfall)
     {
         val tester: JacksonTester<Any> = JacksonTester(
                 this.javaClass,
@@ -74,7 +73,7 @@ class SerialisierungTest
     @ExtendWith(
             BeendeInventurTestfall::class,
             HaushaltsbuchführungBegonnenTestfall::class)
-    fun schematest(testfall: Testfall<*>)
+    fun schematest(testfall: Testfall)
     {
         with(testfall) {
 

@@ -4,9 +4,9 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInven
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 
-class ErfasseInventarTestfall : TestfallAnbieter<ErfasseInventar>()
+class ErfasseInventarTestfall : TestfallAnbieter()
 {
-    override fun testfälle(): Iterable<Testfall<ErfasseInventar>>
+    override fun testfälle(): Iterable<Testfall>
     {
         val aggregatkennung = Aggregatkennung.neu()
 

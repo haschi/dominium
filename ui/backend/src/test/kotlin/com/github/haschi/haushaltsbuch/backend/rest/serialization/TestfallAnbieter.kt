@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.TestTemplateInvocationContext
 import org.junit.jupiter.api.extension.TestTemplateInvocationContextProvider
 import java.util.stream.Stream
 
-abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
+abstract class TestfallAnbieter : TestTemplateInvocationContextProvider
 {
     override fun supportsTestTemplate(context: ExtensionContext?): Boolean = true
 
@@ -19,7 +19,7 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
                 .stream()
     }
 
-    private fun testfall(klasse: Testfall<T>): TestTemplateInvocationContext
+    private fun testfall(klasse: Testfall): TestTemplateInvocationContext
     {
         return object : TestTemplateInvocationContext
         {
@@ -49,5 +49,5 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
     }
 
 
-    abstract fun testfälle(): Iterable<Testfall<T>>
+    abstract fun testfälle(): Iterable<Testfall>
 }

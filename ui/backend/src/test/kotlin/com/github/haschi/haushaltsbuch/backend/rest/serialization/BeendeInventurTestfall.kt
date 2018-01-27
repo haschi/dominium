@@ -3,9 +3,9 @@ package com.github.haschi.haushaltsbuch.backend.rest.serialization
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 
-class BeendeInventurTestfall : TestfallAnbieter<BeendeInventur>()
+class BeendeInventurTestfall : TestfallAnbieter()
 {
-    override fun testfälle(): Iterable<Testfall<BeendeInventur>>
+    override fun testfälle(): Iterable<Testfall>
     {
         val id = Aggregatkennung.neu()
 
