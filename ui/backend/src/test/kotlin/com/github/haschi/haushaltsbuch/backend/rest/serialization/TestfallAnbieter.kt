@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
+package com.github.haschi.haushaltsbuch.backend.rest.serialization
 
 import org.junit.jupiter.api.extension.Extension
 import org.junit.jupiter.api.extension.ExtensionContext

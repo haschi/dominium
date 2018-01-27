@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
+package com.github.haschi.haushaltsbuch.backend.rest.serialization
 
 data class Testfall<T>
 (

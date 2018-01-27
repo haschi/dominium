@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.haushaltsbuch.backend.rest.serialization
+package com.github.haschi.haushaltsbuch.backend.rest.serialization
 
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventarErfasst
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar

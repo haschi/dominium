@@ -129,6 +129,8 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr353:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
     <orderEntry type="module" module-name="Frontend" />
     <orderEntry type="module" module-name="Application Core" />
     <orderEntry type="library" name="Maven: org.axonframework:axon-core:3.1" level="project" />
@@ -136,6 +138,33 @@
     <orderEntry type="library" name="Maven: xpp3:xpp3:1.1.4c" level="project" />
     <orderEntry type="library" name="Maven: org.javamoney:moneta:1.1" level="project" />
     <orderEntry type="library" name="Maven: javax.money:money-api:1.0.1" level="project" />
+    <orderEntry type="module" module-name="Infrastruktur" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-core:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler-proxy:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-socks:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http2:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver-dns:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-dns:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-web:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-auth-common:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-bridge-common:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-lang-kotlin:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jre8:1.2.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.21" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-rx-java2:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjava:2.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-web-client:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-web-common:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: io.vertx:vertx-config:3.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.1" level="project" />
