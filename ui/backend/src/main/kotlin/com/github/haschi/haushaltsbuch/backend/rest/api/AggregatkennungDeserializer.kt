@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.infrastruktur.rest
+package com.github.haschi.haushaltsbuch.backend.rest.api
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
@@ -8,7 +8,8 @@ import java.util.UUID
 
 class AggregatkennungDeserializer : JsonDeserializer<Aggregatkennung>()
 {
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Aggregatkennung
+    override fun deserialize(p: JsonParser, context: DeserializationContext)
+            : Aggregatkennung
     {
         return Aggregatkennung(UUID.fromString(p.text))
     }

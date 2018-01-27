@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.backend.rest.api
+package com.github.haschi.haushaltsbuch.backend
 
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import org.slf4j.LoggerFactory

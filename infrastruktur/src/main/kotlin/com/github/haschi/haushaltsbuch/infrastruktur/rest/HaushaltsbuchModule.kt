@@ -9,11 +9,11 @@ class HaushaltsbuchModule : SimpleModule()
 {
     init
     {
-        addSerializer(Aggregatkennung::class.java, AggregatkennungSerialisierer())
+        addSerializer(Aggregatkennung::class.java, AggregatkennungSerializer())
         addDeserializer(Aggregatkennung::class.java, AggregatkennungDeserializer())
 
-        addSerializer(Währungsbetrag::class.java, WährungsbetragSerialisierer())
-        addDeserializer(Währungsbetrag::class.java, WährungsbetragDeserialisierer())
+        addSerializer(Währungsbetrag::class.java, WaehrungsbetragSerializer())
+        addDeserializer(Währungsbetrag::class.java, WaehrungsbetragDeserializer())
 
         setMixInAnnotation(Inventar::class.java, InventarMixin::class.java)
     }

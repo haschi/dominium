@@ -1,8 +1,9 @@
-package com.github.haschi.haushaltsbuch.backend.rest.api
+package com.github.haschi.haushaltsbuch.backend
 
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.haushaltsbuch.infrastruktur.AxonInfrastrukturFactory
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,7 +14,7 @@ class Bootstrap
     @Bean
     fun anwendungskonfiguration(): GestarteteAnwendung
     {
-        logger.info("Anwendungkern starten")
+        logger.info("Anwendungskern starten")
 
         val factory = AxonInfrastrukturFactory()
         val konfiguration = Anwendungskonfiguration(factory)
@@ -23,13 +24,13 @@ class Bootstrap
     }
 
     @Bean
-    fun commandgateway(): CommandGateway
+    fun commandGateway(): CommandGateway
     {
         return anwendungskonfiguration().gateway
     }
 
     companion object
     {
-        val logger = LoggerFactory.getLogger(Bootstrap::class.java)
+        val logger: Logger = LoggerFactory.getLogger(Bootstrap::class.java)
     }
 }

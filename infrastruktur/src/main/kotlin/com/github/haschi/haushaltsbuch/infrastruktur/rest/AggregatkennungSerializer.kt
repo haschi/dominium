@@ -6,15 +6,15 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import java.io.IOException
 
-class AggregatkennungSerialisierer : JsonSerializer<Aggregatkennung>()
+class AggregatkennungSerializer : JsonSerializer<Aggregatkennung>()
 {
 
     @Throws(IOException::class)
     override fun serialize(
             value: Aggregatkennung,
-            jgen: JsonGenerator,
+            generator: JsonGenerator,
             provider: SerializerProvider)
     {
-        jgen.writeString(value.id.toString())
+        generator.writeString(value.id.toString())
     }
 }

@@ -2,8 +2,11 @@
   <dictionary name="matthias">
     <words>
       <w>abhängigkeitsumkehrung</w>
+      <w>aggregatkennung</w>
       <w>anfangsbestände</w>
+      <w>anwendung</w>
       <w>anwendungsdienst</w>
+      <w>anwendungskern</w>
       <w>anwendungskerns</w>
       <w>buchführungsregeln</w>
       <w>buchungstext</w>
@@ -14,9 +17,11 @@
       <w>infrastrukturfabrik</w>
       <w>objektmodell</w>
       <w>poko</w>
+      <w>reinvermoegen</w>
       <w>reinvermögen</w>
       <w>umlaufvermögen</w>
       <w>unittests</w>
+      <w>waehrungsbetrag</w>
       <w>wertobjekte</w>
       <w>währungsbetrag</w>
     </words>

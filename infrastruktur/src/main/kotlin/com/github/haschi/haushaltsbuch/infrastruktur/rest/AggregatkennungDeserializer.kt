@@ -8,8 +8,8 @@ import java.util.UUID
 
 class AggregatkennungDeserializer : JsonDeserializer<Aggregatkennung>()
 {
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Aggregatkennung
+    override fun deserialize(parser: JsonParser, context: DeserializationContext): Aggregatkennung
     {
-        return Aggregatkennung(UUID.fromString(p.text))
+        return Aggregatkennung(UUID.fromString(parser.text))
     }
 }
