@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -26,7 +25,10 @@ class CommandEndpointTest
     @Test
     fun `post deserialisert commands`()
     {
-        this.mock.perform(MockMvcRequestBuilders.get("/gateway/command").accept(MediaType.APPLICATION_JSON))
+        this.mock.perform(
+                MockMvcRequestBuilders
+                        .get("/gateway/command")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().`is`(418))
     }
 }

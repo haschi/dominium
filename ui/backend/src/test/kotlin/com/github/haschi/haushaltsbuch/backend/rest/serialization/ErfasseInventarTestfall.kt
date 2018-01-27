@@ -6,7 +6,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 
 class ErfasseInventarTestfall : TestfallAnbieter<ErfasseInventar>()
 {
-    override fun testfaelle(): Iterable<Testfall<ErfasseInventar>>
+    override fun testfälle(): Iterable<Testfall<ErfasseInventar>>
     {
         val aggregatkennung = Aggregatkennung.neu()
 

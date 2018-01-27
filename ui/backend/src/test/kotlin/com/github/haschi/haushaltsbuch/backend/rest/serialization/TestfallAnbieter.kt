@@ -14,7 +14,7 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
 
     override fun provideTestTemplateInvocationContexts(context: ExtensionContext?): Stream<TestTemplateInvocationContext>
     {
-        return testfaelle()
+        return testfälle()
                 .map { testfall(it) }
                 .stream()
     }
@@ -49,5 +49,5 @@ abstract class TestfallAnbieter<T: Any> : TestTemplateInvocationContextProvider
     }
 
 
-    abstract fun testfaelle(): Iterable<Testfall<T>>
+    abstract fun testfälle(): Iterable<Testfall<T>>
 }

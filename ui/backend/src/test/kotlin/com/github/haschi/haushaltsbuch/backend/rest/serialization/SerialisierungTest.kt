@@ -27,7 +27,7 @@ class SerialisierungTest
             TestfallEröffnungsbilanzkontoErstellt::class,
             HaushaltsbuchführungBegonnenTestfall::class,
             ErfasseInventarTestfall::class,
-            BeginneHaushaltsbuchfuehrungTestfall::class,
+            BeginneHaushaltsbuchführungTestfall::class,
             InventarErfasstTestfall::class,
             BeendeInventurTestfall::class,
             BeginneInventurTestfall::class)
