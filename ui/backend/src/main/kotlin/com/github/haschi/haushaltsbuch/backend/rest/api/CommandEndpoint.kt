@@ -1,11 +1,9 @@
 package com.github.haschi.haushaltsbuch.backend.rest.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.axonframework.commandhandling.gateway.CommandGateway
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -32,6 +30,7 @@ class CommandEndpoint(val mapper: ObjectMapper, val gateway: CommandGateway)
         return ResponseEntity.accepted().build()
     }
 
+    @ApiResponses(ApiResponse(code = 418, message = "I am a teapot"))
     @RequestMapping("/gateway/command", method = [RequestMethod.GET])
     fun get(): ResponseEntity<Any>
     {

@@ -6,7 +6,7 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="PASS_PARENT_ENVS" value="true" />
-    <option name="MAIN_CLASS_NAME" value="com.github.haschi.haushaltsbuch.backend.rest.api.ApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="com.github.haschi.haushaltsbuch.backend.ApplicationKt" />
     <option name="WORKING_DIRECTORY" value="" />
     <module name="Backend" />
     <envs />
