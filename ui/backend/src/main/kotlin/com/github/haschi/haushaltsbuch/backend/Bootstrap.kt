@@ -20,7 +20,6 @@ class Bootstrap
         val factory = AxonInfrastrukturFactory()
         val konfiguration = Anwendungskonfiguration(factory)
         return konfiguration.start { Anwendung(it) }
-
     }
 
     @Bean

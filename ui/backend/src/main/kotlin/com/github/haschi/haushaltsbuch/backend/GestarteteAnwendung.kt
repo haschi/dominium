@@ -7,8 +7,6 @@ import javax.annotation.PreDestroy
 
 class GestarteteAnwendung(private val anwendung: Anwendung)
 {
-    // val gateway = anwendung.api().command
-
     @PreDestroy
     fun shutdown()
     {
