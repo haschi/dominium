@@ -50,7 +50,7 @@ class InventurStepDefinition(
     fun wirdMeinInventarLeerSein()
     {
 
-        val inventar = welt.query.query.send(LeseInventar(welt.aktuelleInventur),
+        val inventar = welt.query.send(LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java)
         assertThat(inventar).isCompletedWithValueMatching{
             it == Inventar.leer
@@ -69,7 +69,7 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -82,7 +82,7 @@ class InventurStepDefinition(
     fun `dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -94,7 +94,7 @@ class InventurStepDefinition(
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        assertThat(welt.query.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
                 }
@@ -144,7 +144,7 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermoegens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = welt.query.query.send(
+        val inventar = welt.query.send(
                 LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java).get()
 

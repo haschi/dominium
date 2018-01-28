@@ -1,12 +1,13 @@
 package com.github.haschi.haushaltsbuch.backend
 
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendung
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import org.slf4j.LoggerFactory
 import javax.annotation.PreDestroy
 
-class GestarteteAnwendung(private val anwendung: Anwendungskonfiguration)
+class GestarteteAnwendung(private val anwendung: Anwendung)
 {
-    val gateway = anwendung.api().command
+    // val gateway = anwendung.api().command
 
     @PreDestroy
     fun shutdown()

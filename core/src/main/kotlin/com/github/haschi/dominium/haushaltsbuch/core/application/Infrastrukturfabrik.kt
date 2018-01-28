@@ -9,7 +9,7 @@ import org.axonframework.monitoring.MessageMonitor
 
 interface Infrastrukturfabrik
 {
-    fun eventstore(konfiguration: Configuration): EventStore
+    fun eventStore(konfiguration: Configuration): EventStore
     fun historie(konfiguration: Configuration): Historie
     fun logger(): CommandCallback<Any, Any>
     fun loggingMonitor(konfiguration: Configuration, name: String): MessageMonitor<Message<*>>

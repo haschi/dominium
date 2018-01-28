@@ -1,6 +1,7 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendung
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
@@ -20,12 +21,11 @@ import io.vertx.reactivex.ext.web.Router
 import io.vertx.reactivex.ext.web.RoutingContext
 import io.vertx.reactivex.ext.web.handler.BodyHandler
 import io.vertx.reactivex.ext.web.handler.StaticHandler
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class RestApi : AbstractVerticle()
 {
-    private val anwendung = Anwendungskonfiguration(AxonInfrastrukturFactory())
-
+    private val konfiguration = Anwendungskonfiguration(AxonInfrastrukturFactory())
+    private val anwendung = konfiguration.start { Anwendung(it) }
     override fun start()
     {
         logger.info("Hello World")
@@ -41,7 +41,7 @@ class RestApi : AbstractVerticle()
                 })
 
 
-        anwendung.start()
+
         val dominium = anwendung.api()
 
         val router = Router.router(vertx)
