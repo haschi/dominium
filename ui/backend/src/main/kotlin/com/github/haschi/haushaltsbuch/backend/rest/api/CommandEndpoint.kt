@@ -15,11 +15,25 @@ import org.springframework.web.bind.annotation.RequestMethod
 class CommandEndpoint(val mapper: ObjectMapper, val gateway: CommandGateway)
 {
 
-    @ApiResponses(ApiResponse(code = 202, message = "Accepted"))
-    @RequestMapping("/gateway/command", method = [RequestMethod.POST], consumes = ["application/json"])
+    @ApiResponses(
+            ApiResponse(code = 202, message = "Accepted"),
+            ApiResponse(code = 400, message = "Bad Request"))
+    @RequestMapping("/gateway/command",
+            method = [RequestMethod.POST],
+            consumes = ["application/json"])
     fun post(@RequestBody message: RestCommandMessage): ResponseEntity<Any>
     {
-        val commandType = Class.forName(message.type)
+        val commandType = try
+        {
+            Class.forName(message.type)
+        }
+        catch (ausnahme: ClassNotFoundException)
+        {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Unknown command ${message.type}")
+        }
+
         val command = mapper.convertValue(message.payload, commandType)
 
         val result = gateway.sendAndWait<Any>(command)

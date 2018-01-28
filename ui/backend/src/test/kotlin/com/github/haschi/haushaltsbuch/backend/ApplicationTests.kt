@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.haushaltsbuch.backend
+package com.github.haschi.haushaltsbuch.backend
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -12,5 +12,4 @@ class ApplicationTests {
 	@Test
 	fun contextLoads() {
 	}
-
 }
