@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.M7</version>
+        <version>2.0.0.RC1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -84,13 +84,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
-            <!--<artifactId>jackson-datatype-json-org</artifactId>-->
-            <!--&lt;!&ndash;<version>${jackson.version}</version>&ndash;&gt;-->
-            <!--<version>2.9.0</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr353</artifactId>
@@ -149,11 +142,6 @@
             <version>2.2.8</version>
             <scope>test</scope>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId></groupId>-->
-            <!--<artifactId></artifactId>-->
-        <!--</dependency>-->
 
     </dependencies>
 
