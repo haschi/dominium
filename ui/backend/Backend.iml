@@ -164,7 +164,6 @@
     <orderEntry type="library" name="Maven: io.vertx:vertx-web-client:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-web-common:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-config:3.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.1" level="project" />

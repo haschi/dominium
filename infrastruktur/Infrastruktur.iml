@@ -65,7 +65,6 @@
     <orderEntry type="library" name="Maven: io.vertx:vertx-web-common:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: io.vertx:vertx-config:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-kotlin:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
