@@ -8,38 +8,32 @@
                     <li>
                         <h5>Anlagevermögen</h5>
                         <ol>
-                            <li *ngFor="let position of (inventar$ | async)?.anlagevermoegen">
-                                {{position.position}} {{position.waehrungsbetrag}}
-                            </li>
+                            <app-position *ngFor="let position of (inventar$ | async)?.anlagevermoegen" [position]="position" ></app-position>
                         </ol>
                     </li>
                     <li>
                         <h5>Umlaufvermögen</h5>
                         <ol>
-                            <li *ngFor="let position of (inventar$ | async)?.umlaufvermoegen">
-                                {{position.position}} {{position.waehrungsbetrag}}
-                            </li>
+                            <app-position *ngFor="let position of (inventar$ | async)?.umlaufvermoegen" [position]="position" ></app-position>
                         </ol>
                     </li>
                 </ol>
-                <p>Summe des Vermögens {{(inventar$ | async)?.reinvermoegen.summeDesVermoegens}}</p>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
             </li>
 
             <li>
                 <h4>Schulden</h4>
                 <ol>
-                    <li *ngFor="let position of (inventar$ | async)?.schulden">
-                        {{position.position}} {{position.waehrungsbetrag}}
-                    </li>
+                    <app-position *ngFor="let position of (inventar$ | async)?.schulden" [position]="position"></app-position>
                 </ol>
-                <p>Summe der Schulden {{(inventar$ | async)?.reinvermoegen.summeDerSchulden}}</p>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
             </li>
 
             <li>
                 <h4>Ermittlung des Eigenkapitals</h4>
-                <p>Summe des Vermögens {{(inventar$ | async)?.reinvermoegen.summeDesVermoegens}}</p>
-                <p>- Summer der Schulden {{(inventar$ | async)?.reinvermoegen.summeDerSchulden}}</p>
-                <p>Reinvermögen (Eigenkapital) {{(inventar$ | async)?.reinvermoegen.reinvermoegen}}</p>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
+                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [betrag]="(inventar$ | async)?.reinvermoegen.reinvermoegen"></app-zeile>
             </li>
         </ol>
 

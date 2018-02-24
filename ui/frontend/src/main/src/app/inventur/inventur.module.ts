@@ -8,6 +8,8 @@ import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { InventarComponent } from './inventar/inventar.component';
 import { InventurService } from './inventur.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
+import { PositionComponent } from './inventar/position/position.component';
+import { ZeileComponent } from './inventar/zeile/zeile.component';
 
 @NgModule({
     imports: [
@@ -21,6 +23,8 @@ import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module
         GruppeComponent,
         PostenComponent,
         InventarComponent,
+        PositionComponent,
+        ZeileComponent,
     ],
     providers: [InventurService],
     exports: [InventurComponent]

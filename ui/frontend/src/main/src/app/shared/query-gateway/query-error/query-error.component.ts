@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { QueryGatewayState, QueryMessage } from '../query-gateway.model';
+import { QueryMessage } from '../query-gateway.model';
 import { NgRedux, select } from '@angular-redux/store';
-import { QueryGatewayModule } from '../query-gateway.module';
 import { QueryGatewayService } from '../query-gateway.service';
 import { AppState } from '../../../store/model';
 
@@ -22,7 +21,7 @@ export class QueryErrorComponent implements OnInit {
   queryState$: Observable<QueryMessage>;
 
   @select(['query', 'response', 'status'])
-  status$: Observable<number>
+  status$: Observable<number>;
 
   wiederholen() {
 
@@ -32,6 +31,6 @@ export class QueryErrorComponent implements OnInit {
       this.gateway.send(
           m.type,
           m.payload,
-          m.meta));
+          m.result));
   }
 }

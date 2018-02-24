@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { select } from '@angular-redux/store';
 import { LoggerService } from '../../shared/logger.service';
+import { ResultType } from '../../shared/query-gateway/result-type';
 
 @Component({
     selector: 'app-inventar',
@@ -24,9 +25,11 @@ export class InventarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.active.paramMap.subscribe(p => {
-            this.logger.log(`INVENTAR init id=${p.get('id')} Lese Inventar`);
-            this.query.send(QueryType.LeseInventar.toString(), {id: p.get('id')}, {});
+        this.active.paramMap
+            .map(parameter => parameter.get('id'))
+            .subscribe(id => {
+                this.logger.log(`INVENTAR init id=${id} Lese Inventar`);
+                this.query.send(QueryType.LeseInventar, {id: id}, ResultType.Inventar);
         })
     }
 }

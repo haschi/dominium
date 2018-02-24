@@ -14,6 +14,7 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/throw';
+import { ResultType } from './result-type';
 
 @Injectable()
 export class QueryGatewayService {
@@ -47,8 +48,8 @@ export class QueryGatewayService {
     }
 
     @dispatch()
-    send(type: string, payload: any, meta: any): QueryMessageAction {
+    send(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
         this.logger.log(`QUERY send ${type}`);
-        return this.aktionen.angefordert(type, payload, meta)
+        return this.aktionen.angefordert(type, payload, result)
     }
 }
