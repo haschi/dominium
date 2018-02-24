@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.BDDMockito.given
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -19,6 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.util.concurrent.CompletableFuture
 import kotlin.reflect.KClass
 
 @ExtendWith(SpringExtension::class)
@@ -32,7 +35,7 @@ class QueryEndpointTest
             val resultType: KClass<*>)
 
     @Autowired
-    private lateinit var mock: MockMvc
+    private lateinit var mvc: MockMvc
 
     @MockBean
     private lateinit var gateway: QueryGateway
@@ -64,7 +67,10 @@ class QueryEndpointTest
                 ))
                 .map {
                     dynamicTest(it.titel, {
-                        this.mock.perform(
+                        val future = mock(CompletableFuture::class.java)
+                        given(gateway.send(it.query, it.resultType.java)).willReturn(future)
+                        given(future.get()).willReturn(Version("haushaltsbuch", "123"))
+                        this.mvc.perform(
                                 MockMvcRequestBuilders
                                         .post("/gateway/query")
                                         .accept(MediaType.APPLICATION_JSON)
@@ -73,6 +79,56 @@ class QueryEndpointTest
                                 .andExpect(MockMvcResultMatchers.status().`is`(200))
 
                         verify(gateway).send(it.query, it.resultType.java)
+                        verify(future).get()
+                    })
+                }
+    }
+
+    data class TestfallFürStatus400(
+            val titel: String,
+            val content: String,
+            val fehlermeldung: String)
+
+    @TestFactory
+    fun status400(): List<DynamicTest>
+    {
+        return listOf(
+                TestfallFürStatus400(titel = "Unbekanntes Kommando",
+                        content = """
+                            |{
+                            |   "type" : "com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseVersionX",
+                            |   "payload" : {},
+                            |   "result" : "com.github.haschi.dominium.haushaltsbuch.core.model.values.Version"
+                            |}""".trimMargin(),
+                        fehlermeldung = "Unbekanntes Kommando"),
+                TestfallFürStatus400(
+                        titel = "Unbekannter Ergebnis-Typ",
+                        content = """
+                            |{
+                            |   "type" : "com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseVersion",
+                            |   "payload" : {},
+                            |   "result" : "com.github.haschi.dominium.haushaltsbuch.core.model.values.VersionX"
+                            |}""".trimMargin(),
+                        fehlermeldung = "Unbekannter Ergebnis-Typ"),
+                TestfallFürStatus400(
+                        titel = "Fehler bei der Deserialisierung der Anfrage",
+                        content = """
+                            |{
+                            |  "type" : "com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar",
+                            |  "payload" : { },
+                            |  "result" : "com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar"
+                            |}""".trimMargin(),
+                        fehlermeldung = "Fehler bei der Deserialisierung der Anfrage"))
+                .map {
+                    dynamicTest(it.titel, {
+                        this.mvc.perform(
+                                MockMvcRequestBuilders
+                                        .post("/gateway/query")
+                                        .accept(MediaType.APPLICATION_JSON)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(it.content))
+                                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                                .andExpect(MockMvcResultMatchers.content().string(it.fehlermeldung))
                     })
                 }
     }

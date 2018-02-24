@@ -25,7 +25,10 @@ class VersionEndpointTest
     @Test
     fun `get liefert Version`()
     {
-        this.mock.perform(MockMvcRequestBuilders.get("/version").accept(MediaType.TEXT_PLAIN))
+        this.mock.perform(
+                MockMvcRequestBuilders
+                        .get("/gateway/version")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk)
     }
 }
