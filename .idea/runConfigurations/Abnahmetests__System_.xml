@@ -6,8 +6,8 @@
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="myFilePath" value="$PROJECT_DIR$/test/src/testit/resources/com/github/haschi/domain/haushaltsbuch" />
-    <option name="GLUE" value="com.github.haschi.haushaltsbuch com.github.haschi" />
+    <option name="myFilePath" value="$PROJECT_DIR$/testit/src/test/resources/com/github/haschi/haushaltsbuch" />
+    <option name="GLUE" value="com.github.haschi.haushaltsbuch" />
     <option name="myNameFilter" value="" />
     <option name="myGeneratedName" value="All Features in: haushaltsbuch" />
     <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />

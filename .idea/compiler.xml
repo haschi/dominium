@@ -33,6 +33,7 @@
         <module name="haushaltsbuch.backend" />
         <module name="infrastruktur" />
         <module name="Infrastruktur" />
+        <module name="Integrationstest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

@@ -7,21 +7,24 @@ import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import org.axonframework.queryhandling.QueryGateway
-import org.picocontainer.Startable
+// import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
 import javax.management.Query
 
-class DieWelt(private val domäne: Anwendungskonfiguration) : Startable {
+class DieWelt(private val domäne: Anwendungskonfiguration) /*: Startable*/
+{
 
     var anwendung: Anwendung? = null
 
-    override fun stop()
+    //override
+    fun stop()
     {
         println("DieWelt stop")
         anwendung!!.stop()
     }
 
-    override fun start()
+    // override
+    fun start()
     {
         println("DieWelt start")
         anwendung = domäne.start { Anwendung(it) }
