@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
 import { Inventar } from './inventar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { select } from '@angular-redux/store';
 import { Inventarposition } from './inventarposition';
@@ -33,6 +33,7 @@ export class InventurComponent implements OnInit {
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
                 private router: Router,
+                private active: ActivatedRoute,
                 private inventurService: InventurService) {
 
         this.inventurId$ = inventurService.inventurid$;
@@ -60,17 +61,17 @@ export class InventurComponent implements OnInit {
         this.model = this.inventur.value;
         let inventar = this.formulareingabeKonvertieren(this.inventur.value);
 
-        this.inventurId$.subscribe(id => {
-            this.inventurService.erfasseInventar(inventar);
-            this.router.navigate(['inventar', id])
-        });
+        let id = this.active.snapshot.params.id
+        this.inventurService.erfasseInventar(inventar);
+        this.router.navigate(['inventar', id]);
     }
 
     private formulareingabeKonvertieren(value) {
         let inventar: Inventar = {
             anlagevermoegen: value.anlagevermoegen.map(this.inventarpositionKonvertieren),
             umlaufvermoegen: value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
-            schulden: value.schulden.map(this.inventarpositionKonvertieren)
+            schulden: value.schulden.map(this.inventarpositionKonvertieren),
+            reinvermoegen: {reinvermoegen: '', summeDesVermoegens: '', summeDerSchulden: ''}
         };
         return inventar;
     }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
 import { AppState } from '../../store/model';
 import { CommandGatewayService } from './command-gateway.service';
 import { CommandAction, CommandMessageAction } from './command-gateway.model';
@@ -17,6 +16,7 @@ import {
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { TdDialogService } from '@covalent/core';
+import { createEpicMiddleware, EpicMiddleware, Epic } from 'redux-observable';
 
 @Injectable()
 export class CommandGatewayEpicsService {

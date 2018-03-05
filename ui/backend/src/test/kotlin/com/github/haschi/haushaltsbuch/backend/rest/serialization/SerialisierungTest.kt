@@ -1,7 +1,6 @@
 package com.github.haschi.haushaltsbuch.backend.rest.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.fge.jackson.JsonLoader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.TestTemplate
@@ -76,14 +75,14 @@ class SerialisierungTest
     fun schematest(testfall: Testfall)
     {
         with(testfall) {
-
-                val schema = JsonLoader.fromString(schema)
-
-
-                val tester:JacksonTester<Any> = JacksonTester(
-                        this.javaClass,
-                        ResolvableType.forClass(testfall.poko.javaClass),
-                        mapper)
+//
+//                val schema = JsonLoader.fromString(schema)
+//
+//
+//                val tester:JacksonTester<Any> = JacksonTester(
+//                        this.javaClass,
+//                        ResolvableType.forClass(testfall.poko.javaClass),
+//                        mapper)
 
 
 //

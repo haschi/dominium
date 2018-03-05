@@ -21,6 +21,7 @@ class QueryEndpoint(val gateway: QueryGateway, val mapper: ObjectMapper)
 
         val ergebnis = gateway.send(query.query, query.resultType).get()
 
+        Thread.sleep(1500)
         return ResponseEntity.ok(ergebnis)
     }
 

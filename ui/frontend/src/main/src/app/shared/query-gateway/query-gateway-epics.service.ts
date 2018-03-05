@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs/observable/of';
 import { AppState } from '../../store/model';
 import { Observable } from 'rxjs/Observable';
-import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
 import { QueryAction, QueryMessageAction } from './query-gateway.model';
 import {
     QueryGatewayActionsService,
     QueryGatewayActionType
 } from './query-gateway-actions.service';
 import { QueryGatewayService } from './query-gateway.service';
-
+import { createEpicMiddleware, EpicMiddleware, Epic } from 'redux-observable';
 @Injectable()
 export class QueryGatewayEpicsService {
 
@@ -27,7 +26,6 @@ export class QueryGatewayEpicsService {
     private createAngefordertEpic(): Epic<QueryAction, AppState> {
         return (action$) => action$
             .ofType(QueryGatewayActionType.angefordert)
-            .delay(2000)
             .do(action => console.info("QUERY EXECUTE EPIC: " + JSON.stringify(action)))
             .mergeMap(action => this.service.get(action as QueryMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response))

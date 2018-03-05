@@ -31,7 +31,7 @@
 
         <!-- Das muss woanders hin -->
         <version.jboss.bom>10.0.1.Final</version.jboss.bom>
-        <kotlin.version>1.2.21</kotlin.version>
+        <kotlin.version>1.2.30</kotlin.version>
     </properties>
 
     <scm>
@@ -214,25 +214,8 @@
         <module>core</module>
         <module>infrastruktur</module>
         <module>ui</module>
+        <module>testit</module>
     </modules>
-
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>bintray</name>
-            <url>http://jcenter.bintray.com</url>
-        </repository>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>jboss</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
-        </repository>
-    </repositories>
 
 </project>
 

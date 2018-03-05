@@ -24,7 +24,12 @@ export const INVENTUR_INITIAL_STATE: InventurState = {
     inventar: {
         anlagevermoegen: [],
         umlaufvermoegen: [],
-        schulden: []
+        schulden: [],
+        reinvermoegen: {
+            summeDerSchulden: '',
+            summeDesVermoegens: '',
+            reinvermoegen: ''
+        }
     }
 };
 

@@ -13,34 +13,21 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <vertx.version>3.5.0</vertx.version>
         <jackson.version>2.9.2</jackson.version>
         <vmp.version>1.0.9</vmp.version>
         <axon.version>3.1</axon.version>
         <junit.jupiter.version>5.0.1</junit.jupiter.version>
         <junit.platform.version>1.0.1</junit.platform.version>
         <junit.version>4.12.1</junit.version>
-        <cukes.version>1.2.5</cukes.version>
-        <cukes.artefactId>info.cukes</cukes.artefactId>
         <assertj.version>3.8.0</assertj.version>
-        <vertx.verticle>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.verticle>
-        <!--<vertx.launcher>com.github.haschi.haushaltsbuch.infrastruktur.RestApi</vertx.launcher>-->
         <debug.port>8001</debug.port>
-        <kotlin.version>1.2.21</kotlin.version>
+        <kotlin.version>1.2.30</kotlin.version>
         <serialization.version>0.2</serialization.version>
         <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.vertx</groupId>
-                <artifactId>vertx-dependencies</artifactId>
-                <version>${vertx.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>com.github.haschi.haushaltsbuch</groupId>
                 <artifactId>haushaltsbuch-core</artifactId>
@@ -90,30 +77,6 @@
                 <version>${slf4j.version}</version>
             </dependency>
 
-            <!-- todo cucumber-dependencies.pom -->
-            <dependency>
-                <groupId>${cukes.artefactId}</groupId>
-                <artifactId>cucumber-java8</artifactId>
-                <version>${cukes.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${cukes.artefactId}</groupId>
-                <artifactId>cucumber-junit</artifactId>
-                <version>${cukes.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>${cukes.artefactId}</groupId>
-                <artifactId>cucumber-picocontainer</artifactId>
-                <version>${cukes.version}</version>
-            </dependency>
-
-            <!--<dependency>-->
-            <!--<groupId>io.cucumber</groupId>-->
-            <!--<artifactId>gherkin</artifactId>-->
-            <!--<version>5.0.0</version>-->
-            <!--</dependency>-->
 
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -142,45 +105,9 @@
         </dependency>
 
         <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-lang-kotlin</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-rx-java2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-web-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-config</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-simple</artifactId>-->
-            <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -192,19 +119,6 @@
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
             <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-unit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>3.0.5</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -271,30 +185,6 @@
         </dependency>
 
         <dependency>
-            <groupId>${cukes.artefactId}</groupId>
-            <artifactId>cucumber-java8</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${cukes.artefactId}</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${cukes.artefactId}</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>io.cucumber</groupId>-->
-        <!--<artifactId>gherkin</artifactId>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
@@ -350,24 +240,6 @@
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>vertx-maven-plugin</artifactId>
-                <version>${vmp.version}</version>
-                <configuration>
-                    <redeploy>true</redeploy>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>vmp</id>
-                        <goals>
-                            <goal>initialize</goal>
-                            <goal>package</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>

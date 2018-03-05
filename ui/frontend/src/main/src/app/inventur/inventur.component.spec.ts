@@ -56,7 +56,7 @@ describe('InventurComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('sollte ohne Eingabe mit leerem Invantar beginnen',
+    it('sollte ohne Eingabe mit leerem Inventar beginnen',
         inject([HttpTestingController, InventurService], (http: HttpTestingController, inventur: InventurService) => {
 
             inventur.beginneInventur('12345');
@@ -84,7 +84,8 @@ describe('InventurComponent', () => {
                         inventar: {
                             anlagevermoegen: [],
                             umlaufvermoegen: [],
-                            schulden: []
+                            schulden: [],
+                            reinvermoegen: {summeDerSchulden: '', summeDesVermoegens: '', reinvermoegen: ''}
                         }
                     },
                     meta: {}
@@ -93,7 +94,8 @@ describe('InventurComponent', () => {
             inventur.inventar$.subscribe(inventar => expect(inventar).toEqual({
                 anlagevermoegen: [],
                 umlaufvermoegen: [],
-                schulden: []
+                schulden: [],
+                reinvermoegen: {summeDerSchulden: '', summeDesVermoegens: '', reinvermoegen: ''}
             }));
 
         http.verify();

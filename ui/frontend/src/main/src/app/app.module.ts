@@ -8,11 +8,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppMaterialModule } from './shared/app-material-module';
 import { AppCovalentModuleModule } from './shared/app-covalent-module.module';
 import { InventurModule } from './inventur/inventur.module';
-import { NgReduxModule } from '@angular-redux/store';
-import { StoreModule } from './store/store.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
 import { QueryGatewayModule } from './shared/query-gateway/query-gateway.module';
+import { NgReduxModule } from '@angular-redux/store';
 
 @NgModule({
     declarations: [
@@ -26,10 +25,9 @@ import { QueryGatewayModule } from './shared/query-gateway/query-gateway.module'
         AppCovalentModuleModule,
         RouterModule.forRoot(DEMO_APP_ROUTES, {enableTracing: false}),
         InventurModule,
-        NgReduxModule,
-        StoreModule,
         CommandGatewayModule,
-        QueryGatewayModule
+        QueryGatewayModule,
+        NgReduxModule
     ],
     bootstrap: [AppComponent]
 })

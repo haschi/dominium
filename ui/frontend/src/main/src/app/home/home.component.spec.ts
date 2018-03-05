@@ -9,6 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { InventurModule } from '../inventur/inventur.module';
 import { NgReduxModule } from '@angular-redux/store';
 
+
 describe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;

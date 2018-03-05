@@ -5,6 +5,7 @@ import { CommandGatewayService } from '../shared/command-gateway/command-gateway
 import { Inventar } from './inventar';
 import { AppState } from '../store/model';
 import { CommandType } from './command-type';
+import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 
 @Injectable()
 export class InventurService {
@@ -15,7 +16,10 @@ export class InventurService {
     @select(['inventur', 'inventar'])
     inventar$: Observable<Inventar>;
 
-    constructor(private gateway: CommandGatewayService, private store: NgRedux<AppState>) {
+    constructor(
+        private idGenerator: IdGeneratorService,
+        private gateway: CommandGatewayService,
+        private store: NgRedux<AppState>) {
     }
 
     beginneInventur(id: any) {
@@ -23,6 +27,12 @@ export class InventurService {
             CommandType.BeginneInventur,
             {id: id},
             {});
+    }
+
+    beginnen(): any {
+        let id = this.idGenerator.neu();
+        this.beginneInventur(id)
+        return id;
     }
 
     erfasseInventar(inventar: Inventar) {

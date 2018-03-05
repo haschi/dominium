@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-redux/store": "^7.0.2",
+    "@angular-redux/store": "7.1.0",
     "@angular/animations": "5.1.2",
     "@angular/cdk": "5.0.2",
     "@angular/common": "5.1.2",

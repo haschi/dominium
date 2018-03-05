@@ -38,6 +38,10 @@
         </ol>
 
         <td-json-formatter [data]="(inventar$ | async)"></td-json-formatter>
+        <mat-card-actions>
+            <button mat-button (click)="haushaltsbuchAnlegen()">HAUSHALTSBUCH ANLEGEN</button>
+            <button mat-button (click)="inventurWiederholen()">INVENTUR WIEDERHOLEN</button>
+        </mat-card-actions>
     </mat-card-content>
 </mat-card>
 <ng-template #queryError>

@@ -4,6 +4,8 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infrastruktur" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/testit" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui/backend" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui/frontend" charset="UTF-8" />
