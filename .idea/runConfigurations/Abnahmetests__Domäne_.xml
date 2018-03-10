@@ -12,15 +12,18 @@
     <option name="myGeneratedName" value="All Features in: haushaltsbuch" />
     <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />
     <option name="VM_PARAMETERS" value="-Dcucumber.api.java.ObjectFactory=com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory" />
-    <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvmSMFormatter --monochrome" />
+    <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm2SMFormatter --monochrome" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <option name="ENABLE_SWING_INSPECTOR" value="false" />
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
-    <module name="Integrationstest" />
+    <module name="Abnahmetests" />
     <envs />
-    <method />
+    <method>
+      <option name="Make" enabled="false" />
+      <option name="MakeProject" enabled="true" />
+    </method>
   </configuration>
 </component>

@@ -1,19 +1,20 @@
 package com.github.haschi.haushaltsbuch
 
-import com.github.haschi.haushaltsbuch.backend.Application
-import cucumber.api.java.de.Wenn
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ContextConfiguration
+import cucumber.api.java8.De
 
-@SpringBootTest(classes = [Application::class])
-@ContextConfiguration
-class HaushaltsbuchDienstStepdefs
+class HaushaltsbuchDienstStepdefs(val dienst: HaushaltsbuchDienstRestSteps) : De
 {
-    @Wenn("^ich den Haushaltsbuchdienst starte$")
-    @Throws(Throwable::class)
-    fun ichDenHaushaltsbuchdienstStarte()
+    init
     {
-        // Write code here that turns the phrase above into concrete actions
-        //throw PendingException()
+        Wenn("ich den Haushaltsbuchdienst starte"){}
+
+        Und("ich die Version abfrage") {
+            dienst.wennIchDieVersionAbfrage()
+        }
+
+        Dann("werde ich die Version \"([^\"]*)\" \"([^\"]*)\" erhalten") {
+            service: String, version: String ->
+                        dienst.prüfeVersion(service, version)
+        }
     }
 }

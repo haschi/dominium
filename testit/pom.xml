@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>Integrationstests</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Integrationstest für Haushaltsbuch</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -31,7 +31,8 @@
         <junit-jupiter.version>5.0.1</junit-jupiter.version>
         <junit-platform.version>1.0.1</junit-platform.version>
 
-        <cukes.version>1.2.5</cukes.version>
+        <cukes.version>2.3.1</cukes.version>
+        <rest-assured.version>3.0.7</rest-assured.version>
     </properties>
 
     <dependencies>
@@ -122,44 +123,36 @@
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>com.github.java-json-tools</groupId>-->
-        <!--<artifactId>json-schema-validator</artifactId>-->
-        <!--<version>2.2.8</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
         <dependency>
-            <groupId>info.cukes</groupId>
+            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
             <version>${cukes.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>info.cukes</groupId>-->
-            <!--<artifactId>cucumber-picocontainer</artifactId>-->
-            <!--<version>${cukes.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cukes.version}</version>
+        </dependency>
 
         <dependency>
-            <groupId>info.cukes</groupId>
+            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cukes.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.0.0.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-spring</artifactId>
-            <version>${cukes.version}</version>
-            <scope>test</scope>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>io.cucumber</groupId>-->
+            <!--<artifactId>cucumber-expressions</artifactId>-->
+            <!--<version>5.0.13</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.github.haschi.haushaltsbuch</groupId>

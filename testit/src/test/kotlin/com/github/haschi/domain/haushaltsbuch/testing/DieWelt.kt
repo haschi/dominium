@@ -9,7 +9,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennun
 import org.axonframework.queryhandling.QueryGateway
 // import org.picocontainer.Startable
 import java.util.concurrent.CompletableFuture
-import javax.management.Query
+
 
 class DieWelt(private val domäne: Anwendungskonfiguration) /*: Startable*/
 {
@@ -23,7 +23,7 @@ class DieWelt(private val domäne: Anwendungskonfiguration) /*: Startable*/
         anwendung!!.stop()
     }
 
-    // override
+    //override
     fun start()
     {
         println("DieWelt start")
