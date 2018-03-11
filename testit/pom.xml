@@ -233,6 +233,7 @@
                         <cucumber.api.java.ObjectFactory>
                             com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory
                         </cucumber.api.java.ObjectFactory>
+                        <logging.level.root>WARN</logging.level.root>
                     </systemPropertyVariables>
                 </configuration>
                 <dependencies>
@@ -253,6 +254,7 @@
                         <cucumber.api.java.ObjectFactory>
                             com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
                         </cucumber.api.java.ObjectFactory>
+                        <logging.level.root>WARN</logging.level.root>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>

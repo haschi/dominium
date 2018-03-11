@@ -7,27 +7,28 @@ import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import org.axonframework.queryhandling.QueryGateway
-// import org.picocontainer.Startable
+import org.picocontainer.Startable
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.concurrent.CompletableFuture
 
 
-class DieWelt(private val domäne: Anwendungskonfiguration) /*: Startable*/
+class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
 {
+    private var anwendung: Anwendung? = null
 
-    var anwendung: Anwendung? = null
-
-    //override
+    override
     fun stop()
     {
-        println("DieWelt stop")
         anwendung!!.stop()
+        logger.info("Welt gestoppt")
     }
 
-    //override
+    override
     fun start()
     {
-        println("DieWelt start")
         anwendung = domäne.start { Anwendung(it) }
+        logger.info("Welt gestartet")
     }
 
     val query: QueryGateway
@@ -45,4 +46,9 @@ class DieWelt(private val domäne: Anwendungskonfiguration) /*: Startable*/
     var aktuelleInventur: Aggregatkennung = Aggregatkennung.nil
     var intention: CompletableFuture<Any>? = null
     var aktuellesHaushaltsbuch: Aggregatkennung = Aggregatkennung.nil
+
+    companion object
+    {
+        val logger: Logger = LoggerFactory.getLogger(DieWelt::class.java)
+    }
 }

@@ -10,10 +10,3 @@ data class Dominium(
         val command: CommandGateway,
         val query: QueryGateway,
         val historie: Historie)
-{
-
-    fun sendCommand(payload: Any): Any?
-    {
-        return command.sendAndWait<Any>(payload)
-    }
-}
