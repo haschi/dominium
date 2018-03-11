@@ -8,7 +8,8 @@ import org.junit.runner.RunWith
 
 @XStreamConverter(MoneyConverter::class)
 @CucumberOptions(
-        tags = ["~@ignore"],
+//        tags = ["~@ignore"],
+        tags = ["@domain"],
         plugin = ["pretty"])
 @RunWith(Cucumber::class)
 class RunCukesTest

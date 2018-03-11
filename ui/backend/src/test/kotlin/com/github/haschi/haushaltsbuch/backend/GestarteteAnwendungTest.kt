@@ -4,12 +4,14 @@ import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendung
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
+@Disabled
 class GestarteteAnwendungTest
 {
     @Test

@@ -6,11 +6,24 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.DynamicNode
 import org.junit.jupiter.api.DynamicTest.dynamicTest
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import org.slf4j.LoggerFactory
 
 @DisplayName("Währungsbetrag addieren")
 class WährungsbetragAddierenTest
 {
+    @Test
+    fun `welche logger implementierung verwenden wir?`()
+    {
+        val logger = LoggerFactory.getLogger(WährungsbetragAddierenTest::class.java)
+
+        logger.debug("Debug: ${logger.isDebugEnabled}")
+        logger.info("Info: ${logger.isInfoEnabled}")
+        logger.warn("Warn: ${logger.isWarnEnabled}")
+        logger.error("Error: ${logger.isErrorEnabled}")
+    }
+
     @TestFactory
     fun addieren(): List<DynamicNode>
     {
