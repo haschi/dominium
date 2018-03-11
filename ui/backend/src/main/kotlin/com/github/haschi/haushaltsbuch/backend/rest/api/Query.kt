@@ -4,16 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.haschi.haushaltsbuch.backend.UnbekanntesKommando
 
 class Query(
-        val message: RestQueryMessage,
-        val mapper: ObjectMapper)
+        private val message: RestQueryMessage,
+        private val mapper: ObjectMapper)
 {
     val query: Any
         get()
         {
             return try
             {
-                mapper.convertValue(message.payload,
-                        queryType)
+                mapper.convertValue(message.payload, queryType)
             }
             catch (ausnahme: IllegalArgumentException)
             {

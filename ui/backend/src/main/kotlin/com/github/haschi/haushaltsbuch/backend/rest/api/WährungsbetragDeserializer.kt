@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import java.io.IOException
 
-class WaehrungsbetragDeserializer
+class WährungsbetragDeserializer
     : StdScalarDeserializer<Währungsbetrag>(Währungsbetrag::class.java)
 {
     @Throws(IOException::class)

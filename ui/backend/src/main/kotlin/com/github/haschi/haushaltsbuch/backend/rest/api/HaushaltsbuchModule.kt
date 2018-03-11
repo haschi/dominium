@@ -15,7 +15,7 @@ class HaushaltsbuchModule : SimpleModule()
         addDeserializer(Aggregatkennung::class.java, AggregatkennungDeserializer())
 
         addSerializer(Währungsbetrag::class.java, WaehrungsbetragSerializer())
-        addDeserializer(Währungsbetrag::class.java, WaehrungsbetragDeserializer())
+        addDeserializer(Währungsbetrag::class.java, WährungsbetragDeserializer())
 
         setMixInAnnotation(Inventar::class.java, InventarMixin::class.java)
     }

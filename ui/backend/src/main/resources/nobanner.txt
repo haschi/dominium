@@ -1,1 +1,0 @@
-Haschi ${application.title} ${application.version} Spring Boot ${spring-boot.version}

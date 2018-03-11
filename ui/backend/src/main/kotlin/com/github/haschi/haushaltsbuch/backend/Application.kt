@@ -20,6 +20,6 @@ fun exit()
 {
     if (application != null)
     {
-        SpringApplication.exit(application);
+        SpringApplication.exit(application)
     }
 }
