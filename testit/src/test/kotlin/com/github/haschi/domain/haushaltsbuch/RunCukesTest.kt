@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 @CucumberOptions(
 //        tags = ["~@ignore"],
         tags = ["@domain"],
-        plugin = ["pretty"])
+        plugin = ["progress"])
 @RunWith(Cucumber::class)
 class RunCukesTest
 
