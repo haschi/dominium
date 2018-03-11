@@ -137,18 +137,9 @@
             <version>${junit-platform.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>com.github.java-json-tools</groupId>-->
-            <!--<artifactId>json-schema-validator</artifactId>-->
-            <!--<version>2.2.8</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>
-
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
@@ -210,8 +201,7 @@
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
-                        <!--<version>${kotlin.version}</version>-->
-                        <version>1.2.30</version>
+                        <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -240,9 +230,9 @@
                 <version>2.20.1</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <!--<cucumber.api.java.ObjectFactory>-->
-                            <!--com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory-->
-                        <!--</cucumber.api.java.ObjectFactory>-->
+                        <cucumber.api.java.ObjectFactory>
+                            com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
+                        </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
@@ -276,8 +266,5 @@
                 </executions>
             </plugin>
         </plugins>
-
-
     </build>
-
 </project>

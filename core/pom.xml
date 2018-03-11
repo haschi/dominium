@@ -142,12 +142,6 @@
             <version>${kotlin.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.jetbrains.kotlin</groupId>-->
-            <!--<artifactId>kotlin-stdlib-js</artifactId>-->
-            <!--<version>${kotlin.version}</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
@@ -230,20 +224,6 @@
                             </sourceDirs>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>compile-js</id>-->
-                        <!--<phase>compile</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>js</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<sourceDirs>-->
-                                <!--<source>-->
-                                    <!--src/main/kotlin/com/github/haschi/dominium/haushaltsbuch/core/model/miapi-->
-                                <!--</source>-->
-                            <!--</sourceDirs>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
 
                     <execution>
                         <id>test-compile</id>

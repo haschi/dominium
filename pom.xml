@@ -54,10 +54,10 @@
 
             <!-- auslagern nach jee-test.bom -->
             <!--<dependency>-->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>slf4j-simple</artifactId>-->
-                <!--<version>${slf4j.version}</version>-->
-                <!--<scope>test</scope>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-simple</artifactId>-->
+            <!--<version>${slf4j.version}</version>-->
+            <!--<scope>test</scope>-->
             <!--</dependency>-->
 
             <dependency>
@@ -129,48 +129,10 @@
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${kotlin.version}</version>
                 </plugin>
-                <plugin>
-                    <artifactId>jdepend-maven-plugin</artifactId>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <version>2.0</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.10</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.complykit</groupId>
-                    <artifactId>license-check-maven-plugin</artifactId>
-                    <version>0.5.3</version>
-                    <configuration>
-                        <blacklist>
-                            <param>agpl-3.0</param> <!--exclude affero-->
-                            <param>gpl-2.0</param> <!--exclude gpl 2-->
-                            <param>gpl-3.0</param> <!--exclude gpl 3-->
-                        </blacklist>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>os-check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
 
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>1.14</version>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -199,16 +161,6 @@
 
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.19.1</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <modules>
         <module>core</module>
