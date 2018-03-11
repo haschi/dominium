@@ -18,7 +18,7 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
     override fun historie(konfiguration: Configuration): Historie =
          EreignisLieferant(konfiguration.eventStore())
 
-    override fun eventstore(konfiguration: Configuration): EventStore =
+    override fun eventStore(konfiguration: Configuration): EventStore =
             EmbeddedEventStore(InMemoryEventStorageEngine())
 
     override fun loggingMonitor(konfiguration: Configuration,

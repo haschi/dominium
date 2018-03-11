@@ -22,16 +22,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Abnahmetests" />
         <module name="Application Core" />
         <module name="Backend" />
         <module name="Frontend" />
         <module name="haushaltsbuch-backend" />
         <module name="haushaltsbuch-core" />
         <module name="haushaltsbuch-frontend" />
+        <module name="haushaltsbuch-infrastructure" />
+        <module name="haushaltsbuch-test" />
+        <module name="haushaltsbuch.backend" />
         <module name="infrastruktur" />
+        <module name="Infrastruktur" />
+        <module name="Integrationstest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="Abnahmetests" target="1.8" />
       <module name="Application Core" target="1.8" />
       <module name="Backend" target="1.8" />
       <module name="Frontend" target="1.5" />
@@ -39,6 +46,13 @@
       <module name="haushaltsbuch-backend" target="1.8" />
       <module name="haushaltsbuch-core" target="1.8" />
       <module name="haushaltsbuch-frontend" target="1.5" />
+      <module name="haushaltsbuch-infrastructure" target="1.8" />
+      <module name="haushaltsbuch-test" target="1.8" />
+      <module name="haushaltsbuch-ui" target="1.8" />
+      <module name="haushaltsbuch.backend" target="1.8" />
+      <module name="Infrastruktur" target="1.8" />
+      <module name="Integrationstest" target="1.8" />
+      <module name="User Interface" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

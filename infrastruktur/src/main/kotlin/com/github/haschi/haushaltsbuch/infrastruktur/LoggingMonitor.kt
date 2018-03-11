@@ -1,9 +1,9 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.logging.LoggerFactory
 import org.axonframework.messaging.Message
 import org.axonframework.monitoring.MessageMonitor
 import org.axonframework.monitoring.MessageMonitor.MonitorCallback
+import org.slf4j.LoggerFactory
 
 class LoggingMonitor(private val name: String) : MessageMonitor<Message<*>>
 {

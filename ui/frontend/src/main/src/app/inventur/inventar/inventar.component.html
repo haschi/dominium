@@ -1,0 +1,49 @@
+<mat-card *ngIf="inventar$ | async; else queryError">
+    <mat-card-title id="inventar">Inventar</mat-card-title>
+    <mat-card-content>
+        <ol style="list-style-type: upper-alpha">
+            <li>
+                <h4>Vermögen</h4>
+                <ol style="list-style-type: upper-roman">
+                    <li>
+                        <h5>Anlagevermögen</h5>
+                        <ol>
+                            <app-position *ngFor="let position of (inventar$ | async)?.anlagevermoegen" [position]="position" ></app-position>
+                        </ol>
+                    </li>
+                    <li>
+                        <h5>Umlaufvermögen</h5>
+                        <ol>
+                            <app-position *ngFor="let position of (inventar$ | async)?.umlaufvermoegen" [position]="position" ></app-position>
+                        </ol>
+                    </li>
+                </ol>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
+            </li>
+
+            <li>
+                <h4>Schulden</h4>
+                <ol>
+                    <app-position *ngFor="let position of (inventar$ | async)?.schulden" [position]="position"></app-position>
+                </ol>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
+            </li>
+
+            <li>
+                <h4>Ermittlung des Eigenkapitals</h4>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
+                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [betrag]="(inventar$ | async)?.reinvermoegen.reinvermoegen"></app-zeile>
+            </li>
+        </ol>
+
+        <td-json-formatter [data]="(inventar$ | async)"></td-json-formatter>
+        <mat-card-actions>
+            <button mat-button (click)="haushaltsbuchAnlegen()">HAUSHALTSBUCH ANLEGEN</button>
+            <button mat-button (click)="inventurWiederholen()">INVENTUR WIEDERHOLEN</button>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>
+<ng-template #queryError>
+    <app-query-error></app-query-error>
+</ng-template>

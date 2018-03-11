@@ -2,23 +2,34 @@
   <dictionary name="matthias">
     <words>
       <w>abhängigkeitsumkehrung</w>
+      <w>aggregatkennung</w>
       <w>anfangsbestände</w>
+      <w>anwendung</w>
       <w>anwendungsdienst</w>
+      <w>anwendungskern</w>
       <w>anwendungskerns</w>
       <w>buchführungsregeln</w>
       <w>buchungstext</w>
       <w>cqrs</w>
+      <w>deserialisert</w>
+      <w>deserialisieren</w>
+      <w>deserialisierung</w>
       <w>dominium</w>
       <w>entitäten</w>
       <w>eröffnungsbilanzkonto</w>
       <w>infrastrukturfabrik</w>
+      <w>komponententest</w>
       <w>objektmodell</w>
       <w>poko</w>
+      <w>reinvermoegen</w>
       <w>reinvermögen</w>
+      <w>serialisierung</w>
+      <w>systemtest</w>
       <w>umlaufvermögen</w>
       <w>unittests</w>
       <w>wertobjekte</w>
       <w>währungsbetrag</w>
+      <w>zurueckgeben</w>
     </words>
   </dictionary>
 </component>

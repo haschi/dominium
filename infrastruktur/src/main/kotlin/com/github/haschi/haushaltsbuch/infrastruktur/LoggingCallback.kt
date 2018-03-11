@@ -1,8 +1,8 @@
 package com.github.haschi.haushaltsbuch.infrastruktur
 
-import io.vertx.core.logging.LoggerFactory
 import org.axonframework.commandhandling.CommandCallback
 import org.axonframework.commandhandling.CommandMessage
+import org.slf4j.LoggerFactory
 
 class LoggingCallback private constructor() : CommandCallback<Any, Any>
 {

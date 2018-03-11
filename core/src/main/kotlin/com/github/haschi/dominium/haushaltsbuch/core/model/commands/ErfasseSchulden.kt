@@ -8,4 +8,4 @@ data class ErfasseSchulden(
         @TargetAggregateIdentifier
         val inventurkennung: Aggregatkennung,
         val position: String,
-        val währungsbetrag: Währungsbetrag)
+        val waehrungsbetrag: Währungsbetrag)

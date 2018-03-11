@@ -58,7 +58,7 @@ class Inventur
         AggregateLifecycle.apply(
                 SchuldErfasst(
                         position = anweisung.position,
-                        betrag = anweisung.währungsbetrag))
+                        betrag = anweisung.waehrungsbetrag))
     }
 
     @CommandHandler
