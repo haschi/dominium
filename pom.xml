@@ -24,7 +24,7 @@
 
         <maven.enforcer.version>1.4.1</maven.enforcer.version>
 
-        <slf4j.version>1.7.13</slf4j.version>
+        <!--<slf4j.version>1.7.13</slf4j.version>-->
 
         <maven.dependency.plugin.version>2.10</maven.dependency.plugin.version>
         <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
@@ -53,12 +53,12 @@
             </dependency>
 
             <!-- auslagern nach jee-test.bom -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
-                <scope>test</scope>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>slf4j-simple</artifactId>-->
+                <!--<version>${slf4j.version}</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>com.github.haschi</groupId>

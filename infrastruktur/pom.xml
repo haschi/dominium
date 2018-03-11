@@ -24,7 +24,7 @@
         <debug.port>8001</debug.port>
         <kotlin.version>1.2.30</kotlin.version>
         <serialization.version>0.2</serialization.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <!--<slf4j.version>1.7.25</slf4j.version>-->
     </properties>
 
     <dependencyManagement>
@@ -67,16 +67,16 @@
             </dependency>
 
             <!-- logging -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>slf4j-api</artifactId>-->
+                <!--<version>${slf4j.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>slf4j-simple</artifactId>-->
+                <!--<version>${slf4j.version}</version>-->
+            <!--</dependency>-->
 
 
             <dependency>
@@ -105,10 +105,10 @@
             <artifactId>axon-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

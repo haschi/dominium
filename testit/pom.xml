@@ -256,12 +256,7 @@
                         <cucumber.api.java.ObjectFactory>
                             com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory
                         </cucumber.api.java.ObjectFactory>
-                        <!--<logging.level.root>WARN</logging.level.root>-->
-                        <logging.level.org.axonframework>WARN</logging.level.org.axonframework>
-                        <debug>false</debug>
-                        <org.slf4j.simpleLogger.defaultLogLevel>info</org.slf4j.simpleLogger.defaultLogLevel>
                     </systemPropertyVariables>
-                    <argLine>-Dlogging.level.root=WARN</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -281,7 +276,6 @@
                         <cucumber.api.java.ObjectFactory>
                             com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
                         </cucumber.api.java.ObjectFactory>
-                        <logging.level.root>WARN</logging.level.root>
                     </systemPropertyVariables>
                 </configuration>
                 <executions>
