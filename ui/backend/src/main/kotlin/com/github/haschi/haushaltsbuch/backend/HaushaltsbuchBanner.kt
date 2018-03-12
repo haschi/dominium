@@ -10,13 +10,12 @@ class HaushaltsbuchBanner : Banner
 {
     override fun printBanner(environment: Environment?, sourceClass: Class<*>?, out: PrintStream?)
     {
-        val writer = PrintWriter(out);
+        val writer = PrintWriter(out)
 
         val name = environment!!["haushaltsbuch.name"]
         val version = environment["haushaltsbuch.version"]
-        val timestamp = environment["haushaltsbuch.timestamp"]
 
-        writer.println("$name ($version/$timestamp)")
+        writer.println("$name ($version)")
         writer.flush()
     }
 }

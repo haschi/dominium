@@ -21,6 +21,9 @@
     <option name="PASS_PARENT_ENVS" value="true" />
     <module name="Abnahme-Tests" />
     <envs />
-    <method />
+    <method>
+      <option name="Make" enabled="false" />
+      <option name="MakeProject" enabled="true" />
+    </method>
   </configuration>
 </component>
