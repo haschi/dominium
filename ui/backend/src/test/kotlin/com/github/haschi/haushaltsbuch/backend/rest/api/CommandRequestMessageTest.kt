@@ -36,7 +36,6 @@ class CommandRequestMessageTest
                                 |       }
                                 |   },
                                 |   "meta" : {}}""".trimMargin())
-        println(content)
 
         val commandType = Class.forName(content.`object`.type)
         val person = mapper.convertValue(content.`object`.payload, commandType)
