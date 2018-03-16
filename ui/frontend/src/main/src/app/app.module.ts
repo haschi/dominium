@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
 import { QueryGatewayModule } from './shared/query-gateway/query-gateway.module';
 import { NgReduxModule } from '@angular-redux/store';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { NgReduxModule } from '@angular-redux/store';
         InventurModule,
         CommandGatewayModule,
         QueryGatewayModule,
-        NgReduxModule
+        NgReduxModule,
+        StoreModule
     ],
     bootstrap: [AppComponent]
 })
