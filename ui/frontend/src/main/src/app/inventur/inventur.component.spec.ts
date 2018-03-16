@@ -18,6 +18,8 @@ import { InventurService } from './inventur.service';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { StoreModule } from '../store/store.module';
 import { CommandType } from './command-type';
+import { ActivatedRouteStub } from './activated-route-stub';
+import { ActivatedRoute } from '@angular/router';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -39,7 +41,9 @@ describe('InventurComponent', () => {
                 CommandGatewayModule,
                 StoreModule
             ],
-            providers: [LoggerService, InventurService],
+            providers: [LoggerService, InventurService, {
+                provide: ActivatedRoute, useValue: new ActivatedRouteStub({id: '4567'})
+            }],
             schemas: [NO_ERRORS_SCHEMA]
 
         })
@@ -57,7 +61,10 @@ describe('InventurComponent', () => {
     });
 
     it('sollte ohne Eingabe mit leerem Inventar beginnen',
-        inject([HttpTestingController, InventurService], (http: HttpTestingController, inventur: InventurService) => {
+        inject([HttpTestingController, InventurService, ActivatedRoute],
+            (http: HttpTestingController, inventur: InventurService, activatedRoute: ActivatedRoute) => {
+
+                // (activatedRoute as ActivatedRouteStub).setParamMap({id: '12345'});
 
             inventur.beginneInventur('12345');
             const beginne = http.expectOne('/gateway/command');
