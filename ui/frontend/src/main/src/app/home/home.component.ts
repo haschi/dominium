@@ -15,9 +15,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.inventur.inventurid$
-            .filter(x => x !== '')
-            .subscribe(id => this.router.navigate(['inventur', id]))
+        // this.inventur.inventurid$
+        //     .filter(x => x !== '')
+        //     .subscribe(id => this.router.navigate(['inventur', id]))
     }
 
     inventurBeginnen() {
