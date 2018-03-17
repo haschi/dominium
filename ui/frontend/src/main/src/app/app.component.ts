@@ -32,7 +32,7 @@ export class AppComponent implements AfterViewInit, OnInit {
             title: 'Leadership',
             route: '/',
             icon: 'people',
-        },
+        }
     ];
     private version$: Observable<Object>;
 
