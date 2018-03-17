@@ -10,7 +10,7 @@ export function inventurReducer(state: InventurState = INVENTUR_INITIAL_STATE, a
             console.info(`REDUCE INVENTAR ${action.type}: ${action.message.type}`);
             switch (action.message.type) {
                 case CommandType.BeginneInventur: {
-                    return {...state, inventurId: action.message.payload.id}
+                    return {...INVENTUR_INITIAL_STATE, inventurId: action.message.payload.id}
                 }
                 // case CommandType.ErfasseInventar: {
                 //     return {...state, inventar: null}
