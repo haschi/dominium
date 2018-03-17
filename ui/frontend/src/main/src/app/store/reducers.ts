@@ -1,5 +1,5 @@
 import { AppState } from './model';
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 import { inventurReducer } from './inventur-reducers';
 import { commandReducer } from './command-reducers';
 import { queryReducer } from './query-reducers';

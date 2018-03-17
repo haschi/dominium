@@ -54,7 +54,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
 
     ngOnInit(): void {
-        console.info("NG onInit 1")
         let headers = new HttpHeaders();
         this.version$ = this.http.get<any>("/gateway/version")
             .map(data => {
@@ -63,6 +62,5 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit(): void {
-        console.info("After Init")
     }
 }

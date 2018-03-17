@@ -9,6 +9,7 @@ import {
 } from './query-gateway-actions.service';
 import { QueryGatewayService } from './query-gateway.service';
 import { createEpicMiddleware, EpicMiddleware, Epic } from 'redux-observable';
+
 @Injectable()
 export class QueryGatewayEpicsService {
 
@@ -26,14 +27,12 @@ export class QueryGatewayEpicsService {
     private createAngefordertEpic(): Epic<QueryAction, AppState> {
         return (action$) => action$
             .ofType(QueryGatewayActionType.angefordert)
-            .do(action => console.info("QUERY EXECUTE EPIC: " + JSON.stringify(action)))
             .mergeMap(action => this.service.get(action as QueryMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response))
                 .catch(error => this.onError(error, action)));
     }
 
     private onError(error: any, action: QueryAction): Observable<QueryAction> {
-        console.info("QUERY EPIC ERROR " + JSON.stringify(error));
         return of(this.aktionen.fehlgeschlagen(action.message, error.status, "Fehler"))
     }
 }

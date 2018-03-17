@@ -36,14 +36,12 @@ export class CommandGatewayEpicsService {
     private createAngefordertEpic(): Epic<CommandAction, AppState> {
         return (action$) => action$
             .ofType(CommandGatewayActionType.angefordert)
-            .do(action => console.info("COMMAND EXECUTE EPIC: " + JSON.stringify(action)))
             .mergeMap(action => this.service.post(action as CommandMessageAction)
                 .map(response => this.aktionen.gelungen(action.message, response))
                 .catch(error => this.onError(error, action)));
     }
 
     private onError(error: any, action: CommandAction): Observable<CommandAction> {
-        console.info("COMMAND EPIC ERROR " + JSON.stringify(error));
         if (error.status >= 500) {
             return this.openRetryDialog()
                 .map((accept: boolean) => {
@@ -61,7 +59,7 @@ export class CommandGatewayEpicsService {
     openRetryDialog(): Observable<boolean> {
         return this._dialogService.openConfirm({
             message: 'Der Server ist derzeit nicht verfügbar. Soll die Anfrage wiederholt werden',
-            title: 'Verbindungsfehler', //OPTIONAL, hides if not provided
+            title: 'Verbindungsfehler',
             cancelButton: 'Nein',
             acceptButton: 'Ja',
         }).afterClosed();

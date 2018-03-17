@@ -27,7 +27,6 @@ export class CommandGatewayService {
     status$: Observable<CommandResponse>;
 
     post(action: CommandMessageAction): Observable<HttpResponse<Object>> {
-        this.logger.log(`Send Command ${action.message.type}`);
         return this.http.post("/gateway/command", action.message, {observe: 'response'});
     }
 
