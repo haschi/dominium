@@ -14,5 +14,4 @@ export class ZeileComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

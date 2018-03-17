@@ -1,11 +1,8 @@
 import {
-    ChangeDetectionStrategy, Component, ContentChildren, OnInit, QueryList,
+    ChangeDetectionStrategy, Component, OnInit, QueryList,
     ViewChildren
 } from '@angular/core';
-import {
-    AbstractControl, FormArray, FormBuilder, FormControl, FormGroup,
-    Validators
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { LoggerService } from '../shared/logger.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -64,7 +61,6 @@ export class InventurComponent implements OnInit {
     }
 
     auswahlGeaendert(event: StepperSelectionEvent) {
-        console.info("Auswahl geändert " + event.selectedIndex + " " + event.selectedStep.label)
         this.aktuellerStep = event.selectedIndex
     }
 
@@ -85,30 +81,8 @@ export class InventurComponent implements OnInit {
     }
 
     hinzufuegen() {
-        console.log(`Anzahl Komponenten: ${this.gruppen.length}, aktueller Step: ${this.aktuellerStep}`);
-
-        this.gruppen.forEach((item, index) => {
-            console.log(`${index}. Komponente: ${item.titel}`)
-        });
-
         let komponente = this.gruppen.toArray()[this.aktuellerStep];
-        console.log(`Komponente: ${komponente.titel}`);
         komponente.hinzufuegen();
-
-        // const waehrungsbetrag = new FormGroup({
-        //     betrag: new FormControl('', Validators.required),
-        //     waehrung: new FormControl('EUR', Validators.required)
-        // });
-        //
-        // const group = new FormGroup({
-        //     position: new FormControl('', Validators.required),
-        //     waehrungsbetrag: waehrungsbetrag,
-        // });
-        //
-        // let v: FormArray = komponente.positionen// (this.anlagevermoegen.value as FormArray);
-        // v.push(group);
-        // v.updateValueAndValidity({onlySelf: false, emitEvent: true})
-        // console.log(`Anlagevermögen Positionen: ${JSON.stringify((this.anlagevermoegen.value as FormArray).length)}`)
     }
 
     private formulareingabeKonvertieren(value) {
