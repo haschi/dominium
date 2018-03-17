@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+///<reference path="../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
+import {
+    ChangeDetectionStrategy, Component, Input, TemplateRef
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-inventur-gruppe',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
     templateUrl: './gruppe.component.html',
     styleUrls: ['./gruppe.component.scss'],
 })
