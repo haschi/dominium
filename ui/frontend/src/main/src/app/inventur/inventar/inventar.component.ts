@@ -31,7 +31,6 @@ export class InventarComponent implements OnInit {
         this.active.paramMap
             .map(parameter => parameter.get('id'))
             .subscribe(id => {
-                this.logger.log(`INVENTAR init id=${id} Lese Inventar`);
                 this.query.send(QueryType.LeseInventar, {id: id}, ResultType.Inventar);
             })
     }
@@ -41,15 +40,6 @@ export class InventarComponent implements OnInit {
     }
 
     inventurWiederholen() {
-        console.info("Inventur wiederholen");
-
-        let id = this.inventur.beginnen();
-
-        this.inventur.inventurid$
-            .filter(x => x == id)
-            .subscribe(
-                x => this.router.navigate(['inventur', id]),
-                err => console.error('ERROR: ' + err)
-            )
+        this.inventur.beginnen();
     }
 }

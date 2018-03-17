@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventurService } from '../inventur/inventur.service';
-import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 
 @Component({
     selector: 'app-home',
@@ -15,9 +14,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.inventur.inventurid$
-        //     .filter(x => x !== '')
-        //     .subscribe(id => this.router.navigate(['inventur', id]))
     }
 
     inventurBeginnen() {

@@ -75,8 +75,9 @@ export class InventurComponent implements OnInit {
         this.model = this.inventur.value;
         let inventar = this.formulareingabeKonvertieren(this.inventur.value);
 
-        let id = this.active.snapshot.params.id
+        let id = this.active.snapshot.params.id;
         this.inventurService.erfasseInventar(inventar);
+
         this.router.navigate(['inventar', id]);
     }
 

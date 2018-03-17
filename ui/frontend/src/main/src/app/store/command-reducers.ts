@@ -5,7 +5,6 @@ import {
 import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
 
 export function commandReducer(state: CommandGatewayState = COMMAND_GATEWAY_INITIAL_STATE, action): CommandGatewayState {
-    console.info(`REDUCE COMMAND ${action.type}`);
     switch (action.type) {
         case CommandGatewayActionType.angefordert: {
             return {...state, sendet: true, message: action.message}
@@ -18,4 +17,4 @@ export function commandReducer(state: CommandGatewayState = COMMAND_GATEWAY_INIT
         }
     }
     return state;
-};
+}

@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
 @Injectable()
 export class IdGeneratorService {
 
-    constructor() {
-    }
+    constructor() {}
 
     neu(): any {
-        return uuidv1();
+        return uuidv4();
     }
 }

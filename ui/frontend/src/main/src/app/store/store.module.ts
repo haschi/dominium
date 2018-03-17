@@ -15,7 +15,7 @@ export class StoreModule {
     constructor(store: NgRedux<AppState>,
                 rootEpics: RootEpicsService,
                 devTools: DevToolsExtension) {
-        console.info("Redux Store initialisieren");
+
         store.configureStore(
             rootReducer,
             APP_INITIAL_STATE,

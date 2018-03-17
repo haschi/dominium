@@ -25,7 +25,10 @@ export class InventurService {
 
         this.inventurid$
             .filter(id => id != '')
-            .subscribe(id => this.router.navigate(['inventur', id]));
+            .subscribe(id => {
+                console.info(`Route zu /inventur/${id}`);
+                this.router.navigate(['inventur', id])
+            });
     }
 
     beginneInventur(id: any) {
@@ -37,7 +40,7 @@ export class InventurService {
 
     beginnen(): any {
         let id = this.idGenerator.neu();
-        this.beginneInventur(id)
+        this.beginneInventur(id);
         return id;
     }
 

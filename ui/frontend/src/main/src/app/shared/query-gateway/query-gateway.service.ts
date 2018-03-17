@@ -35,11 +35,9 @@ export class QueryGatewayService {
     status$: Observable<QueryResponse>;
 
     get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
-        this.logger.log(`QUERY get ${action.message.type}`);
         return Observable.timer(1000)
             .flatMap(nix =>
                 this.http.post("/gateway/query", action.message, {observe: 'response'})
-                .do(val => console.info(`QUERY got ${JSON.stringify(val)}`))
                 .retryWhen(error =>
                     error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
                         .delay(1000)
@@ -49,7 +47,6 @@ export class QueryGatewayService {
 
     @dispatch()
     send(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
-        this.logger.log(`QUERY send ${type}`);
         return this.aktionen.angefordert(type, payload, result)
     }
 }
