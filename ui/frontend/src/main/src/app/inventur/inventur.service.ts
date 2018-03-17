@@ -6,6 +6,7 @@ import { Inventar } from './inventar';
 import { AppState } from '../store/model';
 import { CommandType } from './command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class InventurService {
@@ -19,7 +20,12 @@ export class InventurService {
     constructor(
         private idGenerator: IdGeneratorService,
         private gateway: CommandGatewayService,
+        private router: Router,
         private store: NgRedux<AppState>) {
+
+        this.inventurid$
+            .filter(id => id != '')
+            .subscribe(id => this.router.navigate(['inventur', id]));
     }
 
     beginneInventur(id: any) {

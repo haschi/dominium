@@ -3,13 +3,13 @@
     <mat-card-content>
         <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
             durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.
-            Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.
+            Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.</p>
 
         <form [formGroup]="inventur" (ngSubmit)="speichern()">
-            <mat-horizontal-stepper linear>
+            <mat-horizontal-stepper linear (selectionChange)="auswahlGeaendert($event)">
                 <mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"
                           [stepControl]="anlagevermoegen">
-        <p>Erfassen Sie ihr Anlagevermögen.</p>
+                    <p>Erfassen Sie ihr Anlagevermögen.</p>
                     <app-inventur-gruppe [positionen]="anlagevermoegen">
                     </app-inventur-gruppe>
                     <div>
@@ -45,6 +45,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card>
-    <td-json-formatter [data]="(model$ | async)"></td-json-formatter>
-</mat-card>
+<button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"
+        style="position: fixed; right: 20px; bottom: 20px">
+    <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
+</button>

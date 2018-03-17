@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+    ChangeDetectionStrategy, Component, OnInit, QueryList,
+    ViewChildren
+} from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { LoggerService } from '../shared/logger.service';
 import 'rxjs/add/operator/map';
@@ -10,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { select } from '@angular-redux/store';
 import { Inventarposition } from './inventarposition';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { GruppeComponent } from './gruppe/gruppe.component';
 
 @Component({
     selector: 'app-inventur',
@@ -18,6 +23,11 @@ import { Inventarposition } from './inventarposition';
     styleUrls: ['./inventur.component.scss']
 })
 export class InventurComponent implements OnInit {
+
+    @ViewChildren(GruppeComponent)
+    private gruppen: QueryList<GruppeComponent>;
+
+    private aktuellerStep: number = 0;
 
     private inventur: FormGroup;
 
@@ -50,6 +60,10 @@ export class InventurComponent implements OnInit {
             .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
     }
 
+    auswahlGeaendert(event: StepperSelectionEvent) {
+        this.aktuellerStep = event.selectedIndex
+    }
+
     inventarpositionKonvertieren(poisition: any): Inventarposition {
         return {
             position: poisition.position,
@@ -64,6 +78,11 @@ export class InventurComponent implements OnInit {
         let id = this.active.snapshot.params.id
         this.inventurService.erfasseInventar(inventar);
         this.router.navigate(['inventar', id]);
+    }
+
+    hinzufuegen() {
+        let komponente = this.gruppen.toArray()[this.aktuellerStep];
+        komponente.hinzufuegen();
     }
 
     private formulareingabeKonvertieren(value) {

@@ -9,7 +9,6 @@ import { select } from '@angular-redux/store';
 import { LoggerService } from '../../shared/logger.service';
 import { ResultType } from '../../shared/query-gateway/result-type';
 import { InventurService } from '../inventur.service';
-import { IdGeneratorService } from '../../shared/command-gateway/id-generator.service';
 
 @Component({
     selector: 'app-inventar',
@@ -47,7 +46,7 @@ export class InventarComponent implements OnInit {
         let id = this.inventur.beginnen();
 
         this.inventur.inventurid$
-            // .filter(x => x == id)
+            .filter(x => x == id)
             .subscribe(
                 x => this.router.navigate(['inventur', id]),
                 err => console.error('ERROR: ' + err)
