@@ -133,7 +133,7 @@
     <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
     <orderEntry type="module" module-name="Frontend" />
     <orderEntry type="module" module-name="Application Core" />
-    <orderEntry type="library" name="Maven: org.axonframework:axon-core:3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.axonframework:axon-core:3.2" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.9" level="project" />
     <orderEntry type="library" name="Maven: xpp3:xpp3:1.1.4c" level="project" />
     <orderEntry type="library" name="Maven: org.javamoney:moneta:1.1" level="project" />

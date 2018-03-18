@@ -67,12 +67,6 @@
             </dependency>
 
             <dependency>
-                <groupId>it.kamaladafrica</groupId>
-                <artifactId>axon-cdi</artifactId>
-                <version>2.0</version>
-            </dependency>
-
-            <dependency>
                 <groupId>io.javaslang</groupId>
                 <artifactId>javaslang</artifactId>
                 <version>2.0.5</version>
