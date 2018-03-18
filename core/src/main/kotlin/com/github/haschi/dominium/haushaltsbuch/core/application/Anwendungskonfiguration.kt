@@ -6,6 +6,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
 import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
+import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore
 
 open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabrik)
 {
@@ -17,6 +18,7 @@ open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabri
             .registerComponent(Historie::class.java, infrastruktur::historie)
             .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java)) }
             .configureEventStore(infrastruktur::eventStore)
+
 
             .buildConfiguration()
 

@@ -19,18 +19,10 @@ class QueryEndpoint(val gateway: QueryGateway, val mapper: ObjectMapper)
             consumes = ["application/json"])
     fun post(@RequestBody message: RestQueryMessage): ResponseEntity<Any>
     {
-        logger.info("QueryEndpoint post: $message")
-
         val query = Query(message, mapper)
         val ergebnis = gateway.query(query.query, query.resultType).get()
 
-        Thread.sleep(1500)
         return ResponseEntity.ok(ergebnis)
-    }
-
-    companion object
-    {
-        val logger: Logger = LoggerFactory.getLogger(QueryEndpoint::class.java)
     }
 }
 

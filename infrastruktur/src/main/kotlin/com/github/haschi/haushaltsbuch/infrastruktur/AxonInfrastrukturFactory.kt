@@ -18,7 +18,7 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
         val queryBus = SimpleQueryBus()
-        queryBus.registerHandlerInterceptor(QueryLoggingInterceptor)
+        queryBus.registerHandlerInterceptor(LoggingInterceptor("QUERY  "))
 
         return queryBus
     }
@@ -31,7 +31,7 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
         val commandBus = SimpleCommandBus()
 
         commandBus.registerHandlerInterceptor(correlationDataInterceptor)
-        commandBus.registerHandlerInterceptor(CommandLoggingInterceptor)
+        commandBus.registerHandlerInterceptor(LoggingInterceptor("COMMAND"))
 
         return commandBus
     }
@@ -39,6 +39,11 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
     override fun historie(konfiguration: Configuration): Historie =
          EreignisLieferant(konfiguration.eventStore())
 
-    override fun eventStore(konfiguration: Configuration): EventStore =
-            EmbeddedEventStore(InMemoryEventStorageEngine())
+    override fun eventStore(konfiguration: Configuration): EventStore
+    {
+        val eventStore = EmbeddedEventStore(InMemoryEventStorageEngine())
+        eventStore.registerDispatchInterceptor(com.github.haschi.haushaltsbuch.infrastruktur.EventLoggingInterceptor())
+
+        return eventStore
+    }
 }
