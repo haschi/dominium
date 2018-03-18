@@ -11,12 +11,13 @@ import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine
 import org.axonframework.messaging.interceptors.CorrelationDataInterceptor
 import org.axonframework.queryhandling.QueryBus
+import org.axonframework.queryhandling.SimpleQueryBus
 
 class AxonInfrastrukturFactory : Infrastrukturfabrik
 {
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return SimpleQueryBus()
     }
 
     override fun commandBus(konfiguration: Configuration): CommandBus

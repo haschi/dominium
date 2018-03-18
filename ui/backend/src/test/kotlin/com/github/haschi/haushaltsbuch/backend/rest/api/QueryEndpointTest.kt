@@ -68,7 +68,7 @@ class QueryEndpointTest
                 .map {
                     dynamicTest(it.titel, {
                         val future = mock(CompletableFuture::class.java)
-                        given(gateway.send(it.query, it.resultType.java)).willReturn(future)
+                        given(gateway.query(it.query, it.resultType.java)).willReturn(future)
                         given(future.get()).willReturn(Version("haushaltsbuch", "123"))
                         this.mvc.perform(
                                 MockMvcRequestBuilders
@@ -78,7 +78,7 @@ class QueryEndpointTest
                                         .content(it.json))
                                 .andExpect(MockMvcResultMatchers.status().`is`(200))
 
-                        verify(gateway).send(it.query, it.resultType.java)
+                        verify(gateway).query(it.query, it.resultType.java)
                         verify(future).get()
                     })
                 }

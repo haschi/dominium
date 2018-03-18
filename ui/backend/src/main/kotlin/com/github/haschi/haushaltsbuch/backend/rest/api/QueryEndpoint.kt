@@ -22,7 +22,7 @@ class QueryEndpoint(val gateway: QueryGateway, val mapper: ObjectMapper)
         logger.info("QueryEndpoint post: $message")
 
         val query = Query(message, mapper)
-        val ergebnis = gateway.send(query.query, query.resultType).get()
+        val ergebnis = gateway.query(query.query, query.resultType).get()
 
         Thread.sleep(1500)
         return ResponseEntity.ok(ergebnis)
