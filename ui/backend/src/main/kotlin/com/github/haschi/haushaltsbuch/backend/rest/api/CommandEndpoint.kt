@@ -35,11 +35,7 @@ class CommandEndpoint(val mapper: ObjectMapper, val gateway: CommandGateway)
         }
 
         val command = mapper.convertValue(message.payload, commandType)
-
-        val result = gateway.sendAndWait<Any>(command)
-
-        println(message)
-        println(result)
+        gateway.sendAndWait<Any>(command)
 
         return ResponseEntity.accepted().build()
     }

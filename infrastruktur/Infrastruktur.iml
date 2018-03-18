@@ -29,6 +29,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.axonframework:axon-core:3.2" level="project" />
     <orderEntry type="module" module-name="Application Core" />
     <orderEntry type="library" name="Maven: org.javamoney:moneta:1.1" level="project" />
     <orderEntry type="library" name="Maven: javax.money:money-api:1.0.1" level="project" />

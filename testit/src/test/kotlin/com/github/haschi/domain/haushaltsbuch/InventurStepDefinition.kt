@@ -50,7 +50,7 @@ class InventurStepDefinition(
     fun wirdMeinInventarLeerSein()
     {
 
-        val inventar = welt.query.send(LeseInventar(welt.aktuelleInventur),
+        val inventar = welt.query.query(LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java)
         assertThat(inventar).isCompletedWithValueMatching{
             it == Inventar.leer
@@ -94,10 +94,10 @@ class InventurStepDefinition(
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
-                }
+                }.isDone
     }
 
     class SchuldParameter(
@@ -144,7 +144,7 @@ class InventurStepDefinition(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
                 summeDesVermoegens = Währungsbetrag.währungsbetrag(map["Summe des Vermögens"]!!))
 
-        val inventar = welt.query.send(
+        val inventar = welt.query.query(
                 LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java).get()
 
@@ -165,8 +165,8 @@ class InventurStepDefinition(
             "Es wurde kein Schritt ausgeführt, der eine Intention ausdrückt."
         }
 
-        welt.intention?.let { itention ->
-            assertThat(itention).isCompletedExceptionally.withFailMessage("X")
+        welt.intention.let { intention ->
+            assertThat(intention).isCompletedExceptionally.withFailMessage("X")
         }
     }
 
