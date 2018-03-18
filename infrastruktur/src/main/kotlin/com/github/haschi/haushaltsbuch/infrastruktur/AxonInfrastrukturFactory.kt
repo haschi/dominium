@@ -17,7 +17,10 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
 {
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
-        return SimpleQueryBus()
+        val queryBus = SimpleQueryBus()
+        queryBus.registerHandlerInterceptor(QueryLoggingInterceptor)
+
+        return queryBus
     }
 
     override fun commandBus(konfiguration: Configuration): CommandBus
