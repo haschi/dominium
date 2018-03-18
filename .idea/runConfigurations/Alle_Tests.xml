@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Alle Tests" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+    <toRun type="JUnit" name="Backend Tests" />
+    <toRun type="JUnit" name="Integrations-Tests" />
+    <toRun type="JavaScriptTestRunnerKarma" name="Frontend Tests" />
+    <method />
+  </configuration>
+</component>

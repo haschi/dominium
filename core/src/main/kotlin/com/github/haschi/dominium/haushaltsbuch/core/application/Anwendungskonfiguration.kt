@@ -15,7 +15,6 @@ open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabri
 {
 
     private val konfiguration: Configuration = DefaultConfigurer.defaultConfiguration()
-            .configureLogger()
             .configureCommandBus(infrastruktur::commandBus)
             .configureAggregate(Inventur::class.java)
             .configureAggregate(Haushaltsbuch::class.java)
@@ -24,18 +23,6 @@ open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabri
             .configureEventStore(infrastruktur::eventStore)
 
             .buildConfiguration()
-
-    private fun Configurer.configureLogger(): Configurer
-    {
-        return this.configureMessageMonitor(
-                { configuration ->
-                    BiFunction { comp: Class<*>, name: String ->
-                        ({ componentType: Class<*>, n: String ->
-                            infrastruktur.loggingMonitor(configuration, n)
-                        })(comp, name)
-                    }
-                })
-    }
 
     fun start(builder: (Configuration) -> Anwendung): Anwendung
     {
