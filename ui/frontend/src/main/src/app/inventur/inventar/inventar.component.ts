@@ -9,6 +9,7 @@ import { select } from '@angular-redux/store';
 import { LoggerService } from '../../shared/logger.service';
 import { ResultType } from '../../shared/query-gateway/result-type';
 import { InventurService } from '../inventur.service';
+import { Inventarposition } from '../inventarposition';
 
 @Component({
     selector: 'app-inventar',
@@ -19,6 +20,18 @@ export class InventarComponent implements OnInit {
 
     @select(['inventur', 'inventar'])
     inventar$: Observable<Inventar>;
+
+    @select(['inventur', 'inventar', 'anlagevermoegen'])
+    anlagevermoegen$: Observable<Inventarposition[]>
+
+    @select(['inventur', 'inventar', 'umlaufvermoegen'])
+    umlaufvermoegen$: Observable<Inventarposition[]>
+
+    @select(['inventur', 'inventar', 'schulden'])
+    schulden$: Observable<Inventarposition[]>
+
+    @select(['inventur', 'inventar', 'reinvermoegen'])
+    reinvermoegen$: Observable<Inventarposition[]>
 
     constructor(private active: ActivatedRoute,
                 private query: QueryGatewayService,

@@ -5,13 +5,17 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './zeile.component.html',
   styleUrls: ['./zeile.component.scss']
 })
-export class ZeileComponent implements OnInit {
+export class ZeileComponent {
 
   @Input() text: string;
   @Input() betrag: string;
+  @Input() summe: string;
 
-  constructor() { }
+  get zwischensumme(): boolean {
+    return this.summe === 'zwischensumme';
+  }
 
-  ngOnInit() {
+  get gesamtsumme(): boolean {
+    return this.summe === 'gesamtsumme';
   }
 }

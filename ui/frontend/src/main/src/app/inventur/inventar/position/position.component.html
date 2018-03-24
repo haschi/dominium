@@ -1,3 +1,5 @@
-<li>
-  <app-zeile [text]="position.position" [betrag]="position.waehrungsbetrag"></app-zeile>
-</li>
+<div layout="row" layout-align="space-between start">
+  <div flex="none" class="position">{{position.position}}</div>
+  <div flex></div>
+  <div flex="none">{{position.waehrungsbetrag}}</div>
+</div>
