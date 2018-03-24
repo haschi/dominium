@@ -1,5 +1,5 @@
 import {
-    ChangeDetectionStrategy, Component, OnInit, QueryList,
+    ChangeDetectionStrategy, Component, HostListener, OnInit, QueryList,
     ViewChildren
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -86,9 +86,13 @@ export class InventurComponent implements OnInit {
         komponente.hinzufuegen();
     }
 
+    @HostListener('document:keypress', ['$event'])
     tastatureingabe($event: KeyboardEvent): boolean {
         if ($event.key === '+') {
-            this.hinzufuegen();
+            if (this.inventur.valid) {
+                this.hinzufuegen();
+            }
+
             return false;
         }
 

@@ -1,7 +1,7 @@
 <div>
     <app-inventur-position *ngFor="let position of positionen.controls; let i = index"
                            [posten]="position" (geloescht)="loeschen(i)"
-                           layout="row" layout-padding>
+                           layout="row" layout-padding (keydown.delete)="loeschen(i)">
     </app-inventur-position>
 </div>
 
