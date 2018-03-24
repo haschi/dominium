@@ -6,12 +6,7 @@ import { Inventarposition } from '../../inventarposition';
   templateUrl: './position.component.html',
   styleUrls: ['./position.component.scss']
 })
-export class PositionComponent implements OnInit {
+export class PositionComponent {
 
   @Input() position: Inventarposition;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 }

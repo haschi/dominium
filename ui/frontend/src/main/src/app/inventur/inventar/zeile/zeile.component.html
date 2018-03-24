@@ -1,4 +1,5 @@
-<div layout="row" layout-align="space-between start">
+<div layout="row" layout-align="space-between start"
+     [ngClass]="{'zwischensumme': zwischensumme, 'gesamtsumme': gesamtsumme}">
   <div flex="none">{{text}}</div>
   <div flex></div>
   <div flex="none">{{betrag}}</div>

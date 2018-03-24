@@ -1,39 +1,45 @@
 <mat-card *ngIf="inventar$ | async; else queryError">
     <mat-card-title id="inventar">Inventar</mat-card-title>
-    <mat-card-content>
+    <mat-card-content id="positionen" class="positionen">
         <ol style="list-style-type: upper-alpha">
             <li>
                 <h4>Vermögen</h4>
                 <ol style="list-style-type: upper-roman">
-                    <li>
+                    <li >
                         <h5>Anlagevermögen</h5>
-                        <ol>
-                            <app-position *ngFor="let position of (inventar$ | async)?.anlagevermoegen" [position]="position" ></app-position>
-                        </ol>
+                        <app-position *ngFor="let position of (anlagevermoegen$ | async)"
+                                      [position]="position">
+                        </app-position>
                     </li>
                     <li>
                         <h5>Umlaufvermögen</h5>
-                        <ol>
-                            <app-position *ngFor="let position of (inventar$ | async)?.umlaufvermoegen" [position]="position" ></app-position>
-                        </ol>
+                        <app-position *ngFor="let position of (umlaufvermoegen$ | async)"
+                                      [position]="position">
+                        </app-position>
                     </li>
                 </ol>
-                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
+                <app-zeile [betrag]="(reinvermoegen$ | async)?.summeDesVermoegens"
+                           [summe]="'zwischensumme'"
+                           [text]="'Summe des Vermögens'">
+                </app-zeile>
             </li>
 
             <li>
                 <h4>Schulden</h4>
-                <ol>
-                    <app-position *ngFor="let position of (inventar$ | async)?.schulden" [position]="position"></app-position>
-                </ol>
-                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
+                <app-position *ngFor="let position of (schulden$ | async)"
+                              [position]="position">
+                </app-position>
+                <app-zeile [betrag]="(reinvermoegen$ | async)?.summeDerSchulden"
+                           [summe]="'zwischensumme'"
+                           [text]="'Summe der Schulden'">
+                </app-zeile>
             </li>
 
             <li>
                 <h4>Ermittlung des Eigenkapitals</h4>
-                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDesVermoegens"></app-zeile>
-                <app-zeile [text]="'Summe der Schulden'" [betrag]="(inventar$ | async)?.reinvermoegen.summeDerSchulden"></app-zeile>
-                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [betrag]="(inventar$ | async)?.reinvermoegen.reinvermoegen"></app-zeile>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(reinvermoegen$ | async)?.summeDesVermoegens"></app-zeile>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="(reinvermoegen$ | async)?.summeDerSchulden"></app-zeile>
+                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [summe]="'gesamtsumme'" [betrag]="(reinvermoegen$ | async)?.reinvermoegen"></app-zeile>
             </li>
         </ol>
 
