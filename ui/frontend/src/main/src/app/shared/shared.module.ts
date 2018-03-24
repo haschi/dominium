@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { CovalentJsonFormatterModule } from '@covalent/core';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
     imports: [
@@ -25,11 +26,13 @@ import { CovalentJsonFormatterModule } from '@covalent/core';
         AppMaterialModule,
         ReactiveFormsModule,
         MatInputModule,
-        CovalentJsonFormatterModule
+        CovalentJsonFormatterModule,
+        AutofocusDirective
     ],
     providers: [
         LoggerService,
-    ]
+    ],
+    declarations: [AutofocusDirective]
 })
 export class SharedModule {
 }
