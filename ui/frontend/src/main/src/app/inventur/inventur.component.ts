@@ -86,6 +86,15 @@ export class InventurComponent implements OnInit {
         komponente.hinzufuegen();
     }
 
+    tastatureingabe($event: KeyboardEvent): boolean {
+        if ($event.key === '+') {
+            this.hinzufuegen();
+            return false;
+        }
+
+        return true
+    }
+
     private formulareingabeKonvertieren(value) {
         let inventar: Inventar = {
             anlagevermoegen: value.anlagevermoegen.map(this.inventarpositionKonvertieren),
