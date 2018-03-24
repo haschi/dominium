@@ -1,1 +1,5 @@
 @import '~@covalent/core/common/platform.css';
+
+[mat-button], [mat-raised-button] {
+  text-transform: uppercase;
+}
