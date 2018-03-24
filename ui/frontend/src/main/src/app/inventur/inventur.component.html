@@ -43,9 +43,12 @@
             </mat-horizontal-stepper>
         </form>
     </mat-card-content>
+    <button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"
+            [disabled]="inventur?.invalid"
+            matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."
+            style="position: fixed; right: 20px; bottom: 20px">
+        <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
+    </button>
+
 </mat-card>
 
-<button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"
-        style="position: fixed; right: 20px; bottom: 20px">
-    <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
-</button>

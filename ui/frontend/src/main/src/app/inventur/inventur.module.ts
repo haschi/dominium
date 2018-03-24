@@ -24,7 +24,7 @@ import { ZeileComponent } from './inventar/zeile/zeile.component';
         PostenComponent,
         InventarComponent,
         PositionComponent,
-        ZeileComponent,
+        ZeileComponent
     ],
     providers: [InventurService],
     exports: [InventurComponent]

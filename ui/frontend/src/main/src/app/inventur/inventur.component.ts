@@ -1,5 +1,5 @@
 import {
-    ChangeDetectionStrategy, Component, OnInit, QueryList,
+    ChangeDetectionStrategy, Component, HostListener, OnInit, QueryList,
     ViewChildren
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
@@ -84,6 +84,19 @@ export class InventurComponent implements OnInit {
     hinzufuegen() {
         let komponente = this.gruppen.toArray()[this.aktuellerStep];
         komponente.hinzufuegen();
+    }
+
+    @HostListener('document:keypress', ['$event'])
+    tastatureingabe($event: KeyboardEvent): boolean {
+        if ($event.key === '+') {
+            if (this.inventur.valid) {
+                this.hinzufuegen();
+            }
+
+            return false;
+        }
+
+        return true
     }
 
     private formulareingabeKonvertieren(value) {
