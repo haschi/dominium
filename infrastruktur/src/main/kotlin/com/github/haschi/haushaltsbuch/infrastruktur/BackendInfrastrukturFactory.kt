@@ -3,8 +3,6 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
-import com.mongodb.MongoClient
-import com.mongodb.ServerAddress
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.CommandMessage
 import org.axonframework.commandhandling.SimpleCommandBus
@@ -20,7 +18,9 @@ import org.axonframework.queryhandling.SimpleQueryBus
 import org.axonframework.serialization.Serializer
 import org.axonframework.serialization.json.JacksonSerializer
 
-class BackendInfrastrukturFactory(val mapper: ObjectMapper) : Infrastrukturfabrik
+class BackendInfrastrukturFactory(
+        val mapper: ObjectMapper,
+        val template: DefaultMongoTemplate) : Infrastrukturfabrik
 {
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
@@ -53,10 +53,6 @@ class BackendInfrastrukturFactory(val mapper: ObjectMapper) : Infrastrukturfabri
 
     override fun eventStore(konfiguration: Configuration): EventStore
     {
-        val server = ServerAddress("localhost", 27017)
-        val client = MongoClient(server)
-        val template = DefaultMongoTemplate(client)
-
         val engine = MongoEventStorageEngine(
                 serializer(konfiguration),
                 null,
