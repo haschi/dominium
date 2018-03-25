@@ -12,8 +12,9 @@ import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageE
 import org.axonframework.messaging.interceptors.CorrelationDataInterceptor
 import org.axonframework.queryhandling.QueryBus
 import org.axonframework.queryhandling.SimpleQueryBus
+import org.axonframework.serialization.Serializer
 
-class AxonInfrastrukturFactory : Infrastrukturfabrik
+class TestInfrastrukturFactory : Infrastrukturfabrik
 {
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
@@ -39,10 +40,15 @@ class AxonInfrastrukturFactory : Infrastrukturfabrik
     override fun historie(konfiguration: Configuration): Historie =
          EreignisLieferant(konfiguration.eventStore())
 
+    override fun serializer(konfiguration: Configuration): Serializer
+    {
+        return konfiguration.eventSerializer()
+    }
+
     override fun eventStore(konfiguration: Configuration): EventStore
     {
         val eventStore = EmbeddedEventStore(InMemoryEventStorageEngine())
-        eventStore.registerDispatchInterceptor(com.github.haschi.haushaltsbuch.infrastruktur.EventLoggingInterceptor())
+        eventStore.registerDispatchInterceptor(EventLoggingInterceptor())
 
         return eventStore
     }

@@ -61,7 +61,7 @@
 
             <dependency>
                 <groupId>org.axonframework</groupId>
-                <artifactId>axon-mongo3</artifactId>
+                <artifactId>axon-mongo</artifactId>
                 <version>${axon.version}</version>
             </dependency>
 
@@ -89,6 +89,11 @@
         <dependency>
             <groupId>org.axonframework</groupId>
             <artifactId>axon-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-mongo</artifactId>
         </dependency>
 
         <dependency>

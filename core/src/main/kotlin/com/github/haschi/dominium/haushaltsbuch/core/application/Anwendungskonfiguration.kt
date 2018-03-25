@@ -19,7 +19,6 @@ open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabri
             .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java)) }
             .configureEventStore(infrastruktur::eventStore)
 
-
             .buildConfiguration()
 
     fun start(builder: (Configuration) -> Anwendung): Anwendung

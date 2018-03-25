@@ -9,8 +9,6 @@ class SystemtestPicoFactory : PicoFactory()
     init
     {
         logger.info("Initialisiere Systemtest Pico Factory")
-        addClass(AxonInfrastrukturFactory::class.java)
-        addClass(Anwendungskonfiguration::class.java)
     }
 
     companion object

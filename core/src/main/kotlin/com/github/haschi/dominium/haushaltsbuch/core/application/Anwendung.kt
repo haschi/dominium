@@ -14,11 +14,10 @@ open class Anwendung(private val konfiguration: Configuration)
         konfiguration.shutdown()
     }
 
-    private val commandbus: CommandBus get() = konfiguration.commandBus()
+    private val commandBus: CommandBus get() = konfiguration.commandBus()
 
     private val commandGatewayFactory
-        get() = CommandGatewayFactory(commandbus)
-    //.registerCommandCallback(infrastruktur.logger())
+        get() = CommandGatewayFactory(commandBus)
 
     private fun <T : Any> gateway(kClass: KClass<T>): T
     {

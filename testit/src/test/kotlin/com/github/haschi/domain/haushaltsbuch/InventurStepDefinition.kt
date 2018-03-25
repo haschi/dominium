@@ -69,7 +69,7 @@ class InventurStepDefinition(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
-        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -82,7 +82,7 @@ class InventurStepDefinition(
     fun `dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
-        assertThat(welt.query.send(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
+        assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
                         Vermoegenswert(it.position, it.währungsbetrag)
@@ -166,7 +166,7 @@ class InventurStepDefinition(
         }
 
         welt.intention.let { intention ->
-            assertThat(intention).isCompletedExceptionally.withFailMessage("X")
+            assertThat(intention).isCompletedExceptionally.withFailMessage(fehlermeldung)
         }
     }
 
