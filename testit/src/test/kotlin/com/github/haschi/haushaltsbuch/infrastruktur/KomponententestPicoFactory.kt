@@ -11,7 +11,7 @@ class KomponententestPicoFactory : PicoFactory()
         val logger = LoggerFactory.getLogger(KomponententestPicoFactory::class.java)
         logger.info("Initialisiere Komponententest Pico Factory")
 
-        addClass(AxonInfrastrukturFactory::class.java)
+        addClass(TestInfrastrukturFactory::class.java)
         addClass(Anwendungskonfiguration::class.java)
     }
 }

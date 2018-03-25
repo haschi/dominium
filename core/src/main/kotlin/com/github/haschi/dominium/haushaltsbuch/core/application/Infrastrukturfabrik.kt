@@ -5,9 +5,11 @@ import org.axonframework.commandhandling.CommandBus
 import org.axonframework.config.Configuration
 import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.queryhandling.QueryBus
+import org.axonframework.serialization.Serializer
 
 interface Infrastrukturfabrik
 {
+    fun serializer(konfiguration: Configuration): Serializer
     fun eventStore(konfiguration: Configuration): EventStore
     fun commandBus(konfiguration: Configuration): CommandBus
     fun queryBus(konfiguration: Configuration): QueryBus

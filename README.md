@@ -284,3 +284,8 @@ Getestet unter
 * Kotlin 1.2.10
 * MariaDB Server Version 10.0.23, Client Version 1.3.7
 
+Testumgebung
+------------
+```bash
+docker run --name test-mongo -p "27017:27017" -d mongo:latest
+```

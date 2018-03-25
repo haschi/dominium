@@ -29,7 +29,8 @@ class LoggingInterceptor<T : Message<*>>(private val name: String)
         }
         catch (ausnahme: Exception)
         {
-            logger.warn("[$item] fehlgeschlagen:", ausnahme)
+            logger.warn("[$item] fehlgeschlagen: '${ausnahme.message}'", ausnahme)
+            throw ausnahme;
         }
     }
 }

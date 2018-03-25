@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 
 @XStreamConverter(MoneyConverter::class)
 @CucumberOptions(
-//        tags = ["~@ignore"],
+        strict = true,
         tags = ["@domain"],
         plugin = ["progress"])
 @RunWith(Cucumber::class)
