@@ -7,8 +7,11 @@ import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseEröffnungsbilanz
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanz
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
+import cucumber.api.DataTable
 import cucumber.api.PendingException
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
@@ -37,8 +40,10 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     }
 
     @Dann("^werde ich die folgende privaten Eröffnungsbilanz vorgeschlagen haben:$")
-    fun x()
+    fun x(erwartet: DataTable)
     {
-        throw PendingException()
+        val bilanz =  welt.query.query(
+                LeseEröffnungsbilanz(welt.aktuelleInventur),
+                Eröffnungsbilanz::class.java)
     }
 }
