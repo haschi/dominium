@@ -22,7 +22,7 @@
         <junit.version>4.12.1</junit.version>
         <assertj.version>3.8.0</assertj.version>
         <debug.port>8001</debug.port>
-        <kotlin.version>1.2.30</kotlin.version>
+        <kotlin.version>1.2.31</kotlin.version>
         <serialization.version>0.2</serialization.version>
     </properties>
 
