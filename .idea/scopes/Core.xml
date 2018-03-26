@@ -1,3 +1,3 @@
 <component name="DependencyValidationManager">
-  <scope name="Core" pattern="src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.application..*||src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.domain..*||src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.model..*" />
+  <scope name="Core" pattern="src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.application..*||src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.domain..*||src[Application Core]:com.github.haschi.dominium.haushaltsbuch.core.model..*||file[Abnahme-Tests]:src/test/resources/com/github/haschi/domain/haushaltsbuch/*||file[Abnahme-Tests]:src/test/kotlin/com/github/haschi/haushaltsbuch/infrastruktur//*||file[Abnahme-Tests]:src/test/kotlin/com/github/haschi/domain/haushaltsbuch//*" />
 </component>
