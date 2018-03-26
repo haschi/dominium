@@ -7,11 +7,11 @@ Funktionalität: Private Eröffnungsbilanz erstellen
   # https://de.wikipedia.org/wiki/Privatbilanz
   Szenario: Private Eröffnungsbilanz erstellen
     Wenn ich die Inventur mit folgendem Inventar beende:
-      | Gruppe         | Position | Betrag       |
+      | Gruppe         | Position | Währungsbetrag |
       | Anlagevermögen | Sparbuch | 1.234,56 EUR |
-      | Umlaufvermögen |          |              |
-      | Schulden       |          |              |
-      | Eigenkapital   |          | 1.234,56 EUR |
+      #| Umlaufvermögen |          |              |
+      #| Schulden       |          |              |
+      #| Eigenkapital   |          | 1.234,56 EUR |
 
     Dann werde ich die folgende privaten Eröffnungsbilanz vorgeschlagen haben:
       | Seite  | Gruppe              | Posten   | Betrag       |

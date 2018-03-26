@@ -15,10 +15,10 @@ Funktionalität: Inventur durchführen
   Szenario: Inventar erfassen
     Angenommen ich habe mit der Inventur begonnen
     Wenn ich folgendes Inventar erfasse:
-      | Gruppe   | Untergruppe           | Position         | Währungsbetrag |
-      | Vermögen | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
-      | Vermögen | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
-      | Schulden | Langfristige Schulden | Autokredit       | 10.569,00 EUR  |
+      | Gruppe                | Position         | Währungsbetrag |
+      | Anlagevermögen        | Sparbuchguthaben | 5.300,00 EUR   |
+      | Umlaufvermögen        | Bankguthaben     | 500,00 EUR     |
+      | Langfristige Schulden | Autokredit       | 10.569,00 EUR  |
 
     Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
       | Position         | Währungsbetrag |
@@ -47,14 +47,14 @@ Funktionalität: Inventur durchführen
   Szenario: Inventar erfassen nach Beenden der Inventur
     Angenommen ich habe mit der Inventur begonnen
     Und ich habe folgendes Inventar erfasst:
-      | Gruppe   | Untergruppe    | Position         | Währungsbetrag |
-      | Vermögen | Anlagevermögen | Sparbuchguthaben | 5.300,00 EUR   |
+      | Gruppe         | Position         | Währungsbetrag |
+      | Anlagevermögen | Sparbuchguthaben | 5.300,00 EUR   |
 
     Wenn ich die Inventur beende
 
     Und ich folgendes Inventar erfassen will:
-      | Gruppe   | Untergruppe    | Position     | Währungsbetrag |
-      | Vermögen | Umlaufvermögen | Bankguthaben | 500,00 EUR     |
+      | Gruppe         | Position     | Währungsbetrag |
+      | Umlaufvermögen | Bankguthaben | 500,00 EUR     |
 
     Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
 
