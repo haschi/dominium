@@ -4,11 +4,11 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseEröffnun
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanz
 import org.axonframework.queryhandling.QueryHandler
 
-class BilanzQueryHandler
+class BilanzQueryHandler(val ablage: BilanzAblage)
 {
     @QueryHandler
     fun falls(abfrage: LeseEröffnungsbilanz): Eröffnungsbilanz
     {
-        return Eröffnungsbilanz
+        return ablage.lesen(abfrage.inventurId)
     }
 }

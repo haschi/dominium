@@ -1,3 +1,3 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
-object Eröffnungsbilanz
+data class Eröffnungsbilanz(val aktiva: List<Bilanzgruppe>, val passiva: List<Bilanzgruppe>)

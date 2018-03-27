@@ -14,7 +14,6 @@ import org.axonframework.eventsourcing.EventSourcingHandler
 
 class Haushaltsbuch
 {
-
     @AggregateIdentifier
     private var id: Aggregatkennung? = null
 
