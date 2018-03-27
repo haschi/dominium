@@ -1,5 +1,6 @@
 package com.github.haschi.domain.haushaltsbuch
 
+import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
@@ -16,6 +17,7 @@ import cucumber.api.PendingException
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import cucumber.api.java8.En
+import org.assertj.core.api.Assertions.assertThat
 
 class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: DieWelt)
 {
@@ -39,11 +41,18 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
         welt.aktuelleInventur = inventurId
     }
 
-    @Dann("^werde ich die folgende privaten Eröffnungsbilanz vorgeschlagen haben:$")
-    fun x(erwartet: DataTable)
+    @Dann("^werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:$")
+    fun eröffnungsbilanzPrüfen(erwartet: List<Bilanzposition>)
     {
-        val bilanz =  welt.query.query(
+        val abfrage =  welt.query.query(
                 LeseEröffnungsbilanz(welt.aktuelleInventur),
                 Eröffnungsbilanz::class.java)
+
+        assertThat(abfrage).isCompletedWithValue(erwartet.bilanz())
     }
+}
+
+private fun <E> List<E>.bilanz(): Eröffnungsbilanz
+{
+    return Eröffnungsbilanz
 }

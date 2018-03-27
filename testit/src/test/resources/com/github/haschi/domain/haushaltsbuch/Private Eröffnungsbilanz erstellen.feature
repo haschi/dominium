@@ -13,7 +13,7 @@ Funktionalität: Private Eröffnungsbilanz erstellen
       #| Schulden       |          |              |
       #| Eigenkapital   |          | 1.234,56 EUR |
 
-    Dann werde ich die folgende privaten Eröffnungsbilanz vorgeschlagen haben:
+    Dann werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:
       | Seite  | Gruppe              | Posten   | Betrag       |
       | Aktiv  | A Anlagevermögen    | Sparbuch | 1.234,56 EUR |
       | Aktiv  | B Umlaufvermögen    |          |              |
