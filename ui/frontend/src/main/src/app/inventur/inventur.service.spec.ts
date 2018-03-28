@@ -1,6 +1,5 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
-import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
 import { BilanzComponent } from './bilanz/bilanz.component';
 
 import { InventurService } from './inventur.service';
