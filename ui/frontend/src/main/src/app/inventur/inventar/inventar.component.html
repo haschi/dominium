@@ -1,4 +1,4 @@
-<mat-card *ngIf="inventar$ | async; else queryError">
+<mat-card *ngIf="(inventar$ | async) as inventar; else queryError">
     <mat-card-title id="inventar">Inventar</mat-card-title>
     <mat-card-content id="positionen" class="positionen">
         <ol style="list-style-type: upper-alpha">
@@ -7,18 +7,18 @@
                 <ol style="list-style-type: upper-roman">
                     <li >
                         <h5>Anlagevermögen</h5>
-                        <app-position *ngFor="let position of (anlagevermoegen$ | async)"
+                        <app-position *ngFor="let position of inventar.anlagevermoegen"
                                       [position]="position">
                         </app-position>
                     </li>
                     <li>
                         <h5>Umlaufvermögen</h5>
-                        <app-position *ngFor="let position of (umlaufvermoegen$ | async)"
+                        <app-position *ngFor="let position of inventar.umlaufvermoegen"
                                       [position]="position">
                         </app-position>
                     </li>
                 </ol>
-                <app-zeile [betrag]="(reinvermoegen$ | async)?.summeDesVermoegens"
+                <app-zeile [betrag]="inventar.reinvermoegen.summeDesVermoegens"
                            [summe]="'zwischensumme'"
                            [text]="'Summe des Vermögens'">
                 </app-zeile>
@@ -26,10 +26,10 @@
 
             <li>
                 <h4>Schulden</h4>
-                <app-position *ngFor="let position of (schulden$ | async)"
+                <app-position *ngFor="let position of inventar.schulden"
                               [position]="position">
                 </app-position>
-                <app-zeile [betrag]="(reinvermoegen$ | async)?.summeDerSchulden"
+                <app-zeile [betrag]="inventar.reinvermoegen.summeDerSchulden"
                            [summe]="'zwischensumme'"
                            [text]="'Summe der Schulden'">
                 </app-zeile>
@@ -37,13 +37,14 @@
 
             <li>
                 <h4>Ermittlung des Eigenkapitals</h4>
-                <app-zeile [text]="'Summe des Vermögens'" [betrag]="(reinvermoegen$ | async)?.summeDesVermoegens"></app-zeile>
-                <app-zeile [text]="'Summe der Schulden'" [betrag]="(reinvermoegen$ | async)?.summeDerSchulden"></app-zeile>
-                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [summe]="'gesamtsumme'" [betrag]="(reinvermoegen$ | async)?.reinvermoegen"></app-zeile>
+                <app-zeile [text]="'Summe des Vermögens'" [betrag]="inventar?.reinvermoegen?.summeDesVermoegens"></app-zeile>
+                <app-zeile [text]="'Summe der Schulden'" [betrag]="inventar?.reinvermoegen?.summeDerSchulden"></app-zeile>
+                <app-zeile [text]="'Reinvermögen (Eigenkapital)'" [summe]="'gesamtsumme'" [betrag]="inventar?.reinvermoegen.reinvermoegen"></app-zeile>
             </li>
         </ol>
 
         <mat-card-actions>
+            <a mat-button color="primary" id="bilanz" [routerLink]="['/inventur/bilanz', 1]">Eröffnungsbilanz</a>
             <button mat-button color="primary" (click)="haushaltsbuchAnlegen()">Haushaltsbuch anlegen</button>
             <button mat-button (click)="inventurWiederholen()">Inventur wiederholen</button>
         </mat-card-actions>
