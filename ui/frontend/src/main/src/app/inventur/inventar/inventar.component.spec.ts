@@ -98,11 +98,11 @@ describe('InventarComponent', () => {
             .compileComponents();
     }));
 
-    fit('should create', inject([Page], (page: Page) => {
+    it('should create', inject([Page], (page: Page) => {
         expect(page.fixture).toBeTruthy();
     }));
 
-    fit('sollte zur Eröffnungsbilanz weiterleiten', async(inject([Page], (page: Page) => {
+    it('sollte zur Eröffnungsbilanz weiterleiten', async(inject([Page], (page: Page) => {
         page.navigieren();
     })))
 });

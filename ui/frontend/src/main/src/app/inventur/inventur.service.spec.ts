@@ -1,4 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
+import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
+import { BilanzComponent } from './bilanz/bilanz.component';
 
 import { InventurService } from './inventur.service';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
@@ -18,9 +21,9 @@ describe('InventurService', () => {
     beforeEach(() => {
 
         TestBed.configureTestingModule({
-            declarations: [HomeComponent, InventurComponent, InventarComponent],
+            declarations: [HomeComponent, InventurComponent, InventarComponent, BilanzComponent],
             providers: [InventurService, LoggerService],
-            imports: [NgReduxModule, HttpClientTestingModule, CommandGatewayModule, RouterTestingModule.withRoutes(DEMO_APP_ROUTES)],
+            imports: [NgReduxModule, HttpClientTestingModule, CommandGatewayModule, QueryGatewayModule, RouterTestingModule.withRoutes(DEMO_APP_ROUTES)],
             schemas: [NO_ERRORS_SCHEMA]
         });
     });
