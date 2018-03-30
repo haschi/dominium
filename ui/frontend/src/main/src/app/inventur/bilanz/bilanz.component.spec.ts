@@ -3,6 +3,7 @@ import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppMaterialModule } from '../../shared/app-material-module';
+import { PositionComponent } from '../inventar/position/position.component';
 import { BilanzServiceService } from './bilanz-service.service';
 
 import { BilanzComponent } from './bilanz.component';
@@ -15,7 +16,7 @@ import { Eroeffnungsbilanz } from './bilanz.model';
 class MockQueryErrorComponent {
 }
 
-fdescribe('BilanzComponent', () => {
+describe('BilanzComponent', () => {
     let mock = {
         bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null)
     };
@@ -47,7 +48,7 @@ fdescribe('BilanzComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BilanzComponent, MockQueryErrorComponent],
+            declarations: [BilanzComponent, MockQueryErrorComponent, PositionComponent],
             imports: [AppMaterialModule],
             providers: [
                 {provide: Page, useFactory: Page.create},

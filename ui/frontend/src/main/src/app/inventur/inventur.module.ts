@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BilanzServiceService } from './bilanz/bilanz-service.service';
 import { InventurComponent } from './inventur.component';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +31,7 @@ import { BilanzComponent } from './bilanz/bilanz.component';
         ZeileComponent,
         BilanzComponent
     ],
-    providers: [InventurService],
+    providers: [InventurService, BilanzServiceService],
     exports: [InventurComponent]
 })
 export class InventurModule {
