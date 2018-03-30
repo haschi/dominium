@@ -4,7 +4,9 @@ import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { of } from 'rxjs/observable/of';
+import { Subject } from 'rxjs/Subject';
 import { AppCovalentModuleModule } from '../../shared/app-covalent-module.module';
 import { AppMaterialModule } from '../../shared/app-material-module';
 import { BilanzComponent } from '../bilanz/bilanz.component';
@@ -16,7 +18,7 @@ import { InventarComponent } from './inventar.component';
 import { PositionComponent } from './position/position.component';
 import { ZeileComponent } from './zeile/zeile.component';
 
-describe('InventarComponent', () => {
+fdescribe('InventarComponent', () => {
 
     class Page {
         constructor(public fixture: ComponentFixture<InventarComponent>) {
@@ -68,7 +70,7 @@ describe('InventarComponent', () => {
     const mock = {
         leseInventar: jasmine.createSpy('leseInventar'),
         inventar$: of(vollesInventar),
-        inventurid$: of('4711')
+        inventurid$: new BehaviorSubject<string>('4711')
     };
 
     const inventurServiceMock = jasmine.createSpyObj(
@@ -101,17 +103,27 @@ describe('InventarComponent', () => {
             .compileComponents();
     }));
 
+
     it('should create', inject([Page], (page: Page) => {
         expect(page.fixture).toBeTruthy();
     }));
 
-    // Testmuster: Navigation mit Router Link
-    it('sollte zur Eröffnungsbilanz weiterleiten',
-        async(inject([Page, Router], (page: Page, router: Router) => {
-            const spy = spyOn(router, 'navigateByUrl');
-            const url = router.createUrlTree(['inventur', 'bilanz', '4711']);
-            page.navigieren();
+    ['4712', '4713'].forEach(id => {
+        describe(`Für die Inventur mit der id ${id}`, () => {
+            beforeEach(() => {
+                mock.inventurid$.next(id)
+            });
 
-            expect(spy).toHaveBeenCalledWith(url, jasmine.anything())
-        })))
+            // Testmuster: Navigation mit Router Link
+            it(`sollte zur Eröffnungsbilanz ${id} weiterleiten`,
+                async(inject([Page, Router], (page: Page, router: Router) => {
+                    const spy = spyOn(router, 'navigateByUrl');
+                    const url = router.createUrlTree(['inventur', 'bilanz', id]);
+                    page.navigieren();
+
+                    expect(spy).toHaveBeenCalledWith(url, jasmine.anything())
+                })))
+        });
+    });
+
 });
