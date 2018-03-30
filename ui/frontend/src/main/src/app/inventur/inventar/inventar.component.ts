@@ -23,9 +23,6 @@ export class InventarComponent implements OnInit {
         this.inventur.leseInventar();
     }
 
-    haushaltsbuchAnlegen() {
-    }
-
     inventurWiederholen() {
         this.inventur.beginnen();
     }

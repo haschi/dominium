@@ -6,19 +6,16 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { of } from 'rxjs/observable/of';
-import { Subject } from 'rxjs/Subject';
 import { AppCovalentModuleModule } from '../../shared/app-covalent-module.module';
 import { AppMaterialModule } from '../../shared/app-material-module';
 import { BilanzComponent } from '../bilanz/bilanz.component';
 import { Inventar } from '../inventar';
-
 import { InventurService } from '../inventur.service';
-
 import { InventarComponent } from './inventar.component';
 import { PositionComponent } from './position/position.component';
 import { ZeileComponent } from './zeile/zeile.component';
 
-fdescribe('InventarComponent', () => {
+describe('InventarComponent', () => {
 
     class Page {
         constructor(public fixture: ComponentFixture<InventarComponent>) {
@@ -35,17 +32,6 @@ fdescribe('InventarComponent', () => {
             link.nativeElement.click()
         }
     }
-
-    const leeresInventar: Inventar = {
-        anlagevermoegen: [{position: "Aktiendepot", waehrungsbetrag: "10.000,00 EUR"}],
-        umlaufvermoegen: [],
-        schulden: [],
-        reinvermoegen: {
-            summeDesVermoegens: "0,00 EUR",
-            summeDerSchulden: "0,00 EUR",
-            reinvermoegen: "0,00 EUR"
-        }
-    };
 
     const vollesInventar: Inventar = {
         anlagevermoegen: [{
@@ -73,10 +59,6 @@ fdescribe('InventarComponent', () => {
         inventurid$: new BehaviorSubject<string>('4711')
     };
 
-    const inventurServiceMock = jasmine.createSpyObj(
-        'InventurService',
-        ['beginneInventur', 'beginnen', 'erfasseInventar', 'leseInventar']);
-
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -103,7 +85,6 @@ fdescribe('InventarComponent', () => {
             .compileComponents();
     }));
 
-
     it('should create', inject([Page], (page: Page) => {
         expect(page.fixture).toBeTruthy();
     }));
@@ -119,6 +100,7 @@ fdescribe('InventarComponent', () => {
                 async(inject([Page, Router], (page: Page, router: Router) => {
                     const spy = spyOn(router, 'navigateByUrl');
                     const url = router.createUrlTree(['inventur', 'bilanz', id]);
+
                     page.navigieren();
 
                     expect(spy).toHaveBeenCalledWith(url, jasmine.anything())
