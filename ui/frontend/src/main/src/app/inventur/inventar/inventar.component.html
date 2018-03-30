@@ -44,7 +44,7 @@
         </ol>
 
         <mat-card-actions>
-            <a mat-button color="primary" id="bilanz" [routerLink]="['/inventur/bilanz', 1]">Eröffnungsbilanz</a>
+            <a mat-button color="primary" id="bilanz" [routerLink]="['/inventur/bilanz', inventurId$ | async]">Eröffnungsbilanz</a>
             <button mat-button color="primary" (click)="haushaltsbuchAnlegen()">Haushaltsbuch anlegen</button>
             <button mat-button (click)="inventurWiederholen()">Inventur wiederholen</button>
         </mat-card-actions>

@@ -12,9 +12,11 @@ import { InventurService } from '../inventur.service';
 export class InventarComponent implements OnInit {
 
     inventar$: Observable<Inventar>;
+    inventurId$: Observable<string>;
 
     constructor(private inventur: InventurService) {
-        this.inventar$ = this.inventur.inventar$
+        this.inventar$ = this.inventur.inventar$;
+        this.inventurId$ = this.inventur.inventurid$
     }
 
     ngOnInit() {

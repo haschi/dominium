@@ -1,24 +1,25 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs/observable/of';
+import { AppCovalentModuleModule } from '../../shared/app-covalent-module.module';
+import { AppMaterialModule } from '../../shared/app-material-module';
 import { BilanzComponent } from '../bilanz/bilanz.component';
 import { Inventar } from '../inventar';
 
 import { InventurService } from '../inventur.service';
 
 import { InventarComponent } from './inventar.component';
-import { AppMaterialModule } from '../../shared/app-material-module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule, By } from '@angular/platform-browser';
-import { AppCovalentModuleModule } from '../../shared/app-covalent-module.module';
 import { PositionComponent } from './position/position.component';
 import { ZeileComponent } from './zeile/zeile.component';
 
 describe('InventarComponent', () => {
 
     class Page {
-        constructor(public fixture: ComponentFixture<InventarComponent>){
+        constructor(public fixture: ComponentFixture<InventarComponent>) {
         }
 
         static create(): Page {
@@ -45,27 +46,29 @@ describe('InventarComponent', () => {
     };
 
     const vollesInventar: Inventar = {
-        anlagevermoegen:[{
+        anlagevermoegen: [{
             position: "Aktiendepot",
             waehrungsbetrag: "10.000,00 EUR"
         }],
         umlaufvermoegen: [{
-                position: "Girokonto",
-                waehrungsbetrag: "5.000,00 EUR"
+            position: "Girokonto",
+            waehrungsbetrag: "5.000,00 EUR"
         }],
         schulden: [{
             position: "Autokredit",
             waehrungsbetrag: "1.000,00 EUR"
         }],
-        reinvermoegen : {
+        reinvermoegen: {
             summeDesVermoegens: "15.000,00 EUR",
             summeDerSchulden: "1.000,00 EUR",
             reinvermoegen: "14.000,00 EUR"
-        }};
+        }
+    };
 
     const mock = {
         leseInventar: jasmine.createSpy('leseInventar'),
-        inventar$: of(vollesInventar)
+        inventar$: of(vollesInventar),
+        inventurid$: of('4711')
     };
 
     const inventurServiceMock = jasmine.createSpyObj(
@@ -87,10 +90,10 @@ describe('InventarComponent', () => {
                 AppCovalentModuleModule,
                 RouterTestingModule.withRoutes([
                     {path: 'inventur/bilanz/:id', component: BilanzComponent}
-                    ])
+                ])
             ],
             providers: [
-                {provide: Page, useFactory: Page.create },
+                {provide: Page, useFactory: Page.create},
                 {provide: InventurService, useValue: mock}
             ],
             schemas: [NO_ERRORS_SCHEMA]
@@ -102,7 +105,13 @@ describe('InventarComponent', () => {
         expect(page.fixture).toBeTruthy();
     }));
 
-    it('sollte zur Eröffnungsbilanz weiterleiten', async(inject([Page], (page: Page) => {
-        page.navigieren();
-    })))
+    // Testmuster: Navigation mit Router Link
+    it('sollte zur Eröffnungsbilanz weiterleiten',
+        async(inject([Page, Router], (page: Page, router: Router) => {
+            const spy = spyOn(router, 'navigateByUrl');
+            const url = router.createUrlTree(['inventur', 'bilanz', '4711']);
+            page.navigieren();
+
+            expect(spy).toHaveBeenCalledWith(url, jasmine.anything())
+        })))
 });
