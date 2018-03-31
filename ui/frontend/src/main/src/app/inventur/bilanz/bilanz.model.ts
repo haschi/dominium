@@ -16,15 +16,16 @@ export interface Bilanzgruppe {
 export interface Aktiva {
     anlagevermoegen: Vermoegenswert[];
     umlaufvermoegen: Vermoegenswert[];
+    summe: string
 }
 
 export interface Passiva {
     eigenkapital: Vermoegenswert[];
     fremdkapital: Vermoegenswert[];
+    summe: string
 }
 
 export interface Eroeffnungsbilanz {
     aktiva: Aktiva
     passiva: Passiva
-    summe: string
 }

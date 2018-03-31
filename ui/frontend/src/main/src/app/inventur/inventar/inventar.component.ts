@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InventurState } from '../../store/model';
 import { Inventar } from '../inventar';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,10 +14,12 @@ export class InventarComponent implements OnInit {
 
     inventar$: Observable<Inventar>;
     inventurId$: Observable<string>;
+    inventurState$: Observable<InventurState>
 
     constructor(private inventur: InventurService) {
         this.inventar$ = this.inventur.inventar$;
         this.inventurId$ = this.inventur.inventurid$
+        this.inventurState$ = this.inventur.state$
     }
 
     ngOnInit() {
@@ -25,5 +28,9 @@ export class InventarComponent implements OnInit {
 
     inventurWiederholen() {
         this.inventur.beginnen();
+    }
+
+    inventurBeenden(id: string) {
+        this.inventur.beenden(id)
     }
 }

@@ -34,8 +34,8 @@
       </div>
     </div>
     <section id="summen" layout="row" layout-align="space-between stretch" layout-margin>
-      <app-zeile [betrag]="bilanz.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
-      <app-zeile [betrag]="bilanz.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+      <app-zeile [betrag]="bilanz.aktiva.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+      <app-zeile [betrag]="bilanz.passiva.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
     </section>
   </mat-card-content>
   <mat-card-actions>

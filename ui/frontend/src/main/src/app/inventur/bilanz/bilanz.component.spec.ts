@@ -112,9 +112,14 @@ describe('BilanzComponent', () => {
             mock.bilanz$.next({
                 aktiva: {
                     anlagevermoegen: [{position: 'Eigentumswohnung', waehrungsbetrag: '120.000,00 EUR'}],
-                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}]},
-                passiva: {eigenkapital: [], fremdkapital: []},
-                summe: "10.000,00 EUR"
+                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
+                    summe: '10.000,00 EUR'
+                },
+                passiva: {
+                    eigenkapital: [],
+                    fremdkapital: [],
+                    summe: "10.000,00 EUR"
+                }
             });
         });
 

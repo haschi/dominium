@@ -46,13 +46,14 @@ describe('BilanzServiceService', () => {
             eroeffnungsbilanz: {
                 aktiva: {
                     anlagevermoegen: [],
-                    umlaufvermoegen: []
+                    umlaufvermoegen: [],
+                    summe: '0,00 EUR'
                 },
                 passiva: {
                     eigenkapital: [],
-                    fremdkapital: []
-                },
-                summe: '0,00 EUR'
+                    fremdkapital: [],
+                    summe: '0,00 EUR'
+                }
             }
         },
         {
@@ -68,7 +69,8 @@ describe('BilanzServiceService', () => {
                         {position: 'Girokonto', waehrungsbetrag: '12.345,67 EUR'},
                         {position: 'Sparbuch', waehrungsbetrag: '23.456,78 EUR'},
                         {position: 'Geldbörse', waehrungsbetrag: '123,45 EUR'}
-                    ]
+                    ],
+                    summe: '1.00 EUR'
                 },
                 passiva: {
                     eigenkapital: [
@@ -78,9 +80,9 @@ describe('BilanzServiceService', () => {
                         {position: 'Autokredit', waehrungsbetrag: '2.000,00 EUR'},
                         {position: 'Hypotheken', waehrungsbetrag: '100.000,00 EUR'},
                         {position: 'Provatkredite', waehrungsbetrag: '100,00 EUR'}
-                    ]
+                    ],
+                    summe: '1.00 EUR'
                 },
-                summe: '1.00 EUR'
             }
         }
     ]
@@ -103,7 +105,7 @@ describe('BilanzServiceService', () => {
                     service.ladeBilanz()
                     expect(mock.send).toHaveBeenCalledWith(
                         QueryType.LeseEroeffnungsbilanz,
-                        {id: testfall.inventurId},
+                        {inventurId: testfall.inventurId},
                         ResultType.Eroeffnungsbilanz)
                 }))
 

@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { of } from 'rxjs/observable/of';
 import { AppCovalentModuleModule } from '../../shared/app-covalent-module.module';
 import { AppMaterialModule } from '../../shared/app-material-module';
+import { INVENTUR_INITIAL_STATE, InventurState } from '../../store/model';
 import { BilanzComponent } from '../bilanz/bilanz.component';
 import { Inventar } from '../inventar';
 import { InventurService } from '../inventur.service';
@@ -56,7 +57,8 @@ describe('InventarComponent', () => {
     const mock = {
         leseInventar: jasmine.createSpy('leseInventar'),
         inventar$: of(vollesInventar),
-        inventurid$: new BehaviorSubject<string>('4711')
+        inventurid$: new BehaviorSubject<string>('4711'),
+        state$: new BehaviorSubject<InventurState>(INVENTUR_INITIAL_STATE)
     };
 
     beforeEach(async(() => {
@@ -92,20 +94,16 @@ describe('InventarComponent', () => {
     ['4712', '4713'].forEach(id => {
         describe(`Für die Inventur mit der id ${id}`, () => {
             beforeEach(() => {
-                mock.inventurid$.next(id)
+                mock.state$.next({...INVENTUR_INITIAL_STATE, inventurId: id})
             });
 
-            // Testmuster: Navigation mit Router Link
+            // Testmuster: Navigation mit Router#navigate
             it(`sollte zur Eröffnungsbilanz ${id} weiterleiten`,
                 async(inject([Page, Router], (page: Page, router: Router) => {
-                    const spy = spyOn(router, 'navigateByUrl');
-                    const url = router.createUrlTree(['inventur', 'bilanz', id]);
-
+                    page.fixture.detectChanges()
+                    const spy = spyOn(router, 'navigate');
                     page.navigieren();
-
-                    expect(spy).toHaveBeenCalledWith(url, jasmine.anything())
                 })))
         });
     });
-
 });

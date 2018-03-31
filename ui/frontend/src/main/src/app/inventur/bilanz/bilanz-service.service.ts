@@ -44,7 +44,7 @@ export class BilanzServiceService {
 
         this.service.send(
             QueryType.LeseEroeffnungsbilanz,
-            {id: id},
+            {inventurId: id},
             ResultType.Eroeffnungsbilanz);
     }
 }

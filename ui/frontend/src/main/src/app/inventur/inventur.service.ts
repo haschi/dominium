@@ -7,7 +7,7 @@ import { QueryGatewayService } from '../shared/query-gateway/query-gateway.servi
 import { QueryType } from '../shared/query-gateway/query-type';
 import { ResultType } from '../shared/query-gateway/result-type';
 import { Inventar } from './inventar';
-import { AppState } from '../store/model';
+import { AppState, InventurState } from '../store/model';
 import { CommandType } from './command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 import { Router } from '@angular/router';
@@ -20,6 +20,9 @@ export class InventurService {
 
     @select(['inventur', 'inventar'])
     inventar$: Observable<Inventar>;
+
+    @select(['inventur'])
+    state$: Observable<InventurState>;
 
     constructor(
         private idGenerator: IdGeneratorService,
@@ -46,6 +49,15 @@ export class InventurService {
         let id = this.idGenerator.neu();
         this.beginneInventur(id);
         return id;
+    }
+
+    beenden(id: any): void {
+        this.gateway.send(
+            CommandType.BeendeInventur,
+            {von: id},
+            {})
+
+        this.router.navigate(['/inventur/bilanz', id])
     }
 
     erfasseInventar(inventar: Inventar) {
