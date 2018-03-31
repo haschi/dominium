@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppMaterialModule } from '../../shared/app-material-module';
 import { PositionComponent } from '../inventar/position/position.component';
+import { ZeileComponent } from '../inventar/zeile/zeile.component';
+import { Inventarposition } from '../inventarposition';
 import { BilanzServiceService } from './bilanz-service.service';
 
 import { BilanzComponent } from './bilanz.component';
@@ -37,8 +39,38 @@ describe('BilanzComponent', () => {
         }
 
         get bilanzsummen(): string[] {
-            const element: DebugElement[] = this.fixture.debugElement.queryAll(By.css('.bilanzsumme span'));
-            return element.map( e => e.nativeElement.innerHTML);
+            return this.fixture.debugElement.query(By.css('#summen'))
+                .queryAll(By.directive(ZeileComponent))
+                .map(c => c.componentInstance as ZeileComponent)
+                .map(i => i.betrag)
+        }
+
+        get anlagevermögen(): Inventarposition[] {
+            return this.fixture.debugElement.query(By.css('#anlagevermoegen'))
+                .queryAll(By.directive(PositionComponent))
+                .map(c => c.componentInstance as PositionComponent)
+                .map(i => i.position)
+        }
+
+        get umlaufvermögen(): Inventarposition[] {
+            return this.fixture.debugElement.query(By.css('#umlaufvermoegen'))
+                .queryAll(By.directive(PositionComponent))
+                .map(c => c.componentInstance as PositionComponent)
+                .map(i => i.position)
+        }
+
+        get eigenkapital(): Inventarposition[] {
+            return this.fixture.debugElement.query(By.css('#eigenkapital'))
+                .queryAll(By.directive(PositionComponent))
+                .map(c => c.componentInstance as PositionComponent)
+                .map(i => i.position)
+        }
+
+        get fremdkapital(): Inventarposition[] {
+            return this.fixture.debugElement.query(By.css('#fremdkapital'))
+                .queryAll(By.directive(PositionComponent))
+                .map(c => c.componentInstance as PositionComponent)
+                .map(i => i.position)
         }
 
         showHtml() {
@@ -48,7 +80,7 @@ describe('BilanzComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BilanzComponent, MockQueryErrorComponent, PositionComponent],
+            declarations: [BilanzComponent, MockQueryErrorComponent, PositionComponent, ZeileComponent],
             imports: [AppMaterialModule],
             providers: [
                 {provide: Page, useFactory: Page.create},
@@ -73,7 +105,9 @@ describe('BilanzComponent', () => {
     describe('mit geladener Eroeffnungsbilanz', () => {
         beforeEach(() => {
             mock.bilanz$.next({
-                aktiva: {anlagevermoegen: [], umlaufvermoegen: []},
+                aktiva: {
+                    anlagevermoegen: [{position: 'Eigentumswohnung', waehrungsbetrag: '120.000,00 EUR'}],
+                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}]},
                 passiva: {eigenkapital: [], fremdkapital: []},
                 summe: "10.000,00 EUR"
             });
@@ -85,6 +119,30 @@ describe('BilanzComponent', () => {
 
         it('sollte 2 Bilanzsummen anzeige', inject([Page], (page: Page) => {
             expect(page.bilanzsummen).toEqual(['10.000,00 EUR', '10.000,00 EUR'])
+        }));
+
+        it('sollte alle Anlagevermögen-Positionen anzeigen', inject([Page], (page: Page) => {
+            mock.bilanz$.subscribe(bilanz => {
+                expect(page.anlagevermögen).toEqual(bilanz.aktiva.anlagevermoegen)
+            })
+        }));
+
+        it('sollte alle Umlaufvermoegen-Positionen anzeigen', inject([Page], (page: Page) => {
+            mock.bilanz$.subscribe(bilanz => {
+                expect(page.umlaufvermögen).toEqual(bilanz.aktiva.umlaufvermoegen)
+            })
+        }))
+
+        it('sollte alle Eigenkapital-Positionen anzeigen', inject([Page], (page: Page) => {
+            mock.bilanz$.subscribe(bilanz => {
+                expect(page.eigenkapital).toEqual(bilanz.passiva.eigenkapital)
+            })
+        }))
+
+        it('sollte alle Fremdkapital-Positionen anzeigen', inject([Page], (page: Page) => {
+            mock.bilanz$.subscribe(bilanz => {
+                expect(page.fremdkapital).toEqual(bilanz.passiva.fremdkapital)
+            })
         }))
     })
 });

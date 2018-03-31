@@ -4,33 +4,39 @@
     <div layout="row" layout-align="space-between stretch" layout-padding layout-margin>
       <div flex class="aktiva">
         <h2>Aktiva</h2>
+        <section id="anlagevermoegen">
         <h3>A. Anlagevermögen</h3>
         <app-position *ngFor="let position of bilanz.aktiva.anlagevermoegen"
                       [position]="position">
         </app-position>
-        <h3>B. Umlaufvermögen</h3>
-        <app-position *ngFor="let position of bilanz.aktiva.umlaufvermoegen"
-                      [position]="position">
-        </app-position>
+        </section>
+        <section id="umlaufvermoegen">
+          <h3>B. Umlaufvermögen</h3>
+          <app-position *ngFor="let position of bilanz.aktiva.umlaufvermoegen"
+                        [position]="position">
+          </app-position>
+        </section>
       </div>
-      <!--<mat-divider flex></mat-divider>-->
       <div flex class="passiva">
         <h2>Passiva</h2>
-        <h3>A. Eigenkapital</h3>
-        <app-position *ngFor="let position of bilanz.passiva.eigenkapital"
-                      [position]="position">
-        </app-position>
-        <h3>B. Fremdkapital</h3>
-        <app-position *ngFor="let position of bilanz.passiva.fremdkapital"
-                      [position]="position">
-        </app-position>
-
+          <section id="eigenkapital">
+          <h3>A. Eigenkapital</h3>
+          <app-position *ngFor="let position of bilanz.passiva.eigenkapital"
+                        [position]="position">
+          </app-position>
+        </section>
+        <section id="fremdkapital">
+          <h3>B. Fremdkapital</h3>
+          <app-position *ngFor="let position of bilanz.passiva.fremdkapital"
+                        [position]="position">
+          </app-position>
+        </section>
       </div>
     </div>
-    <div layout="row" layout-align="space-between stretch" layout-padding layout-margin>
-      <div flex class="bilanzsumme">Summe <span>{{bilanz.summe}}</span></div>
-      <div flex class="bilanzsumme">Summe <span>{{bilanz.summe}}</span></div>
-    </div>
+    <section id="summen" layout="row" layout-align="space-between stretch" layout-padding layout-margin>
+      <app-zeile [betrag]="bilanz.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+      <app-zeile [betrag]="bilanz.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+    </section>
   </mat-card-content>
   <mat-card-actions>
     <a mat-button color="primary">Haushaltsbuch anlegen</a>
