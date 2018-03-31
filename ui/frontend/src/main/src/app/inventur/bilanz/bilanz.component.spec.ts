@@ -94,15 +94,15 @@ describe('BilanzComponent', () => {
         expect(page.fixture).toBeTruthy();
     }));
 
-    describe('ohne geladene Eroeffnungsbilanz', () => {
+    describe('ohne geladene Eröffnungsbilanz', () => {
 
-        it('sollte Ladefortschritt anzeigen', async(inject([Page], (page: Page) => {
+        it('sollte Abfrage-Fehler anzeigen', async(inject([Page], (page: Page) => {
             page.fixture.detectChanges();
             expect(page.ladefortschritt).toBeTruthy()
         })));
     });
 
-    describe('mit geladener Eroeffnungsbilanz', () => {
+    describe('mit geladener Eröffnungsbilanz', () => {
         beforeEach(() => {
             mock.bilanz$.next({
                 aktiva: {
@@ -113,11 +113,11 @@ describe('BilanzComponent', () => {
             });
         });
 
-        it('sollte Ladefortschritt nicht anzeigen', async(inject([Page], (page: Page) => {
+        it('sollte Abfrage-Fehler nicht anzeigen', async(inject([Page], (page: Page) => {
             expect(page.ladefortschritt).toBeFalsy()
         })));
 
-        it('sollte 2 Bilanzsummen anzeige', inject([Page], (page: Page) => {
+        it('sollte zwei Bilanzsummen anzeige', inject([Page], (page: Page) => {
             expect(page.bilanzsummen).toEqual(['10.000,00 EUR', '10.000,00 EUR'])
         }));
 
@@ -127,17 +127,17 @@ describe('BilanzComponent', () => {
             })
         }));
 
-        it('sollte alle Umlaufvermoegen-Positionen anzeigen', inject([Page], (page: Page) => {
+        it('sollte alle Umlaufvermögen-Positionen anzeigen', inject([Page], (page: Page) => {
             mock.bilanz$.subscribe(bilanz => {
                 expect(page.umlaufvermögen).toEqual(bilanz.aktiva.umlaufvermoegen)
             })
-        }))
+        }));
 
         it('sollte alle Eigenkapital-Positionen anzeigen', inject([Page], (page: Page) => {
             mock.bilanz$.subscribe(bilanz => {
                 expect(page.eigenkapital).toEqual(bilanz.passiva.eigenkapital)
             })
-        }))
+        }));
 
         it('sollte alle Fremdkapital-Positionen anzeigen', inject([Page], (page: Page) => {
             mock.bilanz$.subscribe(bilanz => {

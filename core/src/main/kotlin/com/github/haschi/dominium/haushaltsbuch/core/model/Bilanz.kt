@@ -3,9 +3,9 @@ package com.github.haschi.dominium.haushaltsbuch.core.model
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.SchlageEröffnungsbilanzVor
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.PrivateEröffnungsbilanzVorgeschlagen
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Bilanzgruppe
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aktiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanz
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Gruppe
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import org.axonframework.commandhandling.CommandHandler
@@ -25,27 +25,24 @@ class Bilanz
     {
         val inventar = anweisung.inventar
 
-        val bilanz = Eröffnungsbilanz(
-                listOf(
-                        Bilanzgruppe(
-                                Gruppe('A', "Anlagevermögen"),
-                                inventar.anlagevermoegen),
-                        Bilanzgruppe(
-                                Gruppe('B', "Umlaufvermögen"),
-                                inventar.umlaufvermoegen)
-                        ),
-                listOf(
-                        Bilanzgruppe(
-                                Gruppe('A', "Eigenkapital"),
-                                Vermoegenswerte(Vermoegenswert("Eigenkapital", inventar.reinvermoegen.reinvermoegen))
-                        ),
-                        Bilanzgruppe(
-                                Gruppe('B', "Schulden"),
-                                Vermoegenswerte(inventar.schulden.map { Vermoegenswert(it.position, it.waehrungsbetrag) })
-                        )
-                ))
+        val aktiva = Aktiva(
+                anlagevermoegen = inventar.anlagevermoegen,
+                umlaufvermoegen = inventar.umlaufvermoegen)
 
-        val ereignis = PrivateEröffnungsbilanzVorgeschlagen(anweisung.bilanzId, anweisung.inventurId, bilanz)
+        val passiva = Passiva(
+                eigenkapital = Vermoegenswerte(
+                        Vermoegenswert("Eigenkapital",
+                                inventar.reinvermoegen.reinvermoegen)),
+                fremdkapital = Vermoegenswerte(inventar.schulden.map {
+                    Vermoegenswert(it.position,
+                            it.waehrungsbetrag)
+                }))
+
+        val bilanz = Eröffnungsbilanz(aktiva, passiva)
+
+        val ereignis = PrivateEröffnungsbilanzVorgeschlagen(anweisung.bilanzId,
+                anweisung.inventurId,
+                bilanz)
 
         AggregateLifecycle.apply(ereignis)
     }
