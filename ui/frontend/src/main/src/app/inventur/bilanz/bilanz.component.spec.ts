@@ -20,7 +20,8 @@ class MockQueryErrorComponent {
 
 describe('BilanzComponent', () => {
     let mock = {
-        bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null)
+        bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null),
+        ladeBilanz: jasmine.createSpy('ladeBilanz')
     };
 
     class Page {
@@ -93,6 +94,10 @@ describe('BilanzComponent', () => {
     it('should create', inject([Page], (page: Page) => {
         expect(page.fixture).toBeTruthy();
     }));
+
+    it('sollte Eröffnungsbilanz lesen', inject([Page], (page: Page) => {
+        expect(mock.ladeBilanz).toHaveBeenCalled()
+    }))
 
     describe('ohne geladene Eröffnungsbilanz', () => {
 

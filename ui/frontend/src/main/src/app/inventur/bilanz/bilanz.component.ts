@@ -15,21 +15,10 @@ export class BilanzComponent implements OnInit {
 
     constructor(private service: BilanzServiceService) {
         this.bilanz$ = service.bilanz$
-
-        // this.bilanz$ = new BehaviorSubject<Eroeffnungsbilanz>({
-        //     aktiva: {
-        //         anlagevermoegen: [],
-        //         umlaufvermoegen: []
-        //     },
-        //     passiva: {
-        //         eigenkapital: [],
-        //         fremdkapital: []
-        //     },
-        //     summe: "10.000,00 EUR"
-        // })
     }
 
     ngOnInit() {
+        this.service.ladeBilanz()
     }
 
 }

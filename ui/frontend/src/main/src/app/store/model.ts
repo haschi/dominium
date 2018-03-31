@@ -1,3 +1,4 @@
+import { Eroeffnungsbilanz } from '../inventur/bilanz/bilanz.model';
 import { Inventar } from '../inventur/inventar';
 import {
     COMMAND_GATEWAY_INITIAL_STATE,
@@ -17,6 +18,7 @@ export interface AppState {
 export interface InventurState {
     inventurId: string
     inventar: Inventar
+    eroeffnungsbilanz: Eroeffnungsbilanz | null
 }
 
 export const INVENTUR_INITIAL_STATE: InventurState = {
@@ -30,7 +32,8 @@ export const INVENTUR_INITIAL_STATE: InventurState = {
             summeDesVermoegens: '',
             reinvermoegen: ''
         }
-    }
+    },
+    eroeffnungsbilanz: null
 };
 
 export const APP_INITIAL_STATE: AppState = {
