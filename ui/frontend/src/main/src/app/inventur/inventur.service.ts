@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { logger } from 'codelyzer/util/logger';
 import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
+import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
+import { QueryType } from '../shared/query-gateway/query-type';
+import { ResultType } from '../shared/query-gateway/result-type';
 import { Inventar } from './inventar';
-import { AppState } from '../store/model';
+import { AppState, InventurState } from '../store/model';
 import { CommandType } from './command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 import { Router } from '@angular/router';
@@ -17,16 +21,19 @@ export class InventurService {
     @select(['inventur', 'inventar'])
     inventar$: Observable<Inventar>;
 
+    @select(['inventur'])
+    state$: Observable<InventurState>;
+
     constructor(
         private idGenerator: IdGeneratorService,
         private gateway: CommandGatewayService,
+        private queryGateway: QueryGatewayService,
         private router: Router,
         private store: NgRedux<AppState>) {
 
         this.inventurid$
             .filter(id => id != '')
             .subscribe(id => {
-                console.info(`Route zu /inventur/${id}`);
                 this.router.navigate(['inventur', id])
             });
     }
@@ -44,6 +51,15 @@ export class InventurService {
         return id;
     }
 
+    beenden(id: any): void {
+        this.gateway.send(
+            CommandType.BeendeInventur,
+            {von: id},
+            {})
+
+        this.router.navigate(['/inventur/bilanz', id])
+    }
+
     erfasseInventar(inventar: Inventar) {
         let id = this.store.getState().inventur.inventurId;
 
@@ -52,5 +68,14 @@ export class InventurService {
             {id: id, inventar: inventar},
             {}
         )
+    }
+
+    leseInventar() {
+        let id = this.store.getState().inventur.inventurId;
+
+        this.queryGateway.send(
+            QueryType.LeseInventar,
+            {id: id},
+            ResultType.Inventar);
     }
 }

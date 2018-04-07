@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { InventurState } from '../../store/model';
 import { Inventar } from '../inventar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { QueryGatewayService } from '../../shared/query-gateway/query-gateway.service';
-import { QueryType } from '../../shared/query-gateway/query-type';
 import { Observable } from 'rxjs/Observable';
 
-import { select } from '@angular-redux/store';
-import { LoggerService } from '../../shared/logger.service';
-import { ResultType } from '../../shared/query-gateway/result-type';
 import { InventurService } from '../inventur.service';
-import { Inventarposition } from '../inventarposition';
 
 @Component({
     selector: 'app-inventar',
@@ -18,41 +12,25 @@ import { Inventarposition } from '../inventarposition';
 })
 export class InventarComponent implements OnInit {
 
-    @select(['inventur', 'inventar'])
     inventar$: Observable<Inventar>;
+    inventurId$: Observable<string>;
+    inventurState$: Observable<InventurState>
 
-    @select(['inventur', 'inventar', 'anlagevermoegen'])
-    anlagevermoegen$: Observable<Inventarposition[]>
-
-    @select(['inventur', 'inventar', 'umlaufvermoegen'])
-    umlaufvermoegen$: Observable<Inventarposition[]>
-
-    @select(['inventur', 'inventar', 'schulden'])
-    schulden$: Observable<Inventarposition[]>
-
-    @select(['inventur', 'inventar', 'reinvermoegen'])
-    reinvermoegen$: Observable<Inventarposition[]>
-
-    constructor(private active: ActivatedRoute,
-                private query: QueryGatewayService,
-                private logger: LoggerService,
-                private inventur: InventurService,
-                private router: Router) {
+    constructor(private inventur: InventurService) {
+        this.inventar$ = this.inventur.inventar$;
+        this.inventurId$ = this.inventur.inventurid$
+        this.inventurState$ = this.inventur.state$
     }
 
     ngOnInit() {
-        this.active.paramMap
-            .map(parameter => parameter.get('id'))
-            .subscribe(id => {
-                this.query.send(QueryType.LeseInventar, {id: id}, ResultType.Inventar);
-            })
-    }
-
-    haushaltsbuchAnlegen() {
-        console.info("Haushaltsbuch anlegen")
+        this.inventur.leseInventar();
     }
 
     inventurWiederholen() {
         this.inventur.beginnen();
+    }
+
+    inventurBeenden(id: string) {
+        this.inventur.beenden(id)
     }
 }

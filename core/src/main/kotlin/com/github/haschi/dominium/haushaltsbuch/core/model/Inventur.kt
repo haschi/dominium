@@ -88,7 +88,7 @@ class Inventur
             throw InventurAusnahme("Kein Inventar erfasst")
         }
 
-        AggregateLifecycle.apply(InventurBeendet)
+        AggregateLifecycle.apply(InventurBeendet(id!!))
     }
 
     @EventSourcingHandler

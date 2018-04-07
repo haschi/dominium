@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { BilanzServiceService } from './bilanz/bilanz-service.service';
 import { InventurComponent } from './inventur.component';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,13 +12,15 @@ import { InventurService } from './inventur.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { PositionComponent } from './inventar/position/position.component';
 import { ZeileComponent } from './inventar/zeile/zeile.component';
+import { BilanzComponent } from './bilanz/bilanz.component';
 
 @NgModule({
     imports: [
         HttpClientModule,
         AppCovalentModuleModule,
         SharedModule,
-        QueryGatewayModule
+        QueryGatewayModule,
+        RouterModule
     ],
     declarations: [
         InventurComponent,
@@ -24,9 +28,10 @@ import { ZeileComponent } from './inventar/zeile/zeile.component';
         PostenComponent,
         InventarComponent,
         PositionComponent,
-        ZeileComponent
+        ZeileComponent,
+        BilanzComponent
     ],
-    providers: [InventurService],
+    providers: [InventurService, BilanzServiceService],
     exports: [InventurComponent]
 })
 export class InventurModule {

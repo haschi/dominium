@@ -8,6 +8,7 @@
       <w>anwendungsdienst</w>
       <w>anwendungskern</w>
       <w>anwendungskerns</w>
+      <w>bilanzsummen</w>
       <w>buchführungsregeln</w>
       <w>buchungstext</w>
       <w>cqrs</w>
@@ -17,16 +18,20 @@
       <w>dominium</w>
       <w>entitäten</w>
       <w>eröffnungsbilanzkonto</w>
+      <w>fremdkapital</w>
       <w>infrastrukturfabrik</w>
       <w>komponententest</w>
       <w>objektmodell</w>
       <w>poko</w>
+      <w>rechnungsabgrenzungsposten</w>
       <w>reinvermoegen</w>
       <w>reinvermögen</w>
       <w>serialisierung</w>
       <w>systemtest</w>
       <w>umlaufvermögen</w>
       <w>unittests</w>
+      <w>unterschiedsbetrag</w>
+      <w>vermögensverrechnung</w>
       <w>wertobjekte</w>
       <w>währungsbetrag</w>
       <w>zurueckgeben</w>

@@ -18,6 +18,9 @@ export function inventurReducer(state: InventurState = INVENTUR_INITIAL_STATE, a
                 case QueryType.LeseInventar: {
                     return {...state, inventar: action.response.body}
                 }
+                case QueryType.LeseEroeffnungsbilanz: {
+                    return {...state, eroeffnungsbilanz: action.response.body}
+                }
             }
         }
         case QueryGatewayActionType.fehlgeschlagen: {

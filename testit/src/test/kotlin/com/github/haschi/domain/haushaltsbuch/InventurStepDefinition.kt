@@ -6,7 +6,6 @@ import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
-import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
@@ -28,9 +27,7 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
 import java.util.concurrent.CompletableFuture
 
-class InventurStepDefinition(
-        private val welt: DieWelt,
-        private val domäne: Anwendungskonfiguration)
+class InventurStepDefinition(private val welt: DieWelt)
 {
 
     private inline fun <T, R> sync(receiver: T, block: T.() -> CompletableFuture<R>): R

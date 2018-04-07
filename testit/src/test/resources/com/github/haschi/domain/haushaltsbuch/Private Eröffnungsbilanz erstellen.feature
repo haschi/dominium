@@ -1,0 +1,21 @@
+#language: de
+Funktionalität: Private Eröffnungsbilanz erstellen
+
+  Als Hausmann möchte ich aus dem Inventar eine private Eröffnungsbilanz
+  erstellen damit ich mit der Haushaltsbuchführung beginnen kann
+
+  # https://de.wikipedia.org/wiki/Privatbilanz
+  Szenario: Private Eröffnungsbilanz erstellen
+    Wenn ich die Inventur mit folgendem Inventar beende:
+      | Gruppe         | Position | Währungsbetrag |
+      | Anlagevermögen | Sparbuch | 1.234,56 EUR |
+      #| Umlaufvermögen |          |              |
+      #| Schulden       |          |              |
+      #| Eigenkapital   |          | 1.234,56 EUR |
+
+    Dann werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:
+      | Seite  | Gruppe              | Posten   | Betrag       |
+      | Aktiv  | A Anlagevermögen    | Sparbuch | 1.234,56 EUR |
+      #| Aktiv  | B Umlaufvermögen    |          |              |
+      | Passiv | A Eigenkapital      | Eigenkapital | 1.234,56 EUR |
+      #| Passiv | C Schulden |          |              |

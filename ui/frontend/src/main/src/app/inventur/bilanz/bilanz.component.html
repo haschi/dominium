@@ -1,0 +1,48 @@
+<mat-card *ngIf="(bilanz$ | async) as bilanz; else queryError">
+  <mat-card-title><h1>Eröffnungsbilanz</h1></mat-card-title>
+  <mat-card-content>
+    <div layout="row" layout-align="space-between stretch" layout-padding layout-margin>
+      <div flex class="aktiva">
+        <h2>Aktiva</h2>
+        <section id="anlagevermoegen">
+        <h3>A. Anlagevermögen</h3>
+        <app-position *ngFor="let position of bilanz.aktiva.anlagevermoegen"
+                      [position]="position">
+        </app-position>
+        </section>
+        <section id="umlaufvermoegen">
+          <h3>B. Umlaufvermögen</h3>
+          <app-position *ngFor="let position of bilanz.aktiva.umlaufvermoegen"
+                        [position]="position">
+          </app-position>
+        </section>
+      </div>
+      <div flex class="passiva">
+        <h2>Passiva</h2>
+          <section id="eigenkapital">
+          <h3>A. Eigenkapital</h3>
+          <app-position *ngFor="let position of bilanz.passiva.eigenkapital"
+                        [position]="position">
+          </app-position>
+        </section>
+        <section id="fremdkapital">
+          <h3>B. Fremdkapital</h3>
+          <app-position *ngFor="let position of bilanz.passiva.fremdkapital"
+                        [position]="position">
+          </app-position>
+        </section>
+      </div>
+    </div>
+    <section id="summen" layout="row" layout-align="space-between stretch" layout-margin>
+      <app-zeile [betrag]="bilanz.aktiva.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+      <app-zeile [betrag]="bilanz.passiva.summe" [text]="'Summe'" [summe]="'gesamtsumme'" flex></app-zeile>
+    </section>
+  </mat-card-content>
+  <mat-card-actions>
+    <a mat-button color="primary">Haushaltsbuch anlegen</a>
+    <a mat-button>Inventur wiederholen</a>
+  </mat-card-actions>
+</mat-card>
+<ng-template #queryError>
+  <app-query-error></app-query-error>
+</ng-template>
