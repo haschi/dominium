@@ -68,7 +68,7 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
                 Eröffnungsbilanz::class.java)
 
         assertThat(abfrage).isCompletedWithValueMatching(
-                { bilanz -> bilanz.fehlbetrag == fehlbetrag },
+                { bilanz -> bilanz.aktiva.fehlbetrag.summe == fehlbetrag },
                 "Nicht durch Eigenkapital gedeckter Fehlbetrag = ${fehlbetrag}")
     }
 }
@@ -79,7 +79,8 @@ private fun List<Bilanzposition>.bilanz(): Eröffnungsbilanz
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Anlagevermögen" }
                     .map { Vermoegenswert(it.posten, it.betrag) }),
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Umlaufvermögen" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }))
+                    .map { Vermoegenswert(it.posten, it.betrag) }),
+            Vermoegenswerte())
 
     val passiva = Passiva(
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Eigenkapital" }
@@ -87,5 +88,5 @@ private fun List<Bilanzposition>.bilanz(): Eröffnungsbilanz
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Fremdkapital" }
                     .map { Vermoegenswert(it.posten, it.betrag) }))
 
-    return Eröffnungsbilanz(aktiva, 0.0.euro(), passiva)
+    return Eröffnungsbilanz(aktiva, passiva)
 }

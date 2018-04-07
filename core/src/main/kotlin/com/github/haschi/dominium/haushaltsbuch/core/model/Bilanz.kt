@@ -18,7 +18,7 @@ import org.axonframework.eventsourcing.EventSourcingHandler
 class Bilanz
 {
     @AggregateIdentifier
-    var bilanzId: Aggregatkennung? = null;
+    private var bilanzId: Aggregatkennung? = null
 
     constructor()
 
@@ -29,12 +29,18 @@ class Bilanz
 
         val aktiva = Aktiva(
                 anlagevermoegen = inventar.anlagevermoegen,
-                umlaufvermoegen = inventar.umlaufvermoegen)
+                umlaufvermoegen = inventar.umlaufvermoegen,
+                fehlbetrag = if (inventar.reinvermoegen.reinvermoegen.wert.isNegative)
+                    Vermoegenswerte(
+                            Vermoegenswert(
+                                    "Nicht durch Eigenkapital gedeckter Fehlbetrag",
+                                    Währungsbetrag(inventar.reinvermoegen.reinvermoegen.wert.abs())))
+                else Vermoegenswerte())
 
         val passiva = Passiva(
                 eigenkapital = Vermoegenswerte(
                         Vermoegenswert("Eigenkapital",
-                                if (inventar.reinvermoegen.reinvermoegen.wert.isPositiveOrZero())
+                                if (inventar.reinvermoegen.reinvermoegen.wert.isPositive)
                                     inventar.reinvermoegen.reinvermoegen
                                 else 0.0.euro())),
                 fremdkapital = Vermoegenswerte(inventar.schulden.map {
@@ -44,9 +50,6 @@ class Bilanz
 
         val bilanz = Eröffnungsbilanz(
                 aktiva,
-                if (inventar.reinvermoegen.reinvermoegen.wert.isNegative())
-                    Währungsbetrag(inventar.reinvermoegen.reinvermoegen.wert.abs())
-                else 0.0.euro(),
                 passiva)
 
         val ereignis = PrivateEröffnungsbilanzVorgeschlagen(anweisung.bilanzId,
