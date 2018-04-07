@@ -1,0 +1,19 @@
+<h2>Aktiva</h2>
+<section id="anlagevermoegen">
+  <h3>A. Anlagevermögen</h3>
+  <app-position *ngFor="let position of anlagevermoegen"
+                [position]="position">
+  </app-position>
+</section>
+<section id="umlaufvermoegen">
+  <h3>B. Umlaufvermögen</h3>
+  <app-position *ngFor="let position of umlaufvermoegen"
+                [position]="position">
+  </app-position>
+</section>
+<section id="fehlbetrag">
+  <h3>C. Fehlbetrag</h3>
+  <app-position *ngFor="let position of fehlbetrag"
+                [position]="position">
+  </app-position>
+</section>

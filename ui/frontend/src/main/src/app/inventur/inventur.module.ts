@@ -13,6 +13,8 @@ import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module
 import { PositionComponent } from './inventar/position/position.component';
 import { ZeileComponent } from './inventar/zeile/zeile.component';
 import { BilanzComponent } from './bilanz/bilanz.component';
+import { AktivaComponent } from './bilanz/aktiva/aktiva.component';
+import { PassivaComponent } from './bilanz/passiva/passiva.component';
 
 @NgModule({
     imports: [
@@ -29,7 +31,9 @@ import { BilanzComponent } from './bilanz/bilanz.component';
         InventarComponent,
         PositionComponent,
         ZeileComponent,
-        BilanzComponent
+        BilanzComponent,
+        AktivaComponent,
+        PassivaComponent
     ],
     providers: [InventurService, BilanzServiceService],
     exports: [InventurComponent]

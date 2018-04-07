@@ -7,10 +7,12 @@ import { AppMaterialModule } from '../../shared/app-material-module';
 import { PositionComponent } from '../inventar/position/position.component';
 import { ZeileComponent } from '../inventar/zeile/zeile.component';
 import { Inventarposition } from '../inventarposition';
+import { AktivaComponent } from './aktiva/aktiva.component';
 import { BilanzServiceService } from './bilanz-service.service';
 
 import { BilanzComponent } from './bilanz.component';
 import { Eroeffnungsbilanz } from './bilanz.model';
+import { PassivaComponent } from './passiva/passiva.component';
 import Spy = jasmine.Spy;
 
 @Component({
@@ -91,7 +93,13 @@ describe('BilanzComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BilanzComponent, MockQueryErrorComponent, PositionComponent, ZeileComponent],
+            declarations: [
+                BilanzComponent,
+                MockQueryErrorComponent,
+                AktivaComponent,
+                PassivaComponent,
+                PositionComponent,
+                ZeileComponent],
             imports: [AppMaterialModule],
             providers: [
                 {provide: Page, useFactory: Page.create},
