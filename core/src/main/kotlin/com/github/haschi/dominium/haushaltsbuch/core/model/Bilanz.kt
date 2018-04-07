@@ -8,6 +8,8 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbil
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.commandhandling.model.AggregateIdentifier
 import org.axonframework.commandhandling.model.AggregateLifecycle
@@ -32,13 +34,20 @@ class Bilanz
         val passiva = Passiva(
                 eigenkapital = Vermoegenswerte(
                         Vermoegenswert("Eigenkapital",
-                                inventar.reinvermoegen.reinvermoegen)),
+                                if (inventar.reinvermoegen.reinvermoegen.wert.isPositiveOrZero())
+                                    inventar.reinvermoegen.reinvermoegen
+                                else 0.0.euro())),
                 fremdkapital = Vermoegenswerte(inventar.schulden.map {
                     Vermoegenswert(it.position,
                             it.waehrungsbetrag)
                 }))
 
-        val bilanz = Eröffnungsbilanz(aktiva, passiva)
+        val bilanz = Eröffnungsbilanz(
+                aktiva,
+                if (inventar.reinvermoegen.reinvermoegen.wert.isNegative())
+                    Währungsbetrag(inventar.reinvermoegen.reinvermoegen.wert.abs())
+                else 0.0.euro(),
+                passiva)
 
         val ereignis = PrivateEröffnungsbilanzVorgeschlagen(anweisung.bilanzId,
                 anweisung.inventurId,

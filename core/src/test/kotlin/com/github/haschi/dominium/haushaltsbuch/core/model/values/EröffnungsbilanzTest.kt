@@ -46,7 +46,7 @@ class EröffnungsbilanzTest
     @ArgumentsSource(GültigeTestfälle::class)
     fun bilanzsummentest(beschreibung: String, testfall: Testfall)
     {
-        val catched = catchThrowable { Eröffnungsbilanz(testfall.aktiva, testfall.passiva) }
+        val catched = catchThrowable { Eröffnungsbilanz(testfall.aktiva, 0.0.euro(), testfall.passiva) }
         val assertion = assertThat(catched)
         testfall.erwartet(assertion)
     }

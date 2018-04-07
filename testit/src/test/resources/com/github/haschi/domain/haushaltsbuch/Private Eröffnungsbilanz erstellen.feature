@@ -19,3 +19,12 @@ Funktionalität: Private Eröffnungsbilanz erstellen
       #| Aktiv  | B Umlaufvermögen    |          |              |
       | Passiv | A Eigenkapital      | Eigenkapital | 1.234,56 EUR |
       #| Passiv | C Schulden |          |              |
+
+  Szenario: Private Eröffnungsbilanz mit Unterdeckung des Eigenkapitals
+    Wenn ich die Inventur mit folgendem Inventar beende:
+    |Gruppe| Position | Währungsbetrag|
+    | Anlagevermögen | Auto | 5.000,00 EUR |
+    | Umlaufvermögen | Girokonto | 1.000,00 EUR |
+    | Schulden | Autokredit | 7.000,00 EUR |
+
+    Dann werde ich einen nicht durch Eigenkapital gedeckten Fehlbetrag in Höhe von "1.000,00 EUR" bilanziert haben
