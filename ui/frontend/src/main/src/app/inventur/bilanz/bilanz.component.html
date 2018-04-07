@@ -16,6 +16,12 @@
                         [position]="position">
           </app-position>
         </section>
+        <section id="fehlbetrag">
+          <h3>C. Fehlbetrag</h3>
+          <app-position *ngFor="let position of bilanz.aktiva.fehlbetrag"
+                        [position]="position">
+          </app-position>
+        </section>
       </div>
       <div flex class="passiva">
         <h2>Passiva</h2>

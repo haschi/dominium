@@ -2,6 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { AppMaterialModule } from '../../shared/app-material-module';
 import { PositionComponent } from '../inventar/position/position.component';
 import { ZeileComponent } from '../inventar/zeile/zeile.component';
@@ -10,6 +11,7 @@ import { BilanzServiceService } from './bilanz-service.service';
 
 import { BilanzComponent } from './bilanz.component';
 import { Eroeffnungsbilanz } from './bilanz.model';
+import Spy = jasmine.Spy;
 
 @Component({
     selector: 'app-query-error',
@@ -19,10 +21,6 @@ class MockQueryErrorComponent {
 }
 
 describe('BilanzComponent', () => {
-    let mock = {
-        bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null),
-        ladeBilanz: jasmine.createSpy('ladeBilanz')
-    };
 
     class Page {
         constructor(public fixture: ComponentFixture<BilanzComponent>) {
@@ -60,6 +58,18 @@ describe('BilanzComponent', () => {
                 .map(i => i.position)
         }
 
+        get fehlbetrag(): Inventarposition[] {
+            let element = this.fixture.debugElement.query(By.css('#fehlbetrag'))
+
+            if (element == null) {
+                return []
+            }
+
+            return element.queryAll(By.directive(PositionComponent))
+                .map(c => c.componentInstance as PositionComponent)
+                .map(i => i.position)
+        }
+
         get eigenkapital(): Inventarposition[] {
             return this.fixture.debugElement.query(By.css('#eigenkapital'))
                 .queryAll(By.directive(PositionComponent))
@@ -85,7 +95,14 @@ describe('BilanzComponent', () => {
             imports: [AppMaterialModule],
             providers: [
                 {provide: Page, useFactory: Page.create},
-                {provide: BilanzServiceService, useValue: mock}
+                {
+                    provide: BilanzServiceService, useFactory: () => {
+                        return {
+                            bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null),
+                            ladeBilanz: jasmine.createSpy('ladeBilanz')
+                        }
+                    }
+                }
             ]
         })
             .compileComponents();
@@ -95,9 +112,12 @@ describe('BilanzComponent', () => {
         expect(page.fixture).toBeTruthy();
     }));
 
-    it('sollte Eröffnungsbilanz lesen', inject([Page], (page: Page) => {
-        expect(mock.ladeBilanz).toHaveBeenCalled()
-    }))
+    it('sollte Eröffnungsbilanz lesen',
+        inject([Page, BilanzServiceService], (page: Page, service: BilanzServiceService) => {
+            let spy = service.ladeBilanz as Spy
+
+            expect(spy).toHaveBeenCalled()
+        }))
 
     describe('ohne geladene Eröffnungsbilanz', () => {
 
@@ -107,12 +127,17 @@ describe('BilanzComponent', () => {
         })));
     });
 
-    describe('mit geladener Eröffnungsbilanz', () => {
-        beforeEach(() => {
-            mock.bilanz$.next({
+    [
+        {
+            beschreibung: "Eröffnungsbilanz ohne Fehlbetrag",
+            eröffnungsbilanz: {
                 aktiva: {
-                    anlagevermoegen: [{position: 'Eigentumswohnung', waehrungsbetrag: '120.000,00 EUR'}],
+                    anlagevermoegen: [{
+                        position: 'Eigentumswohnung',
+                        waehrungsbetrag: '120.000,00 EUR'
+                    }],
                     umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
+                    fehlbetrag: [],
                     summe: '10.000,00 EUR'
                 },
                 passiva: {
@@ -120,39 +145,62 @@ describe('BilanzComponent', () => {
                     fremdkapital: [],
                     summe: "10.000,00 EUR"
                 }
-            });
-        });
+            }
+        },
+        {
+            beschreibung: "Eröffnungsbilanz mit Fehlbetrag",
+            eröffnungsbilanz: {
+                aktiva: {
+                    anlagevermoegen: [{
+                        position: 'Eigentumswohnung',
+                        waehrungsbetrag: '120.000,00 EUR'
+                    }],
+                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
+                    fehlbetrag: [{position: "Fehlbetrag", waehrungsbetrag: '1.000,00 EUR'}],
+                    summe: '10.000,00 EUR'
+                },
+                passiva: {
+                    eigenkapital: [],
+                    fremdkapital: [],
+                    summe: "10.000,00 EUR"
+                }
+            }
+        }
+    ].forEach(testfall => {
+        describe(testfall.beschreibung, () => {
+            beforeEach(inject([BilanzServiceService], (service: BilanzServiceService) => {
+                let mock = service.bilanz$ as Subject<Eroeffnungsbilanz>
+                mock.next(testfall.eröffnungsbilanz);
+            }));
 
-        it('sollte Abfrage-Fehler nicht anzeigen', async(inject([Page], (page: Page) => {
-            expect(page.ladefortschritt).toBeFalsy()
-        })));
+            it('sollte Abfrage-Fehler nicht anzeigen', inject([Page], (page: Page) => {
+                expect(page.ladefortschritt).toBeFalsy()
+            }));
 
-        it('sollte zwei Bilanzsummen anzeige', inject([Page], (page: Page) => {
-            expect(page.bilanzsummen).toEqual(['10.000,00 EUR', '10.000,00 EUR'])
-        }));
+            it('sollte zwei Bilanzsummen anzeige', inject([Page], (page: Page) => {
+                expect(page.bilanzsummen).toEqual(['10.000,00 EUR', '10.000,00 EUR'])
+            }));
 
-        it('sollte alle Anlagevermögen-Positionen anzeigen', inject([Page], (page: Page) => {
-            mock.bilanz$.subscribe(bilanz => {
-                expect(page.anlagevermögen).toEqual(bilanz.aktiva.anlagevermoegen)
-            })
-        }));
+            it('sollte alle Anlagevermögen-Positionen anzeigen', inject([Page], (page: Page) => {
 
-        it('sollte alle Umlaufvermögen-Positionen anzeigen', inject([Page], (page: Page) => {
-            mock.bilanz$.subscribe(bilanz => {
-                expect(page.umlaufvermögen).toEqual(bilanz.aktiva.umlaufvermoegen)
-            })
-        }));
+                expect(page.anlagevermögen).toEqual(testfall.eröffnungsbilanz.aktiva.anlagevermoegen)
+            }));
 
-        it('sollte alle Eigenkapital-Positionen anzeigen', inject([Page], (page: Page) => {
-            mock.bilanz$.subscribe(bilanz => {
-                expect(page.eigenkapital).toEqual(bilanz.passiva.eigenkapital)
-            })
-        }));
+            it('sollte alle Umlaufvermögen-Positionen anzeigen', inject([Page], (page: Page) => {
+                expect(page.umlaufvermögen).toEqual(testfall.eröffnungsbilanz.aktiva.umlaufvermoegen)
+            }));
 
-        it('sollte alle Fremdkapital-Positionen anzeigen', inject([Page], (page: Page) => {
-            mock.bilanz$.subscribe(bilanz => {
-                expect(page.fremdkapital).toEqual(bilanz.passiva.fremdkapital)
-            })
-        }))
+            it('sollte alle Fehlbeträge anzeigen', inject([Page], (page: Page) => {
+                expect(page.fehlbetrag).toEqual(testfall.eröffnungsbilanz.aktiva.fehlbetrag)
+            }))
+
+            it('sollte alle Eigenkapital-Positionen anzeigen', inject([Page], (page: Page) => {
+                expect(page.eigenkapital).toEqual(testfall.eröffnungsbilanz.passiva.eigenkapital)
+            }));
+
+            it('sollte alle Fremdkapital-Positionen anzeigen', inject([Page], (page: Page) => {
+                expect(page.fremdkapital).toEqual(testfall.eröffnungsbilanz.passiva.fremdkapital)
+            }))
+        })
     })
 });

@@ -16,6 +16,7 @@ export interface Bilanzgruppe {
 export interface Aktiva {
     anlagevermoegen: Vermoegenswert[];
     umlaufvermoegen: Vermoegenswert[];
+    fehlbetrag: Vermoegenswert[];
     summe: string
 }
 

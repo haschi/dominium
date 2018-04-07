@@ -47,6 +47,7 @@ describe('BilanzServiceService', () => {
                 aktiva: {
                     anlagevermoegen: [],
                     umlaufvermoegen: [],
+                    fehlbetrag: [],
                     summe: '0,00 EUR'
                 },
                 passiva: {
@@ -69,6 +70,9 @@ describe('BilanzServiceService', () => {
                         {position: 'Girokonto', waehrungsbetrag: '12.345,67 EUR'},
                         {position: 'Sparbuch', waehrungsbetrag: '23.456,78 EUR'},
                         {position: 'Geldbörse', waehrungsbetrag: '123,45 EUR'}
+                    ],
+                    fehlbetrag: [
+                        {position: 'Fehlbetrag', waehrungsbetrag: '1.000,00 EUR'}
                     ],
                     summe: '1.00 EUR'
                 },
