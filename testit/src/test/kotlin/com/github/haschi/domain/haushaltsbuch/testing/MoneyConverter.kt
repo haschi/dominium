@@ -14,4 +14,9 @@ class MoneyConverter : Transformer<Währungsbetrag>()
 
         return Währungsbetrag.währungsbetrag(währungsbetrag)
     }
+
+    companion object
+    {
+        const val regex = "^(.*) (-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)$"
+    }
 }

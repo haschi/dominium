@@ -7,9 +7,10 @@ import java.util.regex.Pattern
 
 class BuchungConverter : Transformer<Buchung>()
 {
+
     override fun transform(s: String): Buchung
     {
-        val pattern = Pattern.compile("^(.*) (-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)$")
+        val pattern = Pattern.compile(MoneyConverter.regex)
         val matcher = pattern.matcher(s)
 
         assert(matcher.matches()) { "Keine Übereinstimmung: " + s }
@@ -25,3 +26,4 @@ class BuchungConverter : Transformer<Buchung>()
         }
     }
 }
+
