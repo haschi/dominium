@@ -1,0 +1,8 @@
+language: java
+sudo: required
+services:
+  - docker
+jdk:
+  - openjdk8
+install: mvn install -DskipTests=true -DskipIT=true -Dmaven.javadoc.skip=true -B -V
+script: mvn install -B

@@ -82,7 +82,7 @@
                         </goals>
                         <phase>test</phase>
                         <configuration>
-                            <arguments>run test -- --browsers=Chrome --singleRun=true</arguments>
+                            <arguments>run test -- --browsers=PhantomJS --singleRun=true</arguments>
                         </configuration>
                     </execution>
                 </executions>
