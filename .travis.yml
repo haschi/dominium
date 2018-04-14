@@ -1,7 +1,7 @@
 language: java
+services:
+  - docker
 jdk:
   - openjdk8
-jobs:
-  include:
-    - stage: test
-      script: mvn clean test -B -q
+install: mvn install -DskipTests=true -DskipIT=true -Dmaven.javadoc.skip=true -B -V
+script: mvn test -q
