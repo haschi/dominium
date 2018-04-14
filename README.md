@@ -6,6 +6,7 @@ Eine Buchhaltung für private Haushalte.
 *... und eine Experimentierwiese für mich zum Ausprobieren verschiedener
 Techniken.*
 
+[![Build Status](https://travis-ci.org/haschi/dominium.svg?branch=master)](https://travis-ci.org/haschi/dominium)
 
 Anforderungen
 -------------
