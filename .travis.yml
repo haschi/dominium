@@ -1,0 +1,7 @@
+language: java
+jdk:
+  - openjdk8
+jobs:
+  include:
+    - stage: test
+      script: mvn install -DskiptIT=true -B -q
