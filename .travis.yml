@@ -4,4 +4,4 @@ jdk:
 jobs:
   include:
     - stage: test
-      script: mvn install -DskiptIT=true -B -q
+      script: mvn clean test -B -q
