@@ -1,8 +1,8 @@
+import { commandReducer } from '../shared/command-gateway/command-reducers';
 import { AppState } from './model';
 import { combineReducers } from 'redux';
 import { inventurReducer } from './inventur-reducers';
-import { commandReducer } from './command-reducers';
-import { queryReducer } from './query-reducers';
+import { queryReducer } from '../shared/query-gateway/query-reducers';
 
 
 export const rootReducer = combineReducers<AppState>({

@@ -1,8 +1,8 @@
 import {
     QUERY_GATEWAY_INITIAL_STATE,
     QueryGatewayState
-} from '../shared/query-gateway/query-gateway.model';
-import { QueryGatewayActionType } from '../shared/query-gateway/query-gateway-actions.service';
+} from './query-gateway.model';
+import { QueryGatewayActionType } from './query-gateway-actions.service';
 
 export function queryReducer(state: QueryGatewayState = QUERY_GATEWAY_INITIAL_STATE, action): QueryGatewayState {
 

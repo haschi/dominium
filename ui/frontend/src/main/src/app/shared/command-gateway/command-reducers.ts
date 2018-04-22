@@ -1,8 +1,5 @@
-import {
-    COMMAND_GATEWAY_INITIAL_STATE,
-    CommandGatewayState
-} from '../shared/command-gateway/command-gateway.model';
-import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
+import { CommandGatewayActionType } from './command-gateway-actions.service';
+import { COMMAND_GATEWAY_INITIAL_STATE, CommandGatewayState } from './command-gateway.model';
 
 export function commandReducer(state: CommandGatewayState = COMMAND_GATEWAY_INITIAL_STATE, action): CommandGatewayState {
     switch (action.type) {
