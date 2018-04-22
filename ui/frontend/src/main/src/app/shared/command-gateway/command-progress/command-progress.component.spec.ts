@@ -13,7 +13,6 @@ import { StoreModule } from '../../../store/store.module';
 import { MatProgressBar } from '@angular/material';
 import { LoggerService } from '../../logger.service';
 import { QueryGatewayEpicsService } from '../../query-gateway/query-gateway-epics.service';
-import { QueryGatewayActionsService } from '../../query-gateway/query-gateway-actions.service';
 import { QueryGatewayService } from '../../query-gateway/query-gateway.service';
 
 describe('CommandProgressComponent', () => {
@@ -22,7 +21,7 @@ describe('CommandProgressComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            providers: [LoggerService, QueryGatewayEpicsService, QueryGatewayActionsService, QueryGatewayService],
+            providers: [LoggerService, QueryGatewayEpicsService, QueryGatewayService],
             imports: [
                 BrowserModule,
                 BrowserAnimationsModule,

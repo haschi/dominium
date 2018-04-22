@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QueryGatewayActionsService } from './query-gateway-actions.service';
 import { QueryGatewayService } from './query-gateway.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,7 +11,6 @@ import { QueryErrorComponent } from './query-error/query-error.component';
 
 @NgModule({
     providers: [
-        QueryGatewayActionsService,
         QueryGatewayService,
         QueryGatewayEpicsService
     ],

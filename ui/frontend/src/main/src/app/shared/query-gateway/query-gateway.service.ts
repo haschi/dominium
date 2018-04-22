@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { dispatch, select } from '@angular-redux/store';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { angefordert, QueryGatewayActionsService } from './query-gateway-actions.service';
+import { angefordert } from './query-gateway-actions.service';
 import { QueryType } from './query-type';
 import { QueryMessage, QueryMessageAction, QueryResponse } from './query-gateway.model';
 import { LoggerService } from '../logger.service';
@@ -21,7 +21,6 @@ export class QueryGatewayService {
 
     constructor(
         private http: HttpClient,
-        private aktionen: QueryGatewayActionsService,
         private logger: LoggerService) {
     }
 

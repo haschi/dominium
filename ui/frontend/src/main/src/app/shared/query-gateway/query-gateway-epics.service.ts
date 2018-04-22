@@ -6,7 +6,6 @@ import { QueryAction, QueryMessageAction } from './query-gateway.model';
 import {
     fehlgeschlagen,
     gelungen,
-    QueryGatewayActionsService,
     QueryGatewayActionType
 } from './query-gateway-actions.service';
 import { QueryGatewayService } from './query-gateway.service';
@@ -15,8 +14,7 @@ import { createEpicMiddleware, EpicMiddleware, Epic } from 'redux-observable';
 @Injectable()
 export class QueryGatewayEpicsService {
 
-  constructor(private aktionen: QueryGatewayActionsService,
-              private service: QueryGatewayService) { }
+  constructor(private service: QueryGatewayService) { }
 
     public createEpic(): [EpicMiddleware<QueryAction, AppState>] {
         return [
