@@ -276,6 +276,10 @@ Code Richtlinien
 
 In Bezeichnern dürfen keine Umlaute und Sonderzeichen verwendet werden.
 
+Namenskonventionen
+------------------
+
+[Benennung von Actions](https://decembersoft.com/posts/a-simple-naming-convention-for-action-creators-in-redux-js/)
 
 Getestet unter
 --------------
