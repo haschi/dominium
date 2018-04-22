@@ -4,8 +4,8 @@ import { AppState } from '../../store/model';
 import { Observable } from 'rxjs/Observable';
 import { QueryAction, QueryMessageAction } from './query-gateway.model';
 import {
-    fehlgeschlagen,
-    gelungen,
+    queryFehlgeschlagen,
+    queryGelungen,
     QueryGatewayActionType
 } from './query-gateway-actions.service';
 import { QueryGatewayService } from './query-gateway.service';
@@ -22,17 +22,17 @@ export class QueryGatewayEpicsService {
         ];
     }
 
-    // angefordert -> gelungen
-    // angefordert -> fehlgeschlagen
+    // queryAngefordert -> queryGelungen
+    // queryAngefordert -> queryFehlgeschlagen
     private createAngefordertEpic(): Epic<QueryAction, AppState> {
         return (action$) => action$
             .ofType(QueryGatewayActionType.angefordert)
             .mergeMap(action => this.service.get(action as QueryMessageAction)
-                .map(response => gelungen(action.message, response))
+                .map(response => queryGelungen(action.message, response))
                 .catch(error => this.onError(error, action)));
     }
 
     private onError(error: any, action: QueryAction): Observable<QueryAction> {
-        return of(fehlgeschlagen(action.message, error.status, "Fehler"))
+        return of(queryFehlgeschlagen(action.message, error.status, "Fehler"))
     }
 }

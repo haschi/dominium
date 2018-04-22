@@ -10,7 +10,7 @@ export enum QueryGatewayActionType {
     fehlgeschlagen = 'qga_fehlgeschlagen'
 }
 
-export function angefordert(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
+export function queryAngefordert(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
     return {
         type: QueryGatewayActionType.angefordert,
         message: {
@@ -21,7 +21,7 @@ export function angefordert(type: QueryType, payload: any, result: ResultType): 
     }
 };
 
-export function gelungen(message: QueryMessage, response: HttpResponse<any>): QueryResponseAction {
+export function queryGelungen(message: QueryMessage, response: HttpResponse<any>): QueryResponseAction {
     return {
         type: QueryGatewayActionType.gelungen,
         message: message,
@@ -33,19 +33,10 @@ export function gelungen(message: QueryMessage, response: HttpResponse<any>): Qu
     }
 };
 
-export function fehlgeschlagen(cmd: QueryMessage, status: number, message: string): QueryResponseAction {
+export function queryFehlgeschlagen(cmd: QueryMessage, status: number, message: string): QueryResponseAction {
     return {
         type: QueryGatewayActionType.fehlgeschlagen,
         message: cmd,
         response: {status: status, message: message, body: {}}
     }
-}
-
-@Injectable()
-export class QueryGatewayActionsService {
-
-    constructor() {
-    }
-
-
 }
