@@ -1,6 +1,4 @@
 import { Action } from 'redux';
-import { QueryType } from './query-type';
-import { ResultType } from './result-type';
 
 export interface QueryGatewayState {
     message: QueryMessage
@@ -11,7 +9,7 @@ export interface QueryGatewayState {
 export interface QueryMessage {
     type: string,
     payload: any,
-    result: ResultType
+    result: string
 }
 
 export interface QueryResponse {
@@ -26,6 +24,6 @@ export type QueryAction = QueryMessageAction | QueryResponseAction
 
 export const QUERY_GATEWAY_INITIAL_STATE: QueryGatewayState = {
     sendet: false,
-    message: {type: QueryType.KeinQuery, payload: {}, result: ResultType.KeinResult},
+    message: {type: '', payload: {}, result: ''},
     response: {status: 0, message: '', body: {}}
 };

@@ -1,7 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { QueryMessage, QueryMessageAction, QueryResponseAction } from './query-gateway.model';
-import { ResultType } from './result-type';
 
 export enum QueryGatewayActionType {
     angefordert = 'qga_angefordert',
@@ -9,7 +8,7 @@ export enum QueryGatewayActionType {
     fehlgeschlagen = 'qga_fehlgeschlagen'
 }
 
-export function queryAngefordert(type: string, payload: any, result: ResultType): QueryMessageAction {
+export function queryAngefordert(type: string, payload: any, result: string): QueryMessageAction {
     return {
         type: QueryGatewayActionType.angefordert,
         message: {
@@ -32,10 +31,10 @@ export function queryGelungen(message: QueryMessage, response: HttpResponse<any>
     }
 };
 
-export function queryFehlgeschlagen(cmd: QueryMessage, status: number, message: string): QueryResponseAction {
+export function queryFehlgeschlagen(query: QueryMessage, status: number, message: string): QueryResponseAction {
     return {
         type: QueryGatewayActionType.fehlgeschlagen,
-        message: cmd,
+        message: query,
         response: {status: status, message: message, body: {}}
     }
 }

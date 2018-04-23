@@ -3,7 +3,6 @@ import { dispatch, select } from '@angular-redux/store';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { queryAngefordert } from './query-gateway-actions.service';
-import { QueryType } from './query-type';
 import { QueryMessage, QueryMessageAction, QueryResponse } from './query-gateway.model';
 import { LoggerService } from '../logger.service';
 
@@ -41,11 +40,11 @@ export class QueryGatewayService {
                     error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
                         .delay(1000)
                         .take(4)
-                        .concat(Observable.throw(new Error('Wiederholungslimit überschritten!')))));
+                        .concat(Observable.throw(new Error('Limit überschritten!')))));
     }
 
     @dispatch()
-    send(type: string, payload: any, result: ResultType): QueryMessageAction {
+    send(type: string, payload: any, result: string): QueryMessageAction {
         return queryAngefordert(type, payload, result)
     }
 }
