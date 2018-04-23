@@ -9,7 +9,7 @@ export interface QueryGatewayState {
 }
 
 export interface QueryMessage {
-    type: QueryType,
+    type: string,
     payload: any,
     result: ResultType
 }

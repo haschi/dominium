@@ -1,7 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { QueryMessage, QueryMessageAction, QueryResponseAction } from './query-gateway.model';
-import { QueryType } from './query-type';
 import { ResultType } from './result-type';
 
 export enum QueryGatewayActionType {
@@ -10,7 +9,7 @@ export enum QueryGatewayActionType {
     fehlgeschlagen = 'qga_fehlgeschlagen'
 }
 
-export function queryAngefordert(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
+export function queryAngefordert(type: string, payload: any, result: ResultType): QueryMessageAction {
     return {
         type: QueryGatewayActionType.angefordert,
         message: {

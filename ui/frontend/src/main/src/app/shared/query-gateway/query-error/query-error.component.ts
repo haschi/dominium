@@ -23,11 +23,15 @@ export class QueryErrorComponent implements OnInit {
   @select(['query', 'response', 'status'])
   status$: Observable<number>;
 
+  @select(['query', 'message'])
+  private message$: Observable<QueryMessage>
+
   wiederholen() {
 
-    this.state.select(s => s.query.message)
-        .take(1)
-        .subscribe(m =>
+    const first: Observable<QueryMessage> = this.message$.take(1)
+
+      // TODO: Das ist nicht ganz so gut. Noch mal genau hinschauen
+        first.subscribe(m =>
       this.gateway.send(
           m.type,
           m.payload,

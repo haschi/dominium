@@ -45,7 +45,7 @@ export class QueryGatewayService {
     }
 
     @dispatch()
-    send(type: QueryType, payload: any, result: ResultType): QueryMessageAction {
+    send(type: string, payload: any, result: ResultType): QueryMessageAction {
         return queryAngefordert(type, payload, result)
     }
 }
