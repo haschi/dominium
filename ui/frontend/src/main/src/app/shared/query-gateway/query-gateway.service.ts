@@ -13,7 +13,6 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/throw';
-import { ResultType } from './result-type';
 
 @Injectable()
 export class QueryGatewayService {
