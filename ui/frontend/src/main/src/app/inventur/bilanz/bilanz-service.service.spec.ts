@@ -3,8 +3,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 import { LoggerService } from '../../shared/logger.service';
 import { QueryGatewayService } from '../../shared/query-gateway/query-gateway.service';
-import { QueryType } from '../../shared/query-gateway/query-type';
-import { ResultType } from '../../shared/query-gateway/result-type';
+import { QueryType } from '../query-type';
+import { ResultType } from '../result-type';
 import { APP_INITIAL_STATE, AppState, INVENTUR_INITIAL_STATE } from '../../store/model';
 import { rootReducer } from '../../store/reducers';
 

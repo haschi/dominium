@@ -1,4 +1,4 @@
-import { Query } from './query-decorator';
+import { Query } from '../shared/query-gateway/query-decorator';
 
 // const haushaltsbuch = 'com.github.haschi.dominium.haushaltsbuch.core.model.queries';
 

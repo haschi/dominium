@@ -12,8 +12,8 @@ import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.
 import { LoggerService } from '../shared/logger.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { QueryType } from '../shared/query-gateway/query-type';
-import { ResultType } from '../shared/query-gateway/result-type';
+import { QueryType } from './query-type';
+import { ResultType } from './result-type';
 import { APP_INITIAL_STATE, AppState } from '../store/model';
 import { rootReducer } from '../store/reducers';
 import { BilanzComponent } from './bilanz/bilanz.component';

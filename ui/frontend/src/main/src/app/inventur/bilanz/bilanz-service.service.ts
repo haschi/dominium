@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { QueryGatewayService } from '../../shared/query-gateway/query-gateway.service';
-import { QueryType } from '../../shared/query-gateway/query-type';
-import { ResultType } from '../../shared/query-gateway/result-type';
+import { QueryType } from '../query-type';
+import { ResultType } from '../result-type';
 import { AppState } from '../../store/model';
 import { Eroeffnungsbilanz } from './bilanz.model';
 
