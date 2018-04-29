@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { QueryGatewayService } from '../query-gateway.service';
 import { AppState } from '../../../store/model';
-import { QueryMessage } from '../query-reducers';
+import { QueryMessage } from '../query.redux';
 
 @Component({
   selector: 'app-query-error',

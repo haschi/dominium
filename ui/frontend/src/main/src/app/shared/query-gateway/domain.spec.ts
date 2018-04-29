@@ -1,8 +1,8 @@
-import { Command } from './query-decorator';
+import { Query } from './query-decorator';
 
 describe('Ein Feld BeginneHaushaltsbuchführung mit Query Annotation für den Namensraum haschi', () => {
     class X  {
-        @Command('haschi')
+        @Query('haschi')
         static readonly BeginneHaushaltsbuchführung: string = undefined
     }
 

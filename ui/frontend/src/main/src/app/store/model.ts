@@ -7,7 +7,7 @@ import {
 import {
     QUERY_GATEWAY_INITIAL_STATE,
     QueryGatewayState
-} from '../shared/query-gateway/query-reducers';
+} from '../shared/query-gateway/query.redux';
 
 export interface AppState {
     inventur: InventurState

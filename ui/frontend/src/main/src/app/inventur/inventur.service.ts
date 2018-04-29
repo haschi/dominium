@@ -12,6 +12,10 @@ import { CommandType } from './command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 import { Router } from '@angular/router';
 
+//@Domain('haschi')
+//@Result(Inventar)
+interface LeseInventar {id: string}
+
 @Injectable()
 export class InventurService {
 
@@ -76,10 +80,14 @@ export class InventurService {
         let state = this.store.getState().inventur;
         let id = state.inventurId;
 
-        console.info(`Inventur ID: ${id}`)
         this.queryGateway.send(
             QueryType.LeseInventar,
             {id: id},
             ResultType.Inventar);
     }
+
+    // leseInventarNochmal(id: string): void {
+    //     const query: Query<LeseInventar> = {id}
+    //     this.queryGateway.sendQuery(query)
+    // }
 }

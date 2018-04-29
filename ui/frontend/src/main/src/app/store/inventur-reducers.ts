@@ -1,4 +1,4 @@
-import { QueryGatewayActionType } from '../shared/query-gateway/query-reducers';
+import { QueryGatewayActionType } from '../shared/query-gateway/query.redux';
 import { INVENTUR_INITIAL_STATE, InventurState } from './model';
 import { CommandGatewayActionType } from '../shared/command-gateway/command-gateway-actions.service';
 import { CommandType } from '../inventur/command-type';

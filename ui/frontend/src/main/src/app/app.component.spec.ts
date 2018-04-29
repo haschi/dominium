@@ -5,6 +5,7 @@ import { TdLayoutComponent } from '@covalent/core';
 import { AppModule } from './app.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { QueryGatewayService } from './shared/query-gateway/query-gateway.service';
 import { RootEpicsService } from './store/root-epics.service';
 import { CommandGatewayModule } from './shared/command-gateway/command-gateway.module';
 
@@ -13,7 +14,8 @@ describe('AppComponent', () => {
         TestBed.configureTestingModule({
 
             imports: [AppModule, HttpClientTestingModule, CommandGatewayModule],
-            providers: [RootEpicsService,
+            providers: [
+                QueryGatewayService,
                 {provide: APP_BASE_HREF, useValue: '/'}]
         }).compileComponents();
     }));

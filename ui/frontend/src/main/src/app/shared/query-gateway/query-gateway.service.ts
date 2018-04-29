@@ -16,7 +16,7 @@ import {
     QueryMessage,
     QueryMessageAction,
     QueryResponse
-} from './query-reducers';
+} from './query.redux';
 
 @Injectable()
 export class QueryGatewayService {
@@ -34,18 +34,6 @@ export class QueryGatewayService {
 
     @select(['query', 'response'])
     status$: Observable<QueryResponse>;
-
-    get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
-        console.info(`Query Gateway Get: ${JSON.stringify(action)}`)
-        return Observable.timer(1000)
-            .flatMap(nix =>
-                this.http.post("/gateway/query", action.message, {observe: 'response'})
-                .retryWhen(error =>
-                    error.do(val => this.logger.log(`QUERY get ERROR ${val.message}`))
-                        .delay(1000)
-                        .take(4)
-                        .concat(Observable.throw(new Error('Limit überschritten!')))));
-    }
 
     @dispatch()
     send(type: string, payload: any, result: string): QueryMessageAction {

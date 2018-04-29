@@ -1,12 +1,17 @@
-import { NgModule } from '@angular/core';
+import { Inject, InjectionToken, NgModule, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
+import { Action } from 'redux';
+import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
+import { REDUX_EPIC } from '../shared/provider-token';
+import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
+import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
 import { APP_INITIAL_STATE, AppState } from './model';
 import { rootReducer } from './reducers';
 import { RootEpicsService } from './root-epics.service';
 
 @NgModule({
-    imports: [CommonModule, NgReduxModule],
+    imports: [CommonModule, NgReduxModule, QueryGatewayModule],
     exports: [NgReduxModule],
     providers: [RootEpicsService],
     declarations: []
@@ -14,12 +19,16 @@ import { RootEpicsService } from './root-epics.service';
 export class StoreModule {
     constructor(store: NgRedux<AppState>,
                 rootEpics: RootEpicsService,
+                @Inject(REDUX_EPIC) @Optional() epics: Epic<Action, {}>[] = [],
                 devTools: DevToolsExtension) {
+
+
+        const middleware = epics.map(epic => createEpicMiddleware(epic))
 
         store.configureStore(
             rootReducer,
             APP_INITIAL_STATE,
-            [...rootEpics.createEpics()],
+            [...rootEpics.createEpics(), ...middleware],
             devTools.isEnabled() ? [devTools.enhancer()] : [])
     }
 }

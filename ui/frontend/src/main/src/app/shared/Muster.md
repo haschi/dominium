@@ -36,6 +36,8 @@ durch ihren Typ identifizierbar. Reducer verwenden den Typ, um die jeweilige
 Aktion zu erkennen und einen für die Aktion spezifische Transformation des 
 Zustandes auszuwählen
 
+Namenskonvention: [[TODO]]
+
 **Konstanten werden nicht exportiert**, damit Actions nur durch Action Creator 
 erzeugt werden.
 
@@ -71,3 +73,36 @@ State.
 Namenskonvention: *entität*. (Die Funktion besitzt den Namen der Entität, klein
 geschrieben. Dies ist die allgemeine Konvention des Redux Musters)
 
+## Epics
+
+Epics sind automatische Prozess-Schritte, die von einer Aktion ausgelöst werden.
+Diese Prozess-Schritte liefern weitere Aktionen, welche zusätzliche 
+Zustandsänderungen bewirken. Seiteneffekte sind oft deren Ursache und werden
+von Epics ausgelöst.
+
+Sofern Seiteneffekte werden von Diensten implementiert und bereitgestellt. 
+Instanzen dieser Dienste werden dem Epic als Parameter übergeben.
+
+Epics sind Funktionen höherer Ordnung (higher order function). Sie erhalten
+die Instanzen zustandsfreier Dienste als Parameter und liefern eine Funktion
+die zu einer gegebenen Aktion den Seiteneffekt ausführt und als Ergebnis
+weitere Aktionen liefert:
+
+```typescript
+function fallsQueryAngefordert(service: QueryGatewayService): Epic<QueryAction, AppState> {
+    return (action$) => action$
+        .ofType(QueryGatewayActionType.angefordert)
+        .mergeMap(action => service.get(action as QueryMessageAction)
+            .map(response => queryGelungen(action.message, response))
+            .catch(error => of(queryFehlgeschlagen(action.message, error.status, "Fehler"))));
+}
+```   
+
+Namenskonvention: *fallsAktion*, wobei *Aktion* die Bezeichnung eines Action Creator ist,
+der eine Aktion liefert, der die Ursache einer Zustandsänderung ist. Beispiel:
+
+* fallsQueryAngefordert
+* fallsQueryErfolgreich
+* fallsQueryFehlgeschlagen
+* fallsCommandAngefordert
+* ...

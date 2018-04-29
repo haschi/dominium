@@ -12,7 +12,6 @@ import { CommandType } from '../../../inventur/command-type';
 import { StoreModule } from '../../../store/store.module';
 import { MatProgressBar } from '@angular/material';
 import { LoggerService } from '../../logger.service';
-import { QueryGatewayEpicsService } from '../../query-gateway/query-gateway-epics.service';
 import { QueryGatewayService } from '../../query-gateway/query-gateway.service';
 
 describe('CommandProgressComponent', () => {
@@ -21,7 +20,7 @@ describe('CommandProgressComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            providers: [LoggerService, QueryGatewayEpicsService, QueryGatewayService],
+            providers: [LoggerService, QueryGatewayService],
             imports: [
                 BrowserModule,
                 BrowserAnimationsModule,
