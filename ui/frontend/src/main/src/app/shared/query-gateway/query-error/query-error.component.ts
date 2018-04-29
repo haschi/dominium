@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { QueryMessage } from '../query-gateway.model';
 import { NgRedux, select } from '@angular-redux/store';
 import { QueryGatewayService } from '../query-gateway.service';
 import { AppState } from '../../../store/model';
+import { QueryMessage } from '../query-reducers';
 
 @Component({
   selector: 'app-query-error',

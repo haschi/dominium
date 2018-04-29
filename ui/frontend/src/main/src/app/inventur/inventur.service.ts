@@ -43,6 +43,8 @@ export class InventurService {
             CommandType.BeginneInventur,
             {id: id},
             {});
+
+        const state = this.store.getState();
     }
 
     beginnen(): any {
@@ -71,8 +73,10 @@ export class InventurService {
     }
 
     leseInventar() {
-        let id = this.store.getState().inventur.inventurId;
+        let state = this.store.getState().inventur;
+        let id = state.inventurId;
 
+        console.info(`Inventur ID: ${id}`)
         this.queryGateway.send(
             QueryType.LeseInventar,
             {id: id},

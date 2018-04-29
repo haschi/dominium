@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { dispatch, select } from '@angular-redux/store';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { queryAngefordert } from './query-gateway-actions.service';
-import { QueryMessage, QueryMessageAction, QueryResponse } from './query-gateway.model';
 import { LoggerService } from '../logger.service';
 
 import 'rxjs/add/operator/retryWhen';
@@ -13,6 +11,12 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/throw';
+import {
+    queryAngefordert,
+    QueryMessage,
+    QueryMessageAction,
+    QueryResponse
+} from './query-reducers';
 
 @Injectable()
 export class QueryGatewayService {
@@ -32,6 +36,7 @@ export class QueryGatewayService {
     status$: Observable<QueryResponse>;
 
     get(action: QueryMessageAction): Observable<HttpResponse<Object>> {
+        console.info(`Query Gateway Get: ${JSON.stringify(action)}`)
         return Observable.timer(1000)
             .flatMap(nix =>
                 this.http.post("/gateway/query", action.message, {observe: 'response'})
