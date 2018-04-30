@@ -1,10 +1,12 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Provider } from '@angular/core';
-import { Action } from 'redux';
-import { Epic } from 'redux-observable';
+import { Action, AnyAction } from 'redux';
+import { Epic, ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { QueryType } from '../../inventur/query-type';
 import { AppState } from '../../store/model';
+import { filter, map } from 'rxjs/operators';
 
 // TODO: Obwohl Observable Operatoren nicht importiert sind, funktionieren diese
 // Imports prüfen!
@@ -114,3 +116,9 @@ function postQuery(http: HttpClient, action: QueryMessageAction): Observable<Htt
                         .take(4)
                         .concat(Observable.throw(new Error('Zeit-Limit überschritten!')))));
 }
+
+export const gelungen = (q: string) => (source: Observable<AnyAction>) =>
+    source.pipe(
+        filter(action => action.type === QueryGatewayActionType.gelungen),
+        filter(action => action.message.type === q),
+        map(action => action.response.body))

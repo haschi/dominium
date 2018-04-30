@@ -7,14 +7,22 @@ import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.
 import { EpicProvider, REDUX_EPIC } from '../shared/redux-utils/provider';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { fallsCommandInventurBegonnenGelungen } from './inventur-reducers';
+import {
+    fallsCommandInventurBegonnenGelungen,
+    fallsQueryEroeffnungsbilanzGelesenGelungen,
+    fallsQueryInventarGelesenGelungen
+} from './inventur-reducers';
 import { APP_INITIAL_STATE, AppState } from './model';
 import { rootReducer } from './reducers';
 
 @NgModule({
     imports: [CommonModule, NgReduxModule, QueryGatewayModule, CommandGatewayModule],
     exports: [NgReduxModule],
-    providers: [EpicProvider(fallsCommandInventurBegonnenGelungen)],
+    providers: [
+        EpicProvider(fallsCommandInventurBegonnenGelungen),
+        EpicProvider(fallsQueryInventarGelesenGelungen),
+        EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen)
+    ],
     declarations: []
 })
 export class StoreModule {
