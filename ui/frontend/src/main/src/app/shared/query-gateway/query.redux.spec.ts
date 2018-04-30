@@ -3,11 +3,15 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { Action } from 'redux';
 import { Epic } from 'redux-observable';
 import { AppState } from '../../store/model';
-import { REDUX_EPIC } from '../provider-token';
+import { REDUX_EPIC } from '../redux-utils/provider';
+import { EpicProvider } from '../redux-utils/provider';
 import {
-    query, QUERY_GATEWAY_INITIAL_STATE, QueryAction,
+    fallsQueryAngefordert,
+    query,
+    QUERY_GATEWAY_INITIAL_STATE,
+    QueryAction,
     queryAngefordert,
-    QueryEpicProvider, queryFehlgeschlagen,
+    queryFehlgeschlagen,
     QueryGatewayActionType,
     queryGelungen
 } from './query.redux';
@@ -16,7 +20,7 @@ describe('Query Epic Provider', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             providers: [
-                QueryEpicProvider,
+                EpicProvider(fallsQueryAngefordert, [HttpClient]),
                 {provide: HttpClient, useValue: {}},
             ]
         }).compileComponents();
@@ -96,19 +100,5 @@ describe('Query Fehlgeschlagen Action Creator', () => {
             response: {status: 500, message: 'Fehlermeldung', body: {}},
             sendet: false
         })
-    })
-})
-
-
-function epic (): Epic<QueryAction, AppState> {
-    return action$ => action$
-}
-
-describe('Epic Decorator', () => {
-
-
-
-    it('sollte einen Provider für das Epic bereitstellen', () => {
-
     })
 })

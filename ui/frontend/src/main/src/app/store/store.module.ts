@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { Action } from 'redux';
 import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
-import { REDUX_EPIC } from '../shared/provider-token';
+import { REDUX_EPIC } from '../shared/redux-utils/provider';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
 import { APP_INITIAL_STATE, AppState } from './model';
