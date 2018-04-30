@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Provider } from '@angular/core';
 import { Action } from 'redux';
-import { createEpicMiddleware, Epic, EpicMiddleware } from 'redux-observable';
+import { Epic } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { AppState } from '../../store/model';
 import { REDUX_EPIC } from '../provider-token';
-
 
 // TODO: nicht exportieren
 export enum QueryGatewayActionType {
@@ -96,7 +95,11 @@ function fallsQueryAngefordert(http: HttpClient): Epic<QueryAction, AppState> {
     return (action$) => action$
         .ofType(QueryGatewayActionType.angefordert)
         .mergeMap(action => postQuery(http, action as QueryMessageAction)
-            .map(response => queryGelungen(action.message, {status: response.status, message: response.statusText, body: response.body}))
+            .map(response => queryGelungen(action.message, {
+                status: response.status,
+                message: response.statusText,
+                body: response.body
+            }))
             .catch(error => of(queryFehlgeschlagen(action.message, error.status, "Fehler"))));
 }
 
@@ -111,13 +114,16 @@ function postQuery(http: HttpClient, action: QueryMessageAction): Observable<Htt
                         .concat(Observable.throw(new Error('Zeit-Limit überschritten!')))));
 }
 
-function factory(service: HttpClient): Epic<QueryAction, AppState> {
-    return fallsQueryAngefordert(service)
-}
+export const QueryEpicProvider: Provider = provide(fallsQueryAngefordert, [HttpClient])
 
-export const QueryEpicProvider: Provider = {
-    provide: REDUX_EPIC,
-    multi: true,
-    useFactory: factory,
-    deps: [HttpClient]
+export function provide(
+    epic: (...args: any[]) => Epic<Action, {}>,
+    dependencies: any[] = [])
+    : Provider {
+    return {
+        provide: REDUX_EPIC,
+        multi: true,
+        deps: dependencies,
+        useFactory: epic
+    }
 }
