@@ -1,9 +1,8 @@
 import { Eroeffnungsbilanz } from '../inventur/bilanz/bilanz.model';
 import { Inventar } from '../inventur/inventar';
 import {
-    COMMAND_GATEWAY_INITIAL_STATE,
-    CommandGatewayState
-} from '../shared/command-gateway/command-gateway.model';
+    COMMAND_GATEWAY_INITIAL_STATE} from '../shared/command-gateway/command.redux';
+import { CommandGatewayState } from '../shared/command-gateway/command.redux';
 import {
     QUERY_GATEWAY_INITIAL_STATE,
     QueryGatewayState

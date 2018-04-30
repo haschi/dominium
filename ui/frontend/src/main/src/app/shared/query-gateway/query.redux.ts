@@ -7,6 +7,8 @@ import { of } from 'rxjs/observable/of';
 import { AppState } from '../../store/model';
 import { EpicProvider } from '../redux-utils/provider';
 
+// TODO: Obwohl Observable Operatoren nicht importiert sind, funktionieren diese
+// Imports prüfen!
 // TODO: nicht exportieren
 export enum QueryGatewayActionType {
     angefordert = 'qga_angefordert',

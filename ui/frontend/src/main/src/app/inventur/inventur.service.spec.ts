@@ -6,8 +6,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from '../home/home.component';
 import { DEMO_APP_ROUTES } from '../routes';
-import { CommandGatewayActionsService } from '../shared/command-gateway/command-gateway-actions.service';
-import { CommandMessageAction } from '../shared/command-gateway/command-gateway.model';
+import { commandGelungen, CommandMessageAction } from '../shared/command-gateway/command.redux';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { LoggerService } from '../shared/logger.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
@@ -50,10 +49,12 @@ describe('InventurService', () => {
     }));
 
     describe('Nach Beginn der Inventur', () => {
-        beforeEach(inject([CommandGatewayActionsService], (command: CommandGatewayActionsService) => {
-            command.gelungen(
-                {type: CommandType.BeginneInventur, payload: {}, meta: {}},
-                {body: null, type: undefined, status: 200, clone: undefined, headers: undefined, statusText: '', url: '', ok: true})
+        beforeEach(inject([NgRedux], (store: NgRedux<AppState>) => {
+            const action = commandGelungen(
+                {type: CommandType.BeginneInventur, payload: {id: '4711'}, meta: {}},
+                {status: 200, message: 'OK'})
+
+            store.dispatch(action)
         }))
 
         it('leseInventar sollte Inventar anfordern',
