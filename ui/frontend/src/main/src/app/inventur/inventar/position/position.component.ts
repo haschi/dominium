@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Inventarposition } from '../../inventarposition';
+import { Inventarposition } from '../../shared/inventarposition';
 
 @Component({
   selector: 'app-position',

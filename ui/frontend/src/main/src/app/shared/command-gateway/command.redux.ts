@@ -4,7 +4,7 @@ import { Action } from 'redux';
 import { Epic } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { CommandType } from '../../inventur/command-type';
+import { CommandType } from '../../inventur/shared/command-type';
 import { AppState } from '../../store/model';
 
 import 'rxjs/add/operator/catch';

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BilanzServiceService } from './bilanz/bilanz-service.service';
+import { EpicProvider } from '../shared/redux-utils/provider';
+import { BilanzService } from './bilanz/bilanz.service';
 import { InventurComponent } from './inventur.component';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,6 +9,12 @@ import { SharedModule } from '../shared/shared.module';
 import { PostenComponent } from './gruppe/posten/posten.component';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { InventarComponent } from './inventar/inventar.component';
+import {
+    fallsCommandInventurBegonnenGelungen,
+    fallsInventarLesenFehlgeschlagen,
+    fallsQueryEroeffnungsbilanzGelesenGelungen,
+    fallsQueryInventarGelesenGelungen
+} from './shared/inventur.redux';
 import { InventurService } from './inventur.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { PositionComponent } from './inventar/position/position.component';
@@ -35,7 +42,14 @@ import { PassivaComponent } from './bilanz/passiva/passiva.component';
         AktivaComponent,
         PassivaComponent
     ],
-    providers: [InventurService, BilanzServiceService],
+    providers: [
+        InventurService,
+        BilanzService,
+        EpicProvider(fallsCommandInventurBegonnenGelungen),
+        EpicProvider(fallsQueryInventarGelesenGelungen),
+        EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen),
+        EpicProvider(fallsInventarLesenFehlgeschlagen)
+    ],
     exports: [InventurComponent]
 })
 export class InventurModule {

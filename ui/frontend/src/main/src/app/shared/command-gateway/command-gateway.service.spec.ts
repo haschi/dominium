@@ -5,7 +5,7 @@ import { NgReduxModule } from '@angular-redux/store';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { StoreModule } from '../../store/store.module';
 import { CommandGatewayModule } from './command-gateway.module';
-import { CommandType } from '../../inventur/command-type';
+import { CommandType } from '../../inventur/shared/command-type';
 import { AppComponent } from '../../app.component';
 import { AppModule } from '../../app.module';
 import { APP_BASE_HREF } from '@angular/common';

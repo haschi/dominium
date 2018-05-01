@@ -17,7 +17,7 @@ import { InventurModule } from './inventur.module';
 import { InventurService } from './inventur.service';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { StoreModule } from '../store/store.module';
-import { CommandType } from './command-type';
+import { CommandType } from './shared/command-type';
 import { ActivatedRouteStub } from './activated-route-stub';
 import { ActivatedRoute } from '@angular/router';
 

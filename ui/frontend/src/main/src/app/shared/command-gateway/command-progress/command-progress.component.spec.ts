@@ -8,7 +8,7 @@ import { NgReduxModule } from '@angular-redux/store';
 import { CommandGatewayService } from '../command-gateway.service';
 import { CommandGatewayModule } from '../command-gateway.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CommandType } from '../../../inventur/command-type';
+import { CommandType } from '../../../inventur/shared/command-type';
 import { StoreModule } from '../../../store/store.module';
 import { MatProgressBar } from '@angular/material';
 import { LoggerService } from '../../logger.service';

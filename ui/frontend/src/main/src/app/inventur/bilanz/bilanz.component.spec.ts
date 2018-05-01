@@ -6,9 +6,9 @@ import { Subject } from 'rxjs/Subject';
 import { AppMaterialModule } from '../../shared/app-material-module';
 import { PositionComponent } from '../inventar/position/position.component';
 import { ZeileComponent } from '../inventar/zeile/zeile.component';
-import { Inventarposition } from '../inventarposition';
+import { Inventarposition } from '../shared/inventarposition';
 import { AktivaComponent } from './aktiva/aktiva.component';
-import { BilanzServiceService } from './bilanz-service.service';
+import { BilanzService } from './bilanz.service';
 
 import { BilanzComponent } from './bilanz.component';
 import { Eroeffnungsbilanz } from './bilanz.model';
@@ -104,7 +104,7 @@ describe('BilanzComponent', () => {
             providers: [
                 {provide: Page, useFactory: Page.create},
                 {
-                    provide: BilanzServiceService, useFactory: () => {
+                    provide: BilanzService, useFactory: () => {
                         return {
                             bilanz$: new BehaviorSubject<Eroeffnungsbilanz>(null),
                             ladeBilanz: jasmine.createSpy('ladeBilanz')
@@ -121,7 +121,7 @@ describe('BilanzComponent', () => {
     }));
 
     it('sollte Eröffnungsbilanz lesen',
-        inject([Page, BilanzServiceService], (page: Page, service: BilanzServiceService) => {
+        inject([Page, BilanzService], (page: Page, service: BilanzService) => {
             let spy = service.ladeBilanz as Spy
 
             expect(spy).toHaveBeenCalled()
@@ -176,7 +176,7 @@ describe('BilanzComponent', () => {
         }
     ].forEach(testfall => {
         describe(testfall.beschreibung, () => {
-            beforeEach(inject([BilanzServiceService], (service: BilanzServiceService) => {
+            beforeEach(inject([BilanzService], (service: BilanzService) => {
                 let mock = service.bilanz$ as Subject<Eroeffnungsbilanz>
                 mock.next(testfall.eröffnungsbilanz);
             }));

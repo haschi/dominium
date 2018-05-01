@@ -1,10 +1,10 @@
 import { Action, AnyAction } from 'redux';
 import { Epic } from 'redux-observable';
 import { filter, map } from 'rxjs/operators'
-import { CommandGatewayActionType } from '../shared/command-gateway/command.redux';
-import { fehlgeschlagen, gelungen } from '../shared/query-gateway/query.redux';
-import { AppState } from '../store/model';
-import { Eroeffnungsbilanz } from './bilanz/bilanz.model';
+import { CommandGatewayActionType } from '../../shared/command-gateway/command.redux';
+import { fehlgeschlagen, gelungen } from '../../shared/query-gateway/query.redux';
+import { AppState } from '../../store/model';
+import { Eroeffnungsbilanz } from '../bilanz/bilanz.model';
 import { CommandType } from './command-type';
 import { Inventar } from './inventar';
 import { QueryType } from './query-type';

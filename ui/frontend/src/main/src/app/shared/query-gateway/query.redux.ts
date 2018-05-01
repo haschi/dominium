@@ -4,7 +4,7 @@ import { Action, AnyAction } from 'redux';
 import { Epic, ofType } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { QueryType } from '../../inventur/query-type';
+import { QueryType } from '../../inventur/shared/query-type';
 import { AppState } from '../../store/model';
 import { filter, map } from 'rxjs/operators';
 

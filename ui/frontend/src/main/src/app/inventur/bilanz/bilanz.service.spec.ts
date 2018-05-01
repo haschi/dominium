@@ -3,16 +3,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 import { LoggerService } from '../../shared/logger.service';
 import { QueryGatewayService } from '../../shared/query-gateway/query-gateway.service';
-import { INVENTUR_INITIAL_STATE } from '../inventur.redux';
-import { QueryType } from '../query-type';
-import { ResultType } from '../result-type';
+import { INVENTUR_INITIAL_STATE } from '../shared/inventur.redux';
+import { QueryType } from '../shared/query-type';
+import { ResultType } from '../shared/result-type';
 import { APP_INITIAL_STATE, AppState} from '../../store/model';
 import { rootReducer } from '../../store/reducers';
 
-import { BilanzServiceService } from './bilanz-service.service';
+import { BilanzService } from './bilanz.service';
 import { Eroeffnungsbilanz } from './bilanz.model';
 
-describe('BilanzServiceService', () => {
+describe('BilanzService', () => {
 
     const mock = {
         send: jasmine.createSpy('send')
@@ -21,7 +21,7 @@ describe('BilanzServiceService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                BilanzServiceService,
+                BilanzService,
                 LoggerService,
                 {provide: QueryGatewayService, useValue: mock}
             ],
@@ -30,7 +30,7 @@ describe('BilanzServiceService', () => {
         });
     });
 
-    it('should be created', inject([BilanzServiceService], (service: BilanzServiceService) => {
+    it('should be created', inject([BilanzService], (service: BilanzService) => {
         expect(service).toBeTruthy();
     }));
 
@@ -106,7 +106,7 @@ describe('BilanzServiceService', () => {
             }))
 
             it('sollte die Eröffnungsbilanz laden',
-                inject([BilanzServiceService], (service: BilanzServiceService) => {
+                inject([BilanzService], (service: BilanzService) => {
                     service.ladeBilanz()
                     expect(mock.send).toHaveBeenCalledWith(
                         QueryType.LeseEroeffnungsbilanz,
@@ -115,7 +115,7 @@ describe('BilanzServiceService', () => {
                 }))
 
             it('sollte Eröffnungsbilanz liefern',
-                inject([BilanzServiceService], (service: BilanzServiceService) => {
+                inject([BilanzService], (service: BilanzService) => {
                 service.bilanz$.subscribe(
                     bilanz => expect(bilanz).toEqual(testfall.eroeffnungsbilanz))
             }))

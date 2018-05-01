@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { commandAngefordert, CommandMessageAction } from './command.redux';
 import { dispatch, select } from '@angular-redux/store';
-import { CommandType } from '../../inventur/command-type';
+import { CommandType } from '../../inventur/shared/command-type';
 import { LoggerService } from '../logger.service';
 import { CommandMessage, CommandResponse } from './command.redux';
 

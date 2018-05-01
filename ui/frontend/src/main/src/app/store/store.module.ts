@@ -11,19 +11,14 @@ import {
     fallsCommandInventurBegonnenGelungen, fallsInventarLesenFehlgeschlagen,
     fallsQueryEroeffnungsbilanzGelesenGelungen,
     fallsQueryInventarGelesenGelungen
-} from '../inventur/inventur.redux';
+} from '../inventur/shared/inventur.redux';
 import { APP_INITIAL_STATE, AppState } from './model';
 import { rootReducer } from './reducers';
 
 @NgModule({
     imports: [CommonModule, NgReduxModule, QueryGatewayModule, CommandGatewayModule],
     exports: [NgReduxModule],
-    providers: [
-        EpicProvider(fallsCommandInventurBegonnenGelungen),
-        EpicProvider(fallsQueryInventarGelesenGelungen),
-        EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen),
-        EpicProvider(fallsInventarLesenFehlgeschlagen)
-    ],
+
     declarations: []
 })
 export class StoreModule {

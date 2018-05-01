@@ -1,4 +1,4 @@
-import { INVENTUR_INITIAL_STATE, InventurState } from '../inventur/inventur.redux';
+import { INVENTUR_INITIAL_STATE, InventurState } from '../inventur/shared/inventur.redux';
 import {
     COMMAND_GATEWAY_INITIAL_STATE,
     CommandGatewayState

@@ -11,12 +11,12 @@ import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.
 import { LoggerService } from '../shared/logger.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { QueryType } from './query-type';
-import { ResultType } from './result-type';
+import { QueryType } from './shared/query-type';
+import { ResultType } from './shared/result-type';
 import { APP_INITIAL_STATE, AppState } from '../store/model';
 import { rootReducer } from '../store/reducers';
 import { BilanzComponent } from './bilanz/bilanz.component';
-import { CommandType } from './command-type';
+import { CommandType } from './shared/command-type';
 import { InventarComponent } from './inventar/inventar.component';
 import { InventurComponent } from './inventur.component';
 

@@ -4,12 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { InventurState } from './inventur.redux';
-import { QueryType } from './query-type';
-import { ResultType } from './result-type';
-import { Inventar } from './inventar';
+import { InventurState } from './shared/inventur.redux';
+import { QueryType } from './shared/query-type';
+import { ResultType } from './shared/result-type';
+import { Inventar } from './shared/inventar';
 import { AppState} from '../store/model';
-import { CommandType } from './command-type';
+import { CommandType } from './shared/command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 import { Router } from '@angular/router';
 
@@ -30,8 +30,8 @@ export class InventurService {
 
     constructor(
         private idGenerator: IdGeneratorService,
-        private gateway: CommandGatewayService,
-        private queryGateway: QueryGatewayService,
+        private command: CommandGatewayService,
+        private query: QueryGatewayService,
         private router: Router,
         private store: NgRedux<AppState>) {
 
@@ -43,7 +43,7 @@ export class InventurService {
     }
 
     beginneInventur(id: any) {
-        this.gateway.send(
+        this.command.send(
             CommandType.BeginneInventur,
             {id: id},
             {});
@@ -58,7 +58,7 @@ export class InventurService {
     }
 
     beenden(id: any): void {
-        this.gateway.send(
+        this.command.send(
             CommandType.BeendeInventur,
             {von: id},
             {})
@@ -69,7 +69,7 @@ export class InventurService {
     erfasseInventar(inventar: Inventar) {
         let id = this.store.getState().inventur.inventurId;
 
-        this.gateway.send(
+        this.command.send(
             CommandType.ErfasseInventar,
             {id: id, inventar: inventar},
             {}
@@ -80,14 +80,9 @@ export class InventurService {
         let state = this.store.getState().inventur;
         let id = state.inventurId;
 
-        this.queryGateway.send(
+        this.query.send(
             QueryType.LeseInventar,
             {id: id},
             ResultType.Inventar);
     }
-
-    // leseInventarNochmal(id: string): void {
-    //     const query: Query<LeseInventar> = {id}
-    //     this.queryGateway.sendQuery(query)
-    // }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { BilanzServiceService } from './bilanz-service.service';
+import { BilanzService } from './bilanz.service';
 import { Bilanzgruppe, Eroeffnungsbilanz, Gruppe } from './bilanz.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class BilanzComponent implements OnInit {
 
     bilanz$: Observable<Eroeffnungsbilanz>;
 
-    constructor(private service: BilanzServiceService) {
+    constructor(private service: BilanzService) {
         this.bilanz$ = service.bilanz$
     }
 
