@@ -122,3 +122,9 @@ export const gelungen = (q: string) => (source: Observable<AnyAction>) =>
         filter(action => action.type === QueryGatewayActionType.gelungen),
         filter(action => action.message.type === q),
         map(action => action.response.body))
+
+export const fehlgeschlagen = (q: string) => (source: Observable<AnyAction>) =>
+    source.pipe(
+        filter(action => action.type === QueryGatewayActionType.fehlgeschlagen),
+        filter(action => action.message.type === q),
+        map(action => action.response))

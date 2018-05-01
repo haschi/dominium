@@ -7,7 +7,11 @@ import {
     CommandGatewayActionType,
     CommandResponseAction
 } from '../shared/command-gateway/command.redux';
-import { gelungen, QueryGatewayActionType } from '../shared/query-gateway/query.redux';
+import {
+    fehlgeschlagen,
+    gelungen,
+    QueryGatewayActionType
+} from '../shared/query-gateway/query.redux';
 import { AppState, INVENTUR_INITIAL_STATE, InventurState } from './model';
 import { CommandType } from '../inventur/command-type';
 import { QueryType } from '../inventur/query-type';
@@ -16,6 +20,7 @@ import { filter, map } from 'rxjs/operators'
 enum Inventur {
     Begonnen = 'Inventur.Begonnen',
     InventarGelesen = 'Inventur.InventarGelesen',
+    InventarNichtGelesen = 'Inventur.InventarNichtGelesen',
     EroeffnungsbilanzGelesen = 'Inventur.EroeffnungsbilanzGelesen'
 }
 
@@ -30,6 +35,12 @@ export function inventarGelesen(inventar: Inventar): AnyAction /*& {inventar: In
     return {
         type: Inventur.InventarGelesen,
         inventar: inventar
+    }
+}
+
+export function inventarNichtGelesen(): AnyAction {
+    return {
+        type: Inventur.InventarNichtGelesen
     }
 }
 
@@ -63,6 +74,14 @@ export function fallsQueryEroeffnungsbilanzGelesenGelungen(): Epic<AnyAction, Ap
             map(body => eroeffnungsbilanzGelesen(body)));
 }
 
+export function fallsInventarLesenFehlgeschlagen(): Epic<AnyAction, AppState> {
+    return action$ => action$
+        .pipe(
+            fehlgeschlagen(QueryType.LeseInventar),
+            map(response => inventarNichtGelesen())
+        )
+}
+
 export function inventurReducer(state: InventurState = INVENTUR_INITIAL_STATE, action): InventurState {
     switch (action.type) {
         case Inventur.Begonnen: {
@@ -74,16 +93,10 @@ export function inventurReducer(state: InventurState = INVENTUR_INITIAL_STATE, a
         case Inventur.EroeffnungsbilanzGelesen: {
             return {...state, eroeffnungsbilanz: action.eroeffnungsbilanz}
         }
-    }
-
-    switch (action.type) {
-        case QueryGatewayActionType.fehlgeschlagen: {
-            switch (action.message.type) {
-                case QueryType.LeseInventar: {
-                    return {...state, inventar: null}
-                }
-            }
+        case Inventur.InventarNichtGelesen: {
+            return {...state, inventar: null}
         }
     }
+
     return state;
 }
