@@ -1,21 +1,34 @@
 import { Action, AnyAction } from 'redux';
 import { Epic } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
-import { Eroeffnungsbilanz } from '../inventur/bilanz/bilanz.model';
-import { Inventar } from '../inventur/inventar';
-import {
-    CommandGatewayActionType,
-    CommandResponseAction
-} from '../shared/command-gateway/command.redux';
-import {
-    fehlgeschlagen,
-    gelungen,
-    QueryGatewayActionType
-} from '../shared/query-gateway/query.redux';
-import { AppState, INVENTUR_INITIAL_STATE, InventurState } from './model';
-import { CommandType } from '../inventur/command-type';
-import { QueryType } from '../inventur/query-type';
 import { filter, map } from 'rxjs/operators'
+import { CommandGatewayActionType } from '../shared/command-gateway/command.redux';
+import { fehlgeschlagen, gelungen } from '../shared/query-gateway/query.redux';
+import { AppState } from '../store/model';
+import { Eroeffnungsbilanz } from './bilanz/bilanz.model';
+import { CommandType } from './command-type';
+import { Inventar } from './inventar';
+import { QueryType } from './query-type';
+
+export interface InventurState {
+    inventurId: string
+    inventar: Inventar
+    eroeffnungsbilanz: Eroeffnungsbilanz | null
+}
+
+export const INVENTUR_INITIAL_STATE: InventurState = {
+    inventurId: "",
+    inventar: {
+        anlagevermoegen: [],
+        umlaufvermoegen: [],
+        schulden: [],
+        reinvermoegen: {
+            summeDerSchulden: '',
+            summeDesVermoegens: '',
+            reinvermoegen: ''
+        }
+    },
+    eroeffnungsbilanz: null
+};
 
 enum Inventur {
     Begonnen = 'Inventur.Begonnen',
@@ -82,7 +95,7 @@ export function fallsInventarLesenFehlgeschlagen(): Epic<AnyAction, AppState> {
         )
 }
 
-export function inventurReducer(state: InventurState = INVENTUR_INITIAL_STATE, action): InventurState {
+export function inventur(state: InventurState = INVENTUR_INITIAL_STATE, action): InventurState {
     switch (action.type) {
         case Inventur.Begonnen: {
             return {...INVENTUR_INITIAL_STATE, inventurId: action.id}

@@ -1,5 +1,9 @@
 # Umsetzung des Redux Muster
 
+# Das Redux Muster im Zusammenspiel mit Angular
+
+
+
 Redux ist ein rein funktionales Muster. Alle Elemente des Musters werden in 
 einer Datei, die mit .redux.ts endet zusammengefasst. Das Zusammenspiel von
 Reducer, Action bzw. Action Creator, Modell und Epics entspricht einer
@@ -52,11 +56,15 @@ verwendet.
 ## Action Creator
 
 Action Creator sind reine Funktionen, die Actions erzeugen. Sie führen keine
-Seiteneffekte durch.
+Seiteneffekte durch. Aktionen beschreiben 
 
-Die Benennung von Action Creator folgt dem Schema *substantivVerb*. Das 
+Die Benennung von Action Creator folgt dem Schema *substantivZustandsänderung*. Das 
 Substantiv ist oft der Name der Entität, welche durch das Muster beschrieben 
-wird. Das Verb beschreibt eine Aktion, welche auf die Entität angewendet wird.    
+wird. Die Zustandsänderung wird oft als adjektiviertes Verb ausgedrückt. Beispiele:
+
+* inventurBegonnen
+* inventurBeendet
+* queryFehlgeschlagen     
 
 Action Creator werden exportiert.
 

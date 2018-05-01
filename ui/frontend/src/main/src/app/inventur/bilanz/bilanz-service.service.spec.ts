@@ -3,9 +3,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 import { LoggerService } from '../../shared/logger.service';
 import { QueryGatewayService } from '../../shared/query-gateway/query-gateway.service';
+import { INVENTUR_INITIAL_STATE } from '../inventur.redux';
 import { QueryType } from '../query-type';
 import { ResultType } from '../result-type';
-import { APP_INITIAL_STATE, AppState, INVENTUR_INITIAL_STATE } from '../../store/model';
+import { APP_INITIAL_STATE, AppState} from '../../store/model';
 import { rootReducer } from '../../store/reducers';
 
 import { BilanzServiceService } from './bilanz-service.service';

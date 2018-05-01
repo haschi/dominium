@@ -4,18 +4,18 @@ import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
+import { InventurState } from './inventur.redux';
 import { QueryType } from './query-type';
 import { ResultType } from './result-type';
 import { Inventar } from './inventar';
-import { AppState, InventurState } from '../store/model';
+import { AppState} from '../store/model';
 import { CommandType } from './command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
 import { Router } from '@angular/router';
 
-//@Domain('haschi')
-//@Result(Inventar)
 interface LeseInventar {id: string}
 
+// TODO: Unterscheiden zwischen Inventar und Inventur. Ggf. 2 Services?
 @Injectable()
 export class InventurService {
 

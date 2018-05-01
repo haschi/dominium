@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InventurState } from '../../store/model';
+import { InventurState } from '../inventur.redux';
 import { Inventar } from '../inventar';
 import { Observable } from 'rxjs/Observable';
 

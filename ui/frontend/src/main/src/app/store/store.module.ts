@@ -8,10 +8,10 @@ import { EpicProvider, REDUX_EPIC } from '../shared/redux-utils/provider';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
 import {
-    fallsCommandInventurBegonnenGelungen,
+    fallsCommandInventurBegonnenGelungen, fallsInventarLesenFehlgeschlagen,
     fallsQueryEroeffnungsbilanzGelesenGelungen,
     fallsQueryInventarGelesenGelungen
-} from './inventur-reducers';
+} from '../inventur/inventur.redux';
 import { APP_INITIAL_STATE, AppState } from './model';
 import { rootReducer } from './reducers';
 
@@ -21,7 +21,8 @@ import { rootReducer } from './reducers';
     providers: [
         EpicProvider(fallsCommandInventurBegonnenGelungen),
         EpicProvider(fallsQueryInventarGelesenGelungen),
-        EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen)
+        EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen),
+        EpicProvider(fallsInventarLesenFehlgeschlagen)
     ],
     declarations: []
 })
