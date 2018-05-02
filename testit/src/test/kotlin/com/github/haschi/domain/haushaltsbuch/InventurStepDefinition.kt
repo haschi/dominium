@@ -69,7 +69,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
-                        Vermoegenswert(it.position, it.währungsbetrag)
+                        Vermoegenswert(it.kategorie, it.position, it.währungsbetrag)
                     })
                 }
                 .isDone
@@ -82,7 +82,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
-                        Vermoegenswert(it.position, it.währungsbetrag)
+                        Vermoegenswert(it.kategorie, it.position, it.währungsbetrag)
                     })
                 }
     }

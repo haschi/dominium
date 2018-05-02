@@ -141,10 +141,11 @@ describe('BilanzComponent', () => {
             eröffnungsbilanz: {
                 aktiva: {
                     anlagevermoegen: [{
+                        kategorie: "Sonstiges",
                         position: 'Eigentumswohnung',
                         waehrungsbetrag: '120.000,00 EUR'
                     }],
-                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
+                    umlaufvermoegen: [{kategorie: "Sonstiges", position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
                     fehlbetrag: [],
                     summe: '10.000,00 EUR'
                 },
@@ -160,11 +161,12 @@ describe('BilanzComponent', () => {
             eröffnungsbilanz: {
                 aktiva: {
                     anlagevermoegen: [{
+                        kategorie: "Sonstiges",
                         position: 'Eigentumswohnung',
                         waehrungsbetrag: '120.000,00 EUR'
                     }],
-                    umlaufvermoegen: [{position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
-                    fehlbetrag: [{position: "Fehlbetrag", waehrungsbetrag: '1.000,00 EUR'}],
+                    umlaufvermoegen: [{kategorie: "Sonstiges", position: 'Girokonto', waehrungsbetrag: '12.000,00 EUR'}],
+                    fehlbetrag: [{kategorie: "Sonstiges", position: "Fehlbetrag", waehrungsbetrag: '1.000,00 EUR'}],
                     summe: '10.000,00 EUR'
                 },
                 passiva: {

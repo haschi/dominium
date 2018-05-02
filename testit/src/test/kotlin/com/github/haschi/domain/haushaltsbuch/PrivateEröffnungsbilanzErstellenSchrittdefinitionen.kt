@@ -77,16 +77,16 @@ private fun List<Bilanzposition>.bilanz(): Eröffnungsbilanz
 {
     val aktiva = Aktiva(
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Anlagevermögen" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Umlaufvermögen" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte())
 
     val passiva = Passiva(
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Eigenkapital" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Fremdkapital" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }))
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }))
 
     return Eröffnungsbilanz(aktiva, passiva)
 }

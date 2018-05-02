@@ -66,6 +66,7 @@ export class InventurComponent implements OnInit {
 
     inventarpositionKonvertieren(poisition: any): Inventarposition {
         return {
+            kategorie: poisition.kategorie,
             position: poisition.position,
             waehrungsbetrag: `${poisition.waehrungsbetrag.betrag} ${poisition.waehrungsbetrag.waehrung}`
         }

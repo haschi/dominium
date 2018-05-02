@@ -11,6 +11,7 @@ import kotlin.streams.toList
 
 class Inventarposition {
     var gruppe: String? = null
+    var kategorie: String? = null
     var position: String? = null
     @XStreamConverter(MoneyConverter::class)
     var währungsbetrag: Währungsbetrag? = null
@@ -20,7 +21,7 @@ fun List<Inventarposition>.vermögenswerte(bezeichnung: String): Vermoegenswerte
     Vermoegenswerte(
         this.stream()
             .filter { z -> z.gruppe == bezeichnung }
-            .map({p -> Vermoegenswert(p.position!!, p.währungsbetrag!!)})
+            .map({p -> Vermoegenswert(p.kategorie!!, p.position!!, p.währungsbetrag!!)})
             .toList())
 
 fun List<Inventarposition>.schulden(bezeichnung: String): Schulden =

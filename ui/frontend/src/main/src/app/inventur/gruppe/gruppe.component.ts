@@ -25,6 +25,7 @@ export class GruppeComponent {
         });
 
         const group = new FormGroup({
+            kategorie: new FormControl('', Validators.required),
             position: new FormControl('', Validators.required),
             waehrungsbetrag: waehrungsbetrag,
         });

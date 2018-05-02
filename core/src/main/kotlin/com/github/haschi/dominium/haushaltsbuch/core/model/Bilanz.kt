@@ -33,18 +33,23 @@ class Bilanz
                 fehlbetrag = if (inventar.reinvermoegen.reinvermoegen.wert.isNegative)
                     Vermoegenswerte(
                             Vermoegenswert(
+                                    "",
                                     "Nicht durch Eigenkapital gedeckter Fehlbetrag",
                                     Währungsbetrag(inventar.reinvermoegen.reinvermoegen.wert.abs())))
                 else Vermoegenswerte())
 
         val passiva = Passiva(
                 eigenkapital = Vermoegenswerte(
-                        Vermoegenswert("Eigenkapital",
+                        Vermoegenswert(
+                                "",
+                                "Eigenkapital",
                                 if (inventar.reinvermoegen.reinvermoegen.wert.isPositive)
                                     inventar.reinvermoegen.reinvermoegen
                                 else 0.0.euro())),
                 fremdkapital = Vermoegenswerte(inventar.schulden.map {
-                    Vermoegenswert(it.position,
+                    Vermoegenswert(
+                            "",
+                            it.position,
                             it.waehrungsbetrag)
                 }))
 

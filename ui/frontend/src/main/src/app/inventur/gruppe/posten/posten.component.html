@@ -1,8 +1,14 @@
 <ng-container [formGroup]="posten">
     <mat-form-field flex>
+        <input matInput placeholder="Kategorie"
+               type="text" name="kategorie" formControlName="kategorie"
+               required appAutofocus>
+    </mat-form-field>
+
+    <mat-form-field flex>
         <input matInput placeholder="Position"
                type="text" name="position" formControlName="position"
-               required appAutofocus>
+               required>
     </mat-form-field>
 
     <ng-container [formGroup]="posten.get('waehrungsbetrag')">
