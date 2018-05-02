@@ -4,9 +4,8 @@ import { CommandGatewayService } from './command-gateway.service';
 import { NgReduxModule } from '@angular-redux/store';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { StoreModule } from '../../store/store.module';
-import { RootEpicsService } from '../../store/root-epics.service';
 import { CommandGatewayModule } from './command-gateway.module';
-import { CommandType } from '../../inventur/command-type';
+import { CommandType } from '../../inventur/shared/command-type';
 import { AppComponent } from '../../app.component';
 import { AppModule } from '../../app.module';
 import { APP_BASE_HREF } from '@angular/common';
@@ -27,8 +26,9 @@ describe('CommandGatewayService', () => {
                 StoreModule,
                 CommandGatewayModule
             ],
-            providers: [RootEpicsService,
-                {provide: APP_BASE_HREF, useValue: '/'}]
+            providers: [
+                {provide: APP_BASE_HREF, useValue: '/'}
+            ]
         });
     });
 

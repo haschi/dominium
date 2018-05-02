@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { CommandMessage, CommandMessageAction, CommandResponse } from './command-gateway.model';
+import { commandAngefordert, CommandMessageAction } from './command.redux';
 import { dispatch, select } from '@angular-redux/store';
-import { CommandGatewayActionsService } from './command-gateway-actions.service';
-import { CommandType } from '../../inventur/command-type';
+import { CommandType } from '../../inventur/shared/command-type';
 import { LoggerService } from '../logger.service';
+import { CommandMessage, CommandResponse } from './command.redux';
 
 @Injectable()
 export class CommandGatewayService {
 
-    constructor(
-        private http: HttpClient,
-        private aktionen: CommandGatewayActionsService,
-        private logger: LoggerService
-    ) {
-    }
+    constructor() {}
 
     @select(['command', 'sendet'])
     sendet$: Observable<boolean>;
@@ -26,12 +21,8 @@ export class CommandGatewayService {
     @select(['command', 'response'])
     status$: Observable<CommandResponse>;
 
-    post(action: CommandMessageAction): Observable<HttpResponse<Object>> {
-        return this.http.post("/gateway/command", action.message, {observe: 'response'});
-    }
-
     @dispatch()
     send(type: CommandType, payload: any, meta: any): CommandMessageAction {
-        return this.aktionen.angefordert(type, payload, meta)
+        return commandAngefordert(type, payload, meta)
     }
 }

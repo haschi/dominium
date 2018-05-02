@@ -8,11 +8,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
-import { Inventar } from './inventar';
+import { Inventar } from './shared/inventar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { select } from '@angular-redux/store';
-import { Inventarposition } from './inventarposition';
+import { Inventarposition } from './shared/inventarposition';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
 

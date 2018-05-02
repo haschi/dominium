@@ -1,40 +1,18 @@
-import { Eroeffnungsbilanz } from '../inventur/bilanz/bilanz.model';
-import { Inventar } from '../inventur/inventar';
+import { INVENTUR_INITIAL_STATE, InventurState } from '../inventur/shared/inventur.redux';
 import {
     COMMAND_GATEWAY_INITIAL_STATE,
     CommandGatewayState
-} from '../shared/command-gateway/command-gateway.model';
+} from '../shared/command-gateway/command.redux';
 import {
     QUERY_GATEWAY_INITIAL_STATE,
     QueryGatewayState
-} from '../shared/query-gateway/query-gateway.model';
+} from '../shared/query-gateway/query.redux';
 
 export interface AppState {
     inventur: InventurState
     command: CommandGatewayState,
     query: QueryGatewayState
 }
-
-export interface InventurState {
-    inventurId: string
-    inventar: Inventar
-    eroeffnungsbilanz: Eroeffnungsbilanz | null
-}
-
-export const INVENTUR_INITIAL_STATE: InventurState = {
-    inventurId: "",
-    inventar: {
-        anlagevermoegen: [],
-        umlaufvermoegen: [],
-        schulden: [],
-        reinvermoegen: {
-            summeDerSchulden: '',
-            summeDesVermoegens: '',
-            reinvermoegen: ''
-        }
-    },
-    eroeffnungsbilanz: null
-};
 
 export const APP_INITIAL_STATE: AppState = {
     inventur: INVENTUR_INITIAL_STATE,

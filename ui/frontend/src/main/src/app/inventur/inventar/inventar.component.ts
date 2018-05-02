@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { InventurState } from '../../store/model';
-import { Inventar } from '../inventar';
+import { InventurState } from '../shared/inventur.redux';
+import { Inventar } from '../shared/inventar';
 import { Observable } from 'rxjs/Observable';
 
 import { InventurService } from '../inventur.service';

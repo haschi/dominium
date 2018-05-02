@@ -1,6 +1,7 @@
 <mat-card *ngIf="(inventurState$ | async) as inventur; else queryError">
     <mat-card-title id="inventar">Inventar</mat-card-title>
     <mat-card-content id="positionen" class="positionen">
+        <p>Inventur ID {{inventur.inventurId}}</p>
         <ol style="list-style-type: upper-alpha">
             <li>
                 <h4>Vermögen</h4>

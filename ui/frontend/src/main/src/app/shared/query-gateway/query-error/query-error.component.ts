@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { QueryMessage } from '../query-gateway.model';
 import { NgRedux, select } from '@angular-redux/store';
 import { QueryGatewayService } from '../query-gateway.service';
 import { AppState } from '../../../store/model';
+import { QueryMessage } from '../query.redux';
 
 @Component({
   selector: 'app-query-error',
@@ -23,11 +23,15 @@ export class QueryErrorComponent implements OnInit {
   @select(['query', 'response', 'status'])
   status$: Observable<number>;
 
+  @select(['query', 'message'])
+  private message$: Observable<QueryMessage>
+
   wiederholen() {
 
-    this.state.select(s => s.query.message)
-        .take(1)
-        .subscribe(m =>
+    const first: Observable<QueryMessage> = this.message$.take(1)
+
+      // TODO: Das ist nicht ganz so gut. Noch mal genau hinschauen
+        first.subscribe(m =>
       this.gateway.send(
           m.type,
           m.payload,

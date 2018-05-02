@@ -1,12 +1,11 @@
+import { command } from '../shared/command-gateway/command.redux';
 import { AppState } from './model';
 import { combineReducers } from 'redux';
-import { inventurReducer } from './inventur-reducers';
-import { commandReducer } from './command-reducers';
-import { queryReducer } from './query-reducers';
-
+import { inventur } from '../inventur/shared/inventur.redux';
+import { query } from '../shared/query-gateway/query.redux';
 
 export const rootReducer = combineReducers<AppState>({
-    inventur: inventurReducer,
-    command: commandReducer,
-    query: queryReducer
+    inventur: inventur,
+    command: command,
+    query: query
 });
