@@ -15,10 +15,10 @@ Funktionalität: Inventur durchführen
   Szenario: Inventar erfassen
     Angenommen ich habe mit der Inventur begonnen
     Wenn ich folgendes Inventar erfasse:
-      | Gruppe                | Kategorie | Position         | Währungsbetrag |
-      | Anlagevermögen        | Sonstiges | Sparbuchguthaben | 5.300,00 EUR   |
-      | Umlaufvermögen        | Sonstiges | Bankguthaben     | 500,00 EUR     |
-      | Schulden | Sonstiges | Autokredit       | 10.569,00 EUR  |
+      | Gruppe         | Kategorie | Position         | Währungsbetrag |
+      | Anlagevermögen | Sonstiges | Sparbuchguthaben | 5.300,00 EUR   |
+      | Umlaufvermögen | Sonstiges | Bankguthaben     | 500,00 EUR     |
+      | Schulden       | Sonstiges | Autokredit       | 10.569,00 EUR  |
 
     Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
       | Kategorie | Position         | Währungsbetrag |

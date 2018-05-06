@@ -3,7 +3,7 @@ package com.github.haschi.domain.haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
-import com.github.haschi.domain.haushaltsbuch.testing.Inventurgruppen
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
@@ -45,9 +45,9 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     private fun List<Inventarposition>.inventar(): Inventar
     {
         return Inventar(
-                umlaufvermoegen = this.vermögenswerte(Inventurgruppen.Umlaufvermögen),
-                anlagevermoegen = this.vermögenswerte(Inventurgruppen.Anlagevermögen),
-                schulden = this.schulden(Inventurgruppen.Schulden))
+                umlaufvermoegen = this.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = this.vermögenswerte(InventurGruppe.Anlagevermögen),
+                schulden = this.schulden(InventurGruppe.Schulden))
     }
 
     @Dann("^werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:$")

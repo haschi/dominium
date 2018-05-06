@@ -2,7 +2,7 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
-import com.github.haschi.domain.haushaltsbuch.testing.Inventurgruppen
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
@@ -115,9 +115,9 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
     {
         val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte(Inventurgruppen.Umlaufvermögen),
-                anlagevermoegen = zeilen.vermögenswerte(Inventurgruppen.Anlagevermögen),
-                schulden = zeilen.schulden(Inventurgruppen.Schulden))
+                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen),
+                schulden = zeilen.schulden(InventurGruppe.Schulden))
 
         sync(welt.inventur) {
             send(ErfasseInventar(
@@ -131,9 +131,9 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)
     {
         val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte(Inventurgruppen.Umlaufvermögen),
-                anlagevermoegen = zeilen.vermögenswerte(Inventurgruppen.Umlaufvermögen),
-                schulden = zeilen.schulden(Inventurgruppen.Schulden))
+                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                schulden = zeilen.schulden(InventurGruppe.Schulden))
 
         welt.intention = welt.inventur.send(ErfasseInventar(
                     id = welt.aktuelleInventur,
