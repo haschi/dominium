@@ -9,19 +9,19 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import kotlin.streams.toList
 
-class Inventarposition {
-    var gruppe: String? = null
-    var kategorie: String? = null
-    var position: String? = null
-    @XStreamConverter(MoneyConverter::class)
-    var währungsbetrag: Währungsbetrag? = null
-}
+@XStreamConverter(InventarpositionConverter::class)
+class Inventarposition(
+    val gruppe: String,
+    var kategorie: Kategorie,
+    var position: String,
+    var währungsbetrag: Währungsbetrag
+)
 
 fun List<Inventarposition>.vermögenswerte(bezeichnung: String): Vermoegenswerte =
     Vermoegenswerte(
         this.stream()
             .filter { z -> z.gruppe == bezeichnung }
-            .map({p -> Vermoegenswert(p.kategorie!!, p.position!!, p.währungsbetrag!!)})
+            .map({p -> Vermoegenswert(p.kategorie.kategorie, p.position!!, p.währungsbetrag!!)})
             .toList())
 
 fun List<Inventarposition>.schulden(bezeichnung: String): Schulden =
