@@ -12,7 +12,7 @@ import kotlin.streams.toList
 
 @XStreamConverter(InventarpositionConverter::class)
 class Inventarposition(
-    val gruppe: Inventurgruppe,
+    val gruppe: Inventurgruppen,
     var kategorie: Kategorie,
     var position: String,
     var währungsbetrag: Währungsbetrag
@@ -21,13 +21,13 @@ class Inventarposition(
 fun List<Inventarposition>.vermögenswerte(gruppe: Inventurgruppen): Vermoegenswerte =
     Vermoegenswerte(
         this.stream()
-            .filter { z -> z.gruppe.bezeichnung == gruppe.gruppe.bezeichnung }
+            .filter { z -> z.gruppe == gruppe }
             .map({p -> Vermoegenswert(p.kategorie.kategorie, p.position, p.währungsbetrag)})
             .toList())
 
 fun List<Inventarposition>.schulden(gruppe: Inventurgruppen): Schulden =
         Schulden(
                 this.stream()
-                        .filter { z -> z.gruppe.bezeichnung == gruppe.gruppe.bezeichnung }
+                        .filter { z -> z.gruppe == gruppe }
                         .map({p -> Schuld(p.position, p.währungsbetrag) })
                         .toList())

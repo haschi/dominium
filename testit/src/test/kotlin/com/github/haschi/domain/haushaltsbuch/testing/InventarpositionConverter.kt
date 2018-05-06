@@ -17,7 +17,7 @@ class InventarpositionConverter : Converter
 
     override fun unmarshal(reader: HierarchicalStreamReader, p1: UnmarshallingContext?): Any
     {
-        val gruppe = Inventurgruppen.valueOf(nächsterWert(reader)).gruppe
+        val gruppe = Inventurgruppen.valueOf(nächsterWert(reader))
 
         return Inventarposition(
                 gruppe,
@@ -40,18 +40,13 @@ class InventarpositionConverter : Converter
     }
 }
 
-data class Inventurgruppe(val bezeichnung: String, val kategorien: Array<Kategorie>) : Comparable<Inventurgruppe>
-{
-    override fun compareTo(other: Inventurgruppe): Int
-    {
-        return bezeichnung.compareTo(other.bezeichnung)
-    }
-}
 
-enum class Inventurgruppen(var gruppe: Inventurgruppe)
+enum class Inventurgruppen(
+        val bezeichnung: String,
+        val kategorien: Array<Kategorie>)
 {
-    Anlagevermögen(Inventurgruppe("Anlagevermögen", arrayOf(Kategorie("Sonstiges")))),
-    Umlaufvermögen(Inventurgruppe("Umlaufvermögen", arrayOf(Kategorie("Sonstiges")))),
-    Schulden(Inventurgruppe("Schulden", arrayOf(Kategorie("Sonstiges")))),
+    Anlagevermögen("Anlagevermögen", arrayOf(Kategorie("Sonstiges"))),
+    Umlaufvermögen("Umlaufvermögen", arrayOf(Kategorie("Sonstiges"))),
+    Schulden("Schulden", arrayOf(Kategorie("Sonstiges"))),
 }
 
