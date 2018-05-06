@@ -3,6 +3,7 @@ package com.github.haschi.domain.haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.domain.haushaltsbuch.testing.Inventurgruppen
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
@@ -18,7 +19,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 import cucumber.api.Transform
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
@@ -45,9 +45,9 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     private fun List<Inventarposition>.inventar(): Inventar
     {
         return Inventar(
-                umlaufvermoegen = this.vermögenswerte("Umlaufvermögen"),
-                anlagevermoegen = this.vermögenswerte("Anlagevermögen"),
-                schulden = this.schulden("Schulden"))
+                umlaufvermoegen = this.vermögenswerte(Inventurgruppen.Umlaufvermögen),
+                anlagevermoegen = this.vermögenswerte(Inventurgruppen.Anlagevermögen),
+                schulden = this.schulden(Inventurgruppen.Schulden))
     }
 
     @Dann("^werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:$")

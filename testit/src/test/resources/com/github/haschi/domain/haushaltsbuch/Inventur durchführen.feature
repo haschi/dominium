@@ -18,7 +18,7 @@ Funktionalität: Inventur durchführen
       | Gruppe                | Kategorie | Position         | Währungsbetrag |
       | Anlagevermögen        | Sonstiges | Sparbuchguthaben | 5.300,00 EUR   |
       | Umlaufvermögen        | Sonstiges | Bankguthaben     | 500,00 EUR     |
-      | Langfristige Schulden | Sonstiges | Autokredit       | 10.569,00 EUR  |
+      | Schulden | Sonstiges | Autokredit       | 10.569,00 EUR  |
 
     Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
       | Kategorie | Position         | Währungsbetrag |
