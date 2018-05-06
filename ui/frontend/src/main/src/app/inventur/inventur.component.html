@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="(inventurGruppen$ | async) as gruppen">
     <mat-card-title id="title123">Inventur</mat-card-title>
     <mat-card-content>
         <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
@@ -10,7 +10,7 @@
                 <mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"
                           [stepControl]="anlagevermoegen">
                     <p>Erfassen Sie ihr Anlagevermögen.</p>
-                    <app-inventur-gruppe [positionen]="anlagevermoegen">
+                    <app-inventur-gruppe [positionen]="anlagevermoegen" [kategorien]="gruppen.gruppen.anlagevermoegen.kategorien">
                     </app-inventur-gruppe>
                     <div>
                         <button type="button" mat-button matStepperNext [disabled]="anlagevermoegen.invalid">
@@ -20,7 +20,7 @@
                 </mat-step>
                 <mat-step label="Umlaufvermögen">
                     <p>Erfassen Sie ihr Umlaufvermögen</p>
-                    <app-inventur-gruppe [positionen]="umlaufvermoegen">
+                    <app-inventur-gruppe [positionen]="umlaufvermoegen" [kategorien]="gruppen.gruppen.umlaufvermoegen.kategorien">
                     </app-inventur-gruppe>
                     <div>
                         <button type="button" mat-button matStepperPrevious>Zurück</button>
@@ -31,7 +31,7 @@
                 </mat-step>
                 <mat-step label="Schulden">
                     <p>Erfassen Sie ihre Schulden</p>
-                    <app-inventur-gruppe [positionen]="schulden">
+                    <app-inventur-gruppe [positionen]="schulden" [kategorien]="gruppen.gruppen.schulden.kategorien">
                     </app-inventur-gruppe>
                     <div>
                         <button type="button" mat-button matStepperPrevious>Zurück</button>

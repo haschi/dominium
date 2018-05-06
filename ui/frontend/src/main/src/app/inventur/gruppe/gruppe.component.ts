@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy, Component, Input, TemplateRef
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Kategorie } from '../shared/gruppen.redux';
 
 @Component({
     selector: 'app-inventur-gruppe',
@@ -14,6 +15,9 @@ export class GruppeComponent {
 
     @Input()
     public positionen: FormArray;
+
+    @Input()
+    public kategorien: Kategorie[];
 
     @Input()
     public titel: TemplateRef<any>;

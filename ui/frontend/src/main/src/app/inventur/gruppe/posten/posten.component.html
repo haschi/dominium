@@ -1,8 +1,11 @@
 <ng-container [formGroup]="posten">
+
     <mat-form-field flex>
-        <input matInput placeholder="Kategorie"
-               type="text" name="kategorie" formControlName="kategorie"
-               required appAutofocus>
+        <mat-select placeholder="Kategorie" formControlName="kategorie" name="kategorie" required appAutofocus>
+            <mat-option *ngFor="let kategorie of kategorien" [value]="kategorie.kategorie">
+                {{ kategorie.kategorie }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field flex>
@@ -10,6 +13,7 @@
                type="text" name="position" formControlName="position"
                required>
     </mat-form-field>
+
 
     <ng-container [formGroup]="posten.get('waehrungsbetrag')">
         <mat-form-field flex="20">
