@@ -2,6 +2,7 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 
 import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.model.Zeit
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.CommandMessage
 import org.axonframework.commandhandling.SimpleCommandBus
@@ -16,6 +17,11 @@ import org.axonframework.serialization.Serializer
 
 class TestInfrastrukturFactory : Infrastrukturfabrik
 {
+    override fun zeit(): Zeit
+    {
+        return Testzeit
+    }
+
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
         val queryBus = SimpleQueryBus()

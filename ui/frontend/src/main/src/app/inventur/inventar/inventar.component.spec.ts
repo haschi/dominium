@@ -33,9 +33,17 @@ describe('InventarComponent', () => {
             if (!link) throw "Unbekanntes Element";
             link.nativeElement.click()
         }
+
+        get erfasstAm(): string {
+            this.fixture.detectChanges()
+            const element = this.fixture.debugElement.query(By.css('#erfasstAm'))
+            const html = element.nativeElement as HTMLElement
+            return html.textContent
+        }
     }
 
     const vollesInventar: Inventar = {
+        erstelltAm: '2018-05-07T20:55:55.308',
         anlagevermoegen: [{
             kategorie: "Sonstiges",
             position: "Aktiendepot",
@@ -98,7 +106,7 @@ describe('InventarComponent', () => {
     ['4712', '4713'].forEach(id => {
         describe(`Für die Inventur mit der id ${id}`, () => {
             beforeEach(() => {
-                mock.state$.next({...INVENTUR_INITIAL_STATE, inventurId: id})
+                mock.state$.next({...INVENTUR_INITIAL_STATE, inventurId: id, inventar: vollesInventar})
             });
 
             // Testmuster: Navigation mit Router#navigate
@@ -108,6 +116,11 @@ describe('InventarComponent', () => {
                     const spy = spyOn(router, 'navigate');
                     page.navigieren();
                 })))
+
+            it('sollte Erfasst Am anzeigen', inject([Page], (page: Page) => {
+                page.fixture.detectChanges()
+                expect(page.erfasstAm).toEqual('07.05.2018, 20:55:55')
+            }))
         });
     });
 });

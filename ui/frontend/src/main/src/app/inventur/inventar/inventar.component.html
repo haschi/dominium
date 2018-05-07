@@ -2,6 +2,7 @@
     <mat-card-title id="inventar">Inventar</mat-card-title>
     <mat-card-content id="positionen" class="positionen">
         <p>Inventur ID {{inventur.inventurId}}</p>
+        <p>Erstellt am <span id="erfasstAm">{{inventur.inventar.erstelltAm | date:'medium':'':'de' }}</span></p>
         <ol style="list-style-type: upper-alpha">
             <li>
                 <h4>Vermögen</h4>
@@ -45,7 +46,7 @@
         </ol>
 
         <mat-card-actions>
-            <button mat-button color="primary" id="bilanz" (click)="inventurBeenden(inventur.inventurId)">Eröffnungsbilanz erstellen</button>
+            <button mat-button color="primary" id="bilanz" [routerLink]="['/inventur', 'bilanz', inventur.inventurId]">Eröffnungsbilanz erstellen</button>
             <button mat-button (click)="inventurWiederholen()">Inventur wiederholen</button>
         </mat-card-actions>
     </mat-card-content>

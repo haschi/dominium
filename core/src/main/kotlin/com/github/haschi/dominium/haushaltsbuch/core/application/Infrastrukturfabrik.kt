@@ -1,6 +1,7 @@
 package com.github.haschi.dominium.haushaltsbuch.core.application
 
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.model.Zeit
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.config.Configuration
 import org.axonframework.eventsourcing.eventstore.EventStore
@@ -14,4 +15,5 @@ interface Infrastrukturfabrik
     fun commandBus(konfiguration: Configuration): CommandBus
     fun queryBus(konfiguration: Configuration): QueryBus
     fun historie(konfiguration: Configuration): Historie
+    fun zeit(): Zeit
 }

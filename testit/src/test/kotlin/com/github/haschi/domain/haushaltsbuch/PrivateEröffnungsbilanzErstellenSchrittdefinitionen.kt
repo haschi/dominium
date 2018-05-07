@@ -29,25 +29,20 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     @Wenn("^ich die Inventur mit folgendem Inventar beende:$")
     fun inventurBeenden(posten: List<Inventarposition>)
     {
-        val inventar = posten.inventar()
+        val umlaufvermoegen = posten.vermögenswerte(InventurGruppe.Umlaufvermögen)
+        val anlagevermoegen = posten.vermögenswerte(InventurGruppe.Anlagevermögen)
+        val schulden = posten.schulden(InventurGruppe.Schulden)
+
         val inventurId = Aggregatkennung.neu()
 
         with(welt.inventur) {
             send(BeginneInventur(inventurId))
-                    .thenCompose { id -> send(ErfasseInventar(inventurId, inventar)) }
+                    .thenCompose { id -> send(ErfasseInventar(inventurId, anlagevermoegen, umlaufvermoegen, schulden)) }
                     .thenCompose { _ -> send(BeendeInventur(inventurId)) }
                     .get()
         }
 
         welt.aktuelleInventur = inventurId
-    }
-
-    private fun List<Inventarposition>.inventar(): Inventar
-    {
-        return Inventar(
-                umlaufvermoegen = this.vermögenswerte(InventurGruppe.Umlaufvermögen),
-                anlagevermoegen = this.vermögenswerte(InventurGruppe.Anlagevermögen),
-                schulden = this.schulden(InventurGruppe.Schulden))
     }
 
     @Dann("^werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:$")

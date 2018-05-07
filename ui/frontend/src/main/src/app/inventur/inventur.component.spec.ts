@@ -88,22 +88,12 @@ describe('InventurComponent', () => {
                     type: CommandType.ErfasseInventar,
                     payload: {
                         id: "12345",
-                        inventar: {
                             anlagevermoegen: [],
                             umlaufvermoegen: [],
                             schulden: [],
-                            reinvermoegen: {summeDerSchulden: '', summeDesVermoegens: '', reinvermoegen: ''}
-                        }
                     },
                     meta: {}
                 });
-
-            inventur.inventar$.subscribe(inventar => expect(inventar).toEqual({
-                anlagevermoegen: [],
-                umlaufvermoegen: [],
-                schulden: [],
-                reinvermoegen: {summeDerSchulden: '', summeDesVermoegens: '', reinvermoegen: ''}
-            }));
 
         http.verify();
     }));

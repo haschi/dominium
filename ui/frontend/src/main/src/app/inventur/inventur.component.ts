@@ -8,8 +8,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
+import { Vermoegenswert } from './bilanz/bilanz.model';
 import { GruppenState } from './shared/gruppen.redux';
-import { Inventar } from './shared/inventar';
+import { Inventar, InventurEingabe } from './shared/inventar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { select } from '@angular-redux/store';
@@ -37,7 +38,7 @@ export class InventurComponent implements OnInit {
     @select(['inventur', 'inventar'])
     private model$: Observable<Inventar>;
 
-    private inventar$: Observable<Inventar>;
+    private eingabe$: Observable<InventurEingabe>;
 
     inventurId$: Observable<string>;
 
@@ -61,7 +62,7 @@ export class InventurComponent implements OnInit {
             schulden: this.builder.array([])
         });
 
-        this.inventar$ = this.inventur.valueChanges
+        this.eingabe$ = this.inventur.valueChanges
             .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
 
         this.inventurGruppen$ = this.inventurService.gruppen$
@@ -107,14 +108,12 @@ export class InventurComponent implements OnInit {
         return true
     }
 
-    private formulareingabeKonvertieren(value) {
-        let inventar: Inventar = {
+    private formulareingabeKonvertieren(value): InventurEingabe {
+        return {
             anlagevermoegen: value.anlagevermoegen.map(this.inventarpositionKonvertieren),
             umlaufvermoegen: value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
             schulden: value.schulden.map(this.inventarpositionKonvertieren),
-            reinvermoegen: {reinvermoegen: '', summeDesVermoegens: '', summeDerSchulden: ''}
         };
-        return inventar;
     }
 
     get anlagevermoegen(): AbstractControl {

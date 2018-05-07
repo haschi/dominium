@@ -1,6 +1,9 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.values
 
+import java.time.LocalDateTime
+
 data class Inventar(
+        val erstelltAm: LocalDateTime,
         val anlagevermoegen: Vermoegenswerte,
         val umlaufvermoegen: Vermoegenswerte,
         val schulden: Schulden)
@@ -17,6 +20,7 @@ data class Inventar(
     {
         val leer: Inventar
             get() = Inventar(
+                    LocalDateTime.MIN,
                     Vermoegenswerte.keine,
                     Vermoegenswerte.keine,
                     Schulden.keine)

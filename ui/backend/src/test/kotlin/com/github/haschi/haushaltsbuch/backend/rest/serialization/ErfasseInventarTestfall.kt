@@ -12,14 +12,12 @@ class ErfasseInventarTestfall : TestfallAnbieter()
 
         return listOf(
                 Testfall(
-                        poko = ErfasseInventar(aggregatkennung, Inventar.leer),
+                        poko = ErfasseInventar(aggregatkennung, Inventar.leer.anlagevermoegen, Inventar.leer.umlaufvermoegen, Inventar.leer.schulden),
                         json = """{
                                 |  "id" : "${aggregatkennung.id}",
-                                |  "inventar" : {
                                 |    "anlagevermoegen" : [ ],
                                 |    "umlaufvermoegen" : [ ],
                                 |    "schulden" : [ ]
-                                |  }
                                 |}""".trimMargin(),
                         schema = ""))
     }

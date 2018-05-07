@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +13,11 @@ import { CommandGatewayModule } from './shared/command-gateway/command-gateway.m
 import { QueryGatewayModule } from './shared/query-gateway/query-gateway.module';
 import { NgReduxModule } from '@angular-redux/store';
 import { StoreModule } from './store/store.module';
+
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe, 'de');
 
 @NgModule({
     declarations: [
@@ -30,6 +35,9 @@ import { StoreModule } from './store/store.module';
         QueryGatewayModule,
         NgReduxModule,
         StoreModule
+    ],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'de' },
     ],
     bootstrap: [AppComponent]
 })

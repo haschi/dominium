@@ -6,12 +6,14 @@ import com.github.haschi.dominium.haushaltsbuch.core.application.Haushaltsbuchf�
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
+import com.github.haschi.haushaltsbuch.infrastruktur.Testzeit
 import org.axonframework.queryhandling.QueryGateway
 import org.picocontainer.Startable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
-
+import kotlin.properties.Delegates
 
 class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
 {
@@ -46,6 +48,7 @@ class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
     var aktuelleInventur: Aggregatkennung = Aggregatkennung.nil
     var intention: CompletableFuture<Any>? = null
     var aktuellesHaushaltsbuch: Aggregatkennung = Aggregatkennung.nil
+    var zeit: Testzeit = Testzeit
 
     companion object
     {
