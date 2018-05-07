@@ -3,6 +3,7 @@ package com.github.haschi.haushaltsbuch.infrastruktur
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.haschi.dominium.haushaltsbuch.core.application.Infrastrukturfabrik
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
+import com.github.haschi.dominium.haushaltsbuch.core.model.Zeit
 import org.axonframework.commandhandling.CommandBus
 import org.axonframework.commandhandling.CommandMessage
 import org.axonframework.commandhandling.SimpleCommandBus
@@ -22,6 +23,11 @@ class BackendInfrastrukturFactory(
         val mapper: ObjectMapper,
         val template: DefaultMongoTemplate) : Infrastrukturfabrik
 {
+    override fun zeit(): Zeit
+    {
+        return SystemZeit
+    }
+
     override fun queryBus(konfiguration: Configuration): QueryBus
     {
         val queryBus = SimpleQueryBus()

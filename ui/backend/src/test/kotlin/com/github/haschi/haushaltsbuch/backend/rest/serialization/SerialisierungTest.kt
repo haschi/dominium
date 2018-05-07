@@ -28,7 +28,8 @@ class SerialisierungTest
             BeginneHaushaltsbuchführungTestfall::class,
             InventarErfasstTestfall::class,
             BeendeInventurTestfall::class,
-            BeginneInventurTestfall::class)
+            BeginneInventurTestfall::class
+    )
 
     fun serialisierung(testfall: Testfall) {
 
@@ -39,7 +40,8 @@ class SerialisierungTest
 
         with(testfall)
         {
-            assertThat(tester.write(poko))
+            val x = tester.write(poko)
+            assertThat(x)
                     .isEqualToJson(json)
 
             assertThat(tester.write(poko))

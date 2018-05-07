@@ -20,12 +20,14 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import cucumber.api.DataTable
+import cucumber.api.Transform
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
+import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
 
 class InventurStepDefinition(private val welt: DieWelt)
@@ -114,15 +116,16 @@ class InventurStepDefinition(private val welt: DieWelt)
     @Wenn("^ich folgendes Inventar erfasse:$")
     fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
     {
-        val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
-                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen),
-                schulden = zeilen.schulden(InventurGruppe.Schulden))
+        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen);
+        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen);
+        val schulden = zeilen.schulden(InventurGruppe.Schulden);
 
         sync(welt.inventur) {
             send(ErfasseInventar(
-                    id = welt.aktuelleInventur,
-                    inventar = inventar))
+                    welt.aktuelleInventur,
+                    anlagevermoegen,
+                    umlaufvermoegen,
+                    schulden))
         }
     }
 
@@ -130,14 +133,15 @@ class InventurStepDefinition(private val welt: DieWelt)
     @Und("^ich folgendes Inventar erfassen will:$")
     fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)
     {
-        val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
-                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
-                schulden = zeilen.schulden(InventurGruppe.Schulden))
+        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
+        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
+        val schulden = zeilen.schulden(InventurGruppe.Schulden)
 
         welt.intention = welt.inventur.send(ErfasseInventar(
-                    id = welt.aktuelleInventur,
-                    inventar = inventar))
+                    welt.aktuelleInventur,
+                    anlagevermoegen,
+                    umlaufvermoegen,
+                    schulden))
     }
 
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
@@ -187,5 +191,28 @@ class InventurStepDefinition(private val welt: DieWelt)
         sync(welt.inventur) {
             send(BeendeInventur(welt.aktuelleInventur))
         }
+    }
+
+    @Wenn("^ich eine Inventur am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" beende$")
+    fun `wenn ich eine Inventur beende`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    {
+        welt.aktuelleInventur = Aggregatkennung.neu()
+        welt.zeit.jetzt = datum;
+
+        sync(welt.inventur) {
+            send(BeginneInventur(welt.aktuelleInventur))
+                    .thenCompose { id -> send(ErfasseInventar(id, Inventar.leer.anlagevermoegen, Inventar.leer.umlaufvermoegen, Inventar.leer.schulden))}
+                    .thenCompose { _ -> send(BeendeInventur(welt.aktuelleInventur)) }
+        }
+    }
+
+    @Dann("werde ich mein Inventar am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" erfasst haben")
+    fun `werde ich mein Inventar erfasst haben`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    {
+        val inventar = welt.query.query(
+                LeseInventar(welt.aktuelleInventur),
+                Inventar::class.java).get()
+
+        assertThat(inventar.erstelltAm).isEqualTo(datum)
     }
 }

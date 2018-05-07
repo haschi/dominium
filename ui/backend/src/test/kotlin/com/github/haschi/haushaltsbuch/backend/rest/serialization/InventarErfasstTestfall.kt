@@ -7,6 +7,8 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
+import java.time.LocalDateTime
+import java.time.Month
 
 class InventarErfasstTestfall : TestfallAnbieter()
 {
@@ -15,35 +17,27 @@ class InventarErfasstTestfall : TestfallAnbieter()
         return listOf(
                 Testfall(
                         poko = InventarErfasst(
-                                        Inventar(
                                             anlagevermoegen = Vermoegenswerte(
                                                     Vermoegenswert("Aktien", "Aktienpaket ING-DiBa", 123.45.euro())),
                                             umlaufvermoegen = Vermoegenswerte(
                                                     Vermoegenswert("Bargeld", "Geldbörse", 15.67.euro())),
                                             schulden = Schulden(
-                                                    Schuld("Autokredit", 10100.00.euro())))),
+                                                    Schuld("Autokredit", 10100.00.euro()))),
                         json = """{
-                                    |  "inventar" : {
-                                    |    "anlagevermoegen" : [ {
-                                    |      "kategorie": "Aktien",
-                                    |      "position" : "Aktienpaket ING-DiBa",
-                                    |      "waehrungsbetrag" : "123,45 EUR"
-                                    |    } ],
-                                    |    "umlaufvermoegen" : [ {
-                                    |      "kategorie": "Bargeld",
-                                    |      "position" : "Geldbörse",
-                                    |      "waehrungsbetrag" : "15,67 EUR"
-                                    |    } ],
-                                    |    "schulden" : [ {
-                                    |      "position" : "Autokredit",
-                                    |      "waehrungsbetrag" : "10.100,00 EUR"
-                                    |    } ],
-                                    |    "reinvermoegen" : {
-                                    |      "summeDesVermoegens" : "139,12 EUR",
-                                    |      "summeDerSchulden" : "10.100,00 EUR",
-                                    |      "reinvermoegen" : "-9.960,88 EUR"
-                                    |    }
-                                    |  }
+                                    |  "anlagevermoegen" : [ {
+                                    |    "kategorie": "Aktien",
+                                    |    "position" : "Aktienpaket ING-DiBa",
+                                    |    "waehrungsbetrag" : "123,45 EUR"
+                                    |  } ],
+                                    |  "umlaufvermoegen" : [ {
+                                    |    "kategorie": "Bargeld",
+                                    |    "position" : "Geldbörse",
+                                    |    "waehrungsbetrag" : "15,67 EUR"
+                                    |  } ],
+                                    |  "schulden" : [ {
+                                    |    "position" : "Autokredit",
+                                    |    "waehrungsbetrag" : "10.100,00 EUR"
+                                    |  } ]
                                     |}""".trimMargin(),
                         schema = ""
                 )

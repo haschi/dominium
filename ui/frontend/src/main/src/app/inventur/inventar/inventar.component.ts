@@ -29,8 +29,4 @@ export class InventarComponent implements OnInit {
     inventurWiederholen() {
         this.inventur.beginnen();
     }
-
-    inventurBeenden(id: string) {
-        this.inventur.beenden(id)
-    }
 }

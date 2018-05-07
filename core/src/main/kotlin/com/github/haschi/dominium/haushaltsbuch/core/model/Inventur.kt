@@ -70,7 +70,10 @@ class Inventur
             throw InventurAusnahme("Inventur bereits beendet")
         }
 
-        AggregateLifecycle.apply(InventarErfasst(anweisung.inventar))
+        AggregateLifecycle.apply(InventarErfasst(
+                anweisung.anlagevermoegen,
+                anweisung.umlaufvermoegen,
+                anweisung.schulden))
     }
 
     @EventSourcingHandler
@@ -81,14 +84,14 @@ class Inventur
 
     @CommandHandler
     @Throws(InventurAusnahme::class)
-    fun beendeInventur(anweisung: BeendeInventur)
+    fun beendeInventur(anweisung: BeendeInventur, zeit: Zeit)
     {
         if (lebenszyklus != Lebenszyklus.ERFASST)
         {
             throw InventurAusnahme("Kein Inventar erfasst")
         }
 
-        AggregateLifecycle.apply(InventurBeendet(id!!))
+        AggregateLifecycle.apply(InventurBeendet(id!!, zeit.jetzt))
     }
 
     @EventSourcingHandler

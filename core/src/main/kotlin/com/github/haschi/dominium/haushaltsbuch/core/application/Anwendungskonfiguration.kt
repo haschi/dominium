@@ -10,6 +10,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.Bilanz
 import com.github.haschi.dominium.haushaltsbuch.core.model.Haushaltsbuch
 import com.github.haschi.dominium.haushaltsbuch.core.model.Inventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.InventurSaga
+import com.github.haschi.dominium.haushaltsbuch.core.model.Zeit
 import org.axonframework.config.Configuration
 import org.axonframework.config.DefaultConfigurer
 import org.axonframework.config.EventHandlingConfiguration
@@ -26,6 +27,7 @@ open class Anwendungskonfiguration(private val infrastruktur: Infrastrukturfabri
             .configureAggregate(Bilanz::class.java)
             .registerComponent(Historie::class.java, infrastruktur::historie)
             .registerComponent(BilanzAblage::class.java) { BilanzAblage() }
+            .registerComponent(Zeit::class.java) {infrastruktur.zeit()}
             .registerQueryHandler { InventarProjektion(it.getComponent(Historie::class.java)) }
             .registerQueryHandler { BilanzQueryHandler(it.getComponent(BilanzAblage::class.java)) }
             .registerQueryHandler { GruppenQueryHandler() }

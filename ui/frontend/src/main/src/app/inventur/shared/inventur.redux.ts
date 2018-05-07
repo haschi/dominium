@@ -1,10 +1,14 @@
 import { Action, AnyAction } from 'redux';
 import { Epic } from 'redux-observable';
 import { filter, map } from 'rxjs/operators'
-import { CommandGatewayActionType } from '../../shared/command-gateway/command.redux';
+import {
+    commandAngefordert,
+    CommandGatewayActionType
+} from '../../shared/command-gateway/command.redux';
 import { fehlgeschlagen, gelungen } from '../../shared/query-gateway/query.redux';
 import { AppState } from '../../store/model';
 import { Eroeffnungsbilanz } from '../bilanz/bilanz.model';
+import { InventurService } from '../inventur.service';
 import { CommandType } from './command-type';
 import { Inventar } from './inventar';
 import { QueryType } from './query-type';
@@ -18,6 +22,7 @@ export interface InventurState {
 export const INVENTUR_INITIAL_STATE: InventurState = {
     inventurId: "",
     inventar: {
+        erstelltAm: '',
         anlagevermoegen: [],
         umlaufvermoegen: [],
         schulden: [],
@@ -93,6 +98,14 @@ export function fallsInventarLesenFehlgeschlagen(): Epic<AnyAction, AppState> {
             fehlgeschlagen(QueryType.LeseInventar),
             map(response => inventarNichtGelesen())
         )
+}
+
+export function fallsInventarErfasstGelungen(): Epic<AnyAction, AppState> {
+    return action$ => action$
+        .pipe(
+            filter(action => action.type === CommandGatewayActionType.gelungen),
+            filter(action => action.message.type === CommandType.ErfasseInventar),
+            map(action => commandAngefordert(CommandType.BeendeInventur, {von: action.message.payload.id}, {})))
 }
 
 export function inventur(state: InventurState = INVENTUR_INITIAL_STATE, action): InventurState {

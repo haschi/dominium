@@ -8,7 +8,7 @@ import { GruppenState } from './shared/gruppen.redux';
 import { InventurState } from './shared/inventur.redux';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
-import { Inventar } from './shared/inventar';
+import { Inventar, InventurEingabe } from './shared/inventar';
 import { AppState} from '../store/model';
 import { CommandType } from './shared/command-type';
 import { IdGeneratorService } from '../shared/command-gateway/id-generator.service';
@@ -70,12 +70,12 @@ export class InventurService {
         this.router.navigate(['/inventur/bilanz', id])
     }
 
-    erfasseInventar(inventar: Inventar) {
+    erfasseInventar(eingabe: InventurEingabe) {
         let id = this.store.getState().inventur.inventurId;
 
         this.command.send(
             CommandType.ErfasseInventar,
-            {id: id, inventar: inventar},
+            {id: id, ...eingabe},
             {}
         )
     }
