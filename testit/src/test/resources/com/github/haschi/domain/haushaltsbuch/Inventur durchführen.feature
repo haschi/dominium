@@ -58,3 +58,7 @@ Funktionalität: Inventur durchführen
 
     Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
 
+    @domäne
+    Szenario: Inventurdatum erfassen
+      Wenn ich eine Inventur am "07.05.2018 um 17:55" beende
+      Dann werde ich mein Inventar am "07.05.2018 um 17:55" erfasst haben

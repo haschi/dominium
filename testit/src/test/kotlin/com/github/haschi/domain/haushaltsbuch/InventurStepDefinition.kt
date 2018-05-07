@@ -20,12 +20,14 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import cucumber.api.DataTable
+import cucumber.api.Transform
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import org.assertj.core.api.Assertions.assertThat
+import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
 
 class InventurStepDefinition(private val welt: DieWelt)
@@ -187,5 +189,19 @@ class InventurStepDefinition(private val welt: DieWelt)
         sync(welt.inventur) {
             send(BeendeInventur(welt.aktuelleInventur))
         }
+    }
+
+    @Wenn("^ich eine Inventur am \"(\\d\\d.\\d\\d.\\d\\d\\d\\d um \\d\\d:\\d\\d)\" beende$")
+    fun `wenn ich eine Inventur beende`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    {
+        val inventurId = Aggregatkennung.neu()
+        sync(welt.inventur) {send(BeginneInventur(inventurId))}
+        sync(welt.inventur) {send(ErfasseInventar(inventurId, Inventar.leer))}
+        sync(welt.inventur) {send(BeendeInventur(inventurId))}
+    }
+
+    @Dann("werde ich mein Inventar am \"(\\d\\d.\\d\\d.\\d\\d\\d\\d um \\d\\d:\\d\\d)\" erfasst haben")
+    fun `werde ich mein Inventar erfasst haben`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    {
     }
 }
