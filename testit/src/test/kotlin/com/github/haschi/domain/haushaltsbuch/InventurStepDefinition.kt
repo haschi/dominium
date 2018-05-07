@@ -2,6 +2,7 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
@@ -69,7 +70,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.umlaufvermoegen == Vermoegenswerte(vermögenswerte.map {
-                        Vermoegenswert(it.position, it.währungsbetrag)
+                        Vermoegenswert(it.kategorie, it.position, it.währungsbetrag)
                     })
                 }
                 .isDone
@@ -82,7 +83,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching {
                     it.anlagevermoegen == Vermoegenswerte(vermögenswerte.map {
-                        Vermoegenswert(it.position, it.währungsbetrag)
+                        Vermoegenswert(it.kategorie, it.position, it.währungsbetrag)
                     })
                 }
     }
@@ -91,10 +92,17 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
+        var schulden: Schulden = Schulden.keine;
+        var erwartet: Schulden = Schulden.keine;
+
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
-                .isCompletedWithValueMatching {
-                    it.schulden == Schulden(schulden.map { Schuld(it.position, it.währungsbetrag) })
-                }.isDone
+                .isCompletedWithValueMatching( {
+                    schulden = it.schulden;
+                    erwartet = Schulden(schulden.map { Schuld(it.position, it.waehrungsbetrag)})
+                    it.schulden ==  erwartet}
+
+                , "${schulden} erwartet: ${erwartet}")
+                .isDone
     }
 
     class SchuldParameter(
@@ -107,9 +115,9 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
     {
         val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte("Umlaufvermögen"),
-                anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
-                schulden = zeilen.schulden("Langfristige Schulden"))
+                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen),
+                schulden = zeilen.schulden(InventurGruppe.Schulden))
 
         sync(welt.inventur) {
             send(ErfasseInventar(
@@ -123,9 +131,9 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)
     {
         val inventar = Inventar(
-                umlaufvermoegen = zeilen.vermögenswerte("Umlaufvermögen"),
-                anlagevermoegen = zeilen.vermögenswerte("Anlagevermögen"),
-                schulden = zeilen.schulden("Langfristige Schulden"))
+                umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                schulden = zeilen.schulden(InventurGruppe.Schulden))
 
         welt.intention = welt.inventur.send(ErfasseInventar(
                     id = welt.aktuelleInventur,

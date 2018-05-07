@@ -37,14 +37,17 @@ describe('InventarComponent', () => {
 
     const vollesInventar: Inventar = {
         anlagevermoegen: [{
+            kategorie: "Sonstiges",
             position: "Aktiendepot",
             waehrungsbetrag: "10.000,00 EUR"
         }],
         umlaufvermoegen: [{
+            kategorie: "Sonstiges",
             position: "Girokonto",
             waehrungsbetrag: "5.000,00 EUR"
         }],
         schulden: [{
+            kategorie: "Sonstiges",
             position: "Autokredit",
             waehrungsbetrag: "1.000,00 EUR"
         }],

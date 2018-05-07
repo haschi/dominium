@@ -33,7 +33,7 @@ class EröffnungsbilanzTest
                             "Bilanz mit unterschiedlichen Summen",
                             Aktiva(
                                     Vermoegenswerte(
-                                            Vermoegenswert("Eigentumswohnung", 12.00.euro())),
+                                            Vermoegenswert("", "Eigentumswohnung", 12.00.euro())),
                                     Vermoegenswerte(), Vermoegenswerte()),
                             Passiva(Vermoegenswerte(), Vermoegenswerte()),
                             { it.isInstanceOf(BilanzsummenNichtIdentisch::class.java) }))

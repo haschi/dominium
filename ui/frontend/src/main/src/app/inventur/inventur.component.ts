@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
+import { GruppenState } from './shared/gruppen.redux';
 import { Inventar } from './shared/inventar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
@@ -29,7 +30,7 @@ export class InventurComponent implements OnInit {
 
     private aktuellerStep: number = 0;
 
-    private inventur: FormGroup;
+    inventur: FormGroup;
 
     private model: any;
 
@@ -39,6 +40,8 @@ export class InventurComponent implements OnInit {
     private inventar$: Observable<Inventar>;
 
     inventurId$: Observable<string>;
+
+    inventurGruppen$: Observable<GruppenState>;
 
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
@@ -50,6 +53,8 @@ export class InventurComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.inventurService.leseInventurGruppen();
+
         this.inventur = this.builder.group({
             anlagevermoegen: this.builder.array([]),
             umlaufvermoegen: this.builder.array([]),
@@ -58,6 +63,8 @@ export class InventurComponent implements OnInit {
 
         this.inventar$ = this.inventur.valueChanges
             .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
+
+        this.inventurGruppen$ = this.inventurService.gruppen$
     }
 
     auswahlGeaendert(event: StepperSelectionEvent) {
@@ -66,6 +73,7 @@ export class InventurComponent implements OnInit {
 
     inventarpositionKonvertieren(poisition: any): Inventarposition {
         return {
+            kategorie: poisition.kategorie,
             position: poisition.position,
             waehrungsbetrag: `${poisition.waehrungsbetrag.betrag} ${poisition.waehrungsbetrag.waehrung}`
         }

@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PostenComponent } from './gruppe/posten/posten.component';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { InventarComponent } from './inventar/inventar.component';
+import { fallsQueryInventurGruppenGelesenGelungen } from './shared/gruppen.redux';
 import {
     fallsCommandInventurBegonnenGelungen,
     fallsInventarLesenFehlgeschlagen,
@@ -48,7 +49,8 @@ import { PassivaComponent } from './bilanz/passiva/passiva.component';
         EpicProvider(fallsCommandInventurBegonnenGelungen),
         EpicProvider(fallsQueryInventarGelesenGelungen),
         EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen),
-        EpicProvider(fallsInventarLesenFehlgeschlagen)
+        EpicProvider(fallsInventarLesenFehlgeschlagen),
+        EpicProvider(fallsQueryInventurGruppenGelesenGelungen)
     ],
     exports: [InventurComponent]
 })

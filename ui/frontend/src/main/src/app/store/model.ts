@@ -1,3 +1,4 @@
+import { GruppenState, INVENTURGRUPPEN_INITIAL_STATE } from '../inventur/shared/gruppen.redux';
 import { INVENTUR_INITIAL_STATE, InventurState } from '../inventur/shared/inventur.redux';
 import {
     COMMAND_GATEWAY_INITIAL_STATE,
@@ -9,13 +10,15 @@ import {
 } from '../shared/query-gateway/query.redux';
 
 export interface AppState {
-    inventur: InventurState
+    inventur: InventurState,
+    inventurGruppen: GruppenState,
     command: CommandGatewayState,
     query: QueryGatewayState
 }
 
 export const APP_INITIAL_STATE: AppState = {
     inventur: INVENTUR_INITIAL_STATE,
+    inventurGruppen: INVENTURGRUPPEN_INITIAL_STATE,
     command: COMMAND_GATEWAY_INITIAL_STATE,
     query: QUERY_GATEWAY_INITIAL_STATE
 };

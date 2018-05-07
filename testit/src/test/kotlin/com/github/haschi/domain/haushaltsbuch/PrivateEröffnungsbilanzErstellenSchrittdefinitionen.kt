@@ -3,6 +3,7 @@ package com.github.haschi.domain.haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
@@ -18,7 +19,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
 import cucumber.api.Transform
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
@@ -45,9 +45,9 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     private fun List<Inventarposition>.inventar(): Inventar
     {
         return Inventar(
-                umlaufvermoegen = this.vermögenswerte("Umlaufvermögen"),
-                anlagevermoegen = this.vermögenswerte("Anlagevermögen"),
-                schulden = this.schulden("Schulden"))
+                umlaufvermoegen = this.vermögenswerte(InventurGruppe.Umlaufvermögen),
+                anlagevermoegen = this.vermögenswerte(InventurGruppe.Anlagevermögen),
+                schulden = this.schulden(InventurGruppe.Schulden))
     }
 
     @Dann("^werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:$")
@@ -77,16 +77,16 @@ private fun List<Bilanzposition>.bilanz(): Eröffnungsbilanz
 {
     val aktiva = Aktiva(
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Anlagevermögen" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Umlaufvermögen" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte())
 
     val passiva = Passiva(
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Eigenkapital" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }),
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Fremdkapital" }
-                    .map { Vermoegenswert(it.posten, it.betrag) }))
+                    .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }))
 
     return Eröffnungsbilanz(aktiva, passiva)
 }

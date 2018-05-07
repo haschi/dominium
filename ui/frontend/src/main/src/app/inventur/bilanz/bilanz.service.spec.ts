@@ -64,27 +64,27 @@ describe('BilanzService', () => {
             eroeffnungsbilanz: {
                 aktiva: {
                     anlagevermoegen: [
-                        {position: 'Eigentumswohnung', waehrungsbetrag: '120.000,00 EUR'},
-                        {position: 'Kraftfahrzeug', waehrungsbetrag: '15.000,00 EUR'}
+                        {kategorie: "Sonstiges", position: 'Eigentumswohnung', waehrungsbetrag: '120.000,00 EUR'},
+                        {kategorie: "Sonstiges", position: 'Kraftfahrzeug', waehrungsbetrag: '15.000,00 EUR'}
                     ],
                     umlaufvermoegen: [
-                        {position: 'Girokonto', waehrungsbetrag: '12.345,67 EUR'},
-                        {position: 'Sparbuch', waehrungsbetrag: '23.456,78 EUR'},
-                        {position: 'Geldbörse', waehrungsbetrag: '123,45 EUR'}
+                        {kategorie: "Sonstiges", position: 'Girokonto', waehrungsbetrag: '12.345,67 EUR'},
+                        {kategorie: "Sonstiges", position: 'Sparbuch', waehrungsbetrag: '23.456,78 EUR'},
+                        {kategorie: "Sonstiges", position: 'Geldbörse', waehrungsbetrag: '123,45 EUR'}
                     ],
                     fehlbetrag: [
-                        {position: 'Fehlbetrag', waehrungsbetrag: '1.000,00 EUR'}
+                        {kategorie: "Sonstiges", position: 'Fehlbetrag', waehrungsbetrag: '1.000,00 EUR'}
                     ],
                     summe: '1.00 EUR'
                 },
                 passiva: {
                     eigenkapital: [
-                        {position: 'Eigenkapital', waehrungsbetrag: '135.000,00 EUR'}
+                        {kategorie: "Sonstiges", position: 'Eigenkapital', waehrungsbetrag: '135.000,00 EUR'}
                     ],
                     fremdkapital: [
-                        {position: 'Autokredit', waehrungsbetrag: '2.000,00 EUR'},
-                        {position: 'Hypotheken', waehrungsbetrag: '100.000,00 EUR'},
-                        {position: 'Provatkredite', waehrungsbetrag: '100,00 EUR'}
+                        {kategorie: "Sonstiges", position: 'Autokredit', waehrungsbetrag: '2.000,00 EUR'},
+                        {kategorie: "Sonstiges", position: 'Hypotheken', waehrungsbetrag: '100.000,00 EUR'},
+                        {kategorie: "Sonstiges", position: 'Provatkredite', waehrungsbetrag: '100,00 EUR'}
                     ],
                     summe: '1.00 EUR'
                 },

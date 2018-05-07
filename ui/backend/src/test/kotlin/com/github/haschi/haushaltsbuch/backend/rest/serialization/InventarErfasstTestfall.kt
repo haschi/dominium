@@ -17,18 +17,20 @@ class InventarErfasstTestfall : TestfallAnbieter()
                         poko = InventarErfasst(
                                         Inventar(
                                             anlagevermoegen = Vermoegenswerte(
-                                                    Vermoegenswert("Aktiendepot", 123.45.euro())),
+                                                    Vermoegenswert("Aktien", "Aktienpaket ING-DiBa", 123.45.euro())),
                                             umlaufvermoegen = Vermoegenswerte(
-                                                    Vermoegenswert("Geldbörse", 15.67.euro())),
+                                                    Vermoegenswert("Bargeld", "Geldbörse", 15.67.euro())),
                                             schulden = Schulden(
                                                     Schuld("Autokredit", 10100.00.euro())))),
                         json = """{
                                     |  "inventar" : {
                                     |    "anlagevermoegen" : [ {
-                                    |      "position" : "Aktiendepot",
+                                    |      "kategorie": "Aktien",
+                                    |      "position" : "Aktienpaket ING-DiBa",
                                     |      "waehrungsbetrag" : "123,45 EUR"
                                     |    } ],
                                     |    "umlaufvermoegen" : [ {
+                                    |      "kategorie": "Bargeld",
                                     |      "position" : "Geldbörse",
                                     |      "waehrungsbetrag" : "15,67 EUR"
                                     |    } ],

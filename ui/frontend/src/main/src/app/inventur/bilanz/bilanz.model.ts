@@ -4,6 +4,7 @@ export interface Gruppe {
 }
 
 export interface Vermoegenswert {
+    kategorie: string,
     position: string;
     waehrungsbetrag: string
 }
