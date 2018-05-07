@@ -191,7 +191,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         }
     }
 
-    @Wenn("^ich eine Inventur am \"(\\d\\d.\\d\\d.\\d\\d\\d\\d um \\d\\d:\\d\\d)\" beende$")
+    @Wenn("^ich eine Inventur am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" beende$")
     fun `wenn ich eine Inventur beende`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
     {
         val inventurId = Aggregatkennung.neu()
@@ -200,7 +200,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         sync(welt.inventur) {send(BeendeInventur(inventurId))}
     }
 
-    @Dann("werde ich mein Inventar am \"(\\d\\d.\\d\\d.\\d\\d\\d\\d um \\d\\d:\\d\\d)\" erfasst haben")
+    @Dann("werde ich mein Inventar am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" erfasst haben")
     fun `werde ich mein Inventar erfasst haben`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
     {
     }
