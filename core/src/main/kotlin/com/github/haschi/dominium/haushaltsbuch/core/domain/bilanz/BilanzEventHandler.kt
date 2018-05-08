@@ -8,7 +8,7 @@ import org.axonframework.messaging.MetaData
 class BilanzEventHandler(val ablage: BilanzAblage)
 {
     @EventHandler
-    fun falls(ereignis: PrivateEröffnungsbilanzVorgeschlagen, meta: MetaData)
+    fun falls(ereignis: PrivateEröffnungsbilanzVorgeschlagen)
     {
         ablage.speichern(ereignis.inventurId, ereignis.bilanz)
     }

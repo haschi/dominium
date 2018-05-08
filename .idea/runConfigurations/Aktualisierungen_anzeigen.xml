@@ -11,6 +11,7 @@
           <option name="goals">
             <list>
               <option value="versions:display-dependency-updates" />
+              <option value="-DprocessDependencyManagement=false" />
             </list>
           </option>
           <option name="pomFileName" value="pom.xml" />

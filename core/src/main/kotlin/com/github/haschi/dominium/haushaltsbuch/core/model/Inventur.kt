@@ -45,7 +45,7 @@ class Inventur
     }
 
     @CommandHandler // TODO: löschen
-    fun erfasseUmlaufvermögen(anweisung: ErfasseUmlaufvermögen)
+    fun erfasseUmlaufvermoegen(anweisung: ErfasseUmlaufvermögen)
     {
         AggregateLifecycle.apply(UmlaufvermögenErfasst(
                 position = anweisung.position,
@@ -77,14 +77,14 @@ class Inventur
     }
 
     @EventSourcingHandler
-    fun falls(ereignis: InventarErfasst)
+    fun falls(@Suppress("UNUSED_PARAMETER") ereignis: InventarErfasst)
     {
         lebenszyklus = Lebenszyklus.ERFASST
     }
 
     @CommandHandler
     @Throws(InventurAusnahme::class)
-    fun beendeInventur(anweisung: BeendeInventur, zeit: Zeit)
+    fun beendeInventur(@Suppress("UNUSED_PARAMETER") anweisung: BeendeInventur, zeit: Zeit)
     {
         if (lebenszyklus != Lebenszyklus.ERFASST)
         {
@@ -95,7 +95,7 @@ class Inventur
     }
 
     @EventSourcingHandler
-    fun falls(ereignis: InventurBeendet)
+    fun falls(@Suppress("UNUSED_PARAMETER") ereignis: InventurBeendet)
     {
         lebenszyklus = Lebenszyklus.BEENDET
     }

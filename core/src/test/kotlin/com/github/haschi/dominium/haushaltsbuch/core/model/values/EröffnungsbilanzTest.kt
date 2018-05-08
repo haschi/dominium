@@ -44,7 +44,7 @@ class EröffnungsbilanzTest
     @DisplayName("Kein Fehler beim Erstellen der Bilanz")
     @ParameterizedTest(name = "{index}. {0}")
     @ArgumentsSource(GültigeTestfälle::class)
-    fun bilanzsummentest(beschreibung: String, testfall: Testfall)
+    fun bilanzsummentest(@Suppress("UNUSED_PARAMETER") beschreibung: String, testfall: Testfall)
     {
         val catched = catchThrowable { Eröffnungsbilanz(testfall.aktiva, testfall.passiva) }
         val assertion = assertThat(catched)

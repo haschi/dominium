@@ -37,8 +37,8 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
 
         with(welt.inventur) {
             send(BeginneInventur(inventurId))
-                    .thenCompose { id -> send(ErfasseInventar(inventurId, anlagevermoegen, umlaufvermoegen, schulden)) }
-                    .thenCompose { _ -> send(BeendeInventur(inventurId)) }
+                    .thenCompose { send(ErfasseInventar(inventurId, anlagevermoegen, umlaufvermoegen, schulden)) }
+                    .thenCompose { send(BeendeInventur(inventurId)) }
                     .get()
         }
 
