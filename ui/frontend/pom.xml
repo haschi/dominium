@@ -39,7 +39,7 @@
                     <nodeVersion>v9.2.1</nodeVersion>
                     <npmVersion>5.6.0</npmVersion>
                     <workingDirectory>src/main</workingDirectory>
-                    <installDirectory>../../xxx</installDirectory>
+                    <installDirectory>${java.io.tmpdir}/haushaltsbuch/build</installDirectory>
                 </configuration>
                 <executions>
 
