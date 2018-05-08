@@ -34,6 +34,8 @@ in IntelliJ vorhanden sein:
  * **Frontend Tests** Führt die Karma Unittests des Frontends aus. (entspricht 
  npm run test)
  * **Abnahmetests** führt die Cucumber Tests aus.
+ * **Aktualisierungen anzeigen** Gibt alle verfügbaren Aktualisierungen der Abhängigkeiten aus 
+ (`mvn versions:display-dependency-updates`) 
 
 Integrationsumgebung
 ----
