@@ -37,7 +37,7 @@ class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
     val inventur: InventurApi
             get() = anwendung!!.api().inventur
 
-    val haushaltsbuchfuehrung: HaushaltsbuchführungApi
+    val haushaltsbuchführung: HaushaltsbuchführungApi
             get() = anwendung!!.api().haushaltsbuch
 
     val historie: Historie

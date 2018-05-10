@@ -1,7 +1,7 @@
 package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
-import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.domain.haushaltsbuch.testing.InventarEingabe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import com.github.haschi.domain.haushaltsbuch.testing.anlagevermögen
@@ -65,7 +65,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     }
 
     @Dann("^werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:$")
-    fun `dann werde ich folgende Vermögenswerte in meinem Inventar gelistet haben`(
+    fun `dann werde ich folgende Umlaufvermögen in meinem Inventar gelistet haben`(
             vermögenswerte: List<VermögenswertParameter>)
     {
 
@@ -118,7 +118,7 @@ class InventurStepDefinition(private val welt: DieWelt)
             val währungsbetrag: Währungsbetrag)
 
     @Wenn("^ich folgendes Inventar erfasse:$")
-    fun ichFolgendesInventarErfasse(eingabe: List<Inventarposition>)
+    fun ichFolgendesInventarErfasse(eingabe: List<InventarEingabe>)
     {
         sync(welt.inventur) {
             send(ErfasseInventar(
@@ -130,7 +130,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     }
 
     @Und("^ich folgendes Inventar erfassen will:$")
-    fun ichFolgendesInventarErfassenWill(eingabe: List<Inventarposition>)
+    fun ichFolgendesInventarErfassenWill(eingabe: List<InventarEingabe>)
     {
         welt.intention = welt.inventur.send(ErfasseInventar(
                 welt.aktuelleInventur,
@@ -175,7 +175,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     }
 
     @Und("^ich habe folgendes Inventar erfasst:$")
-    fun ichHabeFolgendesInventarErfasst(zeilen: List<Inventarposition>)
+    fun ichHabeFolgendesInventarErfasst(zeilen: List<InventarEingabe>)
     {
         ichFolgendesInventarErfasse(zeilen)
     }

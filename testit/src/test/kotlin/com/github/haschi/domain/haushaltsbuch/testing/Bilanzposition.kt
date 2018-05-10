@@ -12,11 +12,12 @@ data class Bilanzposition(
         @XStreamConverter(MoneyConverter::class)
         val betrag: Währungsbetrag)
 {
-    fun bilanzgruppe(): Gruppe
-    {
-        val elemente = Regex("([A-Z])\\s(.*)").find(gruppe)
-        val buchstabe = elemente!!.groupValues[1][0]
-        val bezeichnung = elemente.groupValues[2]
-        return Gruppe(buchstabe, bezeichnung)
-    }
+    val bilanzGruppe: Gruppe
+        get()
+        {
+            val elemente = Regex("([A-Z])\\s(.*)").find(gruppe)
+            val buchstabe = elemente!!.groupValues[1][0]
+            val bezeichnung = elemente.groupValues[2]
+            return Gruppe(buchstabe, bezeichnung)
+        }
 }

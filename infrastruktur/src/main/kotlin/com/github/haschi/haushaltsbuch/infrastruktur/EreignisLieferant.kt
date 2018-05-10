@@ -7,7 +7,7 @@ import org.axonframework.eventsourcing.eventstore.EventStore
 
 class EreignisLieferant(private val eventStore: EventStore) : Historie
 {
-    override fun bezueglich(aggregat: Aggregatkennung): Sequence<DomainEventMessage<*>>
+    override fun bezüglich(aggregat: Aggregatkennung): Sequence<DomainEventMessage<*>>
     {
         return Sequence {
             eventStore

@@ -149,7 +149,9 @@
     </inspection_tool>
     <inspection_tool class="PointlessBooleanExpressionJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PrivatePropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zäöü][A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="ProtectedField" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ProtectedMemberInFinalClass" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PublicField" enabled="true" level="WARNING" enabled_by_default="true">

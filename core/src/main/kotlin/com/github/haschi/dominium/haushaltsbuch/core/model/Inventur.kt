@@ -45,7 +45,7 @@ class Inventur
     }
 
     @CommandHandler // TODO: löschen
-    fun erfasseUmlaufvermoegen(anweisung: ErfasseUmlaufvermögen)
+    fun erfasseUmlaufvermögen(anweisung: ErfasseUmlaufvermögen)
     {
         AggregateLifecycle.apply(UmlaufvermögenErfasst(
                 position = anweisung.position,

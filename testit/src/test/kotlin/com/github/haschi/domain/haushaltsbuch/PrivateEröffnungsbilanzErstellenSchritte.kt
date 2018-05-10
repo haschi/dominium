@@ -2,10 +2,11 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
-import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
+import com.github.haschi.domain.haushaltsbuch.testing.InventarEingabe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
+import com.github.haschi.domain.haushaltsbuch.testing.anlagevermögen
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
-import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
+import com.github.haschi.domain.haushaltsbuch.testing.umlaufvermögen
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
@@ -13,7 +14,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseEröffnun
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aktiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanz
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
@@ -23,20 +23,20 @@ import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
 
-class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: DieWelt)
+class PrivateEröffnungsbilanzErstellenSchritte(private val welt: DieWelt)
 {
     @Wenn("^ich die Inventur mit folgendem Inventar beende:$")
-    fun inventurBeenden(posten: List<Inventarposition>)
+    fun inventurBeenden(eingabe: List<InventarEingabe>)
     {
-        val umlaufvermoegen = posten.vermögenswerte(InventurGruppe.Umlaufvermögen)
-        val anlagevermoegen = posten.vermögenswerte(InventurGruppe.Anlagevermögen)
-        val schulden = posten.schulden
-
         val inventurId = Aggregatkennung.neu()
 
         with(welt.inventur) {
             send(BeginneInventur(inventurId))
-                    .thenCompose { send(ErfasseInventar(inventurId, anlagevermoegen, umlaufvermoegen, schulden)) }
+                    .thenCompose { send(ErfasseInventar(
+                            inventurId,
+                            eingabe.anlagevermögen,
+                            eingabe.umlaufvermögen,
+                            eingabe.schulden)) }
                     .thenCompose { send(BeendeInventur(inventurId)) }
                     .get()
         }
@@ -70,16 +70,16 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
 private fun List<Bilanzposition>.bilanz(): Eröffnungsbilanz
 {
     val aktiva = Aktiva(
-            Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Anlagevermögen" }
+            Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzGruppe.bezeichnung == "Anlagevermögen" }
                     .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
-            Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzgruppe().bezeichnung == "Umlaufvermögen" }
+            Vermoegenswerte(this.filter { it.seite == "Aktiv" && it.bilanzGruppe.bezeichnung == "Umlaufvermögen" }
                     .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
             Vermoegenswerte())
 
     val passiva = Passiva(
-            Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Eigenkapital" }
+            Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzGruppe.bezeichnung == "Eigenkapital" }
                     .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }),
-            Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzgruppe().bezeichnung == "Fremdkapital" }
+            Vermoegenswerte(this.filter { it.seite == "Passiv" && it.bilanzGruppe.bezeichnung == "Fremdkapital" }
                     .map { Vermoegenswert(it.kategorie, it.posten, it.betrag) }))
 
     return Eröffnungsbilanz(aktiva, passiva)
