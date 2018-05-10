@@ -5,7 +5,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbil
 
 class BilanzAblage
 {
-    val index: MutableMap<Aggregatkennung, Eröffnungsbilanz> = mutableMapOf()
+    private val index: MutableMap<Aggregatkennung, Eröffnungsbilanz> = mutableMapOf()
 
     fun speichern(inventarId: Aggregatkennung, bilanz: Eröffnungsbilanz)
     {

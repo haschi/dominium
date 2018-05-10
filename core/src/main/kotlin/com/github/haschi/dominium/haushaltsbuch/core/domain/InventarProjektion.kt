@@ -23,7 +23,7 @@ class InventarProjektion(private val vergangenheit: Historie)
 
     }
 
-    fun reduce(left: Inventar, right: Inventar): Inventar
+    private fun reduce(left: Inventar, right: Inventar): Inventar
     {
         return Inventar(
                  maxOf(left.erstelltAm, right.erstelltAm),

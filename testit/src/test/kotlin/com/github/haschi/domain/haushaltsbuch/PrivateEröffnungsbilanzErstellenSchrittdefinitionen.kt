@@ -30,7 +30,7 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
     {
         val umlaufvermoegen = posten.vermögenswerte(InventurGruppe.Umlaufvermögen)
         val anlagevermoegen = posten.vermögenswerte(InventurGruppe.Anlagevermögen)
-        val schulden = posten.schulden(InventurGruppe.Schulden)
+        val schulden = posten.schulden
 
         val inventurId = Aggregatkennung.neu()
 

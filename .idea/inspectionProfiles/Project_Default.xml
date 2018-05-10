@@ -135,7 +135,9 @@
       <option name="loggerClassName" value="" />
     </inspection_tool>
     <inspection_tool class="NpmUsedModulesInstalled" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="ObjectPropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="ObjectPropertyName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[A-ZÄÖÜa-zäöü][_A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="OctalIntegerJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="OverridableMethodCallDuringObjectConstruction" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PackageDirectoryMismatch" enabled="true" level="ERROR" enabled_by_default="true" />

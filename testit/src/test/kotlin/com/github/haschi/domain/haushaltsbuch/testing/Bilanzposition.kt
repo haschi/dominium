@@ -6,7 +6,7 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 
 data class Bilanzposition(
         val seite: String,
-        val gruppe: String,
+        private val gruppe: String,
         val kategorie: String,
         val posten: String,
         @XStreamConverter(MoneyConverter::class)

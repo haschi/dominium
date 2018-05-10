@@ -18,6 +18,12 @@ class Inventarposition(
     var währungsbetrag: Währungsbetrag
 )
 
+val List<Inventarposition>.umlaufvermögen
+    get() = vermögenswerte(InventurGruppe.Umlaufvermögen)
+
+val List<Inventarposition>.anlagevermögen
+    get() = vermögenswerte(InventurGruppe.Anlagevermögen)
+
 fun List<Inventarposition>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswerte =
     Vermoegenswerte(
         this.stream()
@@ -25,9 +31,9 @@ fun List<Inventarposition>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswe
             .map({p -> Vermoegenswert(p.kategorie.kategorie, p.position, p.währungsbetrag)})
             .toList())
 
-fun List<Inventarposition>.schulden(gruppe: InventurGruppe): Schulden =
-        Schulden(
-                this.stream()
-                        .filter { z -> z.gruppe == gruppe }
-                        .map({p -> Schuld(p.kategorie.kategorie, p.position, p.währungsbetrag) })
-                        .toList())
+val List<Inventarposition>.schulden
+    get() = Schulden(
+            this.stream()
+                    .filter { z -> z.gruppe == InventurGruppe.Schulden }
+                    .map({ p -> Schuld(p.kategorie.kategorie, p.position, p.währungsbetrag) })
+                    .toList())

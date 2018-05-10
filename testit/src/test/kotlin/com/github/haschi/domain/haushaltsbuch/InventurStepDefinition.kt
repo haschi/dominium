@@ -2,11 +2,11 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
+import com.github.haschi.domain.haushaltsbuch.testing.anlagevermögen
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
-import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
+import com.github.haschi.domain.haushaltsbuch.testing.umlaufvermögen
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeendeInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.BeginneInventur
 import com.github.haschi.dominium.haushaltsbuch.core.model.commands.ErfasseInventar
@@ -52,10 +52,10 @@ class InventurStepDefinition(private val welt: DieWelt)
 
         val inventar = welt.query.query(LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java)
-        assertThat(inventar).isCompletedWithValueMatching{
+        assertThat(inventar).isCompletedWithValueMatching {
             it == Inventar.leer
         }
-        .isDone
+                .isDone
     }
 
     @Angenommen("^ich habe mit der Inventur begonnen$")
@@ -97,11 +97,16 @@ class InventurStepDefinition(private val welt: DieWelt)
         var erwartet: Schulden = Schulden.keine
 
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
-                .isCompletedWithValueMatching( {
-                    erwartet = Schulden(schulden.map { Schuld(it.kategorie, it.position, it.währungsbetrag)})
-                    it.schulden ==  erwartet}
+                .isCompletedWithValueMatching({
+                    erwartet = Schulden(schulden.map {
+                        Schuld(it.kategorie,
+                                it.position,
+                                it.währungsbetrag)
+                    })
+                    it.schulden == erwartet
+                }
 
-                , "$schulden erwartet: $erwartet")
+                        , "$schulden erwartet: $erwartet")
                 .isDone
     }
 
@@ -113,34 +118,25 @@ class InventurStepDefinition(private val welt: DieWelt)
             val währungsbetrag: Währungsbetrag)
 
     @Wenn("^ich folgendes Inventar erfasse:$")
-    fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
+    fun ichFolgendesInventarErfasse(eingabe: List<Inventarposition>)
     {
-        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
-        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen)
-        val schulden = zeilen.schulden(InventurGruppe.Schulden)
-
         sync(welt.inventur) {
             send(ErfasseInventar(
                     welt.aktuelleInventur,
-                    anlagevermoegen,
-                    umlaufvermoegen,
-                    schulden))
+                    eingabe.anlagevermögen,
+                    eingabe.umlaufvermögen,
+                    eingabe.schulden))
         }
     }
 
-
     @Und("^ich folgendes Inventar erfassen will:$")
-    fun ichFolgendesInventarErfassenWill(zeilen: List<Inventarposition>)
+    fun ichFolgendesInventarErfassenWill(eingabe: List<Inventarposition>)
     {
-        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
-        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
-        val schulden = zeilen.schulden(InventurGruppe.Schulden)
-
         welt.intention = welt.inventur.send(ErfasseInventar(
-                    welt.aktuelleInventur,
-                    anlagevermoegen,
-                    umlaufvermoegen,
-                    schulden))
+                welt.aktuelleInventur,
+                eingabe.anlagevermögen,
+                eingabe.umlaufvermögen,
+                eingabe.schulden))
     }
 
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
@@ -200,7 +196,12 @@ class InventurStepDefinition(private val welt: DieWelt)
 
         sync(welt.inventur) {
             send(BeginneInventur(welt.aktuelleInventur))
-                    .thenCompose { id -> send(ErfasseInventar(id, Inventar.leer.anlagevermoegen, Inventar.leer.umlaufvermoegen, Inventar.leer.schulden))}
+                    .thenCompose { id ->
+                        send(ErfasseInventar(id,
+                                Inventar.leer.anlagevermoegen,
+                                Inventar.leer.umlaufvermoegen,
+                                Inventar.leer.schulden))
+                    }
                     .thenCompose { _ -> send(BeendeInventur(welt.aktuelleInventur)) }
         }
     }
