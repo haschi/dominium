@@ -94,13 +94,11 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        var schulden: Schulden = Schulden.keine;
         var erwartet: Schulden = Schulden.keine;
 
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching( {
-                    schulden = it.schulden;
-                    erwartet = Schulden(schulden.map { Schuld(it.position, it.waehrungsbetrag)})
+                    erwartet = Schulden(schulden.map { Schuld(it.kategorie, it.position, it.währungsbetrag)})
                     it.schulden ==  erwartet}
 
                 , "${schulden} erwartet: ${erwartet}")
@@ -108,6 +106,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     }
 
     class SchuldParameter(
+            val kategorie: String,
             val position: String,
 
             @XStreamConverter(MoneyConverter::class)

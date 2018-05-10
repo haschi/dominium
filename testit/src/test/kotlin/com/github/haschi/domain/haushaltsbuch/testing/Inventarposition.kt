@@ -29,5 +29,5 @@ fun List<Inventarposition>.schulden(gruppe: InventurGruppe): Schulden =
         Schulden(
                 this.stream()
                         .filter { z -> z.gruppe == gruppe }
-                        .map({p -> Schuld(p.position, p.währungsbetrag) })
+                        .map({p -> Schuld(p.kategorie.kategorie, p.position, p.währungsbetrag) })
                         .toList())

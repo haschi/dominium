@@ -22,7 +22,7 @@ class InventarErfasstTestfall : TestfallAnbieter()
                                             umlaufvermoegen = Vermoegenswerte(
                                                     Vermoegenswert("Bargeld", "Geldbörse", 15.67.euro())),
                                             schulden = Schulden(
-                                                    Schuld("Autokredit", 10100.00.euro()))),
+                                                    Schuld("Sonstiges", "Autokredit", 10100.00.euro()))),
                         json = """{
                                     |  "anlagevermoegen" : [ {
                                     |    "kategorie": "Aktien",
@@ -35,6 +35,7 @@ class InventarErfasstTestfall : TestfallAnbieter()
                                     |    "waehrungsbetrag" : "15,67 EUR"
                                     |  } ],
                                     |  "schulden" : [ {
+                                    |    "kategorie": "Sonstiges",
                                     |    "position" : "Autokredit",
                                     |    "waehrungsbetrag" : "10.100,00 EUR"
                                     |  } ]

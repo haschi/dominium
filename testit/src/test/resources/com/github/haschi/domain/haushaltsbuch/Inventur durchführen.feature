@@ -29,8 +29,8 @@ Funktionalität: Inventur durchführen
       | Sonstiges | Bankguthaben | 500,00 EUR     |
 
     Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
-      | Position   | Währungsbetrag |
-      | Autokredit | 10.569,00 EUR  |
+      | Kategorie | Position   | Währungsbetrag |
+      | Sonstiges | Autokredit | 10.569,00 EUR  |
 
     Dann werde ich folgendes Reinvermögen ermittelt haben:
       | Summe des Vermögens         | 5.800,00 EUR  |
