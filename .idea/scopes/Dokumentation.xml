@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Dokumentation" pattern="file[Haushaltsbuch]:doc//*||file[Haushaltsbuch]:README.md||file[Abnahme-Tests]:src/test/resources//*.feature" />
+</component>

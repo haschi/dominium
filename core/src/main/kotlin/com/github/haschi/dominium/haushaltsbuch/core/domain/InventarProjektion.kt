@@ -15,7 +15,7 @@ class InventarProjektion(private val vergangenheit: Historie)
     fun leseInventar(abfrage: LeseInventar): Inventar
     {
         // TODO("Empty sequence can't be reduced")
-        return vergangenheit.bezueglich(abfrage.id)
+        return vergangenheit.bezüglich(abfrage.id)
                 .map { m -> alsInventar(m.payload) }
                 .reduce({ l, r -> reduce(l, r) })
 //                .
@@ -23,7 +23,7 @@ class InventarProjektion(private val vergangenheit: Historie)
 
     }
 
-    fun reduce(left: Inventar, right: Inventar): Inventar
+    private fun reduce(left: Inventar, right: Inventar): Inventar
     {
         return Inventar(
                  maxOf(left.erstelltAm, right.erstelltAm),

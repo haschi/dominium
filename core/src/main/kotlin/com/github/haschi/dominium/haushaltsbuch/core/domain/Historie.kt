@@ -5,5 +5,5 @@ import org.axonframework.eventsourcing.DomainEventMessage
 
 interface Historie
 {
-    fun bezueglich(aggregat: Aggregatkennung): Sequence<DomainEventMessage<*>>
+    fun bezüglich(aggregat: Aggregatkennung): Sequence<DomainEventMessage<*>>
 }

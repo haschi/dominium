@@ -13,7 +13,7 @@ object Ansicht
 class GruppenQueryHandler
 {
     @QueryHandler
-    fun falls(query: LeseInventurGruppen): Ansicht
+    fun falls(@Suppress("UNUSED_PARAMETER") query : LeseInventurGruppen): Ansicht
     {
         return Ansicht
     }

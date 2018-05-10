@@ -8,11 +8,11 @@ import cucumber.deps.com.thoughtworks.xstream.converters.UnmarshallingContext
 import cucumber.deps.com.thoughtworks.xstream.io.HierarchicalStreamReader
 import cucumber.deps.com.thoughtworks.xstream.io.HierarchicalStreamWriter
 
-class InventarpositionConverter : Converter
+class InventarEingabeConverter : Converter
 {
     override fun canConvert(p0: Class<*>?): Boolean
     {
-        return  p0 == Inventarposition::class.java
+        return  p0 == InventarEingabe::class.java
     }
 
     override fun unmarshal(reader: HierarchicalStreamReader, p1: UnmarshallingContext?): Any
@@ -20,7 +20,7 @@ class InventarpositionConverter : Converter
         val gruppe = InventurGruppe.valueOf(nächsterWert(reader))
         val kategorie = (nächsterWert(reader))
 
-        return Inventarposition(
+        return InventarEingabe(
                 gruppe,
                 gruppe.kategorien.first { it.kategorie == kategorie },
                 nächsterWert(reader),
@@ -29,7 +29,7 @@ class InventarpositionConverter : Converter
 
     private fun nächsterWert(reader: HierarchicalStreamReader): String
     {
-        reader.moveDown();
+        reader.moveDown()
         val wert = reader.value
         reader.moveUp()
         return wert

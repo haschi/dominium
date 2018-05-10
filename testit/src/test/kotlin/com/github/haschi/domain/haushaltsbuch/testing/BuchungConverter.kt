@@ -13,7 +13,7 @@ class BuchungConverter : Transformer<Buchung>()
         val pattern = Pattern.compile(MoneyConverter.regex)
         val matcher = pattern.matcher(s)
 
-        assert(matcher.matches()) { "Keine Übereinstimmung: " + s }
+        assert(matcher.matches()) { "Keine Übereinstimmung: $s" }
 
         return if (matcher.matches())
         {

@@ -29,8 +29,8 @@ Funktionalität: Inventur durchführen
       | Sonstiges | Bankguthaben | 500,00 EUR     |
 
     Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
-      | Position   | Währungsbetrag |
-      | Autokredit | 10.569,00 EUR  |
+      | Kategorie | Position   | Währungsbetrag |
+      | Sonstiges | Autokredit | 10.569,00 EUR  |
 
     Dann werde ich folgendes Reinvermögen ermittelt haben:
       | Summe des Vermögens         | 5.800,00 EUR  |
@@ -38,7 +38,7 @@ Funktionalität: Inventur durchführen
       | Reinvermögen (Eigenkapital) | -4.769,00 EUR |
 
   @domain
-  Szenario: Inventur ohne Inventarzählung beenden
+  Szenario: Inventur beende ohne Inventar zu erfassen
     Angenommen ich habe mit der Inventur begonnen
     Wenn ich die Inventur beenden will
     Dann werde ich die Fehlermeldung "Kein Inventar erfasst" erhalten
@@ -59,6 +59,6 @@ Funktionalität: Inventur durchführen
     Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
 
     @domäne
-    Szenario: Inventurdatum erfassen
+    Szenario: Datum der Inventur erfassen
       Wenn ich eine Inventur am "07.05.2018 um 17:55" beende
       Dann werde ich mein Inventar am "07.05.2018 um 17:55" erfasst haben

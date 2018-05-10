@@ -21,7 +21,7 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
         val inventar = welt.query.query(LeseInventar(welt.aktuelleInventur),
                 Inventar::class.java).get()
 
-        welt.aktuellesHaushaltsbuch = welt.haushaltsbuchfuehrung.send(
+        welt.aktuellesHaushaltsbuch = welt.haushaltsbuchführung.send(
                 BeginneHaushaltsbuchführung(
                         id = Aggregatkennung.neu(),
                         inventar = inventar)).get()
@@ -32,7 +32,7 @@ class HaushaltsbuchführungBeginnenSteps(private val welt: DieWelt)
             eröffnungsbilanzkonto: List<Kontozeile>)
     {
         val eröffnungsbilanzkontoErstellt =
-                welt.historie.bezueglich(welt.aktuellesHaushaltsbuch)
+                welt.historie.bezüglich(welt.aktuellesHaushaltsbuch)
                         .filter { it.payload is EröffnungsbilanzkontoErstellt }
                         .map { m -> m.payload as EröffnungsbilanzkontoErstellt }
                         .first()

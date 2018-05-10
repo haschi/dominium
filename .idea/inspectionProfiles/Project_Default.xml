@@ -34,7 +34,9 @@
     <inspection_tool class="EmptyStatementBodyJS" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_reportEmptyBlocks" value="false" />
     </inspection_tool>
-    <inspection_tool class="EnumEntryName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EnumEntryName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[A-ZÄÖÜ]([A-ZÄÖÜa-zäöü\d]*|[A-ZÄÖÜ_\d]*)" />
+    </inspection_tool>
     <inspection_tool class="EqualsUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ExceptionCaughtLocallyJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FallThroughInSwitchStatementJS" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -43,7 +45,9 @@
     <inspection_tool class="FinalMethodInFinalClass" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="FlowJSConfig" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="FlowJSFlagCommentPlacement" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="FunctionName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="FunctionName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zäöü][A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="GroovyAssignabilityCheck" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="HashCodeUsesNonFinalVariable" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="IncompatibleMaskJS" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -111,7 +115,9 @@
       <option name="REPORT_VARIABLES" value="true" />
       <option name="REPORT_PARAMETERS" value="true" />
     </inspection_tool>
-    <inspection_tool class="LocalVariableName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="LocalVariableName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zäöü][A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="LoopStatementThatDoesntLoopJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="MethodMayBeStatic" enabled="true" level="ERROR" enabled_by_default="true">
       <option name="m_onlyPrivateOrFinal" value="false" />
@@ -129,7 +135,9 @@
       <option name="loggerClassName" value="" />
     </inspection_tool>
     <inspection_tool class="NpmUsedModulesInstalled" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="ObjectPropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="ObjectPropertyName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[A-ZÄÖÜa-zäöü][_A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="OctalIntegerJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="OverridableMethodCallDuringObjectConstruction" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PackageDirectoryMismatch" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -141,7 +149,9 @@
     </inspection_tool>
     <inspection_tool class="PointlessBooleanExpressionJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="PrivatePropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PropertyName" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="namePattern" value="[a-zäöü][A-ZÄÖÜa-zäöüß\d]*" />
+    </inspection_tool>
     <inspection_tool class="ProtectedField" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="ProtectedMemberInFinalClass" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PublicField" enabled="true" level="WARNING" enabled_by_default="true">

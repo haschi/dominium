@@ -2,7 +2,7 @@ package com.github.haschi.haushaltsbuch
 
 import cucumber.api.java8.De
 
-class HaushaltsbuchDienstSchrittdefinitionen(val dienst: HaushaltsbuchDienstRestSteps) : De
+class HaushaltsbuchDienstSchritte(val dienst: HaushaltsbuchDienstRestSteps) : De
 {
     init
     {

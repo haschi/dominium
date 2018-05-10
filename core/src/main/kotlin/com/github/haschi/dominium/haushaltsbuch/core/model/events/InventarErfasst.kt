@@ -1,6 +1,5 @@
 package com.github.haschi.dominium.haushaltsbuch.core.model.events
 
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 

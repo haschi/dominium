@@ -10,24 +10,30 @@ import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import kotlin.streams.toList
 
-@XStreamConverter(InventarpositionConverter::class)
-class Inventarposition(
+@XStreamConverter(InventarEingabeConverter::class)
+class InventarEingabe(
     val gruppe: InventurGruppe,
     var kategorie: Kategorie,
     var position: String,
     var währungsbetrag: Währungsbetrag
 )
 
-fun List<Inventarposition>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswerte =
+val List<InventarEingabe>.umlaufvermögen: Vermoegenswerte
+    get() = vermögenswerte(InventurGruppe.Umlaufvermögen)
+
+val List<InventarEingabe>.anlagevermögen
+    get() = vermögenswerte(InventurGruppe.Anlagevermögen)
+
+fun List<InventarEingabe>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswerte =
     Vermoegenswerte(
         this.stream()
             .filter { z -> z.gruppe == gruppe }
             .map({p -> Vermoegenswert(p.kategorie.kategorie, p.position, p.währungsbetrag)})
             .toList())
 
-fun List<Inventarposition>.schulden(gruppe: InventurGruppe): Schulden =
-        Schulden(
-                this.stream()
-                        .filter { z -> z.gruppe == gruppe }
-                        .map({p -> Schuld(p.position, p.währungsbetrag) })
-                        .toList())
+val List<InventarEingabe>.schulden
+    get() = Schulden(
+            this.stream()
+                    .filter { z -> z.gruppe == InventurGruppe.Schulden }
+                    .map({ p -> Schuld(p.kategorie.kategorie, p.position, p.währungsbetrag) })
+                    .toList())
