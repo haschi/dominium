@@ -5,8 +5,5 @@ import java.time.LocalDateTime
 
 object Testzeit : Zeit
 {
-    override var jetzt = LocalDateTime.now()
-        set(value) {
-            field = value
-        }
+    override var jetzt: LocalDateTime = LocalDateTime.now()
 }

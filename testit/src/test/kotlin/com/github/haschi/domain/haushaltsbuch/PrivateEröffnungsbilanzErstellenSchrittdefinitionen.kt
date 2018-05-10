@@ -3,7 +3,6 @@ package com.github.haschi.domain.haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.Inventarposition
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.vermögenswerte
@@ -14,7 +13,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseEröffnun
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aktiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Eröffnungsbilanz
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
@@ -64,7 +63,7 @@ class PrivateEröffnungsbilanzErstellenSchrittdefinitionen(private val welt: Die
 
         assertThat(abfrage).isCompletedWithValueMatching(
                 { bilanz -> bilanz.aktiva.fehlbetrag.summe == fehlbetrag },
-                "Nicht durch Eigenkapital gedeckter Fehlbetrag = ${fehlbetrag}")
+                "Nicht durch Eigenkapital gedeckter Fehlbetrag = $fehlbetrag")
     }
 }
 

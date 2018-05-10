@@ -94,14 +94,14 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        var erwartet: Schulden = Schulden.keine;
+        var erwartet: Schulden = Schulden.keine
 
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching( {
                     erwartet = Schulden(schulden.map { Schuld(it.kategorie, it.position, it.währungsbetrag)})
                     it.schulden ==  erwartet}
 
-                , "${schulden} erwartet: ${erwartet}")
+                , "$schulden erwartet: $erwartet")
                 .isDone
     }
 
@@ -115,9 +115,9 @@ class InventurStepDefinition(private val welt: DieWelt)
     @Wenn("^ich folgendes Inventar erfasse:$")
     fun ichFolgendesInventarErfasse(zeilen: List<Inventarposition>)
     {
-        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen);
-        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen);
-        val schulden = zeilen.schulden(InventurGruppe.Schulden);
+        val umlaufvermoegen = zeilen.vermögenswerte(InventurGruppe.Umlaufvermögen)
+        val anlagevermoegen = zeilen.vermögenswerte(InventurGruppe.Anlagevermögen)
+        val schulden = zeilen.schulden(InventurGruppe.Schulden)
 
         sync(welt.inventur) {
             send(ErfasseInventar(
@@ -196,7 +196,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun `wenn ich eine Inventur beende`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
     {
         welt.aktuelleInventur = Aggregatkennung.neu()
-        welt.zeit.jetzt = datum;
+        welt.zeit.jetzt = datum
 
         sync(welt.inventur) {
             send(BeginneInventur(welt.aktuelleInventur))

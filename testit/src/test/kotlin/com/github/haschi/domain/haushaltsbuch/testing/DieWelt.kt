@@ -11,9 +11,7 @@ import org.axonframework.queryhandling.QueryGateway
 import org.picocontainer.Startable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
-import kotlin.properties.Delegates
 
 class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
 {

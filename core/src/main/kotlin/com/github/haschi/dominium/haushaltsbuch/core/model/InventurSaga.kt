@@ -9,9 +9,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventhandling.saga.SagaEventHandler
 import org.axonframework.eventhandling.saga.SagaLifecycle
 import org.axonframework.eventhandling.saga.StartSaga
-import org.axonframework.queryhandling.QueryBus
 import org.axonframework.queryhandling.QueryGateway
-import java.util.concurrent.CompletableFuture
 
 class InventurSaga
 {

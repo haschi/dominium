@@ -29,7 +29,7 @@ class InventarpositionConverter : Converter
 
     private fun nächsterWert(reader: HierarchicalStreamReader): String
     {
-        reader.moveDown();
+        reader.moveDown()
         val wert = reader.value
         reader.moveUp()
         return wert
