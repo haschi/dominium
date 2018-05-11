@@ -15,22 +15,22 @@ Funktionalität: Inventur durchführen
   Szenario: Inventar erfassen
     Angenommen ich habe mit der Inventur begonnen
     Wenn ich folgendes Inventar erfasse:
-      | Gruppe         | Kategorie | Position         | Währungsbetrag |
-      | Anlagevermögen | Sonstiges | Sparbuchguthaben | 5.300,00 EUR   |
-      | Umlaufvermögen | Sonstiges | Bankguthaben     | 500,00 EUR     |
-      | Schulden       | Sonstiges | Autokredit       | 10.569,00 EUR  |
+      | Gruppe         | Kategorie    | Position           | Währungsbetrag |
+      | Anlagevermögen | Wertpapiere  | VW-Aktien          | 5.300,00 EUR   |
+      | Umlaufvermögen | Bankguthaben | Girokonto ING-DiBa | 500,00 EUR     |
+      | Schulden       | Darlehen     | Autokredit         | 10.569,00 EUR  |
 
     Dann werde ich folgendes Anlagevermögen in meinem Inventar gelistet haben:
-      | Kategorie | Position         | Währungsbetrag |
-      | Sonstiges | Sparbuchguthaben | 5.300,00 EUR   |
+      | Kategorie   | Position  | Währungsbetrag |
+      | Wertpapiere | VW-Aktien | 5.300,00 EUR   |
 
     Dann werde ich folgendes Umlaufvermögen in meinem Inventar gelistet haben:
-      | Kategorie | Position     | Währungsbetrag |
-      | Sonstiges | Bankguthaben | 500,00 EUR     |
+      | Kategorie    | Position           | Währungsbetrag |
+      | Bankguthaben | Girokonto ING-DiBa | 500,00 EUR     |
 
     Dann werde ich folgende Schulden in meinem Inventar gelistet haben:
       | Kategorie | Position   | Währungsbetrag |
-      | Sonstiges | Autokredit | 10.569,00 EUR  |
+      | Darlehen  | Autokredit | 10.569,00 EUR  |
 
     Dann werde ich folgendes Reinvermögen ermittelt haben:
       | Summe des Vermögens         | 5.800,00 EUR  |
@@ -58,7 +58,21 @@ Funktionalität: Inventur durchführen
 
     Dann werde ich die Fehlermeldung "Inventur bereits beendet" erhalten
 
-    @domäne
-    Szenario: Datum der Inventur erfassen
-      Wenn ich eine Inventur am "07.05.2018 um 17:55" beende
-      Dann werde ich mein Inventar am "07.05.2018 um 17:55" erfasst haben
+  @domäne
+  Szenario: Datum der Inventur erfassen
+    Wenn ich eine Inventur am "07.05.2018 um 17:55" beende
+    Dann werde ich mein Inventar am "07.05.2018 um 17:55" erfasst haben
+
+  @domäne
+  Szenariogrundriss: Zuordnung einer falschen Kategorie
+    Angenommen ich habe mit der Inventur begonnen
+    Wenn ich folgendes Inventar erfasse:
+      | Gruppe   | Kategorie   | Position  | Währungsbetrag |
+      | <Gruppe> | <Kategorie> | VW-Aktien | 5.300,00 EUR   |
+    Dann werde ich den Fehler "<Fehlerbeschreibung>" erhalten
+
+    Beispiele:
+      | Gruppe         | Kategorie | Fehlerbeschreibung              |
+      | Anlagevermögen | Keine     | Ungültige Kategorie 'Keine'     |
+      | Umlaufvermögen | Ungültig  | Ungültige Kategorie 'Ungültig'  |
+      | Schulden       | Na so was | Ungültige Kategorie 'Na so was' |

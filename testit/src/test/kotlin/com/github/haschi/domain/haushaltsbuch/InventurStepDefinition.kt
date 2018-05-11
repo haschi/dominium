@@ -120,12 +120,19 @@ class InventurStepDefinition(private val welt: DieWelt)
     @Wenn("^ich folgendes Inventar erfasse:$")
     fun ichFolgendesInventarErfasse(eingabe: List<InventarEingabe>)
     {
-        sync(welt.inventur) {
-            send(ErfasseInventar(
-                    welt.aktuelleInventur,
-                    eingabe.anlagevermögen,
-                    eingabe.umlaufvermögen,
-                    eingabe.schulden))
+        try
+        {
+            sync(welt.inventur) {
+                send(ErfasseInventar(
+                        welt.aktuelleInventur,
+                        eingabe.anlagevermögen,
+                        eingabe.umlaufvermögen,
+                        eingabe.schulden))
+            }
+        }
+        catch (ausnahme: Exception)
+        {
+            welt.ausnahme = ausnahme
         }
     }
 
@@ -214,5 +221,12 @@ class InventurStepDefinition(private val welt: DieWelt)
                 Inventar::class.java).get()
 
         assertThat(inventar.erstelltAm).isEqualTo(datum)
+    }
+
+    @Dann ("^werde ich den Fehler \"([^\"]*)\" erhalten$")
+    fun `werde ich den Fehler erhalten`(fehlermeldung: String)
+    {
+        assertThat(welt.ausnahme)
+                .hasMessage(fehlermeldung)
     }
 }

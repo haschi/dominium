@@ -13,6 +13,7 @@ import kotlin.streams.toList
 @XStreamConverter(InventarEingabeConverter::class)
 class InventarEingabe(
     val gruppe: InventurGruppe,
+        val gruppe2: String,
     var kategorie: Kategorie,
     var position: String,
     var währungsbetrag: Währungsbetrag
@@ -27,7 +28,7 @@ val List<InventarEingabe>.anlagevermögen
 fun List<InventarEingabe>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswerte =
     Vermoegenswerte(
         this.stream()
-            .filter { z -> z.gruppe == gruppe }
+            .filter { z -> z.gruppe2 == gruppe.name }
             .map({p -> Vermoegenswert(p.kategorie.kategorie, p.position, p.währungsbetrag)})
             .toList())
 
