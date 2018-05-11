@@ -6,7 +6,7 @@ data class Inventar(
         val erstelltAm: LocalDateTime,
         val anlagevermoegen: Vermoegenswerte,
         val umlaufvermoegen: Vermoegenswerte,
-        val schulden: Schulden)
+        val schulden: Vermoegenswerte)
 {
 
     val reinvermoegen: Reinvermögen
@@ -23,6 +23,6 @@ data class Inventar(
                     LocalDateTime.MIN,
                     Vermoegenswerte.keine,
                     Vermoegenswerte.keine,
-                    Schulden.keine)
+                    Vermoegenswerte.keine)
     }
 }

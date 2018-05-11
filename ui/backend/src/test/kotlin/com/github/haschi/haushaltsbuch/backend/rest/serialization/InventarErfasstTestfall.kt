@@ -1,9 +1,6 @@
 package com.github.haschi.haushaltsbuch.backend.rest.serialization
 
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventarErfasst
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schuld
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.euro
@@ -21,8 +18,8 @@ class InventarErfasstTestfall : TestfallAnbieter()
                                                     Vermoegenswert("Aktien", "Aktienpaket ING-DiBa", 123.45.euro())),
                                             umlaufvermoegen = Vermoegenswerte(
                                                     Vermoegenswert("Bargeld", "Geldbörse", 15.67.euro())),
-                                            schulden = Schulden(
-                                                    Schuld("Sonstiges", "Autokredit", 10100.00.euro()))),
+                                            schulden = Vermoegenswerte(
+                                                    Vermoegenswert("Sonstiges", "Autokredit", 10100.00.euro()))),
                         json = """{
                                     |  "anlagevermoegen" : [ {
                                     |    "kategorie": "Aktien",

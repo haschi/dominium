@@ -14,8 +14,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Reinvermögen
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schuld
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
@@ -94,12 +92,12 @@ class InventurStepDefinition(private val welt: DieWelt)
     fun `dann werde ich folgende Schulden in meinem Inventar gelistet Haben`(
             schulden: List<SchuldParameter>)
     {
-        var erwartet: Schulden = Schulden.keine
+        var erwartet: Vermoegenswerte = Vermoegenswerte.keine
 
         assertThat(welt.query.query(LeseInventar(welt.aktuelleInventur), Inventar::class.java))
                 .isCompletedWithValueMatching({
-                    erwartet = Schulden(schulden.map {
-                        Schuld(it.kategorie,
+                    erwartet = Vermoegenswerte(schulden.map {
+                        Vermoegenswert(it.kategorie,
                                 it.position,
                                 it.währungsbetrag)
                     })

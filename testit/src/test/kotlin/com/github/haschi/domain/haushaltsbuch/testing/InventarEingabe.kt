@@ -2,8 +2,6 @@ package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Kategorie
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schuld
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
@@ -33,8 +31,8 @@ fun List<InventarEingabe>.vermögenswerte(gruppe: InventurGruppe): Vermoegenswer
             .toList())
 
 val List<InventarEingabe>.schulden
-    get() = Schulden(
+    get() = Vermoegenswerte(
             this.stream()
                     .filter { z -> z.gruppe == InventurGruppe.Schulden }
-                    .map({ p -> Schuld(p.kategorie.kategorie, p.position, p.währungsbetrag) })
+                    .map({ p -> Vermoegenswert(p.kategorie.kategorie, p.position, p.währungsbetrag) })
                     .toList())
