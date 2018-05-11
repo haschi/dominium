@@ -4,7 +4,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventarErfass
 import com.github.haschi.dominium.haushaltsbuch.core.model.events.InventurBeendet
 import com.github.haschi.dominium.haushaltsbuch.core.model.queries.LeseInventar
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Inventar
-import com.github.haschi.dominium.haushaltsbuch.core.model.values.Schulden
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import org.axonframework.queryhandling.QueryHandler
 import java.time.LocalDateTime
@@ -29,7 +28,7 @@ class InventarProjektion(private val vergangenheit: Historie)
                  maxOf(left.erstelltAm, right.erstelltAm),
                  Vermoegenswerte(left.anlagevermoegen + right.anlagevermoegen),
                 Vermoegenswerte(left.umlaufvermoegen + right.umlaufvermoegen),
-                Schulden(left.schulden + right.schulden))
+                Vermoegenswerte(left.schulden + right.schulden))
     }
 
     private fun alsInventar(message: Any): Inventar =

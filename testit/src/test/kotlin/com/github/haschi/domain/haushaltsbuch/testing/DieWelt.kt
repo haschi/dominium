@@ -47,6 +47,7 @@ class DieWelt(private val domäne: Anwendungskonfiguration) : Startable
     var intention: CompletableFuture<Any>? = null
     var aktuellesHaushaltsbuch: Aggregatkennung = Aggregatkennung.nil
     var zeit: Testzeit = Testzeit
+    lateinit var ausnahme: Exception
 
     companion object
     {

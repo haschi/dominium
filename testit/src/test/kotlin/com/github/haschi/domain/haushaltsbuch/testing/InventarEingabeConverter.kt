@@ -1,6 +1,7 @@
 package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.InventurGruppe
+import com.github.haschi.dominium.haushaltsbuch.core.model.values.Kategorie
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
 import cucumber.deps.com.thoughtworks.xstream.converters.Converter
 import cucumber.deps.com.thoughtworks.xstream.converters.MarshallingContext
@@ -17,12 +18,14 @@ class InventarEingabeConverter : Converter
 
     override fun unmarshal(reader: HierarchicalStreamReader, p1: UnmarshallingContext?): Any
     {
-        val gruppe = InventurGruppe.valueOf(nächsterWert(reader))
+        val gruppe2 = nächsterWert(reader)
+        val gruppe = InventurGruppe.valueOf(gruppe2)
         val kategorie = (nächsterWert(reader))
 
         return InventarEingabe(
                 gruppe,
-                gruppe.kategorien.first { it.kategorie == kategorie },
+                gruppe2,
+                Kategorie(kategorie),
                 nächsterWert(reader),
                 Währungsbetrag.währungsbetrag(nächsterWert(reader)))
     }
