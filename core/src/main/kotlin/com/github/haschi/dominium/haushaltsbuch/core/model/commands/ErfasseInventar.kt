@@ -15,19 +15,8 @@ data class ErfasseInventar(
 {
     init
     {
-        anlagevermoegen.forEach {
-            if (!InventurGruppe.Anlagevermögen.kategorien.contains(Kategorie(it.kategorie)))
-            {
-                throw UngültigeKategorie(it.kategorie)
-            }
-        }
-
-        umlaufvermoegen.forEach {
-            if (!InventurGruppe.Umlaufvermögen.kategorien.contains(Kategorie(it.kategorie)))
-            {
-                throw UngültigeKategorie(it.kategorie)
-            }
-        }
+        kategoriePrüfen(anlagevermoegen, InventurGruppe.Anlagevermögen)
+        kategoriePrüfen(umlaufvermoegen, InventurGruppe.Umlaufvermögen)
 
         schulden.forEach {
             if (!InventurGruppe.Schulden.kategorien.contains(Kategorie(it.kategorie)))
@@ -36,5 +25,15 @@ data class ErfasseInventar(
             }
         }
 
+    }
+
+    private fun kategoriePrüfen(vermoegenswerte: Vermoegenswerte, gruppe: InventurGruppe)
+    {
+        vermoegenswerte.forEach {
+            if (!gruppe.kategorien.contains(Kategorie(it.kategorie)))
+            {
+                throw UngültigeKategorie(it.kategorie)
+            }
+        }
     }
 }
