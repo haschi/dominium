@@ -8,15 +8,23 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
+import { AppState } from '../store/model';
 import { Vermoegenswert } from './bilanz/bilanz.model';
-import { GruppenState } from './shared/gruppen.redux';
+import { Gruppe, GruppenState, InventurGruppe } from './shared/gruppen.redux';
 import { Inventar, InventurEingabe } from './shared/inventar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventurService } from './inventur.service';
-import { select } from '@angular-redux/store';
+import { NgRedux, select } from '@angular-redux/store';
 import { Inventarposition } from './shared/inventarposition';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
+import 'rxjs/add/operator/withLatestFrom';
+
+interface Koordinate{
+    inventurId: string;
+    gruppe: string;
+    kategorie: string;
+}
 
 @Component({
     selector: 'app-inventur',
@@ -29,7 +37,8 @@ export class InventurComponent implements OnInit {
     @ViewChildren(GruppeComponent)
     private gruppen: QueryList<GruppeComponent>;
 
-    private aktuellerStep: number = 0;
+    private aktuelleGruppe: number = 0;
+    private aktuelleKategorie: number = 0;
 
     inventur: FormGroup;
 
@@ -40,36 +49,54 @@ export class InventurComponent implements OnInit {
 
     private eingabe$: Observable<InventurEingabe>;
 
-    inventurId$: Observable<string>;
+    //inventurId$: Observable<string>;
 
     inventurGruppen$: Observable<GruppenState>;
+
+    kategorie$: Observable<Koordinate>
 
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
                 private router: Router,
                 private active: ActivatedRoute,
+                private store: NgRedux<AppState>,
                 private inventurService: InventurService) {
 
-        this.inventurId$ = inventurService.inventurid$;
+        this.inventurGruppen$ = this.inventurService.gruppen$
     }
 
     ngOnInit() {
-        this.inventurService.leseInventurGruppen();
-
         this.inventur = this.builder.group({
             anlagevermoegen: this.builder.array([]),
             umlaufvermoegen: this.builder.array([]),
             schulden: this.builder.array([])
         });
 
+        console.info("Inventur Component: onInit")
         this.eingabe$ = this.inventur.valueChanges
             .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
 
-        this.inventurGruppen$ = this.inventurService.gruppen$
+        const gruppen$ = this.store.select(s => s.inventurGruppen.gruppen)
+
+        this.kategorie$ =
+            this.active.params.withLatestFrom(gruppen$, (params, gruppen) => {
+                const gruppe = gruppen[params.gruppe];
+            const kategorie = gruppe.kategorien[Number(params.kategorie)];
+
+            return {
+                inventurId: params.id,
+                gruppe: gruppe.bezeichnung,
+                kategorie: kategorie.kategorie
+            }
+        })
     }
 
-    auswahlGeaendert(event: StepperSelectionEvent) {
-        this.aktuellerStep = event.selectedIndex
+    gruppeGeaendert(event: StepperSelectionEvent) {
+        this.aktuelleGruppe = event.selectedIndex
+    }
+
+    kategorieGeaendert(event: StepperSelectionEvent) {
+        this.aktuelleKategorie = event.selectedIndex
     }
 
     inventarpositionKonvertieren(poisition: any): Inventarposition {
@@ -91,7 +118,10 @@ export class InventurComponent implements OnInit {
     }
 
     hinzufuegen() {
-        let komponente = this.gruppen.toArray()[this.aktuellerStep];
+        var komponente: GruppeComponent = this.gruppen.toArray()[this.aktuelleGruppe];
+
+        var kategorie = komponente.kategorie
+        console.info(`Kategorie: ${JSON.stringify(kategorie)}`)
         komponente.hinzufuegen();
     }
 

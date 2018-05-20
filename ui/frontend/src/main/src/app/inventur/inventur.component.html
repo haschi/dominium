@@ -1,54 +1,49 @@
-<mat-card *ngIf="(inventurGruppen$ | async) as gruppen">
-    <mat-card-title id="title123">Inventur</mat-card-title>
-    <mat-card-content>
+<app-navigator>
+
+    <mat-card *ngIf="(kategorie$ | async) as koordinate">
+
+        <mat-card-title>
+            <h2 title>{{koordinate.kategorie}}</h2>
+        </mat-card-title>
+
+
+        <mat-card-content>
         <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
             durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.
             Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.</p>
 
-        <form [formGroup]="inventur" (ngSubmit)="speichern()">
-            <mat-horizontal-stepper linear (selectionChange)="auswahlGeaendert($event)">
-                <mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"
-                          [stepControl]="anlagevermoegen">
-                    <p>Erfassen Sie ihr Anlagevermögen.</p>
-                    <app-inventur-gruppe [positionen]="anlagevermoegen" [kategorien]="gruppen.gruppen.anlagevermoegen.kategorien">
-                    </app-inventur-gruppe>
-                    <div>
-                        <button type="button" mat-button matStepperNext [disabled]="anlagevermoegen.invalid">
-                            Weiter
-                        </button>
-                    </div>
-                </mat-step>
-                <mat-step label="Umlaufvermögen">
-                    <p>Erfassen Sie ihr Umlaufvermögen</p>
-                    <app-inventur-gruppe [positionen]="umlaufvermoegen" [kategorien]="gruppen.gruppen.umlaufvermoegen.kategorien">
-                    </app-inventur-gruppe>
-                    <div>
-                        <button type="button" mat-button matStepperPrevious>Zurück</button>
-                        <button type="button" mat-button matStepperNext [disabled]="umlaufvermoegen.invalid">
-                            Weiter
-                        </button>
-                    </div>
-                </mat-step>
-                <mat-step label="Schulden">
-                    <p>Erfassen Sie ihre Schulden</p>
-                    <app-inventur-gruppe [positionen]="schulden" [kategorien]="gruppen.gruppen.schulden.kategorien">
-                    </app-inventur-gruppe>
-                    <div>
-                        <button type="button" mat-button matStepperPrevious>Zurück</button>
-                        <button type="submit" mat-raised-button color="primary" [disabled]="inventur?.invalid">
-                            Inventur abschließen
-                        </button>
-                    </div>
-                </mat-step>
-            </mat-horizontal-stepper>
-        </form>
+        <!--<form [formGroup]="inventur" (ngSubmit)="speichern()">-->
+            <!--<mat-horizontal-stepper linear (selectionChange)="gruppeGeaendert($event)">-->
+                <!--<mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"-->
+                          <!--[stepControl]="anlagevermoegen">-->
+                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.anlagevermoegen"-->
+                                         <!--[positionen]="anlagevermoegen">-->
+                        <!--<p>Erfassen Sie ihr Anlagevermögen.</p>-->
+                    <!--</app-inventur-gruppe>-->
+                <!--</mat-step>-->
+                <!--<mat-step label="Umlaufvermögen">-->
+                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.umlaufvermoegen"-->
+                                         <!--[positionen]="umlaufvermoegen">-->
+                        <!--<p>Erfassen Sie ihr Umlaufvermögen</p>-->
+                    <!--</app-inventur-gruppe>-->
+                <!--</mat-step>-->
+                <!--<mat-step label="Schulden">-->
+                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.schulden"-->
+                                         <!--[positionen]="schulden">-->
+                        <!--<p>Erfassen Sie ihre Schulden</p>-->
+                    <!--</app-inventur-gruppe>-->
+                <!--</mat-step>-->
+            <!--</mat-horizontal-stepper>-->
+        <!--</form>-->
+
+
     </mat-card-content>
-    <button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"
-            [disabled]="inventur?.invalid"
-            matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."
-            style="position: fixed; right: 20px; bottom: 20px">
-        <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
-    </button>
 
-</mat-card>
-
+    <!--<button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"-->
+            <!--[disabled]="inventur?.invalid"-->
+            <!--matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."-->
+            <!--style="position: fixed; right: 20px; bottom: 20px">-->
+        <!--<mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>-->
+    <!--</button>-->
+    </mat-card>
+</app-navigator>

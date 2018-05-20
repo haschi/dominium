@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { logger } from 'codelyzer/util/logger';
 import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
@@ -18,7 +18,7 @@ interface LeseInventar {id: string}
 
 // TODO: Unterscheiden zwischen Inventar und Inventur. Ggf. 2 Services?
 @Injectable()
-export class InventurService {
+export class InventurService implements OnInit{
 
     @select(['inventur', 'inventurId'])
     inventurid$: Observable<string>;
@@ -39,11 +39,14 @@ export class InventurService {
         private router: Router,
         private store: NgRedux<AppState>) {
 
+        console.info("Inventur Service Constructor")
         this.inventurid$
             .filter(id => id != '')
             .subscribe(id => {
                 this.router.navigate(['inventur', id])
             });
+
+        this.leseInventurGruppen();
     }
 
     beginneInventur(id: any) {
@@ -96,5 +99,10 @@ export class InventurService {
             {},
             ResultType.InventurGruppe
         )
+    }
+
+    ngOnInit(): void {
+        console.info("Inventur Service onInit")
+
     }
 }

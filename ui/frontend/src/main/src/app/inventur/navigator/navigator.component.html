@@ -1,0 +1,42 @@
+<div layout="row" class="mat-typography">
+    <mat-card flex="30" *ngIf="(inventurId | async) as inventurId">
+        <mat-card-title>
+            <h2>Inventurgruppen</h2>
+        </mat-card-title>
+
+        <mat-nav-list>
+            <h3 mat-subheader>Anlagevermögen</h3>
+            <a mat-list-item
+               [routerLink]="['/inventur', inventurId, 'anlagevermoegen', i]"
+               *ngFor="let kategorie of (gruppen | async)?.anlagevermoegen.kategorien; let i = index">
+                {{kategorie.kategorie}}
+            </a>
+        </mat-nav-list>
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <h3 mat-subheader>Umlaufvermögen</h3>
+            <a mat-list-item
+               [routerLink]="['/inventur', inventurId, 'umlaufvermoegen', i]"
+               *ngFor="let kategorie of (gruppen | async)?.umlaufvermoegen.kategorien; let i = index">
+                {{kategorie.kategorie}}
+            </a>
+        </mat-nav-list>
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <h3 mat-subheader>Schulden</h3>
+            <a mat-list-item
+               [routerLink]="['/inventur', inventurId, 'schulden', i]"
+               *ngFor="let kategorie of (gruppen | async)?.schulden.kategorien; let i = index">
+                {{kategorie.kategorie}}
+            </a>
+
+        </mat-nav-list>
+    </mat-card>
+
+    <div flex>
+        <ng-content></ng-content>
+    </div>
+
+</div>
+
+

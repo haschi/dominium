@@ -23,6 +23,7 @@ import { ZeileComponent } from './inventar/zeile/zeile.component';
 import { BilanzComponent } from './bilanz/bilanz.component';
 import { AktivaComponent } from './bilanz/aktiva/aktiva.component';
 import { PassivaComponent } from './bilanz/passiva/passiva.component';
+import { NavigatorComponent } from './navigator/navigator.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { PassivaComponent } from './bilanz/passiva/passiva.component';
         ZeileComponent,
         BilanzComponent,
         AktivaComponent,
-        PassivaComponent
+        PassivaComponent,
+        NavigatorComponent
     ],
     providers: [
         InventurService,

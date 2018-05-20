@@ -1,9 +1,10 @@
 ///<reference path="../../../../node_modules/@angular/core/src/metadata/lifecycle_hooks.d.ts"/>
 import {
-    ChangeDetectionStrategy, Component, Input, TemplateRef
+    ChangeDetectionStrategy, Component, Input, Optional, TemplateRef
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Kategorie } from '../shared/gruppen.redux';
+
+import { Gruppe, Kategorie } from '../shared/gruppen.redux';
 
 @Component({
     selector: 'app-inventur-gruppe',
@@ -17,10 +18,13 @@ export class GruppeComponent {
     public positionen: FormArray;
 
     @Input()
-    public kategorien: Kategorie[];
+    public titel: TemplateRef<any>;
 
     @Input()
-    public titel: TemplateRef<any>;
+    public gruppe: Gruppe;
+
+    @Input()
+    public kategorie: Kategorie;
 
     hinzufuegen() {
         const waehrungsbetrag = new FormGroup({

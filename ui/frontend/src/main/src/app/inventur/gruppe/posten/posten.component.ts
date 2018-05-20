@@ -13,7 +13,7 @@ export class PostenComponent implements OnInit {
     posten: FormGroup;
 
     @Input()
-    kategorien: Kategorie[]
+    kategorie: Kategorie
 
     @Output()
     public geloescht: EventEmitter<void> = new EventEmitter<void>();

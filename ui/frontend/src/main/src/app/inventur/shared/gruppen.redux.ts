@@ -1,6 +1,6 @@
 import { Action, AnyAction } from 'redux';
 import { Epic } from 'redux-observable';
-import { filter, map } from 'rxjs/operators'
+import { filter, map, tap } from 'rxjs/operators'
 import { CommandGatewayActionType } from '../../shared/command-gateway/command.redux';
 import { fehlgeschlagen, gelungen } from '../../shared/query-gateway/query.redux';
 import { AppState } from '../../store/model';
@@ -13,12 +13,12 @@ export interface Kategorie {
     kategorie: string
 }
 
-interface Gruppe {
+export interface Gruppe {
     bezeichnung: string;
     kategorien: Kategorie[]
 }
 
-interface InventurGruppe {
+export interface InventurGruppe {
     anlagevermoegen: Gruppe;
     umlaufvermoegen: Gruppe;
     schulden: Gruppe
@@ -50,6 +50,7 @@ export function inventurGruppenGelesen(gruppen: InventurGruppen): Action & {grup
 export function fallsQueryInventurGruppenGelesenGelungen(): Epic<AnyAction, AppState> {
     return action$ => action$
         .pipe(
+            tap(action => console.log("Inventur Gruppen gelesen gelungen" + JSON.stringify(action.gruppen))),
             gelungen(QueryType.LeseInventurGruppen),
             map(body => inventurGruppenGelesen(body)))
 }
