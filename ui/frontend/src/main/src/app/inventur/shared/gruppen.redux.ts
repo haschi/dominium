@@ -50,8 +50,8 @@ export function inventurGruppenGelesen(gruppen: InventurGruppen): Action & {grup
 export function fallsQueryInventurGruppenGelesenGelungen(): Epic<AnyAction, AppState> {
     return action$ => action$
         .pipe(
-            tap(action => console.log("Inventur Gruppen gelesen gelungen" + JSON.stringify(action.gruppen))),
             gelungen(QueryType.LeseInventurGruppen),
+            tap(action => console.log("Inventur Gruppen gelesen gelungen" + JSON.stringify(action.gruppen))),
             map(body => inventurGruppenGelesen(body)))
 }
 

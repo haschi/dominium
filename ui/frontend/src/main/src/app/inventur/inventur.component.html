@@ -3,7 +3,7 @@
     <mat-card *ngIf="(kategorie$ | async) as koordinate">
 
         <mat-card-title>
-            <h2 title>{{koordinate.kategorie}}</h2>
+            <h2 title>{{koordinate.untertitel}}</h2>
         </mat-card-title>
 
 
@@ -36,9 +36,11 @@
             <!--</mat-horizontal-stepper>-->
         <!--</form>-->
 
-
     </mat-card-content>
 
+        <mat-card-actions *ngIf="next$ | async as next">
+            <a mat-button color="primary" [routerLink]="['/inventur', next.inventurId, next.gruppe, next.kategorie]">Weiter</a>
+        </mat-card-actions>
     <!--<button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"-->
             <!--[disabled]="inventur?.invalid"-->
             <!--matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."-->

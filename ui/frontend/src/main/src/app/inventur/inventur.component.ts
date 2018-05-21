@@ -3,6 +3,7 @@ import {
     ViewChildren
 } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+
 import { LoggerService } from '../shared/logger.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -20,10 +21,13 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import 'rxjs/add/operator/withLatestFrom';
 
+
 interface Koordinate{
     inventurId: string;
     gruppe: string;
-    kategorie: string;
+    kategorie: number;
+    titel: string;
+    untertitel: string;
 }
 
 @Component({
@@ -54,6 +58,8 @@ export class InventurComponent implements OnInit {
     inventurGruppen$: Observable<GruppenState>;
 
     kategorie$: Observable<Koordinate>
+
+    next$: Observable<Koordinate>
 
     constructor(private builder: FormBuilder,
                 private log: LoggerService,
@@ -86,7 +92,65 @@ export class InventurComponent implements OnInit {
             return {
                 inventurId: params.id,
                 gruppe: gruppe.bezeichnung,
-                kategorie: kategorie.kategorie
+                kategorie: Number(params.kategorie),
+                titel: '',
+                untertitel: kategorie.kategorie
+            }
+        })
+
+        this.next$ = this.active.params.withLatestFrom(gruppen$, (params, gruppen) => {
+            const gruppe = params.gruppe;
+            const kategorie = Number(params.kategorie);
+            const inventurId = params.id;
+
+            var x : Gruppe;
+            var n : string = gruppe;
+
+            if (gruppe === 'anlagevermoegen')
+            {
+                x = gruppen.anlagevermoegen;
+            } else if (gruppe === 'umlaufvermoegen') {
+                x = gruppen.umlaufvermoegen;
+            } else {
+                x = gruppen.schulden
+            }
+
+            var max = x.kategorien.length;
+            var next = (kategorie + 1) % max;
+
+            if (kategorie + 1 === max) {
+                if (gruppe === 'anlagevermoegen')
+                {
+                    n = 'umlaufvermoegen';
+                    x = gruppen.umlaufvermoegen;
+                } else if (gruppe === 'umlaufvermoegen') {
+                    n = 'schulden';
+                    x = gruppen.schulden;
+                } else {
+                    n = 'anlagevermoegen';
+                    x = gruppen.anlagevermoegen; // besser nix
+                }
+            }
+
+
+
+            console.info(`LINK: index=${kategorie}, max=${max}, next=${next}`)
+            // const index = aktuelleGruppe.kategorien.findIndex(k => k.kategorie === kategorie.kategorie)
+            // var naechsterIndex = index;
+            //
+            // if (index === aktuelleGruppe.kategorien.length + 1) {
+            //     naechsterIndex = 0;
+            //
+            // } else {
+            //     naechsterIndex = index + 1;
+            // }
+
+            return {
+                inventurId: inventurId,
+                gruppe: n,
+                kategorie: next,
+                titel: 'Gruppe',
+                untertitel: 'Kategorie'
             }
         })
     }
