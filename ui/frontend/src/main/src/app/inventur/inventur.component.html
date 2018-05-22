@@ -1,51 +1,32 @@
 <app-navigator>
 
-    <mat-card *ngIf="(kategorie$ | async) as koordinate">
+    <mat-card *ngIf="(koordinate$ | async) as koordinate">
 
         <mat-card-title>
-            <h2 title>{{koordinate.untertitel}}</h2>
+            <h2 title>Titel</h2>
+            <h3 subtitle>{{koordinate.untertitel}}</h3>
         </mat-card-title>
 
-
         <mat-card-content>
-        <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
-            durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.
-            Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.</p>
+            <p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur
+                durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.
+                Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.</p>
 
-        <!--<form [formGroup]="inventur" (ngSubmit)="speichern()">-->
-            <!--<mat-horizontal-stepper linear (selectionChange)="gruppeGeaendert($event)">-->
-                <!--<mat-step label="Anlagevermögen" formGroupName="anlagevermoegen"-->
-                          <!--[stepControl]="anlagevermoegen">-->
-                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.anlagevermoegen"-->
-                                         <!--[positionen]="anlagevermoegen">-->
-                        <!--<p>Erfassen Sie ihr Anlagevermögen.</p>-->
-                    <!--</app-inventur-gruppe>-->
-                <!--</mat-step>-->
-                <!--<mat-step label="Umlaufvermögen">-->
-                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.umlaufvermoegen"-->
-                                         <!--[positionen]="umlaufvermoegen">-->
-                        <!--<p>Erfassen Sie ihr Umlaufvermögen</p>-->
-                    <!--</app-inventur-gruppe>-->
-                <!--</mat-step>-->
-                <!--<mat-step label="Schulden">-->
-                    <!--<app-inventur-gruppe [gruppe]="gruppen.gruppen.schulden"-->
-                                         <!--[positionen]="schulden">-->
-                        <!--<p>Erfassen Sie ihre Schulden</p>-->
-                    <!--</app-inventur-gruppe>-->
-                <!--</mat-step>-->
-            <!--</mat-horizontal-stepper>-->
-        <!--</form>-->
+            <form *ngIf="form$ | async as f" [formGroup]="f">
+                <app-inventur-gruppe [positionen]="f"></app-inventur-gruppe>
+            </form>
 
-    </mat-card-content>
+        </mat-card-content>
 
         <mat-card-actions *ngIf="next$ | async as next">
-            <a mat-button color="primary" [routerLink]="['/inventur', next.inventurId, next.gruppe, next.kategorie]">Weiter</a>
+            <a mat-button color="primary"
+               [routerLink]="['/inventur', next.inventurId, next.gruppe, next.kategorie]">Weiter</a>
         </mat-card-actions>
-    <!--<button color="primary" mat-mini-fab type="button" (click)="hinzufuegen()"-->
-            <!--[disabled]="inventur?.invalid"-->
-            <!--matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."-->
-            <!--style="position: fixed; right: 20px; bottom: 20px">-->
-        <!--<mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>-->
-    <!--</button>-->
+        <button color="primary" mat-fab type="button" (click)="hinzufuegen()"
+                [disabled]="false"
+                matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."
+                style="position: fixed; right: 20px; bottom: 20px">
+            <mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>
+        </button>
     </mat-card>
 </app-navigator>

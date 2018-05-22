@@ -4,25 +4,27 @@ import { AnyAction } from 'redux';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../store/model';
 import {
+    Eingabe,
     eingabeEntfernen,
     eingabeHinzufügen,
     eingabeLeeren,
     inventureingabe
 } from './inventar-eingabe.redux';
-import { Inventarposition } from './inventarposition';
+import { Inventarposition, PositionEingabe } from './inventarposition';
 
 @Injectable()
 export class InventarEingabeService {
 
-    eingaben$: Observable<Inventarposition[]>;
+    eingaben$: Observable<Eingabe[]>;
 
     constructor(private store: NgRedux<AppState>) {
       this.eingaben$ = this.store.select(s => s.inventureingabe.eingaben)
+
     }
 
     @dispatch()
-    hinzufügen(eingabe: Inventarposition[]): AnyAction {
-      return eingabeHinzufügen(eingabe);
+    hinzufügen(gruppe: string, kategorie: number, eingabe: PositionEingabe[]): AnyAction {
+      return eingabeHinzufügen(gruppe, kategorie, eingabe);
     }
 
     @dispatch()

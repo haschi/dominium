@@ -1,27 +1,7 @@
 <ng-content></ng-content>
-<mat-vertical-stepper linear>
-    <mat-step *ngFor="let kategorie  of gruppe.kategorien; let k = index" [label]="kategorie.kategorie">
-        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-            sanctus est Lorem ipsum dolor sit amet.</p>
 
-            <app-inventur-position *ngFor="let position of positionen.controls; let i = index"
-                                   [posten]="position"
-                                   [kategorie]="kategorie"
-                                   (geloescht)="loeschen(i)"
-                                   layout="row" layout-padding (keydown.delete)="loeschen(i)">
-            </app-inventur-position>
-
-
-            <button mat-button matStepperPrevious *ngIf="k != 0">
-                <mat-icon aria-label="Zurück">navigate_before</mat-icon>Back</button>
-            <button color="primary" mat-button matStepperNext>
-                Weiter<mat-icon aria-label="Zurück">navigate_next</mat-icon></button>
-        <div id="navigationsleiste">
-            XXX YYY ZZZ
-            XXX YYY ZZZ
-            {{gruppe.bezeichnung}}
-        </div>
-    </mat-step>
-</mat-vertical-stepper>
+<app-inventur-position *ngFor="let position of positionen.controls; let i = index"
+                       [posten]="position"
+                       (geloescht)="loeschen(i)"
+                       layout="row" layout-padding (keydown.delete)="loeschen(i)">
+</app-inventur-position>

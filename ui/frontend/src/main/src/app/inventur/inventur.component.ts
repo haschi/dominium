@@ -1,8 +1,24 @@
 import {
-    ChangeDetectionStrategy, Component, HostListener, OnInit, QueryList,
+    ChangeDetectionStrategy,
+    Component,
+    HostListener,
+    Input,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    TemplateRef,
     ViewChildren
 } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import {
+    AbstractControl,
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators
+} from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { LoggerService } from '../shared/logger.service';
 import 'rxjs/add/operator/map';
@@ -11,12 +27,19 @@ import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { AppState } from '../store/model';
 import { Vermoegenswert } from './bilanz/bilanz.model';
-import { Gruppe, GruppenState, InventurGruppe } from './shared/gruppen.redux';
+import { Gruppe, GruppenState, InventurGruppe, Kategorie } from './shared/gruppen.redux';
 import { Inventar, InventurEingabe } from './shared/inventar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, NavigationEnd, Params } from '@angular/router';
 import { InventurService } from './inventur.service';
 import { NgRedux, select } from '@angular-redux/store';
-import { Inventarposition } from './shared/inventarposition';
+import {
+    Eingabe,
+    eingabeHinzufügen,
+    InventurEingabeState,
+    zeileHinzufügen
+} from './shared/inventar-eingabe.redux';
+import { InventarEingabeService } from './shared/inventar-eingabe.service';
+import { Inventarposition, PositionEingabe } from './shared/inventarposition';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import 'rxjs/add/operator/withLatestFrom';
@@ -36,7 +59,7 @@ interface Koordinate{
     templateUrl: './inventur.component.html',
     styleUrls: ['./inventur.component.scss']
 })
-export class InventurComponent implements OnInit {
+export class InventurComponent implements OnInit, OnDestroy {
 
     @ViewChildren(GruppeComponent)
     private gruppen: QueryList<GruppeComponent>;
@@ -44,21 +67,21 @@ export class InventurComponent implements OnInit {
     private aktuelleGruppe: number = 0;
     private aktuelleKategorie: number = 0;
 
-    inventur: FormGroup;
+    // Das zu bearbeitende Formular, wird geändert durch
+    // Wechsel der aktiven Route oder durch Hinzufügen einer
+    // neuen Zeile
+    form$: Observable<FormArray>
 
-    private model: any;
+    // Fügt eine neue Zeile zum Formular hinzu.
+    input$: Subject<Eingabe> = new Subject<Eingabe>();
 
-    @select(['inventur', 'inventar'])
-    private model$: Observable<Inventar>;
-
-    private eingabe$: Observable<InventurEingabe>;
-
-    //inventurId$: Observable<string>;
-
+    // Alle Gruppen und deren Kategorien
     inventurGruppen$: Observable<GruppenState>;
 
-    kategorie$: Observable<Koordinate>
+    // Gruppe und Kategorie, die gerade bearbeitet wird.
+    koordinate$: Observable<Koordinate>
 
+    // Koordinate der nächsten Gruppe für die Navigation
     next$: Observable<Koordinate>
 
     constructor(private builder: FormBuilder,
@@ -66,38 +89,66 @@ export class InventurComponent implements OnInit {
                 private router: Router,
                 private active: ActivatedRoute,
                 private store: NgRedux<AppState>,
-                private inventurService: InventurService) {
+                private inventurService: InventurService,
+                private eingabe: InventarEingabeService) {
 
         this.inventurGruppen$ = this.inventurService.gruppen$
     }
 
+    startSubscription: Subscription;
+    stopSubscription: Subscription;
+    neuSubscription: Subscription;
+
     ngOnInit() {
-        this.inventur = this.builder.group({
-            anlagevermoegen: this.builder.array([]),
-            umlaufvermoegen: this.builder.array([]),
-            schulden: this.builder.array([])
-        });
 
         console.info("Inventur Component: onInit")
-        this.eingabe$ = this.inventur.valueChanges
-            .map(formulareingabe => this.formulareingabeKonvertieren(formulareingabe))
 
+        this.form$ = this.active.params
+            .map(params => {return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
+            .withLatestFrom(this.store.select(s => s.inventureingabe.eingaben), (koordinaten, eingaben: Eingabe[]) => {
+                return this.builder.array(
+                    eingaben.filter(eingabe => eingabe.gruppe === koordinaten.gruppe && eingabe.kategorie === koordinaten.kategorie)
+                        .map(eingabe => eingabe.positionen)
+                        .map(positionen => positionen.map(position => this.zeileErzeugen(position.position, position.waehrungsbetrag.betrag, position.waehrungsbetrag.waehrung))))
+            })
+            .do(form => console.info("Form erstellt: " + form.length))
+
+        // falls die Navigation beginnt, speichere die Eingabe
+        this.startSubscription = this.router.events
+            .filter(event => event instanceof NavigationStart)
+            .map(event => event as NavigationStart)
+            .withLatestFrom(this.form$.filter(f => f.valid), (event, form: FormArray) => {
+                return {event: event, value: form.value}
+            })
+            .withLatestFrom(this.active.params, (result, params) => {
+                return {event: result.event, value: result.value, id: params.id, gruppe: params.gruppe, kategorie: params.kategorie}
+            })
+            .subscribe(result => {
+                console.log("Navigation START to " + result.event.url)
+                console.log("Speichern: " + JSON.stringify(result.value))
+                var x = result.value
+                console.info(`speichern(${result.gruppe}, ${result.kategorie}, ${JSON.stringify(x)})`);
+                this.eingabe.hinzufügen(result.gruppe, result.kategorie, x);
+            })
+
+
+        // falls Navigation beendet ist, lade Daten aus Speicher
+        this.stopSubscription = this.active.params
+            .map(params => {
+                return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}
+            })
+            .subscribe(result => {
+                console.info(`laden(${result.gruppe}, ${result.kategorie})`)
+            })
+
+
+        // Alle geladenen Gruppen mit deren Kategorien
         const gruppen$ = this.store.select(s => s.inventurGruppen.gruppen)
 
-        this.kategorie$ =
-            this.active.params.withLatestFrom(gruppen$, (params, gruppen) => {
-                const gruppe = gruppen[params.gruppe];
-            const kategorie = gruppe.kategorien[Number(params.kategorie)];
+        // falls Kategorie ausgewählt wird, ermittle die aktuelle Kategorie
+        this.koordinate$ =this.active.params.withLatestFrom(gruppen$, this.koordinate)
 
-            return {
-                inventurId: params.id,
-                gruppe: gruppe.bezeichnung,
-                kategorie: Number(params.kategorie),
-                titel: '',
-                untertitel: kategorie.kategorie
-            }
-        })
-
+        // falls Kategorie ausgewählt wird, ermittle den Link für die nächste Kategorie
         this.next$ = this.active.params.withLatestFrom(gruppen$, (params, gruppen) => {
             const gruppe = params.gruppe;
             const kategorie = Number(params.kategorie);
@@ -132,19 +183,6 @@ export class InventurComponent implements OnInit {
                 }
             }
 
-
-
-            console.info(`LINK: index=${kategorie}, max=${max}, next=${next}`)
-            // const index = aktuelleGruppe.kategorien.findIndex(k => k.kategorie === kategorie.kategorie)
-            // var naechsterIndex = index;
-            //
-            // if (index === aktuelleGruppe.kategorien.length + 1) {
-            //     naechsterIndex = 0;
-            //
-            // } else {
-            //     naechsterIndex = index + 1;
-            // }
-
             return {
                 inventurId: inventurId,
                 gruppe: n,
@@ -153,72 +191,70 @@ export class InventurComponent implements OnInit {
                 untertitel: 'Kategorie'
             }
         })
+
+        // falls neue Zeile, speichere Eingabe + neue Zeile
+        this.neuSubscription = this.input$.withLatestFrom(this.koordinate$, (input: Eingabe, koordinate: Koordinate) => {
+            return zeileHinzufügen(koordinate.gruppe, koordinate.kategorie)
+        }).subscribe(action => this.store.dispatch(action));
     }
 
-    gruppeGeaendert(event: StepperSelectionEvent) {
-        this.aktuelleGruppe = event.selectedIndex
-    }
+    koordinate(params: Params, gruppen: InventurGruppe): Koordinate {
+        console.info(`koordinate(${params.gruppe}, ${gruppen}`)
 
-    kategorieGeaendert(event: StepperSelectionEvent) {
-        this.aktuelleKategorie = event.selectedIndex
-    }
+        const gruppe = gruppen[params.gruppe];
+        const kategorie = gruppe.kategorien[Number(params.kategorie)];
 
-    inventarpositionKonvertieren(poisition: any): Inventarposition {
         return {
-            kategorie: poisition.kategorie,
-            position: poisition.position,
-            waehrungsbetrag: `${poisition.waehrungsbetrag.betrag} ${poisition.waehrungsbetrag.waehrung}`
+            inventurId: params.id,
+            gruppe: gruppe.bezeichnung,
+            kategorie: Number(params.kategorie),
+            titel: '',
+            untertitel: kategorie.kategorie
         }
     }
 
-    speichern() {
-        this.model = this.inventur.value;
-        let inventar = this.formulareingabeKonvertieren(this.inventur.value);
-
-        let id = this.active.snapshot.params.id;
-        this.inventurService.erfasseInventar(inventar);
-
-        this.router.navigate(['inventar', id]);
-    }
-
     hinzufuegen() {
-        var komponente: GruppeComponent = this.gruppen.toArray()[this.aktuelleGruppe];
-
-        var kategorie = komponente.kategorie
-        console.info(`Kategorie: ${JSON.stringify(kategorie)}`)
-        komponente.hinzufuegen();
+        console.info('InventurComponent#hinzufuegen')
+        const eingabe: Eingabe = {gruppe: '', kategorie: 0, positionen: [] }
+        this.input$.next(eingabe)
     }
 
     @HostListener('document:keypress', ['$event'])
     tastatureingabe($event: KeyboardEvent): boolean {
         if ($event.key === '+') {
-            if (this.inventur.valid) {
-                this.hinzufuegen();
-            }
 
+                this.hinzufuegen();
             return false;
         }
 
         return true
     }
 
-    private formulareingabeKonvertieren(value): InventurEingabe {
-        return {
-            anlagevermoegen: value.anlagevermoegen.map(this.inventarpositionKonvertieren),
-            umlaufvermoegen: value.umlaufvermoegen.map(this.inventarpositionKonvertieren),
-            schulden: value.schulden.map(this.inventarpositionKonvertieren),
-        };
+    zeileHinzufuegen() {
+        const group = this.zeileErzeugen();
     }
 
-    get anlagevermoegen(): AbstractControl {
-        return this.inventur.get('anlagevermoegen');
+    private zeileErzeugen(position: string = '', betrag: string = '', waehrung: string = 'EUR'): FormGroup {
+        console.info('Zeile erzeugt.')
+        const waehrungsbetrag = new FormGroup({
+            betrag: new FormControl(betrag, Validators.required),
+            waehrung: new FormControl(waehrung, Validators.required)
+        });
+
+        const group = new FormGroup({
+            position: new FormControl(position, Validators.required),
+            waehrungsbetrag: waehrungsbetrag,
+        });
+        return group;
     }
 
-    get umlaufvermoegen(): AbstractControl {
-        return this.inventur.get('umlaufvermoegen');
-    }
+    // loeschen(index: number) {
+    //     this.formular.removeAt(index);
+    // }
 
-    get schulden(): AbstractControl {
-        return this.inventur.get('schulden');
+    ngOnDestroy(): void {
+        if(this.startSubscription) this.startSubscription.unsubscribe();
+        if (this.stopSubscription) this.stopSubscription.unsubscribe();
+        if (this.neuSubscription) this.neuSubscription.unsubscribe();
     }
 }

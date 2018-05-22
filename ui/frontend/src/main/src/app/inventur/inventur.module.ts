@@ -10,6 +10,7 @@ import { PostenComponent } from './gruppe/posten/posten.component';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { InventarComponent } from './inventar/inventar.component';
 import { fallsQueryInventurGruppenGelesenGelungen } from './shared/gruppen.redux';
+import { InventarEingabeService } from './shared/inventar-eingabe.service';
 import {
     fallsCommandInventurBegonnenGelungen, fallsInventarErfasstGelungen,
     fallsInventarLesenFehlgeschlagen,
@@ -48,6 +49,7 @@ import { NavigatorComponent } from './navigator/navigator.component';
     providers: [
         InventurService,
         BilanzService,
+        InventarEingabeService,
         EpicProvider(fallsCommandInventurBegonnenGelungen),
         EpicProvider(fallsQueryInventarGelesenGelungen),
         EpicProvider(fallsQueryEroeffnungsbilanzGelesenGelungen),
