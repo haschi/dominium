@@ -9,7 +9,7 @@ import {
     inventureingabe,
     InventurEingabeState
 } from './inventar-eingabe.redux';
-import { Inventarposition } from './inventarposition';
+import { Inventarposition, PositionEingabe } from './inventarposition';
 
 describe('Inventar-Eingabe', () => {
     var store: Store<InventurEingabeState>;
@@ -17,30 +17,46 @@ describe('Inventar-Eingabe', () => {
 
     describe('mit Gruppen', () => {
 
-        const eingabe: Inventarposition[] = [{
-            kategorie: 'Kredit',
+        const eingabe: PositionEingabe[] = [{
             position: 'Autokredit',
-            waehrungsbetrag: '12.400 EUR'
+            waehrungsbetrag: {betrag: '12.400', waehrung: 'EUR'}
         }, {
-            kategorie: 'Kredit',
-            position: 'Privatekredit',
-            waehrungsbetrag: '5.000 EUR'
+            position: 'Privatkredit',
+            waehrungsbetrag: {betrag: '5.000', waehrung: 'EUR'}
         }];
 
 
         beforeEach(() => {
             store = createStore(inventureingabe, INVENTUREINGBAE_INITIAL_STATE)
-            store.dispatch(eingabeHinzufügen(eingabe));
+            store.dispatch(eingabeHinzufügen('schulden', 0, eingabe));
         })
 
 
         it('sollte eingabe speichern', () => {
-            expect(store.getState()).toEqual({eingaben: eingabe})
+            expect(store.getState()).toEqual({eingaben: [{
+                    gruppe: 'schulden',
+                    kategorie: 0,
+                    position: {
+                    position: 'Autokredit',
+                    waehrungsbetrag: {betrag: '12.400', waehrung: 'EUR'}}
+                }, {
+                    gruppe: 'schulden',
+                    kategorie: 0,
+                    position: {
+                    position: 'Privatkredit',
+                    waehrungsbetrag: {betrag: '5.000', waehrung: 'EUR'}}
+                }]})
         })
 
         it('sollte Eingabe entfernen', () => {
             store.dispatch(eingabeEntfernen(1))
-            expect(store.getState()).toEqual({eingaben: [eingabe[0]]})
+            expect(store.getState()).toEqual({eingaben: [{
+                    gruppe: 'schulden',
+                    kategorie: 0,
+                    position: {
+                        position: 'Autokredit',
+                        waehrungsbetrag: {betrag: '12.400', waehrung: 'EUR'}}
+                }]})
         })
     })
 })
