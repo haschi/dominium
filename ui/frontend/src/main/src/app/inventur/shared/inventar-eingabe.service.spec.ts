@@ -5,8 +5,9 @@ import { rootReducer } from '../../store/reducers';
 import { GruppenState, InventurGruppe } from './gruppen.redux';
 import { InventarEingabeService } from './inventar-eingabe.service';
 import { Inventarposition, PositionEingabe } from './inventarposition';
+import { state } from './testdaten';
 
-fdescribe('Inventar Eingabe', () => {
+describe('Inventar Eingabe', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [NgReduxModule],
@@ -162,14 +163,7 @@ fdescribe('Inventar Eingabe', () => {
         })
     })
 
-    fdescribe('mit geladenen Inventar-Gruppen', () => {
-        const state: GruppenState = {
-            gruppen: {
-                anlagevermoegen: {bezeichnung: 'Anlagevermögen', kategorien: []},
-                umlaufvermoegen: {bezeichnung: 'Umlaufvermögen', kategorien: []},
-                schulden: {bezeichnung: 'Schulden', kategorien: []}
-            }
-        }
+    describe('mit geladenen Inventar-Gruppen', () => {
 
         beforeEach(inject([NgRedux], (store: NgRedux<AppState>) => {
             store.configureStore(rootReducer, {...APP_INITIAL_STATE, inventurGruppen: state})

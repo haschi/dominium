@@ -76,7 +76,7 @@ export class InventurComponent implements OnInit, OnDestroy {
     input$: Subject<Eingabe> = new Subject<Eingabe>();
 
     // Alle Gruppen und deren Kategorien
-    inventurGruppen$: Observable<GruppenState>;
+    inventurGruppen$: Observable<InventurGruppe>;
 
     // Gruppe und Kategorie, die gerade bearbeitet wird.
     koordinate$: Observable<Koordinate>
@@ -100,9 +100,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     neuSubscription: Subscription;
 
     ngOnInit() {
-
-        console.info("Inventur Component: onInit")
-
         this.form$ = this.active.params
 
             .map(params => {return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
@@ -112,8 +109,6 @@ export class InventurComponent implements OnInit, OnDestroy {
                          .map(eingabe => eingabe.position)
                          .map(position => this.zeileErzeugen(position.position, position.waehrungsbetrag.betrag, position.waehrungsbetrag.waehrung)))
              })
-
-        console.info('1')
 
         // falls die Navigation beginnt, speichere die Eingabe
         this.startSubscription = this.router.events
@@ -133,9 +128,6 @@ export class InventurComponent implements OnInit, OnDestroy {
                 this.eingabe.hinzufügen(result.gruppe, result.kategorie, x);
             })
 
-
-        console.info('2')
-
         // falls Navigation beendet ist, lade Daten aus Speicher
         this.stopSubscription = this.active.params
             .map(params => {
@@ -145,18 +137,11 @@ export class InventurComponent implements OnInit, OnDestroy {
                 console.info(`laden(${result.gruppe}, ${result.kategorie})`)
             })
 
-
-        console.info('3')
-        // Alle geladenen Gruppen mit deren Kategorien
-        const gruppen$ = this.store.select(s => s.inventurGruppen.gruppen)
-
-        console.info('4')
         // falls Kategorie ausgewählt wird, ermittle die aktuelle Kategorie
-        this.koordinate$ =this.active.params.withLatestFrom(gruppen$, this.koordinate)
+        this.koordinate$ =this.active.params.withLatestFrom(this.inventurGruppen$, this.koordinate)
 
-        console.info('5')
         // falls Kategorie ausgewählt wird, ermittle den Link für die nächste Kategorie
-        this.next$ = this.active.params.withLatestFrom(gruppen$, (params, gruppen) => {
+        this.next$ = this.active.params.withLatestFrom(this.inventurGruppen$, (params, gruppen) => {
             const gruppe = params.gruppe;
             const kategorie = Number(params.kategorie);
             const inventurId = params.id;
@@ -190,7 +175,6 @@ export class InventurComponent implements OnInit, OnDestroy {
                 }
             }
 
-            console.info('Done')
             return {
                 inventurId: inventurId,
                 gruppe: n,
@@ -207,8 +191,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     koordinate(params: Params, gruppen: InventurGruppe): Koordinate {
-        console.info(`koordinate(${params.gruppe}, ${gruppen}`)
-
         const gruppe = gruppen[params.gruppe];
         const kategorie = gruppe.kategorien[Number(params.kategorie)];
 
@@ -222,7 +204,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     hinzufuegen() {
-        console.info('InventurComponent#hinzufuegen')
         const eingabe: Eingabe = {gruppe: '', kategorie: 0, position: {position: '', waehrungsbetrag: {betrag: '', waehrung: ''}} }
         this.input$.next(eingabe)
     }
@@ -243,7 +224,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     private zeileErzeugen(position: string = '', betrag: string = '', waehrung: string = 'EUR'): FormGroup {
-        console.info('Zeile erzeugt.')
         const waehrungsbetrag = new FormGroup({
             betrag: new FormControl(betrag, Validators.required),
             waehrung: new FormControl(waehrung, Validators.required)

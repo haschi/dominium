@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { GruppenState } from './shared/gruppen.redux';
+import { GruppenState, InventurGruppe } from './shared/gruppen.redux';
 import { InventurState } from './shared/inventur.redux';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
@@ -29,8 +29,8 @@ export class InventurService implements OnInit{
     @select(['inventur'])
     state$: Observable<InventurState>;
 
-    @select(['inventurGruppen'])
-    gruppen$: Observable<GruppenState>
+    @select(['inventurGruppen', 'gruppen'])
+    gruppen$: Observable<InventurGruppe>
 
     constructor(
         private idGenerator: IdGeneratorService,

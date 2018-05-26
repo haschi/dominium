@@ -1,4 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { APP_INITIAL_STATE, AppState } from '../store/model';
+import { rootReducer } from '../store/reducers';
 
 import { HomeComponent } from './home.component';
 import { AppMaterialModule } from '../shared/app-material-module';
@@ -7,8 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { InventurModule } from '../inventur/inventur.module';
-import { NgReduxModule } from '@angular-redux/store';
-
+import { NgRedux, NgReduxModule } from '@angular-redux/store';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -32,11 +33,13 @@ describe('HomeComponent', () => {
             .compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach(inject([NgRedux], (store: NgRedux<AppState>) => {
+        store.configureStore(rootReducer, APP_INITIAL_STATE)
+
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-    });
+    }));
 
     it('should create', () => {
         expect(component).toBeTruthy();
