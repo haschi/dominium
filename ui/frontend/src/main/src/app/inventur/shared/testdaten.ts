@@ -1,12 +1,7 @@
+import { InventurService } from '../inventur.service';
 import { GruppenState } from './gruppen.redux';
 
-export const state: GruppenState = {
-    gruppen: {
-        anlagevermoegen: {bezeichnung: 'Anlagevermögen', kategorien: []},
-        umlaufvermoegen: {bezeichnung: 'Umlaufvermögen', kategorien: []},
-        schulden: {bezeichnung: 'Schulden', kategorien: []}
-    }
-}
+export const state: GruppenState = {gruppen: InventurService.leereGruppen}
 
 export const testgruppen: GruppenState = {
     gruppen: {

@@ -4,7 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
 import { CommandGatewayService } from '../shared/command-gateway/command-gateway.service';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
-import { GruppenState, InventurGruppe } from './shared/gruppen.redux';
+import {
+    GruppenState,
+    InventurGruppe,
+    INVENTURGRUPPEN_INITIAL_STATE
+} from './shared/gruppen.redux';
 import { InventurState } from './shared/inventur.redux';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
@@ -32,6 +36,10 @@ export class InventurService implements OnInit{
     @select(['inventurGruppen', 'gruppen'])
     gruppen$: Observable<InventurGruppe>
 
+    public static get leereGruppen(): InventurGruppe {
+        return INVENTURGRUPPEN_INITIAL_STATE.gruppen
+    }
+
     constructor(
         private idGenerator: IdGeneratorService,
         private command: CommandGatewayService,
@@ -39,7 +47,6 @@ export class InventurService implements OnInit{
         private router: Router,
         private store: NgRedux<AppState>) {
 
-        console.info("Inventur Service Constructor")
         this.inventurid$
             .filter(id => id != '')
             .subscribe(id => {

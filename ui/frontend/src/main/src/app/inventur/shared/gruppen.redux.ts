@@ -30,11 +30,11 @@ export interface GruppenState {
 
 export const INVENTURGRUPPEN_INITIAL_STATE: GruppenState = {
     gruppen: {
-        anlagevermoegen: {bezeichnung: '', kategorien: []},
-        umlaufvermoegen: {bezeichnung: '', kategorien: []},
-        schulden: {bezeichnung: '', kategorien: []}
+        anlagevermoegen: {bezeichnung: 'Anlagevermögen', kategorien: []},
+        umlaufvermoegen: {bezeichnung: 'Umlaufvermögen', kategorien: []},
+        schulden: {bezeichnung: 'Schulden', kategorien: []}
     }
-};
+}
 
 enum InventurGruppen {
     InventurGruppenGelesen = 'InventurGruppen.Gelesen',
@@ -51,7 +51,7 @@ export function fallsQueryInventurGruppenGelesenGelungen(): Epic<AnyAction, AppS
     return action$ => action$
         .pipe(
             gelungen(QueryType.LeseInventurGruppen),
-            tap(action => console.log("Inventur Gruppen gelesen gelungen" + JSON.stringify(action.gruppen))),
+            tap(action => console.log("Inventur Gruppen gelesen gelungen" + JSON.stringify(action))),
             map(body => inventurGruppenGelesen(body)))
 }
 

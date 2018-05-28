@@ -43,6 +43,7 @@ import { Inventarposition, PositionEingabe } from './shared/inventarposition';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import 'rxjs/add/operator/withLatestFrom';
+import { state } from './shared/testdaten';
 
 
 interface Koordinate{
@@ -77,9 +78,10 @@ export class InventurComponent implements OnInit, OnDestroy {
 
     // Alle Gruppen und deren Kategorien
     inventurGruppen$: Observable<InventurGruppe>;
+    anzeigen$: Observable<boolean>
 
     // Gruppe und Kategorie, die gerade bearbeitet wird.
-    koordinate$: Observable<Koordinate>
+    // koordinate$: Observable<Koordinate>
 
     // Koordinate der nächsten Gruppe für die Navigation
     next$: Observable<Koordinate>
@@ -93,104 +95,110 @@ export class InventurComponent implements OnInit, OnDestroy {
                 private eingabe: InventarEingabeService) {
 
         this.inventurGruppen$ = this.inventurService.gruppen$
+
+        this.anzeigen$ = this.inventurService.gruppen$
+            .map(gruppen => gruppen !== InventurService.leereGruppen)
     }
 
-    startSubscription: Subscription;
-    stopSubscription: Subscription;
-    neuSubscription: Subscription;
+    // startSubscription: Subscription;
+    // stopSubscription: Subscription;
+    // neuSubscription: Subscription;
 
     ngOnInit() {
-        this.form$ = this.active.params
-
-            .map(params => {return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
-            .withLatestFrom(this.store.select(s => s.inventureingabe.eingaben), (koordinaten, eingaben: Eingabe[]) => {
-                 return this.builder.array(
-                     eingaben.filter(eingabe => eingabe.gruppe === koordinaten.gruppe && eingabe.kategorie === koordinaten.kategorie)
-                         .map(eingabe => eingabe.position)
-                         .map(position => this.zeileErzeugen(position.position, position.waehrungsbetrag.betrag, position.waehrungsbetrag.waehrung)))
-             })
+        // this.form$ = this.active.params
+        //     .map(params => {return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
+        //     .withLatestFrom(this.store.select(s => s.inventureingabe.eingaben), (koordinaten, eingaben: Eingabe[]) => {
+        //          return this.builder.array(
+        //              eingaben.filter(eingabe => eingabe.gruppe === koordinaten.gruppe && eingabe.kategorie === koordinaten.kategorie)
+        //                  .map(eingabe => eingabe.position)
+        //                  .map(position => this.zeileErzeugen(position.position, position.waehrungsbetrag.betrag, position.waehrungsbetrag.waehrung)))
+        //      })
 
         // falls die Navigation beginnt, speichere die Eingabe
-        this.startSubscription = this.router.events
-            .filter(event => event instanceof NavigationStart)
-            .map(event => event as NavigationStart)
-            .withLatestFrom(this.form$.filter(f => f.valid), (event, form: FormArray) => {
-                return {event: event, value: form.value}
-            })
-            .withLatestFrom(this.active.params, (result, params) => {
-                return {event: result.event, value: result.value, id: params.id, gruppe: params.gruppe, kategorie: params.kategorie}
-            })
-            .subscribe(result => {
-                console.log("Navigation START to " + result.event.url)
-                console.log("Speichern: " + JSON.stringify(result.value))
-                var x = result.value
-                console.info(`speichern(${result.gruppe}, ${result.kategorie}, ${JSON.stringify(x)})`);
-                this.eingabe.hinzufügen(result.gruppe, result.kategorie, x);
-            })
+        // this.startSubscription = this.router.events
+        //     .filter(event => event instanceof NavigationStart)
+        //     .map(event => event as NavigationStart)
+        //     .withLatestFrom(this.form$.filter(f => f.valid), (event, form: FormArray) => {
+        //         return {event: event, value: form.value}
+        //     })
+        //     .withLatestFrom(this.active.params, (result, params) => {
+        //         return {event: result.event, value: result.value, id: params.id, gruppe: params.gruppe, kategorie: params.kategorie}
+        //     })
+        //     .subscribe(result => {
+        //         console.log("Navigation START to " + result.event.url)
+        //         console.log("Speichern: " + JSON.stringify(result.value))
+        //         var x = result.value
+        //         console.info(`speichern(${result.gruppe}, ${result.kategorie}, ${JSON.stringify(x)})`);
+        //         this.eingabe.hinzufügen(result.gruppe, result.kategorie, x);
+        //     })
 
         // falls Navigation beendet ist, lade Daten aus Speicher
-        this.stopSubscription = this.active.params
-            .map(params => {
-                return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}
-            })
-            .subscribe(result => {
-                console.info(`laden(${result.gruppe}, ${result.kategorie})`)
-            })
+        // this.stopSubscription = this.active.params
+        //     .map(params => {
+        //         return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}
+        //     })
+        //     .subscribe(result => {
+        //         console.info(`laden(${result.gruppe}, ${result.kategorie})`)
+        //     })
 
         // falls Kategorie ausgewählt wird, ermittle die aktuelle Kategorie
-        this.koordinate$ =this.active.params.withLatestFrom(this.inventurGruppen$, this.koordinate)
+        // this.koordinate$ =this.active.params
+        //     .filter((p: Params) => p['gruppe'] !== undefined && p['kategorie'] !== undefined)
+        //     .withLatestFrom(this.inventurGruppen$, this.koordinate)
 
         // falls Kategorie ausgewählt wird, ermittle den Link für die nächste Kategorie
-        this.next$ = this.active.params.withLatestFrom(this.inventurGruppen$, (params, gruppen) => {
-            const gruppe = params.gruppe;
-            const kategorie = Number(params.kategorie);
-            const inventurId = params.id;
-
-            var x : Gruppe;
-            var n : string = gruppe;
-
-            if (gruppe === 'anlagevermoegen')
-            {
-                x = gruppen.anlagevermoegen;
-            } else if (gruppe === 'umlaufvermoegen') {
-                x = gruppen.umlaufvermoegen;
-            } else {
-                x = gruppen.schulden
-            }
-
-            var max = x.kategorien.length;
-            var next = (kategorie + 1) % max;
-
-            if (kategorie + 1 === max) {
-                if (gruppe === 'anlagevermoegen')
-                {
-                    n = 'umlaufvermoegen';
-                    x = gruppen.umlaufvermoegen;
-                } else if (gruppe === 'umlaufvermoegen') {
-                    n = 'schulden';
-                    x = gruppen.schulden;
-                } else {
-                    n = 'anlagevermoegen';
-                    x = gruppen.anlagevermoegen; // besser nix
-                }
-            }
-
-            return {
-                inventurId: inventurId,
-                gruppe: n,
-                kategorie: next,
-                titel: 'Gruppe',
-                untertitel: 'Kategorie'
-            }
-        })
+        // this.next$ = this.active.params.withLatestFrom(this.inventurGruppen$, (params, gruppen) => {
+        //     const gruppe = params.gruppe;
+        //     const kategorie = Number(params.kategorie);
+        //     const inventurId = params.id;
+        //
+        //     var x : Gruppe;
+        //     var n : string = gruppe;
+        //
+        //     if (gruppe === 'anlagevermoegen')
+        //     {
+        //         x = gruppen.anlagevermoegen;
+        //     } else if (gruppe === 'umlaufvermoegen') {
+        //         x = gruppen.umlaufvermoegen;
+        //     } else {
+        //         x = gruppen.schulden
+        //     }
+        //
+        //     var max = x.kategorien.length;
+        //     var next = (kategorie + 1) % max;
+        //
+        //     if (kategorie + 1 === max) {
+        //         if (gruppe === 'anlagevermoegen')
+        //         {
+        //             n = 'umlaufvermoegen';
+        //             x = gruppen.umlaufvermoegen;
+        //         } else if (gruppe === 'umlaufvermoegen') {
+        //             n = 'schulden';
+        //             x = gruppen.schulden;
+        //         } else {
+        //             n = 'anlagevermoegen';
+        //             x = gruppen.anlagevermoegen; // besser nix
+        //         }
+        //     }
+        //
+        //     return {
+        //         inventurId: inventurId,
+        //         gruppe: n,
+        //         kategorie: next,
+        //         titel: 'Gruppe',
+        //         untertitel: 'Kategorie'
+        //     }
+        // })
 
         // falls neue Zeile, speichere Eingabe + neue Zeile
-        this.neuSubscription = this.input$.withLatestFrom(this.koordinate$, (input: Eingabe, koordinate: Koordinate) => {
-            return zeileHinzufügen(koordinate.gruppe, koordinate.kategorie)
-        }).subscribe(action => this.store.dispatch(action));
+        // this.neuSubscription = this.input$.withLatestFrom(this.koordinate$, (input: Eingabe, koordinate: Koordinate) => {
+        //     return zeileHinzufügen(koordinate.gruppe, koordinate.kategorie)
+        // }).subscribe(action => this.store.dispatch(action));
     }
 
     koordinate(params: Params, gruppen: InventurGruppe): Koordinate {
+        console.info(JSON.stringify(gruppen))
+        console.info(JSON.stringify(params))
         const gruppe = gruppen[params.gruppe];
         const kategorie = gruppe.kategorien[Number(params.kategorie)];
 
@@ -241,8 +249,8 @@ export class InventurComponent implements OnInit, OnDestroy {
     // }
 
     ngOnDestroy(): void {
-        if(this.startSubscription) this.startSubscription.unsubscribe();
-        if (this.stopSubscription) this.stopSubscription.unsubscribe();
-        if (this.neuSubscription) this.neuSubscription.unsubscribe();
+        // if(this.startSubscription) this.startSubscription.unsubscribe();
+        // if (this.stopSubscription) this.stopSubscription.unsubscribe();
+        // if (this.neuSubscription) this.neuSubscription.unsubscribe();
     }
 }

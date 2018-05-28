@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Frontend Tests" type="JavaScriptTestRunnerKarma" factoryName="Karma">
     <config-file value="$PROJECT_DIR$/ui/frontend/src/main/karma.conf.js" />
-    <browsers value="Chrome" />
-    <karma-package-dir value="" />
+    <browsers value="ChromeHeadless" />
+    <karma-package-dir value="$PROJECT_DIR$/ui/frontend/src/main/node_modules/karma" />
     <node-interpreter value="project" />
     <envs />
     <method />
