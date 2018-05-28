@@ -1,5 +1,5 @@
 
-<app-navigator inventurId="12345" [gruppen]="inventurGruppen$ | async" *ngIf="anzeigen$ | async"></app-navigator>
+<app-navigator [inventurId]="inventurId$ | async" [gruppen]="inventurGruppen$ | async" *ngIf="anzeigen$ | async"></app-navigator>
 
 
     <!--<mat-card *ngIf="(koordinate$ | async) as koordinate">-->

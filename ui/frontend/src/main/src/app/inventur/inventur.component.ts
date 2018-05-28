@@ -25,13 +25,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Observable } from 'rxjs/Observable';
-import { AppState } from '../store/model';
 import { Vermoegenswert } from './bilanz/bilanz.model';
 import { Gruppe, GruppenState, InventurGruppe, Kategorie } from './shared/gruppen.redux';
 import { Inventar, InventurEingabe } from './shared/inventar';
 import { ActivatedRoute, NavigationStart, Router, NavigationEnd, Params } from '@angular/router';
 import { InventurService } from './inventur.service';
-import { NgRedux, select } from '@angular-redux/store';
 import {
     Eingabe,
     eingabeHinzufügen,
@@ -43,8 +41,6 @@ import { Inventarposition, PositionEingabe } from './shared/inventarposition';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import 'rxjs/add/operator/withLatestFrom';
-import { state } from './shared/testdaten';
-
 
 interface Koordinate{
     inventurId: string;
@@ -62,42 +58,41 @@ interface Koordinate{
 })
 export class InventurComponent implements OnInit, OnDestroy {
 
-    @ViewChildren(GruppeComponent)
-    private gruppen: QueryList<GruppeComponent>;
+    // @ViewChildren(GruppeComponent)
+    // private gruppen: QueryList<GruppeComponent>;
 
-    private aktuelleGruppe: number = 0;
-    private aktuelleKategorie: number = 0;
+    // private aktuelleGruppe: number = 0;
+    // private aktuelleKategorie: number = 0;
 
     // Das zu bearbeitende Formular, wird geändert durch
     // Wechsel der aktiven Route oder durch Hinzufügen einer
     // neuen Zeile
-    form$: Observable<FormArray>
+    // form$: Observable<FormArray>
 
     // Fügt eine neue Zeile zum Formular hinzu.
-    input$: Subject<Eingabe> = new Subject<Eingabe>();
+    // input$: Subject<Eingabe> = new Subject<Eingabe>();
 
     // Alle Gruppen und deren Kategorien
     inventurGruppen$: Observable<InventurGruppe>;
     anzeigen$: Observable<boolean>
+    inventurId$: Observable<string>
 
     // Gruppe und Kategorie, die gerade bearbeitet wird.
     // koordinate$: Observable<Koordinate>
 
     // Koordinate der nächsten Gruppe für die Navigation
-    next$: Observable<Koordinate>
+    // next$: Observable<Koordinate>
 
-    constructor(private builder: FormBuilder,
-                private log: LoggerService,
-                private router: Router,
-                private active: ActivatedRoute,
-                private store: NgRedux<AppState>,
-                private inventurService: InventurService,
-                private eingabe: InventarEingabeService) {
+    constructor(
+            private active: ActivatedRoute,
+            private inventurService: InventurService) {
 
         this.inventurGruppen$ = this.inventurService.gruppen$
 
         this.anzeigen$ = this.inventurService.gruppen$
             .map(gruppen => gruppen !== InventurService.leereGruppen)
+
+        this.inventurId$ = this.active.params.map(p => p.id)
     }
 
     // startSubscription: Subscription;
@@ -211,38 +206,38 @@ export class InventurComponent implements OnInit, OnDestroy {
         }
     }
 
-    hinzufuegen() {
-        const eingabe: Eingabe = {gruppe: '', kategorie: 0, position: {position: '', waehrungsbetrag: {betrag: '', waehrung: ''}} }
-        this.input$.next(eingabe)
-    }
+    // hinzufuegen() {
+    //     const eingabe: Eingabe = {gruppe: '', kategorie: 0, position: {position: '', waehrungsbetrag: {betrag: '', waehrung: ''}} }
+    //     this.input$.next(eingabe)
+    // }
 
-    @HostListener('document:keypress', ['$event'])
-    tastatureingabe($event: KeyboardEvent): boolean {
-        if ($event.key === '+') {
+    // @HostListener('document:keypress', ['$event'])
+    // tastatureingabe($event: KeyboardEvent): boolean {
+    //     if ($event.key === '+') {
+    //
+    //             this.hinzufuegen();
+    //         return false;
+    //     }
+    //
+    //     return true
+    // }
 
-                this.hinzufuegen();
-            return false;
-        }
+    // zeileHinzufuegen() {
+    //     const group = this.zeileErzeugen();
+    // }
 
-        return true
-    }
-
-    zeileHinzufuegen() {
-        const group = this.zeileErzeugen();
-    }
-
-    private zeileErzeugen(position: string = '', betrag: string = '', waehrung: string = 'EUR'): FormGroup {
-        const waehrungsbetrag = new FormGroup({
-            betrag: new FormControl(betrag, Validators.required),
-            waehrung: new FormControl(waehrung, Validators.required)
-        });
-
-        const group = new FormGroup({
-            position: new FormControl(position, Validators.required),
-            waehrungsbetrag: waehrungsbetrag,
-        });
-        return group;
-    }
+    // private zeileErzeugen(position: string = '', betrag: string = '', waehrung: string = 'EUR'): FormGroup {
+    //     const waehrungsbetrag = new FormGroup({
+    //         betrag: new FormControl(betrag, Validators.required),
+    //         waehrung: new FormControl(waehrung, Validators.required)
+    //     });
+    //
+    //     const group = new FormGroup({
+    //         position: new FormControl(position, Validators.required),
+    //         waehrungsbetrag: waehrungsbetrag,
+    //     });
+    //     return group;
+    // }
 
     // loeschen(index: number) {
     //     this.formular.removeAt(index);

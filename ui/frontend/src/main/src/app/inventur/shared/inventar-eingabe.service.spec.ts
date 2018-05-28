@@ -5,7 +5,7 @@ import { rootReducer } from '../../store/reducers';
 import { GruppenState, InventurGruppe } from './gruppen.redux';
 import { InventarEingabeService } from './inventar-eingabe.service';
 import { Inventarposition, PositionEingabe } from './inventarposition';
-import { state } from './testdaten';
+import { testgruppen } from './testdaten';
 
 describe('Inventar Eingabe', () => {
     beforeEach(() => {
@@ -166,12 +166,12 @@ describe('Inventar Eingabe', () => {
     describe('mit geladenen Inventar-Gruppen', () => {
 
         beforeEach(inject([NgRedux], (store: NgRedux<AppState>) => {
-            store.configureStore(rootReducer, {...APP_INITIAL_STATE, inventurGruppen: state})
+            store.configureStore(rootReducer, {...APP_INITIAL_STATE, inventurGruppen: testgruppen})
         }))
 
         it('sollte Inventar-Gruppen liefern', inject([InventarEingabeService], (service: InventarEingabeService) => {
             service.gruppen$.subscribe(g => {
-                expect(g).toEqual(state.gruppen)
+                expect(g).toEqual(testgruppen.gruppen)
             })
         }))
     })
