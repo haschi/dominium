@@ -16,9 +16,10 @@ import { DebugElement, NO_ERRORS_SCHEMA, Provider } from '@angular/core';
 import { InventurModule } from './inventur.module';
 import { InventurService } from './inventur.service';
 import { NavigatorComponent } from './navigator/navigator.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InventurGruppe } from './shared/gruppen.redux';
 import { params$, gruppen$, testgruppen } from './shared/testdaten';
+import {Location} from '@angular/common';
 
 describe('InventurComponent', () => {
     let component: InventurComponent;
@@ -40,6 +41,16 @@ describe('InventurComponent', () => {
         // Siehe https://stackoverflow.com/questions/44301315/karma-error-no-captured-browser-open-http-localhost9876/48606192
         get navigator(): DebugElement[] {
             return this.fixture.debugElement.queryAll(By.directive(NavigatorComponent))
+        }
+
+        navigieren(gruppe: string, kategorie: string): void {
+            var navigator = this.navigator[0]
+            var index = testgruppen.gruppen[gruppe].kategorien.findIndex(value => {
+                return value.kategorie === kategorie
+            })
+
+            var link = navigator.query(By.css(`#${gruppe}-${index}`));
+            (link.nativeElement as HTMLElement).click()
         }
 
         showHtml() {
@@ -135,6 +146,46 @@ describe('InventurComponent', () => {
             var navigator: NavigatorComponent = page.navigator[0].componentInstance
             expect(navigator.inventurId).toEqual(params$.value.id)
         }))
+
+        describe('Klick auf Anlagevermögen -> Aktien', () => {
+            var spy: jasmine.Spy;
+
+            beforeEach(inject([Page, Router], (page: Page, router: Router) => {
+                spy = spyOn(router, 'navigateByUrl');
+                page.navigieren('anlagevermoegen', 'Aktien')
+            }))
+
+            it('sollte nach /inventur/4711/anlagevermoegen/0 navigieren', () => {
+                expect(spy.calls.first().args[0].toString()).toEqual('/inventur/4711/anlagevermoegen/0')
+            })
+        })
+
+        describe('Klick auf Umlaufvermögen -> Sparbuch', () => {
+            var spy: jasmine.Spy;
+
+            beforeEach(inject([Page, Router], (page: Page, router: Router) => {
+                spy = spyOn(router, 'navigateByUrl');
+                page.navigieren('umlaufvermoegen', 'Sparbuch')
+            }))
+
+            it('sollte nach /inventur/4711/umlaufvermoegen/2 navigieren', () => {
+                expect(spy.calls.first().args[0].toString()).toEqual('/inventur/4711/umlaufvermoegen/2')
+            })
+        })
+
+        describe('Klick auf Schulden -> Hypotheken', () => {
+            var spy: jasmine.Spy;
+
+            beforeEach(inject([Page, Router], (page: Page, router: Router) => {
+                spy = spyOn(router, 'navigateByUrl');
+                page.navigieren('schulden', 'Hypotheken')
+            }))
+
+            it('sollte nach /inventur/4711/schulden/1 navigieren', () => {
+                expect(spy.calls.first().args[0].toString()).toEqual('/inventur/4711/schulden/1')
+            })
+        })
+
     })
 
     describe('Ohne geladene Gruppen', () => {

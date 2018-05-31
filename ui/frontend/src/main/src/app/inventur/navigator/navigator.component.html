@@ -6,7 +6,7 @@
 
         <mat-nav-list>
             <h3 mat-subheader>Anlagevermögen</h3>
-            <a mat-list-item
+            <a mat-list-item [id]="'anlagevermoegen-' + i"
                [routerLink]="['/inventur', inventurId, 'anlagevermoegen', i]"
                *ngFor="let kategorie of gruppen?.anlagevermoegen.kategorien; let i = index">
                 {{kategorie.kategorie}}
@@ -15,7 +15,7 @@
         <mat-divider></mat-divider>
         <mat-nav-list>
             <h3 mat-subheader>Umlaufvermögen</h3>
-            <a mat-list-item
+            <a mat-list-item [id]="'umlaufvermoegen-' + i"
                [routerLink]="['/inventur', inventurId, 'umlaufvermoegen', i]"
                *ngFor="let kategorie of gruppen?.umlaufvermoegen.kategorien; let i = index">
                 {{kategorie.kategorie}}
@@ -24,7 +24,7 @@
         <mat-divider></mat-divider>
         <mat-nav-list>
             <h3 mat-subheader>Schulden</h3>
-            <a mat-list-item
+            <a mat-list-item [id]="'schulden-' + i"
                [routerLink]="['/inventur', inventurId, 'schulden', i]"
                *ngFor="let kategorie of gruppen?.schulden.kategorien; let i = index">
                 {{kategorie.kategorie}}
