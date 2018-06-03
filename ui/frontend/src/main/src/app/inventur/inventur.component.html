@@ -1,6 +1,20 @@
 
-<app-navigator [inventurId]="inventurId$ | async" [gruppen]="inventurGruppen$ | async" *ngIf="anzeigen$ | async"></app-navigator>
-
+<div layout="row">
+    <div flex>
+<app-navigator [inventurId]="inventurId$ | async" [gruppen]="inventurGruppen$ | async" *ngIf="anzeigen$ | async">
+</app-navigator>
+    </div>
+<mat-card *ngIf="(posten$ | async) as posten" flex="60">
+    <mat-card-content>
+        <app-inventur-position *ngFor="let p of posten" [posten]="p.position">
+        </app-inventur-position>
+    </mat-card-content>
+    <h1>Hallo</h1>
+    <mat-card-actions>
+        <button mat-button (click)="openDialog()" id="hinzufuegen" *ngIf="auswahl$ | async">Hinzufügen</button>
+    </mat-card-actions>
+</mat-card>
+</div>
 
     <!--<mat-card *ngIf="(koordinate$ | async) as koordinate">-->
 

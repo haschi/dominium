@@ -28,7 +28,8 @@ describe('Inventar-Eingabe', () => {
 
         beforeEach(() => {
             store = createStore(inventureingabe, INVENTUREINGBAE_INITIAL_STATE)
-            store.dispatch(eingabeHinzufügen('schulden', 0, eingabe));
+            store.dispatch(eingabeHinzufügen('schulden', 0, eingabe[0]));
+            store.dispatch(eingabeHinzufügen('schulden', 0, eingabe[1]));
         })
 
 

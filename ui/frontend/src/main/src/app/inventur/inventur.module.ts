@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EpicProvider } from '../shared/redux-utils/provider';
 import { BilanzService } from './bilanz/bilanz.service';
+import { EingabeDialog } from './eingabe-dialog.component';
 import { InventurComponent } from './inventur.component';
 import { GruppeComponent } from './gruppe/gruppe.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -44,7 +45,8 @@ import { NavigatorComponent } from './navigator/navigator.component';
         BilanzComponent,
         AktivaComponent,
         PassivaComponent,
-        NavigatorComponent
+        NavigatorComponent,
+        EingabeDialog
     ],
     providers: [
         InventurService,
@@ -57,7 +59,8 @@ import { NavigatorComponent } from './navigator/navigator.component';
         EpicProvider(fallsQueryInventurGruppenGelesenGelungen),
         EpicProvider(fallsInventarErfasstGelungen)
     ],
-    exports: [InventurComponent]
+    exports: [InventurComponent],
+    entryComponents: [EingabeDialog]
 })
 export class InventurModule {
 }

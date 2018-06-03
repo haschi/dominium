@@ -1,29 +1,29 @@
-<ng-container [formGroup]="posten">
+<span>{{posten.position}} {{posten.waehrungsbetrag.betrag}} {{posten.waehrungsbetrag.waehrung}}</span><br/>
 
-    <mat-form-field flex>
-        <input matInput placeholder="Position"
-               type="text" name="position" formControlName="position"
-               required>
-    </mat-form-field>
+<!--<mat-form-field flex>-->
+        <!--<input matInput placeholder="Position"-->
+               <!--type="text" name="position" formControlName="position"-->
+               <!--required>-->
+    <!--</mat-form-field>-->
 
 
-    <ng-container [formGroup]="posten.get('waehrungsbetrag')">
-        <mat-form-field flex="20">
-            <input matInput
-                   placeholder="Betrag" type="text" name="betrag"
-                   maxlength="30" formControlName="betrag" required>
-        </mat-form-field>
+    <!--<ng-container [formGroup]="posten.get('waehrungsbetrag')">-->
+        <!--<mat-form-field flex="20">-->
+            <!--<input matInput-->
+                   <!--placeholder="Betrag" type="text" name="betrag"-->
+                   <!--maxlength="30" formControlName="betrag" required>-->
+        <!--</mat-form-field>-->
 
-        <mat-form-field flex="20">
-            <input matInput
-                   placeholder="Währung" type="text" name="waehrung"
-                   maxlength="3" minlength="3" formControlName="waehrung" required>
-        </mat-form-field>
-    </ng-container>
+        <!--<mat-form-field flex="20">-->
+            <!--<input matInput-->
+                   <!--placeholder="Währung" type="text" name="waehrung"-->
+                   <!--maxlength="3" minlength="3" formControlName="waehrung" required>-->
+        <!--</mat-form-field>-->
+    <!--</ng-container>-->
 
-    <div flex="10">
-        <button mat-icon-button type="button" (click)="geloescht.emit()">
-            <mat-icon aria-label="Inventarposition entfernen">delete</mat-icon>
-        </button>
-    </div>
-</ng-container>
+    <!--<div flex="10">-->
+        <!--<button mat-icon-button type="button" (click)="geloescht.emit()">-->
+            <!--<mat-icon aria-label="Inventarposition entfernen">delete</mat-icon>-->
+        <!--</button>-->
+    <!--</div>-->
+<!--</ng-container>-->

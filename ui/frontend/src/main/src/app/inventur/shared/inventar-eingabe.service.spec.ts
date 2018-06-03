@@ -34,7 +34,8 @@ describe('Inventar Eingabe', () => {
             }]
 
             beforeEach(inject([InventarEingabeService], (service: InventarEingabeService) => {
-                service.hinzufügen('anlagevermoegen', 0, eingabe);
+                service.hinzufügen('anlagevermoegen', 0, eingabe[0]);
+                service.hinzufügen('anlagevermoegen', 0, eingabe[1]);
             }))
 
             it('sollte Eingabe hinzufügen', inject([InventarEingabeService], (service: InventarEingabeService) => {
@@ -101,7 +102,8 @@ describe('Inventar Eingabe', () => {
             }]
 
             beforeEach(inject([InventarEingabeService], (service: InventarEingabeService) => {
-                service.hinzufügen('umlaufvermoegen', 0, umlaufvermoegen)
+                service.hinzufügen('umlaufvermoegen', 0, umlaufvermoegen[0])
+                service.hinzufügen('umlaufvermoegen', 0, umlaufvermoegen[1])
             }))
 
             it('sollte Eingabe hinzufügen', inject([InventarEingabeService], (service: InventarEingabeService) => {

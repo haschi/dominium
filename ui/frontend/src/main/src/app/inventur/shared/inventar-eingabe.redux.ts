@@ -21,7 +21,7 @@ export const INVENTUREINGBAE_INITIAL_STATE: InventurEingabeState = {
     eingaben: []
 }
 
-export function eingabeHinzufügen(gruppe: string, kategorie: number, positionen: PositionEingabe[]): AnyAction {
+export function eingabeHinzufügen(gruppe: string, kategorie: number, positionen: PositionEingabe): AnyAction {
     return {
         type: INVENTUREINGABE_HINZUFÜGEN,
         payload: {
@@ -58,18 +58,13 @@ export function eingabeLeeren(): AnyAction {
 export function inventureingabe(state: InventurEingabeState = INVENTUREINGBAE_INITIAL_STATE, action: AnyAction): InventurEingabeState {
     switch (action.type) {
         case INVENTUREINGABE_HINZUFÜGEN: {
-
-            const neu = action.payload.positionen.map(position => {
-                return {
+            console.info(`INVENTUREINGABE HINZUFÜGEN: ${JSON.stringify(action)}`)
+            const neu = {
                     gruppe: action.payload.gruppe,
                     kategorie: action.payload.kategorie,
-                    position: position}})
+                    position: action.payload.positionen};
 
-            const eingaben: Eingabe[] = state.eingaben
-                .filter(e => !(e.gruppe === action.payload.gruppe && e.kategorie === action.payload.kategorie))
-                .map(element => {return {gruppe: element.gruppe, kategorie: element.kategorie, position: element.position}})
-                // ggf. map zum Klonen
-                .concat(neu)
+            const eingaben: Eingabe[] = Object.assign([], state.eingaben).concat(neu);
 
             return {eingaben}
         }

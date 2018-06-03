@@ -25,7 +25,7 @@ export class InventarEingabeService {
     }
 
     @dispatch()
-    hinzufügen(gruppe: string, kategorie: number, eingabe: PositionEingabe[]): AnyAction {
+    hinzufügen(gruppe: string, kategorie: number, eingabe: PositionEingabe): AnyAction {
       return eingabeHinzufügen(gruppe, kategorie, eingabe);
     }
 

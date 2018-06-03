@@ -1,46 +1,17 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    HostListener,
-    Input,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    TemplateRef,
-    ViewChildren
-} from '@angular/core';
-import {
-    AbstractControl,
-    FormArray,
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators
-} from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
-
-import { LoggerService } from '../shared/logger.service';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Params, Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/withLatestFrom';
 
 import { Observable } from 'rxjs/Observable';
-import { Vermoegenswert } from './bilanz/bilanz.model';
-import { Gruppe, GruppenState, InventurGruppe, Kategorie } from './shared/gruppen.redux';
-import { Inventar, InventurEingabe } from './shared/inventar';
-import { ActivatedRoute, NavigationStart, Router, NavigationEnd, Params } from '@angular/router';
+import { of } from 'rxjs/observable/of';
+import { EingabeDialog } from './eingabe-dialog.component';
 import { InventurService } from './inventur.service';
-import {
-    Eingabe,
-    eingabeHinzufügen,
-    InventurEingabeState,
-    zeileHinzufügen
-} from './shared/inventar-eingabe.redux';
-import { InventarEingabeService } from './shared/inventar-eingabe.service';
-import { Inventarposition, PositionEingabe } from './shared/inventarposition';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { GruppeComponent } from './gruppe/gruppe.component';
-import 'rxjs/add/operator/withLatestFrom';
+import { InventurGruppe } from './shared/gruppen.redux';
+import { Eingabe } from './shared/inventar-eingabe.redux';
+import { PositionEingabe } from './shared/inventarposition';
 
 interface Koordinate{
     inventurId: string;
@@ -76,6 +47,8 @@ export class InventurComponent implements OnInit, OnDestroy {
     inventurGruppen$: Observable<InventurGruppe>;
     anzeigen$: Observable<boolean>
     inventurId$: Observable<string>
+    posten$: Observable<Eingabe[]>
+    auswahl$: Observable<boolean>
 
     // Gruppe und Kategorie, die gerade bearbeitet wird.
     // koordinate$: Observable<Koordinate>
@@ -84,7 +57,9 @@ export class InventurComponent implements OnInit, OnDestroy {
     // next$: Observable<Koordinate>
 
     constructor(
+            private dialog: MatDialog,
             private active: ActivatedRoute,
+            private router: Router,
             private inventurService: InventurService) {
 
         this.inventurGruppen$ = this.inventurService.gruppen$
@@ -93,6 +68,27 @@ export class InventurComponent implements OnInit, OnDestroy {
             .map(gruppen => gruppen !== InventurService.leereGruppen)
 
         this.inventurId$ = this.active.params.map(p => p.id)
+
+        this.posten$ =
+            this.active.params
+            //  .filter(event => event instanceof NavigationStart)
+            // .map(event => event as NavigationStart)
+            // .do(params => console.info("Navigated"))
+            //.map(params => {return {gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
+            // .withLatestFrom(this.inventurService.eingabe$, (filter, eingabe) => {
+            //     console.info(`filtering: ${JSON.stringify(eingabe)}`)
+            //     return eingabe
+            //         .map(element => element.position)
+            // })
+                .map(params => {return {gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
+                .flatMap(params => this.inventurService.eingabe$(params.gruppe, params.kategorie), (outer, inner) => inner)
+            // .do(value => {console.info(JSON.stringify(value))})
+            // .catch(error => {
+            //     console.error('ERROR: '+ JSON.stringify(error))
+            //     return of([])})
+
+        this.auswahl$ = this.active.params
+            .map(params => params.gruppe != null && params.kategorie != null)
     }
 
     // startSubscription: Subscription;
@@ -100,6 +96,7 @@ export class InventurComponent implements OnInit, OnDestroy {
     // neuSubscription: Subscription;
 
     ngOnInit() {
+
         // this.form$ = this.active.params
         //     .map(params => {return {inventurId: params.id, gruppe: params.gruppe, kategorie: Number(params.kategorie)}})
         //     .withLatestFrom(this.store.select(s => s.inventureingabe.eingaben), (koordinaten, eingaben: Eingabe[]) => {
@@ -206,6 +203,15 @@ export class InventurComponent implements OnInit, OnDestroy {
         }
     }
 
+    openDialog() {
+        this.dialog.open(EingabeDialog, {
+            data: {
+                gruppe: this.active.snapshot.params.gruppe,
+                kategorie: Number(this.active.snapshot.params.kategorie)
+            }
+        })
+    }
+
     // hinzufuegen() {
     //     const eingabe: Eingabe = {gruppe: '', kategorie: 0, position: {position: '', waehrungsbetrag: {betrag: '', waehrung: ''}} }
     //     this.input$.next(eingabe)
@@ -249,3 +255,4 @@ export class InventurComponent implements OnInit, OnDestroy {
         // if (this.neuSubscription) this.neuSubscription.unsubscribe();
     }
 }
+

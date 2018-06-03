@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Kategorie } from '../../shared/gruppen.redux';
+import { PositionEingabe } from '../../shared/inventarposition';
 
 @Component({
     selector: 'app-inventur-position',
@@ -10,10 +11,10 @@ import { Kategorie } from '../../shared/gruppen.redux';
 export class PostenComponent implements OnInit {
 
     @Input()
-    posten: FormGroup;
+    kategorie: Kategorie
 
     @Input()
-    kategorie: Kategorie
+    public posten: PositionEingabe
 
     @Output()
     public geloescht: EventEmitter<void> = new EventEmitter<void>();

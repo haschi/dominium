@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import { el } from '@angular/platform-browser/testing/src/browser_util';
 import { logger } from 'codelyzer/util/logger';
 import { Observable } from 'rxjs/Observable';
 import { NgRedux, select } from '@angular-redux/store';
@@ -9,6 +10,7 @@ import {
     InventurGruppe,
     INVENTURGRUPPEN_INITIAL_STATE
 } from './shared/gruppen.redux';
+import { Eingabe } from './shared/inventar-eingabe.redux';
 import { InventurState } from './shared/inventur.redux';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
@@ -36,6 +38,7 @@ export class InventurService implements OnInit{
     @select(['inventurGruppen', 'gruppen'])
     gruppen$: Observable<InventurGruppe>
 
+
     public static get leereGruppen(): InventurGruppe {
         return INVENTURGRUPPEN_INITIAL_STATE.gruppen
     }
@@ -54,6 +57,14 @@ export class InventurService implements OnInit{
             });
 
         this.leseInventurGruppen();
+    }
+
+    eingabe$(gruppe: string, kategorie: number): Observable<Eingabe[]> {
+        //console.info(`Eingabe: ${gruppe}, ${kategorie}`)
+        return this.store.select(s => s.inventureingabe.eingaben)
+          //  .do(eingabe => console.info(`Alle: ${JSON.stringify(eingabe)}`))
+            .map(eingabe => eingabe.filter(element => element.gruppe === gruppe && element.kategorie === kategorie))
+          //  .do(eingabe => console.info(`Gefiltert: ${JSON.stringify(eingabe)}`))
     }
 
     beginneInventur(id: any) {
