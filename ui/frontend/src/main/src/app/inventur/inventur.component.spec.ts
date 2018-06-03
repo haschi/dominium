@@ -19,10 +19,7 @@ import { Eingabe } from './shared/inventar-eingabe.redux';
 import { PositionEingabe } from './shared/inventarposition';
 import { gruppen$, params$, testgruppen } from './shared/testdaten';
 
-fdescribe('InventurComponent', () => {
-    let component: InventurComponent;
-    let fixture: ComponentFixture<InventurComponent>;
-
+describe('InventurComponent', () => {
     let eingabe$ = new BehaviorSubject<Eingabe[]>([])
 
     class Page {
@@ -114,15 +111,9 @@ fdescribe('InventurComponent', () => {
             .compileComponents();
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(InventurComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('sollte erzeugt werden', inject([Page], (page: Page) => {
+        expect(page.fixture.componentInstance).toBeTruthy();
+    }));
 
     it('sollte ohne Eingabe mit leerem Inventar beginnen',
         inject([InventurService, ActivatedRoute],
@@ -162,17 +153,17 @@ fdescribe('InventurComponent', () => {
                 // http.verify();
             }));
 
-    describe('Geladene Gruppen', () => {
+    describe('Falls Inventur-Gruppen verfügbar sind', () => {
         beforeEach(() => {
             gruppen$.next(testgruppen.gruppen)
         })
 
-        it('sollten vom Navigator angezeigt werden', inject([Page], (page: Page) => {
+        it('sollten Test-Gruppen vom Navigator angezeigt werden', inject([Page], (page: Page) => {
             var navigator: NavigatorComponent = page.navigator.componentInstance
             expect(navigator.gruppen).toEqual(testgruppen.gruppen)
         }))
 
-        it('sollte Inventur kennen', inject([Page], (page: Page) => {
+        it('sollte Navigator die aktuelle Inventur kennen', inject([Page], (page: Page) => {
             var navigator: NavigatorComponent = page.navigator.componentInstance
             expect(navigator.inventurId).toEqual(params$.value.id)
         }))
@@ -215,10 +206,9 @@ fdescribe('InventurComponent', () => {
                 expect(spy.calls.first().args[0].toString()).toEqual('/inventur/4711/schulden/1')
             })
         })
-
     })
 
-    describe('Ohne geladene Gruppen', () => {
+    describe('Falls keine Inventur-Gruppen verfügbar sind', () => {
         beforeEach(() => {
             gruppen$.next(InventurService.leereGruppen)
         })
