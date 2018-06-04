@@ -58,7 +58,6 @@ export function eingabeLeeren(): AnyAction {
 export function inventureingabe(state: InventurEingabeState = INVENTUREINGBAE_INITIAL_STATE, action: AnyAction): InventurEingabeState {
     switch (action.type) {
         case INVENTUREINGABE_HINZUFÜGEN: {
-            console.info(`INVENTUREINGABE HINZUFÜGEN: ${JSON.stringify(action)}`)
             const neu = {
                     gruppe: action.payload.gruppe,
                     kategorie: action.payload.kategorie,

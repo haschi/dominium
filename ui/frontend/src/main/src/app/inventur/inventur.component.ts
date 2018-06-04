@@ -189,8 +189,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     koordinate(params: Params, gruppen: InventurGruppe): Koordinate {
-        console.info(JSON.stringify(gruppen))
-        console.info(JSON.stringify(params))
         const gruppe = gruppen[params.gruppe];
         const kategorie = gruppe.kategorien[Number(params.kategorie)];
 

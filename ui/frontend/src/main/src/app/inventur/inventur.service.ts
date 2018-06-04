@@ -120,7 +120,6 @@ export class InventurService implements OnInit{
     }
 
     ngOnInit(): void {
-        console.info("Inventur Service onInit")
 
     }
 }
