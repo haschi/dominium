@@ -1,5 +1,6 @@
 import { DebugElement, NO_ERRORS_SCHEMA, Provider } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { DEMO_APP_ROUTES } from '../routes';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
 import { AppMaterialModule } from '../shared/app-material-module';
 import { BilanzComponent } from './bilanz/bilanz.component';
+import { EingabeDialog } from './eingabe-dialog.component';
 import { PostenComponent } from './gruppe/posten/posten.component';
 import { InventarComponent } from './inventar/inventar.component';
 import { InventurComponent } from './inventur.component';
@@ -53,6 +55,10 @@ describe('InventurComponent', () => {
         get hinzufügen(): DebugElement {
             return this.fixture.debugElement
                 .query(By.css('#hinzufuegen'))
+        }
+
+        hinzufügenDialogÖffnen(): void {
+            (this.hinzufügen.nativeElement).click();
         }
 
         navigieren(gruppe: string, kategorie: string): void {
@@ -103,7 +109,7 @@ describe('InventurComponent', () => {
             providers: [
                 Page.provider,
                 {provide: InventurService, useValue: {gruppen$, eingabe$: (gruppe, kategorie) => {return eingabe$}}},
-                {provide: ActivatedRoute, useValue: {params: params$}}
+                {provide: ActivatedRoute, useValue: {params: params$, snapshot: {params: {id: '4711', gruppe: 'schulden', kategorie: 0}}}}
             ],
             schemas: [NO_ERRORS_SCHEMA]
 
@@ -272,12 +278,14 @@ describe('InventurComponent', () => {
 
                 expect(gesucht).not.toBeUndefined()
             }))
-        })
 
-        describe('Hinzufügen Schaltfläche', () => {
-            it('sollte Eingabe-Dialog öffnen', inject([Page], (page: Page) => {
-                expect(page.hinzufügen).toBeTruthy()
-            }))
+            describe('Hinzufügen Schaltfläche', () => {
+                it('sollte Eingabe-Dialog öffnen', inject([Page, MatDialog, ActivatedRoute], (page: Page, dialog: MatDialog, active: ActivatedRoute) => {
+                    const spy = spyOn(dialog, 'open')
+                    page.hinzufügenDialogÖffnen();
+                    expect(spy).toHaveBeenCalledWith(EingabeDialog, {data: {gruppe: 'schulden', kategorie: 0}})
+                }))
+            })
         })
     })
 });

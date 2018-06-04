@@ -202,11 +202,13 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     openDialog() {
+        const config = {
+            gruppe: this.active.snapshot.params.gruppe,
+            kategorie: Number(this.active.snapshot.params.kategorie)
+        }
+
         this.dialog.open(EingabeDialog, {
-            data: {
-                gruppe: this.active.snapshot.params.gruppe,
-                kategorie: Number(this.active.snapshot.params.kategorie)
-            }
+            data: config
         })
     }
 
