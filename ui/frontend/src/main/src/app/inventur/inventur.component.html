@@ -6,7 +6,7 @@
     </div>
 <mat-card *ngIf="(posten$ | async) as posten" flex="60">
     <mat-card-content>
-        <app-inventur-position *ngFor="let p of posten" [posten]="p.position">
+        <app-inventur-position *ngFor="let p of posten; let i = index" [posten]="p.position" (geloescht)="loeschen(i)" [attr.data-index]="i">
         </app-inventur-position>
     </mat-card-content>
     <h1>Hallo</h1>

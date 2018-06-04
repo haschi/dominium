@@ -119,6 +119,8 @@ export class InventurService implements OnInit{
         )
     }
 
+    entfernen(index: number): void {}
+
     ngOnInit(): void {
 
     }

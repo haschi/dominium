@@ -212,6 +212,10 @@ export class InventurComponent implements OnInit, OnDestroy {
         })
     }
 
+    loeschen(index: number): void {
+        this.inventurService.entfernen(index);
+    }
+
     // hinzufuegen() {
     //     const eingabe: Eingabe = {gruppe: '', kategorie: 0, position: {position: '', waehrungsbetrag: {betrag: '', waehrung: ''}} }
     //     this.input$.next(eingabe)

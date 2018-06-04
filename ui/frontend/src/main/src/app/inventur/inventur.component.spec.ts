@@ -57,6 +57,12 @@ describe('InventurComponent', () => {
                 .query(By.css('#hinzufuegen'))
         }
 
+        entfernen(index: number): void {
+            const posten = this.fixture.debugElement.queryAll(By.directive(PostenComponent))[index]
+            const button = posten.query(By.css('button'))
+            button.nativeElement.click();
+        }
+
         hinzufügenDialogÖffnen(): void {
             (this.hinzufügen.nativeElement).click();
         }
@@ -108,7 +114,7 @@ describe('InventurComponent', () => {
             ],
             providers: [
                 Page.provider,
-                {provide: InventurService, useValue: {gruppen$, eingabe$: (gruppe, kategorie) => {return eingabe$}}},
+                {provide: InventurService, useValue: {gruppen$, eingabe$: (gruppe, kategorie) => {return eingabe$}, entfernen: (index: number) => {}}},
                 {provide: ActivatedRoute, useValue: {params: params$, snapshot: {params: {id: '4711', gruppe: 'schulden', kategorie: 0}}}}
             ],
             schemas: [NO_ERRORS_SCHEMA]
@@ -278,6 +284,14 @@ describe('InventurComponent', () => {
 
                 expect(gesucht).not.toBeUndefined()
             }))
+
+            describe('Posten entfernen', () => {
+                it('sollte ausgewählten Posten entfernen', inject([Page, InventurService], (page: Page, service: InventurService) => {
+                      const spy = spyOn(service, 'entfernen')
+                      page.entfernen(0)
+                      expect(spy).toHaveBeenCalledWith(0)
+                }))
+            })
 
             describe('Hinzufügen Schaltfläche', () => {
                 it('sollte Eingabe-Dialog öffnen', inject([Page, MatDialog, ActivatedRoute], (page: Page, dialog: MatDialog, active: ActivatedRoute) => {

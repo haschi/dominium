@@ -24,4 +24,8 @@ export class PostenComponent implements OnInit {
 
     ngOnInit() {
     }
+
+    loeschen() {
+        this.geloescht.emit()
+    }
 }
