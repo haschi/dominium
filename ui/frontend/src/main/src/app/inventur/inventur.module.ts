@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AppMaterialModule } from '../shared/app-material-module';
 import { EpicProvider } from '../shared/redux-utils/provider';
 import { BilanzService } from './bilanz/bilanz.service';
 import { EingabeDialog } from './eingabe-dialog.component';
@@ -31,6 +32,7 @@ import { NavigatorComponent } from './navigator/navigator.component';
     imports: [
         HttpClientModule,
         AppCovalentModuleModule,
+        AppMaterialModule,
         SharedModule,
         QueryGatewayModule,
         RouterModule

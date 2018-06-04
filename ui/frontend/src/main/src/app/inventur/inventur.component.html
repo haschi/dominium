@@ -8,6 +8,23 @@
     <mat-card-content>
         <app-inventur-position *ngFor="let p of posten; let i = index" [posten]="p.position" (geloescht)="loeschen(i)" [attr.data-index]="i">
         </app-inventur-position>
+
+        <mat-table [dataSource]="posten$">
+            <ng-container matColumnDef="bezeichnung">
+                <mat-header-cell *matHeaderCellDef> Bezeichnung </mat-header-cell>
+                <mat-cell *matCellDef="let p"> {{p.position.position}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="betrag">
+                <mat-header-cell *matHeaderCellDef> Betrag </mat-header-cell>
+                <mat-cell *matCellDef="let p"> {{p.position.waehrungsbetrag.betrag}} {{p.position.waehrungsbetrag.waehrung}}</mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['bezeichnung', 'betrag']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['bezeichnung', 'betrag'];"></mat-row>
+        </mat-table>
+        <!--<table mat-table [dataSource]=”posten”>-->
+        <!--</table>-->
     </mat-card-content>
     <h1>Hallo</h1>
     <mat-card-actions>
