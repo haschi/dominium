@@ -42,10 +42,10 @@ export function zeileHinzufügen(gruppe: string, kategorie: number): AnyAction {
     }
 }
 
-export function eingabeEntfernen(index: number): AnyAction {
+export function eingabeEntfernen(auswahl: Eingabe[]): AnyAction {
     return {
         type: INVENTUREINGABE_ENTFERNEN,
-        payload: index
+        payload: auswahl
     }
 }
 
@@ -72,7 +72,8 @@ export function inventureingabe(state: InventurEingabeState = INVENTUREINGBAE_IN
             return state;
         }
         case  INVENTUREINGABE_ENTFERNEN: {
-            return {eingaben: state.eingaben.filter((value, index) => index !== action.payload)}
+            const auswahl: Eingabe[] = action.payload;
+            return {eingaben: state.eingaben.filter((value, index) => !auswahl.includes(value))}
         }
 
         case INVENTUREINGABE_LEEREN: {

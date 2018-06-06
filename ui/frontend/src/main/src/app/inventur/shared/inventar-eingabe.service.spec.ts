@@ -45,7 +45,7 @@ describe('Inventar Eingabe', () => {
             }))
 
             it('sollte Eingabe anhand Index entfernen', inject([InventarEingabeService], (service: InventarEingabeService) => {
-                service.entfernen(1);
+                service.entfernen([{gruppe: 'anlagevermoegen', kategorie: 0, position: eingabe[1]}]);
                 service.eingaben$.subscribe(eingaben => {
                     expect(eingaben).toEqual([eingabe[0]].map(e => {return {gruppe: 'anlagevermoegen', kategorie: 0, position: e}}))
                 })
@@ -118,7 +118,7 @@ describe('Inventar Eingabe', () => {
             describe('Löschen des Eintrags 3', () => {
 
                 beforeEach(inject([InventarEingabeService], (service: InventarEingabeService) => {
-                    service.entfernen(2)
+                    service.entfernen([{gruppe: 'anlagevermoegen', kategorie: 0, position: umlaufvermoegen[0]}])
                 }))
 
                 it('sollte Sparbuch-Eintrag löschen', inject([InventarEingabeService], (service: InventarEingabeService) => {

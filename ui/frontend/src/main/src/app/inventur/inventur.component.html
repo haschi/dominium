@@ -4,12 +4,28 @@
 <app-navigator [inventurId]="inventurId$ | async" [gruppen]="inventurGruppen$ | async" *ngIf="anzeigen$ | async">
 </app-navigator>
     </div>
-<mat-card *ngIf="(posten$ | async) as posten" flex="60">
+    <div flex="60">
+<mat-card *ngIf="(posten$ | async) as posten">
     <mat-card-content>
-        <app-inventur-position *ngFor="let p of posten; let i = index" [posten]="p.position" (geloescht)="loeschen(i)" [attr.data-index]="i">
-        </app-inventur-position>
+        <button mat-button (click)="openDialog()" id="hinzufuegen" [disabled]="!(auswahl$ | async)">Hinzufügen</button>
+        <button mat-button (click)="auswahlLoeschen()" id="loeschen" [disabled]="selection.selected.length === 0">Löschen</button>
+        <mat-table [dataSource]="posten$" #table>
 
-        <mat-table [dataSource]="posten$">
+            <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="bezeichnung">
                 <mat-header-cell *matHeaderCellDef> Bezeichnung </mat-header-cell>
                 <mat-cell *matCellDef="let p"> {{p.position.position}} </mat-cell>
@@ -20,45 +36,12 @@
                 <mat-cell *matCellDef="let p"> {{p.position.waehrungsbetrag.betrag}} {{p.position.waehrungsbetrag.waehrung}}</mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="['bezeichnung', 'betrag']"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: ['bezeichnung', 'betrag'];"></mat-row>
+            <mat-header-row *matHeaderRowDef="['select', 'bezeichnung', 'betrag']"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: ['select', 'bezeichnung', 'betrag'];"></mat-row>
         </mat-table>
         <!--<table mat-table [dataSource]=”posten”>-->
         <!--</table>-->
     </mat-card-content>
-    <h1>Hallo</h1>
-    <mat-card-actions>
-        <button mat-button (click)="openDialog()" id="hinzufuegen" *ngIf="auswahl$ | async">Hinzufügen</button>
-    </mat-card-actions>
 </mat-card>
+    </div>
 </div>
-
-    <!--<mat-card *ngIf="(koordinate$ | async) as koordinate">-->
-
-        <!--<mat-card-title>-->
-            <!--<h2 title>Titel</h2>-->
-            <!--<h3 subtitle>{{koordinate.untertitel}}</h3>-->
-        <!--</mat-card-title>-->
-
-        <!--<mat-card-content>-->
-            <!--<p>Bevor Sie mit der Haushaltsbuchführung beginnen können müssen Sie eine Inventur-->
-                <!--durchführen, damit die Anfangsbestände Ihrer Konten ermittelt werden können.-->
-                <!--Bei der Inventur erfassen Sie Anlagevermögen, Umlaufvermögen und Schulden.</p>-->
-
-            <!--<form *ngIf="form$ | async as f" [formGroup]="f">-->
-                <!--<app-inventur-gruppe [positionen]="f"></app-inventur-gruppe>-->
-            <!--</form>-->
-
-        <!--</mat-card-content>-->
-
-        <!--<mat-card-actions *ngIf="next$ | async as next">-->
-            <!--<a mat-button color="primary"-->
-               <!--[routerLink]="['/inventur', next.inventurId, next.gruppe, next.kategorie]">Weiter</a>-->
-        <!--</mat-card-actions>-->
-        <!--<button color="primary" mat-fab type="button" (click)="hinzufuegen()"-->
-                <!--[disabled]="false"-->
-                <!--matTooltip="Inventur-Position hinzufügen. Drücken Sie auch '+' auf der Tastatur."-->
-                <!--style="position: fixed; right: 20px; bottom: 20px">-->
-            <!--<mat-icon aria-label="Inventarposition hinzufügen">add</mat-icon>-->
-        <!--</button>-->
-    <!--</mat-card>-->

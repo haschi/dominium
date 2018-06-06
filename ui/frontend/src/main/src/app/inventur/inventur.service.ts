@@ -11,6 +11,7 @@ import {
     INVENTURGRUPPEN_INITIAL_STATE
 } from './shared/gruppen.redux';
 import { Eingabe } from './shared/inventar-eingabe.redux';
+import { InventarEingabeService } from './shared/inventar-eingabe.service';
 import { InventurState } from './shared/inventur.redux';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
@@ -44,6 +45,7 @@ export class InventurService implements OnInit{
     }
 
     constructor(
+        private eingabe: InventarEingabeService,
         private idGenerator: IdGeneratorService,
         private command: CommandGatewayService,
         private query: QueryGatewayService,
@@ -119,7 +121,9 @@ export class InventurService implements OnInit{
         )
     }
 
-    entfernen(index: number): void {}
+    entfernen(auswahl: Eingabe[]): void {
+        this.eingabe.entfernen(auswahl)
+    }
 
     ngOnInit(): void {
 

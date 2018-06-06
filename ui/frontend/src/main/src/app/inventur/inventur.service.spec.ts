@@ -11,6 +11,7 @@ import { CommandGatewayModule } from '../shared/command-gateway/command-gateway.
 import { LoggerService } from '../shared/logger.service';
 import { QueryGatewayModule } from '../shared/query-gateway/query-gateway.module';
 import { QueryGatewayService } from '../shared/query-gateway/query-gateway.service';
+import { InventarEingabeService } from './shared/inventar-eingabe.service';
 import { QueryType } from './shared/query-type';
 import { ResultType } from './shared/result-type';
 import { APP_INITIAL_STATE, AppState } from '../store/model';
@@ -26,16 +27,19 @@ describe('InventurService', () => {
     beforeEach(() => {
 
         TestBed.configureTestingModule({
-            declarations: [HomeComponent, InventurComponent, InventarComponent, BilanzComponent],
+            declarations: [],
             providers: [
                 InventurService,
                 LoggerService,
                 {
                     provide: QueryGatewayService,
                     useValue: jasmine.createSpyObj('QueryGatewayService', ['send'])
+                },
+                {
+                  provide: InventarEingabeService, useValue: {}
                 }
             ],
-            imports: [NgReduxModule, HttpClientTestingModule, CommandGatewayModule, RouterTestingModule.withRoutes(DEMO_APP_ROUTES)],
+            imports: [NgReduxModule, HttpClientTestingModule, CommandGatewayModule, RouterTestingModule.withRoutes([])],
             schemas: [NO_ERRORS_SCHEMA]
         });
     });

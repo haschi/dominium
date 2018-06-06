@@ -30,8 +30,8 @@ export class InventarEingabeService {
     }
 
     @dispatch()
-    entfernen(index: number): AnyAction {
-        return eingabeEntfernen(index);
+    entfernen(auswahl: Eingabe[]): AnyAction {
+        return eingabeEntfernen(auswahl);
     }
 
     @dispatch()

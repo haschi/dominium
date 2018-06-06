@@ -237,7 +237,7 @@ describe('InventurComponent', () => {
 
         it('sollte Schaltfläche Hinzufügen nicht anzeigen', inject([Page], (page: Page) => {
             page.fixture.detectChanges()
-            expect(page.hinzufügen).toBeFalsy()
+            expect((page.hinzufügen.nativeElement as HTMLButtonElement).disabled).toBeTruthy()
         }))
     })
 

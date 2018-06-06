@@ -24,9 +24,6 @@ import { PositionEingabe } from './shared/inventarposition';
                 </mat-form-field>
             </div>
         </div>
-        <div>
-            {{form.value | json }}
-        </div>
     </mat-dialog-content>
         <mat-dialog-actions>
             <button mat-button mat-dialog-close>Abbrechen</button>

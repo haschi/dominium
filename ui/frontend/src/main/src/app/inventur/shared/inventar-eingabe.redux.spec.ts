@@ -50,7 +50,7 @@ describe('Inventar-Eingabe', () => {
         })
 
         it('sollte Eingabe entfernen', () => {
-            store.dispatch(eingabeEntfernen(1))
+            store.dispatch(eingabeEntfernen([{gruppe: 'schulden', kategorie: 0, position: eingabe[1]}]))
             expect(store.getState()).toEqual({eingaben: [{
                     gruppe: 'schulden',
                     kategorie: 0,
