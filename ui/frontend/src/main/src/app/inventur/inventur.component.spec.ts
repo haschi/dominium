@@ -58,9 +58,13 @@ describe('InventurComponent', () => {
         }
 
         entfernen(index: number): void {
-            const posten = this.fixture.debugElement.queryAll(By.directive(PostenComponent))[index]
-            const button = posten.query(By.css('button'))
-            button.nativeElement.click();
+            const selectbox = this.fixture.debugElement.queryAll(By.css('input'))[index + 1]
+            selectbox.nativeElement.click()
+            this.fixture.detectChanges()
+
+            const loeschen = this.fixture.debugElement.query(By.css('#loeschen'))
+            loeschen.nativeElement.click()
+            this.fixture.detectChanges()
         }
 
         hinzufügenDialogÖffnen(): void {
@@ -286,10 +290,20 @@ describe('InventurComponent', () => {
             }))
 
             describe('Posten entfernen', () => {
-                it('sollte ausgewählten Posten entfernen', inject([Page, InventurService], (page: Page, service: InventurService) => {
+                fit('sollte ausgewählten Posten entfernen', inject([Page, InventurService], (page: Page, service: InventurService) => {
                       const spy = spyOn(service, 'entfernen')
                       page.entfernen(0)
-                      expect(spy).toHaveBeenCalledWith(0)
+                      expect(spy).toHaveBeenCalledWith([{
+                          gruppe: 'anlagevermoegen',
+                          kategorie: 0,
+                          position: {
+                              position: 'VW',
+                              waehrungsbetrag: {
+                                  betrag: '10.000,00',
+                                  waehrung: 'EUR'
+                              }
+                          }
+                      }])
                 }))
             })
 
