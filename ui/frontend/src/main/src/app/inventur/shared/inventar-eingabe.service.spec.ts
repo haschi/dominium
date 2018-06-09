@@ -118,7 +118,7 @@ describe('Inventar Eingabe', () => {
             describe('Löschen des Eintrags 3', () => {
 
                 beforeEach(inject([InventarEingabeService], (service: InventarEingabeService) => {
-                    service.entfernen([{gruppe: 'anlagevermoegen', kategorie: 0, position: umlaufvermoegen[0]}])
+                    service.entfernen([{gruppe: 'umlaufvermoegen', kategorie: 0, position: umlaufvermoegen[0]}])
                 }))
 
                 it('sollte Sparbuch-Eintrag löschen', inject([InventarEingabeService], (service: InventarEingabeService) => {

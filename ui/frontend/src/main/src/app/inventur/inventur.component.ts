@@ -89,7 +89,6 @@ export class InventurComponent implements OnInit, OnDestroy {
     }
 
     auswahlLoeschen() {
-        console.info(JSON.stringify(this.selection.selected))
         this.inventurService.entfernen(this.selection.selected)
     }
 

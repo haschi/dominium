@@ -1,11 +1,13 @@
+import { DataSource } from '@angular/cdk/collections';
 import { DebugElement, NO_ERRORS_SCHEMA, Provider } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTable } from '@angular/material';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { HomeComponent } from '../home/home.component';
 import { DEMO_APP_ROUTES } from '../routes';
 import { AppCovalentModuleModule } from '../shared/app-covalent-module.module';
@@ -41,10 +43,16 @@ describe('InventurComponent', () => {
             return this.fixture.debugElement.query(By.directive(NavigatorComponent))
         }
 
-        get posten(): PostenComponent[] {
-            return this.fixture.debugElement
-                .queryAll(By.directive(PostenComponent))
-                .map(element => element.componentInstance as PostenComponent)
+        posten(position: string, betrag: string): DebugElement {
+            return this.fixture.debugElement.queryAll(By.css('mat-row'))
+                .find(element => {
+                    const zellen = element.queryAll(By.css('mat-cell'))
+                    return (zellen[1].nativeElement as HTMLElement).innerText == position && (zellen[2].nativeElement as HTMLElement).innerText == betrag
+                })
+        }
+
+        get zeigtKeinePostenAn(): boolean {
+            return this.fixture.debugElement.queryAll(By.css('mat-row')).length === 0
         }
 
         get position(): HTMLInputElement {
@@ -255,7 +263,7 @@ describe('InventurComponent', () => {
         describe('ohne vorangegangene Eingabe von Posten', () => {
             it('sollte leere Liste anzeigen', inject([Page], (page: Page) => {
                 page.fixture.detectChanges()
-                expect(page.posten).toEqual([])
+                expect(page.zeigtKeinePostenAn).toBeTruthy()
             }))
         })
 
@@ -275,22 +283,11 @@ describe('InventurComponent', () => {
             })
 
             it('sollte Eingabe in Liste anzeigen', inject([Page], (page: Page) => {
-                function istEingabe(p, eingabe: PositionEingabe) {
-                    return p.posten.position === eingabe.position
-                        && p.posten.waehrungsbetrag.betrag === eingabe.waehrungsbetrag.betrag
-                        && p.posten.waehrungsbetrag.waehrung === eingabe.waehrungsbetrag.waehrung;
-                }
-
-                const gesucht = page.posten.find(p => istEingabe(p, {
-                    position: 'VW',
-                    waehrungsbetrag: {betrag: '10.000,00', waehrung: 'EUR'}
-                }))
-
-                expect(gesucht).not.toBeUndefined()
+                expect(page.posten('VW', '10.000,00 EUR')).toBeTruthy()
             }))
 
             describe('Posten entfernen', () => {
-                fit('sollte ausgewählten Posten entfernen', inject([Page, InventurService], (page: Page, service: InventurService) => {
+                it('sollte ausgewählten Posten entfernen', inject([Page, InventurService], (page: Page, service: InventurService) => {
                       const spy = spyOn(service, 'entfernen')
                       page.entfernen(0)
                       expect(spy).toHaveBeenCalledWith([{

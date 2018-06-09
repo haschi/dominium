@@ -73,7 +73,8 @@ export function inventureingabe(state: InventurEingabeState = INVENTUREINGBAE_IN
         }
         case  INVENTUREINGABE_ENTFERNEN: {
             const auswahl: Eingabe[] = action.payload;
-            return {eingaben: state.eingaben.filter((value, index) => !auswahl.includes(value))}
+            // Das ist der Moment, in dem ich immutables haben möchte.
+            return {eingaben: state.eingaben.filter((value, index) => !auswahl.find(val => {return value.gruppe == val.gruppe && value.kategorie == val.kategorie && value.position.position == val.position.position}))}
         }
 
         case INVENTUREINGABE_LEEREN: {
