@@ -18,14 +18,11 @@ import { of } from 'rxjs/observable/of';
 import { Subscription } from 'rxjs/Subscription';
 import { EingabeDialog } from './eingabe-dialog.component';
 import { InventurService } from './inventur.service';
-import { InventurGruppe } from './shared/gruppen.redux';
+import { Gruppe, InventurGruppe } from './shared/gruppen.redux';
 import { Eingabe } from './shared/inventar-eingabe.redux';
 import { PositionEingabe } from './shared/inventarposition';
 
 interface Koordinate{
-    inventurId: string;
-    gruppe: string;
-    kategorie: number;
     titel: string;
     untertitel: string;
 }
@@ -44,6 +41,8 @@ export class InventurComponent implements OnInit, OnDestroy {
     inventurId$: Observable<string>
     posten$: Observable<Eingabe[]>
     auswahl$: Observable<boolean>
+    gruppe$: Observable<Koordinate>
+
     private zeilenSubscription: Subscription;
     private zeilen: number;
     constructor(
@@ -57,6 +56,16 @@ export class InventurComponent implements OnInit, OnDestroy {
         this.anzeigen$ = this.inventurService.gruppen$
             .map(gruppen => gruppen !== InventurService.leereGruppen)
 
+        this.gruppe$ = this.active.params
+            .withLatestFrom(this.inventurService.gruppen$, (params, gruppen) => {
+                console.info(`suche gruppe ${params.gruppe} in ${JSON.stringify(gruppen)}`)
+                const gruppe: Gruppe = gruppen[params.gruppe];
+                console.info(`suche kategorie ${params.kategorie} in gruppe ${JSON.stringify(gruppe)}`)
+                const kategorie = gruppe.kategorien[params.kategorie]
+                const titel = this.titelFuerGruppe(params.gruppe)
+                console.info(`gefunden: ${titel}, ${kategorie.kategorie}`)
+                return {titel: titel, untertitel: kategorie.kategorie}
+            })
         this.inventurId$ = this.active.params.map(p => p.id)
 
         this.posten$ =
@@ -73,6 +82,14 @@ export class InventurComponent implements OnInit, OnDestroy {
         })
     }
 
+    private titelFuerGruppe(gruppe: string): string {
+        switch(gruppe) {
+        case 'anlagevermoegen': return "Anlagevermögen";
+        case 'umlaufvermoegen' : return "Umlaufvermögen";
+        case 'schulden': return "Schulden";
+        default: return ''
+        }
+    }
     selection = new SelectionModel<Eingabe>(true, []);
 
     isAllSelected() {
@@ -100,9 +117,9 @@ export class InventurComponent implements OnInit, OnDestroy {
         const kategorie = gruppe.kategorien[Number(params.kategorie)];
 
         return {
-            inventurId: params.id,
-            gruppe: gruppe.bezeichnung,
-            kategorie: Number(params.kategorie),
+            //inventurId: params.id,
+            //gruppe: gruppe.bezeichnung,
+            //kategorie: Number(params.kategorie),
             titel: '',
             untertitel: kategorie.kategorie
         }

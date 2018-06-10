@@ -6,9 +6,17 @@
     </div>
     <div flex="60">
 <mat-card *ngIf="(posten$ | async) as posten">
-    <mat-card-content>
+    <mat-card-header>
+        <mat-card-title>{{(gruppe$ | async)?.untertitel}}</mat-card-title>
+        <mat-card-subtitle>{{(gruppe$ | async)?.titel}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions >
+        <button mat-button>Zurück</button>
         <button mat-button (click)="openDialog()" id="hinzufuegen" [disabled]="!(auswahl$ | async)">Hinzufügen</button>
         <button mat-button (click)="auswahlLoeschen()" id="loeschen" [disabled]="selection.selected.length === 0">Löschen</button>
+        <button mat-button>Weiter</button>
+    </mat-card-actions>
+    <mat-card-content>
         <mat-table [dataSource]="posten$" #table>
 
             <ng-container matColumnDef="select">
@@ -39,8 +47,6 @@
             <mat-header-row *matHeaderRowDef="['select', 'bezeichnung', 'betrag']"></mat-header-row>
             <mat-row *matRowDef="let row; columns: ['select', 'bezeichnung', 'betrag'];"></mat-row>
         </mat-table>
-        <!--<table mat-table [dataSource]=”posten”>-->
-        <!--</table>-->
     </mat-card-content>
 </mat-card>
     </div>
