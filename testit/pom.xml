@@ -26,7 +26,7 @@
         <junit.version>4.12</junit.version>
         <junit-platform.version>1.2.0</junit-platform.version>
 
-        <cukes.version>2.4.0</cukes.version>
+        <cukes.version>3.0.2</cukes.version>
         <rest-assured.version>3.1.0</rest-assured.version>
         <jackson.version>2.9.5</jackson.version>
         <assertj.version>3.9.1</assertj.version>
@@ -223,7 +223,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <cucumber.api.java.ObjectFactory>
-                            com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory
+                            com.github.haschi.domain.haushaltsbuch.testing.KomponententestPicoFactory
                         </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>
@@ -243,7 +243,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <cucumber.api.java.ObjectFactory>
-                            com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
+                            com.github.haschi.domain.haushaltsbuch.testing.SystemtestPicoFactory
                         </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>

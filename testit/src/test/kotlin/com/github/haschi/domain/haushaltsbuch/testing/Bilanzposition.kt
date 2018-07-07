@@ -2,14 +2,12 @@ package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Gruppe
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
 
 data class Bilanzposition(
         val seite: String,
         private val gruppe: String,
         val kategorie: String,
         val posten: String,
-        @XStreamConverter(MoneyConverter::class)
         val betrag: Währungsbetrag)
 {
     val bilanzGruppe: Gruppe

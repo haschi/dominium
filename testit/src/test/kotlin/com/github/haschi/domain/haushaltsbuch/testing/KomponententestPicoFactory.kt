@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.domain.haushaltsbuch.testing
 
 import com.github.haschi.dominium.haushaltsbuch.core.application.Anwendungskonfiguration
 import cucumber.runtime.java.picocontainer.PicoFactory

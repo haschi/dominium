@@ -1,4 +1,4 @@
-package com.github.haschi.haushaltsbuch.infrastruktur
+package com.github.haschi.domain.haushaltsbuch.testing
 
 import cucumber.runtime.java.picocontainer.PicoFactory
 import org.slf4j.Logger

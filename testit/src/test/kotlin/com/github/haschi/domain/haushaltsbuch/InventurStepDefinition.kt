@@ -2,7 +2,6 @@ package com.github.haschi.domain.haushaltsbuch
 
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.InventarEingabe
-import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
 import com.github.haschi.domain.haushaltsbuch.testing.anlagevermögen
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
@@ -17,13 +16,11 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Reinvermögen
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import cucumber.api.DataTable
-import cucumber.api.Transform
 import cucumber.api.java.de.Angenommen
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Und
 import cucumber.api.java.de.Wenn
-import cucumber.deps.com.thoughtworks.xstream.annotations.XStreamConverter
+import io.cucumber.datatable.DataTable
 import org.assertj.core.api.Assertions.assertThat
 import java.time.LocalDateTime
 import java.util.concurrent.CompletableFuture
@@ -111,8 +108,6 @@ class InventurStepDefinition(private val welt: DieWelt)
     class SchuldParameter(
             val kategorie: String,
             val position: String,
-
-            @XStreamConverter(MoneyConverter::class)
             val währungsbetrag: Währungsbetrag)
 
     @Wenn("^ich folgendes Inventar erfasse:$")
@@ -147,7 +142,7 @@ class InventurStepDefinition(private val welt: DieWelt)
     @Dann("^werde ich folgendes Reinvermögen ermittelt haben:$")
     fun `dann werde ich folgendes Eigenkapital ermittelt haben`(reinvermögen: DataTable)
     {
-        val map = reinvermögen.asMap(String::class.java, String::class.java)
+        val map = reinvermögen.asMap<String, String>(String::class.java, String::class.java)
 
         val erwartungswert = Reinvermögen(
                 summeDerSchulden = Währungsbetrag.währungsbetrag(map["Summe der Schulden"]!!),
@@ -193,8 +188,8 @@ class InventurStepDefinition(private val welt: DieWelt)
         }
     }
 
-    @Wenn("^ich eine Inventur am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" beende$")
-    fun `wenn ich eine Inventur beende`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    @Wenn("ich eine Inventur am {zeitpunkt} beende")
+    fun `wenn ich eine Inventur beende`(datum: LocalDateTime)
     {
         welt.aktuelleInventur = Aggregatkennung.neu()
         welt.zeit.jetzt = datum
@@ -211,8 +206,8 @@ class InventurStepDefinition(private val welt: DieWelt)
         }
     }
 
-    @Dann("werde ich mein Inventar am \"(\\d{2}\\.\\d{2}\\.\\d{4} um \\d{2}:\\d{2})\" erfasst haben")
-    fun `werde ich mein Inventar erfasst haben`(@Transform(LocalDateTimeConverter::class) datum: LocalDateTime)
+    @Dann("werde ich mein Inventar am {zeitpunkt} erfasst haben")
+    fun `werde ich mein Inventar erfasst haben`(datum: LocalDateTime)
     {
         val inventar = welt.query.query(
                 LeseInventar(welt.aktuelleInventur),

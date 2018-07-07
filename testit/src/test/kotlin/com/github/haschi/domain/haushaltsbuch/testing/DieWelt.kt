@@ -6,7 +6,6 @@ import com.github.haschi.dominium.haushaltsbuch.core.application.Haushaltsbuchf√
 import com.github.haschi.dominium.haushaltsbuch.core.application.InventurApi
 import com.github.haschi.dominium.haushaltsbuch.core.domain.Historie
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Aggregatkennung
-import com.github.haschi.haushaltsbuch.infrastruktur.Testzeit
 import org.axonframework.queryhandling.QueryGateway
 import org.picocontainer.Startable
 import org.slf4j.Logger

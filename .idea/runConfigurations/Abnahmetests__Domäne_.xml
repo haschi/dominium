@@ -4,7 +4,7 @@
     <option name="GLUE" value="com.github.haschi.haushaltsbuch com.github.haschi.domain.haushaltsbuch" />
     <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />
     <module name="Abnahme-Tests" />
-    <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm2SMFormatter" />
+    <option name="PROGRAM_PARAMETERS" value=" " />
     <option name="VM_PARAMETERS" value="-Dcucumber.api.java.ObjectFactory=com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory" />
     <extension name="coverage">
       <pattern>

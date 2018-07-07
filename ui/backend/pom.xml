@@ -214,7 +214,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <cucumber.api.java.ObjectFactory>
-                            com.github.haschi.haushaltsbuch.infrastruktur.KomponententestPicoFactory
+                            com.github.haschi.domain.haushaltsbuch.testing.KomponententestPicoFactory
                         </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>
@@ -234,7 +234,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <cucumber.api.java.ObjectFactory>
-                            com.github.haschi.haushaltsbuch.infrastruktur.SystemtestPicoFactory
+                            com.github.haschi.domain.haushaltsbuch.testing.SystemtestPicoFactory
                         </cucumber.api.java.ObjectFactory>
                     </systemPropertyVariables>
                 </configuration>

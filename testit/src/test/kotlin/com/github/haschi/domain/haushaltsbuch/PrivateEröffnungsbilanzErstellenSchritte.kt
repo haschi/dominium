@@ -3,7 +3,7 @@ package com.github.haschi.domain.haushaltsbuch
 import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.DieWelt
 import com.github.haschi.domain.haushaltsbuch.testing.InventarEingabe
-import com.github.haschi.domain.haushaltsbuch.testing.MoneyConverter
+
 import com.github.haschi.domain.haushaltsbuch.testing.anlagevermögen
 import com.github.haschi.domain.haushaltsbuch.testing.schulden
 import com.github.haschi.domain.haushaltsbuch.testing.umlaufvermögen
@@ -18,7 +18,7 @@ import com.github.haschi.dominium.haushaltsbuch.core.model.values.Passiva
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswert
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Vermoegenswerte
 import com.github.haschi.dominium.haushaltsbuch.core.model.values.Währungsbetrag
-import cucumber.api.Transform
+
 import cucumber.api.java.de.Dann
 import cucumber.api.java.de.Wenn
 import org.assertj.core.api.Assertions.assertThat
@@ -55,7 +55,7 @@ class PrivateEröffnungsbilanzErstellenSchritte(private val welt: DieWelt)
     }
 
     @Dann("^werde ich einen nicht durch Eigenkapital gedeckten Fehlbetrag in Höhe von \"(-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)\" bilanziert haben$")
-    fun fehlbetragPrüfen(@Transform(MoneyConverter::class) fehlbetrag: Währungsbetrag)
+    fun fehlbetragPrüfen(fehlbetrag: Währungsbetrag)
     {
         val abfrage = welt.query.query(
                 LeseEröffnungsbilanz(welt.aktuelleInventur),
