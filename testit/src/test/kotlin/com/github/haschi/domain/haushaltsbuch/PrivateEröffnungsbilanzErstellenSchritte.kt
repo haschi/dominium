@@ -54,7 +54,7 @@ class PrivateEröffnungsbilanzErstellenSchritte(private val welt: DieWelt)
         assertThat(abfrage).isCompletedWithValue(posten.bilanz())
     }
 
-    @Dann("^werde ich einen nicht durch Eigenkapital gedeckten Fehlbetrag in Höhe von \"(-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)\" bilanziert haben$")
+    @Dann("""werde ich einen nicht durch Eigenkapital gedeckten Fehlbetrag in Höhe von "{währungsbetrag}" bilanziert haben""")
     fun fehlbetragPrüfen(fehlbetrag: Währungsbetrag)
     {
         val abfrage = welt.query.query(

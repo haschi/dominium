@@ -1,5 +1,6 @@
 package com.github.haschi.domain.haushaltsbuch
 
+import com.github.haschi.domain.haushaltsbuch.testing.Bilanzposition
 import com.github.haschi.domain.haushaltsbuch.testing.InventarEingabe
 import com.github.haschi.domain.haushaltsbuch.testing.Kontozeile
 import com.github.haschi.domain.haushaltsbuch.testing.VermögenswertParameter
@@ -23,7 +24,7 @@ import java.util.regex.Pattern
 
 class TypeRegistryConfiguration : TypeRegistryConfigurer
 {
-    val moneyRegexp = "(.*) (-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)"
+    val moneyRegexp = "(-?(?:\\d{1,3}\\.)?\\d{1,3},\\d{2} EUR)"
 
     override fun configureTypeRegistry(registry: TypeRegistry)
     {
@@ -35,8 +36,6 @@ class TypeRegistryConfiguration : TypeRegistryConfigurer
                     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy 'um' HH:mm")
                     LocalDateTime.parse(it, formatter)
                 }))
-
-
 
         registry.defineParameterType(ParameterType(
                 "währungsbetrag",
@@ -83,6 +82,19 @@ class TypeRegistryConfiguration : TypeRegistryConfigurer
                                     Währungsbetrag.währungsbetrag(it["Währungsbetrag"]!!)
                             )
                         }))
+
+        registry.defineDataTableType(DataTableType(
+                Bilanzposition::class.java,
+                TableEntryTransformer {
+                    Bilanzposition(
+                            seite = it["Seite"]!!,
+                            gruppe = it["Gruppe"]!!,
+                            kategorie = it["Kategorie"]!!,
+                            posten = it["Posten"]!!,
+                            betrag = Währungsbetrag.währungsbetrag(it["Währungsbetrag"]!!)
+                    )
+                }
+        ))
     }
 
     fun Buchung.Companion.parse(buchung: String): Buchung

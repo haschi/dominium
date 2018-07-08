@@ -11,9 +11,9 @@ Funktionalität: Private Eröffnungsbilanz erstellen
       | Anlagevermögen | Sonstiges | Sparbuch | 1.234,56 EUR   |
 
     Dann werde ich die folgende private Eröffnungsbilanz vorgeschlagen haben:
-      | Seite  | Gruppe           | Kategorie | Posten       | Betrag       |
-      | Aktiv  | A Anlagevermögen | Sonstiges | Sparbuch     | 1.234,56 EUR |
-      | Passiv | A Eigenkapital   |           | Eigenkapital | 1.234,56 EUR |
+      | Seite  | Gruppe           | Kategorie | Posten       | Währungsbetrag |
+      | Aktiv  | A Anlagevermögen | Sonstiges | Sparbuch     | 1.234,56 EUR   |
+      | Passiv | A Eigenkapital   |           | Eigenkapital | 1.234,56 EUR   |
 
   Szenario: Private Eröffnungsbilanz mit Unterdeckung des Eigenkapitals
     Wenn ich die Inventur mit folgendem Inventar beende:

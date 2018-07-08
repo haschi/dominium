@@ -170,7 +170,7 @@ class InventurStepDefinition(private val welt: DieWelt)
         }
 
         welt.intention.let { intention ->
-            assertThat(intention).isCompletedExceptionally.withFailMessage(fehlermeldung)
+            assertThat(intention!!).isCompletedExceptionally.withFailMessage(fehlermeldung)
         }
     }
 
